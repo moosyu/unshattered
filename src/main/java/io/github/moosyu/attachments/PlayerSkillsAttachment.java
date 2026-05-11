@@ -4,6 +4,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 public class PlayerSkillsAttachment {
+    private final int[] LEVEL_TABLE = {50,175,375,675,1175,1925,2925,4425,6425,9925};
+
     public PlayerSkillsAttachment(float miningExp, float combatExp, float farmingExp, float fishingExp, float foragingExp) {
         this.miningExp = miningExp;
         this.combatExp = combatExp;
@@ -64,6 +66,14 @@ public class PlayerSkillsAttachment {
 
     public void addForagingExp(float amount) {
         foragingExp += amount;
+    }
+
+    public int getLevel(float exp) {
+        int playerExpLevel = 0;
+        while (playerExpLevel < LEVEL_TABLE.length && exp >= LEVEL_TABLE[playerExpLevel]) {
+            playerExpLevel++;
+        }
+        return playerExpLevel;
     }
 
     public static final Codec<PlayerSkillsAttachment> RECORD_CODEC = RecordCodecBuilder.create(instance ->

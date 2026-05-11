@@ -6,7 +6,7 @@ import net.minecraft.world.level.block.Blocks;
 import java.util.Map;
 
 public class BlocksMiningExperience {
-    private static final Map<Block, Float> MINING_EXP = Map.ofEntries(
+    private static final Map<Block, Float> BLOCKS_MINING_EXP = Map.ofEntries(
             Map.entry(Blocks.STONE, 1.0f),
             Map.entry(Blocks.COBBLESTONE, 1.0f),
             Map.entry(Blocks.COAL_ORE, 5.0f),
@@ -36,6 +36,6 @@ public class BlocksMiningExperience {
     );
 
     public static float getExp(Block block) {
-        return MINING_EXP.getOrDefault(block, 0.0f);
+        return BLOCKS_MINING_EXP.getOrDefault(block, 0.0f);
     }
 }

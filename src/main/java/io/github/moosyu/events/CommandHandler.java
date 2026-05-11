@@ -1,5 +1,6 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.commands.LevelCommand;
 import io.github.moosyu.commands.SkillCommand;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -11,6 +12,7 @@ public class CommandHandler {
         @SubscribeEvent
         public static void onRegisterCommands(RegisterCommandsEvent event) {
             SkillCommand.register(event.getDispatcher());
+            LevelCommand.register(event.getDispatcher());
         }
     }
 }
