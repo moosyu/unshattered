@@ -1,0 +1,13 @@
+{
+  "itemGroup.nno": "Example Mod Tab",
+  "block.nno.example_block": "Example Block",
+  "item.nno.example_item": "Example Item",
+
+  "nno.configuration.title": "NNO Configs",
+  "nno.configuration.section.nno.common.toml": "NNO Configs",
+  "nno.configuration.section.nno.common.toml.title": "NNO Configs",
+  "nno.configuration.items": "Item List",
+  "nno.configuration.logDirtBlock": "Log Dirt Block",
+  "nno.configuration.magicNumberIntroduction": "Magic Number Text",
+  "nno.configuration.magicNumber": "Magic Number"
+}
