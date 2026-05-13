@@ -2,6 +2,7 @@
   "itemGroup.nno": "Example Mod Tab",
   "block.nno.example_block": "Example Block",
   "item.nno.example_item": "Example Item",
+  "item.nno.treecapitator": "Treecapitator",
 
   "nno.configuration.title": "NNO Configs",
   "nno.configuration.section.nno.common.toml": "NNO Configs",

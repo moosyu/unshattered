@@ -8,8 +8,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import static io.github.moosyu.NNO.MODID;
-import static io.github.moosyu.registers.ItemsRegistry.EXAMPLE_BLOCK_ITEM;
-import static io.github.moosyu.registers.ItemsRegistry.EXAMPLE_ITEM;
+import static io.github.moosyu.registers.ItemsRegistry.*;
 
 public class CreativeTabsRegistry {
     // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "nno" namespace
@@ -24,5 +23,6 @@ public class CreativeTabsRegistry {
             .displayItems((parameters, output) -> {
                 output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
                 output.accept(EXAMPLE_BLOCK_ITEM.get());
+                output.accept(TREECAPITATOR.get());
             }).build());
 }

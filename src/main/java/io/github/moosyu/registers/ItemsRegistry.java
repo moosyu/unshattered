@@ -1,8 +1,11 @@
 package io.github.moosyu.registers;
 
+import io.github.moosyu.items.TreecapitatorItem;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Tiers;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -19,4 +22,6 @@ public class ItemsRegistry {
     public static final DeferredItem<Item> EXAMPLE_ITEM = ITEMS.registerSimpleItem("example_item", new Item.Properties()
             .food(new FoodProperties.Builder()
             .alwaysEdible().nutrition(1).saturationModifier(2f).build()));
+
+    public static final DeferredItem<Item> TREECAPITATOR = ITEMS.register("treecapitator", () -> new TreecapitatorItem(Tiers.GOLD, new Item.Properties()));
 }
