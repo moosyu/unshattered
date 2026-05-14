@@ -18,7 +18,6 @@ import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.Queue;
 
-@EventBusSubscriber(modid = NNO.MODID)
 public class TreeSweepHandler {
     private static final int BREAK_COOLDOWN_MAX = 2;
     // not too sure efficiency-wise if this is better than a list, check that out later
@@ -30,7 +29,6 @@ public class TreeSweepHandler {
 
     public static int trySweep(Level level, BlockPos startPos, Player player) {
         int sweep = (int) player.getAttributeValue(AttributesRegistry.SWEEP);
-
         if (sweep <= 0) {
             return 0;
         }
@@ -80,29 +78,33 @@ public class TreeSweepHandler {
         }
         return toBreak;
     }
-    @SubscribeEvent
-    private static void onServerTickEvent(ServerTickEvent.Post event) {
-        if (TO_BREAK.isEmpty()) {
+
+    @EventBusSubscriber(modid = NNO.MODID)
+    public static class EventHandler {
+        @SubscribeEvent
+        private static void onServerTickEvent(ServerTickEvent.Post event) {
+            if (TO_BREAK.isEmpty()) {
+                breakCooldown = BREAK_COOLDOWN_MAX;
+                return;
+            }
+
+            if (breakCooldown > 0) {
+                breakCooldown--;
+                return;
+            }
+
+            BreakTask current = TO_BREAK.poll();
+
+            Level level = current.level();
+            BlockPos pos = current.pos();
+            Player player = current.player();
+
+            // all this bullshit so that the extra broken logs wont have particles...
+            BlockState state = level.getBlockState(pos);
+            level.playSound(null, pos, state.getSoundType(level, pos, player).getBreakSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
+            Block.dropResources(state, level, pos, level.getBlockEntity(pos), player, player.getMainHandItem());
+            level.removeBlock(pos, false);
             breakCooldown = BREAK_COOLDOWN_MAX;
-            return;
         }
-
-        if (breakCooldown > 0) {
-            breakCooldown--;
-            return;
-        }
-
-        BreakTask current = TO_BREAK.poll();
-
-        Level level = current.level();
-        BlockPos pos = current.pos();
-        Player player = current.player();
-
-        // all this bullshit so that the extra broken logs wont have particles...
-        BlockState state = level.getBlockState(pos);
-        level.playSound(null, pos, state.getSoundType(level, pos, player).getBreakSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
-        Block.dropResources(state, level, pos, level.getBlockEntity(pos), player, player.getMainHandItem());
-        level.removeBlock(pos, false);
-        breakCooldown = BREAK_COOLDOWN_MAX;
     }
 }

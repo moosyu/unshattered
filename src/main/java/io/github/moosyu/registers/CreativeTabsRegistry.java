@@ -24,5 +24,10 @@ public class CreativeTabsRegistry {
                 output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
                 output.accept(EXAMPLE_BLOCK_ITEM.get());
                 output.accept(TREECAPITATOR.get());
+                output.accept(SPRUCE_AXE.get());
+                output.accept(SERIOUSLY_DAMAGED_AXE.get());
+                output.accept(DECENT_AXE.get());
+                output.accept(FIG_HEW.get());
+                output.accept(FIGSTONE_SPLITTER.get());
             }).build());
 }

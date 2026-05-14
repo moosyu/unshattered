@@ -30,7 +30,42 @@ public class ItemsRegistry {
     public static final DeferredItem<Item> TREECAPITATOR = ITEMS.register("treecapitator", () -> new TreecapitatorItem(Tiers.GOLD,
             new Item.Properties().attributes(ItemAttributeModifiers.builder().add(AttributesRegistry.SWEEP,
                     new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "sweep"),
-                            5,
+                            25,
+                            AttributeModifier.Operation.ADD_VALUE),
+                    EquipmentSlotGroup.MAINHAND).build())));
+
+    public static final DeferredItem<Item> SPRUCE_AXE = ITEMS.register("spruce_axe", () -> new TreecapitatorItem(Tiers.WOOD,
+            new Item.Properties().attributes(ItemAttributeModifiers.builder().add(AttributesRegistry.SWEEP,
+                    new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "sweep"),
+                            4,
+                            AttributeModifier.Operation.ADD_VALUE),
+                    EquipmentSlotGroup.MAINHAND).build())));
+
+    public static final DeferredItem<Item> SERIOUSLY_DAMAGED_AXE = ITEMS.register("seriously_damaged_axe", () -> new TreecapitatorItem(Tiers.WOOD,
+            new Item.Properties().attributes(ItemAttributeModifiers.builder().add(AttributesRegistry.SWEEP,
+                    new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "sweep"),
+                            7,
+                            AttributeModifier.Operation.ADD_VALUE),
+                    EquipmentSlotGroup.MAINHAND).build())));
+
+    public static final DeferredItem<Item> DECENT_AXE = ITEMS.register("decent_axe", () -> new TreecapitatorItem(Tiers.WOOD,
+            new Item.Properties().attributes(ItemAttributeModifiers.builder().add(AttributesRegistry.SWEEP,
+                    new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "sweep"),
+                            24,
+                            AttributeModifier.Operation.ADD_VALUE),
+                    EquipmentSlotGroup.MAINHAND).build())));
+
+    public static final DeferredItem<Item> FIG_HEW = ITEMS.register("fig_hew", () -> new TreecapitatorItem(Tiers.WOOD,
+            new Item.Properties().attributes(ItemAttributeModifiers.builder().add(AttributesRegistry.SWEEP,
+                    new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "sweep"),
+                            7,
+                            AttributeModifier.Operation.ADD_VALUE),
+                    EquipmentSlotGroup.MAINHAND).build())));
+
+    public static final DeferredItem<Item> FIGSTONE_SPLITTER = ITEMS.register("figstone_splitter", () -> new TreecapitatorItem(Tiers.WOOD,
+            new Item.Properties().attributes(ItemAttributeModifiers.builder().add(AttributesRegistry.SWEEP,
+                    new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "sweep"),
+                            24,
                             AttributeModifier.Operation.ADD_VALUE),
                     EquipmentSlotGroup.MAINHAND).build())));
 }

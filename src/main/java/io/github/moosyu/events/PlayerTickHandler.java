@@ -1,5 +1,6 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.helpers.HealingManager;
 import io.github.moosyu.helpers.ModHelpers;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
@@ -34,10 +35,10 @@ public class PlayerTickHandler {
                 float currentHealth = player.getHealth();
 
                 if (currentHealth < maxHealth) {
-                    // todo: getting to this area but LivingHealHandler event is killing, figure out how how let this heal through.
                     float amountToHeal = 1.5f + (maxHealth / 100f);
+                    HealingManager.heal(player, amountToHeal);
+                    System.out.println("Healing occurred normally!");
                     System.out.println(amountToHeal);
-                    player.heal(amountToHeal);
                 }
             }
 

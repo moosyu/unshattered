@@ -3,6 +3,12 @@
   "block.nno.example_block": "Example Block",
   "item.nno.example_item": "Example Item",
   "item.nno.treecapitator": "Treecapitator",
+  "item.nno.spruce_axe": "Spruce Axe",
+  "item.nno.seriously_damaged_axe": "Seriously Damaged Axe",
+  "item.nno.decent_axe": "Decent Axe",
+  "item.nno.fig_hew": "Fig Hew",
+  "item.nno.figstone_splitter": "Figstone Splitter",
+  "attribute.name.nno.sweep": "Sweep",
 
   "nno.configuration.title": "NNO Configs",
   "nno.configuration.section.nno.common.toml": "NNO Configs",
