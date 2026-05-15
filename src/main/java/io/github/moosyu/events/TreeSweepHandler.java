@@ -1,27 +1,23 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.NNO;
+import io.github.moosyu.attachments.PlayerSkillsAttachment;
+import io.github.moosyu.registers.AttachmentRegistry;
 import io.github.moosyu.registers.AttributesRegistry;
+import io.github.moosyu.sounds.ModSounds;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BlockTypes;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
-import java.util.ArrayDeque;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Random;
+import java.util.*;
 
 
 public class TreeSweepHandler {
@@ -29,28 +25,29 @@ public class TreeSweepHandler {
     // not too sure efficiency-wise if this is better than a list, check that out later
     // just kind of assumed it was faster and wanted to use something new...
     // todo: fix this for multiplayer, queues seem to weirdly overlaps so in the final form of this mod that should be solved
-    private static final Queue<BreakTask> TO_BREAK = new ArrayDeque<>();
-    private record BreakTask(Level level, BlockPos pos, Player player) {}
+    private static final List<BreakTask> TO_BREAK = new ArrayList<>();
+    private record BreakTask(Level level, BlockPos pos, Player player, BlockState state) {}
     private static int breakCooldown = BREAK_COOLDOWN_MAX;
     private static final Random random = new Random();
+    private static int listPos = 0;
+    private static PlayerSkillsAttachment skills;
 
-    public static int trySweep(Level level, BlockPos startPos, Player player) {
-        // remove the first block (it wont be removed at the start as the vanilla break for logs is disabled
+    public static void trySweep(Level level, BlockPos startPos, Player player) {
+        skills = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
+        // so when it's deleted the player doesnt just get given air
+        BlockState startBlock = level.getBlockState(startPos);
         level.removeBlock(startPos, false);
 
         int sweep = (int) player.getAttributeValue(AttributesRegistry.SWEEP);
         if (sweep <= 0) {
-            return 0;
+            skills.addForagingExp(6.0f);
+            ModSounds.playerExperienceSound(player);
+            return;
         }
-
+        // todo: disable when there are already logs being broken
         Queue<BreakTask> result = breakConnectedLogs(level, startPos, player, sweep);
+        result.add(new BreakTask(level, startPos, player, startBlock));
         TO_BREAK.addAll(result);
-
-        return result.size() + 1;
-    }
-
-    private static void giveDrops(Player player) {
-
     }
 
     private static Queue<BreakTask> breakConnectedLogs(Level level, BlockPos startPos, Player player, int sweep) {
@@ -84,7 +81,7 @@ public class TreeSweepHandler {
                                 if (toBreak.size() >= sweep || toBreak.size() >= 35)
                                     return toBreak;
                                 queue.add(neighborLong);
-                                toBreak.add(new BreakTask(level, mutablePos.immutable(), player));
+                                toBreak.add(new BreakTask(level, mutablePos.immutable(), player, state));
                             }
                         }
                     }
@@ -94,29 +91,37 @@ public class TreeSweepHandler {
         return toBreak;
     }
 
-    //private static int calculateLogs(Player player) {
-    //    var attribute = player.getAttribute(AttributesRegistry.FORAGING_FORTUNE);
-    //    double fortune = attribute != null ? attribute.getValue() : 0.0;
-    //    double multiplier = 1.0 + (fortune / 100.0);
-    //    int guaranteedMultiplier = (int) multiplier;
-    //    int finalMultiplier = guaranteedMultiplier;
+    // todo: fix this always beeing zero?
+    private static int calculateLogs(Player player) {
+        var attribute = player.getAttribute(AttributesRegistry.FORAGING_FORTUNE);
+        double fortune = attribute != null ? attribute.getValue() : 0.0;
+        double multiplier = 1.0 + (fortune / 100.0);
+        int guaranteedMultiplier = (int) multiplier;
+        int finalMultiplier = guaranteedMultiplier;
 
-        // Roll for extra drop
-    //    if (random.nextDouble() < (multiplier - guaranteedMultiplier)) {
-      //      finalMultiplier++;
-        //}
+        // roll for extra drop
+        if (random.nextDouble() < (multiplier - guaranteedMultiplier)) {
+            finalMultiplier++;
+        }
 
-      //  return finalMultiplier;
-    //}
+        return finalMultiplier;
+    }
 
     @EventBusSubscriber(modid = NNO.MODID)
     public static class EventHandler {
         @SubscribeEvent
         private static void onServerTickEvent(ServerTickEvent.Post event) {
-            if (TO_BREAK.isEmpty()) {
+            if (!TO_BREAK.isEmpty() && listPos == TO_BREAK.size()) {
                 breakCooldown = BREAK_COOLDOWN_MAX;
-                // todo: figure out a way to pull this off, remember that Queue#poll deletes entries so they'll have to be stored somewhere bonus (maybe i shouldve just used a list)
-                //giveDrops();
+                for (BreakTask current : TO_BREAK) {
+                    int calculatedLogs = calculateLogs(current.player());
+                    current.player().getInventory().add(new ItemStack(current.state().getBlock(), calculatedLogs));
+                }
+                skills.addForagingExp(TO_BREAK.size() * 6.0f);
+                // my spider senses are telling me something terrible with happen with this in multiplayer but idrk rn
+                ModSounds.playerExperienceSound(TO_BREAK.getLast().player());
+                listPos = 0;
+                TO_BREAK.clear();
                 return;
             }
 
@@ -125,11 +130,19 @@ public class TreeSweepHandler {
                 return;
             }
 
-            BreakTask current = TO_BREAK.poll();
+            if (TO_BREAK.isEmpty()) {
+                return;
+            }
+
+            BreakTask current = TO_BREAK.get(listPos);
             Level level = current.level();
             BlockPos pos = current.pos();
 
-            level.removeBlock(pos, false);
+            // as the first block (added at the end) will certainly be an empty block
+            if (!level.isEmptyBlock(pos)) {
+                level.removeBlock(pos, false);
+            }
+            listPos++;
             breakCooldown = BREAK_COOLDOWN_MAX;
         }
     }

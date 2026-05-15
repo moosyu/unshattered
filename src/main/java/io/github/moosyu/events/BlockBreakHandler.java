@@ -47,8 +47,7 @@ public class BlockBreakHandler {
             if (blockState.is(BlockTags.LOGS)) {
                 // cancel the vanilla block break for logs (to add
                 event.setCanceled(true);
-                skills.addForagingExp(TreeSweepHandler.trySweep(player.level(), event.getPos(), player) + 1 * 6.0f);
-                ModSounds.playerExperienceSound(player);
+                TreeSweepHandler.trySweep(player.level(), event.getPos(), player);
                 return;
             }
 
