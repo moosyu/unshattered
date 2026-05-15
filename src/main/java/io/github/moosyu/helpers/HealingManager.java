@@ -8,7 +8,6 @@ public class HealingManager {
     public static void heal(LivingEntity entity, float amount) {
         ALLOWED_HEAL.set(true);
         try {
-            System.out.println(amount);
             entity.heal(amount);
         } finally {
             ALLOWED_HEAL.set(false);

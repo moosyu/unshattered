@@ -1,12 +1,10 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.helpers.HealingManager;
-import io.github.moosyu.helpers.ModHelpers;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import static io.github.moosyu.NNO.MODID;
@@ -37,8 +35,6 @@ public class PlayerTickHandler {
                 if (currentHealth < maxHealth) {
                     float amountToHeal = 1.5f + (maxHealth / 100f);
                     HealingManager.heal(player, amountToHeal);
-                    System.out.println("Healing occurred normally!");
-                    System.out.println(amountToHeal);
                 }
             }
 
@@ -49,9 +45,9 @@ public class PlayerTickHandler {
 
                 // ill make the exclamation mark pop up above bobber once I get deep enough in that I know how to do that. For now it's just the basis here.
                 if (currentlyApproaching && !fishApproaching) {
-                    ModHelpers.broadcastMessage("Fish approaching");
+                    System.out.println("Fish approaching");
                 } else if (currentlyNibbling && !fishNibbling) {
-                    ModHelpers.broadcastMessage("Nibbling");
+                    System.out.println("Nibbling");
                 }
 
                 fishApproaching = currentlyApproaching;

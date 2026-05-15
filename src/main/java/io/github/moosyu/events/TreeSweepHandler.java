@@ -6,7 +6,11 @@ import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,6 +21,8 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Random;
+
 
 public class TreeSweepHandler {
     private static final int BREAK_COOLDOWN_MAX = 2;
@@ -26,8 +32,12 @@ public class TreeSweepHandler {
     private static final Queue<BreakTask> TO_BREAK = new ArrayDeque<>();
     private record BreakTask(Level level, BlockPos pos, Player player) {}
     private static int breakCooldown = BREAK_COOLDOWN_MAX;
+    private static final Random random = new Random();
 
     public static int trySweep(Level level, BlockPos startPos, Player player) {
+        // remove the first block (it wont be removed at the start as the vanilla break for logs is disabled
+        level.removeBlock(startPos, false);
+
         int sweep = (int) player.getAttributeValue(AttributesRegistry.SWEEP);
         if (sweep <= 0) {
             return 0;
@@ -36,8 +46,13 @@ public class TreeSweepHandler {
         Queue<BreakTask> result = breakConnectedLogs(level, startPos, player, sweep);
         TO_BREAK.addAll(result);
 
-        return result.size();
+        return result.size() + 1;
     }
+
+    private static void giveDrops(Player player) {
+
+    }
+
     private static Queue<BreakTask> breakConnectedLogs(Level level, BlockPos startPos, Player player, int sweep) {
         Queue<BreakTask> toBreak = new ArrayDeque<>();
         Queue<Long> queue = new LinkedList<>();
@@ -79,12 +94,29 @@ public class TreeSweepHandler {
         return toBreak;
     }
 
+    //private static int calculateLogs(Player player) {
+    //    var attribute = player.getAttribute(AttributesRegistry.FORAGING_FORTUNE);
+    //    double fortune = attribute != null ? attribute.getValue() : 0.0;
+    //    double multiplier = 1.0 + (fortune / 100.0);
+    //    int guaranteedMultiplier = (int) multiplier;
+    //    int finalMultiplier = guaranteedMultiplier;
+
+        // Roll for extra drop
+    //    if (random.nextDouble() < (multiplier - guaranteedMultiplier)) {
+      //      finalMultiplier++;
+        //}
+
+      //  return finalMultiplier;
+    //}
+
     @EventBusSubscriber(modid = NNO.MODID)
     public static class EventHandler {
         @SubscribeEvent
         private static void onServerTickEvent(ServerTickEvent.Post event) {
             if (TO_BREAK.isEmpty()) {
                 breakCooldown = BREAK_COOLDOWN_MAX;
+                // todo: figure out a way to pull this off, remember that Queue#poll deletes entries so they'll have to be stored somewhere bonus (maybe i shouldve just used a list)
+                //giveDrops();
                 return;
             }
 
@@ -94,15 +126,9 @@ public class TreeSweepHandler {
             }
 
             BreakTask current = TO_BREAK.poll();
-
             Level level = current.level();
             BlockPos pos = current.pos();
-            Player player = current.player();
 
-            // all this bullshit so that the extra broken logs wont have particles...
-            BlockState state = level.getBlockState(pos);
-            level.playSound(null, pos, state.getSoundType(level, pos, player).getBreakSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
-            Block.dropResources(state, level, pos, level.getBlockEntity(pos), player, player.getMainHandItem());
             level.removeBlock(pos, false);
             breakCooldown = BREAK_COOLDOWN_MAX;
         }

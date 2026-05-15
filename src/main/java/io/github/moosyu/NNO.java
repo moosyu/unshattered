@@ -1,5 +1,7 @@
 package io.github.moosyu;
 
+import net.minecraft.client.AttackIndicatorStatus;
+import net.minecraft.client.Minecraft;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -53,6 +55,8 @@ public class NNO {
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
+
+        Minecraft.getInstance().options.attackIndicator().set(AttackIndicatorStatus.OFF);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);

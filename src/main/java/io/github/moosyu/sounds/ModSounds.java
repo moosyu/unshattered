@@ -11,6 +11,6 @@ public class ModSounds {
         Random rand = new Random();
         // not 100% about this just yet. slightly randomising the pitch helped, but I may add some random delay to the pitch sometimes to emulate
         // hypixel's shitting 5tps servers?
-        player.playNotifySound(SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.NEUTRAL, 0.1f, 2.0f - rand.nextFloat(0.3f));
+        player.playNotifySound(SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.NEUTRAL, 0.5f, 2.0f - rand.nextFloat(0.3f));
     }
 }

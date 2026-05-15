@@ -10,6 +10,7 @@ public class BlocksMiningExperience {
             Map.entry(Blocks.STONE, 1.0f),
             Map.entry(Blocks.COBBLESTONE, 1.0f),
             Map.entry(Blocks.COAL_ORE, 5.0f),
+            Map.entry(Blocks.IRON_ORE, 5.0f),
             Map.entry(Blocks.GOLD_ORE, 6.0f),
             Map.entry(Blocks.LAPIS_ORE, 7.0f),
             Map.entry(Blocks.REDSTONE_ORE, 7.0f),

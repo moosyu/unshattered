@@ -9,6 +9,7 @@
   "item.nno.fig_hew": "Fig Hew",
   "item.nno.figstone_splitter": "Figstone Splitter",
   "attribute.name.nno.sweep": "Sweep",
+  "attribute.name.nno.foraging_fortune": "Foraging Fortune",
 
   "nno.configuration.title": "NNO Configs",
   "nno.configuration.section.nno.common.toml": "NNO Configs",

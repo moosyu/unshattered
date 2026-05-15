@@ -1,6 +1,5 @@
 package io.github.moosyu.registers;
 
-import io.github.moosyu.items.TreecapitatorItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -27,45 +26,63 @@ public class ItemsRegistry {
             .food(new FoodProperties.Builder()
             .alwaysEdible().nutrition(1).saturationModifier(2f).build()));
 
-    public static final DeferredItem<Item> TREECAPITATOR = ITEMS.register("treecapitator", () -> new TreecapitatorItem(Tiers.GOLD,
-            new Item.Properties().attributes(ItemAttributeModifiers.builder().add(AttributesRegistry.SWEEP,
-                    new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "sweep"),
-                            25,
-                            AttributeModifier.Operation.ADD_VALUE),
-                    EquipmentSlotGroup.MAINHAND).build())));
+    public static final DeferredItem<AxeItem> TREECAPITATOR = ITEMS.register("treecapitator", () -> new AxeItem(Tiers.GOLD, new Item.Properties().attributes(
+                    ItemAttributeModifiers.builder().add(AttributesRegistry.SWEEP,
+                            new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "sweep"), 25, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND).add(AttributesRegistry.FORAGING_FORTUNE,
+                            new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "foraging_fortune"), 100, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).build()
+            ))
+    );
 
-    public static final DeferredItem<Item> SPRUCE_AXE = ITEMS.register("spruce_axe", () -> new TreecapitatorItem(Tiers.WOOD,
-            new Item.Properties().attributes(ItemAttributeModifiers.builder().add(AttributesRegistry.SWEEP,
-                    new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "sweep"),
-                            4,
-                            AttributeModifier.Operation.ADD_VALUE),
-                    EquipmentSlotGroup.MAINHAND).build())));
+    public static final DeferredItem<AxeItem> SPRUCE_AXE = ITEMS.register("spruce_axe", () -> new AxeItem(Tiers.WOOD, new Item.Properties().attributes(
+                    ItemAttributeModifiers.builder().add(AttributesRegistry.SWEEP,
+                            new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "sweep"), 4, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND).add(AttributesRegistry.FORAGING_FORTUNE,
+                            new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "foraging_fortune"), 50, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).build()
+            ))
+    );
 
-    public static final DeferredItem<Item> SERIOUSLY_DAMAGED_AXE = ITEMS.register("seriously_damaged_axe", () -> new TreecapitatorItem(Tiers.WOOD,
-            new Item.Properties().attributes(ItemAttributeModifiers.builder().add(AttributesRegistry.SWEEP,
-                    new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "sweep"),
-                            7,
-                            AttributeModifier.Operation.ADD_VALUE),
-                    EquipmentSlotGroup.MAINHAND).build())));
+    public static final DeferredItem<AxeItem> SERIOUSLY_DAMAGED_AXE = ITEMS.register("seriously_damaged_axe", () -> new AxeItem(Tiers.WOOD, new Item.Properties().attributes(
+                    ItemAttributeModifiers.builder().add(AttributesRegistry.SWEEP,
+                            new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "sweep"), 7, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND).add(AttributesRegistry.FORAGING_FORTUNE,
+                            new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "foraging_fortune"), 5, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).build()
+            ))
+    );
 
-    public static final DeferredItem<Item> DECENT_AXE = ITEMS.register("decent_axe", () -> new TreecapitatorItem(Tiers.WOOD,
-            new Item.Properties().attributes(ItemAttributeModifiers.builder().add(AttributesRegistry.SWEEP,
-                    new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "sweep"),
-                            24,
-                            AttributeModifier.Operation.ADD_VALUE),
-                    EquipmentSlotGroup.MAINHAND).build())));
+    public static final DeferredItem<AxeItem> DECENT_AXE = ITEMS.register("decent_axe", () -> new AxeItem(Tiers.WOOD, new Item.Properties().attributes(
+                    ItemAttributeModifiers.builder().add(AttributesRegistry.SWEEP,
+                            new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "sweep"), 24, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND).add(AttributesRegistry.FORAGING_FORTUNE,
+                            new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "foraging_fortune"), 5, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).build()
+            ))
+    );
 
-    public static final DeferredItem<Item> FIG_HEW = ITEMS.register("fig_hew", () -> new TreecapitatorItem(Tiers.WOOD,
-            new Item.Properties().attributes(ItemAttributeModifiers.builder().add(AttributesRegistry.SWEEP,
-                    new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "sweep"),
-                            7,
-                            AttributeModifier.Operation.ADD_VALUE),
-                    EquipmentSlotGroup.MAINHAND).build())));
+    public static final DeferredItem<AxeItem> FIG_HEW = ITEMS.register("fig_hew", () -> new AxeItem(Tiers.WOOD, new Item.Properties().attributes(
+                    ItemAttributeModifiers.builder().add(AttributesRegistry.SWEEP,
+                            new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "sweep"), 7, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND).add(AttributesRegistry.FORAGING_FORTUNE,
+                            new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "foraging_fortune"), 20, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).build()
+            ))
+    );
 
-    public static final DeferredItem<Item> FIGSTONE_SPLITTER = ITEMS.register("figstone_splitter", () -> new TreecapitatorItem(Tiers.WOOD,
-            new Item.Properties().attributes(ItemAttributeModifiers.builder().add(AttributesRegistry.SWEEP,
-                    new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "sweep"),
-                            24,
-                            AttributeModifier.Operation.ADD_VALUE),
-                    EquipmentSlotGroup.MAINHAND).build())));
+    public static final DeferredItem<AxeItem> FIGSTONE_SPLITTER = ITEMS.register("figstone_splitter", () -> new AxeItem(Tiers.WOOD, new Item.Properties().attributes(
+                    ItemAttributeModifiers.builder().add(AttributesRegistry.SWEEP,
+                            new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "sweep"), 24, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND).add(AttributesRegistry.FORAGING_FORTUNE,
+                            new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "foraging_fortune"), 35, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).build()
+            ))
+    );
 }
