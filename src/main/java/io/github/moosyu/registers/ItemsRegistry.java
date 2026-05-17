@@ -26,6 +26,7 @@ public class ItemsRegistry {
             .food(new FoodProperties.Builder()
             .alwaysEdible().nutrition(1).saturationModifier(2f).build()));
 
+    // todo: make it so the foraging fortune only applies in certain areas (the park, not the galatea)
     public static final DeferredItem<AxeItem> TREECAPITATOR = ITEMS.register("treecapitator", () -> new AxeItem(Tiers.GOLD, new Item.Properties().attributes(
                     ItemAttributeModifiers.builder().add(AttributesRegistry.SWEEP,
                             new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "sweep"), 25, AttributeModifier.Operation.ADD_VALUE),
@@ -36,6 +37,7 @@ public class ItemsRegistry {
             ))
     );
 
+    // todo: make it so the foraging fortune only applies in certain areas (the park, not the galatea)
     public static final DeferredItem<AxeItem> SPRUCE_AXE = ITEMS.register("spruce_axe", () -> new AxeItem(Tiers.WOOD, new Item.Properties().attributes(
                     ItemAttributeModifiers.builder().add(AttributesRegistry.SWEEP,
                             new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "sweep"), 4, AttributeModifier.Operation.ADD_VALUE),

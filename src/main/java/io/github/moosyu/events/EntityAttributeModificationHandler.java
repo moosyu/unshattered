@@ -14,6 +14,7 @@ public class EntityAttributeModificationHandler {
         @SubscribeEvent
         public static void onModifyAttributesCalled(EntityAttributeModificationEvent event) {
             event.add(EntityType.PLAYER, AttributesRegistry.SWEEP);
+            event.add(EntityType.PLAYER, AttributesRegistry.FORAGING_FORTUNE);
         }
     }
 }
