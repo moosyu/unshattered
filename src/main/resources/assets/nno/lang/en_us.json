@@ -1,7 +1,5 @@
 {
-  "itemGroup.nno": "Example Mod Tab",
-  "block.nno.example_block": "Example Block",
-  "item.nno.example_item": "Example Item",
+  "itemGroup.nno": "NNO Items",
   "item.nno.treecapitator": "Treecapitator",
   "item.nno.spruce_axe": "Spruce Axe",
   "item.nno.seriously_damaged_axe": "Seriously Damaged Axe",
@@ -9,6 +7,8 @@
   "item.nno.fig_hew": "Fig Hew",
   "item.nno.figstone_splitter": "Figstone Splitter",
   "item.nno.mercenary_axe": "Mercenary Axe",
+  "item.nno.leaflet_chestplate": "Leaflet Chestplate",
+
   "attribute.name.nno.sweep": "Sweep",
   "attribute.name.nno.foraging_fortune": "Foraging Fortune",
   "attribute.name.nno.health": "Health",

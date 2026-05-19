@@ -13,4 +13,8 @@ public class ModSounds {
         // hypixel's shitting 5tps servers?
         player.playNotifySound(SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.NEUTRAL, 0.5f, 2.0f - rand.nextFloat(0.3f));
     }
+
+    public static void playerDeathSound(Player player) {
+        player.playNotifySound(SoundEvents.ANVIL_FALL, SoundSource.NEUTRAL, 0.5f, 2.0f);
+    }
 }

@@ -1,6 +1,8 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.attachments.PlayerStatsAttachment;
 import io.github.moosyu.helpers.HealingManager;
+import io.github.moosyu.registers.AttributesRegistry;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -8,6 +10,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import static io.github.moosyu.NNO.MODID;
+import static io.github.moosyu.registers.AttachmentRegistry.PLAYER_STATS;
 
 public class PlayerTickHandler {
     static boolean fishApproaching = false;
@@ -18,6 +21,7 @@ public class PlayerTickHandler {
         @SubscribeEvent
         public static void onPlayerTick(PlayerTickEvent.Post event) {
             Player player = event.getEntity();
+            PlayerStatsAttachment stats = player.getData(PLAYER_STATS.get());
 
             if (player.level().isClientSide()) {
                 return;
@@ -29,13 +33,7 @@ public class PlayerTickHandler {
 
             // heal every 2 seconds
             if (player.tickCount % 40 == 0) {
-                float maxHealth = player.getMaxHealth();
-                float currentHealth = player.getHealth();
-
-                if (currentHealth < maxHealth) {
-                    float amountToHeal = 1.5f + (maxHealth / 100f);
-                    HealingManager.heal(player, amountToHeal);
-                }
+                stats.addCurrentStat(PlayerStatsAttachment.Stat.HEALTH, 2.0f, player.getAttribute(AttributesRegistry.HEALTH).getValue());
             }
 
             // fishing popup

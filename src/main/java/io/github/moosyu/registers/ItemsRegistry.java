@@ -4,10 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.AxeItem;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -90,5 +87,12 @@ public class ItemsRegistry {
                             EquipmentSlotGroup.MAINHAND
                     ).build()
             ))
+    );
+
+    public static final DeferredItem<Item> LEAFLET_CHESTPLATE = ITEMS.registerItem("leaflet_chestplate", props -> new ArmorItem(
+            ArmorMaterials.LEATHER, ArmorItem.Type.CHESTPLATE, new Item.Properties().attributes(ItemAttributeModifiers.builder().add(
+            AttributesRegistry.HEALTH,
+            new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "health"), 80,
+                    AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.CHEST).build()))
     );
 }

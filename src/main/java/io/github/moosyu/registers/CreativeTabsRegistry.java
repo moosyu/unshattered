@@ -21,7 +21,7 @@ public class CreativeTabsRegistry {
             .withTabsBefore(CreativeModeTabs.COMBAT)
             .icon(() -> TREECAPITATOR.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
-                output.accept(MERCENARY_AXE.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
+                output.accept(MERCENARY_AXE.get());
                 output.accept(EXAMPLE_BLOCK_ITEM.get());
                 output.accept(TREECAPITATOR.get());
                 output.accept(SPRUCE_AXE.get());
@@ -29,5 +29,6 @@ public class CreativeTabsRegistry {
                 output.accept(DECENT_AXE.get());
                 output.accept(FIG_HEW.get());
                 output.accept(FIGSTONE_SPLITTER.get());
+                output.accept(LEAFLET_CHESTPLATE.get());
             }).build());
 }
