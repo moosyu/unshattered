@@ -35,10 +35,7 @@ public class PlayerStatsAttachment {
         lastUpdatedStat = index;
     }
 
-    public void removeCurrentStat(Stat currentStat, double amount) {
-        stats[currentStat.ordinal()] -= amount;
-
-    }
+    public void removeCurrentStat(Stat currentStat, double amount) {stats[currentStat.ordinal()] -= amount;}
 
     public void addCurrentStat(Stat currentStat, double amount, double maxAmount) {
         // the Math.min should return the smaller of the two (so the value doesnt overflow max health

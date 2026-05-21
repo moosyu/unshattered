@@ -16,7 +16,7 @@ public class LivingDropHandler {
     public static class EventHandler {
         @SubscribeEvent
         public static void onLivingDrop(LivingDropsEvent event) {
-            if (event.getSource().getEntity() instanceof Player player) {
+            if (event.getSource().getEntity() instanceof Player player && !player.level().isClientSide()) {
                 Inventory inventory = player.getInventory();
                 // why are block drops in lists but living drops are in a collection?? do we have the data on this?
                 List<ItemEntity> drops = event.getDrops().stream().toList();

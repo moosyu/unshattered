@@ -18,11 +18,9 @@ public class ItemFishedHandler {
         @SubscribeEvent
         public static void onItemFished(ItemFishedEvent event) {
             Player player = event.getEntity();
-            PlayerSkillsAttachment skills = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
+            if (player.level().isClientSide()) return;
 
-            if (player.level().isClientSide()) {
-                return;
-            }
+            PlayerSkillsAttachment skills = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
 
             for (ItemStack fishingItem : event.getDrops()) {
                 skills.addExp(PlayerSkillsAttachment.Skill.FISHING, ItemsFishingExperience.getExp(fishingItem.getItem()));

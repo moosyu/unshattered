@@ -20,9 +20,8 @@ public class PlayerTickHandler {
         @SubscribeEvent
         public static void onPlayerTick(PlayerTickEvent.Post event) {
             Player player = event.getEntity();
-            PlayerStatsAttachment stats = player.getData(PLAYER_STATS.get());
-
             if (player.level().isClientSide()) return;
+            PlayerStatsAttachment stats = player.getData(PLAYER_STATS.get());
 
             // disable hunger effects
             player.getFoodData().setFoodLevel(20);
@@ -31,7 +30,9 @@ public class PlayerTickHandler {
 
             // heal every 2 seconds
             if (player.tickCount % 40 == 0) {
-                stats.addCurrentStat(PlayerStatsAttachment.Stat.HEALTH, 2.0f, player.getAttribute(AttributesRegistry.HEALTH).getValue());
+                double maxHealth = player.getAttribute(AttributesRegistry.HEALTH).getValue();
+                double healthGained = (1.5 + maxHealth/100) * (player.getAttribute(AttributesRegistry.HEALTH_REGEN).getValue()/100);
+                stats.addCurrentStat(PlayerStatsAttachment.Stat.HEALTH, healthGained, maxHealth);
                 player.syncData(PLAYER_STATS);
             }
 

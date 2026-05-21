@@ -18,7 +18,7 @@ public class PlayerJoinHandler {
     public static class EventHandler {
         @SubscribeEvent
         public static void onPlayerJoin(EntityJoinLevelEvent event) {
-            if (event.getEntity() instanceof Player player) {
+            if (event.getEntity() instanceof Player player && !player.level().isClientSide) {
                 var stats = player.getData(PLAYER_STATS.get());
                 final double MAX_HEALTH = player.getAttribute(AttributesRegistry.HEALTH).getValue();
                 stats.setCurrentStat(PlayerStatsAttachment.Stat.HEALTH, MAX_HEALTH);

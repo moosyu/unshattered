@@ -19,6 +19,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.*;
 
+// shouldnt need to check if serverside as this will being run from BlockBreakHandler which already had that checek
 @EventBusSubscriber(modid = NNO.MODID)
 public class TreeSweepHandler {
     private static final int BREAK_COOLDOWN_MAX = 2;

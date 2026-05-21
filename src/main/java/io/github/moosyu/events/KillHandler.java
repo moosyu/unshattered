@@ -24,9 +24,7 @@ public class KillHandler {
             Entity attacker = source.getEntity();
 
             if (attacker instanceof Player player) {
-                if (player.level().isClientSide()) {
-                    return;
-                }
+                if (player.level().isClientSide()) return;
                 PlayerSkillsAttachment skills = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
 
                 float combatExp = EntityCombatExperience.getExp(event.getEntity().getType());

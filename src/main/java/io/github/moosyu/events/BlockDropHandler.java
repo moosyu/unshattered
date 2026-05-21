@@ -16,7 +16,7 @@ public class BlockDropHandler {
     public static class EventHandler {
         @SubscribeEvent
         public static void onBlockDrop(BlockDropsEvent event) {
-            if (event.getBreaker() instanceof Player player) {
+            if (event.getBreaker() instanceof Player player && !player.level().isClientSide()) {
                 Inventory inventory = player.getInventory();
                 List<ItemEntity> drops = event.getDrops();
                 for (ItemEntity drop : drops) {

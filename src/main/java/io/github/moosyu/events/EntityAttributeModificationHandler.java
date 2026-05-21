@@ -15,12 +15,13 @@ public class EntityAttributeModificationHandler {
         public static void onModifyAttributesCalled(EntityAttributeModificationEvent event) {
             event.add(EntityType.PLAYER, AttributesRegistry.SWEEP);
             event.add(EntityType.PLAYER, AttributesRegistry.FORAGING_FORTUNE);
-            event.add(EntityType.PLAYER, AttributesRegistry.HEALTH, 100.0d);
-            event.add(EntityType.PLAYER, AttributesRegistry.DAMAGE, 5.0d);
+            event.add(EntityType.PLAYER, AttributesRegistry.HEALTH);
+            event.add(EntityType.PLAYER, AttributesRegistry.DAMAGE);
+            event.add(EntityType.PLAYER, AttributesRegistry.MANA);
             event.add(EntityType.PLAYER, AttributesRegistry.STRENGTH);
             event.add(EntityType.PLAYER, AttributesRegistry.CRITICAL_DAMAGE);
             event.add(EntityType.PLAYER, AttributesRegistry.CRITICAL_CHANCE);
-            event.add(EntityType.PLAYER, AttributesRegistry.MANA, 100.0d);
+            event.add(EntityType.PLAYER, AttributesRegistry.HEALTH_REGEN, 100.d);
 
             event.add(EntityType.ZOMBIE, AttributesRegistry.HEALTH, 70.0d);
             event.add(EntityType.ZOMBIE, AttributesRegistry.DAMAGE, 20.0d);
@@ -45,6 +46,18 @@ public class EntityAttributeModificationHandler {
 
             event.add(EntityType.CREEPER, AttributesRegistry.HEALTH, 80.0d);
             event.add(EntityType.CREEPER, AttributesRegistry.DAMAGE, 20.0d);
+
+            event.add(EntityType.SHEEP, AttributesRegistry.HEALTH, 50.0d);
+
+            event.add(EntityType.COW, AttributesRegistry.HEALTH, 50.0d);
+
+            event.add(EntityType.CHICKEN, AttributesRegistry.HEALTH, 20.0d);
+
+            event.add(EntityType.RABBIT, AttributesRegistry.HEALTH, 130.0d);
+
+            event.add(EntityType.PIG, AttributesRegistry.HEALTH, 50.0d);
+
+            event.add(EntityType.MOOSHROOM, AttributesRegistry.HEALTH, 50.0d);
         }
     }
 }

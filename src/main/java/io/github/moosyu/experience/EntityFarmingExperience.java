@@ -9,7 +9,8 @@ public class EntityFarmingExperience {
             Map.entry(EntityType.COW, 3.0f),
             Map.entry(EntityType.CHICKEN, 4.0f),
             Map.entry(EntityType.RABBIT, 4.0f),
-            Map.entry(EntityType.PIG, 4.0f)
+            Map.entry(EntityType.PIG, 4.0f),
+            Map.entry(EntityType.MOOSHROOM, 5.0f)
     );
 
     public static float getExp(EntityType<?> entityType) {

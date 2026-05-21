@@ -22,13 +22,11 @@ public class BlockBreakHandler {
         @SubscribeEvent
         public static void onBlockBreak(BlockEvent.BreakEvent event) {
             Player player = event.getPlayer();
+            if (player.level().isClientSide()) return;
+
             BlockState blockState = event.getState();
             Block block = blockState.getBlock();
             PlayerSkillsAttachment skills = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
-
-            if (player.level().isClientSide()) {
-                return;
-            }
 
             float miningExp = BlocksMiningExperience.getExp(block);
             if (miningExp > 0.0f) {

@@ -19,10 +19,8 @@ public class AttackEntityHandler {
         public static void onAttackEntity(AttackEntityEvent event) {
             Player player = event.getEntity();
             boolean sprinting = player.isSprinting();
-            if (!(event.getTarget() instanceof LivingEntity target)) return;
-
+            if (!(event.getTarget() instanceof LivingEntity target) || player.level().isClientSide()) return;
             event.setCanceled(true);
-
             double damage = player.getAttributeValue(AttributesRegistry.DAMAGE);
             AttributeInstance health = target.getAttribute(AttributesRegistry.HEALTH);
             if (target.invulnerableTime <= 0 && health != null) {

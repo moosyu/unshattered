@@ -11,7 +11,7 @@ public class LivingExperienceDropHandler {
     public static class EventHandler {
         @SubscribeEvent
         public static void onLivingExperienceDrop(LivingExperienceDropEvent event) {
-            event.setCanceled(true);
+            if (!event.getEntity().level().isClientSide()) event.setCanceled(true);
         }
     }
 }
