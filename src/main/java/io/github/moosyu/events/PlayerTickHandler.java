@@ -28,11 +28,15 @@ public class PlayerTickHandler {
             player.getFoodData().setSaturation(5.0f);
             player.getFoodData().setExhaustion(0.0f);
 
+            double maxHealth = player.getAttribute(AttributesRegistry.HEALTH).getValue();
             // heal every 2 seconds
             if (player.tickCount % 40 == 0) {
-                double maxHealth = player.getAttribute(AttributesRegistry.HEALTH).getValue();
                 double healthGained = (1.5 + maxHealth/100) * (player.getAttribute(AttributesRegistry.HEALTH_REGEN).getValue()/100);
                 stats.addCurrentStat(PlayerStatsAttachment.Stat.HEALTH, healthGained, maxHealth);
+                player.syncData(PLAYER_STATS);
+            } else {
+                // update health if attribute changed. itll already be updated on the healing tick though
+                if (maxHealth < stats.getCurrentStat(PlayerStatsAttachment.Stat.HEALTH)) stats.setCurrentStat(PlayerStatsAttachment.Stat.HEALTH, maxHealth);
                 player.syncData(PLAYER_STATS);
             }
 
