@@ -1,6 +1,6 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.attachments.PlayerStatsAttachment;
+import io.github.moosyu.attachments.PlayerStateAttachment;
 import io.github.moosyu.registers.AttributesRegistry;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
@@ -9,7 +9,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import static io.github.moosyu.NNO.MODID;
-import static io.github.moosyu.registers.AttachmentRegistry.PLAYER_STATS;
+import static io.github.moosyu.registers.AttachmentRegistry.PLAYER_STATE;
 
 public class PlayerTickHandler {
     static boolean fishApproaching = false;
@@ -21,7 +21,7 @@ public class PlayerTickHandler {
         public static void onPlayerTick(PlayerTickEvent.Post event) {
             Player player = event.getEntity();
             if (player.level().isClientSide()) return;
-            PlayerStatsAttachment stats = player.getData(PLAYER_STATS.get());
+            PlayerStateAttachment stats = player.getData(PLAYER_STATE.get());
 
             // disable hunger effects
             player.getFoodData().setFoodLevel(20);
@@ -32,12 +32,12 @@ public class PlayerTickHandler {
             // heal every 2 seconds
             if (player.tickCount % 40 == 0) {
                 double healthGained = (1.5 + maxHealth/100) * (player.getAttribute(AttributesRegistry.HEALTH_REGEN).getValue()/100);
-                stats.addCurrentStat(PlayerStatsAttachment.Stat.HEALTH, healthGained, maxHealth);
-                player.syncData(PLAYER_STATS);
+                stats.addCurrentStat(PlayerStateAttachment.Stat.HEALTH, healthGained, maxHealth);
+                player.syncData(PLAYER_STATE);
             } else {
                 // update health if attribute changed. itll already be updated on the healing tick though
-                if (maxHealth < stats.getCurrentStat(PlayerStatsAttachment.Stat.HEALTH)) stats.setCurrentStat(PlayerStatsAttachment.Stat.HEALTH, maxHealth);
-                player.syncData(PLAYER_STATS);
+                if (maxHealth < stats.getCurrentStat(PlayerStateAttachment.Stat.HEALTH)) stats.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, maxHealth);
+                player.syncData(PLAYER_STATE);
             }
 
             // fishing popup

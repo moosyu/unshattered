@@ -1,10 +1,8 @@
 package io.github.moosyu.attachments;
 
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
-
-public class PlayerStatsAttachment {
+public class PlayerStateAttachment {
     private final double[] stats = new double[Stat.values().length];
+    private boolean cancelKnockback = false;
     private int lastUpdatedStat = -1;
 
     public enum Stat {
@@ -12,7 +10,7 @@ public class PlayerStatsAttachment {
         MANA
     }
 
-    public PlayerStatsAttachment() {
+    public PlayerStateAttachment() {
         stats[Stat.HEALTH.ordinal()] = 0.0f;
         stats[Stat.MANA.ordinal()] = 0.0f;
     }
@@ -38,8 +36,7 @@ public class PlayerStatsAttachment {
     public void removeCurrentStat(Stat currentStat, double amount) {stats[currentStat.ordinal()] -= amount;}
 
     public void addCurrentStat(Stat currentStat, double amount, double maxAmount) {
-        // the Math.min should return the smaller of the two (so the value doesnt overflow max health
-        // very smart but very dangerous
+        // the Math.min should return the smaller of the two (so the value doesnt overflow max). very smart but very dangerous.
         stats[currentStat.ordinal()] = (float) Math.min(stats[currentStat.ordinal()] + amount, maxAmount);
     }
 
@@ -53,5 +50,13 @@ public class PlayerStatsAttachment {
 
     public void setCurrentStatByIndex(int index, double value) {
         stats[index] = value;
+    }
+
+    public boolean shouldCancelKnockback() {
+        return cancelKnockback;
+    }
+
+    public void setCancelledKnockback(boolean cancelKnockback) {
+        this.cancelKnockback = cancelKnockback;
     }
 }

@@ -1,6 +1,6 @@
 package io.github.moosyu.helpers;
 
-import io.github.moosyu.attachments.PlayerStatsAttachment;
+import io.github.moosyu.attachments.PlayerStateAttachment;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.attachment.AttachmentSyncHandler;
@@ -8,9 +8,9 @@ import net.neoforged.neoforge.attachment.IAttachmentHolder;
 import org.jetbrains.annotations.Nullable;
 
 // warning (for me): DO NOT FUCK UP THE ORDERING OF THE DATA IT WILL NOT FIGURE IT OUT ITSELF!!!
-public class StatsSyncHandler implements AttachmentSyncHandler<PlayerStatsAttachment> {
+public class StatsSyncHandler implements AttachmentSyncHandler<PlayerStateAttachment> {
     @Override
-    public void write(RegistryFriendlyByteBuf buf, PlayerStatsAttachment attachment, boolean initialSync) {
+    public void write(RegistryFriendlyByteBuf buf, PlayerStateAttachment attachment, boolean initialSync) {
         int statIndex = attachment.getLastUpdatedStat();
 
         boolean fullSync = initialSync || statIndex < 0;
@@ -31,11 +31,11 @@ public class StatsSyncHandler implements AttachmentSyncHandler<PlayerStatsAttach
     }
 
     @Override
-    public @Nullable PlayerStatsAttachment read(IAttachmentHolder holder, RegistryFriendlyByteBuf buf, @Nullable PlayerStatsAttachment previousValue) {
+    public @Nullable PlayerStateAttachment read(IAttachmentHolder holder, RegistryFriendlyByteBuf buf, @Nullable PlayerStateAttachment previousValue) {
         boolean fullSync = buf.readBoolean();
 
         if (fullSync) {
-            PlayerStatsAttachment attachment = previousValue != null ? previousValue : new PlayerStatsAttachment();
+            PlayerStateAttachment attachment = previousValue != null ? previousValue : new PlayerStateAttachment();
 
             int length = buf.readInt();
             double[] stats = new double[length];
@@ -51,7 +51,7 @@ public class StatsSyncHandler implements AttachmentSyncHandler<PlayerStatsAttach
             double value = buf.readDouble();
 
             if (previousValue == null) {
-                previousValue = new PlayerStatsAttachment(); // safety
+                previousValue = new PlayerStateAttachment(); // safety
             }
 
             previousValue.setCurrentStatByIndex(statIndex, value);
