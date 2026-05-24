@@ -15,7 +15,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
 import static io.github.moosyu.NNO.MODID;
-import static io.github.moosyu.registers.AttachmentRegistry.PLAYER_STATE;
+import static io.github.moosyu.registers.AttachmentRegistry.PLAYER_SKILLS;
 
 // ran just before a player is to break a block
 public class BlockBreakHandler {
@@ -33,6 +33,7 @@ public class BlockBreakHandler {
             float miningExp = BlocksMiningExperience.getExp(block);
             if (miningExp > 0.0f) {
                 skills.addExp(PlayerSkillsAttachment.Skill.MINING, miningExp);
+                player.syncData(PLAYER_SKILLS);
                 ModSounds.playerExperienceSound(player);
                 return;
             }
@@ -42,6 +43,7 @@ public class BlockBreakHandler {
             float farmingExp = BlocksFarmingExperience.getExp(block);
             if (farmingExp > 0.0f) {
                 skills.addExp(PlayerSkillsAttachment.Skill.FARMING, BlocksFarmingExperience.getExp(block));
+                player.syncData(PLAYER_SKILLS);
                 ModSounds.playerExperienceSound(player);
                 return;
             }
@@ -55,6 +57,7 @@ public class BlockBreakHandler {
 
             if (blockState.is(BlockTags.FLOWERS)) {
                 skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, 1.0f);
+                player.syncData(PLAYER_SKILLS);
                 ModSounds.playerExperienceSound(player);
                 return;
             }

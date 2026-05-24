@@ -19,6 +19,8 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.*;
 
+import static io.github.moosyu.registers.AttachmentRegistry.PLAYER_SKILLS;
+
 // shouldnt need to check if serverside as this will being run from BlockBreakHandler which already had that checek
 @EventBusSubscriber(modid = NNO.MODID)
 public class TreeSweepHandler {
@@ -64,7 +66,8 @@ public class TreeSweepHandler {
 
         private void finish() {
             // unless something has gone horribly wrong the "player" value in tasks should be the same in every index
-            PlayerSkillsAttachment skills = tasks.getFirst().player().getData(AttachmentRegistry.PLAYER_SKILLS.get());
+            Player player = tasks.getFirst().player();
+            PlayerSkillsAttachment skills = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
 
             for (BreakTask current : tasks) {
                 int logs = calculateLogs(current.player());
@@ -72,7 +75,8 @@ public class TreeSweepHandler {
             }
 
             skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, tasks.size() * 6.0f);
-            ModSounds.playerExperienceSound(tasks.getLast().player());
+            player.syncData(PLAYER_SKILLS);
+            ModSounds.playerExperienceSound(player);
         }
     }
 
@@ -102,6 +106,7 @@ public class TreeSweepHandler {
         int sweep = (int) player.getAttributeValue(AttributesRegistry.SWEEP);
         if (sweep <= 0) {
             skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, 6.0f);
+            player.syncData(PLAYER_SKILLS);
             ModSounds.playerExperienceSound(player);
             return;
         }

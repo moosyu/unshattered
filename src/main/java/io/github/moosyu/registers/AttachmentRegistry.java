@@ -20,6 +20,7 @@ public class AttachmentRegistry {
                     .build()
     );
 
+    // no serializer as the state should reset on rejoin
     public static final Supplier<AttachmentType<PlayerStateAttachment>> PLAYER_STATE = ATTACHMENTS.register("player_state", () ->
             AttachmentType.builder(PlayerStateAttachment::new)
                     .sync(new StateSyncHandler())

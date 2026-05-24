@@ -11,6 +11,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
 
 import static io.github.moosyu.NNO.MODID;
+import static io.github.moosyu.registers.AttachmentRegistry.PLAYER_SKILLS;
 
 public class ItemFishedHandler {
     @EventBusSubscriber(modid = MODID)
@@ -24,6 +25,7 @@ public class ItemFishedHandler {
 
             for (ItemStack fishingItem : event.getDrops()) {
                 skills.addExp(PlayerSkillsAttachment.Skill.FISHING, ItemsFishingExperience.getExp(fishingItem.getItem()));
+                player.syncData(PLAYER_SKILLS);
                 ModSounds.playerExperienceSound(player);
             }
         }

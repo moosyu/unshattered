@@ -1,6 +1,6 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.screens.SkillsScreen;
+import io.github.moosyu.screens.ProfileScreen;
 import net.minecraft.client.Minecraft;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -16,7 +16,7 @@ public class InputHandler {
             // make unable to be triggered while in screens (like chatting)
             if (Minecraft.getInstance().screen != null) return;
             // 75 is k, this is just temporary as the intended
-            if (event.getKey() == 75) Minecraft.getInstance().setScreen(new SkillsScreen());
+            if (event.getKey() == 75) Minecraft.getInstance().setScreen(new ProfileScreen());
         }
     }
 }

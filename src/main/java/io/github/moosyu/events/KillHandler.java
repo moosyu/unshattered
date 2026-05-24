@@ -14,6 +14,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 
 import static io.github.moosyu.NNO.MODID;
+import static io.github.moosyu.registers.AttachmentRegistry.PLAYER_SKILLS;
 
 public class KillHandler {
     @EventBusSubscriber(modid = MODID)
@@ -30,6 +31,7 @@ public class KillHandler {
                 float combatExp = EntityCombatExperience.getExp(event.getEntity().getType());
                 if (combatExp > 0.0f) {
                     skills.addExp(PlayerSkillsAttachment.Skill.COMBAT, combatExp);
+                    player.syncData(PLAYER_SKILLS);
                     ModSounds.playerExperienceSound(player);
                     return;
                 }
@@ -37,6 +39,7 @@ public class KillHandler {
                 float farmingExp = EntityFarmingExperience.getExp(event.getEntity().getType());
                 if (farmingExp > 0.0f) {
                     skills.addExp(PlayerSkillsAttachment.Skill.FARMING, farmingExp);
+                    player.syncData(PLAYER_SKILLS);
                     ModSounds.playerExperienceSound(player);
                     return;
                 }
