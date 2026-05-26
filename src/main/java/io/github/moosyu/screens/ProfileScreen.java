@@ -2,7 +2,8 @@ package io.github.moosyu.screens;
 
 import com.mojang.math.Axis;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.attachments.PlayerStateAttachment;
+import io.github.moosyu.attributes.AttributeTypes;
+import io.github.moosyu.attributes.ModAttributes;
 import io.github.moosyu.helpers.RomanNumeralHelper;
 import io.github.moosyu.registers.AttachmentRegistry;
 import net.minecraft.client.Minecraft;
@@ -10,29 +11,34 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 import static io.github.moosyu.registers.TextureRegister.*;
 
 public class ProfileScreen extends Screen {
     private enum Tabs {
-        SKILLS,
-        STATS,
-        QUESTS,
-        CRAFTING,
-        COLLECTIONS,
-        PETS,
-        STORAGE,
-        WARDROBE,
-        BANK,
-        WARP,
-        BAGS,
-        SACKS,
+        SKILLS(SKILLS_ICON),
+        STATS(PROFILE_ICON),
+        QUESTS(QUESTS_ICON),
+        CRAFTING(CRAFTING_ICON),
+        COLLECTIONS(COLLECTION_ICON),
+        PETS(PETS_ICON),
+        STORAGE(STORAGE_ICON),
+        WARDROBE(WARDROBE_ICON),
+        BANK(BANK_ICON),
+        WARP(BuiltInRegistries.ITEM.getKey(Items.STONE)),
+        BAGS(BAGS_ICON);
+
+        private final ResourceLocation iconTexture;
+
+        Tabs(ResourceLocation iconTexture) {
+            this.iconTexture = iconTexture;
+        }
     }
 
     private static final int SCREEN_WIDTH = 352;
@@ -55,20 +61,16 @@ public class ProfileScreen extends Screen {
         final int CORNER_POS_Y = (this.height - SCREEN_HEIGHT) / 2;
 
         for (int i = 0; i < Tabs.values().length; i++) {
-            final Tabs currentTabPostion = Tabs.values()[i];
-            if (i <= 6) {
-                this.addRenderableWidget(new TabButton(CORNER_POS_X + 16 + (i * 48), CORNER_POS_Y - 24, 32, 24, TAB_CLOSED, () -> {
-                    currentTab = currentTabPostion;
-                    this.init();
-                }, false));
-            } else {
-                this.addRenderableWidget(new TabButton(CORNER_POS_X + 16 + ((i - 7) * 48), CORNER_POS_Y + SCREEN_HEIGHT, 32, 24, TAB_CLOSED, () -> {
-                    currentTab = currentTabPostion;
-                    this.init();
-                }, true));
-            }
+            final Tabs CURRENT_TAB_POSITION = Tabs.values()[i];
+            final boolean top = i <= 6;
+            this.addRenderableWidget(new TabButton(top ? CORNER_POS_X + 16 + (i * 48) : CORNER_POS_X + 16 + ((i - 7) * 48), top ? CORNER_POS_Y - 32 : CORNER_POS_Y + SCREEN_HEIGHT, 32, 32, (CURRENT_TAB_POSITION == currentTab ? TAB_OPENED : TAB_CLOSED), () -> {
+                currentTab = CURRENT_TAB_POSITION;
+                this.init();
+            }, !top, CURRENT_TAB_POSITION.iconTexture, currentTab == CURRENT_TAB_POSITION));
         }
 
+        // for anything that requires it
+        int uniqueIndex = 0;
         if (currentTab == Tabs.SKILLS) {
             for (int i = 0; i < PlayerSkillsAttachment.Skill.values().length; i++) {
                 boolean even = i % 2 == 0;
@@ -77,6 +79,12 @@ public class ProfileScreen extends Screen {
                 PlayerSkillsAttachment.Skill currentSkill = PlayerSkillsAttachment.Skill.values()[i];
 
                 this.addRenderableWidget(new SkillWidget(currentSkill, posX + 16, posY + 16, player, new ItemStack(currentSkill.getIcon())));
+            }
+        } else if (currentTab == Tabs.STATS) {
+            for (ModAttributes currentStat : ModAttributes.values()) {
+                if (currentStat.type == AttributeTypes.INVISIBLE) continue;
+                this.addRenderableWidget(new StatWidget( currentStat, CORNER_POS_X, CORNER_POS_Y + (uniqueIndex * 14), player ) );
+                uniqueIndex++;
             }
         }
     }
@@ -116,7 +124,7 @@ public class ProfileScreen extends Screen {
             PlayerSkillsAttachment playerData = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
 
             // debug area for clicks
-            graphics.fill(this.getX(), this.getY(), this.getX() + this.width, this.getY() + this.height, 0x44FF0000);
+            // graphics.fill(this.getX(), this.getY(), this.getX() + this.width, this.getY() + this.height, 0x44FF0000);
 
             String levelText = skill.getName() + " " + RomanNumeralHelper.toRoman(playerData.getLevel(playerData.getExp(skill)));
             graphics.drawString(Minecraft.getInstance().font, levelText, this.getX() + 36, this.getY() + 4, 0xFF53F953, true);
@@ -145,27 +153,22 @@ public class ProfileScreen extends Screen {
     // this is a widget as i intend for some hover interaction at some point
     private static class StatWidget extends AbstractWidget {
         private final Player player;
-        private final Holder<Attribute> attribute;
-        private final String attributeName, attributeSymbol;
-        private final int attributeColor;
+        private final ModAttributes currentAttribute;
 
-        public StatWidget(String attributeName, String attributeSymbol, Holder<Attribute> attribute, int x, int y, Player player, int attributeColor) {
-            super(x, y, 32, 16, Component.literal(attributeName));
+        public StatWidget(ModAttributes currentAttribute, int x, int y, Player player) {
+            super(x, y, 32, 16, Component.literal(String.valueOf(Component.translatable(currentAttribute.getTranslationKey()))));
             this.player = player;
-            this.attribute = attribute;
-            this.attributeName = attributeName;
-            this.attributeSymbol = attributeSymbol;
-            this.attributeColor = attributeColor;
+            this.currentAttribute = currentAttribute;
         }
 
         @Override
         protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-            final double attributeValue = player.getAttributeValue(attribute);
+            final double attributeValue = player.getAttributeValue(currentAttribute.holder);
             int textX = this.getX() + 20;
             int textY = this.getY() + 4;
 
-            graphics.drawString(Minecraft.getInstance().font, attributeSymbol + " " + attributeName + ":", textX, textY, attributeColor, false);
-            graphics.drawString(Minecraft.getInstance().font, String.format("%.0f", attributeValue), textX + Minecraft.getInstance().font.width(attributeSymbol + " " + attributeName + ": ") + 2, textY, 0xFFDEDFE0, false);
+            graphics.drawString(Minecraft.getInstance().font, currentAttribute.symbol + " " + Component.translatable(currentAttribute.getTranslationKey()).getString() + ":", textX, textY, currentAttribute.color, false);
+            graphics.drawString(Minecraft.getInstance().font, String.format("%.0f", attributeValue), textX + Minecraft.getInstance().font.width(currentAttribute.symbol + " " + currentAttribute.name() + ":") + 2, textY, 0xFFDEDFE0, false);
         }
 
         @Override
@@ -173,15 +176,17 @@ public class ProfileScreen extends Screen {
     }
 
     private static class TabButton extends AbstractWidget {
-        private final ResourceLocation texture;
+        private final ResourceLocation texture, iconTexture;
         private final Runnable onPress;
-        private final boolean flipped;
+        private final boolean flipped, active;
 
-        public TabButton(int x, int y, int width, int height, ResourceLocation texture, Runnable onPress, boolean flipped) {
+        public TabButton(int x, int y, int width, int height, ResourceLocation texture, Runnable onPress, boolean flipped, ResourceLocation iconTexture, boolean active) {
             super(x, y, width, height, Component.empty());
             this.texture = texture;
             this.onPress = onPress;
             this.flipped = flipped;
+            this.iconTexture = iconTexture;
+            this.active = active;
         }
 
         @Override
@@ -193,9 +198,21 @@ public class ProfileScreen extends Screen {
                 graphics.pose().translate(-(this.getX() + width / 2f), -(this.getY() + height / 2f), 0);
                 graphics.blit(texture, this.getX(), this.getY(), 0, 0, width, height, width, height);
                 graphics.pose().popPose();
+
+                // icons
+                graphics.pose().pushPose();
+                graphics.pose().scale(2f, 2f, 2f);
+                graphics.blit( iconTexture, this.getX() / 2, active ? (this.getY() / 2) - 1 : (this.getY() / 2), 0, active ? 0 : 5, 16, active ? 16 : 11, 16, 16);                graphics.pose().popPose();
             } else {
                 graphics.blit(texture, this.getX(), this.getY(), 0, 0, width, height, width, height);
+
+                // icons
+                graphics.pose().pushPose();
+                graphics.pose().scale(2f, 2f, 2f);
+                graphics.blit(iconTexture, this.getX() / 2, active ? (this.getY() / 2) + 1 : (this.getY() / 2) + 5, 0, 0, 16, active ? 16 : 11, 16, 16);
+                graphics.pose().popPose();
             }
+
         }
 
         @Override
