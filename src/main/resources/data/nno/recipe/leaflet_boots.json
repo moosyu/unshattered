@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "L L",
+    "L L"
+  ],
+  "key": {
+    "L": {
+      "item": "minecraft:oak_log"
+    }
+  },
+  "result": {
+    "id": "nno:leaflet_boots",
+    "count": 1
+  }
+}

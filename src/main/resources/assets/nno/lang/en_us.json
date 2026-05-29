@@ -22,6 +22,14 @@
   "attribute.name.nno.mana": "Mana",
   "attribute.name.nno.health_regen": "Health Regen",
 
+  "rarity.nno.common": "Common",
+  "rarity.nno.uncommon": "Uncommon",
+  "rarity.nno.rare": "Rare",
+  "rarity.nno.epic": "Epic",
+  "rarity.nno.legendary": "Legendary",
+  "rarity.nno.mythic": "Mythic",
+  "rarity.nno.divine": "Divine",
+
   "nno.configuration.title": "NNO Configs",
   "nno.configuration.section.nno.common.toml": "NNO Configs",
   "nno.configuration.section.nno.common.toml.title": "NNO Configs",

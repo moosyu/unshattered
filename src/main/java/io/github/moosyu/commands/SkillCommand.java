@@ -5,6 +5,7 @@ import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.registers.AttachmentRegistry;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
 public class SkillCommand {
@@ -16,7 +17,7 @@ public class SkillCommand {
             }
             PlayerSkillsAttachment skills = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
             context.getSource().sendSuccess(() ->
-                            net.minecraft.network.chat.Component.literal("Foraging exp: " + skills.getExp(PlayerSkillsAttachment.Skill.FORAGING) + "\n" +
+                            Component.literal("Foraging exp: " + skills.getExp(PlayerSkillsAttachment.Skill.FORAGING) + "\n" +
                                     "Combat exp: " + skills.getExp(PlayerSkillsAttachment.Skill.COMBAT) + "\n" +
                                     "Farming exp: " + skills.getExp(PlayerSkillsAttachment.Skill.FARMING) + "\n" +
                                     "Fishing exp: " + skills.getExp(PlayerSkillsAttachment.Skill.FISHING) + "\n" +

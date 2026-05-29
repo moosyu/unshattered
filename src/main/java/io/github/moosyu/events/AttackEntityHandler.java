@@ -1,15 +1,21 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.attributes.ModAttributes;
-import io.github.moosyu.registers.AttributesRegistry;
+import io.github.moosyu.particles.DamageNumberParticle;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import static io.github.moosyu.NNO.MODID;
 
@@ -37,10 +43,28 @@ public class AttackEntityHandler {
                     // this should one shot just about any vanilla mob to my knowledge
                     target.hurt(target.damageSources().playerAttack(player), 500.0f);
                 }
+                PacketDistributor.sendToPlayer((ServerPlayer) player, new DamageNumberData(damage, target.getX(), target.getY(), target.getZ()));
             }
-
             player.resetAttackStrengthTicker();
             if (sprinting) player.setSprinting(true);
         }
+    }
+
+    public record DamageNumberData(double damage, double targetPosX, double targetPosY, double targetPosZ) implements CustomPacketPayload {
+        public static final CustomPacketPayload.Type<DamageNumberData> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath("nno", "damage_number_data"));
+        public static final StreamCodec<ByteBuf, DamageNumberData> STREAM_CODEC = StreamCodec.composite(
+                ByteBufCodecs.DOUBLE,
+                DamageNumberData::damage,
+                ByteBufCodecs.DOUBLE,
+                DamageNumberData::targetPosX,
+                ByteBufCodecs.DOUBLE,
+                DamageNumberData::targetPosY,
+                ByteBufCodecs.DOUBLE,
+                DamageNumberData::targetPosZ,
+                DamageNumberData::new
+        );
+
+        @Override
+        public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {return TYPE;}
     }
 }

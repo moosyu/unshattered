@@ -25,6 +25,7 @@ import static io.github.moosyu.registers.AttachmentRegistry.ATTACHMENTS;
 import static io.github.moosyu.registers.AttributesRegistry.ATTRIBUTES;
 import static io.github.moosyu.registers.BlocksRegistry.BLOCKS;
 import static io.github.moosyu.registers.CreativeTabsRegistry.CREATIVE_MODE_TABS;
+import static io.github.moosyu.registers.DataComponentRegistry.DATA_COMPONENTS;
 import static io.github.moosyu.registers.ItemsRegistry.*;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -51,6 +52,7 @@ public class NNO {
         AttributesRegistry.registerAll();
         ATTRIBUTES.register(modEventBus);
         ARMOR_MATERIALS.register(modEventBus);
+        DATA_COMPONENTS.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (NNO) to respond directly to events.
