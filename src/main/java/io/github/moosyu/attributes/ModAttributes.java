@@ -43,7 +43,7 @@ public enum ModAttributes {
     }
 
     public String getTranslationKey() {
-        return "attribute.name.nno." + id;
+        return "attribute.name.unshattered." + id;
     }
 
     // for accessing attributes using holder values

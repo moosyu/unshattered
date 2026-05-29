@@ -5,7 +5,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
-import static io.github.moosyu.NNO.MODID;
+import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.networking.payloads.ClientPayloadHandler.handleDamageNumberEmission;
 
 // great name by the way

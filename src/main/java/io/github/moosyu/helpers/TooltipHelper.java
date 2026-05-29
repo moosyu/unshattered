@@ -40,7 +40,7 @@ public class TooltipHelper {
         }
 
         tooltipComponents.add(Component.empty());
-        if (itemType.reforgeable()) {tooltipComponents.add(Component.translatable("tooltip.nno.reforgable").withColor(0xFF555555));}
-        tooltipComponents.add(Component.literal(Component.translatable("rarity.nno." + itemRarity.name().toLowerCase()).getString().toUpperCase()+ " " +Component.translatable(itemType.getKey()).getString().toUpperCase()).withColor(itemRarity.getColor()).withStyle(ChatFormatting.BOLD));
+        if (itemType.reforgeable()) {tooltipComponents.add(Component.translatable("tooltip.unshattered.reforgable").withColor(0xFF555555));}
+        tooltipComponents.add(Component.literal(Component.translatable("rarity.unshattered." + itemRarity.name().toLowerCase()).getString().toUpperCase()+ " " +Component.translatable(itemType.getKey()).getString().toUpperCase()).withColor(itemRarity.getColor()).withStyle(ChatFormatting.BOLD));
     }
 }

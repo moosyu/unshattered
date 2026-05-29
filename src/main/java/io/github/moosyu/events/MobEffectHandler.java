@@ -4,7 +4,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 
-import static io.github.moosyu.NNO.MODID;
+import static io.github.moosyu.Unshattered.MODID;
 
 // disables potion effects for players and mobs
 public class MobEffectHandler {

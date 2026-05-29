@@ -4,10 +4,9 @@ import io.github.moosyu.attributes.ModAttributes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
-import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import static io.github.moosyu.NNO.MODID;
+import static io.github.moosyu.Unshattered.MODID;
 
 public class AttributesRegistry {
     public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(Registries.ATTRIBUTE, MODID);

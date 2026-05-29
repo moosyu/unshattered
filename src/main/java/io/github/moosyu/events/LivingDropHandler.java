@@ -9,7 +9,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 
 import java.util.List;
 
-import static io.github.moosyu.NNO.MODID;
+import static io.github.moosyu.Unshattered.MODID;
 
 public class LivingDropHandler {
     @EventBusSubscriber(modid = MODID)

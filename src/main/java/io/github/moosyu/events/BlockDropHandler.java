@@ -9,7 +9,7 @@ import net.neoforged.neoforge.event.level.BlockDropsEvent;
 
 import java.util.List;
 
-import static io.github.moosyu.NNO.MODID;
+import static io.github.moosyu.Unshattered.MODID;
 
 public class BlockDropHandler {
     @EventBusSubscriber(modid = MODID)

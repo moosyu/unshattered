@@ -1,8 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
+    "L L",
     "LLL",
-    "L L"
+    "LLL"
   ],
   "key": {
     "L": {
@@ -10,7 +11,7 @@
     }
   },
   "result": {
-    "id": "nno:leaflet_helmet",
+    "id": "unshattered:leaflet_chestplate",
     "count": 1
   }
 }

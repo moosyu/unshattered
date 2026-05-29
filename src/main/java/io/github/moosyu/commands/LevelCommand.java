@@ -37,11 +37,11 @@ public class LevelCommand {
                     };
 
                     if (level == -1) {
-                        context.getSource().sendFailure(Component.translatable("commands.nno.skills.levels.get.failure"));
+                        context.getSource().sendFailure(Component.translatable("commands.unshattered.skills.levels.get.failure"));
                         return 0;
                     }
 
-                    context.getSource().sendSuccess(() -> Component.literal(skillName.substring(0, 1).toUpperCase() + skillName.substring(1) + " " + Component.translatable("commands.nno.skills.skill") + ":"  + level), false);
+                    context.getSource().sendSuccess(() -> Component.literal(skillName.substring(0, 1).toUpperCase() + skillName.substring(1) + " " + Component.translatable("commands.unshattered.skills.skill") + ":"  + level), false);
                     return 1;
                 })));
     }

@@ -8,10 +8,10 @@ import net.minecraft.world.item.TooltipFlag;
 
 import java.util.List;
 
-public class NNOItem extends Item {
+public class UnshatteredItem extends Item {
     protected String itemType;
 
-    public NNOItem(Properties properties, String itemType) {
+    public UnshatteredItem(Properties properties, String itemType) {
         super(properties);
         this.itemType = itemType;
     }

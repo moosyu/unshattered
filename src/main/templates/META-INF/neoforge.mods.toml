@@ -48,7 +48,7 @@ authors="Moosyu"
 
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-Converts vanilla Minecraft to an MMO (based on Hypixel Skyblock).
+The modding equivilent of a fanfiction
 '''
 
 # The [[mixins]] block allows you to declare your mixin config to FML so that it gets loaded.

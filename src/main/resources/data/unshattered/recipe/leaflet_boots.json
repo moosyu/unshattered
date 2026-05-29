@@ -2,8 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "L L",
-    "LLL",
-    "LLL"
+    "L L"
   ],
   "key": {
     "L": {
@@ -11,7 +10,7 @@
     }
   },
   "result": {
-    "id": "nno:leaflet_chestplate",
+    "id": "unshattered:leaflet_boots",
     "count": 1
   }
 }

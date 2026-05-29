@@ -17,7 +17,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-import static io.github.moosyu.NNO.MODID;
+import static io.github.moosyu.Unshattered.MODID;
 
 public class AttackEntityHandler {
     @EventBusSubscriber(modid = MODID)
@@ -51,7 +51,7 @@ public class AttackEntityHandler {
     }
 
     public record DamageNumberData(double damage, double targetPosX, double targetPosY, double targetPosZ) implements CustomPacketPayload {
-        public static final CustomPacketPayload.Type<DamageNumberData> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath("nno", "damage_number_data"));
+        public static final CustomPacketPayload.Type<DamageNumberData> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath("unshattered", "damage_number_data"));
         public static final StreamCodec<ByteBuf, DamageNumberData> STREAM_CODEC = StreamCodec.composite(
                 ByteBufCodecs.DOUBLE,
                 DamageNumberData::damage,

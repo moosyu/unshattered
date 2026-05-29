@@ -1,6 +1,6 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.NNO;
+import io.github.moosyu.Unshattered;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.ModAttributes;
 import io.github.moosyu.experience.BlocksFarmingExperience;
@@ -20,10 +20,11 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.*;
 
+import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.registers.AttachmentRegistry.PLAYER_SKILLS;
 
 // shouldnt need to check if serverside as this will being run from BlockBreakHandler which already had that checek
-@EventBusSubscriber(modid = NNO.MODID)
+@EventBusSubscriber(modid = MODID)
 public class TreeSweepHandler {
     private static final int BREAK_COOLDOWN_MAX = 2;
     private static final List<TreeBreakInstance> ACTIVE_BREAKS = new ArrayList<>();

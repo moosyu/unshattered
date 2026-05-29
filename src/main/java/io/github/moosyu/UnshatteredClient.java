@@ -11,11 +11,11 @@ import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
 // This class will not load on dedicated servers. Accessing client side code from here is safe.
-@Mod(value = NNO.MODID, dist = Dist.CLIENT)
-// You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-@EventBusSubscriber(modid = NNO.MODID, value = Dist.CLIENT)
-public class NNOClient {
-    public NNOClient(ModContainer container) {
+@Mod(value = Unshattered.MODID, dist = Dist.CLIENT)
+// You can use EventBusSubscriber to automatically register all static methods in the class aunshatteredtated with @SubscribeEvent
+@EventBusSubscriber(modid = Unshattered.MODID, value = Dist.CLIENT)
+public class UnshatteredClient {
+    public UnshatteredClient(ModContainer container) {
         // Allows NeoForge to create a config screen for this mod's configs.
         // The config screen is accessed by going to the Mods screen > clicking on your mod > clicking on config.
         // Do not forget to add translations for your config options to the en_us.json file.
@@ -25,7 +25,7 @@ public class NNOClient {
     @SubscribeEvent
     static void onClientSetup(FMLClientSetupEvent event) {
         // Some client setup code
-        NNO.LOGGER.info("HELLO FROM CLIENT SETUP");
-        NNO.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+        Unshattered.LOGGER.info("HELLO FROM CLIENT SETUP");
+        Unshattered.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
     }
 }

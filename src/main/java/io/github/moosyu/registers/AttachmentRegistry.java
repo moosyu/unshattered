@@ -8,7 +8,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-import static io.github.moosyu.NNO.MODID;
+import static io.github.moosyu.Unshattered.MODID;
 import static net.neoforged.neoforge.registries.NeoForgeRegistries.Keys.ATTACHMENT_TYPES;
 
 public class AttachmentRegistry {

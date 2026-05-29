@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "nno:item/leaflet_boots"
+    "layer0": "unshattered:item/leaflet_leggings"
   }
 }

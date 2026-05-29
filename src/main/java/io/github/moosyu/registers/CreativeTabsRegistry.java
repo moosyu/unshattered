@@ -8,14 +8,14 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import static io.github.moosyu.NNO.MODID;
+import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.registers.ItemsRegistry.*;
 public class CreativeTabsRegistry {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NNO_ITEMS_TAB = CREATIVE_MODE_TABS.register("nno_items_tab",
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_ITEMS_TAB = CREATIVE_MODE_TABS.register("unshattered_items_tab",
         () -> CreativeModeTab.builder()
-        .title(Component.translatable("item_group.nno.items"))
+        .title(Component.translatable("item_group.unshattered.items"))
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
         .icon(() -> BAT_THE_FISH.get().getDefaultInstance())
         .displayItems((parameters, output) -> {
@@ -45,9 +45,9 @@ public class CreativeTabsRegistry {
             output.accept(ZOOP_THE_FISH.get());
         }).build());
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NNO_ARMOR_TAB = CREATIVE_MODE_TABS.register("nno_armor_tab",
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_ARMOR_TAB = CREATIVE_MODE_TABS.register("unshattered_armor_tab",
         () -> CreativeModeTab.builder()
-        .title(Component.translatable("item_group.nno.armor"))
+        .title(Component.translatable("item_group.unshattered.armor"))
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
         .icon(() -> LEAFLET_CHESTPLATE.get().getDefaultInstance())
         .displayItems((parameters, output) -> {
@@ -57,9 +57,9 @@ public class CreativeTabsRegistry {
             output.accept(LEAFLET_BOOTS.get());
         }).build());
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NNO_TOOLS_TAB = CREATIVE_MODE_TABS.register("nno_tools_tab",
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_TOOLS_TAB = CREATIVE_MODE_TABS.register("unshattered_tools_tab",
         () -> CreativeModeTab.builder()
-        .title(Component.translatable("item_group.nno.tools"))
+        .title(Component.translatable("item_group.unshattered.tools"))
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
         .icon(() -> TREECAPITATOR.get().getDefaultInstance())
         .displayItems((parameters, output) -> {
@@ -71,9 +71,9 @@ public class CreativeTabsRegistry {
             output.accept(FIGSTONE_SPLITTER.get());
         }).build());
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NNO_WEAPONS_TAB = CREATIVE_MODE_TABS.register("nno_weapons_tab",
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_WEAPONS_TAB = CREATIVE_MODE_TABS.register("unshattered_weapons_tab",
         () -> CreativeModeTab.builder()
-        .title(Component.translatable("item_group.nno.weapons"))
+        .title(Component.translatable("item_group.unshattered.weapons"))
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
         .icon(() -> MERCENARY_AXE.get().getDefaultInstance())
         .displayItems((parameters, output) -> {

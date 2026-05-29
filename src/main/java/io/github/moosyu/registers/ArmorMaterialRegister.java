@@ -17,7 +17,7 @@ import org.checkerframework.checker.signature.qual.Identifier;
 import java.util.EnumMap;
 import java.util.List;
 
-import static io.github.moosyu.NNO.MODID;
+import static io.github.moosyu.Unshattered.MODID;
 
 public class ArmorMaterialRegister {
     public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIALS = DeferredRegister.create(Registries.ARMOR_MATERIAL, MODID);

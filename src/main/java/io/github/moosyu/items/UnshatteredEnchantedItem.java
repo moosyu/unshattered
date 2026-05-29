@@ -3,8 +3,8 @@ package io.github.moosyu.items;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-public class NNOEnchantedItem extends Item {
-    public NNOEnchantedItem(Properties properties) {
+public class UnshatteredEnchantedItem extends Item {
+    public UnshatteredEnchantedItem(Properties properties) {
         super(properties);
     }
 
