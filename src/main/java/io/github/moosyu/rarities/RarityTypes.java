@@ -9,7 +9,8 @@ public enum RarityTypes {
     EPIC(0xFFAA00AA),
     LEGENDARY(0xFFFFAA00),
     MYTHIC(0xFFFF55FF),
-    DIVINE(0xFF55FFFF);
+    DIVINE(0xFF55FFFF),
+    SPECIAL(0xFFFF5555);
 
     private final int color;
 

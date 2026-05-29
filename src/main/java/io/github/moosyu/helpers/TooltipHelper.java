@@ -19,22 +19,28 @@ public class TooltipHelper {
     public static void displayHoverText(ItemStack stack, List<Component> tooltipComponents) {
         RarityTypes itemRarity = stack.get(DataComponentRegistry.RARITY.get());
         ItemTypes itemType = stack.get(DataComponentRegistry.ITEM_TYPE.get());
+        String itemDescriptionKey = stack.get(DataComponentRegistry.DESCRIPTION_KEY.get());
         if (itemRarity == null) itemRarity = RarityTypes.COMMON;
         if (itemType == null) itemType = ItemTypes.ITEM;
 
         tooltipComponents.add(Component.translatable(stack.getDescriptionId()).withColor(itemRarity.getColor()));
         ItemAttributeModifiers modifiers = stack.getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY);
 
+        if (itemDescriptionKey != null) {tooltipComponents.add(Component.translatable(itemDescriptionKey).withColor(0xFFAAAAAA));}
+
         for (ItemAttributeModifiers.Entry entry : modifiers.modifiers()) {
             Holder<Attribute> attributeHolder = entry.attribute();
             AttributeModifier modifier = entry.modifier();
+            ModAttributes modAttribute = ModAttributes.fromAttribute(attributeHolder.value());
 
+            if (modAttribute == null) continue;
             tooltipComponents.add(Component.translatable(attributeHolder.value().getDescriptionId()).append(Component.literal(": ")).withStyle(ChatFormatting.GRAY)
-                    .append(Component.literal("+" + (int) modifier.amount()).withStyle((ModAttributes.fromAttribute(attributeHolder.value()).offensive) ? ChatFormatting.RED : ChatFormatting.GREEN))
+                    .append(Component.literal("+" + (int) modifier.amount()).withStyle((modAttribute.offensive) ? ChatFormatting.RED : ChatFormatting.GREEN))
             );
         }
 
         tooltipComponents.add(Component.empty());
-        tooltipComponents.add(Component.literal(Component.translatable("rarity.nno." + itemRarity.name().toLowerCase()).getString().toUpperCase()).append(Component.literal(" ")).append(Component.literal(itemType.name())).withColor(itemRarity.getColor()).withStyle(ChatFormatting.BOLD));
+        if (itemType.reforgeable()) {tooltipComponents.add(Component.translatable("tooltip.nno.reforgable").withColor(0xFF555555));}
+        tooltipComponents.add(Component.literal(Component.translatable("rarity.nno." + itemRarity.name().toLowerCase()).getString().toUpperCase()+ " " +Component.translatable(itemType.getKey()).getString().toUpperCase()).withColor(itemRarity.getColor()).withStyle(ChatFormatting.BOLD));
     }
 }

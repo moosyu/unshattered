@@ -6,6 +6,7 @@ import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.registers.AttachmentRegistry;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
 public class LevelCommand {
@@ -36,11 +37,11 @@ public class LevelCommand {
                     };
 
                     if (level == -1) {
-                        context.getSource().sendFailure(net.minecraft.network.chat.Component.literal("Unknown skill!"));
+                        context.getSource().sendFailure(Component.translatable("commands.nno.skills.levels.get.failure"));
                         return 0;
                     }
 
-                    context.getSource().sendSuccess(() -> net.minecraft.network.chat.Component.literal(skillName.substring(0, 1).toUpperCase() + skillName.substring(1) + " level: " + level), false);
+                    context.getSource().sendSuccess(() -> Component.literal(skillName.substring(0, 1).toUpperCase() + skillName.substring(1) + " " + Component.translatable("commands.nno.skills.skill") + ":"  + level), false);
                     return 1;
                 })));
     }

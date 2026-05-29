@@ -22,12 +22,15 @@ public class ItemsRegistry {
     // Creates a new BlockItem with the id "nno:example_block", combining the namespace and path
     public static final DeferredItem<BlockItem> EXAMPLE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("example_block", EXAMPLE_BLOCK);
 
-    public static final DeferredItem<NNOAxeWeapon> MERCENARY_AXE = ITEMS.register("mercenary_axe", () -> new NNOAxeWeapon(new Item.Properties().component(DataComponentRegistry.RARITY.get(), RarityTypes.RARE).component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.BATTLE_AXE).attributes(
-        ItemAttributeModifiers.builder().add(ModAttributes.DAMAGE.holder,
-                new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "mercenary_axe_damage"), 70, AttributeModifier.Operation.ADD_VALUE),
-                EquipmentSlotGroup.MAINHAND).add(ModAttributes.STRENGTH.holder,
-                new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "mercenary_axe_strength"), 20, AttributeModifier.Operation.ADD_VALUE),
-                EquipmentSlotGroup.MAINHAND
+    public static final DeferredItem<NNOAxeWeapon> MERCENARY_AXE = ITEMS.register("mercenary_axe", () -> new NNOAxeWeapon(new Item.Properties()
+        .component(DataComponentRegistry.RARITY.get(), RarityTypes.RARE)
+        .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.BATTLE_AXE)
+
+        .attributes(ItemAttributeModifiers.builder().add(ModAttributes.DAMAGE.holder,
+        new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "mercenary_axe_damage"), 70, AttributeModifier.Operation.ADD_VALUE),
+        EquipmentSlotGroup.MAINHAND).add(ModAttributes.STRENGTH.holder,
+        new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "mercenary_axe_strength"), 20, AttributeModifier.Operation.ADD_VALUE),
+        EquipmentSlotGroup.MAINHAND
         ).build()))
     );
     // todo: make it so the foraging fortune only applies in certain areas (the park, not the galatea)
@@ -120,5 +123,172 @@ public class ItemsRegistry {
             EquipmentSlotGroup.FEET).add(ModAttributes.FORAGING_FORTUNE.holder,
             new AttributeModifier(ResourceLocation.fromNamespaceAndPath(MODID, "leaflet_boots_foraging_fortune"), 3, AttributeModifier.Operation.ADD_VALUE),
             EquipmentSlotGroup.FEET).build()), "Boots")
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> BAT_THE_FISH = ITEMS.register("bat_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "Where is my cape!"))
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> CENTURY_THE_FISH = ITEMS.register("century_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "The term 'century' was actually named after him, or so he says."))
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> CHILL_THE_FISH = ITEMS.register("chill_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "This fish was found frozen solid in the lake of the island during the Holiday months."))
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> CLUNK_THE_FISH = ITEMS.register("clunk_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "Cluck cluck bkaawwk. Puk Puk Pukaaak!"))
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> DIAMOND_THE_FISH = ITEMS.register("diamond_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "Shines bright like a fish."))
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> DUST_THE_FISH = ITEMS.register("dust_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "Pretty sure they forgot about me..."))
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> EGG_THE_FISH = ITEMS.register("egg_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "This delicate, painted fish was found in the depths of the island during the Easter season."))
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> EON_THE_FISH = ITEMS.register("eon_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "Back in my day, we swam upstream for hours to get to school, and we didn't complain!"))
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> FLAKE_THE_FISH = ITEMS.register("flake_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "I'm a special snowflake."))
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> EXPERIMENT_THE_FISH = ITEMS.register("experiment_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "Fish me once, shame on you. Fish me twice, shame on me."))
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> FOSSIL_THE_FISH = ITEMS.register("fossil_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "Older than time itself yet never changing, for he was born perfect."))
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> GABAGOOL_THE_FISH = ITEMS.register("gabagool_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "If the salad is on top, I send it back."))
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> GIFT_THE_FISH = ITEMS.register("gift_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "I'm empty inside."))
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> HERRING_THE_FISH = ITEMS.register("herring_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "Sometimes patience is the key to victory. Sometimes it leads to very little and it seems like it's not worth it. And you wonder why you waited so long for something so disappointing."))
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> NOPE_THE_FISH = ITEMS.register("nope_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "Why did we follow Shrimp..."))
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> OOPS_THE_FISH = ITEMS.register("oops_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "Discovered in the depths of the island during the summer months."))
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> PARTY_THE_FISH = ITEMS.register("party_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "Big fan of parties, yet it's hard to enjoy them without friends."))
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> ROCK_THE_FISH = ITEMS.register("rock_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "Don't take me for granite."))
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> SHRIMP_THE_FISH = ITEMS.register("shrimp_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "I achieved nothing."))
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> SKELETON_THE_FISH = ITEMS.register("skeleton_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "Once a beautiful bass, but his loud mouth got the better of him."))
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> SPOOK_THE_FISH = ITEMS.register("spook_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "This fish lurks in the darkness below the island during the Halloween season."))
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> STEW_THE_FISH = ITEMS.register("stew_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "The stew was expired."))
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> SWAMP_THE_FISH = ITEMS.register("swamp_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "I once tried a clear pond. too shiny. Never again."))
+    );
+
+    public static final DeferredItem<NNOEnchantedItem> ZOOP_THE_FISH = ITEMS.register("zoop_the_fish", () -> new NNOEnchantedItem(new Item.Properties()
+            .component(DataComponentRegistry.RARITY.get(), RarityTypes.SPECIAL)
+            .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(DataComponentRegistry.DESCRIPTION_KEY.get(), "Keep me in here please."))
     );
 }
