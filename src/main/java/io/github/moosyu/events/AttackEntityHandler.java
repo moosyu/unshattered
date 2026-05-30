@@ -31,6 +31,7 @@ public class AttackEntityHandler {
             double critDamage = 0.0d;
             if (player.getAttributeValue(ModAttributes.CRITICAL_CHANCE.holder) >= (Math.random() * 101)) critDamage = player.getAttributeValue(ModAttributes.CRITICAL_DAMAGE.holder);
             double damage = ((5 + player.getAttributeValue(ModAttributes.DAMAGE.holder)) * (1 + (player.getAttributeValue(ModAttributes.STRENGTH.holder) / 100))) * (1 + (critDamage / 100));
+            System.out.println(damage);
             AttributeInstance health = target.getAttribute(ModAttributes.HEALTH.holder);
             if (target.invulnerableTime <= 0 && health != null) {
                 if ((health.getBaseValue() - damage) > 0) {

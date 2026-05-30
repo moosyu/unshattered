@@ -11,6 +11,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -31,8 +32,10 @@ public class LivingDamageHandler {
                 Entity attacker = event.getSource().getEntity();
                 event.setNewDamage(0.0f);
                 if (attacker instanceof LivingEntity entity) {
+                    AttributeInstance attackerHolder = entity.getAttribute(ModAttributes.DAMAGE.holder);
+                    if (attackerHolder == null) return;
                     PlayerStateAttachment states = player.getData(PLAYER_STATE.get());
-                    double mobDamage = entity.getAttribute(ModAttributes.DAMAGE.holder).getBaseValue();
+                    double mobDamage = attackerHolder.getBaseValue();
                     double playerHealth = states.getCurrentStat(PlayerStateAttachment.Stat.HEALTH);
                     if (playerHealth - mobDamage > 0.0d) {
                         states.removeCurrentStat(PlayerStateAttachment.Stat.HEALTH, mobDamage);

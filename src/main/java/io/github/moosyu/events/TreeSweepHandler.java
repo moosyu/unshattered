@@ -110,6 +110,7 @@ public class TreeSweepHandler {
             skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, 6.0f);
             player.syncData(PLAYER_SKILLS);
             ModSounds.playerExperienceSound(player);
+            player.getInventory().add(new ItemStack(startBlock.getBlock(), calculateLogs(player)));
             return;
         }
 

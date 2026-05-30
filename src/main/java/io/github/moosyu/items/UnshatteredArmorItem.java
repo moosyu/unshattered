@@ -8,9 +8,7 @@ public class UnshatteredArmorItem extends ArmorItem {
     protected String itemType;
 
     public UnshatteredArmorItem(Holder<ArmorMaterial> material, Type type, Properties properties, String itemType) {
-        super(material, type, applyDefaults(properties));
+        super(material, type, properties.stacksTo(1));
         this.itemType = itemType;
     }
-
-    private static Properties applyDefaults(Properties properties) {return properties.stacksTo(1);}
 }

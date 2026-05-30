@@ -77,6 +77,16 @@ public class CreativeTabsRegistry {
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
         .icon(() -> MERCENARY_AXE.get().getDefaultInstance())
         .displayItems((parameters, output) -> {
-            output.accept(MERCENARY_AXE.get());
+                output.accept(MERCENARY_AXE.get());
+                output.accept(WOODEN_SWORD.get());
+                output.accept(STONE_SWORD.get());
+                output.accept(IRON_SWORD.get());
+                output.accept(GOLDEN_SWORD.get());
+                output.accept(DIAMOND_SWORD.get());
+                output.accept(WOODEN_AXE.get());
+                output.accept(STONE_AXE.get());
+                output.accept(IRON_AXE.get());
+                output.accept(GOLDEN_AXE.get());
+                output.accept(DIAMOND_AXE.get());
         }).build());
 }

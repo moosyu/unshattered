@@ -22,10 +22,10 @@ public class DamageNumberParticle extends Particle {
     @Override
     public void render(VertexConsumer buffer, Camera camera, float partialTicks) {
         // todo: figure out how to do this shit (im gonna die)
-        System.out.println(x);
-        System.out.println(y);
-        System.out.println(z);
-        System.out.println(text);
+        //System.out.println(x);
+        //System.out.println(y);
+        //System.out.println(z);
+        //System.out.println(text);
     }
 
     @Override
