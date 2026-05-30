@@ -45,6 +45,16 @@ public class CreativeTabsRegistry {
             output.accept(ZOOP_THE_FISH.get());
         }).build());
 
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_BLOCKS_TAB = CREATIVE_MODE_TABS.register("unshattered_blocks_tab",
+        () -> CreativeModeTab.builder()
+        .title(Component.translatable("item_group.unshattered.blocks"))
+        .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
+        .icon(() -> FIG_LOG.get().getDefaultInstance())
+        .displayItems((parameters, output) -> {
+            output.accept(FIG_LOG.get());
+            output.accept(ENCHANTED_FIG_LOG.get());
+        }).build());
+
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_ARMOR_TAB = CREATIVE_MODE_TABS.register("unshattered_armor_tab",
         () -> CreativeModeTab.builder()
         .title(Component.translatable("item_group.unshattered.armor"))

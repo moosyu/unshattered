@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y": { "model": "unshattered:block/fig_log" },
+    "axis=x": { "model": "unshattered:block/fig_log", "x": 90, "y": 90 },
+    "axis=z": { "model": "unshattered:block/fig_log", "x": 90 }
+  }
+}

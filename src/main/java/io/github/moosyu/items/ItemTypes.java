@@ -6,6 +6,7 @@ import net.minecraft.network.chat.Component;
 public enum ItemTypes {
     ITEM("item_type.unshattered.item", false),
     FISH("item_type.unshattered.fish", false),
+    LOG("item_type.unshattered.log", false),
     SWORD("item_type.unshattered.sword", true),
     AXE("item_type.unshattered.axe", true),
     BATTLE_AXE("item_type.unshattered.battle_axe", true),
