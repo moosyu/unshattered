@@ -10,4 +10,5 @@ public class TextureRegister {
     public static final ResourceLocation PROFILE_SCREEN = ResourceLocation.fromNamespaceAndPath("unshattered", "textures/gui/profile_screen.png");
     public static final ResourceLocation TAB_OPENED = ResourceLocation.fromNamespaceAndPath("unshattered", "textures/gui/tab_opened.png");
     public static final ResourceLocation TAB_CLOSED = ResourceLocation.fromNamespaceAndPath("unshattered", "textures/gui/tab_closed.png");
+    public static final ResourceLocation CRAFTING_SCREEN = ResourceLocation.fromNamespaceAndPath("unshattered", "textures/gui/crafting_screen.png");
 }
