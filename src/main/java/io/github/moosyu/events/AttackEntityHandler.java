@@ -7,7 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -52,7 +52,7 @@ public class AttackEntityHandler {
     }
 
     public record DamageNumberData(double damage, double targetPosX, double targetPosY, double targetPosZ) implements CustomPacketPayload {
-        public static final CustomPacketPayload.Type<DamageNumberData> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath("unshattered", "damage_number_data"));
+        public static final CustomPacketPayload.Type<DamageNumberData> TYPE = new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath("unshattered", "damage_number_data"));
         public static final StreamCodec<ByteBuf, DamageNumberData> STREAM_CODEC = StreamCodec.composite(
                 ByteBufCodecs.DOUBLE,
                 DamageNumberData::damage,

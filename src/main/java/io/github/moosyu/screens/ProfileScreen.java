@@ -7,12 +7,12 @@ import io.github.moosyu.attributes.ModAttributes;
 import io.github.moosyu.helpers.RomanNumeralHelper;
 import io.github.moosyu.registers.AttachmentRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
@@ -20,21 +20,21 @@ import static io.github.moosyu.registers.TextureRegister.*;
 
 public class ProfileScreen extends Screen {
     private enum Tabs {
-        SKILLS(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
-        STATS(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
-        QUESTS(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
-        CRAFTING(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
-        COLLECTIONS(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
-        PETS(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
-        STORAGE(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
-        WARDROBE(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
-        BANK(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
-        WARP(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
-        BAGS(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone.png"));
+        SKILLS(Identifier.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
+        STATS(Identifier.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
+        QUESTS(Identifier.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
+        CRAFTING(Identifier.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
+        COLLECTIONS(Identifier.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
+        PETS(Identifier.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
+        STORAGE(Identifier.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
+        WARDROBE(Identifier.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
+        BANK(Identifier.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
+        WARP(Identifier.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
+        BAGS(Identifier.fromNamespaceAndPath("minecraft", "textures/block/stone.png"));
 
-        private final ResourceLocation iconTexture;
+        private final Identifier iconTexture;
 
-        Tabs(ResourceLocation iconTexture) {
+        Tabs(Identifier iconTexture) {
             this.iconTexture = iconTexture;
         }
     }
@@ -88,10 +88,10 @@ public class ProfileScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {super.render(graphics, mouseX, mouseY, partialTick);}
+    public void render(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {super.render(graphics, mouseX, mouseY, partialTick);}
 
     @Override
-    public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+    public void renderBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         // putting this all here to layer the dimmed background bit and the actual empty screen properly
         // idk why this happens i mustve done something wrong at some point
         this.renderTransparentBackground(graphics);
