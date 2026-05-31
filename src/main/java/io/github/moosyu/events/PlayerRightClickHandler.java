@@ -1,6 +1,5 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.menus.CraftingMenu;
 import io.netty.buffer.Unpooled;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -28,12 +27,6 @@ public class PlayerRightClickHandler {
                 event.setCanceled(true);
                 Player player = event.getEntity();
                 player.swing(InteractionHand.MAIN_HAND);
-                player.openMenu(new SimpleMenuProvider((containerId, inventory, playerEntity) ->
-                                new CraftingMenu(
-                                        containerId,
-                                        inventory,
-                                        new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(pos)
-                                ), Component.literal("Crafting")));
             }
         }
     }

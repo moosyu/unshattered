@@ -2,12 +2,9 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.attachments.PlayerStateAttachment;
 import io.github.moosyu.attributes.ModAttributes;
-import io.github.moosyu.registers.AttributesRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,6 +17,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.registers.AttachmentRegistry.PLAYER_STATE;
+import static io.github.moosyu.sounds.UnshatteredSounds.playerDeathSound;
 
 public class LivingDamageHandler {
     @EventBusSubscriber(modid = MODID)
@@ -41,12 +39,13 @@ public class LivingDamageHandler {
                         states.removeCurrentStat(PlayerStateAttachment.Stat.HEALTH, mobDamage);
                         player.syncData(PLAYER_STATE.get());
                     } else {
-                        BlockPos spawnPos = level.getSharedSpawnPos();
+                        BlockPos spawnPos = level.getRespawnData().pos();
                         player.teleportTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5);
                         player.sendSystemMessage(Component.literal(player.getName().getString() + " was slain by a " + entity.getName().getString() + "!").withStyle(ChatFormatting.RED));
                         states.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, player.getAttributeValue(ModAttributes.HEALTH.holder));
                         player.syncData(PLAYER_STATE.get());
-                        player.playNotifySound(SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 0.8f, 1.2f);
+                        // todo: fix the death sound not going off
+                        playerDeathSound(player);
                         states.setCancelledKnockback(true);
                     }
                 }

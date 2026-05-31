@@ -1,31 +1,36 @@
 package io.github.moosyu.layers;
 
 import io.github.moosyu.attributes.ModAttributes;
-import io.github.moosyu.registers.AttributesRegistry;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.LayeredDraw;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.client.gui.GuiLayer;
 
 import static io.github.moosyu.helpers.TextShadowHelper.drawShadowText;
 import static io.github.moosyu.registers.TextureRegister.SMALL_BAR;
 
-public class ManaBarLayer implements LayeredDraw.Layer {
+public class ManaBarLayer implements GuiLayer {
     @Override
-    public void render(GuiGraphics graphics, DeltaTracker deltaTracker) {
+    public void render(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker) {
         final int SPRITE_WIDTH = 73;
         final int SPRITE_HEIGHT = 15;
         final int BAR_HEIGHT = 8;
         final int POS_X_BAR = (graphics.guiWidth() / 2) - (SPRITE_WIDTH / 2) + 54;
-        final int POS_Y_BAR = graphics.guiHeight() - SPRITE_HEIGHT - 24;
+        final int POS_Y_BAR = graphics.guiHeight() - SPRITE_HEIGHT - 18;
+
+        Player player = Minecraft.getInstance().player;
+        if (!player.level().isClientSide()) return;
         final AttributeInstance manaAttribute = Minecraft.getInstance().player.getAttribute(ModAttributes.MANA.holder);
+        final String currentManaText = String.valueOf((int) manaAttribute.getValue());
+        final Font font = Minecraft.getInstance().font;
 
-        graphics.setColor(0.0f, 0.653f, 1f, 1.0f);
-        graphics.blit(SMALL_BAR, POS_X_BAR, POS_Y_BAR, 0, BAR_HEIGHT - 1, SPRITE_WIDTH, BAR_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT);
-        graphics.blit(SMALL_BAR, POS_X_BAR, POS_Y_BAR, 0, 0, SPRITE_WIDTH, BAR_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT);
-        graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, SMALL_BAR, POS_X_BAR, POS_Y_BAR, 0, BAR_HEIGHT - 1, SPRITE_WIDTH, BAR_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT, 0xFF00A6FF);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, SMALL_BAR, POS_X_BAR, POS_Y_BAR, 0, 0, SPRITE_WIDTH, BAR_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT, 0xFF00A6FF);
 
-        drawShadowText(graphics, manaAttribute != null ? String.valueOf((int) manaAttribute.getValue()) : "ERROR", POS_X_BAR + (SPRITE_WIDTH / 2), POS_Y_BAR, 0x4E5BC6);
+        graphics.text(Minecraft.getInstance().font, currentManaText, POS_X_BAR + (SPRITE_WIDTH / 2) - (font.width(currentManaText) / 2), POS_Y_BAR - 8, 0xFF4E5BC6, true);
     }
 }

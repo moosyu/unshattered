@@ -1,12 +1,9 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.Unshattered;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.ModAttributes;
-import io.github.moosyu.experience.BlocksFarmingExperience;
 import io.github.moosyu.registers.AttachmentRegistry;
-import io.github.moosyu.registers.AttributesRegistry;
-import io.github.moosyu.sounds.ModSounds;
+import io.github.moosyu.sounds.UnshatteredSounds;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
@@ -78,7 +75,7 @@ public class TreeSweepHandler {
 
             skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, tasks.size() * 6.0f);
             player.syncData(PLAYER_SKILLS);
-            ModSounds.playerExperienceSound(player);
+            UnshatteredSounds.playerExperienceSound(player);
         }
     }
 
@@ -109,7 +106,7 @@ public class TreeSweepHandler {
         if (sweep <= 0) {
             skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, 6.0f);
             player.syncData(PLAYER_SKILLS);
-            ModSounds.playerExperienceSound(player);
+            UnshatteredSounds.playerExperienceSound(player);
             player.getInventory().add(new ItemStack(startBlock.getBlock(), calculateLogs(player)));
             return;
         }

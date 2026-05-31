@@ -1,15 +1,12 @@
 package io.github.moosyu.registers;
 
 import net.minecraft.resources.Identifier;
-import net.minecraft.resources.ResourceLocation;
 
 // idk if this counts as a register sorry im not sure where else to put it, maybe helpers?
 public class TextureRegister {
     public static final Identifier SMALL_BAR = Identifier.fromNamespaceAndPath("unshattered", "textures/gui/small_bar.png");
-    public static final Identifier LARGE_BAR = Identifier.fromNamespaceAndPath("unshattered", "textures/gui/large_bar.png");
     public static final Identifier SKILL_BAR = Identifier.fromNamespaceAndPath("unshattered", "textures/gui/skill_bar.png");
     public static final Identifier PROFILE_SCREEN = Identifier.fromNamespaceAndPath("unshattered", "textures/gui/profile_screen.png");
     public static final Identifier TAB_OPENED = Identifier.fromNamespaceAndPath("unshattered", "textures/gui/tab_opened.png");
     public static final Identifier TAB_CLOSED = Identifier.fromNamespaceAndPath("unshattered", "textures/gui/tab_closed.png");
-    public static final Identifier CRAFTING_SCREEN = Identifier.fromNamespaceAndPath("unshattered", "textures/gui/crafting_screen.png");
 }

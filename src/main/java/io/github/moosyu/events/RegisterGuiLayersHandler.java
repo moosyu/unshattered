@@ -1,7 +1,5 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.layers.DefenseBarLayer;
-import io.github.moosyu.layers.ExperienceBarLayer;
 import io.github.moosyu.layers.HealthBarLayer;
 import io.github.moosyu.layers.ManaBarLayer;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -19,8 +17,12 @@ public class RegisterGuiLayersHandler {
             // https://antongerdelan.net/colour/
             event.replaceLayer(VanillaGuiLayers.PLAYER_HEALTH, new HealthBarLayer());
             event.replaceLayer(VanillaGuiLayers.FOOD_LEVEL, new ManaBarLayer());
-            event.replaceLayer(VanillaGuiLayers.EXPERIENCE_BAR, new ExperienceBarLayer());
-            event.replaceLayer(VanillaGuiLayers.ARMOR_LEVEL, new DefenseBarLayer());
+            event.replaceLayer(VanillaGuiLayers.SELECTED_ITEM_NAME, new ManaBarLayer());
+            // hiding some vanilla bits
+            event.replaceLayer(VanillaGuiLayers.CONTEXTUAL_INFO_BAR, (context, tickCounter) -> {});
+            event.replaceLayer(VanillaGuiLayers.EXPERIENCE_LEVEL, (context, tickCounter) -> {});
+            event.replaceLayer(VanillaGuiLayers.CONTEXTUAL_INFO_BAR_BACKGROUND, (context, tickCounter) -> {});
+            event.replaceLayer(VanillaGuiLayers.ARMOR_LEVEL, (context, tickCounter) -> {});
         }
     }
 }

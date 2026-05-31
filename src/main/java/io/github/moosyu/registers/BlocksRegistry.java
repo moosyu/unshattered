@@ -16,6 +16,5 @@ import static io.github.moosyu.Unshattered.MODID;
 public class BlocksRegistry {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MODID);
 
-    public static final DeferredBlock<Block> EXAMPLE_BLOCK = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
-    public static final DeferredBlock<Block> FIG_LOG_BLOCK = BLOCKS.registerBlock("fig_log", registryName -> new RotatedPillarBlock(BlockBehaviour.Properties.of().destroyTime(2.0f).sound(SoundType.WOOD)));
+    public static final DeferredBlock<Block> FIG_LOG_BLOCK = BLOCKS.register("fig_log", registerName -> new RotatedPillarBlock(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, registerName)).destroyTime(2.0f).sound(SoundType.WOOD)));
 }

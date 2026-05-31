@@ -36,7 +36,7 @@ public class ItemTooltipHandler {
             if (itemRarity == null) itemRarity = RarityTypes.COMMON;
             if (itemType == null) itemType = ItemTypes.ITEM;
 
-            tooltipComponents.add(Component.translatable(stack.getDescriptionId()).withColor(itemRarity.getColor()));
+            tooltipComponents.add(Component.translatable(stack.getItemName().getString()).withColor(itemRarity.getColor()));
             ItemAttributeModifiers modifiers = stack.getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY);
 
             if (itemDescriptionKey != null) {tooltipComponents.add(Component.translatable(itemDescriptionKey).withColor(0xFFAAAAAA));}

@@ -1,7 +1,10 @@
 package io.github.moosyu.items;
 
-public class UnshatteredAxeWeapon extends UnshatteredWeapon {
+import io.github.moosyu.registers.DataComponentRegistry;
+import net.minecraft.world.item.Item;
+
+public class UnshatteredAxeWeapon extends Item {
     public UnshatteredAxeWeapon(Properties properties) {
-        super(properties, ItemTypes.BATTLE_AXE);
+        super(properties.stacksTo(1).component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.BATTLE_AXE));
     }
 }

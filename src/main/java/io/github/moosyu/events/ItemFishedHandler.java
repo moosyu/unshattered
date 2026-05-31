@@ -3,7 +3,7 @@ package io.github.moosyu.events;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.experience.ItemsFishingExperience;
 import io.github.moosyu.registers.AttachmentRegistry;
-import io.github.moosyu.sounds.ModSounds;
+import io.github.moosyu.sounds.UnshatteredSounds;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -26,7 +26,7 @@ public class ItemFishedHandler {
             for (ItemStack fishingItem : event.getDrops()) {
                 skills.addExp(PlayerSkillsAttachment.Skill.FISHING, ItemsFishingExperience.getExp(fishingItem.getItem()));
                 player.syncData(PLAYER_SKILLS);
-                ModSounds.playerExperienceSound(player);
+                UnshatteredSounds.playerExperienceSound(player);
             }
         }
     }

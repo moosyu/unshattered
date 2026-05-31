@@ -21,20 +21,19 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
-import static io.github.moosyu.registers.ArmorMaterialRegister.ARMOR_MATERIALS;
-import static io.github.moosyu.registers.AttachmentRegistry.ATTACHMENTS;
+import static io.github.moosyu.registers.AttachmentRegistry.ATTACHMENT_TYPES;
 import static io.github.moosyu.registers.AttributesRegistry.ATTRIBUTES;
 import static io.github.moosyu.registers.BlocksRegistry.BLOCKS;
 import static io.github.moosyu.registers.CreativeTabsRegistry.CREATIVE_MODE_TABS;
 import static io.github.moosyu.registers.DataComponentRegistry.DATA_COMPONENTS;
 import static io.github.moosyu.registers.ItemsRegistry.*;
-import static io.github.moosyu.registers.MenuTypeRegister.MENUS;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Unshattered.MODID)
 public class Unshattered {
     // Define mod id in a common place for everything to reference
     public static final String MODID = "unshattered";
+    public static final String MOD_NAME = "Skyblock: Unshattered";
     // Directly reference a slf4j logger
     public static final Logger LOGGER = LogUtils.getLogger();
 
@@ -50,22 +49,15 @@ public class Unshattered {
         ITEMS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered
         CREATIVE_MODE_TABS.register(modEventBus);
-        ATTACHMENTS.register(modEventBus);
+        ATTACHMENT_TYPES.register(modEventBus);
         AttributesRegistry.registerAll();
         ATTRIBUTES.register(modEventBus);
-        ARMOR_MATERIALS.register(modEventBus);
         DATA_COMPONENTS.register(modEventBus);
-        MENUS.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (unshattered) to respond directly to events.
         // Do not add this line if there are no @SubscribeEvent-aunshatteredtated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
-
-        // Register the item to a creative tab
-        modEventBus.addListener(this::addCreative);
-
-        Minecraft.getInstance().options.attackIndicator().set(AttackIndicatorStatus.OFF);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
@@ -83,13 +75,7 @@ public class Unshattered {
 
         Config.ITEM_STRINGS.get().forEach((item) -> LOGGER.info("ITEM >> {}", item));
         event.enqueueWork(ModAttributes::buildLookup);
-    }
-
-    // Add the example block item to the building blocks tab
-    private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
-            event.accept(EXAMPLE_BLOCK_ITEM);
-        }
+        Minecraft.getInstance().options.attackIndicator().set(AttackIndicatorStatus.OFF);
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
