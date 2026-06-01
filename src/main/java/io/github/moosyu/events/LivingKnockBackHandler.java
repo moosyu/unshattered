@@ -9,16 +9,14 @@ import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
 
 import static io.github.moosyu.Unshattered.MODID;
 
+@EventBusSubscriber(modid = MODID)
 public class LivingKnockBackHandler {
-    @EventBusSubscriber(modid = MODID)
-    public static class EventHandler {
-        @SubscribeEvent
-        public static void onLivingKnockBack(LivingKnockBackEvent event) {
-            if (event.getEntity() instanceof Player player && !player.level().isClientSide()) {
-                PlayerStateAttachment state = player.getData(AttachmentRegistry.PLAYER_STATE.get());
-                if (state.isKnockbackCancelled()) event.setCanceled(true);
-                state.setCancelledKnockback(false);
-            }
+    @SubscribeEvent
+    public static void onLivingKnockBack(LivingKnockBackEvent event) {
+        if (event.getEntity() instanceof Player player && !player.level().isClientSide()) {
+            PlayerStateAttachment state = player.getData(AttachmentRegistry.PLAYER_STATE.get());
+            if (state.isKnockbackCancelled()) event.setCanceled(true);
+            state.setCancelledKnockback(false);
         }
     }
 }

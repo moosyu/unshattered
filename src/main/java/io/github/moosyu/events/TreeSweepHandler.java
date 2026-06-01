@@ -20,7 +20,7 @@ import java.util.*;
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.registers.AttachmentRegistry.PLAYER_SKILLS;
 
-// shouldnt need to check if serverside as this will being run from BlockBreakHandler which already had that checek
+// shouldnt need to check if serverside as this will being run from BlockBreakHandler which already had that check
 @EventBusSubscriber(modid = MODID)
 public class TreeSweepHandler {
     private static final int BREAK_COOLDOWN_MAX = 2;

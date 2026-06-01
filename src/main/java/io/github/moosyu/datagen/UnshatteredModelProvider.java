@@ -1,6 +1,5 @@
 package io.github.moosyu.datagen;
 
-import io.github.moosyu.registers.BlocksRegistry;
 import io.github.moosyu.registers.ItemsRegistry;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
@@ -9,7 +8,6 @@ import net.minecraft.client.data.models.model.*;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.equipment.EquipmentAssets;
 import net.minecraft.world.level.block.Blocks;
 
 import static io.github.moosyu.Unshattered.MODID;
@@ -22,7 +20,7 @@ public class UnshatteredModelProvider extends ModelProvider {
 
     @Override
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
-        itemModels.generateFlatItem(ItemsRegistry.MERCENARY_AXE.get(), Items.IRON_AXE, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ItemsRegistry.MERCENARY_AXE.get(), Items.IRON_AXE, ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsRegistry.WOODEN_SWORD.get(), Items.WOODEN_SWORD, ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsRegistry.STONE_SWORD.get(), Items.STONE_SWORD, ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsRegistry.IRON_SWORD.get(), Items.IRON_SWORD, ModelTemplates.FLAT_HANDHELD_ITEM);

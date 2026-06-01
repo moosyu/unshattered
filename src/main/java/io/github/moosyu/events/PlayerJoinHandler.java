@@ -15,19 +15,17 @@ import static io.github.moosyu.registers.AttachmentRegistry.PLAYER_STATE;
 // triggers when the player starts the game or switches world
 // however when the game starts this gives you the wrong value. idk why, maybe attributes arent properly loaded yet so you dont get modifiers.
 // todo: fix whatever causes that
+@EventBusSubscriber(modid = MODID)
 public class PlayerJoinHandler {
-    @EventBusSubscriber(modid = MODID)
-    public static class EventHandler {
-        @SubscribeEvent
-        public static void onPlayerJoin(EntityJoinLevelEvent event) {
-            if (event.getEntity() instanceof Player player && !player.level().isClientSide()) {
-                var stats = player.getData(PLAYER_STATE.get());
-                final AttributeInstance healthAttribute = player.getAttribute(ModAttributes.HEALTH.holder);
-                if (healthAttribute == null) return;
-                final double MAX_HEALTH = healthAttribute.getValue();
-                stats.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, MAX_HEALTH);
-                player.syncData(PLAYER_STATE);
-            }
+    @SubscribeEvent
+    public static void onPlayerJoin(EntityJoinLevelEvent event) {
+        if (event.getEntity() instanceof Player player && !player.level().isClientSide()) {
+            var stats = player.getData(PLAYER_STATE.get());
+            final AttributeInstance healthAttribute = player.getAttribute(ModAttributes.HEALTH.holder);
+            if (healthAttribute == null) return;
+            final double MAX_HEALTH = healthAttribute.getValue();
+            stats.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, MAX_HEALTH);
+            player.syncData(PLAYER_STATE);
         }
     }
 }

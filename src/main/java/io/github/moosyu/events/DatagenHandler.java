@@ -12,18 +12,16 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import static io.github.moosyu.Unshattered.MODID;
 
+@EventBusSubscriber(modid = MODID)
 public class DatagenHandler {
-    @EventBusSubscriber(modid = MODID)
-    public static class EventHandler {
-        @SubscribeEvent
-        public static void onGatherData(GatherDataEvent.Client event) {
-            DataGenerator generator = event.getGenerator();
-            PackOutput packOutput = generator.getPackOutput();
+    @SubscribeEvent
+    public static void onGatherData(GatherDataEvent.Client event) {
+        DataGenerator generator = event.getGenerator();
+        PackOutput packOutput = generator.getPackOutput();
 
-            generator.addProvider(true, new UnshatteredModelProvider(packOutput));
-            generator.addProvider(true, new UnshatteredBlockTagsProvider(packOutput, event.getLookupProvider()));
-            generator.addProvider(true, new UnshatteredItemTagsProvider(packOutput, event.getLookupProvider()));
-            generator.addProvider(true, new UnshatteredEquipmentAssets(packOutput));
-        }
+        generator.addProvider(true, new UnshatteredModelProvider(packOutput));
+        generator.addProvider(true, new UnshatteredBlockTagsProvider(packOutput, event.getLookupProvider()));
+        generator.addProvider(true, new UnshatteredItemTagsProvider(packOutput, event.getLookupProvider()));
+        generator.addProvider(true, new UnshatteredEquipmentAssets(packOutput));
     }
 }

@@ -23,72 +23,74 @@ import java.util.regex.Pattern;
 
 import static io.github.moosyu.Unshattered.MODID;
 
+@EventBusSubscriber(modid = MODID)
 public class ItemTooltipHandler {
-    @EventBusSubscriber(modid = MODID)
-    public static class EventHandler {
-        @SubscribeEvent
-        public static void onItemTooltip(ItemTooltipEvent event) {
-            if (event.getEntity() != null && !event.getEntity().level().isClientSide()) return;
-            ItemStack stack = event.getItemStack();
-            List<Component> tooltipComponents = event.getToolTip();
-            RarityTypes itemRarity = stack.get(DataComponentRegistry.RARITY.get());
-            ItemTypes itemType = stack.get(DataComponentRegistry.ITEM_TYPE.get());
-            String itemDescriptionKey = stack.get(DataComponentRegistry.DESCRIPTION_KEY.get());
+    @SubscribeEvent
+    public static void onItemTooltip(ItemTooltipEvent event) {
+        if (event.getEntity() != null && !event.getEntity().level().isClientSide()) return;
+        ItemStack stack = event.getItemStack();
+        List<Component> tooltipComponents = event.getToolTip();
+        RarityTypes itemRarity = stack.get(DataComponentRegistry.RARITY.get());
+        ItemTypes itemType = stack.get(DataComponentRegistry.ITEM_TYPE.get());
+        String itemDescriptionKey = stack.get(DataComponentRegistry.DESCRIPTION_KEY.get());
 
-            event.getToolTip().clear();
-            if (itemRarity == null) itemRarity = RarityTypes.COMMON;
-            if (itemType == null) itemType = ItemTypes.ITEM;
+        event.getToolTip().clear();
+        if (itemRarity == null) itemRarity = RarityTypes.COMMON;
+        if (itemType == null) itemType = ItemTypes.ITEM;
 
-            tooltipComponents.add(Component.translatable(stack.getItemName().getString()).withColor(itemRarity.getColor()));
-            ItemAttributeModifiers modifiers = stack.getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY);
+        tooltipComponents.add(Component.translatable(stack.getItemName().getString()).withColor(itemRarity.getColor()));
+        ItemAttributeModifiers modifiers = stack.getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY);
 
-            if (itemDescriptionKey != null) {tooltipComponents.add(parseStyledText(Component.translatable(itemDescriptionKey).getString()));}
-
-            for (ItemAttributeModifiers.Entry entry : modifiers.modifiers()) {
-                Holder<Attribute> attributeHolder = entry.attribute();
-                AttributeModifier modifier = entry.modifier();
-                ModAttributes modAttribute = ModAttributes.fromAttribute(attributeHolder.value());
-
-                if (modAttribute == null) continue;
-                tooltipComponents.add(Component.translatable(attributeHolder.value().getDescriptionId()).append(Component.literal(": ")).withStyle(ChatFormatting.GRAY).append(Component.literal("+" + (int) modifier.amount()).withStyle((modAttribute.offensive) ? ChatFormatting.RED : ChatFormatting.GREEN)));
-            }
-
-            tooltipComponents.add(Component.empty());
-            if (itemType.reforgeable()) {tooltipComponents.add(Component.translatable("tooltip.unshattered.reforgable").withColor(0xFF555555));}
-            // tooltipComponents.add(Component.literal("❣ ").withColor(0xFFAA0000).append(Component.literal("Requires").withColor(0xFFFF5555)).append(Component.literal(" Combat Skill 4.").withColor(0xFF55FF55)));
-            tooltipComponents.add(Component.literal(Component.translatable("rarity.unshattered." + itemRarity.name().toLowerCase()).getString().toUpperCase()+ " " + Component.translatable(itemType.getKey()).getString().toUpperCase()).withColor(itemRarity.getColor()).withStyle(ChatFormatting.BOLD));
+        if (itemDescriptionKey != null) {
+            tooltipComponents.add(parseStyledText(Component.translatable(itemDescriptionKey).getString()));
         }
 
-        public static Component parseStyledText(String input) {
-            MutableComponent result = Component.empty();
-            Matcher matcher = Pattern.compile("\\[color=(0x[0-9A-Fa-f]+)](.*?)\\[/color]|\\[i](.*?)\\[/i]").matcher(input);
-            final int BASE_COLOR = 0xFFAAAAAA;
-            int lastEnd = 0;
+        for (ItemAttributeModifiers.Entry entry : modifiers.modifiers()) {
+            Holder<Attribute> attributeHolder = entry.attribute();
+            AttributeModifier modifier = entry.modifier();
+            ModAttributes modAttribute = ModAttributes.fromAttribute(attributeHolder.value());
 
-            while (matcher.find()) {
-                if (matcher.start() > lastEnd) {
-                    String before = input.substring(lastEnd, matcher.start());
-                    result.append(Component.literal(before).withColor(BASE_COLOR));
-                }
-                if (matcher.group(1) != null) {
-                    String colorHex = matcher.group(1);
-                    String text = matcher.group(2);
-                    int color = (int) Long.parseLong(colorHex.substring(2), 16);
-
-                    result.append(Component.literal(text).withColor(color));
-                } else if (matcher.group(3) != null) {
-                    String text = matcher.group(3);
-                    result.append(Component.literal(text).withColor(BASE_COLOR).withStyle(ChatFormatting.ITALIC));
-                }
-                lastEnd = matcher.end();
-            }
-
-            if (lastEnd < input.length()) {
-                String remaining = input.substring(lastEnd);
-                result.append(Component.literal(remaining).withColor(BASE_COLOR));
-            }
-
-            return result;
+            if (modAttribute == null) continue;
+            tooltipComponents.add(Component.translatable(attributeHolder.value().getDescriptionId()).append(Component.literal(": ")).withStyle(ChatFormatting.GRAY).append(Component.literal("+" + (int) modifier.amount()).withStyle((modAttribute.offensive) ? ChatFormatting.RED : ChatFormatting.GREEN)));
         }
+
+        tooltipComponents.add(Component.empty());
+        if (itemType.reforgeable()) {
+            tooltipComponents.add(Component.translatable("tooltip.unshattered.reforgable").withColor(0xFF555555));
+        }
+        // tooltipComponents.add(Component.literal("❣ ").withColor(0xFFAA0000).append(Component.literal("Requires").withColor(0xFFFF5555)).append(Component.literal(" Combat Skill 4.").withColor(0xFF55FF55)));
+        tooltipComponents.add(Component.literal(Component.translatable("rarity.unshattered." + itemRarity.name().toLowerCase()).getString().toUpperCase() + " " + Component.translatable(itemType.getKey()).getString().toUpperCase()).withColor(itemRarity.getColor()).withStyle(ChatFormatting.BOLD));
+    }
+
+    public static Component parseStyledText(String input) {
+        MutableComponent result = Component.empty();
+        Matcher matcher = Pattern.compile("\\[color=(0x[0-9A-Fa-f]+)](.*?)\\[/color]|\\[i](.*?)\\[/i]").matcher(input);
+        final int BASE_COLOR = 0xFFAAAAAA;
+        int lastEnd = 0;
+
+        while (matcher.find()) {
+            if (matcher.start() > lastEnd) {
+                String before = input.substring(lastEnd, matcher.start());
+                result.append(Component.literal(before).withColor(BASE_COLOR));
+            }
+            if (matcher.group(1) != null) {
+                String colorHex = matcher.group(1);
+                String text = matcher.group(2);
+                int color = (int) Long.parseLong(colorHex.substring(2), 16);
+
+                result.append(Component.literal(text).withColor(color));
+            } else if (matcher.group(3) != null) {
+                String text = matcher.group(3);
+                result.append(Component.literal(text).withColor(BASE_COLOR).withStyle(ChatFormatting.ITALIC));
+            }
+            lastEnd = matcher.end();
+        }
+
+        if (lastEnd < input.length()) {
+            String remaining = input.substring(lastEnd);
+            result.append(Component.literal(remaining).withColor(BASE_COLOR));
+        }
+
+        return result;
     }
 }

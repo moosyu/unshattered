@@ -15,33 +15,31 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.registers.AttachmentRegistry.PLAYER_SKILLS;
 
+@EventBusSubscriber(modid = MODID)
 public class KillHandler {
-    @EventBusSubscriber(modid = MODID)
-    public static class EventHandler {
-        @SubscribeEvent
-        public static void onEntityDeath(LivingDeathEvent event) {
-            DamageSource source = event.getSource();
-            Entity attacker = source.getEntity();
+    @SubscribeEvent
+    public static void onEntityDeath(LivingDeathEvent event) {
+        DamageSource source = event.getSource();
+        Entity attacker = source.getEntity();
 
-            if (attacker instanceof Player player) {
-                if (player.level().isClientSide()) return;
-                PlayerSkillsAttachment skills = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
+        if (attacker instanceof Player player) {
+            if (player.level().isClientSide()) return;
+            PlayerSkillsAttachment skills = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
 
-                float combatExp = EntityCombatExperience.getExp(event.getEntity().getType());
-                if (combatExp > 0.0f) {
-                    skills.addExp(PlayerSkillsAttachment.Skill.COMBAT, combatExp);
-                    player.syncData(PLAYER_SKILLS);
-                    UnshatteredSounds.playerExperienceSound(player);
-                    return;
-                }
+            float combatExp = EntityCombatExperience.getExp(event.getEntity().getType());
+            if (combatExp > 0.0f) {
+                skills.addExp(PlayerSkillsAttachment.Skill.COMBAT, combatExp);
+                player.syncData(PLAYER_SKILLS);
+                UnshatteredSounds.playerExperienceSound(player);
+                return;
+            }
 
-                float farmingExp = EntityFarmingExperience.getExp(event.getEntity().getType());
-                if (farmingExp > 0.0f) {
-                    skills.addExp(PlayerSkillsAttachment.Skill.FARMING, farmingExp);
-                    player.syncData(PLAYER_SKILLS);
-                    UnshatteredSounds.playerExperienceSound(player);
-                    return;
-                }
+            float farmingExp = EntityFarmingExperience.getExp(event.getEntity().getType());
+            if (farmingExp > 0.0f) {
+                skills.addExp(PlayerSkillsAttachment.Skill.FARMING, farmingExp);
+                player.syncData(PLAYER_SKILLS);
+                UnshatteredSounds.playerExperienceSound(player);
+                return;
             }
         }
     }

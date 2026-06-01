@@ -10,19 +10,17 @@ import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
 import static io.github.moosyu.Unshattered.MODID;
 
+@EventBusSubscriber(modid = MODID)
 public class RegisterGuiLayersHandler {
-    @EventBusSubscriber(modid = MODID)
-    public static class EventHandler {
-        @SubscribeEvent
-        public static void onRegisterGuiLayer(RegisterGuiLayersEvent event) {
-            event.replaceLayer(VanillaGuiLayers.PLAYER_HEALTH, new HealthBarLayer());
-            event.replaceLayer(VanillaGuiLayers.FOOD_LEVEL, new ManaBarLayer());
-            event.replaceLayer(VanillaGuiLayers.SELECTED_ITEM_NAME, new SelectedItemLayer());
-            // hiding some vanilla bits
-            event.replaceLayer(VanillaGuiLayers.CONTEXTUAL_INFO_BAR, (_, _) -> {});
-            event.replaceLayer(VanillaGuiLayers.EXPERIENCE_LEVEL, (_, _) -> {});
-            event.replaceLayer(VanillaGuiLayers.CONTEXTUAL_INFO_BAR_BACKGROUND, (_, _) -> {});
-            event.replaceLayer(VanillaGuiLayers.ARMOR_LEVEL, (_, _) -> {});
-        }
+    @SubscribeEvent
+    public static void onRegisterGuiLayer(RegisterGuiLayersEvent event) {
+        event.replaceLayer(VanillaGuiLayers.PLAYER_HEALTH, new HealthBarLayer());
+        event.replaceLayer(VanillaGuiLayers.FOOD_LEVEL, new ManaBarLayer());
+        event.replaceLayer(VanillaGuiLayers.SELECTED_ITEM_NAME, new SelectedItemLayer());
+        // hiding some vanilla bits
+        event.replaceLayer(VanillaGuiLayers.CONTEXTUAL_INFO_BAR, (_, _) -> {});
+        event.replaceLayer(VanillaGuiLayers.EXPERIENCE_LEVEL, (_, _) -> {});
+        event.replaceLayer(VanillaGuiLayers.CONTEXTUAL_INFO_BAR_BACKGROUND, (_, _) -> {});
+        event.replaceLayer(VanillaGuiLayers.ARMOR_LEVEL, (_, _) -> {});
     }
 }

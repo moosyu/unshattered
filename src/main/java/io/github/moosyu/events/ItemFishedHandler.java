@@ -13,21 +13,19 @@ import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.registers.AttachmentRegistry.PLAYER_SKILLS;
 
+@EventBusSubscriber(modid = MODID)
 public class ItemFishedHandler {
-    @EventBusSubscriber(modid = MODID)
-    public static class EventHandler {
-        @SubscribeEvent
-        public static void onItemFished(ItemFishedEvent event) {
-            Player player = event.getEntity();
-            if (player.level().isClientSide()) return;
+    @SubscribeEvent
+    public static void onItemFished(ItemFishedEvent event) {
+        Player player = event.getEntity();
+        if (player.level().isClientSide()) return;
 
-            PlayerSkillsAttachment skills = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
+        PlayerSkillsAttachment skills = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
 
-            for (ItemStack fishingItem : event.getDrops()) {
-                skills.addExp(PlayerSkillsAttachment.Skill.FISHING, ItemsFishingExperience.getExp(fishingItem.getItem()));
-                player.syncData(PLAYER_SKILLS);
-                UnshatteredSounds.playerExperienceSound(player);
-            }
+        for (ItemStack fishingItem : event.getDrops()) {
+            skills.addExp(PlayerSkillsAttachment.Skill.FISHING, ItemsFishingExperience.getExp(fishingItem.getItem()));
+            player.syncData(PLAYER_SKILLS);
+            UnshatteredSounds.playerExperienceSound(player);
         }
     }
 }

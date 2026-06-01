@@ -11,21 +11,18 @@ import java.util.List;
 
 import static io.github.moosyu.Unshattered.MODID;
 
+@EventBusSubscriber(modid = MODID)
 public class BlockDropHandler {
-    @EventBusSubscriber(modid = MODID)
-    public static class EventHandler {
-        @SubscribeEvent
-        public static void onBlockDrop(BlockDropsEvent event) {
-            if (event.getBreaker() instanceof Player player && !player.level().isClientSide()) {
-                Inventory inventory = player.getInventory();
-                List<ItemEntity> drops = event.getDrops();
-                for (ItemEntity drop : drops) {
-                    // this seems to kind of just work but check in later to see if it bites me in the arse
-                    inventory.add(drop.getItem());
-                }
+    @SubscribeEvent
+    public static void onBlockDrop(BlockDropsEvent event) {
+        if (event.getBreaker() instanceof Player player && !player.level().isClientSide()) {
+            Inventory inventory = player.getInventory();
+            List<ItemEntity> drops = event.getDrops();
+            for (ItemEntity drop : drops) {
+                // this seems to kind of just work but check in later to see if it bites me in the arse
+                inventory.add(drop.getItem());
             }
         }
     }
 }
-
 

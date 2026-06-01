@@ -19,39 +19,37 @@ import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.registers.AttachmentRegistry.PLAYER_STATE;
 import static io.github.moosyu.sounds.UnshatteredSounds.playerDeathSound;
 
+@EventBusSubscriber(modid = MODID)
 public class LivingDamageHandler {
-    @EventBusSubscriber(modid = MODID)
-    public static class EventHandler {
-        @SubscribeEvent
-        public static void onLivingDamage(LivingDamageEvent.Pre event) {
-            Level level = event.getEntity().level();
-            if (level.isClientSide()) return;
-            if (event.getEntity() instanceof Player player) {
-                Entity attacker = event.getSource().getEntity();
-                event.setNewDamage(0.0f);
-                if (attacker instanceof LivingEntity entity) {
-                    AttributeInstance attackerHolder = entity.getAttribute(ModAttributes.DAMAGE.holder);
-                    if (attackerHolder == null) return;
-                    PlayerStateAttachment states = player.getData(PLAYER_STATE.get());
-                    double mobDamage = attackerHolder.getBaseValue();
-                    double playerHealth = states.getCurrentStat(PlayerStateAttachment.Stat.HEALTH);
-                    if (playerHealth - mobDamage > 0.0d) {
-                        states.removeCurrentStat(PlayerStateAttachment.Stat.HEALTH, mobDamage);
-                        player.syncData(PLAYER_STATE.get());
-                    } else {
-                        BlockPos spawnPos = level.getRespawnData().pos();
-                        player.teleportTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5);
-                        player.sendSystemMessage(Component.literal(player.getName().getString() + " was slain by a " + entity.getName().getString() + "!").withStyle(ChatFormatting.RED));
-                        states.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, player.getAttributeValue(ModAttributes.HEALTH.holder));
-                        player.syncData(PLAYER_STATE.get());
-                        // todo: fix the death sound not going off
-                        playerDeathSound(player);
-                        states.setCancelledKnockback(true);
-                    }
+    @SubscribeEvent
+    public static void onLivingDamage(LivingDamageEvent.Pre event) {
+        Level level = event.getEntity().level();
+        if (level.isClientSide()) return;
+        if (event.getEntity() instanceof Player player) {
+            Entity attacker = event.getSource().getEntity();
+            event.setNewDamage(0.0f);
+            if (attacker instanceof LivingEntity entity) {
+                AttributeInstance attackerHolder = entity.getAttribute(ModAttributes.DAMAGE.holder);
+                if (attackerHolder == null) return;
+                PlayerStateAttachment states = player.getData(PLAYER_STATE.get());
+                double mobDamage = attackerHolder.getBaseValue();
+                double playerHealth = states.getCurrentStat(PlayerStateAttachment.Stat.HEALTH);
+                if (playerHealth - mobDamage > 0.0d) {
+                    states.removeCurrentStat(PlayerStateAttachment.Stat.HEALTH, mobDamage);
+                    player.syncData(PLAYER_STATE.get());
+                } else {
+                    BlockPos spawnPos = level.getRespawnData().pos();
+                    player.teleportTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5);
+                    player.sendSystemMessage(Component.literal(player.getName().getString() + " was slain by a " + entity.getName().getString() + "!").withStyle(ChatFormatting.RED));
+                    states.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, player.getAttributeValue(ModAttributes.HEALTH.holder));
+                    player.syncData(PLAYER_STATE.get());
+                    // todo: fix the death sound not going off
+                    playerDeathSound(player);
+                    states.setCancelledKnockback(true);
                 }
-            } else if (event.getSource().is(DamageTypeTags.IS_FIRE)) {
-                event.getEntity().invulnerableTime = 0;
             }
+        } else if (event.getSource().is(DamageTypeTags.IS_FIRE)) {
+            event.getEntity().invulnerableTime = 0;
         }
     }
 }
