@@ -1,40 +1,44 @@
 package io.github.moosyu.screens;
 
-import com.mojang.math.Axis;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.AttributeTypes;
 import io.github.moosyu.attributes.ModAttributes;
 import io.github.moosyu.helpers.RomanNumeralHelper;
 import io.github.moosyu.registers.AttachmentRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 import static io.github.moosyu.registers.TextureRegister.*;
 
 public class ProfileScreen extends Screen {
     private enum Tabs {
-        SKILLS(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
-        STATS(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
-        QUESTS(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
-        CRAFTING(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
-        COLLECTIONS(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
-        PETS(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
-        STORAGE(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
-        WARDROBE(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
-        BANK(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
-        WARP(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
-        BAGS(ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone.png"));
+        SKILLS(Identifier.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
+        STATS(Identifier.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
+        QUESTS(Identifier.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
+        CRAFTING(Identifier.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
+        COLLECTIONS(Identifier.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
+        PETS(Identifier.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
+        STORAGE(Identifier.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
+        WARDROBE(Identifier.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
+        BANK(Identifier.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
+        WARP(Identifier.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
+        BAGS(Identifier.fromNamespaceAndPath("minecraft", "textures/block/stone.png"));
 
-        private final ResourceLocation iconTexture;
+        private final Identifier iconTexture;
 
-        Tabs(ResourceLocation iconTexture) {
+        Tabs(Identifier iconTexture) {
             this.iconTexture = iconTexture;
         }
     }
@@ -75,30 +79,36 @@ public class ProfileScreen extends Screen {
                 int posX = (even ? CORNER_POS_X : CORNER_POS_X + SCREEN_WIDTH - 176);
                 int posY = (even ? (CORNER_POS_Y + i * 24) : (CORNER_POS_Y + (i - 1) * 24));
                 PlayerSkillsAttachment.Skill currentSkill = PlayerSkillsAttachment.Skill.values()[i];
-
-                this.addRenderableWidget(new SkillWidget(currentSkill, posX + 16, posY + 16, player, new ItemStack(currentSkill.getIcon())));
+                this.addRenderableWidget(new SkillWidget(currentSkill, posX, posY, player, currentSkill.getIcon().getDefaultInstance()));
             }
         } else if (currentTab == Tabs.STATS) {
             for (ModAttributes currentStat : ModAttributes.values()) {
                 if (currentStat.type == AttributeTypes.INVISIBLE) continue;
-                this.addRenderableWidget(new StatWidget( currentStat, CORNER_POS_X, CORNER_POS_Y + (uniqueIndex * 14), player ) );
+                this.addRenderableWidget(new StatWidget(currentStat, CORNER_POS_X, CORNER_POS_Y + (uniqueIndex * 14), player ) );
                 uniqueIndex++;
             }
         }
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {super.render(graphics, mouseX, mouseY, partialTick);}
-
-    @Override
-    public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+    public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         // putting this all here to layer the dimmed background bit and the actual empty screen properly
         // idk why this happens i mustve done something wrong at some point
-        this.renderTransparentBackground(graphics);
-        int cornerPosX = (this.width - SCREEN_WIDTH) / 2;
-        int cornerPosY = (this.height - SCREEN_HEIGHT) / 2;
+        this.extractTransparentBackground(graphics);
+        final int CORNER_POS_X = (this.width - SCREEN_WIDTH) / 2;
+        final int CORNER_POS_Y = (this.height - SCREEN_HEIGHT) / 2;
 
-        graphics.blit(PROFILE_SCREEN, cornerPosX, cornerPosY, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, PROFILE_SCREEN, CORNER_POS_X, CORNER_POS_Y, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT);
+        // some debugging stuff
+        //final int RIGHT_POS = CORNER_POS_Y + SCREEN_WIDTH;
+        //final int BOTTOM_POS = CORNER_POS_Y + SCREEN_HEIGHT;
+        //final int COLOR = 0xFFFF0000;
+
+        //graphics.fill(CORNER_POS_X, CORNER_POS_X, RIGHT_POS, CORNER_POS_X + 1, COLOR);
+        //graphics.fill(CORNER_POS_X, BOTTOM_POS - 1, RIGHT_POS, BOTTOM_POS, COLOR);
+        //graphics.fill(CORNER_POS_X, CORNER_POS_X, CORNER_POS_X + 1, BOTTOM_POS, COLOR);
+        //graphics.fill(RIGHT_POS - 1, CORNER_POS_X, RIGHT_POS, BOTTOM_POS, COLOR);
+
     }
 
     // so it wont try to save and what not
@@ -118,30 +128,30 @@ public class ProfileScreen extends Screen {
         }
 
         @Override
-        protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int i, int i1, float v) {
             PlayerSkillsAttachment playerData = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
 
             // debug area for clicks
             // graphics.fill(this.getX(), this.getY(), this.getX() + this.width, this.getY() + this.height, 0x44FF0000);
 
             String levelText = skill.getName() + " " + RomanNumeralHelper.toRoman(playerData.getLevel(playerData.getExp(skill)));
-            graphics.drawString(Minecraft.getInstance().font, levelText, this.getX() + 36, this.getY() + 4, 0xFF53F953, true);
-            graphics.pose().pushPose();
-            graphics.pose().scale(2f, 2f, 2f);
-            graphics.renderItem(displayIcon, this.getX() / 2, this.getY() / 2);
-            graphics.pose().popPose();
-            graphics.blit(SKILL_BAR, this.getX() + 32, this.getY() + 24, 0, 7, 112, 8, 112, 15);
-            graphics.blit(SKILL_BAR, this.getX() + 32, this.getY() + 24, 0, 0, (int) (112 * playerData.getPercentageToLevel(playerData.getExp(skill))), 8, 112, 15);
+            graphics.text(Minecraft.getInstance().font, levelText, this.getX() + 36, this.getY() + 4, 0xFF53F953, true);
+            graphics.pose().pushMatrix();
+            graphics.pose().scale(2f, 2f);
+            graphics.item(displayIcon, this.getX() / 2, this.getY() / 2);
+            graphics.pose().popMatrix();
+            graphics.blit(RenderPipelines.GUI_TEXTURED, SKILL_BAR, this.getX() + 32, this.getY() + 24, 0, 7, 112, 8, 112, 15);
+            graphics.blit(RenderPipelines.GUI_TEXTURED, SKILL_BAR, this.getX() + 32, this.getY() + 24, 0, 0, (int) (112 * playerData.getPercentageToLevel(playerData.getExp(skill))), 8, 112, 15);
         }
 
         @Override
-        public boolean mouseClicked(double mouseX, double mouseY, int button) {
-            if (this.isValidClickButton(button) && this.clicked(mouseX, mouseY)) {
+        public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
+            if (this.isValidClickButton(event.buttonInfo())) {
                 this.playDownSound(Minecraft.getInstance().getSoundManager());
                 System.out.println(this.skill.getName());
                 return true;
             }
-            return super.mouseClicked(mouseX, mouseY, button);
+            return false;
         }
 
         @Override
@@ -160,13 +170,13 @@ public class ProfileScreen extends Screen {
         }
 
         @Override
-        protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
             final double attributeValue = player.getAttributeValue(currentAttribute.holder);
             int textX = this.getX() + 20;
             int textY = this.getY() + 4;
 
-            graphics.drawString(Minecraft.getInstance().font, currentAttribute.symbol + " " + Component.translatable(currentAttribute.getTranslationKey()).getString() + ":", textX, textY, currentAttribute.color, false);
-            graphics.drawString(Minecraft.getInstance().font, String.format("%.0f", attributeValue), textX + Minecraft.getInstance().font.width(currentAttribute.symbol + " " + currentAttribute.name() + ":") + 2, textY, 0xFFDEDFE0, false);
+            graphics.text(Minecraft.getInstance().font, currentAttribute.symbol + " " + Component.translatable(currentAttribute.getTranslationKey()).getString() + ":", textX, textY, currentAttribute.color, false);
+            graphics.text(Minecraft.getInstance().font, String.format("%.0f", attributeValue), textX + Minecraft.getInstance().font.width(currentAttribute.symbol + " " + currentAttribute.name() + ":") + 2, textY, 0xFFDEDFE0, false);
         }
 
         @Override
@@ -174,11 +184,11 @@ public class ProfileScreen extends Screen {
     }
 
     private static class TabButton extends AbstractWidget {
-        private final ResourceLocation texture, iconTexture;
+        private final Identifier texture, iconTexture;
         private final Runnable onPress;
         private final boolean flipped, active;
 
-        public TabButton(int x, int y, int width, int height, ResourceLocation texture, Runnable onPress, boolean flipped, ResourceLocation iconTexture, boolean active) {
+        public TabButton(int x, int y, int width, int height, Identifier texture, Runnable onPress, boolean flipped, Identifier iconTexture, boolean active) {
             super(x, y, width, height, Component.empty());
             this.texture = texture;
             this.onPress = onPress;
@@ -188,28 +198,29 @@ public class ProfileScreen extends Screen {
         }
 
         @Override
-        protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int i, int i1, float v) {
             if (flipped) {
-                graphics.pose().pushPose();
-                graphics.pose().translate(this.getX() + width / 2f, this.getY() + height / 2f, 0);
-                graphics.pose().mulPose(Axis.ZP.rotationDegrees(180));
-                graphics.pose().translate(-(this.getX() + width / 2f), -(this.getY() + height / 2f), 0);
-                graphics.blit(texture, this.getX(), this.getY(), 0, 0, width, height, width, height);
-                graphics.pose().popPose();
+                graphics.pose().pushMatrix();
+                graphics.pose().translate(this.getX() + width / 2f, this.getY() + height / 2f);
+                graphics.pose().rotate((float) Math.PI);
+                graphics.pose().translate(-(this.getX() + width / 2f), -(this.getY() + height / 2f));
+                graphics.blit(RenderPipelines.GUI_TEXTURED, texture, this.getX(), this.getY(), 0, 0, width, height, width, height);
+                graphics.pose().popMatrix();
 
                 // icons
-                graphics.blit( iconTexture, this.getX(), active ? (this.getY()) - 1 : (this.getY()), 0, active ? 0 : 5, 16, active ? 16 : 11, 16, 16);
+                graphics.blit(RenderPipelines.GUI_TEXTURED, iconTexture, this.getX(), active ? (this.getY()) - 1 : (this.getY()), 0, active ? 0 : 5, 16, active ? 16 : 11, 16, 16);
             } else {
-                graphics.blit(texture, this.getX(), this.getY(), 0, 0, width, height, width, height);
+                graphics.blit(RenderPipelines.GUI_TEXTURED, texture, this.getX(), this.getY(), 0, 0, width, height, width, height);
 
                 // icons
-                graphics.blit(iconTexture, this.getX(), active ? (this.getY()) + 1 : (this.getY()) + 5, 0, 0, 16, active ? 16 : 11, 16, 16);
+                graphics.blit(RenderPipelines.GUI_TEXTURED, iconTexture, this.getX(), active ? (this.getY()) + 1 : (this.getY()) + 5, 0, 0, 16, active ? 16 : 11, 16, 16);
             }
+
         }
 
         @Override
-        public boolean mouseClicked(double mouseX, double mouseY, int button) {
-            if (this.isValidClickButton(button) && this.isMouseOver(mouseX, mouseY)) {
+        public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
+            if (this.isValidClickButton(event.buttonInfo())) {
                 this.playDownSound(Minecraft.getInstance().getSoundManager());
                 onPress.run();
                 return true;

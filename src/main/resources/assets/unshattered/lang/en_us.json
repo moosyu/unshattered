@@ -1,9 +1,9 @@
 {
-  "item_group.unshattered.items": "Unshattered Items",
-  "item_group.unshattered.armor": "Unshattered Armor",
-  "item_group.unshattered.tools": "Unshattered Tools",
-  "item_group.unshattered.weapons": "Unshattered Weapons",
-  "item_group.unshattered.blocks": "Unshattered Blocks",
+  "item_group.unshattered.items": "Skyblock: Unshattered Items",
+  "item_group.unshattered.armor": "Skyblock: Unshattered Armor",
+  "item_group.unshattered.tools": "Skyblock: Unshattered Tools",
+  "item_group.unshattered.weapons": "Skyblock: Unshattered Weapons",
+  "item_group.unshattered.blocks": "Skyblock: Unshattered Blocks",
 
   "item.unshattered.treecapitator": "Treecapitator",
   "item.unshattered.spruce_axe": "Spruce Axe",
@@ -50,6 +50,7 @@
   "item.unshattered.golden_axe": "Golden Axe",
   "item.unshattered.iron_axe": "Iron Axe",
   "item.unshattered.diamond_axe": "Diamond Axe",
+  "item.unshattered.fig_log": "Fig Log",
   "item.unshattered.enchanted_fig_log": "Enchanted Fig Log",
 
   "block.unshattered.fig_log": "Fig Log",
@@ -89,6 +90,12 @@
   "attribute.name.unshattered.critical_chance": "Critical Chance",
   "attribute.name.unshattered.mana": "Mana",
   "attribute.name.unshattered.health_regen": "Health Regen",
+
+  "skills.name.unshattered.combat": "Combat",
+  "skills.name.unshattered.farming": "Farming",
+  "skills.name.unshattered.fishing": "Fishing",
+  "skills.name.unshattered.mining": "Mining",
+  "skills.name.unshattered.foraging": "Foraging",
 
   "rarity.unshattered.common": "Common",
   "rarity.unshattered.uncommon": "Uncommon",

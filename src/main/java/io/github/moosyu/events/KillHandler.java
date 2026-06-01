@@ -1,11 +1,10 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.experience.BlocksFarmingExperience;
 import io.github.moosyu.experience.EntityCombatExperience;
 import io.github.moosyu.experience.EntityFarmingExperience;
 import io.github.moosyu.registers.AttachmentRegistry;
-import io.github.moosyu.sounds.ModSounds;
+import io.github.moosyu.sounds.UnshatteredSounds;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -32,7 +31,7 @@ public class KillHandler {
                 if (combatExp > 0.0f) {
                     skills.addExp(PlayerSkillsAttachment.Skill.COMBAT, combatExp);
                     player.syncData(PLAYER_SKILLS);
-                    ModSounds.playerExperienceSound(player);
+                    UnshatteredSounds.playerExperienceSound(player);
                     return;
                 }
 
@@ -40,7 +39,7 @@ public class KillHandler {
                 if (farmingExp > 0.0f) {
                     skills.addExp(PlayerSkillsAttachment.Skill.FARMING, farmingExp);
                     player.syncData(PLAYER_SKILLS);
-                    ModSounds.playerExperienceSound(player);
+                    UnshatteredSounds.playerExperienceSound(player);
                     return;
                 }
             }

@@ -27,7 +27,7 @@ public class PlayerTickHandler {
             // disable hunger effects
             player.getFoodData().setFoodLevel(20);
             player.getFoodData().setSaturation(5.0f);
-            player.getFoodData().setExhaustion(0.0f);
+            //player.getFoodData().setExhaustion(0.0f);
 
             double maxHealth = player.getAttribute(ModAttributes.HEALTH.holder).getValue();
             // heal every 2 seconds

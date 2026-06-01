@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "unshattered:block/fig_log_top",
+    "side": "unshattered:block/fig_log_side"
+  }
+}

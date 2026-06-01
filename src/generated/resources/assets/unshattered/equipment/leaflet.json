@@ -1,0 +1,19 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "unshattered:leaflet"
+      }
+    ],
+    "humanoid_baby": [
+      {
+        "texture": "unshattered:leaflet"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "unshattered:leaflet"
+      }
+    ]
+  }
+}
