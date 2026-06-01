@@ -9,13 +9,13 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.client.gui.GuiLayer;
+import org.jspecify.annotations.NonNull;
 
-import static io.github.moosyu.helpers.TextShadowHelper.drawShadowText;
-import static io.github.moosyu.registers.TextureRegister.SMALL_BAR;
+import static io.github.moosyu.layers.UnshatteredGuiLayers.SMALL_BAR;
 
 public class ManaBarLayer implements GuiLayer {
     @Override
-    public void render(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker) {
+    public void render(GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
         final int SPRITE_WIDTH = 73;
         final int SPRITE_HEIGHT = 15;
         final int BAR_HEIGHT = 8;
@@ -25,6 +25,7 @@ public class ManaBarLayer implements GuiLayer {
         Player player = Minecraft.getInstance().player;
         if (!player.level().isClientSide()) return;
         final AttributeInstance manaAttribute = Minecraft.getInstance().player.getAttribute(ModAttributes.MANA.holder);
+        if (manaAttribute == null) return;
         final String currentManaText = String.valueOf((int) manaAttribute.getValue());
         final Font font = Minecraft.getInstance().font;
 

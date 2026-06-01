@@ -2,6 +2,7 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.layers.HealthBarLayer;
 import io.github.moosyu.layers.ManaBarLayer;
+import io.github.moosyu.layers.SelectedItemLayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
@@ -14,15 +15,14 @@ public class RegisterGuiLayersHandler {
     public static class EventHandler {
         @SubscribeEvent
         public static void onRegisterGuiLayer(RegisterGuiLayersEvent event) {
-            // https://antongerdelan.net/colour/
             event.replaceLayer(VanillaGuiLayers.PLAYER_HEALTH, new HealthBarLayer());
             event.replaceLayer(VanillaGuiLayers.FOOD_LEVEL, new ManaBarLayer());
-            event.replaceLayer(VanillaGuiLayers.SELECTED_ITEM_NAME, new ManaBarLayer());
+            event.replaceLayer(VanillaGuiLayers.SELECTED_ITEM_NAME, new SelectedItemLayer());
             // hiding some vanilla bits
-            event.replaceLayer(VanillaGuiLayers.CONTEXTUAL_INFO_BAR, (context, tickCounter) -> {});
-            event.replaceLayer(VanillaGuiLayers.EXPERIENCE_LEVEL, (context, tickCounter) -> {});
-            event.replaceLayer(VanillaGuiLayers.CONTEXTUAL_INFO_BAR_BACKGROUND, (context, tickCounter) -> {});
-            event.replaceLayer(VanillaGuiLayers.ARMOR_LEVEL, (context, tickCounter) -> {});
+            event.replaceLayer(VanillaGuiLayers.CONTEXTUAL_INFO_BAR, (_, _) -> {});
+            event.replaceLayer(VanillaGuiLayers.EXPERIENCE_LEVEL, (_, _) -> {});
+            event.replaceLayer(VanillaGuiLayers.CONTEXTUAL_INFO_BAR_BACKGROUND, (_, _) -> {});
+            event.replaceLayer(VanillaGuiLayers.ARMOR_LEVEL, (_, _) -> {});
         }
     }
 }

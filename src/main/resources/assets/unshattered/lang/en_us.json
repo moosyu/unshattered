@@ -52,6 +52,8 @@
   "item.unshattered.diamond_axe": "Diamond Axe",
   "item.unshattered.fig_log": "Fig Log",
   "item.unshattered.enchanted_fig_log": "Enchanted Fig Log",
+  "item.unshattered.bedrock": "Bedrock",
+  "item.unshattered.cake_soul": "Cake Soul",
 
   "block.unshattered.fig_log": "Fig Log",
 
@@ -80,6 +82,8 @@
   "item.description.unshattered.swamp_the_fish": "I once tried a clear pond. too shiny. Never again.",
   "item.description.unshattered.zoop_the_fish": "Keep me in here please.",
   "item.description.unshattered.fig_log": "Each ring tells tales of sun-kissed days. Hold it close, and you might hear its stories.",
+  "item.description.unshattered.bedrock": "[color=0xFFFF5555]I guess you have this now.[/color]",
+  "item.description.unshattered.cake_soul": "What does it all mean???",
 
   "attribute.name.unshattered.sweep": "Sweep",
   "attribute.name.unshattered.foraging_fortune": "Foraging Fortune",

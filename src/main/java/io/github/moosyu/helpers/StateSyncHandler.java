@@ -6,6 +6,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.attachment.AttachmentSyncHandler;
 import net.neoforged.neoforge.attachment.IAttachmentHolder;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 // warning (for me): DO NOT FUCK UP THE ORDERING OF THE DATA IT WILL NOT FIGURE IT OUT ITSELF!!!
 public class StateSyncHandler implements AttachmentSyncHandler<PlayerStateAttachment> {
@@ -31,7 +32,7 @@ public class StateSyncHandler implements AttachmentSyncHandler<PlayerStateAttach
     }
 
     @Override
-    public @Nullable PlayerStateAttachment read(IAttachmentHolder holder, RegistryFriendlyByteBuf buf, @Nullable PlayerStateAttachment previousValue) {
+    public @Nullable PlayerStateAttachment read(@NonNull IAttachmentHolder holder, RegistryFriendlyByteBuf buf, @Nullable PlayerStateAttachment previousValue) {
         boolean fullSync = buf.readBoolean();
 
         if (fullSync) {
@@ -59,7 +60,7 @@ public class StateSyncHandler implements AttachmentSyncHandler<PlayerStateAttach
         }
     }
     @Override
-    public boolean sendToPlayer(IAttachmentHolder holder, ServerPlayer player) {
+    public boolean sendToPlayer(@NonNull IAttachmentHolder holder, @NonNull ServerPlayer player) {
         return holder == player;
     }
 }

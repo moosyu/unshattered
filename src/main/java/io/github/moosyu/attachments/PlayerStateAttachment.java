@@ -1,5 +1,7 @@
 package io.github.moosyu.attachments;
 
+import net.minecraft.world.item.ItemStack;
+
 public class PlayerStateAttachment {
     private final double[] stats = new double[Stat.values().length];
     private boolean cancelKnockback = false;

@@ -9,13 +9,14 @@ import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.client.gui.GuiLayer;
+import org.jspecify.annotations.NonNull;
 
 import static io.github.moosyu.registers.AttachmentRegistry.PLAYER_STATE;
-import static io.github.moosyu.registers.TextureRegister.SMALL_BAR;
+import static io.github.moosyu.layers.UnshatteredGuiLayers.SMALL_BAR;
 
 public class HealthBarLayer implements GuiLayer {
     @Override
-    public void render(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker) {
+    public void render(GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
         final int SPRITE_WIDTH = 73;
         final int SPRITE_HEIGHT = 15;
         final int BAR_HEIGHT = 8;

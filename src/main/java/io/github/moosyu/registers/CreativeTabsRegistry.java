@@ -43,6 +43,8 @@ public class CreativeTabsRegistry {
             output.accept(STEW_THE_FISH.get());
             output.accept(SWAMP_THE_FISH.get());
             output.accept(ZOOP_THE_FISH.get());
+            output.accept(BEDROCK.get());
+            output.accept(CAKE_SOUL.get());
         }).build());
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_BLOCKS_TAB = CREATIVE_MODE_TABS.register("unshattered_blocks_tab",

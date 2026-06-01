@@ -2,7 +2,7 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.attachments.PlayerStateAttachment;
 import io.github.moosyu.attributes.ModAttributes;
-import io.github.moosyu.registers.AttributesRegistry;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -23,22 +23,26 @@ public class PlayerTickHandler {
             Player player = event.getEntity();
             if (player.level().isClientSide()) return;
             PlayerStateAttachment stats = player.getData(PLAYER_STATE.get());
+            final AttributeInstance healthAttribute = player.getAttribute(ModAttributes.HEALTH.holder);
+            final AttributeInstance healthRegenAttribute = player.getAttribute(ModAttributes.HEALTH_REGEN.holder);
 
             // disable hunger effects
             player.getFoodData().setFoodLevel(20);
             player.getFoodData().setSaturation(5.0f);
             //player.getFoodData().setExhaustion(0.0f);
 
-            double maxHealth = player.getAttribute(ModAttributes.HEALTH.holder).getValue();
-            // heal every 2 seconds
-            if (player.tickCount % 40 == 0) {
-                double healthGained = (1.5 + maxHealth/100) * (player.getAttribute(ModAttributes.HEALTH_REGEN.holder).getValue()/100);
-                stats.addCurrentStat(PlayerStateAttachment.Stat.HEALTH, healthGained, maxHealth);
-                player.syncData(PLAYER_STATE);
-            } else {
-                // update health if attribute changed. itll already be updated on the healing tick though
-                if (maxHealth < stats.getCurrentStat(PlayerStateAttachment.Stat.HEALTH)) stats.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, maxHealth);
-                player.syncData(PLAYER_STATE);
+            if (healthAttribute != null && healthRegenAttribute != null) {
+                double maxHealth = healthAttribute.getValue();
+                // heal every 2 seconds
+                if (player.tickCount % 40 == 0) {
+                    double healthGained = (1.5 + maxHealth / 100) * (healthRegenAttribute.getValue() / 100);
+                    stats.addCurrentStat(PlayerStateAttachment.Stat.HEALTH, healthGained, maxHealth);
+                    player.syncData(PLAYER_STATE);
+                } else {
+                    // update health if attribute changed. itll already be updated on the healing tick though
+                    if (maxHealth < stats.getCurrentStat(PlayerStateAttachment.Stat.HEALTH)) stats.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, maxHealth);
+                    player.syncData(PLAYER_STATE);
+                }
             }
 
             // fishing popup

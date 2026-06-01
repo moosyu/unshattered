@@ -8,8 +8,6 @@ import io.github.moosyu.registers.AttachmentRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.MouseButtonEvent;
@@ -18,9 +16,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
-import static io.github.moosyu.registers.TextureRegister.*;
+import static io.github.moosyu.layers.UnshatteredGuiLayers.*;
 
 public class ProfileScreen extends Screen {
     private enum Tabs {
@@ -43,8 +40,8 @@ public class ProfileScreen extends Screen {
         }
     }
 
-    private static final int SCREEN_WIDTH = 352;
-    private static final int SCREEN_HEIGHT = 222;
+    private static final int SCREEN_WIDTH = 350;
+    private static final int SCREEN_HEIGHT = 150;
     private static final String PAGE_NAME = "Profile";
     private Tabs currentTab = Tabs.SKILLS;
 
@@ -73,6 +70,8 @@ public class ProfileScreen extends Screen {
 
         // for anything that requires it
         int uniqueIndex = 0;
+
+        // todo: center these horizontally and vertically
         if (currentTab == Tabs.SKILLS) {
             for (int i = 0; i < PlayerSkillsAttachment.Skill.values().length; i++) {
                 boolean even = i % 2 == 0;
