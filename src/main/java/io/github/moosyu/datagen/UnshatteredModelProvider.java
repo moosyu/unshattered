@@ -6,13 +6,13 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.model.*;
-import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.equipment.EquipmentAssets;
 
 import static io.github.moosyu.Unshattered.MODID;
+import static io.github.moosyu.registers.BlocksRegistry.FIG_LOG_BLOCK;
 
 public class UnshatteredModelProvider extends ModelProvider {
     public UnshatteredModelProvider(PackOutput output) {
@@ -66,9 +66,7 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ItemsRegistry.STEW_THE_FISH.get(), Items.COD, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsRegistry.SWAMP_THE_FISH.get(), Items.COOKED_SALMON, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsRegistry.ZOOP_THE_FISH.get(), Items.SALMON, ModelTemplates.FLAT_ITEM);
-        // ill figure out how to fake blocks at some point
-        itemModels.generateFlatItem(ItemsRegistry.ENCHANTED_FIG_LOG.get(), Items.STRIPPED_SPRUCE_LOG, ModelTemplates.FLAT_ITEM);
-
-        blockModels.createTrivialCube(BlocksRegistry.FIG_LOG_BLOCK.get());
+        blockModels.createRotatedPillarWithHorizontalVariant(FIG_LOG_BLOCK.get(), TexturedModel.COLUMN, TexturedModel.COLUMN_HORIZONTAL);
+        itemModels.itemModelOutput.accept(ItemsRegistry.ENCHANTED_FIG_LOG.get(), ItemModelUtils.plainModel(ModelTemplates.CUBE_COLUMN.create(Identifier.fromNamespaceAndPath("unshattered", "block/enchanted_fig_log"), TextureMapping.column(FIG_LOG_BLOCK.get()), blockModels.modelOutput)));
     }
 }

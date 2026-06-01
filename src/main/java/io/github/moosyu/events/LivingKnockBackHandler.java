@@ -16,7 +16,7 @@ public class LivingKnockBackHandler {
         public static void onLivingKnockBack(LivingKnockBackEvent event) {
             if (event.getEntity() instanceof Player player && !player.level().isClientSide()) {
                 PlayerStateAttachment state = player.getData(AttachmentRegistry.PLAYER_STATE.get());
-                if (state.shouldCancelKnockback()) event.setCanceled(true);
+                if (state.isKnockbackCancelled()) event.setCanceled(true);
                 state.setCancelledKnockback(false);
             }
         }

@@ -8,6 +8,8 @@ import io.github.moosyu.registers.AttachmentRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.MouseButtonEvent;
@@ -16,6 +18,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 import static io.github.moosyu.registers.TextureRegister.*;
 
@@ -76,27 +79,36 @@ public class ProfileScreen extends Screen {
                 int posX = (even ? CORNER_POS_X : CORNER_POS_X + SCREEN_WIDTH - 176);
                 int posY = (even ? (CORNER_POS_Y + i * 24) : (CORNER_POS_Y + (i - 1) * 24));
                 PlayerSkillsAttachment.Skill currentSkill = PlayerSkillsAttachment.Skill.values()[i];
-                this.addRenderableWidget(new SkillWidget(currentSkill, posX + 16, posY + 16, player, new ItemStack(currentSkill.getIcon())));
+                this.addRenderableWidget(new SkillWidget(currentSkill, posX, posY, player, currentSkill.getIcon().getDefaultInstance()));
             }
         } else if (currentTab == Tabs.STATS) {
             for (ModAttributes currentStat : ModAttributes.values()) {
                 if (currentStat.type == AttributeTypes.INVISIBLE) continue;
-                this.addRenderableWidget(new StatWidget( currentStat, CORNER_POS_X, CORNER_POS_Y + (uniqueIndex * 14), player ) );
+                this.addRenderableWidget(new StatWidget(currentStat, CORNER_POS_X, CORNER_POS_Y + (uniqueIndex * 14), player ) );
                 uniqueIndex++;
             }
         }
     }
-
 
     @Override
     public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         // putting this all here to layer the dimmed background bit and the actual empty screen properly
         // idk why this happens i mustve done something wrong at some point
         this.extractTransparentBackground(graphics);
-        int cornerPosX = (this.width - SCREEN_WIDTH) / 2;
-        int cornerPosY = (this.height - SCREEN_HEIGHT) / 2;
+        final int CORNER_POS_X = (this.width - SCREEN_WIDTH) / 2;
+        final int CORNER_POS_Y = (this.height - SCREEN_HEIGHT) / 2;
 
-        graphics.blit(RenderPipelines.GUI_TEXTURED, PROFILE_SCREEN, cornerPosX, cornerPosY, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, PROFILE_SCREEN, CORNER_POS_X, CORNER_POS_Y, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT);
+        // some debugging stuff
+        //final int RIGHT_POS = CORNER_POS_Y + SCREEN_WIDTH;
+        //final int BOTTOM_POS = CORNER_POS_Y + SCREEN_HEIGHT;
+        //final int COLOR = 0xFFFF0000;
+
+        //graphics.fill(CORNER_POS_X, CORNER_POS_X, RIGHT_POS, CORNER_POS_X + 1, COLOR);
+        //graphics.fill(CORNER_POS_X, BOTTOM_POS - 1, RIGHT_POS, BOTTOM_POS, COLOR);
+        //graphics.fill(CORNER_POS_X, CORNER_POS_X, CORNER_POS_X + 1, BOTTOM_POS, COLOR);
+        //graphics.fill(RIGHT_POS - 1, CORNER_POS_X, RIGHT_POS, BOTTOM_POS, COLOR);
+
     }
 
     // so it wont try to save and what not
@@ -127,7 +139,7 @@ public class ProfileScreen extends Screen {
             graphics.pose().pushMatrix();
             graphics.pose().scale(2f, 2f);
             graphics.item(displayIcon, this.getX() / 2, this.getY() / 2);
-            graphics.pose().pushMatrix();
+            graphics.pose().popMatrix();
             graphics.blit(RenderPipelines.GUI_TEXTURED, SKILL_BAR, this.getX() + 32, this.getY() + 24, 0, 7, 112, 8, 112, 15);
             graphics.blit(RenderPipelines.GUI_TEXTURED, SKILL_BAR, this.getX() + 32, this.getY() + 24, 0, 0, (int) (112 * playerData.getPercentageToLevel(playerData.getExp(skill))), 8, 112, 15);
         }

@@ -52,7 +52,7 @@ public class PlayerStateAttachment {
         stats[index] = value;
     }
 
-    public boolean shouldCancelKnockback() {
+    public boolean isKnockbackCancelled() {
         return cancelKnockback;
     }
 

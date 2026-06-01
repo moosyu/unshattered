@@ -91,6 +91,12 @@
   "attribute.name.unshattered.mana": "Mana",
   "attribute.name.unshattered.health_regen": "Health Regen",
 
+  "skills.name.unshattered.combat": "Combat",
+  "skills.name.unshattered.farming": "Farming",
+  "skills.name.unshattered.fishing": "Fishing",
+  "skills.name.unshattered.mining": "Mining",
+  "skills.name.unshattered.foraging": "Foraging",
+
   "rarity.unshattered.common": "Common",
   "rarity.unshattered.uncommon": "Uncommon",
   "rarity.unshattered.rare": "Rare",

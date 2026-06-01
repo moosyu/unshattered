@@ -1,17 +1,26 @@
 package io.github.moosyu.materials;
 
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Util;
+import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.EquipmentAssets;
 import net.neoforged.neoforge.common.Tags;
 
 import java.util.EnumMap;
 
+import static io.github.moosyu.Unshattered.MODID;
+
 public class ArmorMaterials {
-    public static final net.minecraft.world.item.equipment.ArmorMaterial LEAFLET_ARMOR_MATERIAL = new net.minecraft.world.item.equipment.ArmorMaterial(
+    private static final ResourceKey<? extends Registry<EquipmentAsset>> ROOT_ID = ResourceKey.createRegistryKey(Identifier.withDefaultNamespace("equipment_asset"));
+    public static ResourceKey<EquipmentAsset> LEAFLET_KEY = ResourceKey.create(ROOT_ID, Identifier.fromNamespaceAndPath(MODID, "leaflet"));
+
+    public static final ArmorMaterial LEAFLET_ARMOR_MATERIAL = new ArmorMaterial(
 1,
         // Determines the defense value of this armor material, depending on what armor piece it is.
         Util.make(new EnumMap<>(ArmorType.class), map -> {
@@ -26,7 +35,7 @@ public class ArmorMaterials {
         20,
         // Determines the sound played when equipping this armor.
         // This is wrapped with a Holder.
-        SoundEvents.ARMOR_EQUIP_GENERIC,
+        BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.AZALEA_LEAVES_PLACE),
 0.0f,
 0.0f,
         Tags.Items.NUGGETS,

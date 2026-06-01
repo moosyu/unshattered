@@ -2,6 +2,7 @@ package io.github.moosyu.attachments;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -17,22 +18,22 @@ public class PlayerSkillsAttachment {
 
     // todo: ideally these should be using like lang files for names but i dont really intend on translating this mod so i dont mind rn
     public enum Skill {
-        COMBAT("Combat", Items.STONE_SWORD),
-        FARMING("Farming", Items.GOLDEN_HOE),
-        FISHING("Fishing", Items.FISHING_ROD),
-        MINING("Mining", Items.STONE_PICKAXE),
-        FORAGING("Foraging", Items.OAK_SAPLING);
+        COMBAT("skills.name.unshattered.combat", Items.STONE_SWORD),
+        FARMING("skills.name.unshattered.farming", Items.GOLDEN_HOE),
+        FISHING("skills.name.unshattered.fishing", Items.FISHING_ROD),
+        MINING("skills.name.unshattered.mining", Items.STONE_PICKAXE),
+        FORAGING("skills.name.unshattered.foraging", Items.OAK_SAPLING);
 
-        private final String name;
+        private final String key;
         private final Item icon;
 
-        Skill(String name, Item icon) {
-            this.name = name;
+        Skill(String key, Item icon) {
+            this.key = key;
             this.icon = icon;
         }
 
         public String getName() {
-            return name;
+            return Component.translatable(key).getString();
         }
 
         public Item getIcon() {
