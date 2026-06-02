@@ -1,6 +1,8 @@
 package io.github.moosyu.registers;
 
+import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.ModAttributes;
+import io.github.moosyu.dataComponents.SkillRequirement;
 import io.github.moosyu.items.*;
 import io.github.moosyu.rarities.RarityTypes;
 import net.minecraft.resources.Identifier;
@@ -19,7 +21,7 @@ import static io.github.moosyu.registers.BlocksRegistry.*;
 public class ItemsRegistry {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
 
-    public static final DeferredItem<UnshatteredAxeWeapon> MERCENARY_AXE = ITEMS.registerItem("mercenary_axe", props -> new UnshatteredAxeWeapon(props.component(DataComponentRegistry.RARITY.get(), RarityTypes.RARE).attributes(ItemAttributeModifiers.builder().add(ModAttributes.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "mercenary_axe_damage"), 70, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).add(ModAttributes.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "mercenary_axe_strength"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).build())));
+    public static final DeferredItem<UnshatteredAxeWeapon> MERCENARY_AXE = ITEMS.registerItem("mercenary_axe", props -> new UnshatteredAxeWeapon(props.component(DataComponentRegistry.RARITY.get(), RarityTypes.RARE).component(DataComponentRegistry.SKILL_REQUIREMENT.get(), new SkillRequirement(PlayerSkillsAttachment.Skill.COMBAT, 4)).attributes(ItemAttributeModifiers.builder().add(ModAttributes.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "mercenary_axe_damage"), 70, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).add(ModAttributes.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "mercenary_axe_strength"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).build())));
     public static final DeferredItem<UnshatteredSword> WOODEN_SWORD = ITEMS.registerItem("wooden_sword", props -> new UnshatteredSword(props.component(DataComponentRegistry.RARITY.get(), RarityTypes.COMMON).attributes(ItemAttributeModifiers.builder().add(ModAttributes.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "wooden_sword_damage"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).build())));
     public static final DeferredItem<UnshatteredSword> STONE_SWORD = ITEMS.registerItem("stone_sword", props -> new UnshatteredSword(props.component(DataComponentRegistry.RARITY.get(), RarityTypes.COMMON).attributes(ItemAttributeModifiers.builder().add(ModAttributes.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "stone_sword_damage"), 25, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).build())));
     public static final DeferredItem<UnshatteredSword> IRON_SWORD = ITEMS.registerItem("iron_sword", props -> new UnshatteredSword(props.component(DataComponentRegistry.RARITY.get(), RarityTypes.COMMON).attributes(ItemAttributeModifiers.builder().add(ModAttributes.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "iron_sword_damage"), 30, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).build())));

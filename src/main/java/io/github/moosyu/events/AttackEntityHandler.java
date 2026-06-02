@@ -1,7 +1,14 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.ModAttributes;
+import io.github.moosyu.dataComponents.SkillRequirement;
+import io.github.moosyu.registers.AttachmentRegistry;
+import io.github.moosyu.registers.AttributesRegistry;
+import io.github.moosyu.registers.DataComponentRegistry;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
@@ -19,6 +26,14 @@ public class AttackEntityHandler {
         boolean sprinting = player.isSprinting();
         if (!(event.getTarget() instanceof LivingEntity target) || player.level().isClientSide()) return;
         event.setCanceled(true);
+        SkillRequirement skillRequirement = player.getItemInHand(InteractionHand.MAIN_HAND).get(DataComponentRegistry.SKILL_REQUIREMENT);
+        PlayerSkillsAttachment playerSkill = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
+        if (skillRequirement != null && skillRequirement.level() > playerSkill.getLevel(playerSkill.getExp(skillRequirement.skill()))) {
+            player.sendSystemMessage(Component.literal(skillRequirement.skill().getName()).append(Component.literal(" level ")).append(Component.literal(String.valueOf(skillRequirement.level()))).append(Component.literal(" is required to use this weapon!")).withColor(0xFFFF5555));
+            return;
+        }
+
+        //player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
         double critDamage = 0.0d;
         if (player.getAttributeValue(ModAttributes.CRITICAL_CHANCE.holder) >= (Math.random() * 101)) critDamage = player.getAttributeValue(ModAttributes.CRITICAL_DAMAGE.holder);
         double damage = ((5 + player.getAttributeValue(ModAttributes.DAMAGE.holder)) * (1 + (player.getAttributeValue(ModAttributes.STRENGTH.holder) / 100))) * (1 + (critDamage / 100));

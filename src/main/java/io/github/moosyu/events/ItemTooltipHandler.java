@@ -1,8 +1,11 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.ModAttributes;
+import io.github.moosyu.dataComponents.SkillRequirement;
 import io.github.moosyu.items.ItemTypes;
 import io.github.moosyu.rarities.RarityTypes;
+import io.github.moosyu.registers.AttachmentRegistry;
 import io.github.moosyu.registers.DataComponentRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
@@ -11,6 +14,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -29,10 +33,12 @@ public class ItemTooltipHandler {
     public static void onItemTooltip(ItemTooltipEvent event) {
         if (event.getEntity() != null && !event.getEntity().level().isClientSide()) return;
         ItemStack stack = event.getItemStack();
+        Player player = event.getEntity();
         List<Component> tooltipComponents = event.getToolTip();
         RarityTypes itemRarity = stack.get(DataComponentRegistry.RARITY.get());
         ItemTypes itemType = stack.get(DataComponentRegistry.ITEM_TYPE.get());
         String itemDescriptionKey = stack.get(DataComponentRegistry.DESCRIPTION_KEY.get());
+        SkillRequirement itemSkillRequirement = stack.get(DataComponentRegistry.SKILL_REQUIREMENT.get());
 
         event.getToolTip().clear();
         if (itemRarity == null) itemRarity = RarityTypes.COMMON;
@@ -55,10 +61,13 @@ public class ItemTooltipHandler {
         }
 
         tooltipComponents.add(Component.empty());
-        if (itemType.reforgeable()) {
-            tooltipComponents.add(Component.translatable("tooltip.unshattered.reforgable").withColor(0xFF555555));
+        if (itemType.reforgeable()) tooltipComponents.add(Component.translatable("tooltip.unshattered.reforgable").withColor(0xFF555555));
+        if (itemSkillRequirement != null) {
+            PlayerSkillsAttachment.Skill requiredSkill = itemSkillRequirement.skill();
+            PlayerSkillsAttachment playerSkill = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
+            if (itemSkillRequirement.level() > playerSkill.getLevel(playerSkill.getExp(requiredSkill))) tooltipComponents.add(Component.literal("❣ ").withColor(0xFFAA0000).append(Component.literal("Requires ").withColor(0xFFFF5555)).append(Component.translatable(itemSkillRequirement.skill().getName()).append(" Skill ").append(String.valueOf(itemSkillRequirement.level())).withColor(0xFF55FF55)));
         }
-        // tooltipComponents.add(Component.literal("❣ ").withColor(0xFFAA0000).append(Component.literal("Requires").withColor(0xFFFF5555)).append(Component.literal(" Combat Skill 4.").withColor(0xFF55FF55)));
+
         tooltipComponents.add(Component.literal(Component.translatable("rarity.unshattered." + itemRarity.name().toLowerCase()).getString().toUpperCase() + " " + Component.translatable(itemType.getKey()).getString().toUpperCase()).withColor(itemRarity.getColor()).withStyle(ChatFormatting.BOLD));
     }
 
