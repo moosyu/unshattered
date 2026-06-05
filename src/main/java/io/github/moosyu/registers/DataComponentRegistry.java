@@ -1,7 +1,7 @@
 package io.github.moosyu.registers;
 
 import com.mojang.serialization.Codec;
-import io.github.moosyu.dataComponents.SkillRequirement;
+import io.github.moosyu.data.components.SkillRequirement;
 import io.github.moosyu.items.ItemTypes;
 import io.github.moosyu.rarities.RarityTypes;
 import net.minecraft.core.component.DataComponentType;

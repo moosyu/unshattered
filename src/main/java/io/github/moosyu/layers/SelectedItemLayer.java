@@ -14,9 +14,12 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.client.gui.GuiLayer;
 import org.jspecify.annotations.NonNull;
 
-// todo: make this fade
+// currently if you have two different items that are exactly the same (same stack size and everything) the tooltip wont reload as ItemStack.matches will return true
+// perhaps ill fix this but what are the odds this becomes a problem or anyone actually cares
 public class SelectedItemLayer implements GuiLayer {
     private long displayUntilTick = 0;
+    // the vanilla one doesnt seem to work properly for me unfortunately
+    private ItemStack lastSelected = ItemStack.EMPTY;
 
     @Override
     public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
@@ -24,28 +27,36 @@ public class SelectedItemLayer implements GuiLayer {
         Player player = minecraft.player;
         if (player == null || !player.level().isClientSide()) return;
 
-        Item heldItem = player.getMainHandItem().getItem();
+        final int DISPLAYED_TICK_COUNT = 80;
+        final int FADING_TICK_COUNT = 20;
+        ItemStack current = player.getMainHandItem();
+        Item heldItem = current.getItem();
         boolean hasItem = heldItem != Items.AIR;
         Level level = player.level();
 
         if (!hasItem) {
             return;
         }
-        if (heldItem != minecraft.gui.lastToolHighlight.getItem()) {
-            displayUntilTick = level.getGameTime() + 100;
-            displaySelectedText(heldItem, graphics, minecraft);
+
+        // for when a new item has been selected
+        // matches is a for a memory thingy as the addresses are the same despite being different items so != returns always true
+        if (!ItemStack.matches(current, lastSelected)) {
+            lastSelected = current.copy();
+            displayUntilTick = level.getGameTime() + DISPLAYED_TICK_COUNT;
+            displaySelectedText(heldItem, graphics, minecraft, 1.0f);
             return;
         }
+        // for current selected texts
         if (level.getGameTime() < displayUntilTick) {
-            displaySelectedText(heldItem, graphics, minecraft);
+            displaySelectedText(heldItem, graphics, minecraft, displayUntilTick - FADING_TICK_COUNT >= level.getGameTime() ? 1.0f : (float) (displayUntilTick - level.getGameTime()) / FADING_TICK_COUNT);
         }
     }
 
-    private void displaySelectedText(Item heldItem, GuiGraphicsExtractor graphics, Minecraft minecraft) {
+    private void displaySelectedText(Item heldItem, GuiGraphicsExtractor graphics, Minecraft minecraft, float opacity) {
         ItemStack heldItemStack = heldItem.getDefaultInstance();
         Component itemName = heldItem.getName(heldItemStack);
         RarityTypes rarity = heldItem.components().get(DataComponentRegistry.RARITY);
-        int itemColor = rarity != null ? rarity.getColor() : RarityTypes.COMMON.getColor();
+        int itemColor = rarity != null ? rarity.getColor(opacity) : RarityTypes.COMMON.getColor(1.0f);
         graphics.text(Minecraft.getInstance().font, itemName, (graphics.guiWidth() / 2) - (minecraft.font.width(itemName) / 2), graphics.guiHeight() - 50, itemColor, true);
     }
 }

@@ -2,7 +2,7 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.ModAttributes;
-import io.github.moosyu.dataComponents.SkillRequirement;
+import io.github.moosyu.data.components.SkillRequirement;
 import io.github.moosyu.items.ItemTypes;
 import io.github.moosyu.rarities.RarityTypes;
 import io.github.moosyu.registers.AttachmentRegistry;
@@ -44,7 +44,7 @@ public class ItemTooltipHandler {
         if (itemRarity == null) itemRarity = RarityTypes.COMMON;
         if (itemType == null) itemType = ItemTypes.ITEM;
 
-        tooltipComponents.add(Component.translatable(stack.getItemName().getString()).withColor(itemRarity.getColor()));
+        tooltipComponents.add(Component.translatable(stack.getItemName().getString()).withColor(itemRarity.getColor(1.0f)));
         ItemAttributeModifiers modifiers = stack.getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY);
 
         if (itemDescriptionKey != null) {
@@ -68,7 +68,7 @@ public class ItemTooltipHandler {
             if (itemSkillRequirement.level() > playerSkill.getLevel(playerSkill.getExp(requiredSkill))) tooltipComponents.add(Component.literal("❣ ").withColor(0xFFAA0000).append(Component.literal("Requires ").withColor(0xFFFF5555)).append(Component.translatable(itemSkillRequirement.skill().getName()).append(" Skill ").append(String.valueOf(itemSkillRequirement.level())).withColor(0xFF55FF55)));
         }
 
-        tooltipComponents.add(Component.literal(Component.translatable("rarity.unshattered." + itemRarity.name().toLowerCase()).getString().toUpperCase() + " " + Component.translatable(itemType.getKey()).getString().toUpperCase()).withColor(itemRarity.getColor()).withStyle(ChatFormatting.BOLD));
+        tooltipComponents.add(Component.literal(Component.translatable("rarity.unshattered." + itemRarity.name().toLowerCase()).getString().toUpperCase() + " " + Component.translatable(itemType.getKey()).getString().toUpperCase()).withColor(itemRarity.getColor(1.0f)).withStyle(ChatFormatting.BOLD));
     }
 
     public static Component parseStyledText(String input) {

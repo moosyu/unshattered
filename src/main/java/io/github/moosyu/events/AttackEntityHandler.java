@@ -2,9 +2,8 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.ModAttributes;
-import io.github.moosyu.dataComponents.SkillRequirement;
+import io.github.moosyu.data.components.SkillRequirement;
 import io.github.moosyu.registers.AttachmentRegistry;
-import io.github.moosyu.registers.AttributesRegistry;
 import io.github.moosyu.registers.DataComponentRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;

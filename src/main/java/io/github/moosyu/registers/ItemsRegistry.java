@@ -2,7 +2,7 @@ package io.github.moosyu.registers;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.ModAttributes;
-import io.github.moosyu.dataComponents.SkillRequirement;
+import io.github.moosyu.data.components.SkillRequirement;
 import io.github.moosyu.items.*;
 import io.github.moosyu.rarities.RarityTypes;
 import net.minecraft.resources.Identifier;

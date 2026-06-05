@@ -1,4 +1,4 @@
-package io.github.moosyu.dataComponents;
+package io.github.moosyu.data.components;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
