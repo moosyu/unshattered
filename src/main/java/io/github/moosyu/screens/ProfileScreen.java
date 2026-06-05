@@ -2,7 +2,7 @@ package io.github.moosyu.screens;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.AttributeTypes;
-import io.github.moosyu.attributes.ModAttributes;
+import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.helpers.RomanNumeralHelper;
 import io.github.moosyu.registers.AttachmentRegistry;
 import net.minecraft.client.Minecraft;
@@ -16,6 +16,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import org.jspecify.annotations.NonNull;
 
 import static io.github.moosyu.layers.UnshatteredGuiLayers.*;
 
@@ -81,7 +82,7 @@ public class ProfileScreen extends Screen {
                 this.addRenderableWidget(new SkillWidget(currentSkill, posX, posY, player, currentSkill.getIcon().getDefaultInstance()));
             }
         } else if (currentTab == Tabs.STATS) {
-            for (ModAttributes currentStat : ModAttributes.values()) {
+            for (UnshatteredAttributes currentStat : UnshatteredAttributes.values()) {
                 if (currentStat.type == AttributeTypes.INVISIBLE) continue;
                 this.addRenderableWidget(new StatWidget(currentStat, CORNER_POS_X, CORNER_POS_Y + (uniqueIndex * 14), player ) );
                 uniqueIndex++;
@@ -90,7 +91,7 @@ public class ProfileScreen extends Screen {
     }
 
     @Override
-    public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+    public void extractBackground(@NonNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         // putting this all here to layer the dimmed background bit and the actual empty screen properly
         // idk why this happens i mustve done something wrong at some point
         this.extractTransparentBackground(graphics);
@@ -154,15 +155,15 @@ public class ProfileScreen extends Screen {
         }
 
         @Override
-        protected void updateWidgetNarration(NarrationElementOutput narrationElementOutput) {}
+        protected void updateWidgetNarration(@NonNull NarrationElementOutput narrationElementOutput) {}
     }
 
     // this is a widget as i intend for some hover interaction at some point
     private static class StatWidget extends AbstractWidget {
         private final Player player;
-        private final ModAttributes currentAttribute;
+        private final UnshatteredAttributes currentAttribute;
 
-        public StatWidget(ModAttributes currentAttribute, int x, int y, Player player) {
+        public StatWidget(UnshatteredAttributes currentAttribute, int x, int y, Player player) {
             super(x, y, 32, 16, Component.literal(String.valueOf(Component.translatable(currentAttribute.getTranslationKey()))));
             this.player = player;
             this.currentAttribute = currentAttribute;
@@ -174,12 +175,13 @@ public class ProfileScreen extends Screen {
             int textX = this.getX() + 20;
             int textY = this.getY() + 4;
 
-            graphics.text(Minecraft.getInstance().font, currentAttribute.symbol + " " + Component.translatable(currentAttribute.getTranslationKey()).getString() + ":", textX, textY, currentAttribute.color, false);
-            graphics.text(Minecraft.getInstance().font, String.format("%.0f", attributeValue), textX + Minecraft.getInstance().font.width(currentAttribute.symbol + " " + currentAttribute.name() + ":") + 2, textY, 0xFFDEDFE0, false);
+            String statsTitle = currentAttribute.symbol + " " + Component.translatable(currentAttribute.getTranslationKey()).getString() + ":";
+            graphics.text(Minecraft.getInstance().font, statsTitle, textX, textY, currentAttribute.color, false);
+            graphics.text(Minecraft.getInstance().font, String.format("%.0f", attributeValue), textX + Minecraft.getInstance().font.width(statsTitle) + 2, textY, 0xFFDEDFE0, false);
         }
 
         @Override
-        protected void updateWidgetNarration(NarrationElementOutput narrationElementOutput) {}
+        protected void updateWidgetNarration(@NonNull NarrationElementOutput narrationElementOutput) {}
     }
 
     private static class TabButton extends AbstractWidget {
@@ -197,7 +199,7 @@ public class ProfileScreen extends Screen {
         }
 
         @Override
-        protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int i, int i1, float v) {
+        protected void extractWidgetRenderState(@NonNull GuiGraphicsExtractor graphics, int i, int i1, float v) {
             if (flipped) {
                 graphics.pose().pushMatrix();
                 graphics.pose().translate(this.getX() + width / 2f, this.getY() + height / 2f);
@@ -228,6 +230,6 @@ public class ProfileScreen extends Screen {
         }
 
         @Override
-        protected void updateWidgetNarration(NarrationElementOutput narrationElementOutput) {}
+        protected void updateWidgetNarration(@NonNull NarrationElementOutput narrationElementOutput) {}
     }
 }

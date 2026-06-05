@@ -1,6 +1,6 @@
 package io.github.moosyu.layers;
 
-import io.github.moosyu.attributes.ModAttributes;
+import io.github.moosyu.attributes.UnshatteredAttributes;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -24,7 +24,7 @@ public class ManaBarLayer implements GuiLayer {
 
         Player player = Minecraft.getInstance().player;
         if (!player.level().isClientSide()) return;
-        final AttributeInstance manaAttribute = Minecraft.getInstance().player.getAttribute(ModAttributes.MANA.holder);
+        final AttributeInstance manaAttribute = Minecraft.getInstance().player.getAttribute(UnshatteredAttributes.MANA.holder);
         if (manaAttribute == null) return;
         final String currentManaText = String.valueOf((int) manaAttribute.getValue());
         final Font font = Minecraft.getInstance().font;

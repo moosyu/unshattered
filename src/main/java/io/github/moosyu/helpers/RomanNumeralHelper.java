@@ -1,7 +1,7 @@
 package io.github.moosyu.helpers;
 
 // https://www.geeksforgeeks.org/dsa/converting-decimal-number-lying-between-1-to-3999-to-roman-numerals/ 💋
-public class RomanNumeralHelper {
+public final class RomanNumeralHelper {
     public static String toRoman(int x) {
         int[] base = {1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000};
         String[] sym = {"I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M"};

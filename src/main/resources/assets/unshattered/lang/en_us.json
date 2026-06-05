@@ -54,6 +54,7 @@
   "item.unshattered.enchanted_fig_log": "Enchanted Fig Log",
   "item.unshattered.bedrock": "Bedrock",
   "item.unshattered.cake_soul": "Cake Soul",
+  "item.unshattered.challenging_rod": "Challenging Rod",
 
   "block.unshattered.fig_log": "Fig Log",
 
@@ -94,13 +95,14 @@
   "attribute.name.unshattered.critical_chance": "Critical Chance",
   "attribute.name.unshattered.mana": "Mana",
   "attribute.name.unshattered.health_regen": "Health Regen",
+  "attribute.name.unshattered.defense": "Defense",
 
   "skills.name.unshattered.combat": "Combat",
   "skills.name.unshattered.farming": "Farming",
   "skills.name.unshattered.fishing": "Fishing",
   "skills.name.unshattered.mining": "Mining",
   "skills.name.unshattered.foraging": "Foraging",
-  "skills.name.unshattered.slayer": "Foraging",
+  "skills.name.unshattered.magecraft": "Magecraft",
 
   "rarity.unshattered.common": "Common",
   "rarity.unshattered.uncommon": "Uncommon",

@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
 
 // warning (for me): DO NOT FUCK UP THE ORDERING OF THE DATA IT WILL NOT FIGURE IT OUT ITSELF!!!
-public class StateSyncHandler implements AttachmentSyncHandler<PlayerStateAttachment> {
+public final class StateSyncHandler implements AttachmentSyncHandler<PlayerStateAttachment> {
     @Override
     public void write(RegistryFriendlyByteBuf buf, PlayerStateAttachment attachment, boolean initialSync) {
         int statIndex = attachment.getLastUpdatedStat();

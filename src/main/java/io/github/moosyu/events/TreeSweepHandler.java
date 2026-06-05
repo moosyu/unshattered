@@ -1,7 +1,7 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.attributes.ModAttributes;
+import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.registers.AttachmentRegistry;
 import io.github.moosyu.sounds.UnshatteredSounds;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
@@ -80,7 +80,7 @@ public class TreeSweepHandler {
     }
 
     private static int calculateLogs(Player player) {
-        var attribute = player.getAttribute(ModAttributes.FORAGING_FORTUNE.holder);
+        var attribute = player.getAttribute(UnshatteredAttributes.FORAGING_FORTUNE.holder);
         // making sure attribute isnt null, probably pointless but i also managed to fuck up registering it last time and it made the game crash
         double fortune = attribute != null ? attribute.getValue() : 0.0;
         double multiplier = 1.0 + (fortune / 100.0);
@@ -102,7 +102,7 @@ public class TreeSweepHandler {
         // removing the initial block (as the vanilla block break is canceled)
         level.removeBlock(startPos, false);
 
-        int sweep = (int) player.getAttributeValue(ModAttributes.SWEEP.holder);
+        int sweep = (int) player.getAttributeValue(UnshatteredAttributes.SWEEP.holder);
         if (sweep <= 0) {
             skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, 6.0f);
             player.syncData(PLAYER_SKILLS);

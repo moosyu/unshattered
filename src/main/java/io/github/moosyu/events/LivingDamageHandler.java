@@ -1,7 +1,8 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.attachments.PlayerStateAttachment;
-import io.github.moosyu.attributes.ModAttributes;
+import io.github.moosyu.attributes.UnshatteredAttributes;
+import io.github.moosyu.registers.AttributesRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -29,19 +30,20 @@ public class LivingDamageHandler {
             Entity attacker = event.getSource().getEntity();
             event.setNewDamage(0.0f);
             if (attacker instanceof LivingEntity entity) {
-                AttributeInstance attackerHolder = entity.getAttribute(ModAttributes.DAMAGE.holder);
-                if (attackerHolder == null) return;
+                AttributeInstance attackerDamageHolder = entity.getAttribute(UnshatteredAttributes.DAMAGE.holder);
+                AttributeInstance playerDefenseAttribute = player.getAttribute(UnshatteredAttributes.DEFENSE.holder);
+                if (attackerDamageHolder == null || playerDefenseAttribute == null) return;
                 PlayerStateAttachment states = player.getData(PLAYER_STATE.get());
-                double mobDamage = attackerHolder.getBaseValue();
                 double playerHealth = states.getCurrentStat(PlayerStateAttachment.Stat.HEALTH);
-                if (playerHealth - mobDamage > 0.0d) {
-                    states.removeCurrentStat(PlayerStateAttachment.Stat.HEALTH, mobDamage);
+                double damageDealt = attackerDamageHolder.getBaseValue() * (1 - (playerDefenseAttribute.getValue() / (playerDefenseAttribute.getValue() + 100)));
+                if (playerHealth - damageDealt > 0.0d) {
+                    states.removeCurrentStat(PlayerStateAttachment.Stat.HEALTH, damageDealt);
                     player.syncData(PLAYER_STATE.get());
                 } else {
                     BlockPos spawnPos = level.getRespawnData().pos();
                     player.teleportTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5);
                     player.sendSystemMessage(Component.literal(player.getName().getString() + " was slain by a " + entity.getName().getString() + "!").withStyle(ChatFormatting.RED));
-                    states.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, player.getAttributeValue(ModAttributes.HEALTH.holder));
+                    states.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, player.getAttributeValue(UnshatteredAttributes.HEALTH.holder));
                     player.syncData(PLAYER_STATE.get());
                     // todo: fix the death sound not going off
                     playerDeathSound(player);

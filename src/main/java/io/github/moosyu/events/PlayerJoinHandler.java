@@ -1,8 +1,7 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.attachments.PlayerStateAttachment;
-import io.github.moosyu.attributes.ModAttributes;
-import io.github.moosyu.registers.AttributesRegistry;
+import io.github.moosyu.attributes.UnshatteredAttributes;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -21,7 +20,7 @@ public class PlayerJoinHandler {
     public static void onPlayerJoin(EntityJoinLevelEvent event) {
         if (event.getEntity() instanceof Player player && !player.level().isClientSide()) {
             var stats = player.getData(PLAYER_STATE.get());
-            final AttributeInstance healthAttribute = player.getAttribute(ModAttributes.HEALTH.holder);
+            final AttributeInstance healthAttribute = player.getAttribute(UnshatteredAttributes.HEALTH.holder);
             if (healthAttribute == null) return;
             final double MAX_HEALTH = healthAttribute.getValue();
             stats.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, MAX_HEALTH);

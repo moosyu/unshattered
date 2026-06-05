@@ -1,7 +1,7 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.attributes.ModAttributes;
+import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.data.components.SkillRequirement;
 import io.github.moosyu.registers.AttachmentRegistry;
 import io.github.moosyu.registers.DataComponentRegistry;
@@ -28,16 +28,16 @@ public class AttackEntityHandler {
         SkillRequirement skillRequirement = player.getItemInHand(InteractionHand.MAIN_HAND).get(DataComponentRegistry.SKILL_REQUIREMENT);
         PlayerSkillsAttachment playerSkill = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
         if (skillRequirement != null && skillRequirement.level() > playerSkill.getLevel(playerSkill.getExp(skillRequirement.skill()))) {
-            player.sendSystemMessage(Component.literal(skillRequirement.skill().getName()).append(Component.literal(" level ")).append(Component.literal(String.valueOf(skillRequirement.level()))).append(Component.literal(" is required to use this weapon!")).withColor(0xFFFF5555));
+            player.sendSystemMessage(Component.literal(skillRequirement.skill().getName() + " level " + skillRequirement.level() + " is required to use this weapon!").withColor(0xFFFF5555));
             return;
         }
 
         //player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
         double critDamage = 0.0d;
-        if (player.getAttributeValue(ModAttributes.CRITICAL_CHANCE.holder) >= (Math.random() * 101)) critDamage = player.getAttributeValue(ModAttributes.CRITICAL_DAMAGE.holder);
-        double damage = ((5 + player.getAttributeValue(ModAttributes.DAMAGE.holder)) * (1 + (player.getAttributeValue(ModAttributes.STRENGTH.holder) / 100))) * (1 + (critDamage / 100));
+        if (player.getAttributeValue(UnshatteredAttributes.CRITICAL_CHANCE.holder) >= (Math.random() * 101)) critDamage = player.getAttributeValue(UnshatteredAttributes.CRITICAL_DAMAGE.holder);
+        double damage = ((5 + player.getAttributeValue(UnshatteredAttributes.DAMAGE.holder)) * (1 + (player.getAttributeValue(UnshatteredAttributes.STRENGTH.holder) / 100))) * (1 + (critDamage / 100));
         System.out.println(damage);
-        AttributeInstance targetHealth = target.getAttribute(ModAttributes.HEALTH.holder);
+        AttributeInstance targetHealth = target.getAttribute(UnshatteredAttributes.HEALTH.holder);
         if (target.invulnerableTime <= 0 && targetHealth != null) {
             if ((targetHealth.getBaseValue() - damage) > 0) {
                 targetHealth.setBaseValue(targetHealth.getBaseValue() - damage);

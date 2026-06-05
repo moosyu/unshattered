@@ -1,7 +1,7 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.attachments.PlayerStateAttachment;
-import io.github.moosyu.attributes.ModAttributes;
+import io.github.moosyu.attributes.UnshatteredAttributes;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
@@ -21,8 +21,8 @@ public class PlayerTickHandler {
         Player player = event.getEntity();
         if (player.level().isClientSide()) return;
         PlayerStateAttachment stats = player.getData(PLAYER_STATE.get());
-        final AttributeInstance healthAttribute = player.getAttribute(ModAttributes.HEALTH.holder);
-        final AttributeInstance healthRegenAttribute = player.getAttribute(ModAttributes.HEALTH_REGEN.holder);
+        final AttributeInstance healthAttribute = player.getAttribute(UnshatteredAttributes.HEALTH.holder);
+        final AttributeInstance healthRegenAttribute = player.getAttribute(UnshatteredAttributes.HEALTH_REGEN.holder);
 
         // disable hunger effects
         player.getFoodData().setFoodLevel(20);

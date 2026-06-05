@@ -6,7 +6,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum ModAttributes {
+public enum UnshatteredAttributes {
     HEALTH("health", "❤", 100.0, 0.0, 2147483647.0, 0xFFFC3A3A, AttributeTypes.IMPORTANT, false),
     STRENGTH("strength", "❁", 0.0, 0.0, 4096.0, 0xFFFC3A3A, AttributeTypes.IMPORTANT, true),
     CRITICAL_CHANCE("critical_chance", "☣", 30.0, 0.0, 2048.0, 0xFF3535CC, AttributeTypes.IMPORTANT, false),
@@ -15,10 +15,10 @@ public enum ModAttributes {
     SWEEP("sweep", "∮", 0.0, 0.0, 1024.0, 0xFF00AA00, AttributeTypes.VISIBLE, false),
     FORAGING_FORTUNE("foraging_fortune", "☘", 0.0, 0.0, 1024.0, 0xFFFFAA00, AttributeTypes.IMPORTANT, false),
     DAMAGE("damage", 0.0, 0.0, 2147483647.0, true),
-    HEALTH_REGEN("health_regen", "❣", 100.0, 0.0, 2048.0, 0xFFFC3A3A, AttributeTypes.VISIBLE, false);
+    HEALTH_REGEN("health_regen", "❣", 100.0, 0.0, 2048.0, 0xFFFC3A3A, AttributeTypes.VISIBLE, false),
+    DEFENSE("defense", "❈", 0.0, 0.0, 131072.0, 0xFF55FF55, AttributeTypes.VISIBLE, false);
 
-    private static final Map<Attribute, ModAttributes> ATTRIBUTE_MAP = new HashMap<>();
-
+    private static final Map<Attribute, UnshatteredAttributes> ATTRIBUTE_MAP = new HashMap<>();
     public final String id;
     public final String symbol;
     public final double def, min, max;
@@ -27,7 +27,7 @@ public enum ModAttributes {
     public DeferredHolder<Attribute, Attribute> holder;
     public final boolean offensive;
 
-    ModAttributes(String id, String symbol, double def, double min, double max, int color, AttributeTypes type, boolean offensive) {
+    UnshatteredAttributes(String id, String symbol, double def, double min, double max, int color, AttributeTypes type, boolean offensive) {
         this.id = id;
         this.symbol = symbol;
         this.def = def;
@@ -38,7 +38,7 @@ public enum ModAttributes {
         this.offensive = offensive;
     }
 
-    ModAttributes(String id, double def, double min, double max, boolean offensive) {
+    UnshatteredAttributes(String id, double def, double min, double max, boolean offensive) {
         this(id, "", def, min, max, 0x00000000, AttributeTypes.INVISIBLE, offensive);
     }
 
@@ -49,14 +49,14 @@ public enum ModAttributes {
     // for accessing attributes using holder values
     public static void buildLookup() {
         ATTRIBUTE_MAP.clear();
-        for (ModAttributes modAttribute : values()) {
+        for (UnshatteredAttributes modAttribute : values()) {
             if (modAttribute.holder != null) {
                 ATTRIBUTE_MAP.put(modAttribute.holder.value(), modAttribute);
             }
         }
     }
 
-    public static ModAttributes fromAttribute(Attribute attribute) {
+    public static UnshatteredAttributes fromAttribute(Attribute attribute) {
         return ATTRIBUTE_MAP.get(attribute);
     }
 }

@@ -1,7 +1,7 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.attributes.ModAttributes;
+import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.data.components.SkillRequirement;
 import io.github.moosyu.items.ItemTypes;
 import io.github.moosyu.rarities.RarityTypes;
@@ -32,8 +32,9 @@ public class ItemTooltipHandler {
     @SubscribeEvent
     public static void onItemTooltip(ItemTooltipEvent event) {
         if (event.getEntity() != null && !event.getEntity().level().isClientSide()) return;
-        ItemStack stack = event.getItemStack();
         Player player = event.getEntity();
+        if (player == null) return;
+        ItemStack stack = event.getItemStack();
         List<Component> tooltipComponents = event.getToolTip();
         RarityTypes itemRarity = stack.get(DataComponentRegistry.RARITY.get());
         ItemTypes itemType = stack.get(DataComponentRegistry.ITEM_TYPE.get());
@@ -54,7 +55,7 @@ public class ItemTooltipHandler {
         for (ItemAttributeModifiers.Entry entry : modifiers.modifiers()) {
             Holder<Attribute> attributeHolder = entry.attribute();
             AttributeModifier modifier = entry.modifier();
-            ModAttributes modAttribute = ModAttributes.fromAttribute(attributeHolder.value());
+            UnshatteredAttributes modAttribute = UnshatteredAttributes.fromAttribute(attributeHolder.value());
 
             if (modAttribute == null) continue;
             tooltipComponents.add(Component.translatable(attributeHolder.value().getDescriptionId()).append(Component.literal(": ")).withStyle(ChatFormatting.GRAY).append(Component.literal("+" + (int) modifier.amount()).withStyle((modAttribute.offensive) ? ChatFormatting.RED : ChatFormatting.GREEN)));

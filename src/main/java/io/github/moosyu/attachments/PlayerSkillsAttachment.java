@@ -22,7 +22,7 @@ public class PlayerSkillsAttachment {
         FISHING("skills.name.unshattered.fishing", Items.FISHING_ROD),
         MINING("skills.name.unshattered.mining", Items.STONE_PICKAXE),
         FORAGING("skills.name.unshattered.foraging", Items.OAK_SAPLING),
-        SLAYER("skills.name.unshattered.slayer", Items.SKELETON_SKULL);
+        MAGECRAFT("skills.name.unshattered.magecraft", Items.BOOK);
 
         private final String key;
         private final Item icon;
@@ -41,13 +41,13 @@ public class PlayerSkillsAttachment {
         }
     }
 
-    public PlayerSkillsAttachment(float combatExp, float farmingExp, float fishingExp, float miningExp, float foragingExp, float slayerExp) {
+    public PlayerSkillsAttachment(float combatExp, float farmingExp, float fishingExp, float miningExp, float foragingExp, float magecraftExp) {
         skillExp[Skill.COMBAT.ordinal()] = combatExp;
         skillExp[Skill.FARMING.ordinal()] = farmingExp;
         skillExp[Skill.FISHING.ordinal()] = fishingExp;
         skillExp[Skill.MINING.ordinal()] = miningExp;
         skillExp[Skill.FORAGING.ordinal()] = foragingExp;
-        skillExp[Skill.SLAYER.ordinal()] = slayerExp;
+        skillExp[Skill.MAGECRAFT.ordinal()] = magecraftExp;
     }
 
     public float getExp(Skill skill) {
