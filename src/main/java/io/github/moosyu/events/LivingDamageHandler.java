@@ -1,7 +1,10 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.attachments.AttachmentRegistry;
 import io.github.moosyu.attachments.PlayerStateAttachment;
+import io.github.moosyu.attributes.AttributesRegistry;
 import io.github.moosyu.attributes.UnshatteredAttributes;
+import io.github.moosyu.helpers.PlayerDamageHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -26,28 +29,18 @@ public class LivingDamageHandler {
         Level level = event.getEntity().level();
         if (level.isClientSide()) return;
         if (event.getEntity() instanceof Player player) {
-            Entity attacker = event.getSource().getEntity();
             event.setNewDamage(0.0f);
+            Entity attacker = event.getSource().getEntity();
+            double playerDefenseValue = player.getAttributeValue(UnshatteredAttributes.DEFENSE.holder);
             if (attacker instanceof LivingEntity entity) {
-                AttributeInstance attackerDamageHolder = entity.getAttribute(UnshatteredAttributes.DAMAGE.holder);
-                AttributeInstance playerDefenseAttribute = player.getAttribute(UnshatteredAttributes.DEFENSE.holder);
-                if (attackerDamageHolder == null || playerDefenseAttribute == null) return;
-                PlayerStateAttachment states = player.getData(PLAYER_STATE.get());
-                double playerHealth = states.getCurrentStat(PlayerStateAttachment.Stat.HEALTH);
-                double damageDealt = attackerDamageHolder.getBaseValue() * (1 - (playerDefenseAttribute.getValue() / (playerDefenseAttribute.getValue() + 100)));
-                if (playerHealth - damageDealt > 0.0d) {
-                    states.removeCurrentStat(PlayerStateAttachment.Stat.HEALTH, damageDealt);
-                    player.syncData(PLAYER_STATE.get());
-                } else {
-                    BlockPos spawnPos = level.getRespawnData().pos();
-                    player.teleportTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5);
-                    player.sendSystemMessage(Component.literal(player.getName().getString() + " was slain by a " + entity.getName().getString() + "!").withStyle(ChatFormatting.RED));
-                    states.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, player.getAttributeValue(UnshatteredAttributes.HEALTH.holder));
-                    player.syncData(PLAYER_STATE.get());
-                    // todo: fix the death sound not going off
-                    playerDeathSound(player);
-                    states.setCancelledKnockback(true);
-                }
+                double attackerDamageValue = entity.getAttributeValue(UnshatteredAttributes.DAMAGE.holder);
+                double damageDealt = attackerDamageValue * (1 - (playerDefenseValue / (playerDefenseValue + 100)));
+                PlayerDamageHelper.damagePlayer(player, damageDealt, level, player.getName().getString() + " was slain by a " + entity.getName().getString() + "!");
+            } else if (event.getSource().is(DamageTypeTags.IS_FALL)) {
+                int blocksFallen = (int) (event.getOriginalDamage() + 3);
+                // https://old.reddit.com/r/HypixelSkyblock/comments/fvozn7/fall_damage_calculator/
+                double damageDealt = (((blocksFallen - 6.5) * 200 / 33) / ((playerDefenseValue / 100) + 1));
+                PlayerDamageHelper.damagePlayer(player, damageDealt, level, player.getName().getString() + " fell to their death!");
             }
         } else if (event.getSource().is(DamageTypeTags.IS_FIRE)) {
             event.getEntity().invulnerableTime = 0;

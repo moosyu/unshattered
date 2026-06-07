@@ -72,7 +72,7 @@ public class CreativeTabsRegistry {
         () -> CreativeModeTab.builder()
         .title(Component.translatable("item_group.unshattered.unshattered_resources"))
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
-        .icon(() -> FIG_LOG.get().getDefaultInstance())
+        .icon(() -> ENCHANTED_FIG_LOG.get().getDefaultInstance())
         .displayItems((parameters, output) -> {
             output.accept(ENCHANTED_FIG_LOG.get());
         }).build());
