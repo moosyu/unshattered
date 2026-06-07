@@ -1,5 +1,6 @@
 package io.github.moosyu.datagen;
 
+import io.github.moosyu.blocks.BlocksRegistry;
 import io.github.moosyu.items.ItemsRegistry;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
@@ -11,7 +12,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.blocks.BlocksRegistry.*;
 
 public class UnshatteredModelProvider extends ModelProvider {
     public UnshatteredModelProvider(PackOutput output) {
@@ -68,9 +68,12 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ItemsRegistry.CAKE_SOUL.get(), Items.PINK_DYE, ModelTemplates.FLAT_ITEM);
         // fix this being the backwards facing texture of a fishing rod
         itemModels.generateFlatItem(ItemsRegistry.CHALLENGING_ROD.get(), Items.FISHING_ROD, ModelTemplates.FLAT_HANDHELD_ITEM);
-        itemModels.itemModelOutput.accept(ItemsRegistry.ENCHANTED_FIG_LOG.get(), ItemModelUtils.plainModel(ModelTemplates.CUBE_COLUMN.create(Identifier.fromNamespaceAndPath("unshattered", "block/enchanted_fig_log"), TextureMapping.column(FIG_LOG_BLOCK.get()), blockModels.modelOutput)));
+        itemModels.itemModelOutput.accept(ItemsRegistry.ENCHANTED_FIG_LOG.get(), ItemModelUtils.plainModel(ModelTemplates.CUBE_COLUMN.create(Identifier.fromNamespaceAndPath("unshattered", "block/enchanted_fig_log"), TextureMapping.column(BlocksRegistry.FIG_LOG_BLOCK.get()), blockModels.modelOutput)));
         itemModels.itemModelOutput.accept(ItemsRegistry.BEDROCK.get(), ItemModelUtils.plainModel(ModelTemplates.CUBE_ALL.create(Identifier.fromNamespaceAndPath("unshattered", "block/bedrock"), TextureMapping.cube(Blocks.BEDROCK), blockModels.modelOutput)));
 
-        blockModels.createRotatedPillarWithHorizontalVariant(FIG_LOG_BLOCK.get(), TexturedModel.COLUMN, TexturedModel.COLUMN_HORIZONTAL);
+        blockModels.createRotatedPillarWithHorizontalVariant(BlocksRegistry.FIG_LOG_BLOCK.get(), TexturedModel.COLUMN, TexturedModel.COLUMN_HORIZONTAL);
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(BlocksRegistry.BREAKABLE_STONE_BLOCK.get(), BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(BlocksRegistry.BREAKABLE_STONE_BLOCK.get(), TextureMapping.cube(Blocks.STONE), blockModels.modelOutput))));
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(BlocksRegistry.BREAKABLE_COBBLESTONE_BLOCK.get(), BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(BlocksRegistry.BREAKABLE_COBBLESTONE_BLOCK.get(), TextureMapping.cube(Blocks.COBBLESTONE), blockModels.modelOutput))));
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(BlocksRegistry.BREAKABLE_FIG_LOG_BLOCK.get(), BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(BlocksRegistry.BREAKABLE_FIG_LOG_BLOCK.get(), TextureMapping.column(BlocksRegistry.FIG_LOG_BLOCK.get()), blockModels.modelOutput))));
     }
 }

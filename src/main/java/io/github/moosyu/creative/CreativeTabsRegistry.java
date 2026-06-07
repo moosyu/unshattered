@@ -5,6 +5,7 @@ net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -47,13 +48,32 @@ public class CreativeTabsRegistry {
             output.accept(CAKE_SOUL.get());
         }).build());
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_BLOCKS_TAB = CREATIVE_MODE_TABS.register("unshattered_blocks_tab",
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_DECORATIVE_BLOCKS_TAB = CREATIVE_MODE_TABS.register("unshattered_decorative_blocks_tab",
         () -> CreativeModeTab.builder()
         .title(Component.translatable("item_group.unshattered.decorative_blocks"))
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
         .icon(() -> FIG_LOG.get().getDefaultInstance())
         .displayItems((parameters, output) -> {
             output.accept(FIG_LOG.get());
+        }).build());
+
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_BREAKABLE_BLOCKS_TAB = CREATIVE_MODE_TABS.register("unshattered_breakable_blocks_tab",
+        () -> CreativeModeTab.builder()
+        .title(Component.translatable("item_group.unshattered.breakable_blocks"))
+        .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
+        .icon(() -> BREAKABLE_COBBLESTONE.get().getDefaultInstance())
+        .displayItems((parameters, output) -> {
+            output.accept(BREAKABLE_STONE.get());
+            output.accept(BREAKABLE_COBBLESTONE.get());
+            output.accept(BREAKABLE_FIG_LOG.get());
+        }).build());
+
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_RESOURCES_TAB = CREATIVE_MODE_TABS.register("unshattered_resources_tab",
+        () -> CreativeModeTab.builder()
+        .title(Component.translatable("item_group.unshattered.unshattered_resources"))
+        .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
+        .icon(() -> FIG_LOG.get().getDefaultInstance())
+        .displayItems((parameters, output) -> {
             output.accept(ENCHANTED_FIG_LOG.get());
         }).build());
 

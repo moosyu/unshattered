@@ -8,8 +8,8 @@ import java.util.Map;
 
 public final class BrokenBlocksWorldResult {
     private static final Map<Block, Block> BROKEN_BLOCKS_WORLD_RESULT = Map.ofEntries(
-            Map.entry(Blocks.STONE, Blocks.COBBLESTONE),
-            Map.entry(Blocks.COBBLESTONE, Blocks.BEDROCK)
+            Map.entry(BlocksRegistry.BREAKABLE_STONE_BLOCK.get(), BlocksRegistry.BREAKABLE_COBBLESTONE_BLOCK.get()),
+            Map.entry(BlocksRegistry.BREAKABLE_COBBLESTONE_BLOCK.get(), Blocks.BEDROCK)
     );
 
     public static BlockState getBlockCreated(Block block) {

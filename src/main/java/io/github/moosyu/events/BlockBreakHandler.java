@@ -6,6 +6,7 @@ import io.github.moosyu.experience.BlocksFarmingExperience;
 import io.github.moosyu.experience.BlocksMiningExperience;
 import io.github.moosyu.helpers.CheckBreakableBlock;
 import io.github.moosyu.attachments.AttachmentRegistry;
+import io.github.moosyu.helpers.CheckSkillRequirementHelper;
 import io.github.moosyu.sounds.UnshatteredSounds;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
@@ -15,6 +16,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 
 import static io.github.moosyu.Unshattered.MODID;
@@ -27,6 +29,10 @@ public class BlockBreakHandler {
     public static void onBlockBreak(BreakBlockEvent event) {
         Player player = event.getPlayer();
         Level level = player.level();
+        // so you can still break stuff normally in creative
+        if (player.isCreative()) {
+            return;
+        }
         if (player.level().isClientSide()) {
             return;
         }
@@ -73,6 +79,15 @@ public class BlockBreakHandler {
             player.syncData(PLAYER_SKILLS);
             UnshatteredSounds.playerExperienceSound(player);
             return;
+        }
+    }
+
+    // to stop players from attempting to break blocks
+    @SubscribeEvent
+    public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
+        if (!CheckSkillRequirementHelper.canUseItem(event.getEntity(), event.getEntity().getMainHandItem())
+                || CheckBreakableBlock.canBreakBlock(event.getState(), event.getEntity()) == null) {
+            event.setNewSpeed(0.0F);
         }
     }
 }

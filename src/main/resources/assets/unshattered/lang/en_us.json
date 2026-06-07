@@ -1,10 +1,11 @@
 {
-  "item_group.unshattered.items": "Skyblock: Unshattered Items",
-  "item_group.unshattered.armor": "Skyblock: Unshattered Armor",
-  "item_group.unshattered.tools": "Skyblock: Unshattered Tools",
-  "item_group.unshattered.weapons": "Skyblock: Unshattered Weapons",
-  "item_group.unshattered.decorative_blocks": "Skyblock: Unshattered Decorative Blocks",
-  "item_group.unshattered.breakable_blocks": "Skyblock: Unshattered Breakable Blocks",
+  "item_group.unshattered.items": "Skyblock: Unshattered - Items",
+  "item_group.unshattered.armor": "Skyblock: Unshattered - Armor",
+  "item_group.unshattered.tools": "Skyblock: Unshattered - Tools",
+  "item_group.unshattered.weapons": "Skyblock: Unshattered - Weapons",
+  "item_group.unshattered.decorative_blocks": "Skyblock: Unshattered - Decorative Blocks",
+  "item_group.unshattered.breakable_blocks": "Skyblock: Unshattered - Breakable Blocks",
+  "item_group.unshattered.unshattered_resources": "Skyblock: Unshattered - Resources",
 
   "item.unshattered.treecapitator": "Treecapitator",
   "item.unshattered.spruce_axe": "Spruce Axe",
