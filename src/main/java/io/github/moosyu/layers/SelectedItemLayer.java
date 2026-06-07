@@ -1,7 +1,7 @@
 package io.github.moosyu.layers;
 
 import io.github.moosyu.rarities.RarityTypes;
-import io.github.moosyu.registers.DataComponentRegistry;
+import io.github.moosyu.data.components.DataComponentRegistry;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;

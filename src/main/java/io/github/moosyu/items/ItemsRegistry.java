@@ -1,10 +1,10 @@
-package io.github.moosyu.registers;
+package io.github.moosyu.items;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.data.components.SkillRequirement;
-import io.github.moosyu.items.*;
 import io.github.moosyu.rarities.RarityTypes;
+import io.github.moosyu.data.components.DataComponentRegistry;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -16,7 +16,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.materials.ArmorMaterials.LEAFLET_ARMOR_MATERIAL;
-import static io.github.moosyu.registers.BlocksRegistry.*;
+import static io.github.moosyu.blocks.BlocksRegistry.*;
 
 public class ItemsRegistry {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);

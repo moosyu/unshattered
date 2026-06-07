@@ -1,6 +1,6 @@
 package io.github.moosyu.datagen;
 
-import io.github.moosyu.registers.ItemsRegistry;
+import io.github.moosyu.items.ItemsRegistry;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
@@ -11,7 +11,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.registers.BlocksRegistry.FIG_LOG_BLOCK;
+import static io.github.moosyu.blocks.BlocksRegistry.*;
 
 public class UnshatteredModelProvider extends ModelProvider {
     public UnshatteredModelProvider(PackOutput output) {
@@ -68,8 +68,9 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ItemsRegistry.CAKE_SOUL.get(), Items.PINK_DYE, ModelTemplates.FLAT_ITEM);
         // fix this being the backwards facing texture of a fishing rod
         itemModels.generateFlatItem(ItemsRegistry.CHALLENGING_ROD.get(), Items.FISHING_ROD, ModelTemplates.FLAT_HANDHELD_ITEM);
-        blockModels.createRotatedPillarWithHorizontalVariant(FIG_LOG_BLOCK.get(), TexturedModel.COLUMN, TexturedModel.COLUMN_HORIZONTAL);
         itemModels.itemModelOutput.accept(ItemsRegistry.ENCHANTED_FIG_LOG.get(), ItemModelUtils.plainModel(ModelTemplates.CUBE_COLUMN.create(Identifier.fromNamespaceAndPath("unshattered", "block/enchanted_fig_log"), TextureMapping.column(FIG_LOG_BLOCK.get()), blockModels.modelOutput)));
         itemModels.itemModelOutput.accept(ItemsRegistry.BEDROCK.get(), ItemModelUtils.plainModel(ModelTemplates.CUBE_ALL.create(Identifier.fromNamespaceAndPath("unshattered", "block/bedrock"), TextureMapping.cube(Blocks.BEDROCK), blockModels.modelOutput)));
+
+        blockModels.createRotatedPillarWithHorizontalVariant(FIG_LOG_BLOCK.get(), TexturedModel.COLUMN, TexturedModel.COLUMN_HORIZONTAL);
     }
 }

@@ -1,7 +1,6 @@
 package io.github.moosyu.datagen;
 
 import net.minecraft.client.resources.model.EquipmentClientInfo;
-import net.minecraft.core.Registry;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -19,10 +18,10 @@ import static io.github.moosyu.materials.ArmorMaterials.LEAFLET_KEY;
 
 // thanks for the code pookie
 // https://github.com/Tutorials-By-Kaupenjoe/NeoForge-Course-26.X/blob/22-armor/src/main/java/net/kaupenjoe/mccourse/datagen/ModEquipmentAsset.java
-public class UnshatteredEquipmentAssets implements DataProvider {
+public class EquipmentAssets implements DataProvider {
     private final PackOutput.PathProvider pathProvider;
 
-    public UnshatteredEquipmentAssets(PackOutput output) {
+    public EquipmentAssets(PackOutput output) {
         this.pathProvider = output.createPathProvider(PackOutput.Target.RESOURCE_PACK, "equipment");
     }
 

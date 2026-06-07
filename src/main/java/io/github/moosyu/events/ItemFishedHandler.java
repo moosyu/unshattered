@@ -2,7 +2,7 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.experience.ItemsFishingExperience;
-import io.github.moosyu.registers.AttachmentRegistry;
+import io.github.moosyu.attachments.AttachmentRegistry;
 import io.github.moosyu.sounds.UnshatteredSounds;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -11,7 +11,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.registers.AttachmentRegistry.PLAYER_SKILLS;
+import static io.github.moosyu.attachments.AttachmentRegistry.PLAYER_SKILLS;
 
 @EventBusSubscriber(modid = MODID)
 public class ItemFishedHandler {

@@ -1,6 +1,5 @@
-package io.github.moosyu.registers;
+package io.github.moosyu.attributes;
 
-import io.github.moosyu.attributes.UnshatteredAttributes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;

@@ -11,7 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.client.gui.GuiLayer;
 import org.jspecify.annotations.NonNull;
 
-import static io.github.moosyu.registers.AttachmentRegistry.PLAYER_STATE;
+import static io.github.moosyu.attachments.AttachmentRegistry.PLAYER_STATE;
 import static io.github.moosyu.layers.UnshatteredGuiLayers.SMALL_BAR;
 
 public class HealthBarLayer implements GuiLayer {

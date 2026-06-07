@@ -3,7 +3,8 @@
   "item_group.unshattered.armor": "Skyblock: Unshattered Armor",
   "item_group.unshattered.tools": "Skyblock: Unshattered Tools",
   "item_group.unshattered.weapons": "Skyblock: Unshattered Weapons",
-  "item_group.unshattered.blocks": "Skyblock: Unshattered Blocks",
+  "item_group.unshattered.decorative_blocks": "Skyblock: Unshattered Decorative Blocks",
+  "item_group.unshattered.breakable_blocks": "Skyblock: Unshattered Breakable Blocks",
 
   "item.unshattered.treecapitator": "Treecapitator",
   "item.unshattered.spruce_axe": "Spruce Axe",
@@ -52,12 +53,17 @@
   "item.unshattered.diamond_axe": "Diamond Axe",
   "item.unshattered.fig_log": "Fig Log",
   "item.unshattered.enchanted_fig_log": "Enchanted Fig Log",
+  "item.unshattered.breakable_fig_log": "Breakable Fig Log",
+  "item.unshattered.breakable_stone": "Breakable Stone",
+  "item.unshattered.breakable_cobblestone": "Breakable Cobblestone",
   "item.unshattered.bedrock": "Bedrock",
   "item.unshattered.cake_soul": "Cake Soul",
   "item.unshattered.challenging_rod": "Challenging Rod",
 
   "block.unshattered.fig_log": "Fig Log",
-
+  "block.unshattered.breakable_fig_log": "Breakable Fig Log",
+  "block.unshattered.breakable_stone": "Breakable Stone",
+  "block.unshattered.breakable_cobblestone": "Breakable Cobblestone",
   "item.description.unshattered.bat_the_fish": "Where is my cape!",
   "item.description.unshattered.century_the_fish": "The term 'century' was actually named after him, or so he says.",
   "item.description.unshattered.chill_the_fish": "This fish was found frozen solid in the lake of the island during the Holiday months.",

@@ -2,7 +2,6 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.attachments.PlayerStateAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributes;
-import io.github.moosyu.registers.AttributesRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -17,7 +16,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.registers.AttachmentRegistry.PLAYER_STATE;
+import static io.github.moosyu.attachments.AttachmentRegistry.PLAYER_STATE;
 import static io.github.moosyu.sounds.UnshatteredSounds.playerDeathSound;
 
 @EventBusSubscriber(modid = MODID)

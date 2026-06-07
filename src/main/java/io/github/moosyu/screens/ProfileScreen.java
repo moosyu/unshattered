@@ -4,7 +4,7 @@ import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.AttributeTypes;
 import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.helpers.RomanNumeralHelper;
-import io.github.moosyu.registers.AttachmentRegistry;
+import io.github.moosyu.attachments.AttachmentRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;

@@ -3,7 +3,7 @@ package io.github.moosyu.events;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.experience.EntityCombatExperience;
 import io.github.moosyu.experience.EntityFarmingExperience;
-import io.github.moosyu.registers.AttachmentRegistry;
+import io.github.moosyu.attachments.AttachmentRegistry;
 import io.github.moosyu.sounds.UnshatteredSounds;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -13,7 +13,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.registers.AttachmentRegistry.PLAYER_SKILLS;
+import static io.github.moosyu.attachments.AttachmentRegistry.PLAYER_SKILLS;
 
 @EventBusSubscriber(modid = MODID)
 public class KillHandler {

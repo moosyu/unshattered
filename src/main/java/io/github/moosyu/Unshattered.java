@@ -1,7 +1,7 @@
 package io.github.moosyu;
 
 import io.github.moosyu.attributes.UnshatteredAttributes;
-import io.github.moosyu.registers.AttributesRegistry;
+import io.github.moosyu.attributes.AttributesRegistry;
 import net.minecraft.client.AttackIndicatorStatus;
 import net.minecraft.client.Minecraft;
 import org.slf4j.Logger;
@@ -19,12 +19,12 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
-import static io.github.moosyu.registers.AttachmentRegistry.ATTACHMENT_TYPES;
-import static io.github.moosyu.registers.AttributesRegistry.ATTRIBUTES;
-import static io.github.moosyu.registers.BlocksRegistry.BLOCKS;
-import static io.github.moosyu.registers.CreativeTabsRegistry.CREATIVE_MODE_TABS;
-import static io.github.moosyu.registers.DataComponentRegistry.DATA_COMPONENTS;
-import static io.github.moosyu.registers.ItemsRegistry.*;
+import static io.github.moosyu.attachments.AttachmentRegistry.ATTACHMENT_TYPES;
+import static io.github.moosyu.attributes.AttributesRegistry.ATTRIBUTES;
+import static io.github.moosyu.blocks.BlocksRegistry.BLOCKS;
+import static io.github.moosyu.creative.CreativeTabsRegistry.CREATIVE_MODE_TABS;
+import static io.github.moosyu.data.components.DataComponentRegistry.DATA_COMPONENTS;
+import static io.github.moosyu.items.ItemsRegistry.*;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Unshattered.MODID)

@@ -2,7 +2,7 @@ package io.github.moosyu.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.registers.AttachmentRegistry;
+import io.github.moosyu.attachments.AttachmentRegistry;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;

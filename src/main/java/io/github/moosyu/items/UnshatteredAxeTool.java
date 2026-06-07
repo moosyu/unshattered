@@ -1,6 +1,6 @@
 package io.github.moosyu.items;
 
-import io.github.moosyu.registers.DataComponentRegistry;
+import io.github.moosyu.data.components.DataComponentRegistry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.BlockTags;

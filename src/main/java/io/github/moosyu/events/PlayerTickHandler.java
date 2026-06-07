@@ -10,7 +10,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.registers.AttachmentRegistry.PLAYER_STATE;
+import static io.github.moosyu.attachments.AttachmentRegistry.PLAYER_STATE;
 
 @EventBusSubscriber(modid = MODID)
 public class PlayerTickHandler {

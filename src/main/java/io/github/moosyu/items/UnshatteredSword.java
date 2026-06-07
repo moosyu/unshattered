@@ -1,6 +1,6 @@
 package io.github.moosyu.items;
 
-import io.github.moosyu.registers.DataComponentRegistry;
+import io.github.moosyu.data.components.DataComponentRegistry;
 import net.minecraft.world.item.Item;
 
 public class UnshatteredSword extends Item {

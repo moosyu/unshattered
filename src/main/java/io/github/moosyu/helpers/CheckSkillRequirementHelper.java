@@ -2,8 +2,8 @@ package io.github.moosyu.helpers;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.components.SkillRequirement;
-import io.github.moosyu.registers.AttachmentRegistry;
-import io.github.moosyu.registers.DataComponentRegistry;
+import io.github.moosyu.attachments.AttachmentRegistry;
+import io.github.moosyu.data.components.DataComponentRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;

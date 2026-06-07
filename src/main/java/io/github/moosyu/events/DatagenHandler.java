@@ -1,9 +1,6 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.datagen.UnshatteredBlockTagsProvider;
-import io.github.moosyu.datagen.UnshatteredEquipmentAssets;
-import io.github.moosyu.datagen.UnshatteredItemTagsProvider;
-import io.github.moosyu.datagen.UnshatteredModelProvider;
+import io.github.moosyu.datagen.*;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -22,6 +19,6 @@ public class DatagenHandler {
         generator.addProvider(true, new UnshatteredModelProvider(packOutput));
         generator.addProvider(true, new UnshatteredBlockTagsProvider(packOutput, event.getLookupProvider()));
         generator.addProvider(true, new UnshatteredItemTagsProvider(packOutput, event.getLookupProvider()));
-        generator.addProvider(true, new UnshatteredEquipmentAssets(packOutput));
+        generator.addProvider(true, new EquipmentAssets(packOutput));
     }
 }

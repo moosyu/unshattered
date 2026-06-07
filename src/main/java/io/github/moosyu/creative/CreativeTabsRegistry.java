@@ -1,4 +1,4 @@
-package io.github.moosyu.registers;
+package io.github.moosyu.creative;
 
 import
 net.minecraft.core.registries.Registries;
@@ -9,7 +9,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.registers.ItemsRegistry.*;
+import static io.github.moosyu.items.ItemsRegistry.*;
 public class CreativeTabsRegistry {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
@@ -49,7 +49,7 @@ public class CreativeTabsRegistry {
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_BLOCKS_TAB = CREATIVE_MODE_TABS.register("unshattered_blocks_tab",
         () -> CreativeModeTab.builder()
-        .title(Component.translatable("item_group.unshattered.blocks"))
+        .title(Component.translatable("item_group.unshattered.decorative_blocks"))
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
         .icon(() -> FIG_LOG.get().getDefaultInstance())
         .displayItems((parameters, output) -> {
