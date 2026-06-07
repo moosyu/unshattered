@@ -23,8 +23,9 @@ public class HealthBarLayer implements GuiLayer {
         final int POS_X_BAR = (graphics.guiWidth() / 2) - (SPRITE_WIDTH / 2) - 54;
         final int POS_Y_BAR = graphics.guiHeight() - SPRITE_HEIGHT - 18;
 
-        Player player = Minecraft.getInstance().player;
-        if (!player.level().isClientSide()) return;
+        Minecraft minecraft = Minecraft.getInstance();
+        Player player = minecraft.player;
+        if (!player.level().isClientSide() || minecraft.options.hideGui) return;
         final double currentHealth = player.getData(PLAYER_STATE.get()).getCurrentStat(PlayerStateAttachment.Stat.HEALTH);
         final double healthPercentage = (player.getData(PLAYER_STATE.get()).getCurrentStat(PlayerStateAttachment.Stat.HEALTH) / player.getAttributeValue(UnshatteredAttributes.HEALTH.holder));
         final String currentHealthText = String.valueOf((int) currentHealth);

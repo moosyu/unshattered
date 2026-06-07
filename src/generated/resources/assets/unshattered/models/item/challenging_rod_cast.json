@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld_rod",
   "textures": {
-    "layer0": "unshattered:item/challenging_rod"
+    "layer0": "unshattered:item/challenging_rod_cast"
   }
 }

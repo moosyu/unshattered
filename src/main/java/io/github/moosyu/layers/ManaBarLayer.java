@@ -22,8 +22,9 @@ public class ManaBarLayer implements GuiLayer {
         final int POS_X_BAR = (graphics.guiWidth() / 2) - (SPRITE_WIDTH / 2) + 54;
         final int POS_Y_BAR = graphics.guiHeight() - SPRITE_HEIGHT - 18;
 
+        Minecraft minecraft = Minecraft.getInstance();
         Player player = Minecraft.getInstance().player;
-        if (!player.level().isClientSide()) return;
+        if (!player.level().isClientSide() || minecraft.options.hideGui) return;
         final AttributeInstance manaAttribute = Minecraft.getInstance().player.getAttribute(UnshatteredAttributes.MANA.holder);
         if (manaAttribute == null) return;
         final String currentManaText = String.valueOf((int) manaAttribute.getValue());

@@ -25,7 +25,7 @@ public class SelectedItemLayer implements GuiLayer {
     public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
-        if (player == null || !player.level().isClientSide()) return;
+        if (player == null || !player.level().isClientSide() || minecraft.options.hideGui) return;
 
         final int DISPLAYED_TICK_COUNT = 80;
         final int FADING_TICK_COUNT = 20;
@@ -35,6 +35,7 @@ public class SelectedItemLayer implements GuiLayer {
         Level level = player.level();
 
         if (!hasItem) {
+            lastSelected = ItemStack.EMPTY;
             return;
         }
 

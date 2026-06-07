@@ -1,23 +1,32 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
+import io.github.moosyu.blocks.BlocksRegistry;
 import io.github.moosyu.blocks.BrokenBlocksItemResult;
+import io.github.moosyu.blocks.BrokenBlocksWorldResult;
+import io.github.moosyu.data.RegenBlocksSavedData;
 import io.github.moosyu.experience.BlocksFarmingExperience;
 import io.github.moosyu.experience.BlocksMiningExperience;
 import io.github.moosyu.helpers.CheckBreakableBlock;
 import io.github.moosyu.attachments.AttachmentRegistry;
 import io.github.moosyu.helpers.CheckSkillRequirementHelper;
 import io.github.moosyu.sounds.UnshatteredSounds;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
+
+import java.util.*;
 
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.attachments.AttachmentRegistry.PLAYER_SKILLS;
@@ -25,27 +34,27 @@ import static io.github.moosyu.attachments.AttachmentRegistry.PLAYER_SKILLS;
 // ran just before a player is to break a block
 @EventBusSubscriber(modid = MODID)
 public class BlockBreakHandler {
+    private static final int TIME_BROKEN = 120;
+    private static final Map<BlockPos, RegenBlock> BLOCKS_AWAITING_REGEN = new HashMap<>();
+    public record RegenBlock(Level level, BlockState currentBlock, long regenTick) {}
     @SubscribeEvent
     public static void onBlockBreak(BreakBlockEvent event) {
         Player player = event.getPlayer();
         Level level = player.level();
         // so you can still break stuff normally in creative
-        if (player.isCreative()) {
-            return;
-        }
-        if (player.level().isClientSide()) {
-            return;
-        }
+        if (player.isCreative() || player.level().isClientSide()) return;
         event.setCanceled(true);
 
         BlockState blockState = event.getState();
         Block block = blockState.getBlock();
         BlockState replacementBlock = CheckBreakableBlock.canBreakBlock(blockState, player);
 
-        if (replacementBlock == null) {
-            return;
-        } else {
-            level.setBlock(event.getPos(), replacementBlock, 3);
+        if (replacementBlock == null) return;
+        else {
+            BlockPos blockPos = event.getPos();
+            level.setBlock(blockPos, replacementBlock, 3);
+            // server tick count and world tick count are different (i know now)
+            RegenBlocksSavedData.get((ServerLevel) level).addBlock(blockPos, level.getGameTime() + TIME_BROKEN);
         }
 
         PlayerSkillsAttachment skills = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
@@ -88,6 +97,30 @@ public class BlockBreakHandler {
         if (!CheckSkillRequirementHelper.canUseItem(event.getEntity(), event.getEntity().getMainHandItem())
                 || CheckBreakableBlock.canBreakBlock(event.getState(), event.getEntity()) == null) {
             event.setNewSpeed(0.0F);
+        }
+    }
+
+    @SubscribeEvent
+    private static void onServerTickEvent(ServerTickEvent.Post event) {
+        // im hoping that this wont be absurdly laggy but if this project ends up being anyhow successful i imagine this could get fucked up if like
+        // 1000 blocks are waiting to regen at the same time
+        for (ServerLevel level : event.getServer().getAllLevels()) {
+            RegenBlocksSavedData data = RegenBlocksSavedData.get(level);
+            Map<BlockPos, Long> toAdd = new HashMap<>();
+            List<BlockPos> toRemove = new ArrayList<>();
+
+            for (Map.Entry<BlockPos, Long> entry : data.getRegenTicks().entrySet()) {
+                if (level.getGameTime() >= entry.getValue()) {
+                    BlockState restoredBlock = BrokenBlocksWorldResult.getBlockRestored(level.getBlockState(entry.getKey()).getBlock());
+                    level.setBlock(entry.getKey(), restoredBlock, 3);
+                    toRemove.add(entry.getKey());
+                    if (restoredBlock.is(BlocksRegistry.BREAKABLE_COBBLESTONE_BLOCK))
+                        toAdd.put(entry.getKey(), level.getGameTime() + TIME_BROKEN);
+                }
+            }
+
+            toRemove.forEach(data::removeBlock);
+            toAdd.forEach(data::addBlock);
         }
     }
 }
