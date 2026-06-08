@@ -3,6 +3,7 @@ package io.github.moosyu.items;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.data.components.SkillRequirement;
+import io.github.moosyu.items.swords.RogueSword;
 import io.github.moosyu.rarities.RarityTypes;
 import io.github.moosyu.data.components.DataComponentRegistry;
 import net.minecraft.resources.Identifier;
@@ -76,4 +77,5 @@ public class ItemsRegistry {
     public static final DeferredItem<BlockItem> BREAKABLE_FIG_LOG = ITEMS.registerItem("breakable_fig_log", props -> new BlockItem(BREAKABLE_FIG_LOG_BLOCK.get(), props.component(DataComponentRegistry.RARITY.get(), RarityTypes.COMMON).component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.LOG)));
     public static final DeferredItem<BlockItem> BREAKABLE_STONE = ITEMS.registerItem("breakable_stone", props -> new BlockItem(BREAKABLE_STONE_BLOCK.get(), props.component(DataComponentRegistry.RARITY.get(), RarityTypes.COMMON).component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.LOG)));
     public static final DeferredItem<BlockItem> BREAKABLE_COBBLESTONE = ITEMS.registerItem("breakable_cobblestone", props -> new BlockItem(BREAKABLE_COBBLESTONE_BLOCK.get(), props.component(DataComponentRegistry.RARITY.get(), RarityTypes.COMMON).component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.LOG)));
+    public static final DeferredItem<Item> ROGUE_SWORD = ITEMS.registerItem("rogue_sword", RogueSword::new);
 }

@@ -20,28 +20,25 @@ public class PlayerTickHandler {
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         Player player = event.getEntity();
         if (player.level().isClientSide()) return;
-        PlayerStateAttachment stats = player.getData(PLAYER_STATE.get());
-        final AttributeInstance healthAttribute = player.getAttribute(UnshatteredAttributes.HEALTH.holder);
-        final AttributeInstance healthRegenAttribute = player.getAttribute(UnshatteredAttributes.HEALTH_REGEN.holder);
+        PlayerStateAttachment state = player.getData(PLAYER_STATE.get());
+        final double maxHealthValue = player.getAttributeValue(UnshatteredAttributes.HEALTH.holder);
+        final double healthRegenValue = player.getAttributeValue(UnshatteredAttributes.HEALTH_REGEN.holder);
 
         // disable hunger effects
         player.getFoodData().setFoodLevel(20);
         player.getFoodData().setSaturation(5.0f);
         //player.getFoodData().setExhaustion(0.0f);
 
-        if (healthAttribute != null && healthRegenAttribute != null) {
-            double maxHealth = healthAttribute.getValue();
-            // heal every 2 seconds
-            if (player.tickCount % 40 == 0) {
-                double healthGained = (1.5 + maxHealth / 100) * (healthRegenAttribute.getValue() / 100);
-                stats.addCurrentStat(PlayerStateAttachment.Stat.HEALTH, healthGained, maxHealth);
-                player.syncData(PLAYER_STATE);
-            } else {
-                // update health if attribute changed. itll already be updated on the healing tick though
-                if (maxHealth < stats.getCurrentStat(PlayerStateAttachment.Stat.HEALTH)) stats.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, maxHealth);
-                player.syncData(PLAYER_STATE);
-            }
+        // heal every 2 seconds
+        if (player.tickCount % 40 == 0) {
+            double healthGained = (1.5 + maxHealthValue / 100) * (healthRegenValue / 100);
+            state.addCurrentStat(PlayerStateAttachment.Stat.HEALTH, healthGained, maxHealthValue);
+        } else {
+            // update health if attribute changed. itll already be updated on the healing tick though
+            if (maxHealthValue < state.getCurrentStat(PlayerStateAttachment.Stat.HEALTH)) state.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, maxHealthValue);
         }
+        state.decrementInvulnerableTime();
+        player.syncData(PLAYER_STATE);
 
         // fishing popup
         if (player.fishing instanceof FishingHook hook) {

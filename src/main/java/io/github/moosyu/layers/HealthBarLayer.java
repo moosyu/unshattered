@@ -8,6 +8,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.GameType;
 import net.neoforged.neoforge.client.gui.GuiLayer;
 import org.jspecify.annotations.NonNull;
 
@@ -25,7 +26,7 @@ public class HealthBarLayer implements GuiLayer {
 
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
-        if (!player.level().isClientSide() || minecraft.options.hideGui) return;
+        if (!player.level().isClientSide() || minecraft.options.hideGui || player.gameMode() != GameType.SURVIVAL) return;
         final double currentHealth = player.getData(PLAYER_STATE.get()).getCurrentStat(PlayerStateAttachment.Stat.HEALTH);
         final double healthPercentage = (player.getData(PLAYER_STATE.get()).getCurrentStat(PlayerStateAttachment.Stat.HEALTH) / player.getAttributeValue(UnshatteredAttributes.HEALTH.holder));
         final String currentHealthText = String.valueOf((int) currentHealth);

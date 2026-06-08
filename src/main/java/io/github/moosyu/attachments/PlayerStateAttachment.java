@@ -5,7 +5,7 @@ import net.minecraft.world.item.ItemStack;
 public class PlayerStateAttachment {
     private final double[] stats = new double[Stat.values().length];
     private boolean cancelKnockback = false;
-    private boolean invulnerable = false;
+    private int invulnerableTime = 0;
     private int lastUpdatedStat = -1;
 
     public enum Stat {
@@ -63,7 +63,9 @@ public class PlayerStateAttachment {
         this.cancelKnockback = cancelKnockback;
     }
 
-    public boolean isInvulnerable() {return invulnerable;}
+    public boolean isInvulnerable() {return invulnerableTime > 0;}
 
-    public void setInvulnerable(boolean invulnerable) {this.invulnerable = invulnerable;}
+    public void decrementInvulnerableTime() {invulnerableTime = Math.max(0, invulnerableTime - 1);}
+
+    public void setInvulnerableTime(int invulnerable) {this.invulnerableTime = invulnerable;}
 }

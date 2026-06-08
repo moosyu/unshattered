@@ -121,5 +121,6 @@ public class CreativeTabsRegistry {
                 output.accept(IRON_AXE.get());
                 output.accept(GOLDEN_AXE.get());
                 output.accept(DIAMOND_AXE.get());
+                output.accept(ROGUE_SWORD.get());
         }).build());
 }

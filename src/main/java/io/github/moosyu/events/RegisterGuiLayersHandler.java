@@ -1,5 +1,6 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.layers.BreathBarLayer;
 import io.github.moosyu.layers.HealthBarLayer;
 import io.github.moosyu.layers.ManaBarLayer;
 import io.github.moosyu.layers.SelectedItemLayer;
@@ -17,6 +18,7 @@ public class RegisterGuiLayersHandler {
         event.replaceLayer(VanillaGuiLayers.PLAYER_HEALTH, new HealthBarLayer());
         event.replaceLayer(VanillaGuiLayers.FOOD_LEVEL, new ManaBarLayer());
         event.replaceLayer(VanillaGuiLayers.SELECTED_ITEM_NAME, new SelectedItemLayer());
+        event.replaceLayer(VanillaGuiLayers.AIR_LEVEL, new BreathBarLayer());
         // hiding some vanilla bits
         event.replaceLayer(VanillaGuiLayers.CONTEXTUAL_INFO_BAR, (_, _) -> {});
         event.replaceLayer(VanillaGuiLayers.EXPERIENCE_LEVEL, (_, _) -> {});

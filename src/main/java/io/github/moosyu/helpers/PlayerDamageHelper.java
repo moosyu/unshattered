@@ -15,9 +15,10 @@ public final class PlayerDamageHelper {
     public static void damagePlayer(Player player, double damageDealt, Level level, String deathMessage) {
         PlayerStateAttachment states = player.getData(PLAYER_STATE.get());
         double playerHealth = states.getCurrentStat(PlayerStateAttachment.Stat.HEALTH);
-
+        if (states.isInvulnerable()) return;
         if (playerHealth - damageDealt > 0.0d) {
             states.removeCurrentStat(PlayerStateAttachment.Stat.HEALTH, damageDealt);
+            states.setInvulnerableTime(20);
             player.syncData(PLAYER_STATE.get());
         } else {
             BlockPos spawnPos = level.getRespawnData().pos();
@@ -29,5 +30,6 @@ public final class PlayerDamageHelper {
             playerDeathSound(player);
             states.setCancelledKnockback(true);
         }
+        player.invulnerableTime = 0;
     }
 }
