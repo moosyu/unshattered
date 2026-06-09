@@ -22,6 +22,7 @@ public class EntityAttributeModificationHandler {
         event.add(EntityType.PLAYER, UnshatteredAttributes.CRITICAL_CHANCE.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributes.HEALTH_REGEN.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributes.DEFENSE.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributes.SPEED.holder);
 
         event.add(EntityType.ZOMBIE, UnshatteredAttributes.HEALTH.holder, 70.0d);
         event.add(EntityType.ZOMBIE, UnshatteredAttributes.DAMAGE.holder, 20.0d);

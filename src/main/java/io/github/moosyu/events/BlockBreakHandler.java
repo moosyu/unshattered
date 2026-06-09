@@ -9,7 +9,7 @@ import io.github.moosyu.experience.BlocksFarmingExperience;
 import io.github.moosyu.experience.BlocksMiningExperience;
 import io.github.moosyu.helpers.CheckBreakableBlock;
 import io.github.moosyu.attachments.AttachmentRegistry;
-import io.github.moosyu.helpers.CheckSkillRequirementHelper;
+import io.github.moosyu.helpers.CheckItemRequirementHelper;
 import io.github.moosyu.sounds.UnshatteredSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -18,7 +18,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -94,7 +93,7 @@ public class BlockBreakHandler {
     // to stop players from attempting to break blocks
     @SubscribeEvent
     public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
-        if (!CheckSkillRequirementHelper.canUseItem(event.getEntity(), event.getEntity().getMainHandItem())
+        if (!CheckItemRequirementHelper.passesSkillCheck(event.getEntity(), event.getEntity().getMainHandItem())
                 || CheckBreakableBlock.canBreakBlock(event.getState(), event.getEntity()) == null) {
             event.setNewSpeed(0.0F);
         }

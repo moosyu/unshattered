@@ -21,9 +21,11 @@ public class PlayerJoinHandler {
         if (event.getEntity() instanceof Player player && !player.level().isClientSide()) {
             var stats = player.getData(PLAYER_STATE.get());
             final AttributeInstance healthAttribute = player.getAttribute(UnshatteredAttributes.HEALTH.holder);
-            if (healthAttribute == null) return;
-            final double MAX_HEALTH = healthAttribute.getValue();
-            stats.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, MAX_HEALTH);
+            final AttributeInstance manaAttribute = player.getAttribute(UnshatteredAttributes.MANA.holder);
+            if (healthAttribute == null || manaAttribute == null) return;
+            stats.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, healthAttribute.getValue());
+            player.syncData(PLAYER_STATE);
+            stats.setCurrentStat(PlayerStateAttachment.Stat.MANA, manaAttribute.getValue());
             player.syncData(PLAYER_STATE);
         }
     }

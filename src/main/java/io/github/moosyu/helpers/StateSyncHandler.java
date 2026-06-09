@@ -32,7 +32,7 @@ public final class StateSyncHandler implements AttachmentSyncHandler<PlayerState
     }
 
     @Override
-    public @Nullable PlayerStateAttachment read(@NonNull IAttachmentHolder holder, RegistryFriendlyByteBuf buf, @Nullable PlayerStateAttachment previousValue) {
+    public @NonNull PlayerStateAttachment read(@NonNull IAttachmentHolder holder, RegistryFriendlyByteBuf buf, @Nullable PlayerStateAttachment previousValue) {
         boolean fullSync = buf.readBoolean();
 
         if (fullSync) {

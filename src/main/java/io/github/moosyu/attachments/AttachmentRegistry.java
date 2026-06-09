@@ -11,6 +11,7 @@ import static io.github.moosyu.Unshattered.MODID;
 
 public class AttachmentRegistry {
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, MODID);
+
     public static final Supplier<AttachmentType<PlayerSkillsAttachment>> PLAYER_SKILLS = ATTACHMENT_TYPES.register("player_skills", () ->
             AttachmentType.builder(() -> new PlayerSkillsAttachment(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f))
                     .serialize(PlayerSkillsAttachment.RECORD_CODEC.fieldOf("skills"))
@@ -23,5 +24,9 @@ public class AttachmentRegistry {
             AttachmentType.builder(PlayerStateAttachment::new)
                     .sync(new StateSyncHandler())
                     .build()
+    );
+
+    public static final Supplier<AttachmentType<PlayerAbilitiesAttachment>> PLAYER_ABILITIES = ATTACHMENT_TYPES.register("player_abilities", () ->
+            AttachmentType.builder(PlayerAbilitiesAttachment::new).build()
     );
 }

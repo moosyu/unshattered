@@ -29,6 +29,7 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ItemsRegistry.WOODEN_AXE.get(), Items.WOODEN_AXE, ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsRegistry.STONE_AXE.get(), Items.STONE_AXE, ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsRegistry.IRON_AXE.get(), Items.IRON_AXE, ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ItemsRegistry.ROGUE_SWORD.get(), Items.GOLDEN_SWORD, ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsRegistry.GOLDEN_AXE.get(), Items.GOLDEN_AXE, ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsRegistry.DIAMOND_AXE.get(), Items.DIAMOND_AXE, ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsRegistry.TREECAPITATOR.get(), Items.GOLDEN_AXE, ModelTemplates.FLAT_HANDHELD_ITEM);

@@ -1,10 +1,9 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.helpers.CheckSkillRequirementHelper;
+import io.github.moosyu.helpers.CheckItemRequirementHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -59,13 +58,13 @@ public class PlayerClickHandler {
     @SubscribeEvent
     public static void onPlayerRightClickItem(PlayerInteractEvent.RightClickItem event) {
         if (event.getLevel().isClientSide()) return;
-        if (!CheckSkillRequirementHelper.canUseItem(event.getEntity(), event.getItemStack())) event.setCanceled(true);
+        if (!CheckItemRequirementHelper.passesSkillCheck(event.getEntity(), event.getItemStack())) event.setCanceled(true);
     }
 
     @SubscribeEvent
     public static void onPlayerLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
         Level level = event.getLevel();
         if (level.isClientSide()) return;
-        if (!CheckSkillRequirementHelper.canUseItem(event.getEntity(), event.getItemStack())) event.setCanceled(true);
+        if (!CheckItemRequirementHelper.passesSkillCheck(event.getEntity(), event.getItemStack())) event.setCanceled(true);
     }
 }

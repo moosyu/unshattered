@@ -18,17 +18,11 @@ public class PlayerStateAttachment {
         stats[Stat.MANA.ordinal()] = 0.0f;
     }
 
-    public double[] getStats() {
-        return stats;
-    }
+    public double[] getStats() {return stats;}
 
-    public void setStats(double[] newStats) {
-        System.arraycopy(newStats, 0, stats, 0, stats.length);
-    }
+    public void setStats(double[] newStats) {System.arraycopy(newStats, 0, stats, 0, stats.length);}
 
-    public double getCurrentStat(Stat currentStat) {
-        return stats[currentStat.ordinal()];
-    }
+    public double getCurrentStat(Stat currentStat) {return stats[currentStat.ordinal()];}
 
     public void setCurrentStat(Stat stat, double value) {
         int index = stat.ordinal();
@@ -43,25 +37,15 @@ public class PlayerStateAttachment {
         stats[currentStat.ordinal()] = (float) Math.min(stats[currentStat.ordinal()] + amount, maxAmount);
     }
 
-    public int getLastUpdatedStat() {
-        return lastUpdatedStat;
-    }
+    public int getLastUpdatedStat() {return lastUpdatedStat;}
 
-    public double getCurrentStatByIndex(int index) {
-        return stats[index];
-    }
+    public double getCurrentStatByIndex(int index) {return stats[index];}
 
-    public void setCurrentStatByIndex(int index, double value) {
-        stats[index] = value;
-    }
+    public void setCurrentStatByIndex(int index, double value) {stats[index] = value;}
 
-    public boolean isKnockbackCancelled() {
-        return cancelKnockback;
-    }
+    public boolean isKnockbackCancelled() {return cancelKnockback;}
 
-    public void setCancelledKnockback(boolean cancelKnockback) {
-        this.cancelKnockback = cancelKnockback;
-    }
+    public void setCancelledKnockback(boolean cancelKnockback) {this.cancelKnockback = cancelKnockback;}
 
     public boolean isInvulnerable() {return invulnerableTime > 0;}
 

@@ -1,5 +1,6 @@
 package io.github.moosyu.layers;
 
+import io.github.moosyu.attachments.PlayerStateAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributes;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -12,6 +13,7 @@ import net.minecraft.world.level.GameType;
 import net.neoforged.neoforge.client.gui.GuiLayer;
 import org.jspecify.annotations.NonNull;
 
+import static io.github.moosyu.attachments.AttachmentRegistry.PLAYER_STATE;
 import static io.github.moosyu.layers.UnshatteredGuiLayers.SMALL_BAR;
 
 public class ManaBarLayer implements GuiLayer {
@@ -28,11 +30,13 @@ public class ManaBarLayer implements GuiLayer {
         if (!player.level().isClientSide() || minecraft.options.hideGui || player.gameMode() != GameType.SURVIVAL) return;
         final AttributeInstance manaAttribute = player.getAttribute(UnshatteredAttributes.MANA.holder);
         if (manaAttribute == null) return;
-        final String currentManaText = String.valueOf((int) manaAttribute.getValue());
+        double currentMana = player.getData(PLAYER_STATE.get()).getCurrentStat(PlayerStateAttachment.Stat.MANA);
+        final double manaPercentage = (currentMana / manaAttribute.getValue());
+        final String currentManaText = String.valueOf((int) currentMana);
         final Font font = Minecraft.getInstance().font;
 
         graphics.blit(RenderPipelines.GUI_TEXTURED, SMALL_BAR, POS_X_BAR, POS_Y_BAR, 0, BAR_HEIGHT - 1, SPRITE_WIDTH, BAR_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT, 0xFF00A6FF);
-        graphics.blit(RenderPipelines.GUI_TEXTURED, SMALL_BAR, POS_X_BAR, POS_Y_BAR, 0, 0, SPRITE_WIDTH, BAR_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT, 0xFF00A6FF);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, SMALL_BAR, POS_X_BAR, POS_Y_BAR, 0, 0, (int) (SPRITE_WIDTH * manaPercentage), BAR_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT, 0xFF00A6FF);
 
         graphics.text(Minecraft.getInstance().font, currentManaText, POS_X_BAR + (SPRITE_WIDTH / 2) - (font.width(currentManaText) / 2), POS_Y_BAR - 8, 0xFF4E5BC6, true);
     }

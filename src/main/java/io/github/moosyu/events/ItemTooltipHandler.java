@@ -40,17 +40,15 @@ public class ItemTooltipHandler {
         ItemTypes itemType = stack.get(DataComponentRegistry.ITEM_TYPE.get());
         String itemDescriptionKey = stack.get(DataComponentRegistry.DESCRIPTION_KEY.get());
         SkillRequirement itemSkillRequirement = stack.get(DataComponentRegistry.SKILL_REQUIREMENT.get());
+        Boolean itemAbility = stack.get(DataComponentRegistry.ITEM_ABILITY);
 
         event.getToolTip().clear();
         if (itemRarity == null) itemRarity = RarityTypes.COMMON;
         if (itemType == null) itemType = ItemTypes.ITEM;
+        if (itemAbility == null) itemAbility = false;
 
         tooltipComponents.add(Component.translatable(stack.getItemName().getString()).withColor(itemRarity.getColor(1.0f)));
         ItemAttributeModifiers modifiers = stack.getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY);
-
-        if (itemDescriptionKey != null) {
-            tooltipComponents.add(parseStyledText(Component.translatable(itemDescriptionKey).getString()));
-        }
 
         for (ItemAttributeModifiers.Entry entry : modifiers.modifiers()) {
             Holder<Attribute> attributeHolder = entry.attribute();
@@ -59,6 +57,18 @@ public class ItemTooltipHandler {
 
             if (modAttribute == null) continue;
             tooltipComponents.add(Component.translatable(attributeHolder.value().getDescriptionId()).append(Component.literal(": ")).withStyle(ChatFormatting.GRAY).append(Component.literal("+" + (int) modifier.amount()).withStyle((modAttribute.offensive) ? ChatFormatting.RED : ChatFormatting.GREEN)));
+        }
+
+        if (itemDescriptionKey != null) {
+            tooltipComponents.add(parseStyledText(Component.translatable(itemDescriptionKey).getString(), 0xFFAAAAAA));
+        }
+
+        if (itemAbility) {
+            tooltipComponents.add(Component.literal(""));
+            tooltipComponents.add(Component.literal("Ability: Speed Boost ").withColor(0xFFFFAA00).append(Component.literal("RIGHT CLICK").withColor(0xFFFFFF55).withStyle(ChatFormatting.BOLD)));
+            tooltipComponents.add(Component.literal("Grants ").withColor(0xFFAAAAAA).append(Component.literal("+100✦ Speed ").withColor(0xFFFFFFFF).append(Component.literal("for ").withColor(0xFFAAAAAA).append(Component.literal("30s").withColor(0xFF55FF55)))));
+            tooltipComponents.add(Component.literal("Mana Cost: ").withColor(0xFF555555).append(Component.literal("50").withColor(0xFF00AAAA)));
+            tooltipComponents.add(Component.literal("Cooldown: ").withColor(0xFF555555).append(Component.literal("5s").withColor(0xFF55FF55)));
         }
 
         tooltipComponents.add(Component.empty());
@@ -72,16 +82,15 @@ public class ItemTooltipHandler {
         tooltipComponents.add(Component.literal(Component.translatable("rarity.unshattered." + itemRarity.name().toLowerCase()).getString().toUpperCase() + " " + Component.translatable(itemType.getKey()).getString().toUpperCase()).withColor(itemRarity.getColor(1.0f)).withStyle(ChatFormatting.BOLD));
     }
 
-    public static Component parseStyledText(String input) {
+    public static Component parseStyledText(String input, int baseColor) {
         MutableComponent result = Component.empty();
         Matcher matcher = Pattern.compile("\\[color=(0x[0-9A-Fa-f]+)](.*?)\\[/color]|\\[i](.*?)\\[/i]").matcher(input);
-        final int BASE_COLOR = 0xFFAAAAAA;
         int lastEnd = 0;
 
         while (matcher.find()) {
             if (matcher.start() > lastEnd) {
                 String before = input.substring(lastEnd, matcher.start());
-                result.append(Component.literal(before).withColor(BASE_COLOR));
+                result.append(Component.literal(before).withColor(baseColor));
             }
             if (matcher.group(1) != null) {
                 String colorHex = matcher.group(1);
@@ -91,14 +100,14 @@ public class ItemTooltipHandler {
                 result.append(Component.literal(text).withColor(color));
             } else if (matcher.group(3) != null) {
                 String text = matcher.group(3);
-                result.append(Component.literal(text).withColor(BASE_COLOR).withStyle(ChatFormatting.ITALIC));
+                result.append(Component.literal(text).withColor(baseColor).withStyle(ChatFormatting.ITALIC));
             }
             lastEnd = matcher.end();
         }
 
         if (lastEnd < input.length()) {
             String remaining = input.substring(lastEnd);
-            result.append(Component.literal(remaining).withColor(BASE_COLOR));
+            result.append(Component.literal(remaining).withColor(baseColor));
         }
 
         return result;

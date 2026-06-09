@@ -16,7 +16,8 @@ public enum UnshatteredAttributes {
     FORAGING_FORTUNE("foraging_fortune", "☘", 0.0, 0.0, 1024.0, 0xFFFFAA00, AttributeTypes.IMPORTANT, false),
     DAMAGE("damage", 0.0, 0.0, 2147483647.0, true),
     HEALTH_REGEN("health_regen", "❣", 100.0, 0.0, 2048.0, 0xFFFC3A3A, AttributeTypes.VISIBLE, false),
-    DEFENSE("defense", "❈", 0.0, 0.0, 131072.0, 0xFF55FF55, AttributeTypes.VISIBLE, false);
+    DEFENSE("defense", "❈", 0.0, 0.0, 131072.0, 0xFF55FF55, AttributeTypes.VISIBLE, false),
+    SPEED("speed", "✦", 100.0, 0.0, 400.0, 0xFFFFFFFF, AttributeTypes.VISIBLE, false);
 
     private static final Map<Attribute, UnshatteredAttributes> ATTRIBUTE_MAP = new HashMap<>();
     public final String id;
