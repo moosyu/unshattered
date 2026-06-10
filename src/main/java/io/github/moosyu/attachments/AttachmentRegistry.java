@@ -26,7 +26,7 @@ public class AttachmentRegistry {
                     .build()
     );
 
-    public static final Supplier<AttachmentType<PlayerAbilitiesAttachment>> PLAYER_ABILITIES = ATTACHMENT_TYPES.register("player_abilities", () ->
-            AttachmentType.builder(PlayerAbilitiesAttachment::new).build()
+    public static final Supplier<AttachmentType<PlayerAbilityEffectsAttachment>> PLAYER_ABILITIES = ATTACHMENT_TYPES.register("player_abilities", () ->
+            AttachmentType.builder(PlayerAbilityEffectsAttachment::new).build()
     );
 }

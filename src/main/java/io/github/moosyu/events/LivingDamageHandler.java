@@ -2,6 +2,7 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.helpers.PlayerDamageHelper;
+import net.minecraft.network.chat.Component;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -12,6 +13,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
+import static io.github.moosyu.Unshattered.LOGGER;
 import static io.github.moosyu.Unshattered.MODID;
 
 @EventBusSubscriber(modid = MODID)
@@ -27,7 +29,10 @@ public class LivingDamageHandler {
             if (attacker instanceof LivingEntity entity) {
                 AttributeInstance damageAttributeInstance = entity.getAttribute(UnshatteredAttributes.DAMAGE.holder);
                 // in case the damage attribute was never defined
-                if (damageAttributeInstance == null) return;
+                if (damageAttributeInstance == null) {
+                    LOGGER.error("A damage attribute wasn't defined for entity: {}", entity.getName().getString());
+                    return;
+                };
                 double damageDealt = damageAttributeInstance.getValue() * (1 - (playerDefenseValue / (playerDefenseValue + 100)));
                 PlayerDamageHelper.damagePlayer(player, damageDealt, level, player.getName().getString() + " was slain by a " + entity.getName().getString() + "!");
             } else if (event.getSource().is(DamageTypeTags.IS_FALL)) {
@@ -42,6 +47,8 @@ public class LivingDamageHandler {
                 // this should eventually factor in true defense irc
                 double damageDealt = (double) (2 * 200) / 33;
                 PlayerDamageHelper.damagePlayer(player, damageDealt, level, player.getName().getString() + " burnt to death!");
+            } else {
+                LOGGER.error("A damage attribute wasn't defined for: {}", event.getSource().getMsgId());
             }
         } else if (event.getSource().is(DamageTypeTags.IS_FIRE)) {
             event.getEntity().invulnerableTime = 0;

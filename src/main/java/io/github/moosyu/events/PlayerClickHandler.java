@@ -3,7 +3,9 @@ package io.github.moosyu.events;
 import io.github.moosyu.helpers.CheckItemRequirementHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.TriState;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -53,6 +55,8 @@ public class PlayerClickHandler {
             event.setCanceled(true);
             event.getEntity().swing(InteractionHand.MAIN_HAND);
         }
+
+        if (event.getItemStack().getItem() instanceof BlockItem && !event.getEntity().isCreative()) event.setUseItem(TriState.FALSE);
     }
 
     @SubscribeEvent

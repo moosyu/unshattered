@@ -3,8 +3,8 @@ package io.github.moosyu.screens;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.AttributeTypes;
 import io.github.moosyu.attributes.UnshatteredAttributes;
-import io.github.moosyu.helpers.RomanNumeralHelper;
 import io.github.moosyu.attachments.AttachmentRegistry;
+import io.github.moosyu.helpers.TextHelpers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -134,7 +134,7 @@ public class ProfileScreen extends Screen {
             // debug area for clicks
             // graphics.fill(this.getX(), this.getY(), this.getX() + this.width, this.getY() + this.height, 0x44FF0000);
 
-            String levelText = skill.getName() + " " + RomanNumeralHelper.toRoman(playerData.getLevel(playerData.getExp(skill)));
+            String levelText = skill.getName() + " " + TextHelpers.convertTextToRomanNumeral(playerData.getLevel(playerData.getExp(skill)));
             graphics.text(Minecraft.getInstance().font, levelText, this.getX() + 36, this.getY() + 4, 0xFF53F953, true);
             graphics.pose().pushMatrix();
             graphics.pose().scale(2f, 2f);

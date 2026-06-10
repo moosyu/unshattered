@@ -19,7 +19,7 @@ public class CreativeTabsRegistry {
         .title(Component.translatable("item_group.unshattered.items"))
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
         .icon(() -> BAT_THE_FISH.get().getDefaultInstance())
-        .displayItems((parameters, output) -> {
+        .displayItems((_, output) -> {
             output.accept(BAT_THE_FISH.get());
             output.accept(CENTURY_THE_FISH.get());
             output.accept(CHILL_THE_FISH.get());
@@ -53,7 +53,7 @@ public class CreativeTabsRegistry {
         .title(Component.translatable("item_group.unshattered.decorative_blocks"))
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
         .icon(() -> FIG_LOG.get().getDefaultInstance())
-        .displayItems((parameters, output) -> {
+        .displayItems((_, output) -> {
             output.accept(FIG_LOG.get());
         }).build());
 
@@ -62,7 +62,7 @@ public class CreativeTabsRegistry {
         .title(Component.translatable("item_group.unshattered.breakable_blocks"))
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
         .icon(() -> BREAKABLE_COBBLESTONE.get().getDefaultInstance())
-        .displayItems((parameters, output) -> {
+        .displayItems((_, output) -> {
             output.accept(BREAKABLE_STONE.get());
             output.accept(BREAKABLE_COBBLESTONE.get());
             output.accept(BREAKABLE_FIG_LOG.get());
@@ -73,7 +73,7 @@ public class CreativeTabsRegistry {
         .title(Component.translatable("item_group.unshattered.unshattered_resources"))
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
         .icon(() -> ENCHANTED_FIG_LOG.get().getDefaultInstance())
-        .displayItems((parameters, output) -> {
+        .displayItems((_, output) -> {
             output.accept(ENCHANTED_FIG_LOG.get());
         }).build());
 
@@ -82,7 +82,7 @@ public class CreativeTabsRegistry {
         .title(Component.translatable("item_group.unshattered.armor"))
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
         .icon(() -> LEAFLET_CHESTPLATE.get().getDefaultInstance())
-        .displayItems((parameters, output) -> {
+        .displayItems((_, output) -> {
             output.accept(LEAFLET_HELMET.get());
             output.accept(LEAFLET_CHESTPLATE.get());
             output.accept(LEAFLET_LEGGINGS.get());
@@ -94,7 +94,7 @@ public class CreativeTabsRegistry {
         .title(Component.translatable("item_group.unshattered.tools"))
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
         .icon(() -> TREECAPITATOR.get().getDefaultInstance())
-        .displayItems((parameters, output) -> {
+        .displayItems((_, output) -> {
             output.accept(TREECAPITATOR.get());
             output.accept(SPRUCE_AXE.get());
             output.accept(SERIOUSLY_DAMAGED_AXE.get());
@@ -109,7 +109,7 @@ public class CreativeTabsRegistry {
         .title(Component.translatable("item_group.unshattered.weapons"))
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
         .icon(() -> MERCENARY_AXE.get().getDefaultInstance())
-        .displayItems((parameters, output) -> {
+        .displayItems((_, output) -> {
                 output.accept(MERCENARY_AXE.get());
                 output.accept(WOODEN_SWORD.get());
                 output.accept(STONE_SWORD.get());
@@ -122,5 +122,7 @@ public class CreativeTabsRegistry {
                 output.accept(GOLDEN_AXE.get());
                 output.accept(DIAMOND_AXE.get());
                 output.accept(ROGUE_SWORD.get());
+                output.accept(SQUIRE_SWORD.get());
+                output.accept(UNDEAD_SWORD.get());
         }).build());
 }

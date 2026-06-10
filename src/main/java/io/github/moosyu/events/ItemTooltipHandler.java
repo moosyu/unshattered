@@ -3,6 +3,8 @@ package io.github.moosyu.events;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.data.components.SkillRequirement;
+import io.github.moosyu.data.components.ToolAbility;
+import io.github.moosyu.helpers.TextHelpers;
 import io.github.moosyu.items.ItemTypes;
 import io.github.moosyu.rarities.RarityTypes;
 import io.github.moosyu.attachments.AttachmentRegistry;
@@ -11,7 +13,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
@@ -22,8 +23,6 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static io.github.moosyu.Unshattered.MODID;
 
@@ -40,12 +39,11 @@ public class ItemTooltipHandler {
         ItemTypes itemType = stack.get(DataComponentRegistry.ITEM_TYPE.get());
         String itemDescriptionKey = stack.get(DataComponentRegistry.DESCRIPTION_KEY.get());
         SkillRequirement itemSkillRequirement = stack.get(DataComponentRegistry.SKILL_REQUIREMENT.get());
-        Boolean itemAbility = stack.get(DataComponentRegistry.ITEM_ABILITY);
+        ToolAbility toolAbility = stack.get(DataComponentRegistry.ITEM_ABILITY);
 
         event.getToolTip().clear();
         if (itemRarity == null) itemRarity = RarityTypes.COMMON;
         if (itemType == null) itemType = ItemTypes.ITEM;
-        if (itemAbility == null) itemAbility = false;
 
         tooltipComponents.add(Component.translatable(stack.getItemName().getString()).withColor(itemRarity.getColor(1.0f)));
         ItemAttributeModifiers modifiers = stack.getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY);
@@ -60,16 +58,23 @@ public class ItemTooltipHandler {
         }
 
         if (itemDescriptionKey != null) {
-            tooltipComponents.add(parseStyledText(Component.translatable(itemDescriptionKey).getString(), 0xFFAAAAAA));
+            tooltipComponents.add(TextHelpers.parseStyledText(Component.translatable(itemDescriptionKey).getString(), 0xFFAAAAAA));
         }
 
-        if (itemAbility) {
+        if (toolAbility != null) {
             tooltipComponents.add(Component.literal(""));
-            tooltipComponents.add(Component.literal("Ability: Speed Boost ").withColor(0xFFFFAA00).append(Component.literal("RIGHT CLICK").withColor(0xFFFFFF55).withStyle(ChatFormatting.BOLD)));
-            tooltipComponents.add(Component.literal("Grants ").withColor(0xFFAAAAAA).append(Component.literal("+100✦ Speed ").withColor(0xFFFFFFFF).append(Component.literal("for ").withColor(0xFFAAAAAA).append(Component.literal("30s").withColor(0xFF55FF55)))));
-            tooltipComponents.add(Component.literal("Mana Cost: ").withColor(0xFF555555).append(Component.literal("50").withColor(0xFF00AAAA)));
-            tooltipComponents.add(Component.literal("Cooldown: ").withColor(0xFF555555).append(Component.literal("5s").withColor(0xFF55FF55)));
+            if (toolAbility.passive()) {
+                tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + toolAbility.abilityId())).withColor(0xFFFFAA00));
+                tooltipComponents.add(TextHelpers.parseStyledText(Component.translatable("item.ability.description.unshattered." + toolAbility.abilityId()).getString(), 0xFFAAAAAA));
+            } else {
+                tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + toolAbility.abilityId())).withColor(0xFFFFAA00).append(Component.literal(" RIGHT CLICK").withColor(0xFFFFFF55).withStyle(ChatFormatting.BOLD)));
+                tooltipComponents.add(TextHelpers.parseStyledText(Component.translatable("item.ability.description.unshattered." + toolAbility.abilityId()).getString(), 0xFFAAAAAA));
+
+                if (toolAbility.manaCost() > 0) tooltipComponents.add(Component.literal("Mana Cost: ").withColor(0xFF555555).append(Component.literal(String.valueOf(toolAbility.manaCost())).withColor(0xFF00AAAA)));
+                if (toolAbility.cooldown() > 0) tooltipComponents.add(Component.literal("Cooldown: ").withColor(0xFF555555).append(Component.literal(String.valueOf(toolAbility.cooldown() / 20 /* convert to seconds */)).append("s").withColor(0xFF55FF55)));
+            }
         }
+
 
         tooltipComponents.add(Component.empty());
         if (itemType.reforgeable()) tooltipComponents.add(Component.translatable("tooltip.unshattered.reforgable").withColor(0xFF555555));
@@ -80,36 +85,5 @@ public class ItemTooltipHandler {
         }
 
         tooltipComponents.add(Component.literal(Component.translatable("rarity.unshattered." + itemRarity.name().toLowerCase()).getString().toUpperCase() + " " + Component.translatable(itemType.getKey()).getString().toUpperCase()).withColor(itemRarity.getColor(1.0f)).withStyle(ChatFormatting.BOLD));
-    }
-
-    public static Component parseStyledText(String input, int baseColor) {
-        MutableComponent result = Component.empty();
-        Matcher matcher = Pattern.compile("\\[color=(0x[0-9A-Fa-f]+)](.*?)\\[/color]|\\[i](.*?)\\[/i]").matcher(input);
-        int lastEnd = 0;
-
-        while (matcher.find()) {
-            if (matcher.start() > lastEnd) {
-                String before = input.substring(lastEnd, matcher.start());
-                result.append(Component.literal(before).withColor(baseColor));
-            }
-            if (matcher.group(1) != null) {
-                String colorHex = matcher.group(1);
-                String text = matcher.group(2);
-                int color = (int) Long.parseLong(colorHex.substring(2), 16);
-
-                result.append(Component.literal(text).withColor(color));
-            } else if (matcher.group(3) != null) {
-                String text = matcher.group(3);
-                result.append(Component.literal(text).withColor(baseColor).withStyle(ChatFormatting.ITALIC));
-            }
-            lastEnd = matcher.end();
-        }
-
-        if (lastEnd < input.length()) {
-            String remaining = input.substring(lastEnd);
-            result.append(Component.literal(remaining).withColor(baseColor));
-        }
-
-        return result;
     }
 }

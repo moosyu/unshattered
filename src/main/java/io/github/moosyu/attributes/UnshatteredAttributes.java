@@ -14,10 +14,11 @@ public enum UnshatteredAttributes {
     MANA("mana", "✎", 100.0, 0.0, 131072.0, 0xFF55D5FF, AttributeTypes.IMPORTANT, false),
     SWEEP("sweep", "∮", 0.0, 0.0, 1024.0, 0xFF00AA00, AttributeTypes.VISIBLE, false),
     FORAGING_FORTUNE("foraging_fortune", "☘", 0.0, 0.0, 1024.0, 0xFFFFAA00, AttributeTypes.IMPORTANT, false),
-    DAMAGE("damage", 0.0, 0.0, 2147483647.0, true),
+    DAMAGE("damage", 0.0, 0.0, 2147483647.0),
     HEALTH_REGEN("health_regen", "❣", 100.0, 0.0, 2048.0, 0xFFFC3A3A, AttributeTypes.VISIBLE, false),
     DEFENSE("defense", "❈", 0.0, 0.0, 131072.0, 0xFF55FF55, AttributeTypes.VISIBLE, false),
-    SPEED("speed", "✦", 100.0, 0.0, 400.0, 0xFFFFFFFF, AttributeTypes.VISIBLE, false);
+    SPEED("speed", "✦", 100.0, 0.0, 400.0, 0xFFFFFFFF, AttributeTypes.VISIBLE, false),
+    FINAL_DAMAGE_MODIFIER("final_damage_modifier", 1, 0, 10.0);
 
     private static final Map<Attribute, UnshatteredAttributes> ATTRIBUTE_MAP = new HashMap<>();
     public final String id;
@@ -39,8 +40,8 @@ public enum UnshatteredAttributes {
         this.offensive = offensive;
     }
 
-    UnshatteredAttributes(String id, double def, double min, double max, boolean offensive) {
-        this(id, "", def, min, max, 0x00000000, AttributeTypes.INVISIBLE, offensive);
+    UnshatteredAttributes(String id, double def, double min, double max) {
+        this(id, "", def, min, max, 0x00000000, AttributeTypes.INVISIBLE, true);
     }
 
     public String getTranslationKey() {

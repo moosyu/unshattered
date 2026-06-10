@@ -1,9 +1,7 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.attachments.PlayerAbilitiesAttachment;
 import io.github.moosyu.attachments.PlayerStateAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributes;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -11,7 +9,6 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.attachments.AttachmentRegistry.PLAYER_ABILITIES;
 import static io.github.moosyu.attachments.AttachmentRegistry.PLAYER_STATE;
 
 @EventBusSubscriber(modid = MODID)
