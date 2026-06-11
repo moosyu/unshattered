@@ -4,6 +4,7 @@ import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.AttributesRegistry;
 import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.data.components.SkillRequirement;
+import io.github.moosyu.items.swords.FlamingSword;
 import io.github.moosyu.items.swords.RogueSword;
 import io.github.moosyu.items.swords.UndeadSword;
 import io.github.moosyu.rarities.RarityTypes;
@@ -82,5 +83,5 @@ public class ItemsRegistry {
     public static final DeferredItem<Item> ROGUE_SWORD = ITEMS.registerItem("rogue_sword", RogueSword::new);
     public static final DeferredItem<Item> SQUIRE_SWORD = ITEMS.registerItem("squire_sword", props -> new Item(props.component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.SWORD).component(DataComponentRegistry.RARITY.get(), RarityTypes.UNCOMMON).component(DataComponentRegistry.SKILL_REQUIREMENT.get(), new SkillRequirement(PlayerSkillsAttachment.Skill.COMBAT, 4)).attributes(ItemAttributeModifiers.builder().add(UnshatteredAttributes.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "squire_sword_damage"), 50, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).add(UnshatteredAttributes.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "squire_sword_strength"), 10, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).build())));
     public static final DeferredItem<Item> UNDEAD_SWORD = ITEMS.registerItem("undead_sword", UndeadSword::new);
-
+    public static final DeferredItem<Item> FLAMING_SWORD = ITEMS.registerItem("flaming_sword", FlamingSword::new);
 }

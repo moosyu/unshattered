@@ -40,6 +40,7 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ItemsRegistry.FIGSTONE_SPLITTER.get(), Items.STONE_AXE, ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsRegistry.SQUIRE_SWORD.get(), Items.IRON_SWORD, ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsRegistry.UNDEAD_SWORD.get(), Items.IRON_SWORD, ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ItemsRegistry.FLAMING_SWORD.get(), Items.IRON_SWORD, ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsRegistry.LEAFLET_HELMET.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsRegistry.LEAFLET_CHESTPLATE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsRegistry.LEAFLET_LEGGINGS.get(), ModelTemplates.FLAT_ITEM);
@@ -69,7 +70,6 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ItemsRegistry.SWAMP_THE_FISH.get(), Items.COOKED_SALMON, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsRegistry.ZOOP_THE_FISH.get(), Items.SALMON, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsRegistry.CAKE_SOUL.get(), Items.PINK_DYE, ModelTemplates.FLAT_ITEM);
-        // fix this being the backwards facing texture of a fishing rod
         itemModels.generateFishingRod(ItemsRegistry.CHALLENGING_ROD.get());
         itemModels.itemModelOutput.accept(ItemsRegistry.ENCHANTED_FIG_LOG.get(), ItemModelUtils.plainModel(ModelTemplates.CUBE_COLUMN.create(Identifier.fromNamespaceAndPath("unshattered", "block/enchanted_fig_log"), TextureMapping.column(BlocksRegistry.FIG_LOG_BLOCK.get()), blockModels.modelOutput)));
         itemModels.itemModelOutput.accept(ItemsRegistry.BEDROCK.get(), ItemModelUtils.plainModel(ModelTemplates.CUBE_ALL.create(Identifier.fromNamespaceAndPath("unshattered", "block/bedrock"), TextureMapping.cube(Blocks.BEDROCK), blockModels.modelOutput)));

@@ -7,7 +7,6 @@ import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.data.components.ToolAbility;
 import io.github.moosyu.data.components.DataComponentRegistry;
 import io.github.moosyu.helpers.CheckItemRequirementHelper;
-import io.github.moosyu.items.ItemTypes;
 import io.github.moosyu.items.UnshatteredSword;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
@@ -17,15 +16,12 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import org.jspecify.annotations.NonNull;
-
-import java.util.function.Consumer;
 
 import static io.github.moosyu.Unshattered.MODID;
 
@@ -44,10 +40,10 @@ public class RogueSword extends UnshatteredSword {
         AttributeInstance movementSpeedAttribute = player.getAttribute(Attributes.MOVEMENT_SPEED);
         PlayerAbilityEffectsAttachment playerAbilities = player.getData(AttachmentRegistry.PLAYER_ABILITIES.get());
         if (player.getCooldowns().isOnCooldown(this.getDefaultInstance()) || !CheckItemRequirementHelper.passesManaCheck(player, SPEED_BOOST_ABILITY.manaCost()) || movementSpeedAttribute == null) return InteractionResult.FAIL;
-        if (playerAbilities.hasEffect(ABILITY_IDENTIFIER)) {
-            playerAbilities.setEffectExpiryTime(ABILITY_IDENTIFIER, SPEED_BOOST_ABILITY.duration(), level, this::onSpeedBoostExpire);
+        if (playerAbilities.hasActiveEffect(ABILITY_IDENTIFIER)) {
+            playerAbilities.setActiveEffectExpiryTime(ABILITY_IDENTIFIER, SPEED_BOOST_ABILITY.duration(), level, this::onSpeedBoostExpire);
         } else {
-            playerAbilities.addEffect(ABILITY_IDENTIFIER, SPEED_BOOST_ABILITY.duration(), level, this::onSpeedBoostExpire);
+            playerAbilities.addActiveEffect(ABILITY_IDENTIFIER, SPEED_BOOST_ABILITY.duration(), level, this::onSpeedBoostExpire);
             movementSpeedAttribute.addTransientModifier(new AttributeModifier(ABILITY_IDENTIFIER, 0.05, AttributeModifier.Operation.ADD_VALUE));
         }
         if (!player.isCreative()) player.getData(AttachmentRegistry.PLAYER_STATE.get()).removeCurrentStat(PlayerStateAttachment.Stat.MANA, SPEED_BOOST_ABILITY.manaCost());
@@ -66,7 +62,7 @@ public class RogueSword extends UnshatteredSword {
         Player player = event.getEntity();
         Level level = player.level();
         PlayerAbilityEffectsAttachment abilities = player.getData(AttachmentRegistry.PLAYER_ABILITIES.get());
-        if (!abilities.hasAnyEffect() || level.isClientSide()) return;
+        if (!abilities.hasAnyActiveEffect() || level.isClientSide()) return;
         abilities.tickEffects(level, player);
     }
 }

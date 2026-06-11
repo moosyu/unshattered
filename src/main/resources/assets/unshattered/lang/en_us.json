@@ -63,11 +63,14 @@
   "item.unshattered.rogue_sword": "Rogue Sword",
   "item.unshattered.squire_sword": "Squire Sword",
   "item.unshattered.undead_sword": "Undead Sword",
+  "item.unshattered.flaming_sword": "Flaming Sword",
 
   "item.ability.unshattered.speed_boost": "Speed Boost",
   "item.ability.unshattered.mind_blowing": "Mind Blowing",
-  "item.ability.description.unshattered.speed_boost": "Grants [color=0xFFFFFFFF]+100✦ Speed[/color] for [color=0xFF55FF55]30s[/color]",
-  "item.ability.description.unshattered.mind_blowing": "Deals [color=0xFF55FF55]+100%[/color] damage to undead mobs",
+  "item.ability.unshattered.ignition": "Ignition",
+  "item.ability.description.unshattered.speed_boost": "Grants [color=0xFFFFFFFF]+100✦ Speed[/color] for [color=0xFF55FF55]30s[/color].",
+  "item.ability.description.unshattered.mind_blowing": "Deals [color=0xFF55FF55]+100%[/color] damage to undead mobs.",
+  "item.ability.description.unshattered.ignition": "Ignites enemies for [color=0xFF55FF55]3s[/color].",
 
   "block.unshattered.fig_log": "Fig Log",
   "block.unshattered.breakable_fig_log": "Breakable Fig Log",

@@ -124,5 +124,6 @@ public class CreativeTabsRegistry {
                 output.accept(ROGUE_SWORD.get());
                 output.accept(SQUIRE_SWORD.get());
                 output.accept(UNDEAD_SWORD.get());
+                output.accept(FLAMING_SWORD.get());
         }).build());
 }
