@@ -16,8 +16,8 @@ public class SetCoinsCommand {
                 ServerPlayer player = context.getSource().getPlayerOrException();
                 PlayerCurrencyAttachment coins = player.getData(AttachmentRegistry.PLAYER_CURRENCY.get());
                 int amount = IntegerArgumentType.getInteger(context, "amount");
-
                 coins.setCoins(amount);
+                player.syncData(AttachmentRegistry.PLAYER_CURRENCY.get());
                 context.getSource().sendSuccess(
                         () -> Component.literal("coins set to " + amount),
                         false

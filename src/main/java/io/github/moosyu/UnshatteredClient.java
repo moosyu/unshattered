@@ -1,6 +1,5 @@
 package io.github.moosyu;
 
-import io.github.moosyu.screens.SidebarScreen;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -28,6 +27,5 @@ public class UnshatteredClient {
         // Some client setup code
         Unshattered.LOGGER.info("HELLO FROM CLIENT SETUP");
         Unshattered.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
-        Minecraft.getInstance().setScreen(new SidebarScreen());
     }
 }

@@ -13,6 +13,7 @@ import static io.github.moosyu.sounds.UnshatteredSounds.playerDeathSound;
 
 public final class PlayerDamageHelper {
     public static void damagePlayer(Player player, double damageDealt, Level level, String deathMessage) {
+        System.out.println("damage dealt " + damageDealt);
         PlayerStateAttachment states = player.getData(PLAYER_STATE.get());
         double playerHealth = states.getCurrentStat(PlayerStateAttachment.Stat.HEALTH);
         if (states.isInvulnerable()) return;

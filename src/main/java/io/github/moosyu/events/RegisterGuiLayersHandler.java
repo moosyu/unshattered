@@ -1,11 +1,6 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.layers.BreathBarLayer;
-import io.github.moosyu.layers.HealthBarLayer;
-import io.github.moosyu.layers.ManaBarLayer;
-import io.github.moosyu.layers.SelectedItemLayer;
-import io.github.moosyu.screens.SidebarScreen;
-import net.minecraft.resources.Identifier;
+import io.github.moosyu.layers.*;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
@@ -21,6 +16,7 @@ public class RegisterGuiLayersHandler {
         event.replaceLayer(VanillaGuiLayers.FOOD_LEVEL, new ManaBarLayer());
         event.replaceLayer(VanillaGuiLayers.SELECTED_ITEM_NAME, new SelectedItemLayer());
         event.replaceLayer(VanillaGuiLayers.AIR_LEVEL, new BreathBarLayer());
+        event.replaceLayer(VanillaGuiLayers.SCOREBOARD_SIDEBAR, new SidebarLayer());
         // hiding some vanilla bits
         event.replaceLayer(VanillaGuiLayers.CONTEXTUAL_INFO_BAR, (_, _) -> {});
         event.replaceLayer(VanillaGuiLayers.EXPERIENCE_LEVEL, (_, _) -> {});
