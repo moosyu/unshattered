@@ -4,6 +4,8 @@ import io.github.moosyu.layers.BreathBarLayer;
 import io.github.moosyu.layers.HealthBarLayer;
 import io.github.moosyu.layers.ManaBarLayer;
 import io.github.moosyu.layers.SelectedItemLayer;
+import io.github.moosyu.screens.SidebarScreen;
+import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;

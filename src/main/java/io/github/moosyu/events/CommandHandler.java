@@ -1,8 +1,6 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.commands.LevelCommand;
-import io.github.moosyu.commands.SkillCommand;
-import io.github.moosyu.commands.StatCommand;
+import io.github.moosyu.commands.*;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
@@ -16,5 +14,7 @@ public class CommandHandler {
         SkillCommand.register(event.getDispatcher());
         LevelCommand.register(event.getDispatcher());
         StatCommand.register(event.getDispatcher());
+        GetCoinsCommand.register(event.getDispatcher());
+        SetCoinsCommand.register(event.getDispatcher());
     }
 }

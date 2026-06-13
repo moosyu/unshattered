@@ -12,17 +12,24 @@ import static io.github.moosyu.Unshattered.MODID;
 public class EntityAttributeModificationHandler {
     @SubscribeEvent
     public static void onModifyAttributesCalled(EntityAttributeModificationEvent event) {
-        event.add(EntityType.PLAYER, UnshatteredAttributes.SWEEP.holder);
-        event.add(EntityType.PLAYER, UnshatteredAttributes.FORAGING_FORTUNE.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributes.HEALTH.holder);
-        event.add(EntityType.PLAYER, UnshatteredAttributes.DAMAGE.holder);
-        event.add(EntityType.PLAYER, UnshatteredAttributes.MANA.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributes.DEFENSE.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributes.STRENGTH.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributes.CRITICAL_DAMAGE.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributes.CRITICAL_CHANCE.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributes.MANA.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributes.HEALTH_REGEN.holder);
-        event.add(EntityType.PLAYER, UnshatteredAttributes.DEFENSE.holder);
-        event.add(EntityType.PLAYER, UnshatteredAttributes.SPEED.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributes.TRUE_DEFENSE.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributes.FEROCITY.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributes.DAMAGE.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributes.MINING_SPEED.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributes.MINING_FORTUNE.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributes.MINING_SPREAD.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributes.PRISTINE.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributes.FARMING_FORTUNE.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributes.FORAGING_FORTUNE.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributes.SWEEP.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributes.MAGIC_FIND.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributes.FINAL_DAMAGE_MODIFIER.holder);
 
         event.add(EntityType.ZOMBIE, UnshatteredAttributes.HEALTH.holder, 70.0d);

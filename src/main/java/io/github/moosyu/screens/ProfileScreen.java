@@ -14,6 +14,8 @@ import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.jspecify.annotations.NonNull;
@@ -83,10 +85,13 @@ public class ProfileScreen extends Screen {
             }
         } else if (currentTab == Tabs.STATS) {
             for (UnshatteredAttributes currentStat : UnshatteredAttributes.values()) {
+                int posX = (uniqueIndex > 9 ? CORNER_POS_X + SCREEN_WIDTH - 176 : CORNER_POS_X);
+                int posY = (uniqueIndex > 9 ? CORNER_POS_Y + ((uniqueIndex - 10) * 14) : CORNER_POS_Y + (uniqueIndex * 14));
                 if (currentStat.type == AttributeTypes.INVISIBLE) continue;
-                this.addRenderableWidget(new StatWidget(currentStat, CORNER_POS_X, CORNER_POS_Y + (uniqueIndex * 14), player ) );
+                this.addRenderableWidget(new StatWidget(currentStat, posX, posY, player));
                 uniqueIndex++;
             }
+            this.addRenderableWidget(new VanillaStatWidget((uniqueIndex > 9 ? CORNER_POS_X + SCREEN_WIDTH - 176 : CORNER_POS_X), (uniqueIndex > 9 ? CORNER_POS_Y + ((uniqueIndex - 10) * 14) : CORNER_POS_Y + (uniqueIndex * 14)), "✦", "attribute.name.unshattered.speed", (int) (player.getAttributeValue(Attributes.MOVEMENT_SPEED) * 1000), 0xFFFFFFFF));
         }
     }
 
@@ -178,6 +183,33 @@ public class ProfileScreen extends Screen {
             String statsTitle = currentAttribute.symbol + " " + Component.translatable(currentAttribute.getTranslationKey()).getString() + ":";
             graphics.text(Minecraft.getInstance().font, statsTitle, textX, textY, currentAttribute.color, false);
             graphics.text(Minecraft.getInstance().font, String.format("%.0f", attributeValue), textX + Minecraft.getInstance().font.width(statsTitle) + 2, textY, 0xFFDEDFE0, false);
+        }
+
+        @Override
+        protected void updateWidgetNarration(@NonNull NarrationElementOutput narrationElementOutput) {}
+    }
+
+    private static class VanillaStatWidget extends AbstractWidget {
+        private final String symbol;
+        private final String key;
+        private final int value;
+        private final int color;
+        public VanillaStatWidget(int x, int y, String symbol, String key, int value, int color) {
+            super(x, y, 32, 16, Component.literal(key));
+            this.symbol = symbol;
+            this.value = value;
+            this.key = key;
+            this.color = color;
+        }
+
+        @Override
+        protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+            int textX = this.getX() + 20;
+            int textY = this.getY() + 4;
+
+            String statsTitle = symbol + " " + Component.translatable(key).getString() + ":";
+            graphics.text(Minecraft.getInstance().font, statsTitle, textX, textY, color, false);
+            graphics.text(Minecraft.getInstance().font, String.valueOf(value), textX + Minecraft.getInstance().font.width(statsTitle) + 2, textY, 0xFFDEDFE0, false);
         }
 
         @Override
