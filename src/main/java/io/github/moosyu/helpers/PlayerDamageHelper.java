@@ -27,6 +27,8 @@ public final class PlayerDamageHelper {
             player.sendSystemMessage(Component.literal(deathMessage).withStyle(ChatFormatting.RED));
             states.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, player.getAttributeValue(UnshatteredAttributes.HEALTH.holder));
             player.syncData(PLAYER_STATE.get());
+            states.setCurrentStat(PlayerStateAttachment.Stat.MANA, player.getAttributeValue(UnshatteredAttributes.MANA.holder));
+            player.syncData(PLAYER_STATE.get());
             // todo: fix the death sound not going off
             playerDeathSound(player);
             states.setCancelledKnockback(true);

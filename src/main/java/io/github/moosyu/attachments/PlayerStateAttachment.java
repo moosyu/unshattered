@@ -26,22 +26,24 @@ public class PlayerStateAttachment {
 
     public double getCurrentStat(Stat currentStat) {return stats[currentStat.ordinal()];}
 
-    public void setCurrentStat(Stat stat, double value) {
-        int index = stat.ordinal();
+    public void setCurrentStat(Stat currentStat, double value) {
+        int index = currentStat.ordinal();
         stats[index] = value;
         lastUpdatedStat = index;
     }
 
-    public void removeCurrentStat(Stat currentStat, double amount) {stats[currentStat.ordinal()] -= amount;}
-
-    public void addCurrentStat(Stat currentStat, double amount, double maxAmount) {
-        // the Math.min should return the smaller of the two (so the value doesnt overflow max). very smart but very dangerous.
-        stats[currentStat.ordinal()] = (float) Math.min(stats[currentStat.ordinal()] + amount, maxAmount);
+    public void removeCurrentStat(Stat currentStat, double amount) {
+        int index = currentStat.ordinal();
+        stats[index] -= amount;
+        lastUpdatedStat = index;
     }
 
-    public int getLastUpdatedStat() {return lastUpdatedStat;}
-
-    public double getCurrentStatByIndex(int index) {return stats[index];}
+    public void addCurrentStat(Stat currentStat, double amount, double maxAmount) {
+        int index = currentStat.ordinal();
+        // the Math.min should return the smaller of the two (so the value doesnt overflow max). very smart but very dangerous.
+        stats[index] = (float) Math.min(stats[index] + amount, maxAmount);
+        lastUpdatedStat = index;
+    }
 
     public void setCurrentStatByIndex(int index, double value) {stats[index] = value;}
 

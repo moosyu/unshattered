@@ -43,7 +43,7 @@ public class AttackEntityHandler {
         double critDamage = 0.0d;
         if (player.getAttributeValue(UnshatteredAttributes.CRITICAL_CHANCE.holder) >= (Math.random() * 101)) critDamage = player.getAttributeValue(UnshatteredAttributes.CRITICAL_DAMAGE.holder);
         double damage = (((5 + player.getAttributeValue(UnshatteredAttributes.DAMAGE.holder)) * (1 + (player.getAttributeValue(UnshatteredAttributes.STRENGTH.holder) / 100))) * (1 + (critDamage / 100))) * player.getAttributeValue(UnshatteredAttributes.FINAL_DAMAGE_MODIFIER.holder);
-        System.out.println(damage);
+        System.out.println("damage dealt: " + damage);
         AttributeInstance targetHealth = target.getAttribute(UnshatteredAttributes.HEALTH.holder);
         if (target.invulnerableTime <= 0 && targetHealth != null) {
             if ((targetHealth.getBaseValue() - damage) > 0) {

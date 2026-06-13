@@ -24,6 +24,7 @@ import static io.github.moosyu.attributes.AttributesRegistry.ATTRIBUTES;
 import static io.github.moosyu.blocks.BlocksRegistry.BLOCKS;
 import static io.github.moosyu.creative.CreativeTabsRegistry.CREATIVE_MODE_TABS;
 import static io.github.moosyu.data.components.DataComponentRegistry.DATA_COMPONENTS;
+import static io.github.moosyu.entities.EntitiesRegistry.ENTITY_TYPES;
 import static io.github.moosyu.items.ItemsRegistry.*;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -51,6 +52,7 @@ public class Unshattered {
         AttributesRegistry.registerAll();
         ATTRIBUTES.register(modEventBus);
         DATA_COMPONENTS.register(modEventBus);
+        ENTITY_TYPES.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (unshattered) to respond directly to events.

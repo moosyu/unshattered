@@ -23,6 +23,14 @@ public class PlayerCurrencyAttachment {
         this.coins = coins;
     }
 
+    public void addCoins(int amount) {
+        coins += amount;
+    }
+
+    public void removeCoins(int amount) {
+        coins -= amount;
+    }
+
     public int getMotes() {
         return motes;
     }

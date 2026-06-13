@@ -1,0 +1,15 @@
+{
+  "remove": [
+    "minecraft:skeleton",
+    "minecraft:zombie",
+    "minecraft:zombie_villager",
+    "minecraft:zombie_horse",
+    "minecraft:stray",
+    "minecraft:wither_skeleton",
+    "minecraft:bogged",
+    "minecraft:drowned",
+    "minecraft:zombie_nautilus",
+    "minecraft:phantom"
+  ],
+  "values": []
+}

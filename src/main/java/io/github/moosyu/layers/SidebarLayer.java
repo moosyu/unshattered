@@ -13,10 +13,11 @@ import org.jspecify.annotations.NonNull;
 
 public class SidebarLayer implements GuiLayer {
     @Override
-    public void render(GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
-        Font font = Minecraft.getInstance().font;
-        Player player = Minecraft.getInstance().player;
-        if (player == null || !player.level().isClientSide()) return;
+    public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
+        Minecraft minecraft = Minecraft.getInstance();
+        Font font = minecraft.font;
+        Player player = minecraft.player;
+        if (player == null || !player.level().isClientSide() || minecraft.options.hideGui) return;
         final int SCREEN_WIDTH = (int) (graphics.guiWidth() * 0.2);
         final int SCREEN_HEIGHT = (int) (graphics.guiHeight() * 0.4);
 
