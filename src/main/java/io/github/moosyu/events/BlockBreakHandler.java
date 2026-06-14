@@ -5,8 +5,8 @@ import io.github.moosyu.blocks.BlocksRegistry;
 import io.github.moosyu.blocks.BrokenBlocksItemResult;
 import io.github.moosyu.blocks.BrokenBlocksWorldResult;
 import io.github.moosyu.data.RegenBlocksSavedData;
-import io.github.moosyu.experience.BlocksFarmingExperience;
-import io.github.moosyu.experience.BlocksMiningExperience;
+import io.github.moosyu.skills.experience.BlocksFarmingExperience;
+import io.github.moosyu.skills.experience.BlocksMiningExperience;
 import io.github.moosyu.helpers.CheckBreakableBlock;
 import io.github.moosyu.attachments.AttachmentRegistry;
 import io.github.moosyu.helpers.CheckItemRequirementHelper;
@@ -60,7 +60,7 @@ public class BlockBreakHandler {
 
         float miningExp = BlocksMiningExperience.getExp(block);
         if (miningExp > 0.0f) {
-            skills.addExp(PlayerSkillsAttachment.Skill.MINING, miningExp);
+            skills.addExp(PlayerSkillsAttachment.Skill.MINING, miningExp, player);
             player.syncData(PLAYER_SKILLS);
             UnshatteredSounds.playerExperienceSound(player);
             player.getInventory().add(new ItemStack(BrokenBlocksItemResult.getItemDropped(block)));
@@ -71,7 +71,7 @@ public class BlockBreakHandler {
         // could just do the same thing as done with sweeping but less costly as it's just the block above
         float farmingExp = BlocksFarmingExperience.getExp(block);
         if (farmingExp > 0.0f) {
-            skills.addExp(PlayerSkillsAttachment.Skill.FARMING, BlocksFarmingExperience.getExp(block));
+            skills.addExp(PlayerSkillsAttachment.Skill.FARMING, BlocksFarmingExperience.getExp(block), player);
             player.syncData(PLAYER_SKILLS);
             UnshatteredSounds.playerExperienceSound(player);
             return;
@@ -83,7 +83,7 @@ public class BlockBreakHandler {
         }
 
         if (blockState.is(BlockTags.FLOWERS)) {
-            skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, 1.0f);
+            skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, 1.0f, player);
             player.syncData(PLAYER_SKILLS);
             UnshatteredSounds.playerExperienceSound(player);
             return;

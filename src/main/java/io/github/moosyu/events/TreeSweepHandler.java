@@ -73,7 +73,7 @@ public class TreeSweepHandler {
                 current.player().getInventory().add(new ItemStack(current.state().getBlock(), logs));
             }
 
-            skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, tasks.size() * 6.0f);
+            skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, tasks.size() * 6.0f, player);
             player.syncData(PLAYER_SKILLS);
             UnshatteredSounds.playerExperienceSound(player);
         }
@@ -104,7 +104,7 @@ public class TreeSweepHandler {
 
         int sweep = (int) player.getAttributeValue(UnshatteredAttributes.SWEEP.holder);
         if (sweep <= 0) {
-            skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, 6.0f);
+            skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, 6.0f, player);
             player.syncData(PLAYER_SKILLS);
             UnshatteredSounds.playerExperienceSound(player);
             player.getInventory().add(new ItemStack(startBlock.getBlock(), calculateLogs(player)));

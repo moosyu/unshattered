@@ -1,4 +1,4 @@
-package io.github.moosyu.experience;
+package io.github.moosyu.skills.experience;
 
 import net.minecraft.world.entity.EntityType;
 import java.util.Map;

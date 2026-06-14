@@ -131,6 +131,8 @@
   "skills.name.unshattered.foraging": "Foraging",
   "skills.name.unshattered.magecraft": "Magecraft",
 
+  "skills.message.unshattered.level_up": "SKILL LEVEL UP",
+
   "rarity.unshattered.common": "Common",
   "rarity.unshattered.uncommon": "Uncommon",
   "rarity.unshattered.rare": "Rare",

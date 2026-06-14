@@ -19,7 +19,6 @@ public enum RarityTypes {
         this.color = color;
     }
 
-    // https://stackoverflow.com/a/28483738 my goodness
     public int getColor(float opacity) {
         return OpacityHelper.getOpacityColor(color, opacity);
     }

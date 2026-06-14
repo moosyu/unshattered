@@ -1,4 +1,4 @@
-package io.github.moosyu.experience;
+package io.github.moosyu.skills.experience;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;

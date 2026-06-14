@@ -34,19 +34,19 @@ public class LivingDamageHandler {
                     return;
                 };
                 double damageDealt = damageAttributeInstance.getValue() * (1 - (playerDefenseValue / (playerDefenseValue + 100)));
-                PlayerDamageHelper.damagePlayer(player, damageDealt, level, player.getName().getString() + " was slain by a " + entity.getName().getString() + "!");
+                PlayerDamageHelper.damagePlayer(player, damageDealt, level, "☠ " + player.getName().getString() + " was slain by a " + entity.getName().getString() + "!");
             } else if (event.getSource().is(DamageTypeTags.IS_FALL)) {
                 int blocksFallen = (int) (event.getOriginalDamage() + 3);
                 // https://old.reddit.com/r/HypixelSkyblock/comments/fvozn7/fall_damage_calculator/
                 double damageDealt = (((blocksFallen - 6.5) * 200 / 33) / ((playerDefenseValue / 100) + 1));
-                PlayerDamageHelper.damagePlayer(player, damageDealt, level, player.getName().getString() + " fell to their death!");
+                PlayerDamageHelper.damagePlayer(player, damageDealt, level, "☠ " +player.getName().getString() + " fell to their death!");
             } else if (event.getSource().is(DamageTypeTags.IS_DROWNING)) {
                 double damageDealt = (event.getOriginalDamage() * 200 / 33) / ((playerDefenseValue / 100) + 1);
-                PlayerDamageHelper.damagePlayer(player, damageDealt, level, player.getName().getString() + " drowned!");
+                PlayerDamageHelper.damagePlayer(player, damageDealt, level, "☠ " +player.getName().getString() + " drowned!");
             } else if (event.getSource().is(DamageTypeTags.IS_FIRE)) {
                 // this should eventually factor in true defense irc
                 double damageDealt = (double) (2 * 200) / 33;
-                PlayerDamageHelper.damagePlayer(player, damageDealt, level, player.getName().getString() + " burnt to death!");
+                PlayerDamageHelper.damagePlayer(player, damageDealt, level, "☠ " +player.getName().getString() + " burnt to death!");
             } else {
                 LOGGER.error("A damage attribute wasn't defined for: {}", event.getSource().getMsgId());
             }

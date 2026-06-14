@@ -1,4 +1,4 @@
-package io.github.moosyu.experience;
+package io.github.moosyu.skills.experience;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;

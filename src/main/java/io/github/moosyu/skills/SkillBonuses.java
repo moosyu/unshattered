@@ -1,5 +1,9 @@
 package io.github.moosyu.skills;
 
-public class SkillBonuses {
+import io.github.moosyu.attributes.UnshatteredAttributes;
 
+public class SkillBonuses {
+    public UnshatteredAttributes add() {
+        return null;
+    }
 }
