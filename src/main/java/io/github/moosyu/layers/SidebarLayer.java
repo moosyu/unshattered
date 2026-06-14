@@ -18,14 +18,14 @@ public class SidebarLayer implements GuiLayer {
         Font font = minecraft.font;
         Player player = minecraft.player;
         if (player == null || !player.level().isClientSide() || minecraft.options.hideGui) return;
-        final int SCREEN_WIDTH = (int) (graphics.guiWidth() * 0.2);
-        final int SCREEN_HEIGHT = (int) (graphics.guiHeight() * 0.4);
+        final int SIDEBAR_WIDTH = 85;
+        final int SIDEBAR_HEIGHT = 96;
 
-        final int CORNER_POS_X = (graphics.guiWidth() - SCREEN_WIDTH) - 2;
-        final int CORNER_POS_Y = (graphics.guiHeight() - SCREEN_HEIGHT) / 2;
+        final int CORNER_POS_X = (graphics.guiWidth() - SIDEBAR_WIDTH) - 2;
+        final int CORNER_POS_Y = (graphics.guiHeight() - SIDEBAR_HEIGHT) / 2;
 
-        graphics.fill(CORNER_POS_X, CORNER_POS_Y, CORNER_POS_X + SCREEN_WIDTH, CORNER_POS_Y + SCREEN_HEIGHT, 0x66000000);
-        graphics.text(font, Component.literal("SKYBLOCK").withStyle(ChatFormatting.BOLD), CORNER_POS_X + ((SCREEN_WIDTH - font.width(Component.literal("SKYBLOCK").withStyle(ChatFormatting.BOLD))) / 2), CORNER_POS_Y + 2, 0xFFFFFF55);
+        graphics.fill(CORNER_POS_X, CORNER_POS_Y, CORNER_POS_X + SIDEBAR_WIDTH, CORNER_POS_Y + SIDEBAR_HEIGHT, 0x66000000);
+        graphics.text(font, Component.literal("SKYBLOCK").withStyle(ChatFormatting.BOLD), CORNER_POS_X + ((SIDEBAR_WIDTH - font.width(Component.literal("SKYBLOCK").withStyle(ChatFormatting.BOLD))) / 2), CORNER_POS_Y + 2, 0xFFFFFF55);
         graphics.text(font, "Purse: ", CORNER_POS_X + 2, CORNER_POS_Y + 12, 0xFFFFFFFF, false);
         graphics.text(font, String.valueOf(player.getData(AttachmentRegistry.PLAYER_CURRENCY.get()).getCoins()), CORNER_POS_X + font.width("Purse: ") + 2, CORNER_POS_Y + 12, 0xFFFFFF55, false);
     }

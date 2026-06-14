@@ -1,7 +1,6 @@
 package io.github.moosyu.attachments;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.moosyu.helpers.TextHelpers;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -10,7 +9,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.attachment.IAttachmentSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,11 +56,9 @@ public class PlayerSkillsAttachment {
     }
 
     public void addExp(Skill skill, float amount, Player player) {
-        float currentSkillExp = getExp(skill);
         int currentLevel = getLevel(getExp(skill));
         System.out.println(currentLevel);
         skillExp[skill.ordinal()] += amount;
-        String nextLevelPercentage = String.format("%.2f", (currentSkillExp / SKILL_LEVEL_TABLE[currentLevel + 1]) * 100) + "%";
         int levelDifference = getLevel(getExp(skill)) - currentLevel;
         for (int i = 0; i < levelDifference; i++) {
             StringBuilder borderBar = new StringBuilder();
@@ -73,7 +69,7 @@ public class PlayerSkillsAttachment {
                 player.sendSystemMessage(
                     // component.empty because i couldnt reset the chat formatting for some reason
                     Component.empty().append(Component.literal(" SKILL LEVEL UP ").withStyle(ChatFormatting.BOLD).withColor(0xFF00FFFF))
-                    .append(Component.literal("Combat ").withColor(0xFF00ADAB))
+                    .append(Component.literal(Component.translatable(skill.key).getString() + " ").withColor(0xFF00ADAB))
                     .append(Component.literal(TextHelpers.convertTextToRomanNumeral(currentLevel)).withColor(0xFF555555))
                     .append(Component.literal("\uD83E\uDC46").withColor(0xFF555555))
                     .append(Component.literal(TextHelpers.convertTextToRomanNumeral(currentLevel + 1)).withColor(0xFF00ADAB))
@@ -81,7 +77,7 @@ public class PlayerSkillsAttachment {
             } else {
                 player.sendSystemMessage(
                     Component.empty().append(Component.literal(" SKILL LEVEL UP ").withStyle(ChatFormatting.BOLD).withColor(0xFF00FFFF))
-                    .append(Component.literal("Combat ").withColor(0xFF00ADAB))
+                    .append(Component.literal(Component.translatable(skill.key).getString() + " ").withColor(0xFF00ADAB))
                     .append(Component.literal(TextHelpers.convertTextToRomanNumeral(1)).withColor(0xFF00ADAB))
                 );
             }
@@ -91,7 +87,7 @@ public class PlayerSkillsAttachment {
             player.sendSystemMessage(Component.literal(" REWARDS").withColor(0xFF00FF24).withStyle(ChatFormatting.BOLD));
             player.sendSystemMessage(Component.literal(borderBar.toString()).withColor(0xFF00ADAB));
         }
-        player.sendOverlayMessage((Component.literal("+" + amount + " ").append(Component.translatable(skill.key))).withColor(0xFF73F8F2).append(Component.literal(" (").withColor(0xFF7D7874).append(Component.literal(nextLevelPercentage).withColor(0xFFFFAA00).append(Component.literal(")").withColor(0xFF7D7874)))));
+        player.sendOverlayMessage((Component.literal("+" + amount + " ").append(Component.translatable(skill.key))).withColor(0xFF73F8F2).append(Component.literal(" (").withColor(0xFF7D7874).append(Component.literal(String.format("%.2f", getPercentageToNextLevel(getExp(skill)) * 100) + "%").withColor(0xFFFFAA00).append(Component.literal(")").withColor(0xFF7D7874)))));
     }
 
     public int getLevel(float exp) {
@@ -102,13 +98,18 @@ public class PlayerSkillsAttachment {
         return level;
     }
 
-    public float getPercentageToLevel(float exp) {
+    public float getPercentageToNextLevel(float exp) {
         int index = 0;
         while (index < SKILL_LEVEL_TABLE.length && exp >= SKILL_LEVEL_TABLE[index]) {
             index++;
         }
-        float prevLevelXP = (index == 0) ? 0 : SKILL_LEVEL_TABLE[index - 1];
-        return (exp - prevLevelXP) / (SKILL_LEVEL_TABLE[index] - prevLevelXP);
+        if (index < SKILL_LEVEL_TABLE.length) {
+            float prevLevelXP = (index == 0) ? 0 : SKILL_LEVEL_TABLE[index - 1];
+            return (exp - prevLevelXP) / (SKILL_LEVEL_TABLE[index] - prevLevelXP);
+        } else {
+            // if the player is max level
+            return 1;
+        }
     }
 
     // both codecs are pretty weird because i found them in different places online

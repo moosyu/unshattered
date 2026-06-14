@@ -14,7 +14,6 @@ import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -146,7 +145,7 @@ public class ProfileScreen extends Screen {
             graphics.item(displayIcon, this.getX() / 2, this.getY() / 2);
             graphics.pose().popMatrix();
             graphics.blit(RenderPipelines.GUI_TEXTURED, SKILL_BAR, this.getX() + 32, this.getY() + 24, 0, 7, 112, 8, 112, 15);
-            graphics.blit(RenderPipelines.GUI_TEXTURED, SKILL_BAR, this.getX() + 32, this.getY() + 24, 0, 0, (int) (112 * playerData.getPercentageToLevel(playerData.getExp(skill))), 8, 112, 15);
+            graphics.blit(RenderPipelines.GUI_TEXTURED, SKILL_BAR, this.getX() + 32, this.getY() + 24, 0, 0, (int) (112 * playerData.getPercentageToNextLevel(playerData.getExp(skill))), 8, 112, 15);
         }
 
         @Override
