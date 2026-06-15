@@ -41,6 +41,9 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ItemsRegistry.SQUIRE_SWORD.get(), Items.IRON_SWORD, ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsRegistry.UNDEAD_SWORD.get(), Items.IRON_SWORD, ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsRegistry.FLAMING_SWORD.get(), Items.IRON_SWORD, ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ItemsRegistry.ZOMBIE_SWORD.get(), Items.IRON_SWORD, ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ItemsRegistry.ORNATE_ZOMBIE_SWORD.get(), Items.GOLDEN_SWORD, ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ItemsRegistry.FLORID_ZOMBIE_SWORD.get(), Items.GOLDEN_SWORD, ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsRegistry.LEAFLET_HELMET.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsRegistry.LEAFLET_CHESTPLATE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsRegistry.LEAFLET_LEGGINGS.get(), ModelTemplates.FLAT_ITEM);

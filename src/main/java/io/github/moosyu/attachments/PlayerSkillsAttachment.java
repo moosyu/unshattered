@@ -87,7 +87,7 @@ public class PlayerSkillsAttachment {
             player.sendSystemMessage(Component.literal(" REWARDS").withColor(0xFF00FF24).withStyle(ChatFormatting.BOLD));
             player.sendSystemMessage(Component.literal(borderBar.toString()).withColor(0xFF00ADAB));
         }
-        player.sendOverlayMessage((Component.literal("+" + amount + " ").append(Component.translatable(skill.key))).withColor(0xFF73F8F2).append(Component.literal(" (").withColor(0xFF7D7874).append(Component.literal(String.format("%.2f", getPercentageToNextLevel(getExp(skill)) * 100) + "%").withColor(0xFFFFAA00).append(Component.literal(")").withColor(0xFF7D7874)))));
+        player.sendOverlayMessage((Component.literal("+" + amount + " ").append(Component.translatable(skill.key))).withColor(0xFF00AAAA).append(Component.literal(" (").withColor(0xFF7D7874).append(Component.literal(String.format("%.2f", getPercentageToNextLevel(getExp(skill)) * 100) + "%").withColor(0xFFFFAA00).append(Component.literal(")").withColor(0xFF7D7874)))));
     }
 
     public int getLevel(float exp) {

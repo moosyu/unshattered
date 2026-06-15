@@ -64,13 +64,23 @@
   "item.unshattered.squire_sword": "Squire Sword",
   "item.unshattered.undead_sword": "Undead Sword",
   "item.unshattered.flaming_sword": "Flaming Sword",
+  "item.unshattered.zombie_sword": "Zombie Sword",
+  "item.unshattered.ornate_zombie_sword": "Ornate Zombie Sword",
+  "item.unshattered.florid_zombie_sword": "Florid Zombie Sword",
 
   "item.ability.unshattered.speed_boost": "Speed Boost",
   "item.ability.unshattered.mind_blowing": "Mind Blowing",
   "item.ability.unshattered.ignition": "Ignition",
+  "item.ability.unshattered.instant_heal": "Instant Heal",
+  "item.ability.unshattered.ornate_zombie_sword_instant_heal": "Instant Heal",
+  "item.ability.unshattered.florid_zombie_sword_instant_heal": "Instant Heal",
+
   "item.ability.description.unshattered.speed_boost": "Grants [color=0xFFFFFFFF]+50✦ Speed[/color] for [color=0xFF55FF55]30s[/color].",
   "item.ability.description.unshattered.mind_blowing": "Deals [color=0xFF55FF55]+100%[/color] damage to undead mobs.",
   "item.ability.description.unshattered.ignition": "Ignites enemies for [color=0xFF55FF55]3s[/color].",
+  "item.ability.description.unshattered.instant_heal": "Heal for [color=0xFFFF5555]120[/color] + [color=0xFFFF5555]5%❤[/color].",
+  "item.ability.description.unshattered.ornate_zombie_sword_instant_heal": "Heal for [color=0xFFFF5555]144[/color] + [color=0xFFFF5555]5%❤[/color].",
+  "item.ability.description.unshattered.florid_zombie_sword_instant_heal": "Heal for [color=0xFFFF5555]168[/color] + [color=0xFFFF5555]5%❤[/color].",
 
   "block.unshattered.fig_log": "Fig Log",
   "block.unshattered.breakable_fig_log": "Breakable Fig Log",

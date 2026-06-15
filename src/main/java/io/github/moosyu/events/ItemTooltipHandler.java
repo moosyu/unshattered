@@ -2,8 +2,9 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributes;
+import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.data.components.SkillRequirement;
-import io.github.moosyu.data.components.ToolAbility;
+import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.helpers.TextHelpers;
 import io.github.moosyu.items.ItemTypes;
 import io.github.moosyu.rarities.RarityTypes;
@@ -39,7 +40,8 @@ public class ItemTooltipHandler {
         ItemTypes itemType = stack.get(DataComponentRegistry.ITEM_TYPE.get());
         String itemDescriptionKey = stack.get(DataComponentRegistry.DESCRIPTION_KEY.get());
         SkillRequirement itemSkillRequirement = stack.get(DataComponentRegistry.SKILL_REQUIREMENT.get());
-        ToolAbility toolAbility = stack.get(DataComponentRegistry.ITEM_ABILITY);
+        ItemAbility itemAbility = stack.get(DataComponentRegistry.ITEM_ABILITY);
+        ItemCharges itemCharges = stack.get(DataComponentRegistry.ITEM_CHARGES);
 
         event.getToolTip().clear();
         if (itemRarity == null) itemRarity = RarityTypes.COMMON;
@@ -61,17 +63,18 @@ public class ItemTooltipHandler {
             tooltipComponents.add(TextHelpers.parseStyledText(Component.translatable(itemDescriptionKey).getString(), 0xFFAAAAAA));
         }
 
-        if (toolAbility != null) {
+        if (itemAbility != null) {
             tooltipComponents.add(Component.literal(""));
-            if (toolAbility.passive()) {
-                tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + toolAbility.abilityId())).withColor(0xFFFFAA00));
-                tooltipComponents.add(TextHelpers.parseStyledText(Component.translatable("item.ability.description.unshattered." + toolAbility.abilityId()).getString(), 0xFFAAAAAA));
+            if (itemAbility.passive()) {
+                tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.abilityId())).withColor(0xFFFFAA00));
+                tooltipComponents.add(TextHelpers.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityId()).getString(), 0xFFAAAAAA));
             } else {
-                tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + toolAbility.abilityId())).withColor(0xFFFFAA00).append(Component.literal(" RIGHT CLICK").withColor(0xFFFFFF55).withStyle(ChatFormatting.BOLD)));
-                tooltipComponents.add(TextHelpers.parseStyledText(Component.translatable("item.ability.description.unshattered." + toolAbility.abilityId()).getString(), 0xFFAAAAAA));
+                tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.abilityId())).withColor(0xFFFFAA00).append(Component.literal(" RIGHT CLICK").withColor(0xFFFFFF55).withStyle(ChatFormatting.BOLD)));
+                tooltipComponents.add(TextHelpers.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityId()).getString(), 0xFFAAAAAA));
 
-                if (toolAbility.manaCost() > 0) tooltipComponents.add(Component.literal("Mana Cost: ").withColor(0xFF555555).append(Component.literal(String.valueOf(toolAbility.manaCost())).withColor(0xFF00AAAA)));
-                if (toolAbility.cooldown() > 0) tooltipComponents.add(Component.literal("Cooldown: ").withColor(0xFF555555).append(Component.literal(String.valueOf(toolAbility.cooldown() / 20 /* convert to seconds */)).append("s").withColor(0xFF55FF55)));
+                if (itemAbility.manaCost() > 0) tooltipComponents.add(Component.literal("Mana Cost: ").withColor(0xFF555555).append(Component.literal(String.valueOf(itemAbility.manaCost())).withColor(0xFF00AAAA)));
+                if (itemAbility.cooldown() > 0) tooltipComponents.add(Component.literal("Cooldown: ").withColor(0xFF555555).append(Component.literal(String.valueOf(itemAbility.cooldown() / 20 /* convert ticks to seconds */)).append("s").withColor(0xFF55FF55)));
+                if (itemCharges != null) tooltipComponents.add(Component.literal("Charges: ").withColor(0xFF555555).append(Component.literal(String.valueOf(itemCharges.currentCharges())).withColor(0xFFFFFF55)).append(Component.literal("/").withColor(0xFF555555)).append(Component.literal((itemCharges.rechargeTime() / 20) + "s").withColor(0xFF55FF55)));
             }
         }
 

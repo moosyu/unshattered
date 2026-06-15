@@ -5,7 +5,7 @@ import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.data.components.SkillRequirement;
 import io.github.moosyu.attachments.AttachmentRegistry;
 import io.github.moosyu.data.components.DataComponentRegistry;
-import io.github.moosyu.items.UnshatteredAbilitySword;
+import io.github.moosyu.items.UnshatteredPassiveAbilitySword;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -34,7 +34,7 @@ public class AttackEntityHandler {
             return;
         }
 
-        if (player.getMainHandItem().getItem() instanceof UnshatteredAbilitySword sword) {
+        if (player.getMainHandItem().getItem() instanceof UnshatteredPassiveAbilitySword sword) {
             if (sword.abilityConditionsMet(player, target)) {
                 sword.onAbilityTriggered(player, target);
             }

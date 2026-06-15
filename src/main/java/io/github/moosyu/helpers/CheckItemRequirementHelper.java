@@ -1,7 +1,9 @@
 package io.github.moosyu.helpers;
 
+import io.github.moosyu.Unshattered;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attachments.PlayerStateAttachment;
+import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.data.components.SkillRequirement;
 import io.github.moosyu.attachments.AttachmentRegistry;
 import io.github.moosyu.data.components.DataComponentRegistry;
@@ -28,6 +30,14 @@ public final class CheckItemRequirementHelper {
     public static boolean passesManaCheck(Player player, int manaCost) {
         if (player.getData(AttachmentRegistry.PLAYER_STATE.get()).getCurrentStat(PlayerStateAttachment.Stat.MANA) < manaCost) {
             player.sendSystemMessage(Component.literal("You don't have enough mana to use this!").withColor(ERROR_COLOR));
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean passesChargesCheck(Player player, ItemCharges itemCharges) {
+        if (itemCharges.currentCharges() <= 0) {
+            player.sendSystemMessage(Component.literal("You don't have any charges left!").withColor(ERROR_COLOR));
             return false;
         }
         return true;

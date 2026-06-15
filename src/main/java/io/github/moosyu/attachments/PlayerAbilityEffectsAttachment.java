@@ -2,6 +2,7 @@ package io.github.moosyu.attachments;
 
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 import java.util.HashMap;
@@ -12,14 +13,14 @@ import java.util.function.Predicate;
 
 public class PlayerAbilityEffectsAttachment {
     private final Map<Identifier, ActiveEffectEntry> activeEffects = new HashMap<>();
-    private record ActiveEffectEntry(long expiryTime, Consumer<Player> onExpire) {}
+    private record ActiveEffectEntry(long expiryTime, Consumer<Player> onExpire, ItemStack itemStack) {}
 
-    public void addActiveEffect(Identifier abilityIdentifier, long abilityLength, Level level, Consumer<Player> onExpire) {
-        activeEffects.put(abilityIdentifier, new ActiveEffectEntry(level.getGameTime() + abilityLength, onExpire));
+    public void addActiveEffect(Identifier abilityIdentifier, long abilityLength, Level level, Consumer<Player> onExpire, ItemStack itemStack) {
+        activeEffects.put(abilityIdentifier, new ActiveEffectEntry(level.getGameTime() + abilityLength, onExpire, itemStack));
     }
 
-    public void setActiveEffectExpiryTime(Identifier abilityIdentifier, long abilityLength, Level level, Consumer<Player> onExpire) {
-        activeEffects.replace(abilityIdentifier, new ActiveEffectEntry(level.getGameTime() + abilityLength, onExpire));
+    public void setActiveEffectExpiryTime(Identifier abilityIdentifier, long abilityLength, Level level, Consumer<Player> onExpire, ItemStack itemStack) {
+        activeEffects.replace(abilityIdentifier, new ActiveEffectEntry(level.getGameTime() + abilityLength, onExpire, itemStack));
     }
 
     public boolean hasActiveEffect(Identifier abilityIdentifier) {
@@ -41,6 +42,7 @@ public class PlayerAbilityEffectsAttachment {
             Map.Entry<Identifier, ActiveEffectEntry> entry = currentEffect.next();
             if (activeEffectFinished(entry.getKey(), level)) {
                 entry.getValue().onExpire().accept(player);
+                // in case entry.getValue().onExpire().accept(player); resets the effect or something like with zombie sword
                 currentEffect.remove();
             }
         }

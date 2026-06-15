@@ -1,9 +1,12 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.attachments.AttachmentRegistry;
+import io.github.moosyu.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.attachments.PlayerStateAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
+import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
@@ -18,6 +21,7 @@ public class PlayerTickHandler {
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         Player player = event.getEntity();
+        Level level = player.level();
         if (player.level().isClientSide()) return;
         PlayerStateAttachment state = player.getData(PLAYER_STATE.get());
         final double MAX_HEALTH_VALUE = player.getAttributeValue(UnshatteredAttributes.HEALTH.holder);
@@ -43,6 +47,11 @@ public class PlayerTickHandler {
             player.syncData(PLAYER_STATE);
         }
         state.decrementInvulnerableTime();
+
+        PlayerAbilityEffectsAttachment abilities = player.getData(AttachmentRegistry.PLAYER_ABILITIES.get());
+        if (abilities.hasAnyActiveEffect()) {
+            abilities.tickEffects(level, player);
+        }
 
         // fishing popup
         if (player.fishing instanceof FishingHook hook) {
