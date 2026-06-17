@@ -3,9 +3,10 @@ package io.github.moosyu.events;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.attachments.AttachmentRegistry;
-import io.github.moosyu.sounds.UnshatteredSounds;
+import io.github.moosyu.packets.ExpSoundEffectPacket;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -14,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.*;
 
@@ -75,7 +77,7 @@ public class TreeSweepHandler {
 
             skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, tasks.size() * 6.0f, player);
             player.syncData(PLAYER_SKILLS);
-            UnshatteredSounds.playerExperienceSound(player);
+            PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
         }
     }
 
@@ -106,7 +108,7 @@ public class TreeSweepHandler {
         if (sweep <= 0) {
             skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, 6.0f, player);
             player.syncData(PLAYER_SKILLS);
-            UnshatteredSounds.playerExperienceSound(player);
+            PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
             player.getInventory().add(new ItemStack(startBlock.getBlock(), calculateLogs(player)));
             return;
         }

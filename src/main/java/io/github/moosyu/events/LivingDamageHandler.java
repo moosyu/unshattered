@@ -2,7 +2,9 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.helpers.PlayerDamageHelper;
+import io.github.moosyu.packets.DeathSoundEffectPacket;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -12,6 +14,7 @@ import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import static io.github.moosyu.Unshattered.LOGGER;
 import static io.github.moosyu.Unshattered.MODID;

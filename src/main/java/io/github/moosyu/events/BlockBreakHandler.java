@@ -3,16 +3,16 @@ package io.github.moosyu.events;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.blocks.BlocksRegistry;
 import io.github.moosyu.blocks.BrokenBlocksItemResult;
-import io.github.moosyu.blocks.BrokenBlocksWorldResult;
 import io.github.moosyu.data.RegenBlocksSavedData;
+import io.github.moosyu.packets.ExpSoundEffectPacket;
 import io.github.moosyu.skills.experience.BlocksFarmingExperience;
 import io.github.moosyu.skills.experience.BlocksMiningExperience;
 import io.github.moosyu.helpers.CheckBreakableBlock;
 import io.github.moosyu.attachments.AttachmentRegistry;
 import io.github.moosyu.helpers.CheckItemRequirementHelper;
-import io.github.moosyu.sounds.UnshatteredSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -24,6 +24,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.*;
 
@@ -62,7 +63,7 @@ public class BlockBreakHandler {
         if (miningExp > 0.0f) {
             skills.addExp(PlayerSkillsAttachment.Skill.MINING, miningExp, player);
             player.syncData(PLAYER_SKILLS);
-            UnshatteredSounds.playerExperienceSound(player);
+            PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
             player.getInventory().add(new ItemStack(BrokenBlocksItemResult.getItemDropped(block)));
             return;
         }
@@ -73,7 +74,7 @@ public class BlockBreakHandler {
         if (farmingExp > 0.0f) {
             skills.addExp(PlayerSkillsAttachment.Skill.FARMING, BlocksFarmingExperience.getExp(block), player);
             player.syncData(PLAYER_SKILLS);
-            UnshatteredSounds.playerExperienceSound(player);
+            PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
             return;
         }
 
@@ -85,7 +86,7 @@ public class BlockBreakHandler {
         if (blockState.is(BlockTags.FLOWERS)) {
             skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, 1.0f, player);
             player.syncData(PLAYER_SKILLS);
-            UnshatteredSounds.playerExperienceSound(player);
+            PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
             return;
         }
     }
