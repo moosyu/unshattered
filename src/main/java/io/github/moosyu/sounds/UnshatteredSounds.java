@@ -9,9 +9,9 @@ public class UnshatteredSounds {
     // stop forgetting this only works clientside
     public static void playerExperienceSound(Player player) {
         Random rand = new Random();
-        player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.5f, 2.0f - rand.nextFloat(0.3f));
+        player.level().playLocalSound(player.getX(), player.getY(), player.getZ(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.5f, 2.0f - rand.nextFloat(0.3f), false);
     }
     public static void playerDeathSound(Player player) {
-        player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ANVIL_FALL, SoundSource.PLAYERS, 0.5f, 2.0f);
+        player.level().playLocalSound(player.getX(), player.getY(), player.getZ(), SoundEvents.ANVIL_FALL, SoundSource.PLAYERS, 0.5f, 2.0f, false);
     }
 }

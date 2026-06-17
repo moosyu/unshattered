@@ -53,7 +53,7 @@ public class BlockBreakHandler {
             BlockPos blockPos = event.getPos();
             level.setBlock(blockPos, replacementBlock, 3);
             // server tick count and world tick count are different (i know now)
-            RegenBlocksSavedData.get((ServerLevel) level).addBlock(blockPos, level.getGameTime() + TIME_BROKEN);
+            RegenBlocksSavedData.get((ServerLevel) level).addBlock(blockPos, level.getGameTime() + TIME_BROKEN, replacementBlock);
         }
 
         PlayerSkillsAttachment skills = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
@@ -103,23 +103,30 @@ public class BlockBreakHandler {
     private static void onServerTickEvent(ServerTickEvent.Post event) {
         // im hoping that this wont be absurdly laggy but if this project ends up being anyhow successful i imagine this could get fucked up if like
         // 1000 blocks are waiting to regen at the same time
+        if (event.getServer().getTickCount() % 10 != 0) return;
         for (ServerLevel level : event.getServer().getAllLevels()) {
             RegenBlocksSavedData data = RegenBlocksSavedData.get(level);
-            Map<BlockPos, Long> toAdd = new HashMap<>();
+            if (data.getRegenTicks().isEmpty()) continue;
+            long gameTime = level.getGameTime();
             List<BlockPos> toRemove = new ArrayList<>();
-
-            for (Map.Entry<BlockPos, Long> entry : data.getRegenTicks().entrySet()) {
-                if (level.getGameTime() >= entry.getValue()) {
-                    BlockState restoredBlock = BrokenBlocksWorldResult.getBlockRestored(level.getBlockState(entry.getKey()).getBlock());
-                    level.setBlock(entry.getKey(), restoredBlock, 3);
-                    toRemove.add(entry.getKey());
-                    if (restoredBlock.is(BlocksRegistry.BREAKABLE_COBBLESTONE_BLOCK))
-                        toAdd.put(entry.getKey(), level.getGameTime() + TIME_BROKEN);
+            Map<BlockPos, RegenBlocksSavedData.RegenEntry> toAdd = new HashMap<>();
+            for (Map.Entry<BlockPos, RegenBlocksSavedData.RegenEntry> entry : data.getRegenTicks().entrySet()) {
+                RegenBlocksSavedData.RegenEntry regenEntry = entry.getValue();
+                if (gameTime >= regenEntry.targetTick()) {
+                    BlockPos pos = entry.getKey();
+                    BlockState originalState = regenEntry.targetState();
+                    level.setBlock(pos, originalState, 3);
+                    toRemove.add(pos);
+                    if (originalState.is(BlocksRegistry.BREAKABLE_COBBLESTONE_BLOCK.get())) {
+                        // How do we know if it was Iron Ore or Stone?
+                        // You could check a separate "original source" map, or handle it during the initial break.
+                        // Alternatively, if you want it to go Bedrock -> Cobble -> Iron Ore:
+                        // You'd track the ultimate origin state.
+                    }
                 }
             }
 
             toRemove.forEach(data::removeBlock);
-            toAdd.forEach(data::addBlock);
         }
     }
 }

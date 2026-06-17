@@ -18,7 +18,7 @@ public class SidebarLayer implements GuiLayer {
         Font font = minecraft.font;
         Player player = minecraft.player;
         if (player == null || !player.level().isClientSide() || minecraft.options.hideGui) return;
-        final int SIDEBAR_WIDTH = 85;
+        final int SIDEBAR_WIDTH = font.width("Purse: " + player.getData(AttachmentRegistry.PLAYER_CURRENCY.get()).getCoins()) + 20;
         final int SIDEBAR_HEIGHT = 96;
 
         final int CORNER_POS_X = (graphics.guiWidth() - SIDEBAR_WIDTH) - 2;

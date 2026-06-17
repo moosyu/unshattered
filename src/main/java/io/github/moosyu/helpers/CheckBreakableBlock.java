@@ -14,7 +14,7 @@ public final class CheckBreakableBlock {
      */
     public static BlockState canBreakBlock(BlockState blockState, Player player) {
         if (blockState.is(UnshatteredBlockTagsProvider.BREAKABLE_BLOCKS)) {
-            return BrokenBlocksWorldResult.getBlockCreated(blockState.getBlock());
+            return BrokenBlocksWorldResult.getDegradedState(blockState.getBlock());
         }
         return null;
     }

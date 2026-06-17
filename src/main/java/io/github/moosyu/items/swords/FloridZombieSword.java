@@ -11,6 +11,7 @@ import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.helpers.CheckItemRequirementHelper;
 import io.github.moosyu.items.UnshatteredSword;
 import io.github.moosyu.rarities.RarityTypes;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -56,12 +57,13 @@ public class FloridZombieSword extends UnshatteredSword {
             if (!player.isCreative() && CheckItemRequirementHelper.passesManaCheck(player, INSTANT_HEAL_ABILITY.manaCost())) {
                 player.getData(AttachmentRegistry.PLAYER_STATE.get()).removeCurrentStat(PlayerStateAttachment.Stat.MANA, INSTANT_HEAL_ABILITY.manaCost());
                 player.syncData(AttachmentRegistry.PLAYER_STATE.get());
+                itemStack.set(DataComponentRegistry.ITEM_CHARGES.get(), itemCharges.decrementCharges());
             }
             if (!abilities.hasActiveEffect(ABILITY_IDENTIFIER)) {
                 abilities.addActiveEffect(ABILITY_IDENTIFIER, itemCharges.rechargeTime(), level,  p -> onRecharge(p, itemStack), player.getItemBySlot(hand.asEquipmentSlot()));
             }
-            itemStack.set(DataComponentRegistry.ITEM_CHARGES.get(), itemCharges.decrementCharges());
             player.getData(AttachmentRegistry.PLAYER_STATE.get()).addCurrentStat(PlayerStateAttachment.Stat.HEALTH, 168 + (maxHealthAttribute.getValue() * 0.05), maxHealthAttribute.getValue());
+            level.addParticle(ParticleTypes.HEART, player.getX(), player.getEyeY(), player.getY(), 2, 0, 2);
         }
         return InteractionResult.SUCCESS;
     }
