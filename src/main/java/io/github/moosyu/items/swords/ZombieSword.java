@@ -47,50 +47,50 @@ public class ZombieSword extends UnshatteredSword {
 
     @Override
     public @NonNull InteractionResult use(@NonNull Level level, @NonNull Player player, @NonNull InteractionHand hand) {
+        if (level.isClientSide()) {
+            return InteractionResult.FAIL;
+        }
         AttributeInstance maxHealthAttribute = player.getAttribute(UnshatteredAttributes.HEALTH.holder);
         PlayerAbilityEffectsAttachment abilities = player.getData(AttachmentRegistry.PLAYER_ABILITIES.get());
         ItemStack itemStack = player.getItemInHand(InteractionHand.MAIN_HAND);
         ItemCharges itemCharges = itemStack.get(DataComponentRegistry.ITEM_CHARGES.get());
-        if (maxHealthAttribute == null) {
-            Unshattered.LOGGER.error("max health is null (from zombie sword)");
-            return InteractionResult.FAIL;
-        } else if (itemCharges == null) {
-            Unshattered.LOGGER.error("item charges are null (from zombie sword)");
+        if (maxHealthAttribute == null || itemCharges == null) {
+            Unshattered.LOGGER.error("maxHealthAttribute or itemCharges are null (from zombie sword)");
             return InteractionResult.FAIL;
         }
-        if (CheckItemRequirementHelper.passesChargesCheck(player, itemCharges)) {
-            if (!level.isClientSide()) {
-                if (!player.isCreative()) {
-                    if (CheckItemRequirementHelper.passesManaCheck(player, INSTANT_HEAL_ABILITY.manaCost())) {
-                        player.getData(AttachmentRegistry.PLAYER_STATE.get()).removeCurrentStat(PlayerStateAttachment.Stat.MANA, INSTANT_HEAL_ABILITY.manaCost());
-                        player.syncData(AttachmentRegistry.PLAYER_STATE.get());
-                        itemStack.set(DataComponentRegistry.ITEM_CHARGES.get(), itemCharges.decrementCharges());
-                    }
-                    else {
-                        return InteractionResult.FAIL;
-                    }
-                }
-
+        PlayerStateAttachment playerState = player.getData(AttachmentRegistry.PLAYER_STATE.get());
+        if (!player.isCreative()) {
+            if (!CheckItemRequirementHelper.passesManaCheck(player, INSTANT_HEAL_ABILITY.manaCost())
+                    || player.getCooldowns().isOnCooldown(itemStack)
+                    || !CheckItemRequirementHelper.passesChargesCheck(player, itemCharges)) {
+                return InteractionResult.FAIL;
+            } else {
+                itemStack.set(DataComponentRegistry.ITEM_CHARGES.get(), itemCharges.decrementCharges());
+                player.getCooldowns().addCooldown(itemStack, INSTANT_HEAL_ABILITY.cooldown());
                 if (!abilities.hasActiveEffect(ABILITY_IDENTIFIER)) {
-                    abilities.addActiveEffect(ABILITY_IDENTIFIER, itemCharges.rechargeTime(), level,  p -> onRecharge(p, itemStack), player.getItemBySlot(hand.asEquipmentSlot()));
+                    abilities.addActiveEffect(ABILITY_IDENTIFIER, itemCharges.rechargeTime(), level, p -> onRecharge(p, itemStack), player.getItemBySlot(hand.asEquipmentSlot()));
                 }
-                player.getData(AttachmentRegistry.PLAYER_STATE.get()).addCurrentStat(PlayerStateAttachment.Stat.HEALTH, 120 + (maxHealthAttribute.getValue() * 0.05), maxHealthAttribute.getValue());
-
+                playerState.removeCurrentStat(PlayerStateAttachment.Stat.MANA, INSTANT_HEAL_ABILITY.manaCost());
+                player.syncData(AttachmentRegistry.PLAYER_STATE.get());
             }
 
-            if (level.isClientSide()) {
-                Vec3 look = player.getLookAngle().normalize();
-                Random rand = new Random();
-                for (int i = 0; i < 6; i++) {
-                    double sideOffset = (rand.nextDouble() - 0.5) * 0.5;
-                    Vec3 particlePos = player.getEyePosition()
-                            .add(look.scale(0.75f))
-                            .add(look.cross(new Vec3(0, 1, 0)).normalize().scale(sideOffset))
-                            .add(0, -0.6, 0);
-                    Minecraft.getInstance().particleEngine.createParticle(ParticleTypes.HEART, particlePos.x, particlePos.y, particlePos.z, 0.0, 0.02, 0.0);
-                    level.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.PLAYERS, 0.1f, 1.0f, false);
-                }
-            }
+            playerState.addCurrentStat(PlayerStateAttachment.Stat.HEALTH, 120 + (maxHealthAttribute.getValue() * 0.05), maxHealthAttribute.getValue());
+            player.syncData(AttachmentRegistry.PLAYER_STATE.get());
+        }
+
+        // this seems to be broken and triggers even when the checks fail
+        // i assume this is some funny business where it actually doesnt know what's going on with the server so id need to make a packet for it.
+        // for now, just returning if isClientSide and ill fix this later
+        Vec3 look = player.getLookAngle().normalize();
+        Random rand = new Random();
+        for (int i = 0; i < 6; i++) {
+            double sideOffset = (rand.nextDouble() - 0.5) * 0.5;
+            Vec3 particlePos = player.getEyePosition()
+                    .add(look.scale(0.75f))
+                    .add(look.cross(new Vec3(0, 1, 0)).normalize().scale(sideOffset))
+                    .add(0, -0.6, 0);
+            Minecraft.getInstance().particleEngine.createParticle(ParticleTypes.HEART, particlePos.x, particlePos.y, particlePos.z, 0.0, 0.02, 0.0);
+            level.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.PLAYERS, 0.1f, 1.0f, false);
         }
         return InteractionResult.PASS;
     }
