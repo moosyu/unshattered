@@ -10,9 +10,15 @@ import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.helpers.CheckItemRequirementHelper;
 import io.github.moosyu.items.UnshatteredSword;
+import io.github.moosyu.packets.ZombieSwordEffectsPacket;
 import io.github.moosyu.rarities.RarityTypes;
+import net.minecraft.client.Minecraft;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -24,8 +30,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jspecify.annotations.NonNull;
+
+import java.util.Random;
 
 import static io.github.moosyu.Unshattered.MODID;
 
@@ -40,30 +50,37 @@ public class FloridZombieSword extends UnshatteredSword {
 
     @Override
     public @NonNull InteractionResult use(@NonNull Level level, @NonNull Player player, @NonNull InteractionHand hand) {
-        if (level.isClientSide()) return InteractionResult.FAIL;
+        if (level.isClientSide()) {
+            return InteractionResult.FAIL;
+        }
         AttributeInstance maxHealthAttribute = player.getAttribute(UnshatteredAttributes.HEALTH.holder);
         PlayerAbilityEffectsAttachment abilities = player.getData(AttachmentRegistry.PLAYER_ABILITIES.get());
         ItemStack itemStack = player.getItemInHand(InteractionHand.MAIN_HAND);
         ItemCharges itemCharges = itemStack.get(DataComponentRegistry.ITEM_CHARGES.get());
-        if (maxHealthAttribute == null) {
-            Unshattered.LOGGER.error("max health is null (from florid zombie sword)");
-            return InteractionResult.FAIL;
-        } else if (itemCharges == null) {
-            Unshattered.LOGGER.error("item charges are null (from florid zombie sword)");
+        if (maxHealthAttribute == null || itemCharges == null) {
+            Unshattered.LOGGER.error("maxHealthAttribute or itemCharges are null (from florid zombie sword)");
             return InteractionResult.FAIL;
         }
-        if (CheckItemRequirementHelper.passesChargesCheck(player, itemCharges)) {
-            if (!player.isCreative() && CheckItemRequirementHelper.passesManaCheck(player, INSTANT_HEAL_ABILITY.manaCost())) {
-                player.getData(AttachmentRegistry.PLAYER_STATE.get()).removeCurrentStat(PlayerStateAttachment.Stat.MANA, INSTANT_HEAL_ABILITY.manaCost());
+        PlayerStateAttachment playerState = player.getData(AttachmentRegistry.PLAYER_STATE.get());
+        if (!player.isCreative()) {
+            if (!CheckItemRequirementHelper.passesManaCheck(player, INSTANT_HEAL_ABILITY.manaCost())
+                    || player.getCooldowns().isOnCooldown(itemStack)
+                    || !CheckItemRequirementHelper.passesChargesCheck(player, itemCharges)) {
+                return InteractionResult.FAIL;
+            } else {
+                itemStack.set(DataComponentRegistry.ITEM_CHARGES.get(), itemCharges.decrementCharges());
+                player.getCooldowns().addCooldown(itemStack, INSTANT_HEAL_ABILITY.cooldown());
+                if (!abilities.hasActiveEffect(ABILITY_IDENTIFIER)) {
+                    abilities.addActiveEffect(ABILITY_IDENTIFIER, itemCharges.rechargeTime(), level, p -> onRecharge(p, itemStack), player.getItemBySlot(hand.asEquipmentSlot()));
+                }
+                playerState.removeCurrentStat(PlayerStateAttachment.Stat.MANA, INSTANT_HEAL_ABILITY.manaCost());
                 player.syncData(AttachmentRegistry.PLAYER_STATE.get());
             }
-            if (!abilities.hasActiveEffect(ABILITY_IDENTIFIER)) {
-                abilities.addActiveEffect(ABILITY_IDENTIFIER, itemCharges.rechargeTime(), level,  p -> onRecharge(p, itemStack), player.getItemBySlot(hand.asEquipmentSlot()));
-            }
-            itemStack.set(DataComponentRegistry.ITEM_CHARGES.get(), itemCharges.decrementCharges());
-            player.getData(AttachmentRegistry.PLAYER_STATE.get()).addCurrentStat(PlayerStateAttachment.Stat.HEALTH, 168 + (maxHealthAttribute.getValue() * 0.05), maxHealthAttribute.getValue());
+            playerState.addCurrentStat(PlayerStateAttachment.Stat.HEALTH, 168 + (maxHealthAttribute.getValue() * 0.05), maxHealthAttribute.getValue());
+            player.syncData(AttachmentRegistry.PLAYER_STATE.get());
         }
-        return InteractionResult.SUCCESS;
+        PacketDistributor.sendToPlayer((ServerPlayer) player, new ZombieSwordEffectsPacket());
+        return InteractionResult.PASS;
     }
 
     private void onRecharge(Player player, ItemStack itemStack) {

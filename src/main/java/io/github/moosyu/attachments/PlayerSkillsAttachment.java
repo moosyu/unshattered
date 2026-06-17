@@ -57,7 +57,6 @@ public class PlayerSkillsAttachment {
 
     public void addExp(Skill skill, float amount, Player player) {
         int currentLevel = getLevel(getExp(skill));
-        System.out.println(currentLevel);
         skillExp[skill.ordinal()] += amount;
         int levelDifference = getLevel(getExp(skill)) - currentLevel;
         for (int i = 0; i < levelDifference; i++) {

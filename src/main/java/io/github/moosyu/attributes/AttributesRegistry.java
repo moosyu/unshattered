@@ -13,7 +13,7 @@ public class AttributesRegistry {
     public static void registerAll() {
         for (UnshatteredAttributes attribute : UnshatteredAttributes.values()) {
             attribute.holder = ATTRIBUTES.register(attribute.id, () ->
-                    new RangedAttribute(attribute.getTranslationKey(), attribute.def, attribute.min, attribute.max).setSyncable(true));
+                new RangedAttribute(attribute.getTranslationKey(), attribute.def, attribute.min, attribute.max).setSyncable(true));
         }
     }
 }

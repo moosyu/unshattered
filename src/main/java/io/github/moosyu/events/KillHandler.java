@@ -1,16 +1,18 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
+import io.github.moosyu.packets.ExpSoundEffectPacket;
 import io.github.moosyu.skills.experience.EntityCombatExperience;
 import io.github.moosyu.skills.experience.EntityFarmingExperience;
 import io.github.moosyu.attachments.AttachmentRegistry;
-import io.github.moosyu.sounds.UnshatteredSounds;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.attachments.AttachmentRegistry.PLAYER_SKILLS;
@@ -30,7 +32,7 @@ public class KillHandler {
             if (combatExp > 0.0f) {
                 skills.addExp(PlayerSkillsAttachment.Skill.COMBAT, combatExp, player);
                 player.syncData(PLAYER_SKILLS);
-                UnshatteredSounds.playerExperienceSound(player);
+                PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
                 return;
             }
 
@@ -38,7 +40,7 @@ public class KillHandler {
             if (farmingExp > 0.0f) {
                 skills.addExp(PlayerSkillsAttachment.Skill.FARMING, farmingExp, player);
                 player.syncData(PLAYER_SKILLS);
-                UnshatteredSounds.playerExperienceSound(player);
+                PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
                 return;
             }
         }

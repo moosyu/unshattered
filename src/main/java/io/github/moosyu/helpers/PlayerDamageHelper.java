@@ -2,14 +2,16 @@ package io.github.moosyu.helpers;
 
 import io.github.moosyu.attachments.PlayerStateAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributes;
+import io.github.moosyu.packets.DeathSoundEffectPacket;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import static io.github.moosyu.attachments.AttachmentRegistry.PLAYER_STATE;
-import static io.github.moosyu.sounds.UnshatteredSounds.playerDeathSound;
 
 public final class PlayerDamageHelper {
     public static void damagePlayer(Player player, double damageDealt, Level level, String deathMessage) {
@@ -29,8 +31,8 @@ public final class PlayerDamageHelper {
             player.syncData(PLAYER_STATE.get());
             states.setCurrentStat(PlayerStateAttachment.Stat.MANA, player.getAttributeValue(UnshatteredAttributes.MANA.holder));
             player.syncData(PLAYER_STATE.get());
-            // todo: fix the death sound not going off
-            playerDeathSound(player);
+            // todo: why doesn't this work sobbb
+            PacketDistributor.sendToPlayer((ServerPlayer) player, new DeathSoundEffectPacket());
             states.setCancelledKnockback(true);
         }
         player.invulnerableTime = 0;

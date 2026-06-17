@@ -1,14 +1,16 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
+import io.github.moosyu.packets.ExpSoundEffectPacket;
 import io.github.moosyu.skills.experience.ItemsFishingExperience;
 import io.github.moosyu.attachments.AttachmentRegistry;
-import io.github.moosyu.sounds.UnshatteredSounds;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.attachments.AttachmentRegistry.PLAYER_SKILLS;
@@ -25,7 +27,7 @@ public class ItemFishedHandler {
         for (ItemStack fishingItem : event.getDrops()) {
             skills.addExp(PlayerSkillsAttachment.Skill.FISHING, ItemsFishingExperience.getExp(fishingItem.getItem()), player);
             player.syncData(PLAYER_SKILLS);
-            UnshatteredSounds.playerExperienceSound(player);
+            PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
         }
     }
 }
