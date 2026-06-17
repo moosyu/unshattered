@@ -11,6 +11,7 @@ import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.helpers.CheckItemRequirementHelper;
 import io.github.moosyu.items.UnshatteredSword;
 import io.github.moosyu.rarities.RarityTypes;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
@@ -38,7 +39,7 @@ import static io.github.moosyu.Unshattered.MODID;
 @EventBusSubscriber(modid = MODID)
 public class ZombieSword extends UnshatteredSword {
     private static final Identifier ABILITY_IDENTIFIER = Identifier.fromNamespaceAndPath(MODID, "zombie_sword_instant_heal");
-    private static final ItemAbility INSTANT_HEAL_ABILITY = new ItemAbility("instant_heal",70, 0, 0, false);
+    private static final ItemAbility INSTANT_HEAL_ABILITY = new ItemAbility("instant_heal",70, 10, 0, false);
 
     public ZombieSword(Properties properties) {
         super(properties.component(DataComponentRegistry.ITEM_ABILITY.get(), INSTANT_HEAL_ABILITY).component(DataComponentRegistry.RARITY.get(), RarityTypes.RARE).component(DataComponentRegistry.ITEM_CHARGES.get(), new ItemCharges(4, 4, 300)).attributes(ItemAttributeModifiers.builder().add(UnshatteredAttributes.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "zombie_sword_damage"), 100, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).add(UnshatteredAttributes.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "zombie_sword_strength"), 50, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).add(UnshatteredAttributes.MANA.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "zombie_sword_mana"), 50, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).build()));
@@ -58,20 +59,24 @@ public class ZombieSword extends UnshatteredSword {
             return InteractionResult.FAIL;
         }
         if (CheckItemRequirementHelper.passesChargesCheck(player, itemCharges)) {
-            if (!player.isCreative()) {
-                if (CheckItemRequirementHelper.passesManaCheck(player, INSTANT_HEAL_ABILITY.manaCost())) {
-                    player.getData(AttachmentRegistry.PLAYER_STATE.get()).removeCurrentStat(PlayerStateAttachment.Stat.MANA, INSTANT_HEAL_ABILITY.manaCost());
-                    player.syncData(AttachmentRegistry.PLAYER_STATE.get());
-                    itemStack.set(DataComponentRegistry.ITEM_CHARGES.get(), itemCharges.decrementCharges());
+            if (!level.isClientSide()) {
+                if (!player.isCreative()) {
+                    if (CheckItemRequirementHelper.passesManaCheck(player, INSTANT_HEAL_ABILITY.manaCost())) {
+                        player.getData(AttachmentRegistry.PLAYER_STATE.get()).removeCurrentStat(PlayerStateAttachment.Stat.MANA, INSTANT_HEAL_ABILITY.manaCost());
+                        player.syncData(AttachmentRegistry.PLAYER_STATE.get());
+                        itemStack.set(DataComponentRegistry.ITEM_CHARGES.get(), itemCharges.decrementCharges());
+                    }
+                    else {
+                        return InteractionResult.FAIL;
+                    }
                 }
-                else {
-                    return InteractionResult.FAIL;
+
+                if (!abilities.hasActiveEffect(ABILITY_IDENTIFIER)) {
+                    abilities.addActiveEffect(ABILITY_IDENTIFIER, itemCharges.rechargeTime(), level,  p -> onRecharge(p, itemStack), player.getItemBySlot(hand.asEquipmentSlot()));
                 }
+                player.getData(AttachmentRegistry.PLAYER_STATE.get()).addCurrentStat(PlayerStateAttachment.Stat.HEALTH, 120 + (maxHealthAttribute.getValue() * 0.05), maxHealthAttribute.getValue());
+
             }
-            if (!abilities.hasActiveEffect(ABILITY_IDENTIFIER)) {
-                abilities.addActiveEffect(ABILITY_IDENTIFIER, itemCharges.rechargeTime(), level,  p -> onRecharge(p, itemStack), player.getItemBySlot(hand.asEquipmentSlot()));
-            }
-            player.getData(AttachmentRegistry.PLAYER_STATE.get()).addCurrentStat(PlayerStateAttachment.Stat.HEALTH, 120 + (maxHealthAttribute.getValue() * 0.05), maxHealthAttribute.getValue());
 
             if (level.isClientSide()) {
                 Vec3 look = player.getLookAngle().normalize();
@@ -82,7 +87,7 @@ public class ZombieSword extends UnshatteredSword {
                             .add(look.scale(0.75f))
                             .add(look.cross(new Vec3(0, 1, 0)).normalize().scale(sideOffset))
                             .add(0, -0.6, 0);
-                    level.addParticle(ParticleTypes.HEART, particlePos.x, particlePos.y, particlePos.z, 0.0, 0.02, 0.0);
+                    Minecraft.getInstance().particleEngine.createParticle(ParticleTypes.HEART, particlePos.x, particlePos.y, particlePos.z, 0.0, 0.02, 0.0);
                     level.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.PLAYERS, 0.1f, 1.0f, false);
                 }
             }
