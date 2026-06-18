@@ -1,5 +1,6 @@
 package io.github.moosyu.packets.handlers;
 
+import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.packets.DamageNumberPacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;

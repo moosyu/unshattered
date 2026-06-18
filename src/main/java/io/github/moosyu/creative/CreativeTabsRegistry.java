@@ -20,32 +20,32 @@ public class CreativeTabsRegistry {
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
         .icon(() -> BAT_THE_FISH.get().getDefaultInstance())
         .displayItems((_, output) -> {
-            output.accept(BAT_THE_FISH.get());
-            output.accept(CENTURY_THE_FISH.get());
-            output.accept(CHILL_THE_FISH.get());
-            output.accept(CLUNK_THE_FISH.get());
-            output.accept(DIAMOND_THE_FISH.get());
-            output.accept(DUST_THE_FISH.get());
-            output.accept(EGG_THE_FISH.get());
-            output.accept(EON_THE_FISH.get());
-            output.accept(FLAKE_THE_FISH.get());
-            output.accept(EXPERIMENT_THE_FISH.get());
-            output.accept(FOSSIL_THE_FISH.get());
-            output.accept(GABAGOOL_THE_FISH.get());
-            output.accept(GIFT_THE_FISH.get());
-            output.accept(HERRING_THE_FISH.get());
-            output.accept(NOPE_THE_FISH.get());
-            output.accept(OOPS_THE_FISH.get());
-            output.accept(PARTY_THE_FISH.get());
-            output.accept(ROCK_THE_FISH.get());
-            output.accept(SHRIMP_THE_FISH.get());
-            output.accept(SKELETON_THE_FISH.get());
-            output.accept(SPOOK_THE_FISH.get());
-            output.accept(STEW_THE_FISH.get());
-            output.accept(SWAMP_THE_FISH.get());
-            output.accept(ZOOP_THE_FISH.get());
-            output.accept(BEDROCK.get());
-            output.accept(CAKE_SOUL.get());
+                output.accept(BAT_THE_FISH.get());
+                output.accept(CENTURY_THE_FISH.get());
+                output.accept(CHILL_THE_FISH.get());
+                output.accept(CLUNK_THE_FISH.get());
+                output.accept(DIAMOND_THE_FISH.get());
+                output.accept(DUST_THE_FISH.get());
+                output.accept(EGG_THE_FISH.get());
+                output.accept(EON_THE_FISH.get());
+                output.accept(FLAKE_THE_FISH.get());
+                output.accept(EXPERIMENT_THE_FISH.get());
+                output.accept(FOSSIL_THE_FISH.get());
+                output.accept(GABAGOOL_THE_FISH.get());
+                output.accept(GIFT_THE_FISH.get());
+                output.accept(HERRING_THE_FISH.get());
+                output.accept(NOPE_THE_FISH.get());
+                output.accept(OOPS_THE_FISH.get());
+                output.accept(PARTY_THE_FISH.get());
+                output.accept(ROCK_THE_FISH.get());
+                output.accept(SHRIMP_THE_FISH.get());
+                output.accept(SKELETON_THE_FISH.get());
+                output.accept(SPOOK_THE_FISH.get());
+                output.accept(STEW_THE_FISH.get());
+                output.accept(SWAMP_THE_FISH.get());
+                output.accept(ZOOP_THE_FISH.get());
+                output.accept(BEDROCK.get());
+                output.accept(CAKE_SOUL.get());
         }).build());
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_DECORATIVE_BLOCKS_TAB = CREATIVE_MODE_TABS.register("unshattered_decorative_blocks_tab",
@@ -54,7 +54,7 @@ public class CreativeTabsRegistry {
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
         .icon(() -> FIG_LOG.get().getDefaultInstance())
         .displayItems((_, output) -> {
-            output.accept(FIG_LOG.get());
+                output.accept(FIG_LOG.get());
         }).build());
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_BREAKABLE_BLOCKS_TAB = CREATIVE_MODE_TABS.register("unshattered_breakable_blocks_tab",
@@ -63,9 +63,9 @@ public class CreativeTabsRegistry {
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
         .icon(() -> BREAKABLE_COBBLESTONE.get().getDefaultInstance())
         .displayItems((_, output) -> {
-            output.accept(BREAKABLE_STONE.get());
-            output.accept(BREAKABLE_COBBLESTONE.get());
-            output.accept(BREAKABLE_FIG_LOG.get());
+                output.accept(BREAKABLE_STONE.get());
+                output.accept(BREAKABLE_COBBLESTONE.get());
+                output.accept(BREAKABLE_FIG_LOG.get());
         }).build());
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_RESOURCES_TAB = CREATIVE_MODE_TABS.register("unshattered_resources_tab",
@@ -74,7 +74,7 @@ public class CreativeTabsRegistry {
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
         .icon(() -> ENCHANTED_FIG_LOG.get().getDefaultInstance())
         .displayItems((_, output) -> {
-            output.accept(ENCHANTED_FIG_LOG.get());
+                output.accept(ENCHANTED_FIG_LOG.get());
         }).build());
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_ARMOR_TAB = CREATIVE_MODE_TABS.register("unshattered_armor_tab",
@@ -83,10 +83,10 @@ public class CreativeTabsRegistry {
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
         .icon(() -> LEAFLET_CHESTPLATE.get().getDefaultInstance())
         .displayItems((_, output) -> {
-            output.accept(LEAFLET_HELMET.get());
-            output.accept(LEAFLET_CHESTPLATE.get());
-            output.accept(LEAFLET_LEGGINGS.get());
-            output.accept(LEAFLET_BOOTS.get());
+                output.accept(LEAFLET_HELMET.get());
+                output.accept(LEAFLET_CHESTPLATE.get());
+                output.accept(LEAFLET_LEGGINGS.get());
+                output.accept(LEAFLET_BOOTS.get());
         }).build());
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_TOOLS_TAB = CREATIVE_MODE_TABS.register("unshattered_tools_tab",
@@ -95,13 +95,13 @@ public class CreativeTabsRegistry {
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
         .icon(() -> TREECAPITATOR.get().getDefaultInstance())
         .displayItems((_, output) -> {
-            output.accept(TREECAPITATOR.get());
-            output.accept(SPRUCE_AXE.get());
-            output.accept(SERIOUSLY_DAMAGED_AXE.get());
-            output.accept(DECENT_AXE.get());
-            output.accept(FIG_HEW.get());
-            output.accept(FIGSTONE_SPLITTER.get());
-            output.accept(CHALLENGING_ROD.get());
+                output.accept(TREECAPITATOR.get());
+                output.accept(SPRUCE_AXE.get());
+                output.accept(SERIOUSLY_DAMAGED_AXE.get());
+                output.accept(DECENT_AXE.get());
+                output.accept(FIG_HEW.get());
+                output.accept(FIGSTONE_SPLITTER.get());
+                output.accept(CHALLENGING_ROD.get());
         }).build());
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_WEAPONS_TAB = CREATIVE_MODE_TABS.register("unshattered_weapons_tab",
@@ -110,23 +110,27 @@ public class CreativeTabsRegistry {
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
         .icon(() -> MERCENARY_AXE.get().getDefaultInstance())
         .displayItems((_, output) -> {
-            output.accept(MERCENARY_AXE.get());
-            output.accept(WOODEN_SWORD.get());
-            output.accept(STONE_SWORD.get());
-            output.accept(IRON_SWORD.get());
-            output.accept(GOLDEN_SWORD.get());
-            output.accept(DIAMOND_SWORD.get());
-            output.accept(WOODEN_AXE.get());
-            output.accept(STONE_AXE.get());
-            output.accept(IRON_AXE.get());
-            output.accept(GOLDEN_AXE.get());
-            output.accept(DIAMOND_AXE.get());
-            output.accept(ROGUE_SWORD.get());
-            output.accept(SQUIRE_SWORD.get());
-            output.accept(UNDEAD_SWORD.get());
-            output.accept(FLAMING_SWORD.get());
-            output.accept(ZOMBIE_SWORD.get());
-            output.accept(ORNATE_ZOMBIE_SWORD.get());
-            output.accept(FLORID_ZOMBIE_SWORD.get());
+                output.accept(MERCENARY_AXE.get());
+                output.accept(WOODEN_SWORD.get());
+                output.accept(STONE_SWORD.get());
+                output.accept(IRON_SWORD.get());
+                output.accept(GOLDEN_SWORD.get());
+                output.accept(DIAMOND_SWORD.get());
+                output.accept(WOODEN_AXE.get());
+                output.accept(STONE_AXE.get());
+                output.accept(IRON_AXE.get());
+                output.accept(GOLDEN_AXE.get());
+                output.accept(DIAMOND_AXE.get());
+                output.accept(ROGUE_SWORD.get());
+                output.accept(SQUIRE_SWORD.get());
+                output.accept(UNDEAD_SWORD.get());
+                output.accept(FLAMING_SWORD.get());
+                output.accept(ZOMBIE_SWORD.get());
+                output.accept(ORNATE_ZOMBIE_SWORD.get());
+                output.accept(FLORID_ZOMBIE_SWORD.get());
+                output.accept(GOLDEN_CLEAVER.get());
+                output.accept(SUPER_CLEAVER.get());
+                output.accept(HYPER_CLEAVER.get());
+                output.accept(GIANT_CLEAVER.get());
         }).build());
 }

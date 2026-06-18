@@ -19,6 +19,11 @@ public class PlayerAbilityEffectsAttachment {
         activeEffects.put(abilityIdentifier, new ActiveEffectEntry(level.getGameTime() + abilityLength, onExpire, itemStack));
     }
 
+    public void removeActiveEffect(Identifier abilityIdentifier, Player player) {
+        activeEffects.get(abilityIdentifier).onExpire.accept(player);
+        activeEffects.remove(abilityIdentifier);
+    }
+
     public void setActiveEffectExpiryTime(Identifier abilityIdentifier, long abilityLength, Level level, Consumer<Player> onExpire, ItemStack itemStack) {
         activeEffects.replace(abilityIdentifier, new ActiveEffectEntry(level.getGameTime() + abilityLength, onExpire, itemStack));
     }
@@ -33,7 +38,8 @@ public class PlayerAbilityEffectsAttachment {
 
     public boolean activeEffectFinished(Identifier abilityIdentifier, Level level) {
         if (!hasActiveEffect(abilityIdentifier)) return false;
-        return level.getGameTime() > activeEffects.get(abilityIdentifier).expiryTime();
+        // if expiry time is 0 effect should be removed manually
+        return level.getGameTime() > activeEffects.get(abilityIdentifier).expiryTime() && activeEffects.get(abilityIdentifier).expiryTime() != 0;
     }
 
     public long expiryTimeTicks(Identifier abilityIdentifier) {

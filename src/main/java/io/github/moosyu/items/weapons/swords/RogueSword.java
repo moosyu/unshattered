@@ -1,4 +1,4 @@
-package io.github.moosyu.items.swords;
+package io.github.moosyu.items.weapons.swords;
 
 import io.github.moosyu.attachments.AttachmentRegistry;
 import io.github.moosyu.attachments.PlayerAbilityEffectsAttachment;
@@ -7,7 +7,6 @@ import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.DataComponentRegistry;
 import io.github.moosyu.helpers.CheckItemRequirementHelper;
-import io.github.moosyu.items.UnshatteredSword;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;

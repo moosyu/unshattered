@@ -1,10 +1,13 @@
 package io.github.moosyu.items;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.attributes.AttributesRegistry;
 import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.data.components.SkillRequirement;
-import io.github.moosyu.items.swords.*;
+import io.github.moosyu.items.weapons.cleavers.GiantCleaver;
+import io.github.moosyu.items.weapons.cleavers.GoldenCleaver;
+import io.github.moosyu.items.weapons.cleavers.HyperCleaver;
+import io.github.moosyu.items.weapons.cleavers.SuperCleaver;
+import io.github.moosyu.items.weapons.swords.*;
 import io.github.moosyu.rarities.RarityTypes;
 import io.github.moosyu.data.components.DataComponentRegistry;
 import net.minecraft.resources.Identifier;
@@ -85,4 +88,8 @@ public class ItemsRegistry {
     public static final DeferredItem<Item> ZOMBIE_SWORD = ITEMS.registerItem("zombie_sword", ZombieSword::new);
     public static final DeferredItem<Item> ORNATE_ZOMBIE_SWORD = ITEMS.registerItem("ornate_zombie_sword", OrnateZombieSword::new);
     public static final DeferredItem<Item> FLORID_ZOMBIE_SWORD = ITEMS.registerItem("florid_zombie_sword", FloridZombieSword::new);
+    public static final DeferredItem<Item> GOLDEN_CLEAVER = ITEMS.registerItem("golden_cleaver", GoldenCleaver::new);
+    public static final DeferredItem<Item> SUPER_CLEAVER = ITEMS.registerItem("super_cleaver", SuperCleaver::new);
+    public static final DeferredItem<Item> HYPER_CLEAVER = ITEMS.registerItem("hyper_cleaver", HyperCleaver::new);
+    public static final DeferredItem<Item> GIANT_CLEAVER = ITEMS.registerItem("giant_cleaver", GiantCleaver::new);
 }

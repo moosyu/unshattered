@@ -56,7 +56,7 @@ public class ItemTooltipHandler {
             UnshatteredAttributes modAttribute = UnshatteredAttributes.fromAttribute(attributeHolder.value());
 
             if (modAttribute == null) continue;
-            tooltipComponents.add(Component.translatable(attributeHolder.value().getDescriptionId()).append(Component.literal(": ")).withStyle(ChatFormatting.GRAY).append(Component.literal("+" + (int) modifier.amount()).withStyle((modAttribute.offensive) ? ChatFormatting.RED : ChatFormatting.GREEN)));
+            tooltipComponents.add(Component.translatable(attributeHolder.value().getDescriptionId()).append(Component.literal(": ")).withStyle(ChatFormatting.GRAY).append(Component.literal("+" + (int) modifier.amount() + (modAttribute.percentage ? "%" : "")).withStyle((modAttribute.offensive) ? ChatFormatting.RED : ChatFormatting.GREEN)));
         }
 
         if (itemDescriptionKey != null) {

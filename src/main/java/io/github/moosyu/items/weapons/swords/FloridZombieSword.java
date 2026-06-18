@@ -1,4 +1,4 @@
-package io.github.moosyu.items.swords;
+package io.github.moosyu.items.weapons.swords;
 
 import io.github.moosyu.Unshattered;
 import io.github.moosyu.attachments.AttachmentRegistry;
@@ -6,10 +6,9 @@ import io.github.moosyu.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.attachments.PlayerStateAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.data.components.DataComponentRegistry;
-import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.data.components.ItemAbility;
+import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.helpers.CheckItemRequirementHelper;
-import io.github.moosyu.items.UnshatteredSword;
 import io.github.moosyu.packets.ZombieSwordEffectsPacket;
 import io.github.moosyu.rarities.RarityTypes;
 import net.minecraft.resources.Identifier;
@@ -33,12 +32,12 @@ import org.jspecify.annotations.NonNull;
 import static io.github.moosyu.Unshattered.MODID;
 
 @EventBusSubscriber(modid = MODID)
-public class ZombieSword extends UnshatteredSword {
-    private static final Identifier ABILITY_IDENTIFIER = Identifier.fromNamespaceAndPath(MODID, "zombie_sword_instant_heal");
-    private static final ItemAbility INSTANT_HEAL_ABILITY = new ItemAbility("instant_heal",70, 10, 0, false);
+public class FloridZombieSword extends UnshatteredSword {
+    private static final Identifier ABILITY_IDENTIFIER = Identifier.fromNamespaceAndPath(MODID, "florid_zombie_sword_instant_heal");
+    private static final ItemAbility INSTANT_HEAL_ABILITY = new ItemAbility(ABILITY_IDENTIFIER.getPath(),70, 10, 0, false);
 
-    public ZombieSword(Properties properties) {
-        super(properties.component(DataComponentRegistry.ITEM_ABILITY.get(), INSTANT_HEAL_ABILITY).component(DataComponentRegistry.RARITY.get(), RarityTypes.RARE).component(DataComponentRegistry.ITEM_CHARGES.get(), new ItemCharges(4, 4, 300)).attributes(ItemAttributeModifiers.builder().add(UnshatteredAttributes.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "zombie_sword_damage"), 100, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).add(UnshatteredAttributes.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "zombie_sword_strength"), 50, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).add(UnshatteredAttributes.MANA.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "zombie_sword_mana"), 50, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).build()));
+    public FloridZombieSword(Properties properties) {
+        super(properties.component(DataComponentRegistry.ITEM_ABILITY.get(), INSTANT_HEAL_ABILITY).component(DataComponentRegistry.RARITY.get(), RarityTypes.LEGENDARY).component(DataComponentRegistry.ITEM_CHARGES.get(), new ItemCharges(5, 5, 300)).attributes(ItemAttributeModifiers.builder().add(UnshatteredAttributes.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "florid_zombie_sword_damage"), 150, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).add(UnshatteredAttributes.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "florid_zombie_sword_strength"), 80, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).add(UnshatteredAttributes.MANA.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "florid_zombie_sword_mana"), 100, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).build()));
     }
 
     @Override
@@ -51,7 +50,7 @@ public class ZombieSword extends UnshatteredSword {
         ItemStack itemStack = player.getItemInHand(InteractionHand.MAIN_HAND);
         ItemCharges itemCharges = itemStack.get(DataComponentRegistry.ITEM_CHARGES.get());
         if (maxHealthAttribute == null || itemCharges == null) {
-            Unshattered.LOGGER.error("maxHealthAttribute or itemCharges are null (from zombie sword)");
+            Unshattered.LOGGER.error("maxHealthAttribute or itemCharges are null (from florid zombie sword)");
             return InteractionResult.FAIL;
         }
         PlayerStateAttachment playerState = player.getData(AttachmentRegistry.PLAYER_STATE.get());
@@ -69,7 +68,7 @@ public class ZombieSword extends UnshatteredSword {
                 playerState.removeCurrentStat(PlayerStateAttachment.Stat.MANA, INSTANT_HEAL_ABILITY.manaCost());
                 player.syncData(AttachmentRegistry.PLAYER_STATE.get());
             }
-            playerState.addCurrentStat(PlayerStateAttachment.Stat.HEALTH, 120 + (maxHealthAttribute.getValue() * 0.05), maxHealthAttribute.getValue());
+            playerState.addCurrentStat(PlayerStateAttachment.Stat.HEALTH, 168 + (maxHealthAttribute.getValue() * 0.05), maxHealthAttribute.getValue());
             player.syncData(AttachmentRegistry.PLAYER_STATE.get());
         }
         PacketDistributor.sendToPlayer((ServerPlayer) player, new ZombieSwordEffectsPacket());

@@ -11,13 +11,19 @@ public enum ItemTypes {
     AXE("item_type.unshattered.axe", true),
     BATTLE_AXE("item_type.unshattered.battle_axe", true),
     BOW("item_type.unshattered.bow", true),
+    SHORTBOW("item_type.unshattered.shortbow", true),
     HELMET("item_type.unshattered.helmet", true),
     CHESTPLATE("item_type.unshattered.chestplate", true),
     LEGGINGS("item_type.unshattered.leggings", true),
     BOOTS("item_type.unshattered.boots", true),
     WAND("item_type.unshattered.wand", true),
     ACCESSORY("item_type.unshattered.accessory", true),
-    STAFF("item_type.unshattered.staff", true);
+    STAFF("item_type.unshattered.staff", true),
+    GRIMOIRES("item_type.unshattered.grimoire", true),
+    LONGSWORD("item_type.unshattered.longsword", true),
+    WARHAMMER("item_type.unshattered.warhammer", true),
+    WHIP("item_type.unshattered.whip", true),
+    CLEAVER("item_type.unshattered.cleaver", true);
 
     private final String key;
     private final boolean reforgeable;
