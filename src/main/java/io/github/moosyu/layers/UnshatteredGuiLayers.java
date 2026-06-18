@@ -9,4 +9,6 @@ public class UnshatteredGuiLayers {
     public static final Identifier PROFILE_SCREEN = Identifier.fromNamespaceAndPath("unshattered", "textures/gui/profile_screen.png");
     public static final Identifier TAB_OPENED = Identifier.fromNamespaceAndPath("unshattered", "textures/gui/tab_opened.png");
     public static final Identifier TAB_CLOSED = Identifier.fromNamespaceAndPath("unshattered", "textures/gui/tab_closed.png");
+    public static final Identifier CHARGE_FILLED = Identifier.fromNamespaceAndPath("unshattered", "textures/gui/charge_filled.png");
+    public static final Identifier CHARGE_EMPTY = Identifier.fromNamespaceAndPath("unshattered", "textures/gui/charge_empty.png");
 }

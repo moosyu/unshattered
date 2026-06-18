@@ -1,6 +1,7 @@
 package io.github.moosyu.helpers;
 
 import io.github.moosyu.Unshattered;
+import io.github.moosyu.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.components.ItemCharges;
@@ -8,6 +9,7 @@ import io.github.moosyu.data.components.SkillRequirement;
 import io.github.moosyu.attachments.AttachmentRegistry;
 import io.github.moosyu.data.components.DataComponentRegistry;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.Tags;
@@ -35,9 +37,11 @@ public final class CheckItemRequirementHelper {
         return true;
     }
 
-    public static boolean passesChargesCheck(Player player, ItemCharges itemCharges) {
+    public static boolean passesChargesCheck(Player player, ItemCharges itemCharges, Identifier rechargeIdentifier) {
         if (itemCharges.currentCharges() <= 0) {
-            player.sendSystemMessage(Component.literal("You don't have any charges left!").withColor(ERROR_COLOR));
+            player.sendSystemMessage(
+                    Component.literal("You don't have any charges left! Wait " + (((player.getData(AttachmentRegistry.PLAYER_ABILITIES.get()).expiryTimeTicks(rechargeIdentifier) - player.level().getGameTime()) / 20) + 1) + "s.")
+                    .withColor(ERROR_COLOR));
             return false;
         }
         return true;

@@ -42,7 +42,7 @@ import static io.github.moosyu.Unshattered.MODID;
 @EventBusSubscriber(modid = MODID)
 public class FloridZombieSword extends UnshatteredSword {
     private static final Identifier ABILITY_IDENTIFIER = Identifier.fromNamespaceAndPath(MODID, "florid_zombie_sword_instant_heal");
-    private static final ItemAbility INSTANT_HEAL_ABILITY = new ItemAbility("florid_zombie_sword_instant_heal",70, 0, 0, false);
+    private static final ItemAbility INSTANT_HEAL_ABILITY = new ItemAbility("florid_zombie_sword_instant_heal",70, 10, 0, false);
 
     public FloridZombieSword(Properties properties) {
         super(properties.component(DataComponentRegistry.ITEM_ABILITY.get(), INSTANT_HEAL_ABILITY).component(DataComponentRegistry.RARITY.get(), RarityTypes.LEGENDARY).component(DataComponentRegistry.ITEM_CHARGES.get(), new ItemCharges(5, 5, 300)).attributes(ItemAttributeModifiers.builder().add(UnshatteredAttributes.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "florid_zombie_sword_damage"), 150, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).add(UnshatteredAttributes.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "florid_zombie_sword_strength"), 80, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).add(UnshatteredAttributes.MANA.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "florid_zombie_sword_mana"), 100, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).build()));
@@ -65,7 +65,7 @@ public class FloridZombieSword extends UnshatteredSword {
         if (!player.isCreative()) {
             if (!CheckItemRequirementHelper.passesManaCheck(player, INSTANT_HEAL_ABILITY.manaCost())
                     || player.getCooldowns().isOnCooldown(itemStack)
-                    || !CheckItemRequirementHelper.passesChargesCheck(player, itemCharges)) {
+                    || !CheckItemRequirementHelper.passesChargesCheck(player, itemCharges, ABILITY_IDENTIFIER)) {
                 return InteractionResult.FAIL;
             } else {
                 itemStack.set(DataComponentRegistry.ITEM_CHARGES.get(), itemCharges.decrementCharges());
@@ -85,8 +85,8 @@ public class FloridZombieSword extends UnshatteredSword {
 
     private void onRecharge(Player player, ItemStack itemStack) {
         Level level = player.level();
-        if (level.isClientSide()) return;
         ItemCharges itemCharges = itemStack.get(DataComponentRegistry.ITEM_CHARGES.get());
+        if (level.isClientSide() || itemCharges == null) return;
         itemStack.set(DataComponentRegistry.ITEM_CHARGES.get(), itemCharges.incrementCharges());
     }
 

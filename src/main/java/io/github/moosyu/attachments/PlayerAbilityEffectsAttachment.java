@@ -33,7 +33,11 @@ public class PlayerAbilityEffectsAttachment {
 
     public boolean activeEffectFinished(Identifier abilityIdentifier, Level level) {
         if (!hasActiveEffect(abilityIdentifier)) return false;
-        return level.getGameTime() > activeEffects.get(abilityIdentifier).expiryTime;
+        return level.getGameTime() > activeEffects.get(abilityIdentifier).expiryTime();
+    }
+
+    public long expiryTimeTicks(Identifier abilityIdentifier) {
+        return activeEffects.get(abilityIdentifier).expiryTime();
     }
 
     public void tickEffects(Level level, Player player) {
@@ -42,7 +46,6 @@ public class PlayerAbilityEffectsAttachment {
             Map.Entry<Identifier, ActiveEffectEntry> entry = currentEffect.next();
             if (activeEffectFinished(entry.getKey(), level)) {
                 entry.getValue().onExpire().accept(player);
-                // in case entry.getValue().onExpire().accept(player); resets the effect or something like with zombie sword
                 currentEffect.remove();
             }
         }

@@ -5,6 +5,7 @@ import io.github.moosyu.data.components.DataComponentRegistry;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -13,6 +14,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.client.gui.GuiLayer;
 import org.jspecify.annotations.NonNull;
+
+import java.util.Set;
 
 // currently if you have two different items that are exactly the same (same stack size and everything) the tooltip wont reload as ItemStack.matches will return true
 // perhaps ill fix this but what are the odds this becomes a problem or anyone actually cares
@@ -23,14 +26,15 @@ public class SelectedItemLayer implements GuiLayer {
 
     @Override
     public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
+        final int DISPLAYED_TICK_COUNT = 80;
+        final int FADING_TICK_COUNT = 20;
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
         if (player == null || !player.level().isClientSide() || minecraft.options.hideGui) return;
 
-        final int DISPLAYED_TICK_COUNT = 80;
-        final int FADING_TICK_COUNT = 20;
-        ItemStack current = player.getMainHandItem();
-        Item heldItem = current.getItem();
+        ItemStack currentItemStack = player.getMainHandItem();
+        Set<DataComponentType<?>> ignoredComponents = Set.of(DataComponentRegistry.ITEM_CHARGES.get());
+        Item heldItem = currentItemStack.getItem();
         boolean hasItem = heldItem != Items.AIR;
         Level level = player.level();
 
@@ -38,11 +42,9 @@ public class SelectedItemLayer implements GuiLayer {
             lastSelected = ItemStack.EMPTY;
             return;
         }
-
-        // for when a new item has been selected
-        // matches is a for a memory thingy as the addresses are the same despite being different items so != returns always true
-        if (!ItemStack.matches(current, lastSelected)) {
-            lastSelected = current.copy();
+        // for when a new item has been selected. _ -> true just makes data components not affect it, probably is a better way but idc
+        if (!ItemStack.matchesIgnoringComponents(currentItemStack, lastSelected, _ -> true)) {
+            lastSelected = currentItemStack.copy();
             displayUntilTick = level.getGameTime() + DISPLAYED_TICK_COUNT;
             displaySelectedText(heldItem, graphics, minecraft, 1.0f);
             return;

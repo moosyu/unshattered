@@ -10,7 +10,7 @@ import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.helpers.CheckItemRequirementHelper;
 import io.github.moosyu.items.UnshatteredSword;
-import io.github.moosyu.packets.DeathSoundEffectPacket;
+import io.github.moosyu.packets.ZombieSwordEffectsPacket;
 import io.github.moosyu.rarities.RarityTypes;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
@@ -58,7 +58,7 @@ public class ZombieSword extends UnshatteredSword {
         if (!player.isCreative()) {
             if (!CheckItemRequirementHelper.passesManaCheck(player, INSTANT_HEAL_ABILITY.manaCost())
                     || player.getCooldowns().isOnCooldown(itemStack)
-                    || !CheckItemRequirementHelper.passesChargesCheck(player, itemCharges)) {
+                    || !CheckItemRequirementHelper.passesChargesCheck(player, itemCharges, ABILITY_IDENTIFIER)) {
                 return InteractionResult.FAIL;
             } else {
                 itemStack.set(DataComponentRegistry.ITEM_CHARGES.get(), itemCharges.decrementCharges());
@@ -69,19 +69,17 @@ public class ZombieSword extends UnshatteredSword {
                 playerState.removeCurrentStat(PlayerStateAttachment.Stat.MANA, INSTANT_HEAL_ABILITY.manaCost());
                 player.syncData(AttachmentRegistry.PLAYER_STATE.get());
             }
-
             playerState.addCurrentStat(PlayerStateAttachment.Stat.HEALTH, 120 + (maxHealthAttribute.getValue() * 0.05), maxHealthAttribute.getValue());
             player.syncData(AttachmentRegistry.PLAYER_STATE.get());
         }
-
-        PacketDistributor.sendToPlayer((ServerPlayer) player, new DeathSoundEffectPacket());
+        PacketDistributor.sendToPlayer((ServerPlayer) player, new ZombieSwordEffectsPacket());
         return InteractionResult.PASS;
     }
 
     private void onRecharge(Player player, ItemStack itemStack) {
         Level level = player.level();
-        if (level.isClientSide()) return;
         ItemCharges itemCharges = itemStack.get(DataComponentRegistry.ITEM_CHARGES.get());
+        if (level.isClientSide() || itemCharges == null) return;
         itemStack.set(DataComponentRegistry.ITEM_CHARGES.get(), itemCharges.incrementCharges());
     }
 
