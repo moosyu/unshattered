@@ -1,6 +1,6 @@
 package io.github.moosyu.items.weapons.swords;
 
-import io.github.moosyu.attributes.UnshatteredAttributes;
+import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.DataComponentRegistry;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.items.UnshatteredPassiveAbilityItem;
@@ -17,11 +17,11 @@ import static io.github.moosyu.Unshattered.MODID;
 
 public class UndeadSword extends UnshatteredSword implements UnshatteredPassiveAbilityItem {
     public UndeadSword(Properties properties) {
-        super(properties.attributes(ItemAttributeModifiers.builder().add(UnshatteredAttributes.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "undead_sword_damage"), 30, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).build()).component(DataComponentRegistry.ITEM_ABILITY.get(), new ItemAbility("mind_blowing", 0, 0, 0, true)));
+        super(properties.attributes(ItemAttributeModifiers.builder().add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "undead_sword_damage"), 30, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).build()).component(DataComponentRegistry.ITEM_ABILITY.get(), new ItemAbility("mind_blowing", 0, 0, 0, true)));
     }
 
     public void onAbilityTriggered(Player player, LivingEntity target) {
-        AttributeInstance finalDamageModifier = player.getAttribute(UnshatteredAttributes.FINAL_DAMAGE_MODIFIER.holder);
+        AttributeInstance finalDamageModifier = player.getAttribute(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder);
         if (finalDamageModifier == null) return;
         finalDamageModifier.setBaseValue(finalDamageModifier.getValue() + 1);
     }

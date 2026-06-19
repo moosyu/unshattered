@@ -11,7 +11,7 @@ import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import java.util.concurrent.CompletableFuture;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.blocks.BlocksRegistry.*;
+import static io.github.moosyu.blocks.UnshatteredBlocks.*;
 
 public class UnshatteredBlockTagsProvider extends BlockTagsProvider {
     public UnshatteredBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {

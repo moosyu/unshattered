@@ -1,6 +1,6 @@
 package io.github.moosyu.items.weapons.cleavers;
 
-import io.github.moosyu.attributes.UnshatteredAttributes;
+import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.DataComponentRegistry;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.rarities.RarityTypes;
@@ -15,11 +15,16 @@ public class GiantCleaver extends UnshatteredCleaver {
     public GiantCleaver(Properties properties) {
         super(properties
                 .component(DataComponentRegistry.RARITY.get(), RarityTypes.LEGENDARY)
-                .component(DataComponentRegistry.ITEM_ABILITY.get(), new ItemAbility("giant_cleaver_cleave", 0, 0, 0, true)).attributes(ItemAttributeModifiers.builder().add(UnshatteredAttributes.DAMAGE.holder,
-                new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "giant_cleaver_damage"), 235, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).add(UnshatteredAttributes.STRENGTH.holder,
-                new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "giant_cleaver_strength"), 120, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).add(UnshatteredAttributes.CRITICAL_DAMAGE.holder,
-                new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "giant_cleaver_crit_damage"), 120, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).build()),
-                5.0f
+                .component(DataComponentRegistry.ITEM_ABILITY.get(), new ItemAbility("giant_cleaver_cleave", 0, 0, 0, true))
+                .component(DataComponentRegistry.DESCRIPTION.get(), true)
+                .component(DataComponentRegistry.ITEM_SELL_VALUE.get(), 200000)
+                .attributes(ItemAttributeModifiers.builder().add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "giant_cleaver_damage"), 235, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "giant_cleaver_strength"), 120, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValues.CRITICAL_DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "giant_cleaver_crit_damage"), 120, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .build()
+                ),
+                5.0f,
+                0.5f
         );
     }
 }

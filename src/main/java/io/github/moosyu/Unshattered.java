@@ -1,7 +1,7 @@
 package io.github.moosyu;
 
+import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.attributes.UnshatteredAttributes;
-import io.github.moosyu.attributes.AttributesRegistry;
 import net.minecraft.client.AttackIndicatorStatus;
 import net.minecraft.client.Minecraft;
 import org.slf4j.Logger;
@@ -19,13 +19,13 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
-import static io.github.moosyu.attachments.AttachmentRegistry.ATTACHMENT_TYPES;
-import static io.github.moosyu.attributes.AttributesRegistry.ATTRIBUTES;
-import static io.github.moosyu.blocks.BlocksRegistry.BLOCKS;
-import static io.github.moosyu.creative.CreativeTabsRegistry.CREATIVE_MODE_TABS;
+import static io.github.moosyu.attachments.UnshatteredAttachments.ATTACHMENT_TYPES;
+import static io.github.moosyu.attributes.UnshatteredAttributes.ATTRIBUTES;
+import static io.github.moosyu.blocks.UnshatteredBlocks.BLOCKS;
+import static io.github.moosyu.creative.UnshatteredCreativeTabs.CREATIVE_MODE_TABS;
 import static io.github.moosyu.data.components.DataComponentRegistry.DATA_COMPONENTS;
-import static io.github.moosyu.entities.EntitiesRegistry.ENTITY_TYPES;
-import static io.github.moosyu.items.ItemsRegistry.*;
+import static io.github.moosyu.entities.UnshatteredEntities.ENTITY_TYPES;
+import static io.github.moosyu.items.UnshatteredItems.*;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Unshattered.MODID)
@@ -49,7 +49,7 @@ public class Unshattered {
         // Register the Deferred Register to the mod event bus so tabs get registered
         CREATIVE_MODE_TABS.register(modEventBus);
         ATTACHMENT_TYPES.register(modEventBus);
-        AttributesRegistry.registerAll();
+        UnshatteredAttributes.registerAll();
         ATTRIBUTES.register(modEventBus);
         DATA_COMPONENTS.register(modEventBus);
         ENTITY_TYPES.register(modEventBus);
@@ -74,7 +74,7 @@ public class Unshattered {
         LOGGER.info("{}{}", Config.MAGIC_NUMBER_INTRODUCTION.get(), Config.MAGIC_NUMBER.getAsInt());
 
         Config.ITEM_STRINGS.get().forEach((item) -> LOGGER.info("ITEM >> {}", item));
-        event.enqueueWork(UnshatteredAttributes::buildLookup);
+        event.enqueueWork(UnshatteredAttributeValues::buildLookup);
         Minecraft.getInstance().options.attackIndicator().set(AttackIndicatorStatus.OFF);
     }
 
@@ -83,6 +83,6 @@ public class Unshattered {
     public void onServerStarting(ServerStartingEvent event) {
         // Do something when the server starts
         LOGGER.info("HELLO from server starting");
-        UnshatteredAttributes.buildLookup();
+        UnshatteredAttributeValues.buildLookup();
     }
 }

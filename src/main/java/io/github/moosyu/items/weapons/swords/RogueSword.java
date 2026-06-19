@@ -1,9 +1,9 @@
 package io.github.moosyu.items.weapons.swords;
 
-import io.github.moosyu.attachments.AttachmentRegistry;
+import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.attachments.PlayerStateAttachment;
-import io.github.moosyu.attributes.UnshatteredAttributes;
+import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.DataComponentRegistry;
 import io.github.moosyu.helpers.CheckItemRequirementHelper;
@@ -28,14 +28,21 @@ public class RogueSword extends UnshatteredSword {
     private static final ItemAbility SPEED_BOOST_ABILITY = new ItemAbility("speed_boost",50, 100, 600, false);
 
     public RogueSword(Properties properties) {
-        super(properties.component(DataComponentRegistry.ITEM_ABILITY.get(), SPEED_BOOST_ABILITY).attributes(ItemAttributeModifiers.builder().add(UnshatteredAttributes.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "rogue_sword_damage"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).build()));
+        super(properties
+                .component(DataComponentRegistry.ITEM_ABILITY.get(), SPEED_BOOST_ABILITY)
+                .component(DataComponentRegistry.ITEM_SELL_VALUE.get(), 3)
+                .attributes(ItemAttributeModifiers.builder()
+                        .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "rogue_sword_damage"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                        .build()
+                )
+        );
     }
 
     @Override
     public @NonNull InteractionResult use(@NonNull Level level, @NonNull Player player, @NonNull InteractionHand hand) {
         if (level.isClientSide()) return InteractionResult.FAIL;
         AttributeInstance movementSpeedAttribute = player.getAttribute(Attributes.MOVEMENT_SPEED);
-        PlayerAbilityEffectsAttachment playerAbilities = player.getData(AttachmentRegistry.PLAYER_ABILITIES.get());
+        PlayerAbilityEffectsAttachment playerAbilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES.get());
         if (player.getCooldowns().isOnCooldown(this.getDefaultInstance()) || !CheckItemRequirementHelper.passesManaCheck(player, SPEED_BOOST_ABILITY.manaCost()) || movementSpeedAttribute == null) return InteractionResult.FAIL;
         if (playerAbilities.hasActiveEffect(ABILITY_IDENTIFIER)) {
             playerAbilities.setActiveEffectExpiryTime(ABILITY_IDENTIFIER, SPEED_BOOST_ABILITY.duration(), level, this::onSpeedBoostExpire, player.getItemBySlot(hand.asEquipmentSlot()));
@@ -43,7 +50,7 @@ public class RogueSword extends UnshatteredSword {
             playerAbilities.addActiveEffect(ABILITY_IDENTIFIER, SPEED_BOOST_ABILITY.duration(), level, this::onSpeedBoostExpire, player.getItemBySlot(hand.asEquipmentSlot()));
             movementSpeedAttribute.addTransientModifier(new AttributeModifier(ABILITY_IDENTIFIER, 0.05, AttributeModifier.Operation.ADD_VALUE));
         }
-        if (!player.isCreative()) player.getData(AttachmentRegistry.PLAYER_STATE.get()).removeCurrentStat(PlayerStateAttachment.Stat.MANA, SPEED_BOOST_ABILITY.manaCost());
+        if (!player.isCreative()) player.getData(UnshatteredAttachments.PLAYER_STATE.get()).removeCurrentStat(PlayerStateAttachment.Stat.MANA, SPEED_BOOST_ABILITY.manaCost());
         player.getCooldowns().addCooldown(this.getDefaultInstance(), SPEED_BOOST_ABILITY.cooldown());
         return InteractionResult.PASS;
     }

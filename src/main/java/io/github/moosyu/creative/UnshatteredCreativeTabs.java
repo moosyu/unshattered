@@ -5,13 +5,12 @@ net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.items.ItemsRegistry.*;
-public class CreativeTabsRegistry {
+import static io.github.moosyu.items.UnshatteredItems.*;
+public class UnshatteredCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_ITEMS_TAB = CREATIVE_MODE_TABS.register("unshattered_items_tab",
@@ -124,10 +123,10 @@ public class CreativeTabsRegistry {
                 output.accept(ROGUE_SWORD.get());
                 output.accept(SQUIRE_SWORD.get());
                 output.accept(UNDEAD_SWORD.get());
-                output.accept(FLAMING_SWORD.get());
                 output.accept(ZOMBIE_SWORD.get());
                 output.accept(ORNATE_ZOMBIE_SWORD.get());
                 output.accept(FLORID_ZOMBIE_SWORD.get());
+                output.accept(RUSTY_CLEAVER.get());
                 output.accept(GOLDEN_CLEAVER.get());
                 output.accept(SUPER_CLEAVER.get());
                 output.accept(HYPER_CLEAVER.get());

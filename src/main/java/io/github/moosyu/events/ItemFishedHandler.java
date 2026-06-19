@@ -3,7 +3,7 @@ package io.github.moosyu.events;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.packets.ExpSoundEffectPacket;
 import io.github.moosyu.skills.experience.ItemsFishingExperience;
-import io.github.moosyu.attachments.AttachmentRegistry;
+import io.github.moosyu.attachments.UnshatteredAttachments;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -13,7 +13,7 @@ import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.attachments.AttachmentRegistry.PLAYER_SKILLS;
+import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_SKILLS;
 
 @EventBusSubscriber(modid = MODID)
 public class ItemFishedHandler {
@@ -22,7 +22,7 @@ public class ItemFishedHandler {
         Player player = event.getEntity();
         if (player.level().isClientSide()) return;
 
-        PlayerSkillsAttachment skills = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
+        PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
 
         for (ItemStack fishingItem : event.getDrops()) {
             skills.addExp(PlayerSkillsAttachment.Skill.FISHING, ItemsFishingExperience.getExp(fishingItem.getItem()), player);

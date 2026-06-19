@@ -1,9 +1,9 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.attachments.AttachmentRegistry;
+import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.attachments.PlayerStateAttachment;
-import io.github.moosyu.attributes.UnshatteredAttributes;
+import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.level.Level;
@@ -12,7 +12,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.attachments.AttachmentRegistry.PLAYER_STATE;
+import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_STATE;
 
 @EventBusSubscriber(modid = MODID)
 public class PlayerTickHandler {
@@ -24,9 +24,9 @@ public class PlayerTickHandler {
         Level level = player.level();
         if (player.level().isClientSide()) return;
         PlayerStateAttachment state = player.getData(PLAYER_STATE.get());
-        final double MAX_HEALTH_VALUE = player.getAttributeValue(UnshatteredAttributes.HEALTH.holder);
-        final double HEALTH_REGEN_VALUE = player.getAttributeValue(UnshatteredAttributes.HEALTH_REGEN.holder);
-        final double MAX_MANA_VALUE = player.getAttributeValue(UnshatteredAttributes.MANA.holder);
+        final double MAX_HEALTH_VALUE = player.getAttributeValue(UnshatteredAttributeValues.HEALTH.holder);
+        final double HEALTH_REGEN_VALUE = player.getAttributeValue(UnshatteredAttributeValues.HEALTH_REGEN.holder);
+        final double MAX_MANA_VALUE = player.getAttributeValue(UnshatteredAttributeValues.MANA.holder);
 
         // disable hunger effects
         player.getFoodData().setFoodLevel(20);
@@ -51,7 +51,7 @@ public class PlayerTickHandler {
         }
         state.decrementInvulnerableTime();
 
-        PlayerAbilityEffectsAttachment abilities = player.getData(AttachmentRegistry.PLAYER_ABILITIES.get());
+        PlayerAbilityEffectsAttachment abilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES.get());
         if (abilities.hasAnyActiveEffect()) {
             abilities.tickEffects(level, player);
         }

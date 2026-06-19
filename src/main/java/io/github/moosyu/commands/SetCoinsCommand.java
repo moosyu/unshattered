@@ -2,7 +2,7 @@ package io.github.moosyu.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import io.github.moosyu.attachments.AttachmentRegistry;
+import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.attachments.PlayerCurrencyAttachment;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -14,10 +14,10 @@ public class SetCoinsCommand {
         dispatcher.register(Commands.literal("set_coins").then(Commands.argument("amount", IntegerArgumentType.integer())
             .executes(context -> {
                 ServerPlayer player = context.getSource().getPlayerOrException();
-                PlayerCurrencyAttachment coins = player.getData(AttachmentRegistry.PLAYER_CURRENCY.get());
+                PlayerCurrencyAttachment coins = player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get());
                 int amount = IntegerArgumentType.getInteger(context, "amount");
                 coins.setCoins(amount);
-                player.syncData(AttachmentRegistry.PLAYER_CURRENCY.get());
+                player.syncData(UnshatteredAttachments.PLAYER_CURRENCY.get());
                 context.getSource().sendSuccess(
                         () -> Component.literal("coins set to " + amount),
                         false

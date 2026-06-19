@@ -3,7 +3,7 @@ package io.github.moosyu.commands;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.attachments.AttachmentRegistry;
+import io.github.moosyu.attachments.UnshatteredAttachments;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
@@ -25,7 +25,7 @@ public class LevelCommand {
                         return 0;
                     }
                     String skillName = StringArgumentType.getString(context, "skill");
-                    PlayerSkillsAttachment skills = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
+                    PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
 
                     int level = switch (skillName.toLowerCase()) {
                         case "mining" -> skills.getLevel(skills.getExp(PlayerSkillsAttachment.Skill.MINING));

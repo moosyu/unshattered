@@ -1,8 +1,8 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.attributes.UnshatteredAttributes;
-import io.github.moosyu.attachments.AttachmentRegistry;
+import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.packets.ExpSoundEffectPacket;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
@@ -20,7 +20,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import java.util.*;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.attachments.AttachmentRegistry.PLAYER_SKILLS;
+import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_SKILLS;
 
 // shouldnt need to check if serverside as this will being run from BlockBreakHandler which already had that check
 @EventBusSubscriber(modid = MODID)
@@ -68,7 +68,7 @@ public class TreeSweepHandler {
         private void finish() {
             // unless something has gone horribly wrong the "player" value in tasks should be the same in every index
             Player player = tasks.getFirst().player();
-            PlayerSkillsAttachment skills = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
+            PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
 
             for (BreakTask current : tasks) {
                 int logs = calculateLogs(current.player());
@@ -82,7 +82,7 @@ public class TreeSweepHandler {
     }
 
     private static int calculateLogs(Player player) {
-        var attribute = player.getAttribute(UnshatteredAttributes.FORAGING_FORTUNE.holder);
+        var attribute = player.getAttribute(UnshatteredAttributeValues.FORAGING_FORTUNE.holder);
         // making sure attribute isnt null, probably pointless but i also managed to fuck up registering it last time and it made the game crash
         double fortune = attribute != null ? attribute.getValue() : 0.0;
         double multiplier = 1.0 + (fortune / 100.0);
@@ -98,13 +98,13 @@ public class TreeSweepHandler {
     }
 
     public static void trySweep(Level level, BlockPos startPos, Player player) {
-        PlayerSkillsAttachment skills = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
+        PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
         BlockState startBlock = level.getBlockState(startPos);
 
         // removing the initial block (as the vanilla block break is canceled)
         level.removeBlock(startPos, false);
 
-        int sweep = (int) player.getAttributeValue(UnshatteredAttributes.SWEEP.holder);
+        int sweep = (int) player.getAttributeValue(UnshatteredAttributeValues.SWEEP.holder);
         if (sweep <= 0) {
             skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, 6.0f, player);
             player.syncData(PLAYER_SKILLS);

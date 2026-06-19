@@ -11,8 +11,8 @@ public final class BrokenBlocksWorldResult {
     private static final Map<Block, BlockState> DEGRADATION_MAP = new HashMap<>();
 
     static {
-        DEGRADATION_MAP.put(BlocksRegistry.BREAKABLE_STONE_BLOCK.get(), BlocksRegistry.BREAKABLE_COBBLESTONE_BLOCK.get().defaultBlockState());
-        DEGRADATION_MAP.put(BlocksRegistry.BREAKABLE_COBBLESTONE_BLOCK.get(), Blocks.BEDROCK.defaultBlockState());
+        DEGRADATION_MAP.put(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get(), UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get().defaultBlockState());
+        DEGRADATION_MAP.put(UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(), Blocks.BEDROCK.defaultBlockState());
     }
 
     public static BlockState getDegradedState(Block block) {

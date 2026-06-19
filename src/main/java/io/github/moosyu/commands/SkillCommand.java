@@ -2,7 +2,7 @@ package io.github.moosyu.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.attachments.AttachmentRegistry;
+import io.github.moosyu.attachments.UnshatteredAttachments;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
@@ -15,7 +15,7 @@ public class SkillCommand {
             if (player == null) {
                 return 0;
             }
-            PlayerSkillsAttachment skills = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
+            PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
             context.getSource().sendSuccess(() ->
                             Component.literal("Foraging exp: " + skills.getExp(PlayerSkillsAttachment.Skill.FORAGING) + "\n" +
                                     "Combat exp: " + skills.getExp(PlayerSkillsAttachment.Skill.COMBAT) + "\n" +

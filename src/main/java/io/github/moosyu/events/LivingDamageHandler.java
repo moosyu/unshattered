@@ -1,10 +1,7 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.attributes.UnshatteredAttributes;
+import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.helpers.PlayerDamageHelper;
-import io.github.moosyu.packets.DeathSoundEffectPacket;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,7 +11,6 @@ import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
 
 import static io.github.moosyu.Unshattered.LOGGER;
 import static io.github.moosyu.Unshattered.MODID;
@@ -28,9 +24,9 @@ public class LivingDamageHandler {
         if (event.getEntity() instanceof Player player) {
             event.setNewDamage(0.0f);
             Entity attacker = event.getSource().getEntity();
-            double playerDefenseValue = player.getAttributeValue(UnshatteredAttributes.DEFENSE.holder);
+            double playerDefenseValue = player.getAttributeValue(UnshatteredAttributeValues.DEFENSE.holder);
             if (attacker instanceof LivingEntity entity) {
-                AttributeInstance damageAttributeInstance = entity.getAttribute(UnshatteredAttributes.DAMAGE.holder);
+                AttributeInstance damageAttributeInstance = entity.getAttribute(UnshatteredAttributeValues.DAMAGE.holder);
                 // in case the damage attribute was never defined
                 if (damageAttributeInstance == null) {
                     LOGGER.error("A damage attribute wasn't defined for entity: {}", entity.getName().getString());
@@ -56,7 +52,6 @@ public class LivingDamageHandler {
         } else if (event.getSource().is(DamageTypeTags.IS_FIRE)) {
             event.setNewDamage(0.0f);
             event.getEntity().invulnerableTime = 0;
-            System.out.println("fire entity");
         }
     }
 }

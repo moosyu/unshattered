@@ -1,10 +1,8 @@
 package io.github.moosyu;
 
-import io.github.moosyu.entities.EntitiesRegistry;
+import io.github.moosyu.entities.UnshatteredEntities;
 import io.github.moosyu.entities.renderers.GraveyardZombieVillagerRenderer;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.client.renderer.entity.ZombieVillagerRenderer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -28,6 +26,6 @@ public class UnshatteredClient {
 
     @SubscribeEvent
     static void onClientSetup(FMLClientSetupEvent event) {
-        EntityRenderers.register(EntitiesRegistry.GRAVEYARD_ZOMBIE_VILLAGER.get(), GraveyardZombieVillagerRenderer::new);
+        EntityRenderers.register(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), GraveyardZombieVillagerRenderer::new);
     }
 }

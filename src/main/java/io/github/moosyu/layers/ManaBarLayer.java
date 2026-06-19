@@ -1,7 +1,7 @@
 package io.github.moosyu.layers;
 
 import io.github.moosyu.attachments.PlayerStateAttachment;
-import io.github.moosyu.attributes.UnshatteredAttributes;
+import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -13,7 +13,7 @@ import net.minecraft.world.level.GameType;
 import net.neoforged.neoforge.client.gui.GuiLayer;
 import org.jspecify.annotations.NonNull;
 
-import static io.github.moosyu.attachments.AttachmentRegistry.PLAYER_STATE;
+import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_STATE;
 import static io.github.moosyu.layers.UnshatteredGuiLayers.SMALL_BAR;
 
 public class ManaBarLayer implements GuiLayer {
@@ -28,7 +28,7 @@ public class ManaBarLayer implements GuiLayer {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = Minecraft.getInstance().player;
         if (!player.level().isClientSide() || minecraft.options.hideGui || player.gameMode() != GameType.SURVIVAL) return;
-        final AttributeInstance manaAttribute = player.getAttribute(UnshatteredAttributes.MANA.holder);
+        final AttributeInstance manaAttribute = player.getAttribute(UnshatteredAttributeValues.MANA.holder);
         if (manaAttribute == null) return;
         double currentMana = player.getData(PLAYER_STATE.get()).getCurrentStat(PlayerStateAttachment.Stat.MANA);
         final double manaPercentage = (currentMana / manaAttribute.getValue());

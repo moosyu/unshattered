@@ -1,7 +1,7 @@
 package io.github.moosyu.layers;
 
 import io.github.moosyu.attachments.PlayerStateAttachment;
-import io.github.moosyu.attributes.UnshatteredAttributes;
+import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -12,7 +12,7 @@ import net.minecraft.world.level.GameType;
 import net.neoforged.neoforge.client.gui.GuiLayer;
 import org.jspecify.annotations.NonNull;
 
-import static io.github.moosyu.attachments.AttachmentRegistry.PLAYER_STATE;
+import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_STATE;
 import static io.github.moosyu.layers.UnshatteredGuiLayers.SMALL_BAR;
 
 public class HealthBarLayer implements GuiLayer {
@@ -28,7 +28,7 @@ public class HealthBarLayer implements GuiLayer {
         Player player = minecraft.player;
         if (!player.level().isClientSide() || minecraft.options.hideGui || player.gameMode() != GameType.SURVIVAL) return;
         final double currentHealth = player.getData(PLAYER_STATE.get()).getCurrentStat(PlayerStateAttachment.Stat.HEALTH);
-        final double healthPercentage = (player.getData(PLAYER_STATE.get()).getCurrentStat(PlayerStateAttachment.Stat.HEALTH) / player.getAttributeValue(UnshatteredAttributes.HEALTH.holder));
+        final double healthPercentage = (player.getData(PLAYER_STATE.get()).getCurrentStat(PlayerStateAttachment.Stat.HEALTH) / player.getAttributeValue(UnshatteredAttributeValues.HEALTH.holder));
         final String currentHealthText = String.valueOf((int) currentHealth);
         final Font font = Minecraft.getInstance().font;
 

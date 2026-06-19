@@ -8,7 +8,7 @@ import net.neoforged.neoforge.common.data.ItemTagsProvider;
 import java.util.concurrent.CompletableFuture;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.items.ItemsRegistry.*;
+import static io.github.moosyu.items.UnshatteredItems.*;
 
 public class UnshatteredItemTagsProvider extends ItemTagsProvider {
     public UnshatteredItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {

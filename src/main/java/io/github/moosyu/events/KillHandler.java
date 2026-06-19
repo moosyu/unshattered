@@ -4,7 +4,7 @@ import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.packets.ExpSoundEffectPacket;
 import io.github.moosyu.skills.experience.EntityCombatExperience;
 import io.github.moosyu.skills.experience.EntityFarmingExperience;
-import io.github.moosyu.attachments.AttachmentRegistry;
+import io.github.moosyu.attachments.UnshatteredAttachments;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -15,7 +15,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.attachments.AttachmentRegistry.PLAYER_SKILLS;
+import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_SKILLS;
 
 @EventBusSubscriber(modid = MODID)
 public class KillHandler {
@@ -26,7 +26,7 @@ public class KillHandler {
 
         if (attacker instanceof Player player) {
             if (player.level().isClientSide()) return;
-            PlayerSkillsAttachment skills = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
+            PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
 
             float combatExp = EntityCombatExperience.getExp(event.getEntity().getType());
             if (combatExp > 0.0f) {

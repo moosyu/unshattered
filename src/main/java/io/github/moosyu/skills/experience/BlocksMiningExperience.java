@@ -1,6 +1,6 @@
 package io.github.moosyu.skills.experience;
 
-import io.github.moosyu.blocks.BlocksRegistry;
+import io.github.moosyu.blocks.UnshatteredBlocks;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
@@ -8,8 +8,8 @@ import java.util.Map;
 
 public class BlocksMiningExperience {
     private static final Map<Block, Float> BLOCKS_MINING_EXP = Map.ofEntries(
-            Map.entry(BlocksRegistry.BREAKABLE_STONE_BLOCK.get(), 1.0f),
-            Map.entry(BlocksRegistry.BREAKABLE_COBBLESTONE_BLOCK.get(), 1.0f),
+            Map.entry(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get(), 1.0f),
+            Map.entry(UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(), 1.0f),
             Map.entry(Blocks.COAL_ORE, 5.0f),
             Map.entry(Blocks.IRON_ORE, 5.0f),
             Map.entry(Blocks.GOLD_ORE, 6.0f),

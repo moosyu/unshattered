@@ -2,7 +2,7 @@ package io.github.moosyu.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import io.github.moosyu.attachments.PlayerStateAttachment;
-import io.github.moosyu.attachments.AttachmentRegistry;
+import io.github.moosyu.attachments.UnshatteredAttachments;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.server.level.ServerPlayer;
@@ -14,7 +14,7 @@ public class StatCommand {
             if (player == null) {
                 return 0;
             }
-            PlayerStateAttachment stats = player.getData(AttachmentRegistry.PLAYER_STATE.get());
+            PlayerStateAttachment stats = player.getData(UnshatteredAttachments.PLAYER_STATE.get());
             context.getSource().sendSuccess(() -> net.minecraft.network.chat.Component.literal(String.valueOf(stats.getCurrentStat(PlayerStateAttachment.Stat.HEALTH))),
                     false);
             return 1;

@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 
 import static io.github.moosyu.Unshattered.MODID;
 
-public class EntitiesRegistry {
+public class UnshatteredEntities {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.createEntities(MODID);
 
     public static final Supplier<EntityType<GraveyardZombieVillager>> GRAVEYARD_ZOMBIE_VILLAGER = ENTITY_TYPES.register(

@@ -1,15 +1,13 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.data.components.SkillRequirement;
-import io.github.moosyu.attachments.AttachmentRegistry;
+import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.DataComponentRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
@@ -27,7 +25,7 @@ public class LivingEquipmentChangeHandler {
             // me of real skyblock which puts a smile on my face
             // this also dupes in creative mode which gives me the impression there is a way to dupe using this in survival but whatever
             if (itemSkillRequirement != null) {
-                PlayerSkillsAttachment playerSkills = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
+                PlayerSkillsAttachment playerSkills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
                 EquipmentSlot slotPlaced = event.getSlot();
                 if ((slotPlaced == EquipmentSlot.HEAD
                         || slotPlaced == EquipmentSlot.CHEST

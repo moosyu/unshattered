@@ -1,6 +1,6 @@
 package io.github.moosyu.layers;
 
-import io.github.moosyu.attachments.AttachmentRegistry;
+import io.github.moosyu.attachments.UnshatteredAttachments;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -18,7 +18,7 @@ public class SidebarLayer implements GuiLayer {
         Font font = minecraft.font;
         Player player = minecraft.player;
         if (player == null || !player.level().isClientSide() || minecraft.options.hideGui) return;
-        final int SIDEBAR_WIDTH = font.width("Purse: " + player.getData(AttachmentRegistry.PLAYER_CURRENCY.get()).getCoins()) + 20;
+        final int SIDEBAR_WIDTH = font.width("Purse: " + player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get()).getCoins()) + 20;
         final int SIDEBAR_HEIGHT = 96;
 
         final int CORNER_POS_X = (graphics.guiWidth() - SIDEBAR_WIDTH) - 2;
@@ -27,6 +27,6 @@ public class SidebarLayer implements GuiLayer {
         graphics.fill(CORNER_POS_X, CORNER_POS_Y, CORNER_POS_X + SIDEBAR_WIDTH, CORNER_POS_Y + SIDEBAR_HEIGHT, 0x66000000);
         graphics.text(font, Component.literal("SKYBLOCK").withStyle(ChatFormatting.BOLD), CORNER_POS_X + ((SIDEBAR_WIDTH - font.width(Component.literal("SKYBLOCK").withStyle(ChatFormatting.BOLD))) / 2), CORNER_POS_Y + 2, 0xFFFFFF55);
         graphics.text(font, "Purse: ", CORNER_POS_X + 2, CORNER_POS_Y + 12, 0xFFFFFFFF, false);
-        graphics.text(font, String.valueOf(player.getData(AttachmentRegistry.PLAYER_CURRENCY.get()).getCoins()), CORNER_POS_X + font.width("Purse: ") + 2, CORNER_POS_Y + 12, 0xFFFFFF55, false);
+        graphics.text(font, String.valueOf(player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get()).getCoins()), CORNER_POS_X + font.width("Purse: ") + 2, CORNER_POS_Y + 12, 0xFFFFFF55, false);
     }
 }

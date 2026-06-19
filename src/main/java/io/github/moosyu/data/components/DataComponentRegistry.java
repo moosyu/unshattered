@@ -16,8 +16,9 @@ public final class DataComponentRegistry {
 
     public static final Supplier<DataComponentType<RarityTypes>> RARITY = DATA_COMPONENTS.registerComponentType("rarity", builder -> builder.persistent(RarityTypes.CODEC));
     public static final Supplier<DataComponentType<ItemTypes>> ITEM_TYPE = DATA_COMPONENTS.registerComponentType("item_type", builder -> builder.persistent(ItemTypes.CODEC));
-    public static final Supplier<DataComponentType<String>> DESCRIPTION_KEY = DATA_COMPONENTS.registerComponentType("description_key", builder -> builder.persistent(Codec.STRING));
+    public static final Supplier<DataComponentType<Boolean>> DESCRIPTION = DATA_COMPONENTS.registerComponentType("description", builder -> builder.persistent(Codec.BOOL));
     public static final Supplier<DataComponentType<SkillRequirement>> SKILL_REQUIREMENT = DATA_COMPONENTS.registerComponentType("skill_requirement", builder -> builder.persistent(SkillRequirement.CODEC));
     public static final Supplier<DataComponentType<ItemAbility>> ITEM_ABILITY = DATA_COMPONENTS.registerComponentType("item_ability", builder -> builder.persistent(ItemAbility.CODEC));
     public static final Supplier<DataComponentType<ItemCharges>> ITEM_CHARGES = DATA_COMPONENTS.registerComponentType("item_charges", builder -> builder.persistent(ItemCharges.CODEC));
+    public static final Supplier<DataComponentType<Integer>> ITEM_SELL_VALUE = DATA_COMPONENTS.registerComponentType("item_sell_value", builder -> builder.persistent(Codec.INT));
 }

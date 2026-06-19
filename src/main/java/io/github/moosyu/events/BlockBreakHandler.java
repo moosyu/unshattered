@@ -1,14 +1,14 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.blocks.BlocksRegistry;
+import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.blocks.BrokenBlocksItemResult;
 import io.github.moosyu.data.RegenBlocksSavedData;
 import io.github.moosyu.packets.ExpSoundEffectPacket;
 import io.github.moosyu.skills.experience.BlocksFarmingExperience;
 import io.github.moosyu.skills.experience.BlocksMiningExperience;
 import io.github.moosyu.helpers.CheckBreakableBlock;
-import io.github.moosyu.attachments.AttachmentRegistry;
+import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.helpers.CheckItemRequirementHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -29,7 +29,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import java.util.*;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.attachments.AttachmentRegistry.PLAYER_SKILLS;
+import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_SKILLS;
 
 // ran just before a player is to break a block
 @EventBusSubscriber(modid = MODID)
@@ -57,7 +57,7 @@ public class BlockBreakHandler {
             RegenBlocksSavedData.get((ServerLevel) level).addBlock(blockPos, level.getGameTime() + TIME_BROKEN, replacementBlock);
         }
 
-        PlayerSkillsAttachment skills = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
+        PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
 
         float miningExp = BlocksMiningExperience.getExp(block);
         if (miningExp > 0.0f) {
@@ -118,7 +118,7 @@ public class BlockBreakHandler {
                     BlockState originalState = regenEntry.targetState();
                     level.setBlock(pos, originalState, 3);
                     toRemove.add(pos);
-                    if (originalState.is(BlocksRegistry.BREAKABLE_COBBLESTONE_BLOCK.get())) {
+                    if (originalState.is(UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get())) {
                         // How do we know if it was Iron Ore or Stone?
                         // You could check a separate "original source" map, or handle it during the initial break.
                         // Alternatively, if you want it to go Bedrock -> Cobble -> Iron Ore:

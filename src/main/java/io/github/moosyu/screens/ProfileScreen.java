@@ -2,8 +2,8 @@ package io.github.moosyu.screens;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.AttributeTypes;
-import io.github.moosyu.attributes.UnshatteredAttributes;
-import io.github.moosyu.attachments.AttachmentRegistry;
+import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.helpers.TextHelpers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -83,7 +83,7 @@ public class ProfileScreen extends Screen {
                 this.addRenderableWidget(new SkillWidget(currentSkill, posX, posY, player, currentSkill.getIcon().getDefaultInstance()));
             }
         } else if (currentTab == Tabs.STATS) {
-            for (UnshatteredAttributes currentStat : UnshatteredAttributes.values()) {
+            for (UnshatteredAttributeValues currentStat : UnshatteredAttributeValues.values()) {
                 int posX = (uniqueIndex > 9 ? CORNER_POS_X + SCREEN_WIDTH - 176 : CORNER_POS_X);
                 int posY = (uniqueIndex > 9 ? CORNER_POS_Y + ((uniqueIndex - 10) * 14) : CORNER_POS_Y + (uniqueIndex * 14));
                 if (currentStat.type == AttributeTypes.INVISIBLE) continue;
@@ -133,7 +133,7 @@ public class ProfileScreen extends Screen {
 
         @Override
         protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int i, int i1, float v) {
-            PlayerSkillsAttachment playerData = player.getData(AttachmentRegistry.PLAYER_SKILLS.get());
+            PlayerSkillsAttachment playerData = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
 
             // debug area for clicks
             // graphics.fill(this.getX(), this.getY(), this.getX() + this.width, this.getY() + this.height, 0x44FF0000);
@@ -165,9 +165,9 @@ public class ProfileScreen extends Screen {
     // this is a widget as i intend for some hover interaction at some point
     private static class StatWidget extends AbstractWidget {
         private final Player player;
-        private final UnshatteredAttributes currentAttribute;
+        private final UnshatteredAttributeValues currentAttribute;
 
-        public StatWidget(UnshatteredAttributes currentAttribute, int x, int y, Player player) {
+        public StatWidget(UnshatteredAttributeValues currentAttribute, int x, int y, Player player) {
             super(x, y, 32, 16, Component.literal(String.valueOf(Component.translatable(currentAttribute.getTranslationKey()))));
             this.player = player;
             this.currentAttribute = currentAttribute;
