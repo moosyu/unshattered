@@ -121,6 +121,7 @@ public class UnshatteredItems {
     public static final DeferredItem<UnshatteredAxeTool> TREECAPITATOR = ITEMS.registerItem("treecapitator", props -> new UnshatteredAxeTool(props
             .component(DataComponentRegistry.RARITY.get(), RarityTypes.EPIC)
             .component(DataComponentRegistry.ITEM_SELL_VALUE.get(), 10000)
+            .component(DataComponentRegistry.DESCRIPTION.get(), true)
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.SWEEP.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "treecapitator_sweep"), 25, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "treecapitator_foraging_fortune"), 100, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
@@ -130,6 +131,7 @@ public class UnshatteredItems {
     // todo: make it so the foraging fortune only applies in certain areas (the park, not the galatea)
     public static final DeferredItem<UnshatteredAxeTool> SPRUCE_AXE = ITEMS.registerItem("spruce_axe", props -> new UnshatteredAxeTool(props
             .component(DataComponentRegistry.RARITY.get(), RarityTypes.UNCOMMON)
+            .component(DataComponentRegistry.DESCRIPTION.get(), true)
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.SWEEP.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "spruce_axe_sweep"), 4, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "spruce_axe_foraging_fortune"), 50, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
@@ -138,6 +140,7 @@ public class UnshatteredItems {
     ));
     public static final DeferredItem<UnshatteredAxeTool> SERIOUSLY_DAMAGED_AXE = ITEMS.registerItem("seriously_damaged_axe", props -> new UnshatteredAxeTool(props
             .component(DataComponentRegistry.RARITY.get(), RarityTypes.UNCOMMON)
+            .component(DataComponentRegistry.DESCRIPTION.get(), true)
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.SWEEP.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "seriously_damaged_axe_sweep"), 7, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "seriously_damaged_axe_foraging_fortune"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
@@ -146,6 +149,7 @@ public class UnshatteredItems {
     ));
     public static final DeferredItem<UnshatteredAxeTool> DECENT_AXE = ITEMS.registerItem("decent_axe", props -> new UnshatteredAxeTool(props
             .component(DataComponentRegistry.RARITY.get(), RarityTypes.RARE)
+            .component(DataComponentRegistry.DESCRIPTION.get(), true)
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.SWEEP.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "decent_axe_sweep"), 24, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "decent_axe_foraging_fortune"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
@@ -154,6 +158,7 @@ public class UnshatteredItems {
     ));
     public static final DeferredItem<UnshatteredAxeTool> FIG_HEW = ITEMS.registerItem("fig_hew", props -> new UnshatteredAxeTool(props
             .component(DataComponentRegistry.RARITY.get(), RarityTypes.RARE)
+            .component(DataComponentRegistry.DESCRIPTION.get(), true)
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.SWEEP.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "fig_hew_sweep"), 7, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "fig_hew_foraging_fortune"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
@@ -162,6 +167,7 @@ public class UnshatteredItems {
     ));
     public static final DeferredItem<UnshatteredAxeTool> FIGSTONE_SPLITTER = ITEMS.registerItem("figstone_splitter", props -> new UnshatteredAxeTool(props
             .component(DataComponentRegistry.RARITY.get(), RarityTypes.EPIC)
+            .component(DataComponentRegistry.DESCRIPTION.get(), true)
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.SWEEP.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "figstone_splitter_sweep"), 24, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "figstone_splitter_foraging_fortune"), 35, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
@@ -358,6 +364,7 @@ public class UnshatteredItems {
             .component(DataComponentRegistry.RARITY.get(), RarityTypes.UNCOMMON)
             .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.ITEM)
             .component(DataComponentRegistry.SKILL_REQUIREMENT.get(), new SkillRequirement(PlayerSkillsAttachment.Skill.FISHING, 5))
+            .component(DataComponentRegistry.DESCRIPTION.get(), true)
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "challenging_rod_damage"), 75, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "challenging_rod_strength"), 75, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
@@ -386,6 +393,7 @@ public class UnshatteredItems {
             .component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.SWORD)
             .component(DataComponentRegistry.RARITY.get(), RarityTypes.UNCOMMON)
             .component(DataComponentRegistry.ITEM_SELL_VALUE.get(), 2500)
+            .component(DataComponentRegistry.DESCRIPTION.get(), true)
             .component(DataComponentRegistry.SKILL_REQUIREMENT.get(), new SkillRequirement(PlayerSkillsAttachment.Skill.COMBAT, 4))
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "squire_sword_damage"), 50, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)

@@ -42,6 +42,7 @@ public class FloridZombieSword extends UnshatteredSword {
                 .component(DataComponentRegistry.RARITY.get(), RarityTypes.LEGENDARY)
                 .component(DataComponentRegistry.ITEM_CHARGES.get(), new ItemCharges(5, 5, 300))
                 .component(DataComponentRegistry.ITEM_SELL_VALUE.get(), 2000000)
+                .component(DataComponentRegistry.DESCRIPTION.get(), true)
                 .attributes(ItemAttributeModifiers.builder()
                         .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "florid_zombie_sword_damage"), 150, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                         .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "florid_zombie_sword_strength"), 80, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)

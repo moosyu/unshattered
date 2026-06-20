@@ -31,6 +31,7 @@ public class RogueSword extends UnshatteredSword {
         super(properties
                 .component(DataComponentRegistry.ITEM_ABILITY.get(), SPEED_BOOST_ABILITY)
                 .component(DataComponentRegistry.ITEM_SELL_VALUE.get(), 3)
+                .component(DataComponentRegistry.DESCRIPTION.get(), true)
                 .attributes(ItemAttributeModifiers.builder()
                         .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "rogue_sword_damage"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                         .build()
