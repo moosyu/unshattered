@@ -18,12 +18,12 @@ import static io.github.moosyu.Unshattered.MODID;
 public class UndeadSword extends UnshatteredSword implements UnshatteredPassiveAbilityItem {
     public UndeadSword(Properties properties) {
         super(properties
-                .component(DataComponentRegistry.ITEM_ABILITY.get(), new ItemAbility("mind_blowing", 0, 0, 0, true)
+                .component(DataComponentRegistry.ITEM_ABILITY.get(), new ItemAbility("mind_blowing", 0, 0, 0, true))
                 .component(DataComponentRegistry.DESCRIPTION.get(), true)
                 .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "undead_sword_damage"), 30, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .build())
-            )
+                    .build()
+                )
         );
     }
 
