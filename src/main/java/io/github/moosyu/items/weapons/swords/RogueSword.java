@@ -6,7 +6,7 @@ import io.github.moosyu.attachments.PlayerStateAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.DataComponentRegistry;
-import io.github.moosyu.helpers.CheckItemRequirementHelper;
+import io.github.moosyu.util.CheckItemRequirement;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -44,7 +44,7 @@ public class RogueSword extends UnshatteredSword {
         if (level.isClientSide()) return InteractionResult.FAIL;
         AttributeInstance movementSpeedAttribute = player.getAttribute(Attributes.MOVEMENT_SPEED);
         PlayerAbilityEffectsAttachment playerAbilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES.get());
-        if (player.getCooldowns().isOnCooldown(this.getDefaultInstance()) || !CheckItemRequirementHelper.passesManaCheck(player, SPEED_BOOST_ABILITY.manaCost()) || movementSpeedAttribute == null) return InteractionResult.FAIL;
+        if (player.getCooldowns().isOnCooldown(this.getDefaultInstance()) || !CheckItemRequirement.passesManaCheck(player, SPEED_BOOST_ABILITY.manaCost()) || movementSpeedAttribute == null) return InteractionResult.FAIL;
         if (playerAbilities.hasActiveEffect(ABILITY_IDENTIFIER)) {
             playerAbilities.setActiveEffectExpiryTime(ABILITY_IDENTIFIER, SPEED_BOOST_ABILITY.duration(), level, this::onSpeedBoostExpire, player.getItemBySlot(hand.asEquipmentSlot()));
         } else {

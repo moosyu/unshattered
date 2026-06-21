@@ -1,4 +1,4 @@
-package io.github.moosyu.helpers;
+package io.github.moosyu.util;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attachments.PlayerStateAttachment;
@@ -12,7 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.Tags;
 
-public final class CheckItemRequirementHelper {
+public final class CheckItemRequirement {
     public static final int ERROR_COLOR = 0xFFFF5555;
 
     public static boolean passesSkillCheck(Player player, ItemStack itemUsed) {

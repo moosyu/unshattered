@@ -1,4 +1,4 @@
-package io.github.moosyu.helpers;
+package io.github.moosyu.util.damage;
 
 import io.github.moosyu.attachments.PlayerStateAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
@@ -13,7 +13,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_STATE;
 
-public final class PlayerDamageHelper {
+public final class GetPlayerDamageResult {
     public static void damagePlayer(Player player, double damageDealt, Level level, String deathMessage) {
         PlayerStateAttachment states = player.getData(PLAYER_STATE.get());
         double playerHealth = states.getCurrentStat(PlayerStateAttachment.Stat.HEALTH);

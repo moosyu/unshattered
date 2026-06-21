@@ -5,7 +5,7 @@ import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.data.components.SkillRequirement;
 import io.github.moosyu.data.components.ItemAbility;
-import io.github.moosyu.helpers.TextHelpers;
+import io.github.moosyu.util.TextHelpers;
 import io.github.moosyu.items.ItemTypes;
 import io.github.moosyu.rarities.RarityTypes;
 import io.github.moosyu.attachments.UnshatteredAttachments;

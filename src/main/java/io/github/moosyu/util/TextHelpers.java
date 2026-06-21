@@ -1,4 +1,4 @@
-package io.github.moosyu.helpers;
+package io.github.moosyu.util;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

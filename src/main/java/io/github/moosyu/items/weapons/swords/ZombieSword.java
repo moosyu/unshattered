@@ -8,7 +8,7 @@ import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.DataComponentRegistry;
 import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.data.components.ItemAbility;
-import io.github.moosyu.helpers.CheckItemRequirementHelper;
+import io.github.moosyu.util.CheckItemRequirement;
 import io.github.moosyu.packets.ZombieSwordEffectsPacket;
 import io.github.moosyu.rarities.RarityTypes;
 import net.minecraft.resources.Identifier;
@@ -66,9 +66,9 @@ public class ZombieSword extends UnshatteredSword {
         }
         PlayerStateAttachment playerState = player.getData(UnshatteredAttachments.PLAYER_STATE.get());
         if (!player.isCreative()) {
-            if (!CheckItemRequirementHelper.passesManaCheck(player, INSTANT_HEAL_ABILITY.manaCost())
+            if (!CheckItemRequirement.passesManaCheck(player, INSTANT_HEAL_ABILITY.manaCost())
                     || player.getCooldowns().isOnCooldown(itemStack)
-                    || !CheckItemRequirementHelper.passesChargesCheck(player, itemCharges, ABILITY_IDENTIFIER)) {
+                    || !CheckItemRequirement.passesChargesCheck(player, itemCharges, ABILITY_IDENTIFIER)) {
                 return InteractionResult.FAIL;
             } else {
                 itemStack.set(DataComponentRegistry.ITEM_CHARGES.get(), itemCharges.decrementCharges());

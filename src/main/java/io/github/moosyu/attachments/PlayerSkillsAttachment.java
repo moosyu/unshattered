@@ -1,7 +1,7 @@
 package io.github.moosyu.attachments;
 
 import com.mojang.serialization.Codec;
-import io.github.moosyu.helpers.TextHelpers;
+import io.github.moosyu.util.TextHelpers;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;

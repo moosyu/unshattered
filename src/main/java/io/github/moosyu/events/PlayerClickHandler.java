@@ -1,6 +1,6 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.helpers.CheckItemRequirementHelper;
+import io.github.moosyu.util.CheckItemRequirement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.TriState;
@@ -62,13 +62,13 @@ public class PlayerClickHandler {
     @SubscribeEvent
     public static void onPlayerRightClickItem(PlayerInteractEvent.RightClickItem event) {
         if (event.getLevel().isClientSide()) return;
-        if (!CheckItemRequirementHelper.passesSkillCheck(event.getEntity(), event.getItemStack())) event.setCanceled(true);
+        if (!CheckItemRequirement.passesSkillCheck(event.getEntity(), event.getItemStack())) event.setCanceled(true);
     }
 
     @SubscribeEvent
     public static void onPlayerLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
         Level level = event.getLevel();
         if (level.isClientSide()) return;
-        if (!CheckItemRequirementHelper.passesSkillCheck(event.getEntity(), event.getItemStack())) event.setCanceled(true);
+        if (!CheckItemRequirement.passesSkillCheck(event.getEntity(), event.getItemStack())) event.setCanceled(true);
     }
 }

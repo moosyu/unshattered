@@ -1,4 +1,4 @@
-package io.github.moosyu.helpers;
+package io.github.moosyu.util;
 
 import io.github.moosyu.blocks.BrokenBlocksWorldResult;
 import io.github.moosyu.datagen.UnshatteredBlockTagsProvider;

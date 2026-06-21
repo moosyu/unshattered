@@ -1,7 +1,7 @@
 package io.github.moosyu.rarities;
 
 import com.mojang.serialization.Codec;
-import io.github.moosyu.helpers.OpacityHelper;
+import io.github.moosyu.util.GetOpacity;
 
 public enum RarityTypes {
     COMMON(0xFFFFFF),
@@ -20,7 +20,7 @@ public enum RarityTypes {
     }
 
     public int getColor(float opacity) {
-        return OpacityHelper.getOpacityColor(color, opacity);
+        return GetOpacity.getOpacityColor(color, opacity);
     }
     public static final Codec<RarityTypes> CODEC = Codec.STRING.xmap(RarityTypes::valueOf, RarityTypes::name);
 }

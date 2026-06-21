@@ -4,6 +4,7 @@ import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.attachments.PlayerStateAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.util.damage.DamageNumber;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.level.Level;
