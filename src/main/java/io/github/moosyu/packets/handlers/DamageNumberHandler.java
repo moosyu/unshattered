@@ -2,7 +2,7 @@ package io.github.moosyu.packets.handlers;
 
 import io.github.moosyu.packets.DamageNumberPacket;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 // who said maths isnt useful
@@ -10,7 +10,7 @@ public class DamageNumberHandler {
     public static void handleData(final DamageNumberPacket data, final IPayloadContext context) {
         context.enqueueWork(() -> {
             System.out.println("damage dealt: " + data.number());
-            var player = Minecraft.getInstance().player;
+            Player player = Minecraft.getInstance().player;
             if (player == null) return;
 
             final double TARGET_Y = data.getY() + 1.2d;
@@ -26,7 +26,8 @@ public class DamageNumberHandler {
                 dirZ /= DISTANCE;
             }
 
-            Minecraft.getInstance().particleEngine.createParticle(ParticleTypes.HEART, data.getX() + (dirX * OFFSET_DISTANCE), TARGET_Y + (dirY * OFFSET_DISTANCE), data.getZ() + (dirZ * OFFSET_DISTANCE), 0.0d, 0.0d, 0.0d);
+            // decided against doing this with particles as it seemed like i was getting diminishing returns, instead going to try something with RenderLevelStageEvent
+            //Minecraft.getInstance().particleEngine.add(new DamageNumberParticle((ClientLevel) player.level(), data.getX() + (dirX * OFFSET_DISTANCE), TARGET_Y + (dirY * OFFSET_DISTANCE), data.getZ() + (dirZ * OFFSET_DISTANCE), Component.literal("hi")));
         });
     }
 }

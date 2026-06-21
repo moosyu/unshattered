@@ -8,6 +8,7 @@ import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -82,7 +83,7 @@ public class TreeSweepHandler {
     }
 
     private static int calculateLogs(Player player) {
-        var attribute = player.getAttribute(UnshatteredAttributeValues.FORAGING_FORTUNE.holder);
+        AttributeInstance attribute = player.getAttribute(UnshatteredAttributeValues.FORAGING_FORTUNE.holder);
         // making sure attribute isnt null, probably pointless but i also managed to fuck up registering it last time and it made the game crash
         double fortune = attribute != null ? attribute.getValue() : 0.0;
         double multiplier = 1.0 + (fortune / 100.0);

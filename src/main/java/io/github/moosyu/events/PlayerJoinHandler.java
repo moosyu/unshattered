@@ -19,7 +19,7 @@ public class PlayerJoinHandler {
     @SubscribeEvent
     public static void onPlayerJoin(EntityJoinLevelEvent event) {
         if (event.getEntity() instanceof Player player && !player.level().isClientSide()) {
-            var stats = player.getData(PLAYER_STATE.get());
+            PlayerStateAttachment stats = player.getData(PLAYER_STATE.get());
             final AttributeInstance healthAttribute = player.getAttribute(UnshatteredAttributeValues.HEALTH.holder);
             final AttributeInstance manaAttribute = player.getAttribute(UnshatteredAttributeValues.MANA.holder);
             if (healthAttribute == null || manaAttribute == null) return;
