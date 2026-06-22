@@ -4,9 +4,11 @@ import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.packets.ExpSoundEffectPacket;
 import io.github.moosyu.skills.experience.ItemsFishingExperience;
 import io.github.moosyu.attachments.UnshatteredAttachments;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
@@ -21,6 +23,8 @@ public class ItemFishedHandler {
     public static void onItemFished(ItemFishedEvent event) {
         Player player = event.getEntity();
         if (player.level().isClientSide()) return;
+        event.setCanceled(true);
+        event.getDrops().clear();
 
         PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
 

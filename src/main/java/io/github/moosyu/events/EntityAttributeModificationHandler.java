@@ -34,7 +34,7 @@ public class EntityAttributeModificationHandler {
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.SWEEP.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.COMBAT_FORTUNE.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.FISHING_SPEED.holder);
-        event.add(EntityType.PLAYER, UnshatteredAttributeValues.TREASURE_CHANCE.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributeValues.FISHING_FORTUNE.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder);
 
         event.add(EntityType.ZOMBIE, UnshatteredAttributeValues.HEALTH.holder, 70.0d);

@@ -27,14 +27,14 @@ public enum UnshatteredAttributeValues {
     DAMAGE("damage", 0.0, 0.0, 2147483647.0),
     MINING_SPEED("mining_speed", "⸕", 0.0, 0.0, 131072.0, 0xFFFFAA00, AttributeTypes.VISIBLE, false, false),
     MINING_FORTUNE("mining_fortune", "☘", 0.0, 0.0, 2048.0, 0xFFFFAA00, AttributeTypes.IMPORTANT, false, false),
-    MINING_SPREAD("mining_spread", "☘", 0.0, 0.0, 1024.0, 0xFFFFAA00, AttributeTypes.VISIBLE, false, false),
+    MINING_SPREAD("mining_spread", "▚", 0.0, 0.0, 1024.0, 0xFFFFFF55, AttributeTypes.VISIBLE, false, false),
     PRISTINE("pristine", "✧", 0.0, 0.0, 32.0, 0xFFAA00AA, AttributeTypes.VISIBLE, false, false),
     FARMING_FORTUNE("farming_fortune", "☘", 0.0, 0.0, 2048.0, 0xFFFFAA00, AttributeTypes.IMPORTANT, false, false),
     FORAGING_FORTUNE("foraging_fortune", "☘", 0.0, 0.0, 2048.0, 0xFFFFAA00, AttributeTypes.IMPORTANT, false, false),
     SWEEP("sweep", "∮", 0.0, 0.0, 1024.0, 0xFF00AA00, AttributeTypes.VISIBLE, false, false),
     COMBAT_FORTUNE("combat_fortune", "✯", 0.0, 0.0, 900.0, 0xFF55FFFF, AttributeTypes.VISIBLE, false, false),
     FISHING_SPEED("fishing_speed", "☂", 0.0, 0.0, 900.0, 0xFF55FFFF, AttributeTypes.VISIBLE, false, false),
-    TREASURE_CHANCE("treasure_chance", "⛃", 0.0, 0.0, 100.0, 0xFFFFAA00, AttributeTypes.VISIBLE, false, true),
+    FISHING_FORTUNE("fishing_fortune", "⛃", 0.0, 0.0, 2048.0, 0xFF00AAAA, AttributeTypes.VISIBLE, false, false),
     FINAL_DAMAGE_MODIFIER("final_damage_modifier", 1, 0, 10.0);
 
     private static final Map<Attribute, UnshatteredAttributeValues> ATTRIBUTE_MAP = new HashMap<>();

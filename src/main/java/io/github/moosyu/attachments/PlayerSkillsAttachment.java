@@ -49,9 +49,9 @@ public class PlayerSkillsAttachment {
         }),
         FISHING("fishing", Items.FISHING_ROD, (player, level) -> {
             UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.FISHING_SPEED, 1.0d);
-            UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.TREASURE_CHANCE, 0.1d);
+            UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.FISHING_FORTUNE, 4.0d);
             player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.FISHING_SPEED, 1.0d));
-            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.TREASURE_CHANCE, 0.1d));
+            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.FISHING_FORTUNE, 0.1d));
         }),
         MINING("mining", Items.STONE_PICKAXE, (player, level) -> {
             double defenseAmount;
