@@ -1,19 +1,27 @@
 package io.github.moosyu.attributes;
 
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static io.github.moosyu.Unshattered.LOGGER;
+
 public enum UnshatteredAttributeValues {
     HEALTH("health", "❤", 100.0, 0.0, 2147483647.0, 0xFFFC3A3A, AttributeTypes.IMPORTANT, false, false),
     DEFENSE("defense", "❈", 0.0, 0.0, 131072.0, 0xFF55FF55, AttributeTypes.IMPORTANT, false, false),
     STRENGTH("strength", "❁", 0.0, 0.0, 4096.0, 0xFFFC3A3A, AttributeTypes.IMPORTANT, true, false),
-    CRITICAL_CHANCE("critical_chance", "☣", 30.0, 0.0, 2048.0, 0xFF3535CC, AttributeTypes.IMPORTANT, false, true),
-    CRITICAL_DAMAGE("critical_damage", "☠", 50.0, 0.0, 4096.0, 0xFF3535CC, AttributeTypes.IMPORTANT, true, true),
+    /**
+     * still kinda a percentage, 100.0 is 100%
+     */
+    CRITICAL_CHANCE("critical_chance", "☣", 30.0, 0.0, 2048.0, 0xFF5454FC, AttributeTypes.IMPORTANT, false, true),
+    CRITICAL_DAMAGE("critical_damage", "☠", 50.0, 0.0, 4096.0, 0xFF5454FC, AttributeTypes.IMPORTANT, true, true),
     MANA("mana", "✎", 100.0, 0.0, 131072.0, 0xFF55D5FF, AttributeTypes.IMPORTANT, false, false),
-    HEALTH_REGEN("health_regen", "❣", 100.0, 0.0, 2048.0, 0xFFFC3A3A, AttributeTypes.VISIBLE, false, false),
+    MANA_REGEN("mana_regen", "✎", 100.0, 100.0, 2048.0, 0xFF55D5FF, AttributeTypes.IMPORTANT, false, true),
+    HEALTH_REGEN("health_regen", "❣", 100.0, 0.0, 2048.0, 0xFFFC3A3A, AttributeTypes.VISIBLE, false, true),
     TRUE_DEFENSE("true_defense", "❂", 0.0, 0.0, 1024.0, 0xFFFFFFFF, AttributeTypes.VISIBLE, false, false),
     FEROCITY("ferocity", "⫽", 0.0, 0.0, 131072.0, 0xFFFF5555, AttributeTypes.VISIBLE, true, false),
     DAMAGE("damage", 0.0, 0.0, 2147483647.0),
@@ -24,7 +32,9 @@ public enum UnshatteredAttributeValues {
     FARMING_FORTUNE("farming_fortune", "☘", 0.0, 0.0, 2048.0, 0xFFFFAA00, AttributeTypes.IMPORTANT, false, false),
     FORAGING_FORTUNE("foraging_fortune", "☘", 0.0, 0.0, 2048.0, 0xFFFFAA00, AttributeTypes.IMPORTANT, false, false),
     SWEEP("sweep", "∮", 0.0, 0.0, 1024.0, 0xFF00AA00, AttributeTypes.VISIBLE, false, false),
-    MAGIC_FIND("magic_find", "✯", 0.0, 0.0, 900.0, 0xFF55FFFF, AttributeTypes.VISIBLE, false, false),
+    COMBAT_FORTUNE("combat_fortune", "✯", 0.0, 0.0, 900.0, 0xFF55FFFF, AttributeTypes.VISIBLE, false, false),
+    FISHING_SPEED("fishing_speed", "☂", 0.0, 0.0, 900.0, 0xFF55FFFF, AttributeTypes.VISIBLE, false, false),
+    TREASURE_CHANCE("treasure_chance", "⛃", 0.0, 0.0, 100.0, 0xFFFFAA00, AttributeTypes.VISIBLE, false, true),
     FINAL_DAMAGE_MODIFIER("final_damage_modifier", 1, 0, 10.0);
 
     private static final Map<Attribute, UnshatteredAttributeValues> ATTRIBUTE_MAP = new HashMap<>();
@@ -68,5 +78,15 @@ public enum UnshatteredAttributeValues {
 
     public static UnshatteredAttributeValues fromAttribute(Attribute attribute) {
         return ATTRIBUTE_MAP.get(attribute);
+    }
+
+    public static void modifyAttributeBaseValue(Player player, UnshatteredAttributeValues attribute, double amount) {
+        if (player.level().isClientSide()) return;
+        AttributeInstance playerAttribute = player.getAttribute(attribute.holder);
+        if (playerAttribute == null) {
+            LOGGER.error("player didn't have attribute: {}", attribute.id);
+            return;
+        }
+        playerAttribute.setBaseValue(playerAttribute.getBaseValue() + amount);
     }
 }

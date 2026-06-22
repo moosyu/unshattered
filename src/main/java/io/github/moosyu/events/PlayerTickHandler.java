@@ -28,6 +28,7 @@ public class PlayerTickHandler {
         final double MAX_HEALTH_VALUE = player.getAttributeValue(UnshatteredAttributeValues.HEALTH.holder);
         final double HEALTH_REGEN_VALUE = player.getAttributeValue(UnshatteredAttributeValues.HEALTH_REGEN.holder);
         final double MAX_MANA_VALUE = player.getAttributeValue(UnshatteredAttributeValues.MANA.holder);
+        final double MANA_REGEN_VALUE = player.getAttributeValue(UnshatteredAttributeValues.MANA_REGEN.holder);
 
         // disable hunger effects
         player.getFoodData().setFoodLevel(20);
@@ -37,7 +38,7 @@ public class PlayerTickHandler {
         // heal every 2 seconds
         if (player.tickCount % 40 == 0) {
             double healthGained = (1.5 + MAX_HEALTH_VALUE / 100) * (HEALTH_REGEN_VALUE / 100);
-            double manaGained = MAX_MANA_VALUE * 0.04;
+            double manaGained = (MAX_MANA_VALUE * 0.04) * (MANA_REGEN_VALUE / 100);
 
             state.addCurrentStat(PlayerStateAttachment.Stat.HEALTH, healthGained, MAX_HEALTH_VALUE);
             player.syncData(PLAYER_STATE);

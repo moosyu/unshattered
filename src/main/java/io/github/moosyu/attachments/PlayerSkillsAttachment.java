@@ -1,6 +1,7 @@
 package io.github.moosyu.attachments;
 
 import com.mojang.serialization.Codec;
+import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.util.TextHelpers;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -12,29 +13,94 @@ import net.minecraft.world.item.Items;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 public class PlayerSkillsAttachment {
     private static final int[] SKILL_LEVEL_TABLE = {50, 175, 375, 675, 1175, 1925, 2925, 4425, 6425, 9925};
     private final float[] skillExp = new float[Skill.values().length];
 
     public enum Skill {
-        COMBAT("skills.name.unshattered.combat", Items.STONE_SWORD),
-        FARMING("skills.name.unshattered.farming", Items.GOLDEN_HOE),
-        FISHING("skills.name.unshattered.fishing", Items.FISHING_ROD),
-        MINING("skills.name.unshattered.mining", Items.STONE_PICKAXE),
-        FORAGING("skills.name.unshattered.foraging", Items.OAK_SAPLING),
-        MAGECRAFT("skills.name.unshattered.magecraft", Items.BOOK);
+        COMBAT("combat", Items.STONE_SWORD, (player, level) -> {
+            // i know normal sb gives you a flat damage multiplier but i feel like thats a little strange so ill give people an actual stat
+            UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.CRITICAL_DAMAGE, 10.0d);
+            UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.CRITICAL_CHANCE, 0.5d);
+            // later on ill do some like switches for specific level rewards
+            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.CRITICAL_DAMAGE, 10.0d));
+            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.CRITICAL_CHANCE, 0.5));
+        }),
+        FARMING("farming", Items.GOLDEN_HOE, (player, level) -> {
+            double healthAmount;
+            if (level < 15) {
+                healthAmount = 2.0d;
+                UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.HEALTH, healthAmount);
+            } else if (level < 20) {
+                healthAmount = 3.0d;
+                UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.HEALTH, 3.0d);
+            } else if (level < 25) {
+                healthAmount = 4.0d;
+                UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.HEALTH, 4.0d);
+            } else {
+                healthAmount = 5.0d;
+                UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.HEALTH, 5.0d);
+            }
+            UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.FARMING_FORTUNE, 4.0d);
+            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.HEALTH, healthAmount));
+            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.FARMING_FORTUNE, 4.0d));
+        }),
+        FISHING("fishing", Items.FISHING_ROD, (player, level) -> {
+            UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.FISHING_SPEED, 1.0d);
+            UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.TREASURE_CHANCE, 0.1d);
+            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.FISHING_SPEED, 1.0d));
+            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.TREASURE_CHANCE, 0.1d));
+        }),
+        MINING("mining", Items.STONE_PICKAXE, (player, level) -> {
+            double defenseAmount;
+            if (level < 15) {
+                defenseAmount = 1.0d;
+                UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.DEFENSE, 1.0d);
+            } else {
+                defenseAmount = 2.0d;
+                UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.DEFENSE, 2.0d);
+            }
+            UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.MINING_FORTUNE, 4.0d);
+            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.DEFENSE, defenseAmount));
+            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.MINING_FORTUNE, 4.0d));
+        }),
+        FORAGING("foraging", Items.OAK_SAPLING, (player, level) -> {
+            double strengthAmount;
+            if (level < 15) {
+                strengthAmount = 1.0d;
+                UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.STRENGTH, strengthAmount);
+            } else {
+                strengthAmount = 2.0d;
+                UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.STRENGTH, strengthAmount);
+            }
+            UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.FORAGING_FORTUNE, 4.0d);
+            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.STRENGTH, strengthAmount));
+            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.FARMING_FORTUNE, 4.0d));
+        }),
+        MAGECRAFT("magecraft", Items.BOOK, (player, level) -> {
+            UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.MANA, 3.0d);
+            UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.MANA_REGEN, 1.5d);
+            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.MANA, 3.0d));
+            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.MANA_REGEN, 1.5d));
+        });
 
-        private final String key;
+        private final String id;
         private final Item icon;
+        /**
+         * integer is the level
+         */
+        private final BiConsumer<Player, Integer> levelUpReward;
 
-        Skill(String key, Item icon) {
-            this.key = key;
+        Skill(String id, Item icon, BiConsumer<Player, Integer> levelUpReward) {
+            this.id = id;
             this.icon = icon;
+            this.levelUpReward = levelUpReward;
         }
 
-        public String getName() {
-            return Component.translatable(key).getString();
+        public String getTranslationKey() {
+            return "skills.name.unshattered." + id;
         }
 
         public Item getIcon() {
@@ -68,7 +134,7 @@ public class PlayerSkillsAttachment {
                 player.sendSystemMessage(
                     // component.empty because i couldnt reset the chat formatting for some reason
                     Component.empty().append(Component.literal(" SKILL LEVEL UP ").withStyle(ChatFormatting.BOLD).withColor(0xFF00FFFF))
-                    .append(Component.literal(Component.translatable(skill.key).getString() + " ").withColor(0xFF00ADAB))
+                    .append(Component.literal(Component.translatable(skill.getTranslationKey()).getString() + " ").withColor(0xFF00ADAB))
                     .append(Component.literal(TextHelpers.convertTextToRomanNumeral(currentLevel)).withColor(0xFF555555))
                     .append(Component.literal("\uD83E\uDC46").withColor(0xFF555555))
                     .append(Component.literal(TextHelpers.convertTextToRomanNumeral(currentLevel + 1)).withColor(0xFF00ADAB))
@@ -76,17 +142,19 @@ public class PlayerSkillsAttachment {
             } else {
                 player.sendSystemMessage(
                     Component.empty().append(Component.literal(" SKILL LEVEL UP ").withStyle(ChatFormatting.BOLD).withColor(0xFF00FFFF))
-                    .append(Component.literal(Component.translatable(skill.key).getString() + " ").withColor(0xFF00ADAB))
+                    .append(Component.literal(Component.translatable(skill.getTranslationKey()).getString() + " ").withColor(0xFF00ADAB))
                     .append(Component.literal(TextHelpers.convertTextToRomanNumeral(1)).withColor(0xFF00ADAB))
                 );
             }
-            currentLevel++;
-
             player.sendSystemMessage(Component.literal(""));
             player.sendSystemMessage(Component.literal(" REWARDS").withColor(0xFF00FF24).withStyle(ChatFormatting.BOLD));
+            if (!player.level().isClientSide()) {
+                skill.levelUpReward.accept(player, currentLevel);
+            }
+            currentLevel++;
             player.sendSystemMessage(Component.literal(borderBar.toString()).withColor(0xFF00ADAB));
         }
-        player.sendOverlayMessage((Component.literal("+" + amount + " ").append(Component.translatable(skill.key))).withColor(0xFF00AAAA).append(Component.literal(" (").withColor(0xFF7D7874).append(Component.literal(String.format("%.2f", getPercentageToNextLevel(getExp(skill)) * 100) + "%").withColor(0xFFFFAA00).append(Component.literal(")").withColor(0xFF7D7874)))));
+        player.sendOverlayMessage((Component.literal("+" + amount + " ").append(Component.translatable(skill.getTranslationKey()))).withColor(0xFF00AAAA).append(Component.literal(" (").withColor(0xFF7D7874).append(Component.literal(String.format("%.2f", getPercentageToNextLevel(getExp(skill)) * 100) + "%").withColor(0xFFFFAA00).append(Component.literal(")").withColor(0xFF7D7874)))));
     }
 
     public int getLevel(float exp) {
@@ -109,6 +177,12 @@ public class PlayerSkillsAttachment {
             // if the player is max level
             return 1;
         }
+    }
+
+    private static Component attributeGainMessage(UnshatteredAttributeValues attribute, double amount) {
+        return Component.literal("    " + String.format("%.0f", amount) + (attribute.percentage ? "%" : "")).withColor(0xFF00FF24)
+                .append(Component.literal(" " + attribute.symbol + " ").withColor(attribute.color)
+                        .append(Component.translatable(attribute.getTranslationKey()).withColor(attribute.color)));
     }
 
     // both codecs are pretty weird because i found them in different places online

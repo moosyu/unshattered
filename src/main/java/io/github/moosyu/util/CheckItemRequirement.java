@@ -21,7 +21,7 @@ public final class CheckItemRequirement {
         if (itemSkillRequirement == null || itemUsed.is(Tags.Items.ARMORS)) return true;
         PlayerSkillsAttachment playerSkills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
         if (playerSkills.getLevel(playerSkills.getExp(itemSkillRequirement.skill())) < itemSkillRequirement.level()) {
-            player.sendSystemMessage(Component.literal(itemSkillRequirement.skill().getName() + " level " + itemSkillRequirement.level() + " is required to use this item!").withColor(ERROR_COLOR));
+            player.sendSystemMessage(Component.literal(Component.translatable(itemSkillRequirement.skill().getTranslationKey()).getString() + " level " + itemSkillRequirement.level() + " is required to use this item!").withColor(ERROR_COLOR));
             return false;
         }
         return true;

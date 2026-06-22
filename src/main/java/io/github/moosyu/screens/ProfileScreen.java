@@ -21,6 +21,7 @@ import org.jspecify.annotations.NonNull;
 
 import static io.github.moosyu.layers.UnshatteredGuiLayers.*;
 
+// todo: make these scrollable. google reckons i should check out AbstractScrollArea
 public class ProfileScreen extends Screen {
     private enum Tabs {
         SKILLS(Identifier.fromNamespaceAndPath("minecraft", "textures/block/stone.png")),
@@ -73,7 +74,6 @@ public class ProfileScreen extends Screen {
         // for anything that requires it
         int uniqueIndex = 0;
 
-        // todo: center these horizontally and vertically
         if (currentTab == Tabs.SKILLS) {
             for (int i = 0; i < PlayerSkillsAttachment.Skill.values().length; i++) {
                 boolean even = i % 2 == 0;
@@ -138,7 +138,7 @@ public class ProfileScreen extends Screen {
             // debug area for clicks
             // graphics.fill(this.getX(), this.getY(), this.getX() + this.width, this.getY() + this.height, 0x44FF0000);
 
-            String levelText = skill.getName() + " " + TextHelpers.convertTextToRomanNumeral(playerData.getLevel(playerData.getExp(skill)));
+            String levelText =  Component.translatable(skill.getTranslationKey()).getString() + " " + TextHelpers.convertTextToRomanNumeral(playerData.getLevel(playerData.getExp(skill)));
             graphics.text(Minecraft.getInstance().font, levelText, this.getX() + 36, this.getY() + 4, 0xFF53F953, true);
             graphics.pose().pushMatrix();
             graphics.pose().scale(2f, 2f);
@@ -152,7 +152,7 @@ public class ProfileScreen extends Screen {
         public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
             if (this.isValidClickButton(event.buttonInfo())) {
                 this.playDownSound(Minecraft.getInstance().getSoundManager());
-                System.out.println(this.skill.getName());
+                System.out.println(Component.translatable(skill.getTranslationKey()).getString());
                 return true;
             }
             return false;

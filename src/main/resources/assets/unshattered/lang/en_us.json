@@ -154,7 +154,7 @@
   "item.description.unshattered.decent_axe": "Important for any good lumberjack to have.",
   "item.description.unshattered.fig_hew": "Grows with age.",
   "item.description.unshattered.figstone_splitter": "Thousands of figs compressed into a truly godly axe.",
-  "item.description.unshattered.squire_sword": "Not for novices or hardened adventures.",
+  "item.description.unshattered.squire_sword": "Its balance is lousy.",
 
   "attribute.name.unshattered.sweep": "Sweep",
   "attribute.name.unshattered.foraging_fortune": "Foraging Fortune",
@@ -174,7 +174,10 @@
   "attribute.name.unshattered.mining_spread": "Mining Spread",
   "attribute.name.unshattered.pristine": "Pristine",
   "attribute.name.unshattered.farming_fortune": "Farming Fortune",
-  "attribute.name.unshattered.magic_find": "Magic Find",
+  "attribute.name.unshattered.combat_fortune": "Combat Fortune",
+  "attribute.name.unshattered.mana_regen": "Mana Regen",
+  "attribute.name.unshattered.fishing_speed": "Fishing Speed",
+  "attribute.name.unshattered.treasure_chance": "Treasure Chance",
 
   "skills.name.unshattered.combat": "Combat",
   "skills.name.unshattered.farming": "Farming",

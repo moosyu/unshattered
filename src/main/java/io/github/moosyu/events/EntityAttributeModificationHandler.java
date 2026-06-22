@@ -20,6 +20,7 @@ public class EntityAttributeModificationHandler {
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.CRITICAL_DAMAGE.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.CRITICAL_CHANCE.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.MANA.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributeValues.MANA_REGEN.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.HEALTH_REGEN.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.TRUE_DEFENSE.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.FEROCITY.holder);
@@ -31,7 +32,9 @@ public class EntityAttributeModificationHandler {
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.FARMING_FORTUNE.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.FORAGING_FORTUNE.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.SWEEP.holder);
-        event.add(EntityType.PLAYER, UnshatteredAttributeValues.MAGIC_FIND.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributeValues.COMBAT_FORTUNE.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributeValues.FISHING_SPEED.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributeValues.TREASURE_CHANCE.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder);
 
         event.add(EntityType.ZOMBIE, UnshatteredAttributeValues.HEALTH.holder, 70.0d);

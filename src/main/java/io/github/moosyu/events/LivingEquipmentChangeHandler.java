@@ -34,7 +34,7 @@ public class LivingEquipmentChangeHandler {
                 ) && itemSkillRequirement.level() > playerSkills.getLevel(playerSkills.getExp(itemSkillRequirement.skill()))) {
                     player.setItemSlot(slotPlaced, event.getFrom());
                     player.getInventory().add(itemStack);
-                    player.sendSystemMessage(Component.literal(itemSkillRequirement.skill().getName() + " level " + itemSkillRequirement.level() + " is required to equip this armour piece!").withColor(0xFFFF5555));
+                    player.sendSystemMessage(Component.literal(Component.translatable(itemSkillRequirement.skill().getTranslationKey()).getString() + " level " + itemSkillRequirement.level() + " is required to equip this armour piece!").withColor(0xFFFF5555));
                 }
             }
         }

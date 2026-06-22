@@ -88,7 +88,17 @@ public class ItemTooltipHandler {
         if (itemSkillRequirement != null) {
             PlayerSkillsAttachment.Skill requiredSkill = itemSkillRequirement.skill();
             PlayerSkillsAttachment playerSkill = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
-            if (itemSkillRequirement.level() > playerSkill.getLevel(playerSkill.getExp(requiredSkill))) tooltipComponents.add(Component.literal("❣ ").withColor(0xFFAA0000).append(Component.literal("Requires ").withColor(0xFFFF5555)).append(Component.translatable(itemSkillRequirement.skill().getName()).append(" Skill ").append(String.valueOf(itemSkillRequirement.level())).withColor(0xFF55FF55)));
+            if (itemSkillRequirement.level() > playerSkill.getLevel(playerSkill.getExp(requiredSkill))) {
+                tooltipComponents.add(
+                        Component.literal("❣ ").withColor(0xFFAA0000)
+                                .append(Component.literal("Requires ").withColor(0xFFFF5555))
+                                .append(Component.empty()
+                                        .append(Component.translatable(itemSkillRequirement.skill().getTranslationKey()))
+                                        .append(" level ")
+                                        .append(String.valueOf(itemSkillRequirement.level()))
+                                        .withColor(0xFF55FF55)
+                                ));
+            }
         }
 
         tooltipComponents.add(Component.literal(Component.translatable("rarity.unshattered." + itemRarity.name().toLowerCase()).getString().toUpperCase() + " " + Component.translatable(itemType.getKey()).getString().toUpperCase()).withColor(itemRarity.getColor(1.0f)).withStyle(ChatFormatting.BOLD));
