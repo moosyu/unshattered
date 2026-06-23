@@ -49,7 +49,7 @@ public class PlayerSkillsAttachment {
         }),
         FISHING("fishing", Items.FISHING_ROD, (player, level) -> {
             UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.FISHING_SPEED, 1.0d);
-            UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.FISHING_FORTUNE, 4.0d);
+            UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.FISHING_FORTUNE, 0.1d);
             player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.FISHING_SPEED, 1.0d));
             player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.FISHING_FORTUNE, 0.1d));
         }),
@@ -180,7 +180,7 @@ public class PlayerSkillsAttachment {
     }
 
     private static Component attributeGainMessage(UnshatteredAttributeValues attribute, double amount) {
-        return Component.literal("    " + String.format("%.0f", amount) + (attribute.percentage ? "%" : "")).withColor(0xFF00FF24)
+        return Component.literal("    " + ((amount == Math.floor(amount)) ? String.valueOf((long) amount) : String.valueOf(amount)) + (attribute.percentage ? "%" : "")).withColor(0xFF00FF24)
                 .append(Component.literal(" " + attribute.symbol + " ").withColor(attribute.color)
                         .append(Component.translatable(attribute.getTranslationKey()).withColor(attribute.color)));
     }

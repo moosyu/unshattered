@@ -7,6 +7,8 @@
   "item_group.unshattered.breakable_blocks": "Skyblock: Unshattered - Breakable Blocks",
   "item_group.unshattered.unshattered_resources": "Skyblock: Unshattered - Resources",
 
+  "misc.unshattered.coins": "Coins",
+
   "item.unshattered.treecapitator": "Treecapitator",
   "item.unshattered.spruce_axe": "Spruce Axe",
   "item.unshattered.seriously_damaged_axe": "Seriously Damaged Axe",
@@ -185,6 +187,11 @@
   "skills.name.unshattered.mining": "Mining",
   "skills.name.unshattered.foraging": "Foraging",
   "skills.name.unshattered.magecraft": "Magecraft",
+
+  "skills.messages.unshattered.fishing.good_catch": "GOOD CATCH!",
+  "skills.messages.unshattered.fishing.great_catch": "GREAT CATCH!",
+  "skills.messages.unshattered.fishing.outstanding_catch": "OUTSTANDING CATCH!",
+  "skills.messages.unshattered.fishing.you_found": "You found",
 
   "skills.message.unshattered.level_up": "SKILL LEVEL UP",
 
