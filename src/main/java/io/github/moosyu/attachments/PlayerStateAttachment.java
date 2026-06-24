@@ -4,7 +4,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
-public class PlayerStateAttachment {
+public final class PlayerStateAttachment {
     private final double[] stats = new double[Stat.values().length];
     private boolean cancelKnockback = false;
     private int invulnerableTime = 0;

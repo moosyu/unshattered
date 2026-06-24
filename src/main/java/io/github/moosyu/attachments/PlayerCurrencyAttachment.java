@@ -6,7 +6,8 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
-public class PlayerCurrencyAttachment {
+public final class PlayerCurrencyAttachment {
+
     public int coins;
     public int motes;
 

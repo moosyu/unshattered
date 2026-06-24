@@ -19,10 +19,11 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_CURRENCY;
@@ -38,11 +39,28 @@ public class ItemFishedHandler {
 
         Random rand = new Random();
         PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
-        List<FishingResultsEntry> filteredFishingOptions = FishingManager.getEntries(Identifier.fromNamespaceAndPath(MODID, "default")).stream().filter(entry -> entry.levelRequirement() <= skills.getLevel(skills.getExp(PlayerSkillsAttachment.Skill.FISHING))).toList();
+        List<FishingResultsEntry> filteredFishingOptions = new ArrayList<>();
+        int totalWeight = 0;
+        for (FishingResultsEntry entry : FishingManager.getEntries(Identifier.fromNamespaceAndPath(MODID, "default"))) {
+            if (entry.levelRequirement() <= skills.getLevel(skills.getExp(PlayerSkillsAttachment.Skill.FISHING))) {
+                filteredFishingOptions.add(entry);
+                totalWeight += entry.weight();
+            }
+        }
 
-        // todo: later on ill do proper weighting
-        FishingResultsEntry selectedEntry = filteredFishingOptions.get(rand.nextInt(filteredFishingOptions.size()));
-        System.out.println(BuiltInRegistries.ITEM.getValue(Identifier.parse(selectedEntry.id())));
+        int weightSelected = rand.nextInt(totalWeight);
+        System.out.println(weightSelected);
+        FishingResultsEntry selectedEntry = null;
+        for (FishingResultsEntry entry : filteredFishingOptions) {
+            weightSelected -= entry.weight();
+            if (weightSelected <= 0) {
+                selectedEntry = entry;
+            }
+        }
+        if (selectedEntry == null) {
+            Unshattered.LOGGER.error("something went wrong with the weighting!! (nothing was selected)");
+        }
+
         if (Objects.equals(selectedEntry.type(), "ITEM")) {
             player.getInventory().add(new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.parse(selectedEntry.id()))));
         } else if (Objects.equals(selectedEntry.type(), "COIN")) {

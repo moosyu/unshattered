@@ -181,7 +181,7 @@ public class ProfileScreen extends Screen {
 
             String statsTitle = currentAttribute.symbol + " " + Component.translatable(currentAttribute.getTranslationKey()).getString() + ":";
             graphics.text(Minecraft.getInstance().font, statsTitle, textX, textY, currentAttribute.color, false);
-            graphics.text(Minecraft.getInstance().font, String.format("%.0f", attributeValue), textX + Minecraft.getInstance().font.width(statsTitle) + 2, textY, 0xFFDEDFE0, false);
+            graphics.text(Minecraft.getInstance().font, ((attributeValue == Math.floor(attributeValue)) ? String.valueOf((long) attributeValue) : String.valueOf(attributeValue)), textX + Minecraft.getInstance().font.width(statsTitle) + 2, textY, 0xFFDEDFE0, false);
         }
 
         @Override

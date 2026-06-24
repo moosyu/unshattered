@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 
 import static io.github.moosyu.Unshattered.MODID;
 
-public class UnshatteredAttachments {
+public final class UnshatteredAttachments {
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, MODID);
 
     public static final Supplier<AttachmentType<PlayerSkillsAttachment>> PLAYER_SKILLS = ATTACHMENT_TYPES.register("player_skills", () ->

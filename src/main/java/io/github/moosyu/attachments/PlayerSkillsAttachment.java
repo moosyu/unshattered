@@ -15,8 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
-public class PlayerSkillsAttachment {
+public final class PlayerSkillsAttachment {
     private static final int[] SKILL_LEVEL_TABLE = {50, 175, 375, 675, 1175, 1925, 2925, 4425, 6425, 9925};
+    private static final int[] COINS_LEVEL_TABLE = {100, 250, 500, 750, 1000, 2000, 3000, 4000, 5000, 7500, 10000, 15000, 20000, 25000, 30000, 40000, 50000, 65000, 80000, 100000, 125000, 150000, 175000, 200000, 225000, 250000, 275000, 300000, 325000, 350000, 375000, 400000, 425000, 450000, 475000, 500000, 550000, 600000, 650000, 700000, 750000, 800000, 850000, 900000, 1000000, 1000000, 1000000, 1000000, 1000000, 1000000};
     private final float[] skillExp = new float[Skill.values().length];
 
     public enum Skill {
@@ -151,6 +152,9 @@ public class PlayerSkillsAttachment {
             if (!player.level().isClientSide()) {
                 skill.levelUpReward.accept(player, currentLevel);
             }
+            player.sendSystemMessage(Component.literal("    " + String.format("%,d", COINS_LEVEL_TABLE[currentLevel]) + " " + Component.translatable("misc.unshattered.coins").getString()).withColor(0xFFFFAA00));
+            player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get()).addCoins(COINS_LEVEL_TABLE[currentLevel]);
+            player.syncData(UnshatteredAttachments.PLAYER_CURRENCY.get());
             currentLevel++;
             player.sendSystemMessage(Component.literal(borderBar.toString()).withColor(0xFF00ADAB));
         }
