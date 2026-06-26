@@ -48,13 +48,13 @@ public class ItemFishedHandler {
             }
         }
 
-        int weightSelected = rand.nextInt(totalWeight);
-        System.out.println(weightSelected);
+        int weightSelected = rand.nextInt(0, totalWeight);
         FishingResultsEntry selectedEntry = null;
         for (FishingResultsEntry entry : filteredFishingOptions) {
             weightSelected -= entry.weight();
             if (weightSelected <= 0) {
                 selectedEntry = entry;
+                break;
             }
         }
         if (selectedEntry == null) {

@@ -1,7 +1,7 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.util.damage.GetPlayerDamageResult;
+import io.github.moosyu.util.damage.TriggerPlayerDamage;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -33,19 +33,19 @@ public class LivingDamageHandler {
                     return;
                 };
                 double damageDealt = damageAttributeInstance.getValue() * (1 - (playerDefenseValue / (playerDefenseValue + 100)));
-                GetPlayerDamageResult.damagePlayer(player, damageDealt, level, "☠ " + player.getName().getString() + " was slain by a " + entity.getName().getString() + "!");
+                TriggerPlayerDamage.damagePlayer(player, damageDealt, level, "☠ " + player.getName().getString() + " was slain by a " + entity.getName().getString() + "!");
             } else if (event.getSource().is(DamageTypeTags.IS_FALL)) {
                 int blocksFallen = (int) (event.getOriginalDamage() + 3);
                 // https://old.reddit.com/r/HypixelSkyblock/comments/fvozn7/fall_damage_calculator/
                 double damageDealt = (((blocksFallen - 6.5) * 200 / 33) / ((playerDefenseValue / 100) + 1));
-                GetPlayerDamageResult.damagePlayer(player, damageDealt, level, "☠ " +player.getName().getString() + " fell to their death!");
+                TriggerPlayerDamage.damagePlayer(player, damageDealt, level, "☠ " +player.getName().getString() + " fell to their death!");
             } else if (event.getSource().is(DamageTypeTags.IS_DROWNING)) {
                 double damageDealt = (event.getOriginalDamage() * 200 / 33) / ((playerDefenseValue / 100) + 1);
-                GetPlayerDamageResult.damagePlayer(player, damageDealt, level, "☠ " +player.getName().getString() + " drowned!");
+                TriggerPlayerDamage.damagePlayer(player, damageDealt, level, "☠ " +player.getName().getString() + " drowned!");
             } else if (event.getSource().is(DamageTypeTags.IS_FIRE)) {
                 // this should eventually factor in true defense irc
                 double damageDealt = (double) (2 * 200) / 33;
-                GetPlayerDamageResult.damagePlayer(player, damageDealt, level, "☠ " +player.getName().getString() + " burnt to death!");
+                TriggerPlayerDamage.damagePlayer(player, damageDealt, level, "☠ " +player.getName().getString() + " burnt to death!");
             } else {
                 LOGGER.error("A damage attribute wasn't defined for: {}", event.getSource().getMsgId());
             }
