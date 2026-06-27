@@ -6,6 +6,7 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.model.*;
+import net.minecraft.client.renderer.item.properties.conditional.FishingRodCast;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Items;
@@ -80,6 +81,7 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFishingRod(UnshatteredItems.CHALLENGING_ROD.get());
         itemModels.itemModelOutput.accept(UnshatteredItems.ENCHANTED_FIG_LOG.get(), ItemModelUtils.plainModel(ModelTemplates.CUBE_COLUMN.create(Identifier.fromNamespaceAndPath("unshattered", "block/enchanted_fig_log"), TextureMapping.column(UnshatteredBlocks.FIG_LOG_BLOCK.get()), blockModels.modelOutput)));
         itemModels.itemModelOutput.accept(UnshatteredItems.BEDROCK.get(), ItemModelUtils.plainModel(ModelTemplates.CUBE_ALL.create(Identifier.fromNamespaceAndPath("unshattered", "block/bedrock"), TextureMapping.cube(Blocks.BEDROCK), blockModels.modelOutput)));
+        itemModels.itemModelOutput.accept(UnshatteredItems.FISHING_ROD.get(), ItemModelUtils.conditional(new FishingRodCast(), ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(Items.FISHING_ROD, "_cast")), ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(Items.FISHING_ROD))));
 
         blockModels.createRotatedPillarWithHorizontalVariant(UnshatteredBlocks.FIG_LOG_BLOCK.get(), TexturedModel.COLUMN, TexturedModel.COLUMN_HORIZONTAL);
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get(), BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get(), TextureMapping.cube(Blocks.STONE), blockModels.modelOutput))));

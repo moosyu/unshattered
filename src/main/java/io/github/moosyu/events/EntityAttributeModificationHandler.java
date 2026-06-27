@@ -61,6 +61,12 @@ public class EntityAttributeModificationHandler {
         event.add(EntityType.CREEPER, UnshatteredAttributeValues.HEALTH.holder, 80.0d);
         event.add(EntityType.CREEPER, UnshatteredAttributeValues.DAMAGE.holder, 20.0d);
 
+        event.add(EntityType.SQUID, UnshatteredAttributeValues.HEALTH.holder, 50.0d);
+        event.add(EntityType.SQUID, UnshatteredAttributeValues.DAMAGE.holder, 0.0d);
+
+        event.add(EntityType.GLOW_SQUID, UnshatteredAttributeValues.HEALTH.holder, 4000.0d);
+        event.add(EntityType.GLOW_SQUID, UnshatteredAttributeValues.DAMAGE.holder, 0.0d);
+
         event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), UnshatteredAttributeValues.HEALTH.holder, 80.0d);
         event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), UnshatteredAttributeValues.DAMAGE.holder, 20.0d);
         event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), Attributes.MAX_HEALTH, 1.0d);

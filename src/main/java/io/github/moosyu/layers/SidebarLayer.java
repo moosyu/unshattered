@@ -19,16 +19,21 @@ public class SidebarLayer implements GuiLayer {
         Font font = minecraft.font;
         Player player = minecraft.player;
         if (player == null || !player.level().isClientSide() || minecraft.options.hideGui) return;
-        PlayerCurrencyAttachment currencyAttachment = player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get());
-        final int SIDEBAR_WIDTH = font.width("Purse: " + currencyAttachment.getCoins()) + 20;
+        final String TITLE = "UNSHATTERED";
         final int SIDEBAR_HEIGHT = 96;
+        final int HORIZONTAL_MARGIN = 3;
+        final int VERTICAL_MARGIN = 12;
 
+        final PlayerCurrencyAttachment CURRENCY_ATTACHMENT = player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get());
+        final int PURSE_WIDTH = font.width("Purse: " + CURRENCY_ATTACHMENT.getCoins()) + 20;
+        final int TITLE_WIDTH = font.width(Component.literal(TITLE).withStyle(ChatFormatting.BOLD));
+        final int SIDEBAR_WIDTH = Math.max(PURSE_WIDTH, TITLE_WIDTH) + (HORIZONTAL_MARGIN * 4);
         final int CORNER_POS_X = (graphics.guiWidth() - SIDEBAR_WIDTH) - 2;
         final int CORNER_POS_Y = (graphics.guiHeight() - SIDEBAR_HEIGHT) / 2;
 
         graphics.fill(CORNER_POS_X, CORNER_POS_Y, CORNER_POS_X + SIDEBAR_WIDTH, CORNER_POS_Y + SIDEBAR_HEIGHT, 0x66000000);
-        graphics.text(font, Component.literal("SKYBLOCK").withStyle(ChatFormatting.BOLD), CORNER_POS_X + ((SIDEBAR_WIDTH - font.width(Component.literal("SKYBLOCK").withStyle(ChatFormatting.BOLD))) / 2), CORNER_POS_Y + 2, 0xFFFFFF55);
-        graphics.text(font, "Purse: ", CORNER_POS_X + 2, CORNER_POS_Y + 12, 0xFFFFFFFF, false);
-        graphics.text(font, String.format("%,d", currencyAttachment.getCoins()), CORNER_POS_X + font.width("Purse: ") + 2, CORNER_POS_Y + 12, 0xFFFFFF55, false);
+        graphics.text(font, Component.literal(TITLE).withStyle(ChatFormatting.BOLD), CORNER_POS_X + ((SIDEBAR_WIDTH - TITLE_WIDTH) / 2), CORNER_POS_Y + 2, 0xFFFFFF55);
+        graphics.text(font, "Purse: ", CORNER_POS_X + HORIZONTAL_MARGIN, CORNER_POS_Y + VERTICAL_MARGIN, 0xFFFFFFFF, false);
+        graphics.text(font, String.format("%,d", CURRENCY_ATTACHMENT.getCoins()), CORNER_POS_X + font.width("Purse: ") + HORIZONTAL_MARGIN, CORNER_POS_Y + VERTICAL_MARGIN, 0xFFFFFF55, false);
     }
 }

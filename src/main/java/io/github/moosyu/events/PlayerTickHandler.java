@@ -4,7 +4,6 @@ import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.attachments.PlayerStateAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.util.damage.DamageNumber;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.level.Level;
@@ -63,7 +62,7 @@ public class PlayerTickHandler {
             boolean currentlyApproaching = hook.timeUntilHooked > 0;
             boolean currentlyNibbling = hook.nibble > 0;
 
-            // ill make the exclamation mark pop up above bobber once I get deep enough in that I know how to do that. For now it's just the basis here.
+            // one day there'll be an exclamation mark popup...
             if (currentlyApproaching && !fishApproaching) {
                 System.out.println("Fish approaching");
             } else if (currentlyNibbling && !fishNibbling) {

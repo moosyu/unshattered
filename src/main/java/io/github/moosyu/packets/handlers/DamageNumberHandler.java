@@ -13,6 +13,8 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 public class DamageNumberHandler {
     public static void handleData(final DamageNumberPacket data, final IPayloadContext context) {
         context.enqueueWork(() -> {
+            System.out.println(data.number());
+
             Player player = Minecraft.getInstance().player;
             if (player == null) return;
 

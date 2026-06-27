@@ -16,6 +16,10 @@ public class LivingIncomingDamageHandler {
             if (event.getSource().is(DamageTypeTags.IS_FALL) && (int) (event.getAmount() + 3) < 7) {
                 event.setCanceled(true);
             }
+        } else {
+            if (event.getSource().is(DamageTypeTags.IS_FALL)) {
+                event.setCanceled(true);
+            }
         }
     }
 }

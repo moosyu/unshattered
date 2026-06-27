@@ -19,7 +19,9 @@ public final class TriggerPlayerDamage {
     public static void damagePlayer(Player player, double damageDealt, Level level, String deathMessage) {
         PlayerStateAttachment states = player.getData(PLAYER_STATE.get());
         double playerHealth = states.getCurrentStat(PlayerStateAttachment.Stat.HEALTH);
+
         if (states.isInvulnerable()) return;
+
         if (playerHealth - damageDealt > 0.0d) {
             states.removeCurrentStat(PlayerStateAttachment.Stat.HEALTH, damageDealt);
             states.setInvulnerableTime(20);
@@ -27,6 +29,7 @@ public final class TriggerPlayerDamage {
         } else {
             PlayerCurrencyAttachment currency = player.getData(PLAYER_CURRENCY.get());
             BlockPos spawnPos = level.getRespawnData().pos();
+
             player.teleportTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5);
             player.sendSystemMessage(Component.literal(deathMessage).withStyle(ChatFormatting.RED)
                     .append(Component.literal(" You lost " + (currency.getCoins() / 2) + " coins.")));

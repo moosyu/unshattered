@@ -101,6 +101,7 @@ public class UnshatteredCreativeTabs {
                 output.accept(FIG_HEW.get());
                 output.accept(FIGSTONE_SPLITTER.get());
                 output.accept(CHALLENGING_ROD.get());
+                output.accept(FISHING_ROD.get());
         }).build());
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_WEAPONS_TAB = CREATIVE_MODE_TABS.register("unshattered_weapons_tab",

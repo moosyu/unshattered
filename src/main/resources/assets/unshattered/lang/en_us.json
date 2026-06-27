@@ -73,6 +73,7 @@
   "item.unshattered.super_cleaver": "Super Cleaver",
   "item.unshattered.hyper_cleaver": "Hyper Cleaver",
   "item.unshattered.giant_cleaver": "Giant Cleaver",
+  "item.unshattered.fishing_rod": "Fishing Rod",
 
   "item.ability.unshattered.speed_boost": "Speed Boost",
   "item.ability.unshattered.mind_blowing": "Mind Blowing",
@@ -157,6 +158,8 @@
   "item.description.unshattered.fig_hew": "Grows with age.",
   "item.description.unshattered.figstone_splitter": "Thousands of figs compressed into a truly godly axe.",
   "item.description.unshattered.squire_sword": "Its balance is lousy.",
+  "item.description.unshattered.challenging_rod": "Sea creatures can't help but stare.",
+  "item.description.unshattered.fishing_rod": "Ol' reliable.",
 
   "attribute.name.unshattered.sweep": "Sweep",
   "attribute.name.unshattered.foraging_fortune": "Foraging Fortune",
@@ -223,6 +226,7 @@
   "item_type.unshattered.longsword": "Longsword",
   "item_type.unshattered.warhammer": "Warhammer",
   "item_type.unshattered.whip": "Whip",
+  "item_type.unshattered.fishing_rod": "Fishing Rod",
   "item_type.unshattered.cleaver": "Cleaver",
 
   "unshattered.configuration.title": "unshattered Configs",
@@ -237,5 +241,7 @@
   "commands.unshattered.skills.skill": "skill",
 
   "tooltip.unshattered.reforgable": "This item can be reforged!",
-  "tooltip.unshattered.description.bat_the_fish": "Where is my cape!"
+
+  "fishing.messages.minecraft.squid": "A Squid appeared.",
+  "fishing.messages.minecraft.glow_squid": "Pitch darkness reveals a Glow Squid"
 }

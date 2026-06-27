@@ -33,7 +33,7 @@ public enum UnshatteredAttributeValues {
     FORAGING_FORTUNE("foraging_fortune", "☘", 0.0, 0.0, 2048.0, 0xFFFFAA00, AttributeTypes.IMPORTANT, false, false),
     SWEEP("sweep", "∮", 0.0, 0.0, 1024.0, 0xFF00AA00, AttributeTypes.VISIBLE, false, false),
     COMBAT_FORTUNE("combat_fortune", "✯", 0.0, 0.0, 900.0, 0xFF55FFFF, AttributeTypes.VISIBLE, false, false),
-    FISHING_SPEED("fishing_speed", "☂", 0.0, 0.0, 900.0, 0xFF55FFFF, AttributeTypes.VISIBLE, false, false),
+    FISHING_SPEED("fishing_speed", "☂", 0.0, 0.0, 448.0, 0xFF55FFFF, AttributeTypes.VISIBLE, false, false),
     FISHING_FORTUNE("fishing_fortune", "⛃", 0.0, 0.0, 2048.0, 0xFF00AAAA, AttributeTypes.VISIBLE, false, false),
     FINAL_DAMAGE_MODIFIER("final_damage_modifier", 1, 0, 10.0);
 

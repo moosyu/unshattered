@@ -7,7 +7,7 @@ import net.minecraft.network.chat.MutableComponent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TextHelpers {
+public final class TextHelpers {
     public static Component parseStyledText(String input, int baseColor) {
         MutableComponent result = Component.empty();
         Matcher matcher = Pattern.compile("\\[color=(0x[0-9A-Fa-f]+)](.*?)\\[/color]|\\[i](.*?)\\[/i]").matcher(input);

@@ -49,9 +49,11 @@ public class LivingDamageHandler {
             } else {
                 LOGGER.error("A damage attribute wasn't defined for: {}", event.getSource().getMsgId());
             }
-        } else if (event.getSource().is(DamageTypeTags.IS_FIRE)) {
-            event.setNewDamage(0.0f);
-            event.getEntity().invulnerableTime = 0;
+        } else {
+            if (event.getSource().is(DamageTypeTags.IS_FIRE)) {
+                event.setNewDamage(0.0f);
+                event.getEntity().invulnerableTime = 0;
+            }
         }
     }
 }
