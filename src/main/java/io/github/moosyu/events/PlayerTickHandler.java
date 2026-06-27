@@ -58,6 +58,7 @@ public class PlayerTickHandler {
         }
 
         // fishing popup
+        // as now i have a mixin for the whole catching fish when i actually figure rendering out this could probably be removed and added to that
         if (player.fishing instanceof FishingHook hook) {
             boolean currentlyApproaching = hook.timeUntilHooked > 0;
             boolean currentlyNibbling = hook.nibble > 0;

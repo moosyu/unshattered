@@ -1,6 +1,6 @@
 package io.github.moosyu.attributes;
 
-public enum AttributeTypes {
+public enum UnshatteredAttributeTypes {
     IMPORTANT,
     VISIBLE,
     INVISIBLE

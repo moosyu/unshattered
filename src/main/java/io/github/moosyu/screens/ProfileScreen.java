@@ -1,7 +1,7 @@
 package io.github.moosyu.screens;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.attributes.AttributeTypes;
+import io.github.moosyu.attributes.UnshatteredAttributeTypes;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.util.TextHelpers;
@@ -86,7 +86,7 @@ public class ProfileScreen extends Screen {
             for (UnshatteredAttributeValues currentStat : UnshatteredAttributeValues.values()) {
                 int posX = (uniqueIndex > 9 ? CORNER_POS_X + SCREEN_WIDTH - 176 : CORNER_POS_X);
                 int posY = (uniqueIndex > 9 ? CORNER_POS_Y + ((uniqueIndex - 10) * 14) : CORNER_POS_Y + (uniqueIndex * 14));
-                if (currentStat.type == AttributeTypes.INVISIBLE) continue;
+                if (currentStat.type == UnshatteredAttributeTypes.INVISIBLE) continue;
                 this.addRenderableWidget(new StatWidget(currentStat, posX, posY, player));
                 uniqueIndex++;
             }

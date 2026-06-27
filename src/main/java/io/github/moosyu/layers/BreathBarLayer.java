@@ -31,9 +31,9 @@ public class BreathBarLayer implements GuiLayer {
         final String currentAirText = String.valueOf((int) remainingRespiration);
         final Font font = Minecraft.getInstance().font;
 
-        graphics.blit(RenderPipelines.GUI_TEXTURED, SMALL_BAR, POS_X_BAR, POS_Y_BAR, 0, BAR_HEIGHT - 1, SPRITE_WIDTH, BAR_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT, 0xFF6AA2C4);
-        graphics.blit(RenderPipelines.GUI_TEXTURED, SMALL_BAR, POS_X_BAR, POS_Y_BAR, 0, 0, (int) (SPRITE_WIDTH * (remainingAir / player.getMaxAirSupply())), BAR_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT, 0xFF82C5ED);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, SMALL_BAR, POS_X_BAR, POS_Y_BAR, 0, BAR_HEIGHT - 1, SPRITE_WIDTH, BAR_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT, 0xFF56B8FF);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, SMALL_BAR, POS_X_BAR, POS_Y_BAR, 0, 0, (int) (SPRITE_WIDTH * (remainingAir / player.getMaxAirSupply())), BAR_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT, 0xFF56B8FF);
 
-        graphics.text(Minecraft.getInstance().font, currentAirText, POS_X_BAR + (SPRITE_WIDTH / 2) - (font.width(currentAirText) / 2), POS_Y_BAR - 8, 0xFF94E3FC, true);
+        graphics.text(Minecraft.getInstance().font, currentAirText, POS_X_BAR + (SPRITE_WIDTH / 2) - (font.width(currentAirText) / 2), POS_Y_BAR - 8, 0xFF56B8FF, true);
     }
 }

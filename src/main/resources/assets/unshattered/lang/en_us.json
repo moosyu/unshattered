@@ -86,6 +86,7 @@
   "item.ability.unshattered.super_cleaver_cleave": "Cleave",
   "item.ability.unshattered.hyper_cleaver_cleave": "Cleave",
   "item.ability.unshattered.giant_cleaver_cleave": "Cleave",
+  "item.ability.unshattered.fish_out_of_water": "Fish Out Of Water",
 
   "item.ability.description.unshattered.speed_boost": "Grants [color=0xFFFFFFFF]+50✦ Speed[/color] for [color=0xFF55FF55]30s[/color].",
   "item.ability.description.unshattered.mind_blowing": "Deals [color=0xFF55FF55]+100%[/color] damage to undead mobs.",
@@ -98,6 +99,7 @@
   "item.ability.description.unshattered.super_cleaver_cleave": "When hitting an entity, monsters in a [color=0xFF55FF55]3[/color] block range will be hit for [color=0xFFFF5555]30%[/color] of that damage.",
   "item.ability.description.unshattered.hyper_cleaver_cleave": "When hitting an entity, monsters in a [color=0xFF55FF55]4[/color] block range will be hit for [color=0xFFFF5555]40%[/color] of that damage.",
   "item.ability.description.unshattered.giant_cleaver_cleave": "When hitting an entity, monsters in a [color=0xFF55FF55]5[/color] block range will be hit for [color=0xFFFF5555]50%[/color] of that damage.",
+  "item.ability.description.unshattered.fish_out_of_water": "You can only damage [color=0xFF5555FF]aquatic[/color] enemies with this fishing rod!",
 
   "block.unshattered.fig_log": "Fig Log",
   "block.unshattered.breakable_fig_log": "Breakable Fig Log",

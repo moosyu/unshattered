@@ -5,7 +5,7 @@ import io.github.moosyu.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.attachments.PlayerStateAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.ItemAbility;
-import io.github.moosyu.data.components.DataComponentRegistry;
+import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.util.CheckItemRequirement;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
@@ -29,9 +29,9 @@ public class RogueSword extends UnshatteredSword {
 
     public RogueSword(Properties properties) {
         super(properties
-                .component(DataComponentRegistry.ITEM_ABILITY.get(), SPEED_BOOST_ABILITY)
-                .component(DataComponentRegistry.ITEM_SELL_VALUE.get(), 3)
-                .component(DataComponentRegistry.DESCRIPTION.get(), true)
+                .component(UnshatteredDataComponents.ITEM_ABILITY.get(), SPEED_BOOST_ABILITY)
+                .component(UnshatteredDataComponents.ITEM_SELL_VALUE.get(), 3)
+                .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
                 .attributes(ItemAttributeModifiers.builder()
                         .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "rogue_sword_damage"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                         .build()

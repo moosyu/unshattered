@@ -5,7 +5,7 @@ import io.github.moosyu.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.data.components.SkillRequirement;
 import io.github.moosyu.attachments.UnshatteredAttachments;
-import io.github.moosyu.data.components.DataComponentRegistry;
+import io.github.moosyu.data.components.UnshatteredDataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
@@ -16,7 +16,7 @@ public final class CheckItemRequirement {
     public static final int ERROR_COLOR = 0xFFFF5555;
 
     public static boolean passesSkillCheck(Player player, ItemStack itemUsed) {
-        SkillRequirement itemSkillRequirement = itemUsed.get(DataComponentRegistry.SKILL_REQUIREMENT.get());
+        SkillRequirement itemSkillRequirement = itemUsed.get(UnshatteredDataComponents.SKILL_REQUIREMENT.get());
         // armours already have their own logic in LivingEquipmentChangeHandler
         if (itemSkillRequirement == null || itemUsed.is(Tags.Items.ARMORS)) return true;
         PlayerSkillsAttachment playerSkills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());

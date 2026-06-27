@@ -3,13 +3,14 @@ package io.github.moosyu.items.weapons.cleavers;
 import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.data.components.DataComponentRegistry;
+import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemTypes;
 import io.github.moosyu.items.UnshatteredPassiveAbilityItem;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
@@ -22,7 +23,7 @@ public class UnshatteredCleaver extends Item implements UnshatteredPassiveAbilit
     protected final float radius, cleaveDamageFraction;
 
     public UnshatteredCleaver(Properties properties, float radius, float cleaveDamageFraction) {
-        super(properties.stacksTo(1).component(DataComponentRegistry.ITEM_TYPE.get(), ItemTypes.CLEAVER));
+        super(properties.stacksTo(1).component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.CLEAVER));
         this.radius = radius;
         this.cleaveDamageFraction = cleaveDamageFraction;
     }
@@ -43,7 +44,10 @@ public class UnshatteredCleaver extends Item implements UnshatteredPassiveAbilit
         );
         for (Entity entity : level.getEntities(null, boundingBox)) {
             if (entity instanceof LivingEntity && !(entity instanceof Player) && !(entity == target)) {
-                player.getAttribute(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder).setBaseValue(player.getAttribute(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder).getValue() - (1 - cleaveDamageFraction));
+                AttributeInstance finalDamageModifierAttribute = player.getAttribute(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder);
+                if (finalDamageModifierAttribute != null && finalDamageModifierAttribute.getValue() != 0.0d) {
+                    finalDamageModifierAttribute.setBaseValue(finalDamageModifierAttribute.getValue() - (1 - cleaveDamageFraction));
+                }
                 player.attack(entity);
             }
         }

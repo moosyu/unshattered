@@ -1,6 +1,6 @@
 package io.github.moosyu.layers;
 
-import io.github.moosyu.data.components.DataComponentRegistry;
+import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.data.components.ItemCharges;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -22,7 +22,7 @@ public class ChargesLayer implements GuiLayer {
         final int SPRITE_SIZE = 8;
         Minecraft minecraft = Minecraft.getInstance();
         Player player = Minecraft.getInstance().player;
-        ItemCharges itemCharges = player.getItemInHand(InteractionHand.MAIN_HAND).get(DataComponentRegistry.ITEM_CHARGES);
+        ItemCharges itemCharges = player.getItemInHand(InteractionHand.MAIN_HAND).get(UnshatteredDataComponents.ITEM_CHARGES);
         if (!player.level().isClientSide() || itemCharges == null || minecraft.options.hideGui || player.gameMode() != GameType.SURVIVAL) return;
         for (int i = 0; i < itemCharges.maxCharges(); i++) {
             Identifier chargeTexture = itemCharges.maxCharges() - 1 - i < itemCharges.currentCharges() ? CHARGE_FILLED : CHARGE_EMPTY;

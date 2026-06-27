@@ -4,7 +4,7 @@ import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.SkillRequirement;
 import io.github.moosyu.attachments.UnshatteredAttachments;
-import io.github.moosyu.data.components.DataComponentRegistry;
+import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.UnshatteredPassiveAbilityItem;
 import io.github.moosyu.packets.DamageNumberPacket;
 import net.minecraft.network.chat.Component;
@@ -31,7 +31,7 @@ public class AttackEntityHandler {
         boolean sprinting = player.isSprinting();
         if (!(event.getTarget() instanceof LivingEntity target) || player.level().isClientSide()) return;
         event.setCanceled(true);
-        SkillRequirement skillRequirement = player.getItemInHand(InteractionHand.MAIN_HAND).get(DataComponentRegistry.SKILL_REQUIREMENT);
+        SkillRequirement skillRequirement = player.getItemInHand(InteractionHand.MAIN_HAND).get(UnshatteredDataComponents.SKILL_REQUIREMENT);
         PlayerSkillsAttachment playerSkill = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
         AttributeInstance finalDamageAttribute = player.getAttribute(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder);
         if (skillRequirement != null && skillRequirement.level() > playerSkill.getLevel(playerSkill.getExp(skillRequirement.skill()))) {

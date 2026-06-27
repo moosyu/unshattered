@@ -1,7 +1,7 @@
 package io.github.moosyu.layers;
 
 import io.github.moosyu.rarities.RarityTypes;
-import io.github.moosyu.data.components.DataComponentRegistry;
+import io.github.moosyu.data.components.UnshatteredDataComponents;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -33,7 +33,7 @@ public class SelectedItemLayer implements GuiLayer {
         if (player == null || !player.level().isClientSide() || minecraft.options.hideGui) return;
 
         ItemStack currentItemStack = player.getMainHandItem();
-        Set<DataComponentType<?>> ignoredComponents = Set.of(DataComponentRegistry.ITEM_CHARGES.get());
+        Set<DataComponentType<?>> ignoredComponents = Set.of(UnshatteredDataComponents.ITEM_CHARGES.get());
         Item heldItem = currentItemStack.getItem();
         boolean hasItem = heldItem != Items.AIR;
         Level level = player.level();
@@ -58,7 +58,7 @@ public class SelectedItemLayer implements GuiLayer {
     private void displaySelectedText(Item heldItem, GuiGraphicsExtractor graphics, Minecraft minecraft, float opacity) {
         ItemStack heldItemStack = heldItem.getDefaultInstance();
         Component itemName = heldItem.getName(heldItemStack);
-        RarityTypes rarity = heldItem.components().get(DataComponentRegistry.RARITY);
+        RarityTypes rarity = heldItem.components().get(UnshatteredDataComponents.RARITY);
         int itemColor = rarity != null ? rarity.getColor(opacity) : RarityTypes.COMMON.getColor(1.0f);
         graphics.text(Minecraft.getInstance().font, itemName, (graphics.guiWidth() / 2) - (minecraft.font.width(itemName) / 2), graphics.guiHeight() - 50, itemColor, true);
     }

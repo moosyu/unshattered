@@ -9,7 +9,7 @@ import io.github.moosyu.util.TextHelpers;
 import io.github.moosyu.items.ItemTypes;
 import io.github.moosyu.rarities.RarityTypes;
 import io.github.moosyu.attachments.UnshatteredAttachments;
-import io.github.moosyu.data.components.DataComponentRegistry;
+import io.github.moosyu.data.components.UnshatteredDataComponents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
@@ -37,13 +37,13 @@ public class ItemTooltipHandler {
         if (player == null) return;
         ItemStack stack = event.getItemStack();
         List<Component> tooltipComponents = event.getToolTip();
-        RarityTypes itemRarity = stack.get(DataComponentRegistry.RARITY.get());
-        ItemTypes itemType = stack.get(DataComponentRegistry.ITEM_TYPE.get());
+        RarityTypes itemRarity = stack.get(UnshatteredDataComponents.RARITY.get());
+        ItemTypes itemType = stack.get(UnshatteredDataComponents.ITEM_TYPE.get());
         boolean hasModifiers = false;
-        boolean itemDescription = Boolean.TRUE.equals(stack.get(DataComponentRegistry.DESCRIPTION.get()));
-        SkillRequirement itemSkillRequirement = stack.get(DataComponentRegistry.SKILL_REQUIREMENT.get());
-        ItemAbility itemAbility = stack.get(DataComponentRegistry.ITEM_ABILITY);
-        ItemCharges itemCharges = stack.get(DataComponentRegistry.ITEM_CHARGES);
+        boolean itemDescription = Boolean.TRUE.equals(stack.get(UnshatteredDataComponents.DESCRIPTION.get()));
+        SkillRequirement itemSkillRequirement = stack.get(UnshatteredDataComponents.SKILL_REQUIREMENT.get());
+        ItemAbility itemAbility = stack.get(UnshatteredDataComponents.ITEM_ABILITY);
+        ItemCharges itemCharges = stack.get(UnshatteredDataComponents.ITEM_CHARGES);
 
         event.getToolTip().clear();
         if (itemRarity == null) itemRarity = RarityTypes.COMMON;

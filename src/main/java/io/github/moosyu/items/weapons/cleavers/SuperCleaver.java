@@ -1,7 +1,7 @@
 package io.github.moosyu.items.weapons.cleavers;
 
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.data.components.DataComponentRegistry;
+import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.rarities.RarityTypes;
 import net.minecraft.resources.Identifier;
@@ -14,10 +14,10 @@ import static io.github.moosyu.Unshattered.MODID;
 public class SuperCleaver extends UnshatteredCleaver {
     public SuperCleaver(Properties properties) {
         super(properties
-                .component(DataComponentRegistry.RARITY.get(), RarityTypes.RARE)
-                .component(DataComponentRegistry.ITEM_ABILITY.get(), new ItemAbility("super_cleaver_cleave", 0, 0, 0, true))
-                .component(DataComponentRegistry.DESCRIPTION.get(), true)
-                .component(DataComponentRegistry.ITEM_SELL_VALUE.get(), 20000)
+                .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.RARE)
+                .component(UnshatteredDataComponents.ITEM_ABILITY.get(), new ItemAbility("super_cleaver_cleave", 0, 0, 0, true))
+                .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
+                .component(UnshatteredDataComponents.ITEM_SELL_VALUE.get(), 20000)
                 .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "super_cleaver_damage"), 105, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "super_cleaver_strength"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)

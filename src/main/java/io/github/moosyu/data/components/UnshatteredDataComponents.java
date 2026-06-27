@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 
 import static io.github.moosyu.Unshattered.MODID;
 
-public final class DataComponentRegistry {
+public final class UnshatteredDataComponents {
     public static final DeferredRegister.DataComponents DATA_COMPONENTS = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, MODID);
 
     public static final Supplier<DataComponentType<RarityTypes>> RARITY = DATA_COMPONENTS.registerComponentType("rarity", builder -> builder.persistent(RarityTypes.CODEC));

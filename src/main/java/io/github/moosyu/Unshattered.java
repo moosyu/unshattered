@@ -23,7 +23,7 @@ import static io.github.moosyu.attachments.UnshatteredAttachments.ATTACHMENT_TYP
 import static io.github.moosyu.attributes.UnshatteredAttributes.ATTRIBUTES;
 import static io.github.moosyu.blocks.UnshatteredBlocks.BLOCKS;
 import static io.github.moosyu.creative.UnshatteredCreativeTabs.CREATIVE_MODE_TABS;
-import static io.github.moosyu.data.components.DataComponentRegistry.DATA_COMPONENTS;
+import static io.github.moosyu.data.components.UnshatteredDataComponents.DATA_COMPONENTS;
 import static io.github.moosyu.entities.UnshatteredEntities.ENTITY_TYPES;
 import static io.github.moosyu.items.UnshatteredItems.*;
 

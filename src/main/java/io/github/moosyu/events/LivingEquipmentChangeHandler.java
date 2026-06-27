@@ -3,7 +3,7 @@ package io.github.moosyu.events;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.components.SkillRequirement;
 import io.github.moosyu.attachments.UnshatteredAttachments;
-import io.github.moosyu.data.components.DataComponentRegistry;
+import io.github.moosyu.data.components.UnshatteredDataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -20,7 +20,7 @@ public class LivingEquipmentChangeHandler {
     public static void onLivingEquipmentChange(LivingEquipmentChangeEvent event) {
         if (event.getEntity() instanceof Player player) {
             ItemStack itemStack = event.getTo();
-            SkillRequirement itemSkillRequirement = itemStack.get(DataComponentRegistry.SKILL_REQUIREMENT.get());
+            SkillRequirement itemSkillRequirement = itemStack.get(UnshatteredDataComponents.SKILL_REQUIREMENT.get());
             // possibly the worst way to do this but A: any good ways will be annoying to get working and B: the delay kind of reminds
             // me of real skyblock which puts a smile on my face
             // this also dupes in creative mode which gives me the impression there is a way to dupe using this in survival but whatever
