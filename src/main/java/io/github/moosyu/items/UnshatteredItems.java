@@ -219,7 +219,12 @@ public class UnshatteredItems {
             .humanoidArmor(LEAFLET_ARMOR_MATERIAL, ArmorType.LEGGINGS)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.LEGGINGS)
             .component(UnshatteredDataComponents.ITEM_SELL_VALUE.get(), 3)
-            .attributes(ItemAttributeModifiers.builder().add(UnshatteredAttributeValues.HEALTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "leaflet_leggings_health"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.LEGS).add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "leaflet_leggings_foraging_fortune"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.LEGS).build())));
+            .attributes(ItemAttributeModifiers.builder()
+                    .add(UnshatteredAttributeValues.HEALTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "leaflet_leggings_health"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.LEGS)
+                    .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "leaflet_leggings_foraging_fortune"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.LEGS)
+                    .build()
+            )
+    ));
 
     public static final DeferredItem<Item> LEAFLET_BOOTS = ITEMS.registerItem("leaflet_boots", props -> new Item(props
             .humanoidArmor(LEAFLET_ARMOR_MATERIAL, ArmorType.BOOTS)

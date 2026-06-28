@@ -1,9 +1,7 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.screens.ProfileScreen;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;

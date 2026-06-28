@@ -39,8 +39,8 @@ public abstract class FishingHookMixin {
     private void unshattered$catchingFish(CallbackInfo ci) {
         ci.cancel();
         FishingHook hook = (FishingHook)(Object)this;
-        ServerLevel level = (ServerLevel)hook.level();
         if (!(hook.getOwner() instanceof Player player)) return;
+        ServerLevel level = (ServerLevel)hook.level();
         RandomSource random = hook.getRandom();
         double fishingSpeed = player.getAttributeValue(UnshatteredAttributeValues.FISHING_SPEED.holder);
         double fishingSpeedPercentage = (UnshatteredAttributeValues.FISHING_SPEED.max + 20 - fishingSpeed) / UnshatteredAttributeValues.FISHING_SPEED.max;
@@ -89,6 +89,7 @@ public abstract class FishingHookMixin {
                 );
                 this.nibble = Mth.nextInt(random, 20, 40);
                 hook.getEntityData().set(DATA_BITING, true);
+                System.out.println("Nibbling");
             }
         } else if (this.timeUntilLured > 0) {
             this.timeUntilLured -= 1;
@@ -116,6 +117,7 @@ public abstract class FishingHookMixin {
             if (this.timeUntilLured <= 0) {
                 this.fishAngle = Mth.nextFloat(random, 0.0F, 360.0F);
                 this.timeUntilHooked = random.nextInt(10, Math.max(20, (int) (100 * fishingSpeedPercentage)));
+                System.out.println("Fish approaching");
             }
         } else {
             this.timeUntilLured = random.nextInt(20, Math.max(40, (int) (160 * fishingSpeedPercentage)));

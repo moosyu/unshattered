@@ -4,18 +4,21 @@
       "id": "minecraft:squid",
       "type": "MOB",
       "levelRequirement": 0,
-      "exp": 75.0,
+      "exp": 25.0,
       "weight": 1200
     },
     {
       "id": "minecraft:glow_squid",
       "type": "MOB",
       "levelRequirement": 3,
-      "exp": 270.0,
+      "exp": 90.0,
       "weight": 1100,
-      "conditions": {
-        "time": "night"
-      }
+      "conditions": [
+        {
+          "type": "time",
+          "value": "night"
+        }
+      ]
     }
   ]
 }

@@ -7,6 +7,7 @@ import io.github.moosyu.data.RegenBlocksSavedData;
 import io.github.moosyu.packets.ExpSoundEffectPacket;
 import io.github.moosyu.skills.experience.BlocksFarmingExperience;
 import io.github.moosyu.skills.experience.BlocksMiningExperience;
+import io.github.moosyu.skills.foraging.TreeSweepHandler;
 import io.github.moosyu.util.CheckBreakableBlock;
 import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.util.CheckItemRequirement;

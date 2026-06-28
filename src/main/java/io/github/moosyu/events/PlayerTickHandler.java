@@ -56,22 +56,5 @@ public class PlayerTickHandler {
         if (abilities.hasAnyActiveEffect()) {
             abilities.tickEffects(level, player);
         }
-
-        // fishing popup
-        // as now i have a mixin for the whole catching fish when i actually figure rendering out this could probably be removed and added to that
-        if (player.fishing instanceof FishingHook hook) {
-            boolean currentlyApproaching = hook.timeUntilHooked > 0;
-            boolean currentlyNibbling = hook.nibble > 0;
-
-            // one day there'll be an exclamation mark popup...
-            if (currentlyApproaching && !fishApproaching) {
-                System.out.println("Fish approaching");
-            } else if (currentlyNibbling && !fishNibbling) {
-                System.out.println("Nibbling");
-            }
-
-            fishApproaching = currentlyApproaching;
-            fishNibbling = currentlyNibbling;
-        }
     }
 }

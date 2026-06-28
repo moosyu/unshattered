@@ -15,7 +15,8 @@ public class EntityCombatExperience {
             Map.entry(EntityType.BAT, 33.0f),
             Map.entry(EntityType.CREEPER, 8.0f),
             Map.entry(EntityType.BLAZE, 10.0f),
-            Map.entry(EntityType.SQUID, 12.0f)
+            Map.entry(EntityType.SQUID, 12.0f),
+            Map.entry(EntityType.GLOW_SQUID, 36.0f)
     );
 
     public static float getExp(EntityType<?> entityType) {

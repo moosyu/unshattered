@@ -1,25 +1,24 @@
-package io.github.moosyu.events;
+package io.github.moosyu.skills.fishing;
 
 import io.github.moosyu.Unshattered;
 import io.github.moosyu.attachments.PlayerCurrencyAttachment;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.packets.ExpSoundEffectPacket;
 import io.github.moosyu.attachments.UnshatteredAttachments;
-import io.github.moosyu.skills.fishing.FishingManager;
-import io.github.moosyu.skills.fishing.FishingResultsEntry;
 import io.github.moosyu.util.FortuneCalculationHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -49,19 +48,20 @@ public class ItemFishedHandler {
         AttributeInstance fishingFortuneAttribute = player.getAttribute(UnshatteredAttributeValues.FISHING_FORTUNE.holder);
         List<FishingResultsEntry> filteredFishingOptions = new ArrayList<>();
         Identifier selectedResultsTable;
+        FishingHook hook = event.getHookEntity();
         double totalWeight = 0;
         if (fishingFortuneAttribute == null) {
             return;
         }
 
-        if (rand.nextInt(4) > 1) {
+        if (rand.nextInt(4) > 0) {
             selectedResultsTable = Identifier.fromNamespaceAndPath(MODID, "base_water_items");
         } else {
             selectedResultsTable = Identifier.fromNamespaceAndPath(MODID, "base_water_sea_creatures");
         }
 
         for (FishingResultsEntry entry : FishingManager.getEntries(selectedResultsTable)) {
-            if (entry.levelRequirement() <= skills.getLevel(skills.getExp(PlayerSkillsAttachment.Skill.FISHING))) {
+            if (entry.levelRequirement() <= skills.getLevel(skills.getExp(PlayerSkillsAttachment.Skill.FISHING)) && entry.conditions().stream().allMatch(condition -> condition.test(new FishingContext((ServerLevel) level, player, hook)))) {
                 filteredFishingOptions.add(entry);
                 totalWeight += calculateAdjustedWeight(entry.weight(), fishingFortuneAttribute.getValue());
             }
@@ -112,7 +112,7 @@ public class ItemFishedHandler {
                 Entity entity = entityType.create(level, EntitySpawnReason.TRIGGERED);
 
                 if (entity != null) {
-                    entity.setPos(event.getHookEntity().position());
+                    entity.setPos(hook.position());
                     entity.setDeltaMovement(player.position().subtract(entity.position()).normalize().scale(3.5D));
                     player.sendSystemMessage(Component.translatable("fishing.messages." + id.getNamespace() + "." + id.getPath()).withColor(0xFF55FF55));
                     level.addFreshEntity(entity);

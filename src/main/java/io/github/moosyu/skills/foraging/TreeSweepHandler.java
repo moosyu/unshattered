@@ -1,4 +1,4 @@
-package io.github.moosyu.events;
+package io.github.moosyu.skills.foraging;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
