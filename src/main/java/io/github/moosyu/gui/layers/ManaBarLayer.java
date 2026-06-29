@@ -1,4 +1,4 @@
-package io.github.moosyu.layers;
+package io.github.moosyu.gui.layers;
 
 import io.github.moosyu.attachments.PlayerStateAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameType;
@@ -14,7 +15,6 @@ import net.neoforged.neoforge.client.gui.GuiLayer;
 import org.jspecify.annotations.NonNull;
 
 import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_STATE;
-import static io.github.moosyu.layers.UnshatteredGuiLayers.SMALL_BAR;
 
 public class ManaBarLayer implements GuiLayer {
     @Override
@@ -24,6 +24,7 @@ public class ManaBarLayer implements GuiLayer {
         final int BAR_HEIGHT = 8;
         final int POS_X_BAR = (graphics.guiWidth() / 2) - (SPRITE_WIDTH / 2) + 54;
         final int POS_Y_BAR = graphics.guiHeight() - SPRITE_HEIGHT - 18;
+        final Identifier SMALL_BAR = Identifier.fromNamespaceAndPath("unshattered", "textures/gui/sprites/small_bar.png");
 
         Minecraft minecraft = Minecraft.getInstance();
         Player player = Minecraft.getInstance().player;

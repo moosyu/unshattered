@@ -1,6 +1,6 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.screens.ProfileScreen;
+import io.github.moosyu.gui.screens.ProfileScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;

@@ -244,6 +244,7 @@
 
   "tooltip.unshattered.reforgable": "This item can be reforged!",
 
+  "combat.messages.unshattered.failed": "You tried to attack... but nothing happened.",
   "fishing.messages.minecraft.squid": "A Squid appeared.",
   "fishing.messages.minecraft.glow_squid": "Pitch darkness reveals a Glow Squid"
 }

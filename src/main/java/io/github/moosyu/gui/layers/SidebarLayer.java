@@ -1,4 +1,4 @@
-package io.github.moosyu.layers;
+package io.github.moosyu.gui.layers;
 
 import io.github.moosyu.attachments.PlayerCurrencyAttachment;
 import io.github.moosyu.attachments.UnshatteredAttachments;

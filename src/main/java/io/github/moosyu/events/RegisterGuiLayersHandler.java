@@ -1,6 +1,6 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.layers.*;
+import io.github.moosyu.gui.layers.*;
 import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
