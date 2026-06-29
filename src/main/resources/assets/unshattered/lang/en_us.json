@@ -240,11 +240,14 @@
   "unshattered.configuration.magicNumber": "Magic Number",
 
   "commands.unshattered.skills.levels.get.failure": "Unknown skill!",
-  "commands.unshattered.skills.skill": "skill",
+  "commands.unshattered.skills.skill": "Skill",
 
   "tooltip.unshattered.reforgable": "This item can be reforged!",
 
   "combat.messages.unshattered.failed": "You tried to attack... but nothing happened.",
   "fishing.messages.minecraft.squid": "A Squid appeared.",
-  "fishing.messages.minecraft.glow_squid": "Pitch darkness reveals a Glow Squid"
+  "fishing.messages.minecraft.glow_squid": "Pitch darkness reveals a Glow Squid.",
+
+  "misc.messages.unshattered.wizardman_request": "Help Wizardman",
+  "misc.messages.unshattered.wizardman_response_overworld": "You feel the slightest vibration from far away."
 }
