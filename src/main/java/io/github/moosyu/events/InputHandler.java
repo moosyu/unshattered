@@ -8,7 +8,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.InputEvent;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.gui.screens.ProfileModularUIScreen.createBook;
+import static io.github.moosyu.gui.screens.ProfileModularUIScreen.createProfileBook;
 
 // todo: do this properly https://docs.neoforged.net/docs/misc/keymappings/
 @EventBusSubscriber(modid = MODID)
@@ -19,6 +19,6 @@ public class InputHandler {
         if (Minecraft.getInstance().screen != null) return;
         Player player = Minecraft.getInstance().player;
         // 82 is r
-        if (event.getKey() == 82) Minecraft.getInstance().setScreen(new ProfileModularUIScreen(createBook(player)));
+        if (event.getKey() == 82) Minecraft.getInstance().setScreen(new ProfileModularUIScreen(createProfileBook(player)));
     }
 }
