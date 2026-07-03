@@ -1,6 +1,7 @@
 package io.github.moosyu.packets.handlers;
 
 import io.github.moosyu.packets.ZombieSwordEffectsPacket;
+import io.github.moosyu.util.PlayClientsideSound;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
@@ -24,7 +25,7 @@ public class ZombieSwordEffectsPayloadHandler {
                         .add(look.cross(new Vec3(0, 1, 0)).normalize().scale(sideOffset))
                         .add(0, -0.6, 0);
                 Minecraft.getInstance().particleEngine.createParticle(ParticleTypes.HEART, particlePos.x, particlePos.y, particlePos.z, 0.0d, 0.02d, 0.0d);
-                player.level().playLocalSound(player.getX(), player.getY(), player.getZ(), SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.PLAYERS, 0.1f, 1.0f, false);
+                PlayClientsideSound.playClientsideSound(player, SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.PLAYERS, 0.1f, 1.0f);
             }
         });
     }
