@@ -63,13 +63,12 @@ progress-bar:host {
 }
 
 .__progress-bar_bar-container__ {
-    background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 21, 16, 5, 5, 2, 2, 2, 2);
+    background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 16, 16, 5, 5, 2, 2, 2, 2);
     padding-all: 0;
 }
 
 .__progress-bar_bar__ {
-    // something about this is weird...
-    background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 16, 16, 5, 5, 2, 2, 2, 2);
+    background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 21, 16, 5, 5, 2, 2, 2, 2);
 }
 
 .__progress-bar_label__ {
