@@ -1,0 +1,77 @@
+.base-container {
+    width: 176;
+    height: 166;
+    padding-all: 4;
+    // texture location, sprite region (x, y, width, height), border size (for nine-splice)
+    background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 16, 0, 16, 16, 4, 4, 4, 4);
+    scroller-view-mode: vertical;
+}
+
+.base-title {
+    padding-all: 2;
+    margin-bottom: 8;
+}
+
+label {
+    margin: 3 0 3 0;
+}
+
+scroller-vertical:host {
+    width: 14;
+}
+
+.__scroller_scroll_container__ {
+    background: built-in(ui-ore:RECT2);
+}
+
+scroller-vertical .__scroller_scroll_bar__ {
+    base-background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 0, 0, 13, 14, 2, 2, 2, 3);
+    hover-background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 0, 16, 13, 14, 2, 2, 2, 3);
+    pressed-background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 0, 16, 13, 14, 2, 2, 2, 3) color(#ddd);
+}
+
+.__scroller_head_button__ {
+    display: none;
+}
+
+.__scroller_tail_button__ {
+    display: none;
+}
+
+scroller-view {
+    scroller-view-margin: 10;
+}
+
+// for the content area of the scroller
+.__scroller_view_view-port__ {
+    background: empty;
+    padding-all: 2;
+}
+
+.__scroller_view_horizontal-scroller__ {
+    height: 8;
+    margin-top: 2;
+}
+
+.__scroller_view_vertical-scroller__ {
+    width: 8;
+    margin-left: 2;
+}
+
+progress-bar:host {
+    height: 7;
+}
+
+.__progress-bar_bar-container__ {
+    background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 21, 16, 5, 5, 2, 2, 2, 2);
+    padding-all: 0;
+}
+
+.__progress-bar_bar__ {
+    // something about this is weird...
+    background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 16, 16, 5, 5, 2, 2, 2, 2);
+}
+
+.__progress-bar_label__ {
+    text: empty;
+}

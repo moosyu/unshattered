@@ -12,19 +12,18 @@ import static io.github.moosyu.Unshattered.LOGGER;
 
 public enum UnshatteredAttributeValues {
     HEALTH("health", "❤", 100.0, 0.0, 2147483647.0, 0xFFFC3A3A, UnshatteredAttributeTypes.IMPORTANT, false, false),
+    HEALTH_REGEN("health_regen", "❣", 100.0, 0.0, 2048.0, 0xFFFC3A3A, UnshatteredAttributeTypes.VISIBLE, false, true),
     DEFENSE("defense", "❈", 0.0, 0.0, 131072.0, 0xFF55FF55, UnshatteredAttributeTypes.IMPORTANT, false, false),
+    TRUE_DEFENSE("true_defense", "❂", 0.0, 0.0, 1024.0, 0xFFFFFFFF, UnshatteredAttributeTypes.VISIBLE, false, false),
     STRENGTH("strength", "❁", 0.0, 0.0, 4096.0, 0xFFFC3A3A, UnshatteredAttributeTypes.IMPORTANT, true, false),
     /**
      * still kinda a percentage, 100.0 is 100%
      */
     CRITICAL_CHANCE("critical_chance", "☣", 30.0, 0.0, 2048.0, 0xFF5454FC, UnshatteredAttributeTypes.IMPORTANT, false, true),
     CRITICAL_DAMAGE("critical_damage", "☠", 50.0, 0.0, 4096.0, 0xFF5454FC, UnshatteredAttributeTypes.IMPORTANT, true, true),
+    FEROCITY("ferocity", "⫽", 0.0, 0.0, 131072.0, 0xFFFF5555, UnshatteredAttributeTypes.VISIBLE, true, false),
     MANA("mana", "✎", 100.0, 0.0, 131072.0, 0xFF55D5FF, UnshatteredAttributeTypes.IMPORTANT, false, false),
     MANA_REGEN("mana_regen", "✎", 100.0, 100.0, 2048.0, 0xFF55D5FF, UnshatteredAttributeTypes.IMPORTANT, false, true),
-    HEALTH_REGEN("health_regen", "❣", 100.0, 0.0, 2048.0, 0xFFFC3A3A, UnshatteredAttributeTypes.VISIBLE, false, true),
-    TRUE_DEFENSE("true_defense", "❂", 0.0, 0.0, 1024.0, 0xFFFFFFFF, UnshatteredAttributeTypes.VISIBLE, false, false),
-    FEROCITY("ferocity", "⫽", 0.0, 0.0, 131072.0, 0xFFFF5555, UnshatteredAttributeTypes.VISIBLE, true, false),
-    DAMAGE("damage", 0.0, 0.0, 2147483647.0),
     MINING_SPEED("mining_speed", "⸕", 0.0, 0.0, 131072.0, 0xFFFFAA00, UnshatteredAttributeTypes.VISIBLE, false, false),
     MINING_FORTUNE("mining_fortune", "☘", 0.0, 0.0, 2048.0, 0xFFFFAA00, UnshatteredAttributeTypes.IMPORTANT, false, false),
     MINING_SPREAD("mining_spread", "▚", 0.0, 0.0, 1024.0, 0xFFFFFF55, UnshatteredAttributeTypes.VISIBLE, false, false),
@@ -35,6 +34,7 @@ public enum UnshatteredAttributeValues {
     COMBAT_FORTUNE("combat_fortune", "✯", 0.0, 0.0, 900.0, 0xFF55FFFF, UnshatteredAttributeTypes.VISIBLE, false, false),
     FISHING_SPEED("fishing_speed", "☂", 0.0, 0.0, 448.0, 0xFF55FFFF, UnshatteredAttributeTypes.VISIBLE, false, false),
     FISHING_FORTUNE("fishing_fortune", "⛃", 0.0, 0.0, 2048.0, 0xFF00AAAA, UnshatteredAttributeTypes.VISIBLE, false, false),
+    DAMAGE("damage", 0.0, 0.0, 2147483647.0),
     FINAL_DAMAGE_MODIFIER("final_damage_modifier", 1, 0, 10.0);
 
     private static final Map<Attribute, UnshatteredAttributeValues> ATTRIBUTE_MAP = new HashMap<>();

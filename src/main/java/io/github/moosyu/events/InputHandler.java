@@ -1,7 +1,8 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.gui.screens.ProfileModularUIScreen;
+import io.github.moosyu.gui.screens.ProfileScreen;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -19,7 +20,7 @@ public class InputHandler {
         Player player = Minecraft.getInstance().player;
         // 82 is r
         if (event.getKey() == 82) {
-            Minecraft.getInstance().setScreen(new ProfileModularUIScreen(ProfileModularUIScreen.createProfileBook(player)));
+            Minecraft.getInstance().setScreen(new ProfileScreen(ProfileScreen.createSkillsScreen(player), Component.literal("stats")));
         }
     }
 }

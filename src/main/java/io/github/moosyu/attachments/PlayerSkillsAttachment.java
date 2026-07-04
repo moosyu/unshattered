@@ -8,8 +8,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,82 +19,70 @@ public final class PlayerSkillsAttachment {
     private final float[] skillExp = new float[Skill.values().length];
 
     public enum Skill {
-        COMBAT("combat", Items.STONE_SWORD, (player, level) -> {
+        COMBAT("combat", (player, level) -> {
             // i know normal sb gives you a flat damage multiplier but i feel like thats a little strange so ill give people an actual stat
-            UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.CRITICAL_DAMAGE, 10.0d);
-            UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.CRITICAL_CHANCE, 0.5d);
-            // later on ill do some like switches for specific level rewards
-            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.CRITICAL_DAMAGE, 10.0d));
-            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.CRITICAL_CHANCE, 0.5));
+            addPlayerAttributeReward(player, UnshatteredAttributeValues.CRITICAL_DAMAGE, 10.0d);
+            addPlayerAttributeReward(player, UnshatteredAttributeValues.CRITICAL_CHANCE, 0.5d);
+
         }),
-        FARMING("farming", Items.GOLDEN_HOE, (player, level) -> {
+        FARMING("farming", (player, level) -> {
             double healthAmount;
             if (level < 15) {
                 healthAmount = 2.0d;
-                UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.HEALTH, healthAmount);
             } else if (level < 20) {
                 healthAmount = 3.0d;
-                UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.HEALTH, 3.0d);
             } else if (level < 25) {
                 healthAmount = 4.0d;
-                UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.HEALTH, 4.0d);
             } else {
                 healthAmount = 5.0d;
-                UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.HEALTH, 5.0d);
             }
-            UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.FARMING_FORTUNE, 4.0d);
-            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.HEALTH, healthAmount));
-            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.FARMING_FORTUNE, 4.0d));
+            addPlayerAttributeReward(player, UnshatteredAttributeValues.HEALTH, healthAmount);
+            addPlayerAttributeReward(player, UnshatteredAttributeValues.FARMING_FORTUNE, 4.0d);
         }),
-        FISHING("fishing", Items.FISHING_ROD, (player, level) -> {
-            UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.FISHING_SPEED, 1.0d);
-            UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.FISHING_FORTUNE, 0.1d);
-            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.FISHING_SPEED, 1.0d));
-            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.FISHING_FORTUNE, 0.1d));
+        FISHING("fishing", (player, level) -> {
+            addPlayerAttributeReward(player, UnshatteredAttributeValues.FISHING_SPEED, 1.0d);
+            addPlayerAttributeReward(player, UnshatteredAttributeValues.FISHING_FORTUNE, 0.1d);
+
         }),
-        MINING("mining", Items.STONE_PICKAXE, (player, level) -> {
+        MINING("mining", (player, level) -> {
             double defenseAmount;
             if (level < 15) {
                 defenseAmount = 1.0d;
-                UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.DEFENSE, 1.0d);
             } else {
                 defenseAmount = 2.0d;
-                UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.DEFENSE, 2.0d);
             }
-            UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.MINING_FORTUNE, 4.0d);
-            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.DEFENSE, defenseAmount));
-            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.MINING_FORTUNE, 4.0d));
+            addPlayerAttributeReward(player, UnshatteredAttributeValues.DEFENSE, defenseAmount);
+            addPlayerAttributeReward(player, UnshatteredAttributeValues.MINING_FORTUNE, 4.0d);
+
         }),
-        FORAGING("foraging", Items.OAK_SAPLING, (player, level) -> {
+        FORAGING("foraging", (player, level) -> {
             double strengthAmount;
             if (level < 15) {
                 strengthAmount = 1.0d;
-                UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.STRENGTH, strengthAmount);
             } else {
                 strengthAmount = 2.0d;
-                UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.STRENGTH, strengthAmount);
             }
-            UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.FORAGING_FORTUNE, 4.0d);
-            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.STRENGTH, strengthAmount));
-            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.FARMING_FORTUNE, 4.0d));
+            addPlayerAttributeReward(player, UnshatteredAttributeValues.STRENGTH, strengthAmount);
+            addPlayerAttributeReward(player, UnshatteredAttributeValues.FARMING_FORTUNE, 4.0d);
+
         }),
-        MAGECRAFT("magecraft", Items.BOOK, (player, level) -> {
-            UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.MANA, 3.0d);
-            UnshatteredAttributeValues.modifyAttributeBaseValue(player, UnshatteredAttributeValues.MANA_REGEN, 1.5d);
-            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.MANA, 3.0d));
-            player.sendSystemMessage(attributeGainMessage(UnshatteredAttributeValues.MANA_REGEN, 1.5d));
+        MAGECRAFT("magecraft", (player, level) -> {
+            addPlayerAttributeReward(player, UnshatteredAttributeValues.MANA, 3.0d);
+            addPlayerAttributeReward(player, UnshatteredAttributeValues.MANA_REGEN, 1.5d);
+
+        }),
+        CARPENTRY("carpentry", (player, level) -> {
+            addPlayerAttributeReward(player, UnshatteredAttributeValues.HEALTH, 1.0d);
         });
 
         private final String id;
-        private final Item icon;
         /**
          * integer is the level
          */
         private final BiConsumer<Player, Integer> levelUpReward;
 
-        Skill(String id, Item icon, BiConsumer<Player, Integer> levelUpReward) {
+        Skill(String id, BiConsumer<Player, Integer> levelUpReward) {
             this.id = id;
-            this.icon = icon;
             this.levelUpReward = levelUpReward;
         }
 
@@ -104,8 +90,15 @@ public final class PlayerSkillsAttachment {
             return "skills.name.unshattered." + id;
         }
 
-        public Item getIcon() {
-            return icon;
+        /**
+         * modifies the base attribute value and sends a reward message
+         * @param player player having attribute added
+         * @param attribute attribute being added to
+         * @param amount amount added to attribute base
+         */
+        private static void addPlayerAttributeReward(Player player, UnshatteredAttributeValues attribute, double amount) {
+            UnshatteredAttributeValues.modifyAttributeBaseValue(player, attribute, amount);
+            player.sendSystemMessage(attributeGainMessage(attribute, amount));
         }
     }
 
@@ -169,6 +162,11 @@ public final class PlayerSkillsAttachment {
         return level;
     }
 
+    /**
+     *
+     * @param exp the total current exp for the skill
+     * @return a percentage float for the next level
+     */
     public float getPercentageToNextLevel(float exp) {
         int index = 0;
         while (index < SKILL_LEVEL_TABLE.length && exp >= SKILL_LEVEL_TABLE[index]) {
