@@ -21,6 +21,10 @@
     background: sprite(unshattered:textures/gui/crafting_screen.png);
 }
 
+.scrollable-container {
+    height: 158;
+}
+
 .base-title {
     padding-all: 2;
     margin-bottom: 8;
@@ -32,13 +36,15 @@ label {
 }
 
 .tab-container {
-    margin: 0 2 0 2;
+    margin: 0 8 0 8;
     flex-direction: row;
+    align-items: end;
     gap: 2;
 }
 
 .tab {
     background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 32, 0, 32, 11, 3, 10, 3, 0);
+    clip: scissor;
 }
 
 .tab-opened {
@@ -48,7 +54,14 @@ label {
 
 .tab-closed {
     width: 32;
+    height: 18;
+}
+
+.tab-icon {
+    width: 16;
     height: 16;
+    top: 12;
+    left: 8;
 }
 
 scroller-vertical:host {

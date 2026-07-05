@@ -1,12 +1,14 @@
 package io.github.moosyu.gui.screens;
 
 import com.lowdragmc.lowdraglib2.gui.holder.ModularUIScreen;
+import com.lowdragmc.lowdraglib2.gui.texture.SpriteTexture;
 import com.lowdragmc.lowdraglib2.gui.ui.ModularUI;
 import com.lowdragmc.lowdraglib2.gui.ui.UI;
 import com.lowdragmc.lowdraglib2.gui.ui.UIElement;
 import com.lowdragmc.lowdraglib2.gui.ui.elements.Label;
 import com.lowdragmc.lowdraglib2.gui.ui.elements.ProgressBar;
 import com.lowdragmc.lowdraglib2.gui.ui.elements.ScrollerView;
+import com.lowdragmc.lowdraglib2.gui.ui.elements.inventory.InventorySlots;
 import com.lowdragmc.lowdraglib2.gui.ui.event.UIEvents;
 import com.lowdragmc.lowdraglib2.gui.ui.style.StylesheetManager;
 import io.github.moosyu.Unshattered;
@@ -36,36 +38,45 @@ import static io.github.moosyu.Unshattered.MODID;
 
 public class ProfileScreen extends ModularUIScreen {
     public enum Tabs {
-        INVENTORY(player -> new ProfileScreen(ProfileScreen.createInventoryScreen(player), Component.literal("Inventory"))),
-        CRAFTING(player -> new ProfileScreen(ProfileScreen.createCraftingScreen(player), Component.literal("Crafting"))),
-        STATS(player -> new ProfileScreen(ProfileScreen.createStatsScreen(player), Component.literal("Stats"))),
-        SKILLS(player -> new ProfileScreen(ProfileScreen.createSkillsScreen(player), Component.literal("Skills")));
+        INVENTORY(player -> new ProfileScreen(ProfileScreen.createInventoryScreen(player), Component.literal("Inventory")), SpriteTexture.of(Identifier.fromNamespaceAndPath(MODID, "textures/gui/icons.png")).setSprite(16, 0, 16, 16)),
+        CRAFTING(player -> new ProfileScreen(ProfileScreen.createCraftingScreen(player), Component.literal("Crafting")), SpriteTexture.of(Identifier.fromNamespaceAndPath(MODID, "textures/gui/icons.png")).setSprite(0, 0, 16, 16)),
+        STATS(player -> new ProfileScreen(ProfileScreen.createStatsScreen(player), Component.literal("Stats")), SpriteTexture.of(Identifier.fromNamespaceAndPath(MODID, "textures/gui/icons.png")).setSprite(32, 0, 16, 16)),
+        SKILLS(player -> new ProfileScreen(ProfileScreen.createSkillsScreen(player), Component.literal("Skills")), SpriteTexture.of(Identifier.fromNamespaceAndPath(MODID, "textures/gui/icons.png")).setSprite(48, 0, 16, 16));
 
         public final Function<Player, Screen> createScreen;
+        private final SpriteTexture spriteTexture;
 
-        Tabs(Function<Player, Screen> createScreen) {
+        Tabs(Function<Player, Screen> createScreen, SpriteTexture spriteTexture) {
             this.createScreen = createScreen;
+            this.spriteTexture = spriteTexture;
         }
     }
 
     private static final Minecraft minecraft = Minecraft.getInstance();
+    private static final UnshatteredAttributeValues[] VISIBLE_ATTRIBUTES = Arrays.stream(UnshatteredAttributeValues.values()).filter(value -> value.type != UnshatteredAttributeTypes.INVISIBLE).toArray(UnshatteredAttributeValues[]::new);
 
     public ProfileScreen(ModularUI modularUI, Component title) {
         super(modularUI, title);
     }
 
-    private static UIElement createTabs(Player player) {
+    private static UIElement createTabs(Player player, Tabs currentTab) {
         UIElement tabContainer = new UIElement();
 
         tabContainer.addClass("tab-container");
-
         for (Tabs tab : Tabs.values()) {
+            boolean isCurrentTab = currentTab == tab;
             tabContainer.addChild(new UIElement()
-                    .addClasses("tab", "tab-closed")
+                    .addClasses("tab", isCurrentTab ? "tab-opened" : "tab-closed")
                     .addEventListener(UIEvents.CLICK, _ -> {
-                        minecraft.setScreen(tab.createScreen.apply(player));
-                        PlayClientsideSound.playClientsideSound(player, SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.UI, 0.6f);
+                        if (!isCurrentTab) {
+                            minecraft.setScreen(tab.createScreen.apply(player));
+                            PlayClientsideSound.playClientsideSound(player, SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.UI, 0.4f);
+                        }
                     })
+                    .addChild(new UIElement()
+                            .addClass("tab-icon")
+                            .style(style -> style.background(tab.spriteTexture))
+                    )
             );
         }
 
@@ -77,7 +88,7 @@ public class ProfileScreen extends ModularUIScreen {
         UIElement inventoryContainer = new UIElement();
 
         inventoryContainer.addClass("inventory-container");
-        container.addChildren(createTabs(player), inventoryContainer);
+        container.addChildren(createTabs(player, Tabs.INVENTORY), inventoryContainer);
 
         return ModularUI.of(UI.of(container, StylesheetManager.INSTANCE.getStylesheetSafe(Identifier.fromNamespaceAndPath(MODID, "lss/unshattered.lss"))));
     }
@@ -87,36 +98,30 @@ public class ProfileScreen extends ModularUIScreen {
         UIElement craftingContainer = new UIElement();
 
         craftingContainer.addClass("crafting-container");
-        container.addChildren(createTabs(player), craftingContainer);
+        container.addChildren(createTabs(player, Tabs.CRAFTING), craftingContainer);
 
         return ModularUI.of(UI.of(container, StylesheetManager.INSTANCE.getStylesheetSafe(Identifier.fromNamespaceAndPath(MODID, "lss/unshattered.lss"))));
     }
 
-    private static ModularUI createScrollableProfileScreen(String title, Consumer<ScrollerView> contentBuilder, Player player) {
+    private static ModularUI createScrollableProfileScreen(Consumer<ScrollerView> contentBuilder, Player player, Tabs currentTab) {
         UIElement profileContainer = new UIElement();
-        UIElement container = new UIElement();
         ScrollerView scrollableContainer = new ScrollerView();
+        UIElement container = new UIElement();
 
-        profileContainer.addChildren(createTabs(player), container);
-        container.addChild(new Label()
-                .setText(title)
-                .addClass("base-title")
-        );
+        profileContainer.addChildren(createTabs(player, currentTab), container);
+        scrollableContainer.addClass("scrollable-container");
         container.addChild(scrollableContainer);
         container.addClass("base-container");
 
         contentBuilder.accept(scrollableContainer);
-        // ill make this not hardcoded later when i figure out how to...
-        scrollableContainer.layout(layout -> layout.height(135));
 
         return ModularUI.of(UI.of(profileContainer, StylesheetManager.INSTANCE.getStylesheetSafe(Identifier.fromNamespaceAndPath(MODID, "lss/unshattered.lss"))));
     }
 
     public static ModularUI createStatsScreen(Player player) {
-        return createScrollableProfileScreen("Stats", scrollableContainer -> {
-            UnshatteredAttributeValues[] filteredUnshatteredAttributeValues = Arrays.stream(UnshatteredAttributeValues.values()).filter(value -> value.type != UnshatteredAttributeTypes.INVISIBLE).toArray(UnshatteredAttributeValues[]::new);
+        return createScrollableProfileScreen(scrollableContainer -> {
 
-            for (UnshatteredAttributeValues currentAttributeValue : filteredUnshatteredAttributeValues) {
+            for (UnshatteredAttributeValues currentAttributeValue : VISIBLE_ATTRIBUTES) {
                 AttributeInstance currentAttribute = player.getAttribute(currentAttributeValue.holder);
                 String percentageAddition = currentAttributeValue.percentage ? "%" : "";
                 if (currentAttribute == null) {
@@ -132,11 +137,11 @@ public class ProfileScreen extends ModularUIScreen {
                         ).textStyle(textStyle -> textStyle.textColor(currentAttributeValue.color))
                 );
             }
-        }, player);
+        }, player, Tabs.STATS);
     }
 
     public static ModularUI createSkillsScreen(Player player) {
-        return createScrollableProfileScreen("Skills", scrollableContainer -> {
+        return createScrollableProfileScreen(scrollableContainer -> {
             PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
 
             for (PlayerSkillsAttachment.Skill skill : PlayerSkillsAttachment.Skill.values()) {
@@ -148,7 +153,7 @@ public class ProfileScreen extends ModularUIScreen {
                         new ProgressBar().setProgress(skills.getPercentageToNextLevel(skills.getExp(skill))).label(UIElement::removeSelf)
                 );
             }
-        }, player);
+        }, player, Tabs.SKILLS);
     }
 
     @Override
