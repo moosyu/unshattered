@@ -15,15 +15,25 @@ import org.jspecify.annotations.NonNull;
 
 public class ChargesLayer implements GuiLayer {
     @Override
-    public void render(GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
+    public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
         final int SPRITE_SIZE = 8;
         Minecraft minecraft = Minecraft.getInstance();
         Player player = Minecraft.getInstance().player;
+        if (player == null) return;
         ItemCharges itemCharges = player.getItemInHand(InteractionHand.MAIN_HAND).get(UnshatteredDataComponents.ITEM_CHARGES);
         if (!player.level().isClientSide() || itemCharges == null || minecraft.options.hideGui || player.gameMode() != GameType.SURVIVAL) return;
         for (int i = 0; i < itemCharges.maxCharges(); i++) {
-            Identifier chargeTexture = itemCharges.maxCharges() - 1 - i < itemCharges.currentCharges() ? Identifier.fromNamespaceAndPath("unshattered", "textures/sprites/gui/charge_filled.png") : Identifier.fromNamespaceAndPath("unshattered", "textures/sprites/gui/charge_empty.png");
-            graphics.blit(RenderPipelines.GUI_TEXTURED, chargeTexture, (graphics.guiWidth() / 2) - (SPRITE_SIZE / 2) - 95 - (i * 10), graphics.guiHeight() - SPRITE_SIZE - 25, 0, 0, SPRITE_SIZE, SPRITE_SIZE, SPRITE_SIZE, SPRITE_SIZE);
+            graphics.blit(
+                    RenderPipelines.GUI_TEXTURED,
+                    Identifier.fromNamespaceAndPath("unshattered", "textures/gui/charges.png"),
+                    (graphics.guiWidth() / 2) - (SPRITE_SIZE / 2) - 95 - (i * 10),
+                    graphics.guiHeight() - SPRITE_SIZE - 25,
+                    itemCharges.maxCharges() - 1 - i < itemCharges.currentCharges() ? 8 : 0, 0,
+                    SPRITE_SIZE,
+                    SPRITE_SIZE,
+                    SPRITE_SIZE * 2,
+                    SPRITE_SIZE
+            );
         }
     }
 }

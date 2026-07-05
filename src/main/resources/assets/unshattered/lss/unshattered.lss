@@ -2,18 +2,53 @@
     width: 176;
     height: 166;
     padding-all: 4;
-    // texture location, sprite region (x, y, width, height), border size (for nine-splice)
+    // texture location, sprite region (x, y, width, height), border size (for nine-splice) left -> bottom
     background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 16, 0, 16, 16, 4, 4, 4, 4);
     scroller-view-mode: vertical;
+}
+
+.inventory-container {
+    width: 176;
+    height: 166;
+    padding-all: 4;
+    background: sprite(unshattered:textures/gui/inventory_screen.png);
+}
+
+.crafting-container {
+    width: 176;
+    height: 166;
+    padding-all: 4;
+    background: sprite(unshattered:textures/gui/crafting_screen.png);
 }
 
 .base-title {
     padding-all: 2;
     margin-bottom: 8;
+    font-size: 12;
 }
 
 label {
     margin: 3 0 3 0;
+}
+
+.tab-container {
+    margin: 0 2 0 2;
+    flex-direction: row;
+    gap: 2;
+}
+
+.tab {
+    background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 32, 0, 32, 11, 3, 10, 3, 0);
+}
+
+.tab-opened {
+    width: 32;
+    height: 32;
+}
+
+.tab-closed {
+    width: 32;
+    height: 16;
 }
 
 scroller-vertical:host {

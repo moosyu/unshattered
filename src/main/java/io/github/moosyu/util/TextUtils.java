@@ -8,7 +8,7 @@ import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class TextHelpers {
+public final class TextUtils {
     public static DecimalFormat oneDecimalFormat = new DecimalFormat("0.#");
 
     public static Component parseStyledText(String input, int baseColor) {
