@@ -30,6 +30,7 @@ import static io.github.moosyu.Unshattered.MODID;
 
 @EventBusSubscriber(modid = MODID)
 public class ItemTooltipHandler {
+    final static int MAX_WIDTH = 200;
     @SubscribeEvent
     public static void onItemTooltip(ItemTooltipEvent event) {
         if (event.getEntity() != null && !event.getEntity().level().isClientSide()) return;
@@ -64,17 +65,17 @@ public class ItemTooltipHandler {
 
         if (itemDescription) {
             if (hasModifiers) tooltipComponents.add(Component.empty());
-            tooltipComponents.add(TextUtils.parseStyledText(Component.translatable("item.description.unshattered." + BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath()).getString(), 0xFFAAAAAA));
+            TextUtils.addWrappedText(tooltipComponents, TextUtils.parseStyledText(Component.translatable("item.description.unshattered." + BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath()).getString(), 0xFFAAAAAA), MAX_WIDTH);
         }
 
         if (itemAbility != null) {
             tooltipComponents.add(Component.empty());
             if (itemAbility.passive()) {
                 tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.abilityId())).withColor(0xFFFFAA00));
-                tooltipComponents.add(TextUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityId()).getString(), 0xFFAAAAAA));
+                TextUtils.addWrappedText(tooltipComponents, TextUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityId()).getString(), 0xFFAAAAAA), MAX_WIDTH);
             } else {
                 tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.abilityId())).withColor(0xFFFFAA00).append(Component.literal(" RIGHT CLICK").withColor(0xFFFFFF55).withStyle(ChatFormatting.BOLD)));
-                tooltipComponents.add(TextUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityId()).getString(), 0xFFAAAAAA));
+                TextUtils.addWrappedText(tooltipComponents,TextUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityId()).getString(), 0xFFAAAAAA), MAX_WIDTH);
 
                 if (itemAbility.manaCost() > 0) tooltipComponents.add(Component.literal("Mana Cost: ").withColor(0xFF555555).append(Component.literal(String.valueOf(itemAbility.manaCost())).withColor(0xFF00AAAA)));
                 if (itemAbility.cooldown() > 0) tooltipComponents.add(Component.literal("Cooldown: ").withColor(0xFF555555).append(Component.literal(String.format("%.1f", (float) itemAbility.cooldown() / 20 /* convert ticks to seconds */)).append("s").withColor(0xFF55FF55)));

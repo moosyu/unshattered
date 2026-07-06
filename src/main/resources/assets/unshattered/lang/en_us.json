@@ -88,18 +88,18 @@
   "item.ability.unshattered.giant_cleaver_cleave": "Cleave",
   "item.ability.unshattered.fish_out_of_water": "Fish Out Of Water",
 
-  "item.ability.description.unshattered.speed_boost": "Grants [color=0xFFFFFFFF]+50✦ Speed[/color] for [color=0xFF55FF55]30s[/color].",
-  "item.ability.description.unshattered.mind_blowing": "Deals [color=0xFF55FF55]+100%[/color] damage to undead mobs.",
-  "item.ability.description.unshattered.ignition": "Ignites enemies for [color=0xFF55FF55]3s[/color].",
-  "item.ability.description.unshattered.zombie_sword_instant_heal": "Heal for [color=0xFFFF5555]120[/color] + [color=0xFFFF5555]5%❤[/color].",
-  "item.ability.description.unshattered.ornate_zombie_sword_instant_heal": "Heal for [color=0xFFFF5555]144[/color] + [color=0xFFFF5555]5%❤[/color].",
-  "item.ability.description.unshattered.florid_zombie_sword_instant_heal": "Heal for [color=0xFFFF5555]168[/color] + [color=0xFFFF5555]5%❤[/color].",
-  "item.ability.description.unshattered.rusty_cleaver_cleave": "When hitting an entity, monsters in a [color=0xFF55FF55]2[/color] block radius will be hit for [color=0xFFFF5555]10%[/color] of that damage.",
-  "item.ability.description.unshattered.golden_cleaver_cleave": "When hitting an entity, monsters in a [color=0xFF55FF55]3[/color] block range will be hit for [color=0xFFFF5555]20%[/color] of that damage.",
-  "item.ability.description.unshattered.super_cleaver_cleave": "When hitting an entity, monsters in a [color=0xFF55FF55]3[/color] block range will be hit for [color=0xFFFF5555]30%[/color] of that damage.",
-  "item.ability.description.unshattered.hyper_cleaver_cleave": "When hitting an entity, monsters in a [color=0xFF55FF55]4[/color] block range will be hit for [color=0xFFFF5555]40%[/color] of that damage.",
-  "item.ability.description.unshattered.giant_cleaver_cleave": "When hitting an entity, monsters in a [color=0xFF55FF55]5[/color] block range will be hit for [color=0xFFFF5555]50%[/color] of that damage.",
-  "item.ability.description.unshattered.fish_out_of_water": "You can only damage [color=0xFF5555FF]aquatic[/color] enemies with this fishing rod!",
+  "item.ability.description.unshattered.speed_boost": "Grants [colour=0xFFFFFFFF]+50✦ Speed[/colour] for [colour=0xFF55FF55]30s[/colour].",
+  "item.ability.description.unshattered.mind_blowing": "Deals [colour=0xFF55FF55]+100%[/colour] damage to undead mobs.",
+  "item.ability.description.unshattered.ignition": "Ignites enemies for [colour=0xFF55FF55]3s[/colour].",
+  "item.ability.description.unshattered.zombie_sword_instant_heal": "Heal for [colour=0xFFFF5555]120[/colour] + [colour=0xFFFF5555]5%❤[/colour].",
+  "item.ability.description.unshattered.ornate_zombie_sword_instant_heal": "Heal for [colour=0xFFFF5555]144[/colour] + [colour=0xFFFF5555]5%❤[/colour].",
+  "item.ability.description.unshattered.florid_zombie_sword_instant_heal": "Heal for [colour=0xFFFF5555]168[/colour] + [colour=0xFFFF5555]5%❤[/colour].",
+  "item.ability.description.unshattered.rusty_cleaver_cleave": "When hitting an entity, monsters in a [colour=0xFF55FF55]2[/colour] block radius will be hit for [colour=0xFFFF5555]10%[/colour] of that damage.",
+  "item.ability.description.unshattered.golden_cleaver_cleave": "When hitting an entity, monsters in a [colour=0xFF55FF55]3[/colour] block range will be hit for [colour=0xFFFF5555]20%[/colour] of that damage.",
+  "item.ability.description.unshattered.super_cleaver_cleave": "When hitting an entity, monsters in a [colour=0xFF55FF55]3[/colour] block range will be hit for [colour=0xFFFF5555]30%[/colour] of that damage.",
+  "item.ability.description.unshattered.hyper_cleaver_cleave": "When hitting an entity, monsters in a [colour=0xFF55FF55]4[/colour] block range will be hit for [colour=0xFFFF5555]40%[/colour] of that damage.",
+  "item.ability.description.unshattered.giant_cleaver_cleave": "When hitting an entity, monsters in a [colour=0xFF55FF55]5[/colour] block range will be hit for [colour=0xFFFF5555]50%[/colour] of that damage.",
+  "item.ability.description.unshattered.fish_out_of_water": "You can only damage [colour=0xFF5555FF]aquatic[/colour] enemies with this fishing rod!",
 
   "block.unshattered.fig_log": "Fig Log",
   "block.unshattered.breakable_fig_log": "Breakable Fig Log",
@@ -130,7 +130,7 @@
   "item.description.unshattered.swamp_the_fish": "I once tried a clear pond. too shiny. Never again.",
   "item.description.unshattered.zoop_the_fish": "Keep me in here please.",
   "item.description.unshattered.fig_log": "Each ring tells tales of sun-kissed days. Hold it close, and you might hear its stories.",
-  "item.description.unshattered.bedrock": "[color=0xFFFF5555]I guess you have this now.[/color]",
+  "item.description.unshattered.bedrock": "[colour=0xFFFF5555]I guess you have this now.[/colour]",
   "item.description.unshattered.cake_soul": "What does it all mean???",
   "item.description.unshattered.rusty_cleaver": "Blunt yet lacking edge.",
   "item.description.unshattered.golden_cleaver": "Only superficially sharp, I wonder who made it?",
@@ -250,5 +250,10 @@
   "fishing.messages.minecraft.glow_squid": "Pitch darkness reveals a Glow Squid.",
 
   "misc.messages.unshattered.wizardman_request": "Help Wizardman",
-  "misc.messages.unshattered.wizardman_response_overworld": "You feel the slightest vibration from far away."
+  "misc.messages.unshattered.wizardman_response_overworld": "You feel the slightest vibration from across time and space.",
+
+  "gui.title.unshattered.inventory": "Inventory",
+  "gui.title.unshattered.crafting": "Crafting",
+  "gui.title.unshattered.stats": "Stats",
+  "gui.title.unshattered.skills": "Skills"
 }

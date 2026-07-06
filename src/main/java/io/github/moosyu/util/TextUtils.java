@@ -1,19 +1,30 @@
 package io.github.moosyu.util;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
 
 import java.text.DecimalFormat;
+import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class TextUtils {
     public static DecimalFormat oneDecimalFormat = new DecimalFormat("0.#");
 
+    /**
+     *
+     * @param input string input to be converted to component
+     * @param baseColor text colour to be used when section's colour is unspecified
+     * @return parses components to work in bbcode-esque format where you can select colours with [colour=...] [/colour] in hexcode format as well as [i][/i] for itallics
+     */
     public static Component parseStyledText(String input, int baseColor) {
         MutableComponent result = Component.empty();
-        Matcher matcher = Pattern.compile("\\[color=(0x[0-9A-Fa-f]+)](.*?)\\[/color]|\\[i](.*?)\\[/i]").matcher(input);
+        Matcher matcher = Pattern.compile("\\[colour=(0x[0-9A-Fa-f]+)](.*?)\\[/colour]|\\[i](.*?)\\[/i]").matcher(input);
         int lastEnd = 0;
 
         while (matcher.find()) {
@@ -42,7 +53,11 @@ public final class TextUtils {
         return result;
     }
 
-    // https://www.geeksforgeeks.org/dsa/converting-decimal-number-lying-between-1-to-3999-to-roman-numerals/ 💋
+    /**
+     * <a href="https://www.geeksforgeeks.org/dsa/converting-decimal-number-lying-between-1-to-3999-to-roman-numerals/">taken from geeksforgeeks 💋</a>
+     * @param x the value to be converted to a roman numeral (has to be in the range 1-3999)
+     * @return a roman numeral string
+     */
     public static String convertTextToRomanNumeral(int x) {
         int[] base = {1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000};
         String[] sym = {"I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M"};
@@ -66,5 +81,27 @@ public final class TextUtils {
         }
 
         return res.toString();
+    }
+
+    /**
+     *
+     * @param tooltip tooltip for wrapped text to be added back to
+     * @param text text component
+     * @param maxWidth width to be wrapped by in (??)
+     */
+    public static void addWrappedText(List<Component> tooltip, Component text, int maxWidth) {
+    Font font = Minecraft.getInstance().font;
+    List<FormattedText> lines = font.getSplitter().splitLines(text, maxWidth, text.getStyle());
+
+    for (FormattedText line : lines) {
+            MutableComponent lineComponent = Component.empty();
+
+            line.visit((style, string) -> {
+                lineComponent.append(Component.literal(string).withStyle(style));
+                return Optional.empty();
+            }, text.getStyle());
+
+            tooltip.add(lineComponent);
+        }
     }
 }

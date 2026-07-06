@@ -467,6 +467,7 @@ public class UnshatteredItems {
     public static final DeferredItem<Item> ROGUE_SWORD = ITEMS.registerItem("rogue_sword", RogueSword::new);
 
     public static final DeferredItem<Item> SQUIRE_SWORD = ITEMS.registerItem("squire_sword", props -> new Item(props
+            .stacksTo(1)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.SWORD)
             .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.UNCOMMON)
             .component(UnshatteredDataComponents.ITEM_SELL_VALUE.get(), 2500)

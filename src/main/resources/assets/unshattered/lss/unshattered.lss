@@ -7,18 +7,53 @@
     scroller-view-mode: vertical;
 }
 
-.inventory-container {
+.base-container, .inventory-container, .crafting-screen-container {
     width: 176;
     height: 166;
-    padding-all: 4;
+    // just to try to position the menu more like the vanilla inventory
+    margin-bottom: 30;
+}
+
+.inventory-container {
     background: sprite(unshattered:textures/gui/inventory_screen.png);
 }
 
-.crafting-container {
-    width: 176;
-    height: 166;
-    padding-all: 4;
+.crafting-screen-container {
     background: sprite(unshattered:textures/gui/crafting_screen.png);
+    gap: 13;
+}
+
+.crafting-container {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 9;
+}
+
+.crafting-results-slot {
+    margin: 0 16 0 55;
+    transform: scale(2);
+}
+
+.inventory-container, .crafting-screen-container {
+    padding: 7 4 4 7;
+}
+
+item-slot {
+    background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 32, 11, 18, 18);
+}
+
+.armour-slots-container {
+    margin-bottom: 4;
+    flex-direction: column;
+}
+
+.inventory-slots-container {
+    flex-direction: row;
+}
+
+.hotbar-slots-container {
+    flex-direction: row;
+    margin-top: 4;
 }
 
 .scrollable-container {
