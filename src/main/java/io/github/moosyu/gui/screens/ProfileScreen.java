@@ -1,6 +1,7 @@
 package io.github.moosyu.gui.screens;
 
 import com.lowdragmc.lowdraglib2.gui.factory.PlayerUIMenuType;
+import com.lowdragmc.lowdraglib2.gui.texture.IGuiTexture;
 import com.lowdragmc.lowdraglib2.gui.texture.SpriteTexture;
 import com.lowdragmc.lowdraglib2.gui.ui.ModularUI;
 import com.lowdragmc.lowdraglib2.gui.ui.UI;
@@ -10,6 +11,8 @@ import com.lowdragmc.lowdraglib2.gui.ui.elements.inventory.InventorySlots;
 import com.lowdragmc.lowdraglib2.gui.ui.event.HoverTooltips;
 import com.lowdragmc.lowdraglib2.gui.ui.event.UIEvents;
 import com.lowdragmc.lowdraglib2.gui.ui.style.StylesheetManager;
+import com.lowdragmc.lowdraglib2.gui.ui.styletemplate.Sprites;
+import dev.vfyjxf.taffy.style.AlignContent;
 import dev.vfyjxf.taffy.style.FlexDirection;
 import io.github.moosyu.Unshattered;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
@@ -108,23 +111,31 @@ public class ProfileScreen {
             craftingTableContainer.addChild(rowSlots);
         }
 
-        for (int slot = 0; slot < 9; slot++) {
-            quickCraftingContainer.addChild(new ItemSlot());
+        for (int slot = 0; slot < 3; slot++) {
+            // slot + 1 because 0 is reserved for the results
+            quickCraftingContainer.addChild(new ItemSlot().bind(grid.result, slot + 1));
         }
 
         craftingContainer.addChildren(
                 craftingTableContainer,
-                new ItemSlot().bind(grid.result, 0).addClass("crafting-results-slot"),
+                new UIElement().style(style -> style.background(SpriteTexture.of(Identifier.fromNamespaceAndPath(MODID, "textures/gui/unshattered_base_gui.png"))
+                        .setSprite(0, 32, 25, 15)))
+                        .layout(layout -> {
+                            layout.width(25);
+                            layout.height(15);
+                        }),
+                new ItemSlot().bind(grid.result, 0),
                 quickCraftingContainer
         );
         craftingContainer.addClass("crafting-container");
-        craftingScreenContainer.addChildren(craftingContainer, new InventorySlots());
+        craftingScreenContainer.addChildren(craftingContainer, new InventorySlots()).layout(layout -> layout.justifyContent(AlignContent.CENTER));
+
         return craftingScreenContainer;
     }
 
     public static class ProfileCraftingGrid {
         public final ItemStacksResourceHandler input;
-        public final ItemStacksResourceHandler result = new ItemStacksResourceHandler(1);
+        public final ItemStacksResourceHandler result = new ItemStacksResourceHandler(4);
 
         public ProfileCraftingGrid() {
             this.input = new ItemStacksResourceHandler(9);
@@ -133,14 +144,11 @@ public class ProfileScreen {
 
     private static UIElement createScrollableContent(Consumer<ScrollerView> contentBuilder) {
         ScrollerView scrollableContainer = new ScrollerView();
-        UIElement container = new UIElement();
 
         scrollableContainer.addClass("scrollable-container");
-        container.addChild(scrollableContainer);
-        container.addClass("base-container");
-
         contentBuilder.accept(scrollableContainer);
-        return container;
+
+        return scrollableContainer;
     }
 
     private static Consumer<ScrollerView> createStatsContent(Player player) {
