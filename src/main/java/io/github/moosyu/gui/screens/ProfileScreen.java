@@ -1,14 +1,12 @@
 package io.github.moosyu.gui.screens;
 
-import com.lowdragmc.lowdraglib2.gui.holder.ModularUIScreen;
+import com.lowdragmc.lowdraglib2.gui.factory.PlayerUIMenuType;
 import com.lowdragmc.lowdraglib2.gui.texture.SpriteTexture;
 import com.lowdragmc.lowdraglib2.gui.ui.ModularUI;
 import com.lowdragmc.lowdraglib2.gui.ui.UI;
 import com.lowdragmc.lowdraglib2.gui.ui.UIElement;
-import com.lowdragmc.lowdraglib2.gui.ui.elements.ItemSlot;
-import com.lowdragmc.lowdraglib2.gui.ui.elements.Label;
-import com.lowdragmc.lowdraglib2.gui.ui.elements.ProgressBar;
-import com.lowdragmc.lowdraglib2.gui.ui.elements.ScrollerView;
+import com.lowdragmc.lowdraglib2.gui.ui.elements.*;
+import com.lowdragmc.lowdraglib2.gui.ui.elements.inventory.InventorySlots;
 import com.lowdragmc.lowdraglib2.gui.ui.event.HoverTooltips;
 import com.lowdragmc.lowdraglib2.gui.ui.event.UIEvents;
 import com.lowdragmc.lowdraglib2.gui.ui.style.StylesheetManager;
@@ -18,136 +16,135 @@ import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.attributes.UnshatteredAttributeTypes;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.util.PlayClientsideSound;
 import io.github.moosyu.util.TextUtils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.input.KeyEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
-import org.jspecify.annotations.NonNull;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 import static io.github.moosyu.Unshattered.MODID;
 
-public class ProfileScreen extends ModularUIScreen {
-    public enum Tabs {
-        INVENTORY(player -> new ProfileScreen(ProfileScreen.createInventoryScreen(player), Component.translatable("gui.title.unshattered.inventory")), SpriteTexture.of(Identifier.fromNamespaceAndPath(MODID, "textures/gui/icons.png")).setSprite(16, 0, 16, 16)),
-        CRAFTING(player -> new ProfileScreen(ProfileScreen.createCraftingScreen(player), Component.translatable("gui.title.unshattered.crafting")), SpriteTexture.of(Identifier.fromNamespaceAndPath(MODID, "textures/gui/icons.png")).setSprite(0, 0, 16, 16)),
-        STATS(player -> new ProfileScreen(ProfileScreen.createStatsScreen(player), Component.translatable("gui.title.unshattered.stats")), SpriteTexture.of(Identifier.fromNamespaceAndPath(MODID, "textures/gui/icons.png")).setSprite(32, 0, 16, 16)),
-        SKILLS(player -> new ProfileScreen(ProfileScreen.createSkillsScreen(player), Component.translatable("gui.title.unshattered.skills")), SpriteTexture.of(Identifier.fromNamespaceAndPath(MODID, "textures/gui/icons.png")).setSprite(48, 0, 16, 16));
+public class ProfileScreen {
+    public static final Identifier PROFILE_UI_ID = Identifier.fromNamespaceAndPath(MODID, "profile");
 
-        public final Function<Player, Screen> createScreen;
+    public enum Tabs {
+        INVENTORY("inventory", SpriteTexture.of(Identifier.fromNamespaceAndPath(MODID, "textures/gui/icons.png")).setSprite(16, 0, 16, 16)),
+        CRAFTING("crafting", SpriteTexture.of(Identifier.fromNamespaceAndPath(MODID, "textures/gui/icons.png")).setSprite(0, 0, 16, 16)),
+        STATS("stats", SpriteTexture.of(Identifier.fromNamespaceAndPath(MODID, "textures/gui/icons.png")).setSprite(32, 0, 16, 16)),
+        SKILLS("skills", SpriteTexture.of(Identifier.fromNamespaceAndPath(MODID, "textures/gui/icons.png")).setSprite(48, 0, 16, 16));
+
+        public final String id;
         private final SpriteTexture spriteTexture;
 
-        Tabs(Function<Player, Screen> createScreen, SpriteTexture spriteTexture) {
-            this.createScreen = createScreen;
+        Tabs(String id, SpriteTexture spriteTexture) {
+            this.id = id;
             this.spriteTexture = spriteTexture;
         }
     }
 
-    private static final Minecraft minecraft = Minecraft.getInstance();
-    private static final UnshatteredAttributeValues[] VISIBLE_ATTRIBUTES = Arrays.stream(UnshatteredAttributeValues.values()).filter(value -> value.type != UnshatteredAttributeTypes.INVISIBLE).toArray(UnshatteredAttributeValues[]::new);
+    private static final UnshatteredAttributeValues[] VISIBLE_ATTRIBUTES = Arrays.stream(UnshatteredAttributeValues.values())
+            .filter(value -> value.type != UnshatteredAttributeTypes.INVISIBLE)
+            .toArray(UnshatteredAttributeValues[]::new);
 
-    public ProfileScreen(ModularUI modularUI, Component title) {
-        super(modularUI, title);
+
+    public static void openProfile(Player player) {
+        PlayerUIMenuType.openUI(player, PROFILE_UI_ID);
     }
 
-    private static UIElement createTabs(Player player, Tabs currentTab) {
-        UIElement tabContainer = new UIElement();
+    public static ModularUI createProfileScreen(Player player) {
+        TabView tabView = new TabView();
 
-        tabContainer.addClass("tab-container");
-        for (Tabs tab : Tabs.values()) {
-            boolean isCurrentTab = currentTab == tab;
-            tabContainer.addChild(new UIElement()
-                    .addClasses("tab", isCurrentTab ? "tab-opened" : "tab-closed")
-                    .addEventListener(UIEvents.CLICK, _ -> {
-                        if (!isCurrentTab) {
-                            minecraft.setScreen(tab.createScreen.apply(player));
-                            PlayClientsideSound.playClientsideSound(player, SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.UI, 0.4f);
-                        }
-                    })
-                    .addEventListener(UIEvents.HOVER_TOOLTIPS, event -> {
-                        event.hoverTooltips = HoverTooltips.empty().append(Component.translatable("gui.title.unshattered." + tab.name().toLowerCase()));
-                    })
-                    .addChild(new UIElement()
-                            .addClass("tab-icon")
-                            .style(style -> style.background(tab.spriteTexture))
-                    )
-            );
-        }
+        tabView.addTab(createTabHeader(Tabs.INVENTORY), createInventoryContent(player));
+        tabView.addTab(createTabHeader(Tabs.CRAFTING), createCraftingContent());
+        tabView.addTab(createTabHeader(Tabs.STATS), createScrollableContent(createStatsContent(player)));
+        tabView.addTab(createTabHeader(Tabs.SKILLS), createScrollableContent(createSkillsContent(player)));
 
-        return tabContainer;
+        return ModularUI.of(UI.of(tabView, StylesheetManager.INSTANCE.getStylesheetSafe(Identifier.fromNamespaceAndPath(MODID, "lss/unshattered.lss"))), player);
     }
 
-    public static ModularUI createInventoryScreen(Player player) {
-        UIElement container = new UIElement();
+    private static Tab createTabHeader(Tabs tab) {
+        Tab header = new Tab();
+        header.addEventListener(UIEvents.HOVER_TOOLTIPS, event -> event.hoverTooltips = HoverTooltips.empty().append(Component.translatable("gui.title.unshattered." + tab.name().toLowerCase())))
+                .addChild(new UIElement().style(style -> style.background(tab.spriteTexture)));
+        return header;
+    }
+
+    private static UIElement createInventoryContent(Player player) {
         UIElement inventoryContainer = new UIElement();
         UIElement armourContainer = new UIElement();
         Inventory inventory = player.getInventory();
 
-        inventoryContainer.addClass("inventory-container");
-
-        // armour
         armourContainer.addClass("armour-slots-container");
         armourContainer.addChildren(
-                new ItemSlot(new Slot(inventory, 103, 0, 0)),
-                new ItemSlot(new Slot(inventory, 102, 0, 0)),
-                new ItemSlot(new Slot(inventory, 101, 0, 0)),
-                new ItemSlot(new Slot(inventory, 100, 0, 0))
+                new ItemSlot(new Slot(inventory, 39, 0, 0)), // helmet
+                new ItemSlot(new Slot(inventory, 38, 0, 0)), // chestplate
+                new ItemSlot(new Slot(inventory, 37, 0, 0)), // leggings
+                new ItemSlot(new Slot(inventory, 36, 0, 0))  // boots
         );
-        inventoryContainer.addChildren(armourContainer, createInventorySlots(player));
 
-        container.addChildren(createTabs(player, Tabs.INVENTORY), inventoryContainer);
-
-        return ModularUI.of(UI.of(container, StylesheetManager.INSTANCE.getStylesheetSafe(Identifier.fromNamespaceAndPath(MODID, "lss/unshattered.lss"))));
+        inventoryContainer.addChildren(armourContainer, new InventorySlots());
+        return inventoryContainer;
     }
 
-    public static ModularUI createCraftingScreen(Player player) {
-        UIElement container = new UIElement();
+    private static UIElement createCraftingContent() {
         UIElement craftingScreenContainer = new UIElement();
         UIElement craftingContainer = new UIElement();
         UIElement craftingTableContainer = new UIElement();
         UIElement quickCraftingContainer = new UIElement();
+        ProfileCraftingGrid grid = new ProfileCraftingGrid();
 
         for (int row = 0; row < 3; row++) {
             UIElement rowSlots = new UIElement().layout(layout -> layout.flexDirection(FlexDirection.ROW));
-            for (int slot = 0; slot < 3; slot++) {
-                rowSlots.addChild(new ItemSlot());
+            for (int col = 0; col < 3; col++) {
+                int index = row * 3 + col;
+                rowSlots.addChild(new ItemSlot().bind(grid.input, index));
             }
             craftingTableContainer.addChild(rowSlots);
         }
 
-        for (int row = 0; row < 3; row++) {
+        for (int slot = 0; slot < 9; slot++) {
             quickCraftingContainer.addChild(new ItemSlot());
         }
 
         craftingContainer.addChildren(
                 craftingTableContainer,
-                new ItemSlot().addClass("crafting-results-slot"),
+                new ItemSlot().bind(grid.result, 0).addClass("crafting-results-slot"),
                 quickCraftingContainer
         );
         craftingContainer.addClass("crafting-container");
-        craftingScreenContainer.addClass("crafting-screen-container");
-        craftingScreenContainer.addChildren(craftingContainer, createInventorySlots(player));
-        container.addChildren(createTabs(player, Tabs.CRAFTING), craftingScreenContainer);
-
-        return ModularUI.of(UI.of(container, StylesheetManager.INSTANCE.getStylesheetSafe(Identifier.fromNamespaceAndPath(MODID, "lss/unshattered.lss"))));
+        craftingScreenContainer.addChildren(craftingContainer, new InventorySlots());
+        return craftingScreenContainer;
     }
 
-    public static ModularUI createStatsScreen(Player player) {
-        return createScrollableProfileScreen(scrollableContainer -> {
+    public static class ProfileCraftingGrid {
+        public final ItemStacksResourceHandler input;
+        public final ItemStacksResourceHandler result = new ItemStacksResourceHandler(1);
 
+        public ProfileCraftingGrid() {
+            this.input = new ItemStacksResourceHandler(9);
+        }
+    }
+
+    private static UIElement createScrollableContent(Consumer<ScrollerView> contentBuilder) {
+        ScrollerView scrollableContainer = new ScrollerView();
+        UIElement container = new UIElement();
+
+        scrollableContainer.addClass("scrollable-container");
+        container.addChild(scrollableContainer);
+        container.addClass("base-container");
+
+        contentBuilder.accept(scrollableContainer);
+        return container;
+    }
+
+    private static Consumer<ScrollerView> createStatsContent(Player player) {
+        return scrollableContainer -> {
             for (UnshatteredAttributeValues currentAttributeValue : VISIBLE_ATTRIBUTES) {
                 AttributeInstance currentAttribute = player.getAttribute(currentAttributeValue.holder);
                 String percentageAddition = currentAttributeValue.percentage ? "%" : "";
@@ -157,18 +154,20 @@ public class ProfileScreen extends ModularUIScreen {
                 }
 
                 scrollableContainer.addScrollViewChild(new Label().setText(
-                                currentAttributeValue.symbol + " " +
-                                        Component.translatable("attribute.name.unshattered." + currentAttributeValue.id).getString()
-                                        + ": " + TextUtils.oneDecimalFormat.format(currentAttribute.getBaseValue()) + percentageAddition +
-                                        (currentAttribute.getValue() - currentAttribute.getBaseValue() > 0 ? " (" + TextUtils.oneDecimalFormat.format(currentAttribute.getValue()) + percentageAddition + ")" : "")
+                        currentAttributeValue.symbol + " " +
+                                Component.translatable("attribute.name.unshattered." + currentAttributeValue.id).getString()
+                                + ": " + TextUtils.oneDecimalFormat.format(currentAttribute.getBaseValue()) + percentageAddition +
+                                (currentAttribute.getValue() - currentAttribute.getBaseValue() > 0
+                                        ? " (" + TextUtils.oneDecimalFormat.format(currentAttribute.getValue()) + percentageAddition + ")"
+                                        : "")
                         ).textStyle(textStyle -> textStyle.textColor(currentAttributeValue.color))
                 );
             }
-        }, player, Tabs.STATS);
+        };
     }
 
-    public static ModularUI createSkillsScreen(Player player) {
-        return createScrollableProfileScreen(scrollableContainer -> {
+    private static Consumer<ScrollerView> createSkillsContent(Player player) {
+        return scrollableContainer -> {
             PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
 
             for (PlayerSkillsAttachment.Skill skill : PlayerSkillsAttachment.Skill.values()) {
@@ -180,67 +179,6 @@ public class ProfileScreen extends ModularUIScreen {
                         new ProgressBar().setProgress(skills.getPercentageToNextLevel(skills.getExp(skill))).label(UIElement::removeSelf)
                 );
             }
-        }, player, Tabs.SKILLS);
-    }
-
-    private static ModularUI createScrollableProfileScreen(Consumer<ScrollerView> contentBuilder, Player player, Tabs currentTab) {
-        UIElement profileContainer = new UIElement();
-        ScrollerView scrollableContainer = new ScrollerView();
-        UIElement container = new UIElement();
-
-        profileContainer.addChildren(createTabs(player, currentTab), container);
-        scrollableContainer.addClass("scrollable-container");
-        container.addChild(scrollableContainer);
-        container.addClass("base-container");
-
-        contentBuilder.accept(scrollableContainer);
-
-        return ModularUI.of(UI.of(profileContainer, StylesheetManager.INSTANCE.getStylesheetSafe(Identifier.fromNamespaceAndPath(MODID, "lss/unshattered.lss"))));
-    }
-
-    private static UIElement createInventorySlots(Player player) {
-        UIElement inventoryContainer = new UIElement();
-        Inventory inventory = player.getInventory();
-
-        // main inventory
-        for (int row = 0; row < 3; row++) {
-            UIElement inventorySlotsContainer = new UIElement();
-            inventorySlotsContainer.addClass("inventory-slots-container");
-            for (int col = 0; col < 9; col++) {
-                int slot = 9 + row * 9 + col;
-                inventorySlotsContainer.addChild(
-                        new ItemSlot(new Slot(inventory, slot, 0, 0))
-                );
-            }
-            inventoryContainer.addChild(inventorySlotsContainer);
-        }
-
-        // hotbar
-        UIElement hotbarSlotsContainer = new UIElement();
-        hotbarSlotsContainer.addClass("hotbar-slots-container");
-        for (int slot = 0; slot < 9; slot++) {
-            hotbarSlotsContainer.addChild(
-                    new ItemSlot(new Slot(inventory, slot, 0, 0))
-            );
-        }
-        inventoryContainer.addChild(hotbarSlotsContainer);
-        return inventoryContainer;
-    }
-
-    @Override
-    public void extractBackground(@NonNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-        // gets the dim background again, probably remove this when this is an actual thing (assume it's not already and im not just dumb)
-        this.extractMenuBackground(graphics);
-    }
-
-    // so you can close with e too just like the real inventory
-    @Override
-    public boolean keyPressed(KeyEvent event) {
-        if (event.isEscape() || minecraft.options.keyInventory.getKey().getValue() == event.key()) {
-            this.onClose();
-            return true;
-        }
-
-        return false;
+        };
     }
 }

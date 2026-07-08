@@ -7,17 +7,6 @@
     scroller-view-mode: vertical;
 }
 
-.base-container, .inventory-container, .crafting-screen-container {
-    width: 176;
-    height: 166;
-    // just to try to position the menu more like the vanilla inventory
-    margin-bottom: 30;
-}
-
-.inventory-container {
-    background: sprite(unshattered:textures/gui/inventory_screen.png);
-}
-
 .crafting-screen-container {
     background: sprite(unshattered:textures/gui/crafting_screen.png);
     gap: 13;
@@ -70,13 +59,6 @@ label {
     margin: 3 0 3 0;
 }
 
-.tab-container {
-    margin: 0 8 0 8;
-    flex-direction: row;
-    align-items: end;
-    gap: 2;
-}
-
 .tab {
     background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 32, 0, 32, 11, 3, 10, 3, 0);
     clip: scissor;
@@ -92,11 +74,25 @@ label {
     height: 18;
 }
 
-.tab-icon {
-    width: 16;
-    height: 16;
-    top: 12;
-    left: 8;
+// tab
+.__tab-view_tab_content_container__ {
+  background: built-in(ui-mc:BORDER_4);
+  width: 176;
+  height: 166;
+  // just to try to position the menu more like the vanilla inventory
+  margin-bottom: 30;
+}
+
+tab-view .__tab-view_tab_scroller__ {
+  margin-bottom: -4;
+}
+
+tab:host {
+  base-background: built-in(ui-mc:TAB_OFF);
+  hover-background: built-in(ui-mc:TAB_OFF) color(#ddd);
+  pressed-background: built-in(ui-mc:TAB_ON);
+  padding-all: 4;
+  height: 18;
 }
 
 scroller-vertical:host {

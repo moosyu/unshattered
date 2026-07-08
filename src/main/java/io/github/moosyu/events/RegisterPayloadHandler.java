@@ -1,13 +1,7 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.packets.DamageNumberPacket;
-import io.github.moosyu.packets.DeathSoundEffectPacket;
-import io.github.moosyu.packets.ExpSoundEffectPacket;
-import io.github.moosyu.packets.ZombieSwordEffectsPacket;
-import io.github.moosyu.packets.handlers.DamageNumberHandler;
-import io.github.moosyu.packets.handlers.DeathSoundEffectPayloadHandler;
-import io.github.moosyu.packets.handlers.ExpSoundEffectPayloadHandler;
-import io.github.moosyu.packets.handlers.ZombieSwordEffectsPayloadHandler;
+import io.github.moosyu.packets.*;
+import io.github.moosyu.packets.handlers.*;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -24,5 +18,6 @@ public class RegisterPayloadHandler {
         registrar.playToClient(ExpSoundEffectPacket.TYPE, ExpSoundEffectPacket.STREAM_CODEC, ExpSoundEffectPayloadHandler::handleData);
         registrar.playToClient(DeathSoundEffectPacket.TYPE, DeathSoundEffectPacket.STREAM_CODEC, DeathSoundEffectPayloadHandler::handleData);
         registrar.playToClient(DamageNumberPacket.TYPE, DamageNumberPacket.STREAM_CODEC, DamageNumberHandler::handleData);
+        registrar.playToServer(OpenProfilePayload.TYPE, OpenProfilePayload.STREAM_CODEC, OpenProfileHandler::handleData);
     }
 }
