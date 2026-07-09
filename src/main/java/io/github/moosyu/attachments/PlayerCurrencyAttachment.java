@@ -7,7 +7,6 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
 public final class PlayerCurrencyAttachment {
-
     public int coins;
     public int motes;
 

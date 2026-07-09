@@ -21,4 +21,6 @@ public final class UnshatteredDataComponents {
     public static final Supplier<DataComponentType<ItemAbility>> ITEM_ABILITY = DATA_COMPONENTS.registerComponentType("item_ability", builder -> builder.persistent(ItemAbility.CODEC));
     public static final Supplier<DataComponentType<ItemCharges>> ITEM_CHARGES = DATA_COMPONENTS.registerComponentType("item_charges", builder -> builder.persistent(ItemCharges.CODEC));
     public static final Supplier<DataComponentType<Integer>> ITEM_SELL_VALUE = DATA_COMPONENTS.registerComponentType("item_sell_value", builder -> builder.persistent(Codec.INT));
+    public static final Supplier<DataComponentType<Float>> ITEM_EXP_REWARD = DATA_COMPONENTS.registerComponentType("item_exp_reward", builder -> builder.persistent(Codec.FLOAT));
+    public static final Supplier<DataComponentType<Boolean>> ITEM_COLLECTABLE = DATA_COMPONENTS.registerComponentType("item_collectable", builder -> builder.persistent(Codec.BOOL));
 }

@@ -15,6 +15,7 @@ import com.lowdragmc.lowdraglib2.gui.ui.styletemplate.Sprites;
 import dev.vfyjxf.taffy.style.AlignContent;
 import dev.vfyjxf.taffy.style.FlexDirection;
 import io.github.moosyu.Unshattered;
+import io.github.moosyu.attachments.PlayerCollectionsAttachment;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.attributes.UnshatteredAttributeTypes;
@@ -40,7 +41,8 @@ public class ProfileScreen {
         INVENTORY("inventory", SpriteTexture.of(Identifier.fromNamespaceAndPath(MODID, "textures/gui/icons.png")).setSprite(16, 0, 16, 16)),
         CRAFTING("crafting", SpriteTexture.of(Identifier.fromNamespaceAndPath(MODID, "textures/gui/icons.png")).setSprite(0, 0, 16, 16)),
         STATS("stats", SpriteTexture.of(Identifier.fromNamespaceAndPath(MODID, "textures/gui/icons.png")).setSprite(32, 0, 16, 16)),
-        SKILLS("skills", SpriteTexture.of(Identifier.fromNamespaceAndPath(MODID, "textures/gui/icons.png")).setSprite(48, 0, 16, 16));
+        SKILLS("skills", SpriteTexture.of(Identifier.fromNamespaceAndPath(MODID, "textures/gui/icons.png")).setSprite(48, 0, 16, 16)),
+        COLLECTIONS("collections", SpriteTexture.of(Identifier.fromNamespaceAndPath(MODID, "textures/gui/icons.png")).setSprite(0, 16, 16, 16));
 
         public final String id;
         private final SpriteTexture spriteTexture;
@@ -65,8 +67,9 @@ public class ProfileScreen {
 
         tabView.addTab(createTabHeader(Tabs.INVENTORY), createInventoryContent(player));
         tabView.addTab(createTabHeader(Tabs.CRAFTING), createCraftingContent());
-        tabView.addTab(createTabHeader(Tabs.STATS), createScrollableContent(createStatsContent(player)));
-        tabView.addTab(createTabHeader(Tabs.SKILLS), createScrollableContent(createSkillsContent(player)));
+        tabView.addTab(createTabHeader(Tabs.STATS), createScrollableContent(createStatsScroller(player)));
+        tabView.addTab(createTabHeader(Tabs.SKILLS), createScrollableContent(createSkillsScroller(player)));
+        tabView.addTab(createTabHeader(Tabs.COLLECTIONS), createScrollableContent(createCollectionsScroller(player)));
 
         return ModularUI.of(UI.of(tabView, StylesheetManager.INSTANCE.getStylesheetSafe(Identifier.fromNamespaceAndPath(MODID, "lss/unshattered.lss"))), player);
     }
@@ -151,7 +154,7 @@ public class ProfileScreen {
         return scrollableContainer;
     }
 
-    private static Consumer<ScrollerView> createStatsContent(Player player) {
+    private static Consumer<ScrollerView> createStatsScroller(Player player) {
         return scrollableContainer -> {
             for (UnshatteredAttributeValues currentAttributeValue : VISIBLE_ATTRIBUTES) {
                 AttributeInstance currentAttribute = player.getAttribute(currentAttributeValue.holder);
@@ -174,7 +177,7 @@ public class ProfileScreen {
         };
     }
 
-    private static Consumer<ScrollerView> createSkillsContent(Player player) {
+    private static Consumer<ScrollerView> createSkillsScroller(Player player) {
         return scrollableContainer -> {
             PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
 
@@ -187,6 +190,15 @@ public class ProfileScreen {
                         new ProgressBar().setProgress(skills.getPercentageToNextLevel(skills.getExp(skill))).label(UIElement::removeSelf)
                 );
             }
+        };
+    }
+
+    private static Consumer<ScrollerView> createCollectionsScroller(Player player) {
+        return scrollerView -> {
+            PlayerCollectionsAttachment collections = player.getData(UnshatteredAttachments.PLAYER_COLLECTIONS.get());
+            collections.getMap().forEach((key, value) -> {
+                scrollerView.addScrollViewChild(new Label().setText(Component.translatable(key.value().getDescriptionId()).getString() + " " + value));
+            });
         };
     }
 }

@@ -1,21 +1,25 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.blocks.UnshatteredBlocks;
+import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.blocks.BrokenBlocksItemResult;
 import io.github.moosyu.data.RegenBlocksSavedData;
+import io.github.moosyu.data.components.UnshatteredDataComponents;
+import io.github.moosyu.datagen.UnshatteredBlockTagsProvider;
 import io.github.moosyu.packets.ExpSoundEffectPacket;
-import io.github.moosyu.skills.experience.BlocksFarmingExperience;
-import io.github.moosyu.skills.experience.BlocksMiningExperience;
 import io.github.moosyu.skills.foraging.TreeSweepHandler;
+import io.github.moosyu.util.CollectionUtil;
 import io.github.moosyu.util.CheckBreakableBlock;
 import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.util.CheckItemRequirement;
+import io.github.moosyu.util.FortuneCalculation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -24,7 +28,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
-import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.*;
@@ -48,6 +51,7 @@ public class BlockBreakHandler {
 
         BlockState blockState = event.getState();
         Block block = blockState.getBlock();
+        DataComponentMap blockDataComponents = block.asItem().components();
         BlockState replacementBlock = CheckBreakableBlock.canBreakBlock(blockState, player);
 
         if (replacementBlock == null) return;
@@ -58,37 +62,38 @@ public class BlockBreakHandler {
             RegenBlocksSavedData.get((ServerLevel) level).addBlock(blockPos, level.getGameTime() + TIME_BROKEN, replacementBlock);
         }
 
+        float experienceReward = blockDataComponents.getOrDefault(UnshatteredDataComponents.ITEM_EXP_REWARD, 0.0f);
         PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
 
-        float miningExp = BlocksMiningExperience.getExp(block);
-        if (miningExp > 0.0f) {
-            skills.addExp(PlayerSkillsAttachment.Skill.MINING, miningExp, player);
-            player.syncData(PLAYER_SKILLS);
-            PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
-            player.getInventory().add(new ItemStack(BrokenBlocksItemResult.getItemDropped(block)));
-            return;
-        }
-
-        // todo: make braking cactus' both add their drops to inventory but count broken cactus parts for exp
-        // could just do the same thing as done with sweeping but less costly as it's just the block above
-        float farmingExp = BlocksFarmingExperience.getExp(block);
-        if (farmingExp > 0.0f) {
-            skills.addExp(PlayerSkillsAttachment.Skill.FARMING, BlocksFarmingExperience.getExp(block), player);
-            player.syncData(PLAYER_SKILLS);
-            PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
-            return;
-        }
-
-        if (blockState.is(BlockTags.LOGS)) {
-            TreeSweepHandler.trySweep(player.level(), event.getPos(), player);
-            return;
-        }
-
-        if (blockState.is(BlockTags.FLOWERS)) {
-            skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, 1.0f, player);
-            player.syncData(PLAYER_SKILLS);
-            PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
-            return;
+        if (blockState.is(UnshatteredBlockTagsProvider.COLLECTABLE_MINING_BLOCKS)) {
+            ItemStack blockDrops = getBlockDrop(BrokenBlocksItemResult.getItemDropped(block), player, UnshatteredAttributeValues.MINING_FORTUNE);
+            player.getInventory().add(blockDrops);
+            CollectionUtil.addItemToCollection(player, blockDrops);
+            if (experienceReward > 0.0f) {
+                skills.addExp(PlayerSkillsAttachment.Skill.MINING, experienceReward, player);
+                player.syncData(PLAYER_SKILLS);
+                PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
+            }
+        } else if (blockState.is(UnshatteredBlockTagsProvider.COLLECTABLE_FARMING_BLOCKS)) {
+            ItemStack blockDrops = getBlockDrop(BrokenBlocksItemResult.getItemDropped(block), player, UnshatteredAttributeValues.FARMING_FORTUNE);
+            player.getInventory().add(blockDrops);
+            CollectionUtil.addItemToCollection(player, blockDrops);
+            // todo: make braking cactus' both add their drops to inventory but count broken cactus parts for exp
+            // could just do the same thing as done with sweeping but less costly as it's just the block above
+            if (experienceReward > 0.0f) {
+                skills.addExp(PlayerSkillsAttachment.Skill.FARMING, experienceReward, player);
+                player.syncData(PLAYER_SKILLS);
+                PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
+            }
+        } else if (blockState.is(UnshatteredBlockTagsProvider.COLLECTABLE_FORAGING_BLOCKS)) {
+            // flowers are kind of an outlier as they dont really have their own collections either so im just leaving the logic here for now
+            if (blockState.is(BlockTags.FLOWERS)) {
+                skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, 1.0f, player);
+                player.syncData(PLAYER_SKILLS);
+                PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
+            } else {
+                TreeSweepHandler.trySweep(player.level(), event.getPos(), player);
+            }
         }
     }
 
@@ -101,34 +106,7 @@ public class BlockBreakHandler {
         }
     }
 
-    @SubscribeEvent
-    private static void onServerTickEvent(ServerTickEvent.Post event) {
-        // im hoping that this wont be absurdly laggy but if this project ends up being anyhow successful i imagine this could get fucked up if like
-        // 1000 blocks are waiting to regen at the same time
-        if (event.getServer().getTickCount() % 10 != 0) return;
-        for (ServerLevel level : event.getServer().getAllLevels()) {
-            RegenBlocksSavedData data = RegenBlocksSavedData.get(level);
-            if (data.getRegenTicks().isEmpty()) continue;
-            long gameTime = level.getGameTime();
-            List<BlockPos> toRemove = new ArrayList<>();
-            Map<BlockPos, RegenBlocksSavedData.RegenEntry> toAdd = new HashMap<>();
-            for (Map.Entry<BlockPos, RegenBlocksSavedData.RegenEntry> entry : data.getRegenTicks().entrySet()) {
-                RegenBlocksSavedData.RegenEntry regenEntry = entry.getValue();
-                if (gameTime >= regenEntry.targetTick()) {
-                    BlockPos pos = entry.getKey();
-                    BlockState originalState = regenEntry.targetState();
-                    level.setBlock(pos, originalState, 3);
-                    toRemove.add(pos);
-                    if (originalState.is(UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get())) {
-                        // How do we know if it was Iron Ore or Stone?
-                        // You could check a separate "original source" map, or handle it during the initial break.
-                        // Alternatively, if you want it to go Bedrock -> Cobble -> Iron Ore:
-                        // You'd track the ultimate origin state.
-                    }
-                }
-            }
-
-            toRemove.forEach(data::removeBlock);
-        }
+    private static ItemStack getBlockDrop(Item item, Player player, UnshatteredAttributeValues fortuneType) {
+        return new ItemStack(item, FortuneCalculation.getItemsCount(player.getAttributeValue(fortuneType.holder), 1));
     }
 }

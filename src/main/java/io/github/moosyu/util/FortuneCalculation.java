@@ -2,7 +2,7 @@ package io.github.moosyu.util;
 
 import java.util.Random;
 
-public final class FortuneCalculationHelper {
+public final class FortuneCalculation {
 
     /**
      *

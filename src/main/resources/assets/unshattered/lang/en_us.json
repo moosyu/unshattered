@@ -103,8 +103,8 @@
 
   "block.unshattered.fig_log": "Fig Log",
   "block.unshattered.breakable_fig_log": "Breakable Fig Log",
-  "block.unshattered.breakable_stone": "Breakable Stone",
-  "block.unshattered.breakable_cobblestone": "Breakable Cobblestone",
+  "block.unshattered.breakable_stone_block": "Breakable Stone",
+  "block.unshattered.breakable_cobblestone_block": "Breakable Cobblestone",
   "item.description.unshattered.bat_the_fish": "Where is my cape!",
   "item.description.unshattered.century_the_fish": "The term 'century' was actually named after him, or so he says.",
   "item.description.unshattered.chill_the_fish": "This fish was found frozen solid in the lake of the island during the Holiday months.",
@@ -255,5 +255,6 @@
   "gui.title.unshattered.inventory": "Inventory",
   "gui.title.unshattered.crafting": "Crafting",
   "gui.title.unshattered.stats": "Stats",
-  "gui.title.unshattered.skills": "Skills"
+  "gui.title.unshattered.skills": "Skills",
+  "gui.title.unshattered.collections": "Collections"
 }

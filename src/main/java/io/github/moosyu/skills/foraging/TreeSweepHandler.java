@@ -3,6 +3,7 @@ package io.github.moosyu.skills.foraging;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.packets.ExpSoundEffectPacket;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
@@ -10,8 +11,10 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -69,14 +72,16 @@ public class TreeSweepHandler {
         private void finish() {
             // unless something has gone horribly wrong the "player" value in tasks should be the same in every index
             Player player = tasks.getFirst().player();
+            // a little more sketchy but i probably wont mix and match logs so this should be fine
+            Item logItem = tasks.getFirst().level.getBlockState(tasks.getFirst().pos()).getBlock().asItem();
             PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
 
             for (BreakTask current : tasks) {
-                int logs = calculateLogs(current.player());
-                current.player().getInventory().add(new ItemStack(current.state().getBlock(), logs));
+                int logs = calculateLogs(player);
+                player.getInventory().add(new ItemStack(current.state().getBlock(), logs));
             }
 
-            skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, tasks.size() * 6.0f, player);
+            skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, tasks.size() * logItem.components().getOrDefault(UnshatteredDataComponents.ITEM_EXP_REWARD, 0.0f), player);
             player.syncData(PLAYER_SKILLS);
             PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
         }
@@ -102,7 +107,7 @@ public class TreeSweepHandler {
         PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
         BlockState startBlock = level.getBlockState(startPos);
 
-        // removing the initial block (as the vanilla block break is canceled)
+        // removing the initial block (as the vanilla block break is cancelled)
         level.removeBlock(startPos, false);
 
         int sweep = (int) player.getAttributeValue(UnshatteredAttributeValues.SWEEP.holder);

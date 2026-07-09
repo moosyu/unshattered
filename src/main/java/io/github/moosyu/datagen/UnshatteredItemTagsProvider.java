@@ -2,8 +2,14 @@ package io.github.moosyu.datagen;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.Identifier;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.ItemTagsProvider;
+import org.jspecify.annotations.NonNull;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -16,7 +22,7 @@ public class UnshatteredItemTagsProvider extends ItemTagsProvider {
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider provider) {
+    protected void addTags(HolderLookup.@NonNull Provider provider) {
         tag(ItemTags.HEAD_ARMOR).add(LEAFLET_HELMET.get());
         tag(ItemTags.CHEST_ARMOR).add(LEAFLET_CHESTPLATE.get());
         tag(ItemTags.LEG_ARMOR).add(LEAFLET_LEGGINGS.get());

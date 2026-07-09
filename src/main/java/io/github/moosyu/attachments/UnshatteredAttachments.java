@@ -8,6 +8,7 @@ import java.util.function.Supplier;
 
 import static io.github.moosyu.Unshattered.MODID;
 
+// copy on death added to all even though the player should never really "die"
 public final class UnshatteredAttachments {
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, MODID);
 
@@ -15,6 +16,7 @@ public final class UnshatteredAttachments {
             AttachmentType.builder(() -> new PlayerSkillsAttachment(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f))
                     .serialize(PlayerSkillsAttachment.RECORD_CODEC.fieldOf("skills"))
                     .sync(PlayerSkillsAttachment.STREAM_CODEC)
+                    .copyOnDeath()
                     .build()
     );
 
@@ -26,13 +28,23 @@ public final class UnshatteredAttachments {
     );
 
     public static final Supplier<AttachmentType<PlayerAbilityEffectsAttachment>> PLAYER_ABILITIES = ATTACHMENT_TYPES.register("player_abilities", () ->
-            AttachmentType.builder(PlayerAbilityEffectsAttachment::new).build()
+            AttachmentType.builder(PlayerAbilityEffectsAttachment::new)
+                    .build()
     );
 
     public static final Supplier<AttachmentType<PlayerCurrencyAttachment>> PLAYER_CURRENCY = ATTACHMENT_TYPES.register("player_currency", () ->
             AttachmentType.builder(() -> new PlayerCurrencyAttachment(0, 0))
                     .serialize(PlayerCurrencyAttachment.RECORD_CODEC.fieldOf("currency"))
                     .sync(PlayerCurrencyAttachment.STREAM_CODEC)
+                    .copyOnDeath()
+                    .build()
+    );
+
+    public static final Supplier<AttachmentType<PlayerCollectionsAttachment>> PLAYER_COLLECTIONS = ATTACHMENT_TYPES.register("player_collections", () ->
+            AttachmentType.builder(() -> new PlayerCollectionsAttachment())
+                    .serialize(PlayerCollectionsAttachment.RECORD_CODEC.fieldOf("collections"))
+                    .sync(PlayerCollectionsAttachment.STREAM_CODEC)
+                    .copyOnDeath()
                     .build()
     );
 }

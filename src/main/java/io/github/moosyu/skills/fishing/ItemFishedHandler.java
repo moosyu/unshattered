@@ -6,7 +6,8 @@ import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.packets.ExpSoundEffectPacket;
 import io.github.moosyu.attachments.UnshatteredAttachments;
-import io.github.moosyu.util.FortuneCalculationHelper;
+import io.github.moosyu.util.CollectionUtil;
+import io.github.moosyu.util.FortuneCalculation;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -84,8 +85,11 @@ public class ItemFishedHandler {
         }
 
         switch (selectedEntry.type()) {
-            case "ITEM" ->
-                    player.getInventory().add(new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.parse(selectedEntry.id())), FortuneCalculationHelper.getItemsCount(fishingFortuneAttribute.getValue(), 1)));
+            case "ITEM" -> {
+                ItemStack itemReward = new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.parse(selectedEntry.id())), FortuneCalculation.getItemsCount(fishingFortuneAttribute.getValue(), 1));
+                CollectionUtil.addItemToCollection(player, itemReward);
+                player.getInventory().add(itemReward);
+            }
             case "COIN" -> {
                 PlayerCurrencyAttachment currencyAttachment = player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get());
                 int coinAmount = 0;
@@ -112,8 +116,9 @@ public class ItemFishedHandler {
                 Entity entity = entityType.create(level, EntitySpawnReason.TRIGGERED);
 
                 if (entity != null) {
+                    // probably need to disable entity ai as it seems to fuck up movement
+                    // not a clue how to do that in a good way just yet...
                     entity.setPos(hook.position());
-                    entity.setDeltaMovement(player.position().subtract(entity.position()).normalize().scale(3.5D));
                     player.sendSystemMessage(Component.translatable("fishing.messages." + id.getNamespace() + "." + id.getPath()).withColor(0xFF55FF55));
                     level.addFreshEntity(entity);
                 }

@@ -447,23 +447,13 @@ public class UnshatteredItems {
             .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.COMMON)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.LOG)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
+            .component(UnshatteredDataComponents.ITEM_COLLECTABLE.get(), true)
+            .component(UnshatteredDataComponents.ITEM_EXP_REWARD.get(), 15.0f)
     ));
 
-    public static final DeferredItem<BlockItem> BREAKABLE_FIG_LOG = ITEMS.registerItem("breakable_fig_log", props -> new BlockItem(BREAKABLE_FIG_LOG_BLOCK.get(), props
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.COMMON)
-            .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.LOG)
-    ));
-
-    public static final DeferredItem<BlockItem> BREAKABLE_STONE = ITEMS.registerItem("breakable_stone", props -> new BlockItem(BREAKABLE_STONE_BLOCK.get(), props
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.COMMON)
-            .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.LOG)
-    ));
-
-    public static final DeferredItem<BlockItem> BREAKABLE_COBBLESTONE = ITEMS.registerItem("breakable_cobblestone", props -> new BlockItem(BREAKABLE_COBBLESTONE_BLOCK.get(), props
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.COMMON)
-            .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.LOG)
-    ));
-
+    public static final DeferredItem<BlockItem> BREAKABLE_FIG_LOG = ITEMS.registerSimpleBlockItem(BREAKABLE_FIG_LOG_BLOCK.getDelegate());
+    public static final DeferredItem<BlockItem> BREAKABLE_STONE = ITEMS.registerSimpleBlockItem(BREAKABLE_STONE_BLOCK.getDelegate());
+    public static final DeferredItem<BlockItem> BREAKABLE_COBBLESTONE = ITEMS.registerSimpleBlockItem(BREAKABLE_COBBLESTONE_BLOCK.getDelegate());
     public static final DeferredItem<Item> ROGUE_SWORD = ITEMS.registerItem("rogue_sword", RogueSword::new);
 
     public static final DeferredItem<Item> SQUIRE_SWORD = ITEMS.registerItem("squire_sword", props -> new Item(props
@@ -481,20 +471,12 @@ public class UnshatteredItems {
     ));
 
     public static final DeferredItem<Item> UNDEAD_SWORD = ITEMS.registerItem("undead_sword", UndeadSword::new);
-
     public static final DeferredItem<Item> ZOMBIE_SWORD = ITEMS.registerItem("zombie_sword", ZombieSword::new);
-
     public static final DeferredItem<Item> ORNATE_ZOMBIE_SWORD = ITEMS.registerItem("ornate_zombie_sword", OrnateZombieSword::new);
-
     public static final DeferredItem<Item> FLORID_ZOMBIE_SWORD = ITEMS.registerItem("florid_zombie_sword", FloridZombieSword::new);
-
     public static final DeferredItem<Item> RUSTY_CLEAVER = ITEMS.registerItem("rusty_cleaver", RustyCleaver::new);
-
     public static final DeferredItem<Item> GOLDEN_CLEAVER = ITEMS.registerItem("golden_cleaver", GoldenCleaver::new);
-
     public static final DeferredItem<Item> SUPER_CLEAVER = ITEMS.registerItem("super_cleaver", SuperCleaver::new);
-
     public static final DeferredItem<Item> HYPER_CLEAVER = ITEMS.registerItem("hyper_cleaver", HyperCleaver::new);
-
     public static final DeferredItem<Item> GIANT_CLEAVER = ITEMS.registerItem("giant_cleaver", GiantCleaver::new);
 }
