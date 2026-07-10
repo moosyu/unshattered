@@ -31,9 +31,9 @@ public class WaterEntries {
     );
 
     public static final Map<FishingMiscEntry, Double> WATER_MISC_WEIGHTS = Map.ofEntries(
-            Map.entry(createCoinReward(25000, 50001, "skills.messages.unshattered.fishing.outstanding_catch", 0xFF810AF3), 10.0d),
-            Map.entry(createCoinReward(100000, 250001, "skills.messages.unshattered.fishing.outstanding_catch", 0xFFFFAA00), 5.0d),
-            Map.entry(createCoinReward(500000, 1000001, "skills.messages.unshattered.fishing.outstanding_catch", 0xFFFF55FF), 1.0d)
+            Map.entry(createCoinReward(25000, 50001, "skills.messages.unshattered.fishing.good_catch", 0xFF810AF3, 100.0f), 10.0d),
+            Map.entry(createCoinReward(100000, 250001, "skills.messages.unshattered.fishing.great_catch", 0xFFFFAA00, 1000.0f), 5.0d),
+            Map.entry(createCoinReward(500000, 1000001, "skills.messages.unshattered.fishing.outstanding_catch", 0xFFFF55FF, 10000.0f), 1.0d)
     );
 
     public static double calculateTableWeight(Map<?, Double> selectedMap) {
@@ -48,6 +48,4 @@ public class WaterEntries {
                         Map.Entry::getValue
                 ));
     }
-
-
 }

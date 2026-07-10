@@ -21,6 +21,5 @@ public class CollectionUtil {
         PlayerCollectionsAttachment collections = player.getData(UnshatteredAttachments.PLAYER_COLLECTIONS.get());
 
         collections.addPickedUpItem(itemStack);
-        player.syncData(UnshatteredAttachments.PLAYER_COLLECTIONS);
     }
 }

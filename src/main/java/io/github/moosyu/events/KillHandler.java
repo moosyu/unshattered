@@ -32,7 +32,6 @@ public class KillHandler {
             if (combatExp > 0.0f) {
                 skills.addExp(PlayerSkillsAttachment.Skill.COMBAT, combatExp, player);
                 player.syncData(PLAYER_SKILLS);
-                PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
                 return;
             }
 
@@ -40,7 +39,6 @@ public class KillHandler {
             if (farmingExp > 0.0f) {
                 skills.addExp(PlayerSkillsAttachment.Skill.FARMING, farmingExp, player);
                 player.syncData(PLAYER_SKILLS);
-                PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
                 return;
             }
         }

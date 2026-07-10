@@ -5,6 +5,7 @@ import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.packets.ExpSoundEffectPacket;
+import io.github.moosyu.util.AddItemToInventory;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -77,12 +78,11 @@ public class TreeSweepHandler {
 
             for (BreakTask current : tasks) {
                 int logs = calculateLogs(player);
-                player.getInventory().add(new ItemStack(current.state().getBlock(), logs));
+                AddItemToInventory.addItemToInventory(player, new ItemStack(current.state().getBlock(), logs));
             }
 
             skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, tasks.size() * logItem.components().getOrDefault(UnshatteredDataComponents.ITEM_EXP_REWARD, 0.0f), player);
             player.syncData(PLAYER_SKILLS);
-            PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
         }
     }
 
@@ -113,8 +113,7 @@ public class TreeSweepHandler {
         if (sweep <= 0) {
             skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, 6.0f, player);
             player.syncData(PLAYER_SKILLS);
-            PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
-            player.getInventory().add(new ItemStack(startBlock.getBlock(), calculateLogs(player)));
+            AddItemToInventory.addItemToInventory(player, new ItemStack(startBlock.getBlock(), calculateLogs(player)));
             return;
         }
 

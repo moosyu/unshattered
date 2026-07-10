@@ -7,11 +7,8 @@ import io.github.moosyu.data.RegenBlocksSavedData;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.datagen.UnshatteredBlockTagsProvider;
 import io.github.moosyu.packets.ExpSoundEffectPacket;
-import io.github.moosyu.util.CollectionUtil;
-import io.github.moosyu.util.CheckBreakableBlock;
+import io.github.moosyu.util.*;
 import io.github.moosyu.attachments.UnshatteredAttachments;
-import io.github.moosyu.util.CheckItemRequirement;
-import io.github.moosyu.util.FortuneCalculation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.server.level.ServerLevel;
@@ -66,30 +63,25 @@ public class BlockBreakHandler {
 
         if (blockState.is(UnshatteredBlockTagsProvider.COLLECTABLE_MINING_BLOCKS)) {
             ItemStack blockDrops = getBlockDrop(BrokenBlocksItemResult.getItemDropped(block), player, UnshatteredAttributeValues.MINING_FORTUNE);
-            player.getInventory().add(blockDrops);
-            CollectionUtil.addItemToCollection(player, blockDrops);
+            AddItemToInventory.addItemToInventory(player, blockDrops);
             if (experienceReward > 0.0f) {
                 skills.addExp(PlayerSkillsAttachment.Skill.MINING, experienceReward, player);
                 player.syncData(PLAYER_SKILLS);
-                PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
             }
         } else if (blockState.is(UnshatteredBlockTagsProvider.COLLECTABLE_FARMING_BLOCKS)) {
             ItemStack blockDrops = getBlockDrop(BrokenBlocksItemResult.getItemDropped(block), player, UnshatteredAttributeValues.FARMING_FORTUNE);
-            player.getInventory().add(blockDrops);
-            CollectionUtil.addItemToCollection(player, blockDrops);
+            AddItemToInventory.addItemToInventory(player, blockDrops);
             // todo: make braking cactus' both add their drops to inventory but count broken cactus parts for exp
             // could just do the same thing as done with sweeping but less costly as it's just the block above
             if (experienceReward > 0.0f) {
                 skills.addExp(PlayerSkillsAttachment.Skill.FARMING, experienceReward, player);
                 player.syncData(PLAYER_SKILLS);
-                PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
             }
         } else if (blockState.is(UnshatteredBlockTagsProvider.COLLECTABLE_FORAGING_BLOCKS)) {
             // flowers are kind of an outlier as they dont really have their own collections either so im just leaving the logic here for now
             if (blockState.is(BlockTags.FLOWERS)) {
                 skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, 1.0f, player);
                 player.syncData(PLAYER_SKILLS);
-                PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
             } else {
                 TreeSweepHandler.trySweep(player.level(), event.getPos(), player);
             }

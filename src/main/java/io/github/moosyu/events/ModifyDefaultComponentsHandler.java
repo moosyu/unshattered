@@ -19,14 +19,14 @@ public class ModifyDefaultComponentsHandler {
         addCollectableDataComponent(event, Items.JUNGLE_LOG, 6.0f);
         addCollectableDataComponent(event, Items.ACACIA_LOG, 6.0f);
         addCollectableDataComponent(event, Items.DARK_OAK_LOG, 6.0f);
-        addCollectableDataComponent(event, Items.COD);
-        addCollectableDataComponent(event, Items.SALMON);
-        addCollectableDataComponent(event, Items.PUFFERFISH);
-        addCollectableDataComponent(event, Items.TROPICAL_FISH);
-        addCollectableDataComponent(event, Items.PRISMARINE_SHARD);
-        addCollectableDataComponent(event, Items.PRISMARINE_CRYSTALS);
-        addCollectableDataComponent(event, Items.CLAY_BALL);
-        addCollectableDataComponent(event, Items.SPONGE);
+        addCollectableDataComponent(event, Items.COD, 0.5f);
+        addCollectableDataComponent(event, Items.SALMON, 0.7f);
+        addCollectableDataComponent(event, Items.PUFFERFISH, 1.0f);
+        addCollectableDataComponent(event, Items.TROPICAL_FISH, 2.0f);
+        addCollectableDataComponent(event, Items.PRISMARINE_SHARD, 0.5f);
+        addCollectableDataComponent(event, Items.PRISMARINE_CRYSTALS, 0.5f);
+        addCollectableDataComponent(event, Items.CLAY_BALL, 0.1f);
+        addCollectableDataComponent(event, Items.SPONGE, 4.0f);
         addCollectableDataComponent(event, Items.LILY_PAD);
         addCollectableDataComponent(event, Items.WHEAT, 4.0f);
         addCollectableDataComponent(event, Items.POTATO, 4.0f);
@@ -54,6 +54,12 @@ public class ModifyDefaultComponentsHandler {
         addCollectableDataComponent(event, Items.STRING);
     }
 
+    /**
+     * function for speeding up adding items as collectables and setting their exp, only added this comment to remind myself the exp added isnt enforced anywhere lol
+     * @param event ModifyDefaultComponentsEvent event
+     * @param item item being defined
+     * @param exp base exp amount for item to reward though just for a basis and not enforced when actually rewarding exp
+     */
     private static void addCollectableDataComponent(ModifyDefaultComponentsEvent event, Item item, float exp) {
         event.modify(item, (components, _, _) -> {
             components.set(UnshatteredDataComponents.ITEM_COLLECTABLE, true);
