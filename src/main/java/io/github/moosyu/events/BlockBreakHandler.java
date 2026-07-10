@@ -7,7 +7,6 @@ import io.github.moosyu.data.RegenBlocksSavedData;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.datagen.UnshatteredBlockTagsProvider;
 import io.github.moosyu.packets.ExpSoundEffectPacket;
-import io.github.moosyu.skills.foraging.TreeSweepHandler;
 import io.github.moosyu.util.CollectionUtil;
 import io.github.moosyu.util.CheckBreakableBlock;
 import io.github.moosyu.attachments.UnshatteredAttachments;

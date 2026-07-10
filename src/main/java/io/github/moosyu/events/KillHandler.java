@@ -2,8 +2,8 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.packets.ExpSoundEffectPacket;
-import io.github.moosyu.skills.experience.EntityCombatExperience;
-import io.github.moosyu.skills.experience.EntityFarmingExperience;
+import io.github.moosyu.experience.EntityCombatExperience;
+import io.github.moosyu.experience.EntityFarmingExperience;
 import io.github.moosyu.attachments.UnshatteredAttachments;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;

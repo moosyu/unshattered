@@ -1,4 +1,4 @@
-package io.github.moosyu.skills.foraging;
+package io.github.moosyu.events;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
@@ -14,7 +14,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
