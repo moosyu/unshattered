@@ -1,22 +1,17 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.attachments.PlayerCollectionsAttachment;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.experience.EntityFishingExperience;
+import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.fishing.FishingItemEntry;
 import io.github.moosyu.fishing.FishingMiscEntry;
 import io.github.moosyu.fishing.FishingMobEntry;
 import io.github.moosyu.fishing.tables.WaterEntries;
 import io.github.moosyu.attachments.UnshatteredAttachments;
-import io.github.moosyu.packets.ExpSoundEffectPacket;
-import io.github.moosyu.util.AddItemToInventory;
+import io.github.moosyu.util.GiveHarvestedItemstack;
 import io.github.moosyu.util.FortuneCalculation;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
@@ -29,11 +24,10 @@ import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.Consumer;
 
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_SKILLS;
@@ -67,10 +61,10 @@ public class ItemFishedHandler {
                 currentWeight -= calculateAdjustedWeight(entry.getValue(), FISHING_FORTUNE);
                 if (currentWeight <= 0) {
                     Item selectedItem = entry.getKey().item();
-                    float expReward = selectedItem.components().getOrDefault(UnshatteredDataComponents.ITEM_EXP_REWARD.get(), 0.0f);
+                    float expReward = Objects.requireNonNullElse(BuiltInRegistries.ITEM.wrapAsHolder(selectedItem).getData(UnshatteredDataMaps.FISHABLE_ITEMS_EXP_DATA), 0.0f);
                     ItemStack itemRewards = new ItemStack(selectedItem, FortuneCalculation.getItemsCount(FISHING_FORTUNE, 1));
 
-                    AddItemToInventory.addItemToInventory(player, itemRewards);
+                    GiveHarvestedItemstack.givePlayerHarvestedItemstack(player, itemRewards);
 
                     if (expReward > 0.0f) {
                         skills.addExp(PlayerSkillsAttachment.Skill.FISHING, expReward, player);
@@ -92,13 +86,14 @@ public class ItemFishedHandler {
                     Entity entity = entityType.create(level, EntitySpawnReason.TRIGGERED);
                     if (entity != null) {
                         FishingHook hook = event.getHookEntity();
+                        float expReward = Objects.requireNonNullElse(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entityType).getData(UnshatteredDataMaps.FISHABLE_MOBS_EXP_DATA), 0.0f);
 
                         entity.setPos(hook.position());
                         entity.setDeltaMovement(player.position().subtract(entity.position()).normalize().scale(3.5D));
                         player.sendSystemMessage(Component.translatable("fishing.messages." + entityType.getDescriptionId()).withColor(0xFF55FF55));
                         level.addFreshEntity(entity);
 
-                        skills.addExp(PlayerSkillsAttachment.Skill.FISHING, EntityFishingExperience.getExp(entityType), player);
+                        skills.addExp(PlayerSkillsAttachment.Skill.FISHING, expReward, player);
                     }
                 }
             }

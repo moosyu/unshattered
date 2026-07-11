@@ -4,15 +4,12 @@ import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.blocks.BrokenBlocksItemResult;
 import io.github.moosyu.data.RegenBlocksSavedData;
-import io.github.moosyu.data.components.UnshatteredDataComponents;
+import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.datagen.UnshatteredBlockTagsProvider;
-import io.github.moosyu.packets.ExpSoundEffectPacket;
 import io.github.moosyu.util.*;
 import io.github.moosyu.attachments.UnshatteredAttachments;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -24,7 +21,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.*;
 
@@ -46,8 +42,9 @@ public class BlockBreakHandler {
         event.setCanceled(true);
 
         BlockState blockState = event.getState();
+        Float data = blockState.typeHolder().getData(UnshatteredDataMaps.HARVESTABLE_BLOCKS_EXP_DATA);
+        float experienceReward = Objects.requireNonNullElse(data, 0.0f);
         Block block = blockState.getBlock();
-        DataComponentMap blockDataComponents = block.asItem().components();
         BlockState replacementBlock = CheckBreakableBlock.canBreakBlock(blockState, player);
 
         if (replacementBlock == null) return;
@@ -58,19 +55,18 @@ public class BlockBreakHandler {
             RegenBlocksSavedData.get((ServerLevel) level).addBlock(blockPos, level.getGameTime() + TIME_BROKEN, replacementBlock);
         }
 
-        float experienceReward = blockDataComponents.getOrDefault(UnshatteredDataComponents.ITEM_EXP_REWARD, 0.0f);
         PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
 
         if (blockState.is(UnshatteredBlockTagsProvider.COLLECTABLE_MINING_BLOCKS)) {
             ItemStack blockDrops = getBlockDrop(BrokenBlocksItemResult.getItemDropped(block), player, UnshatteredAttributeValues.MINING_FORTUNE);
-            AddItemToInventory.addItemToInventory(player, blockDrops);
+            GiveHarvestedItemstack.givePlayerHarvestedItemstack(player, blockDrops);
             if (experienceReward > 0.0f) {
                 skills.addExp(PlayerSkillsAttachment.Skill.MINING, experienceReward, player);
                 player.syncData(PLAYER_SKILLS);
             }
         } else if (blockState.is(UnshatteredBlockTagsProvider.COLLECTABLE_FARMING_BLOCKS)) {
             ItemStack blockDrops = getBlockDrop(BrokenBlocksItemResult.getItemDropped(block), player, UnshatteredAttributeValues.FARMING_FORTUNE);
-            AddItemToInventory.addItemToInventory(player, blockDrops);
+            GiveHarvestedItemstack.givePlayerHarvestedItemstack(player, blockDrops);
             // todo: make braking cactus' both add their drops to inventory but count broken cactus parts for exp
             // could just do the same thing as done with sweeping but less costly as it's just the block above
             if (experienceReward > 0.0f) {
@@ -78,9 +74,8 @@ public class BlockBreakHandler {
                 player.syncData(PLAYER_SKILLS);
             }
         } else if (blockState.is(UnshatteredBlockTagsProvider.COLLECTABLE_FORAGING_BLOCKS)) {
-            // flowers are kind of an outlier as they dont really have their own collections either so im just leaving the logic here for now
             if (blockState.is(BlockTags.FLOWERS)) {
-                skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, 1.0f, player);
+                skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, experienceReward, player);
                 player.syncData(PLAYER_SKILLS);
             } else {
                 TreeSweepHandler.trySweep(player.level(), event.getPos(), player);

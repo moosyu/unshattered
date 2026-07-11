@@ -448,7 +448,6 @@ public class UnshatteredItems {
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.LOG)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
             .component(UnshatteredDataComponents.ITEM_COLLECTABLE.get(), true)
-            .component(UnshatteredDataComponents.ITEM_EXP_REWARD.get(), 15.0f)
     ));
 
     public static final DeferredItem<BlockItem> BREAKABLE_FIG_LOG = ITEMS.registerSimpleBlockItem(BREAKABLE_FIG_LOG_BLOCK.getDelegate());

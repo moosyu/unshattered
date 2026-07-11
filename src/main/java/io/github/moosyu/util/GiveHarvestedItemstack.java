@@ -5,13 +5,13 @@ import io.github.moosyu.attachments.UnshatteredAttachments;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-public class AddItemToInventory {
+public class GiveHarvestedItemstack {
     /**
-     * should be used instead of Inventory#add as it adds the item to collection too
+     * should be used instead of Inventory#add when adding items that were harvested by the player
      * @param player player having the item added
      * @param itemStack itemstack being added to inventory
      */
-    public static void addItemToInventory(Player player, ItemStack itemStack) {
+    public static void givePlayerHarvestedItemstack(Player player, ItemStack itemStack) {
         PlayerCollectionsAttachment collections = player.getData(UnshatteredAttachments.PLAYER_COLLECTIONS.get());
 
         collections.addPickedUpItem(itemStack);

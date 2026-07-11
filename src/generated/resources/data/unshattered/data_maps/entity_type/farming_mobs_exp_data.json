@@ -1,0 +1,10 @@
+{
+  "values": {
+    "minecraft:chicken": 4.0,
+    "minecraft:cow": 3.0,
+    "minecraft:mooshroom": 5.0,
+    "minecraft:pig": 4.0,
+    "minecraft:rabbit": 4.0,
+    "minecraft:sheep": 4.0
+  }
+}

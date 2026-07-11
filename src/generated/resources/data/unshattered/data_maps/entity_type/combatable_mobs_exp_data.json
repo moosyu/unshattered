@@ -1,0 +1,16 @@
+{
+  "values": {
+    "minecraft:bat": 33.0,
+    "minecraft:blaze": 10.0,
+    "minecraft:cave_spider": 8.0,
+    "minecraft:creeper": 8.0,
+    "minecraft:enderman": 15.0,
+    "minecraft:glow_squid": 36.0,
+    "minecraft:skeleton": 6.0,
+    "minecraft:slime": 4.0,
+    "minecraft:spider": 8.0,
+    "minecraft:squid": 12.0,
+    "minecraft:witch": 15.0,
+    "minecraft:zombie": 6.0
+  }
+}

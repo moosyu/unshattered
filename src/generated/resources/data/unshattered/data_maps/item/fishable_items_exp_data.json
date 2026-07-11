@@ -1,0 +1,12 @@
+{
+  "values": {
+    "minecraft:clay_ball": 0.1,
+    "minecraft:cod": 0.5,
+    "minecraft:prismarine_crystals": 0.5,
+    "minecraft:prismarine_shard": 0.5,
+    "minecraft:pufferfish": 1.0,
+    "minecraft:salmon": 0.7,
+    "minecraft:sponge": 4.0,
+    "minecraft:tropical_fish": 2.0
+  }
+}

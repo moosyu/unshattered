@@ -4,9 +4,6 @@ import com.lowdragmc.lowdraglib2.gui.factory.PlayerUIMenuType;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.gui.screens.ProfileScreen;
-import io.github.moosyu.packets.OpenProfilePayload;
-import net.minecraft.client.AttackIndicatorStatus;
-import net.minecraft.client.Minecraft;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -29,6 +26,7 @@ import static io.github.moosyu.creative.UnshatteredCreativeTabs.CREATIVE_MODE_TA
 import static io.github.moosyu.data.components.UnshatteredDataComponents.DATA_COMPONENTS;
 import static io.github.moosyu.entities.UnshatteredEntities.ENTITY_TYPES;
 import static io.github.moosyu.gui.screens.ProfileScreen.PROFILE_UI_ID;
+import static io.github.moosyu.gui.screens.ProfileScreen.createProfileScreen;
 import static io.github.moosyu.items.UnshatteredItems.*;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -36,7 +34,6 @@ import static io.github.moosyu.items.UnshatteredItems.*;
 public class Unshattered {
     // Define mod id in a common place for everything to reference
     public static final String MODID = "unshattered";
-    public static final String MOD_NAME = "Skyblock: Unshattered";
     // Directly reference a slf4j logger
     public static final Logger LOGGER = LogUtils.getLogger();
 
@@ -75,11 +72,12 @@ public class Unshattered {
             LOGGER.info("DIRT BLOCK >> {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
         }
 
+        // required to be registered for openUI to be run
         PlayerUIMenuType.register(PROFILE_UI_ID, _ -> ProfileScreen::createProfileScreen);
 
         LOGGER.info("{}{}", Config.MAGIC_NUMBER_INTRODUCTION.get(), Config.MAGIC_NUMBER.getAsInt());
 
-        Config.ITEM_STRINGS.get().forEach((item) -> LOGGER.info("ITEM >> {}", item));
+        Config.ITEM_STRINGS.get().forEach(item -> LOGGER.info("ITEM >> {}", item));
         event.enqueueWork(UnshatteredAttributeValues::buildLookup);
     }
 

@@ -25,5 +25,6 @@ public class DatagenHandler {
         generator.addProvider(true, new UnshatteredBlockTagsProvider(packOutput, lookupProvider));
         generator.addProvider(true, new UnshatteredItemTagsProvider(packOutput, lookupProvider));
         generator.addProvider(true, new UnshatteredEntityTagsProvider(packOutput, lookupProvider));
+        generator.addProvider(true, new UnshatteredDataMapProvider(packOutput, lookupProvider));
     }
 }

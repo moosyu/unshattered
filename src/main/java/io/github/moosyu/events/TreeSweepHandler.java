@@ -3,23 +3,23 @@ package io.github.moosyu.events;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.packets.ExpSoundEffectPacket;
-import io.github.moosyu.util.AddItemToInventory;
+import io.github.moosyu.util.GiveHarvestedItemstack;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.*;
 
@@ -73,15 +73,16 @@ public class TreeSweepHandler {
             // unless something has gone horribly wrong the "player" value in tasks should be the same in every index
             Player player = tasks.getFirst().player();
             // a little more sketchy but i probably wont mix and match logs so this should be fine
-            Item logItem = tasks.getFirst().level.getBlockState(tasks.getFirst().pos()).getBlock().asItem();
+            Block logItem = tasks.getFirst().level.getBlockState(tasks.getFirst().pos()).getBlock();
             PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
+            float expReward = Objects.requireNonNullElse(BuiltInRegistries.BLOCK.wrapAsHolder(logItem).getData(UnshatteredDataMaps.HARVESTABLE_BLOCKS_EXP_DATA), 0.0f);
 
             for (BreakTask current : tasks) {
                 int logs = calculateLogs(player);
-                AddItemToInventory.addItemToInventory(player, new ItemStack(current.state().getBlock(), logs));
+                GiveHarvestedItemstack.givePlayerHarvestedItemstack(player, new ItemStack(current.state().getBlock(), logs));
             }
 
-            skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, tasks.size() * logItem.components().getOrDefault(UnshatteredDataComponents.ITEM_EXP_REWARD, 0.0f), player);
+            skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, tasks.size() * expReward, player);
             player.syncData(PLAYER_SKILLS);
         }
     }
@@ -113,7 +114,7 @@ public class TreeSweepHandler {
         if (sweep <= 0) {
             skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, 6.0f, player);
             player.syncData(PLAYER_SKILLS);
-            AddItemToInventory.addItemToInventory(player, new ItemStack(startBlock.getBlock(), calculateLogs(player)));
+            GiveHarvestedItemstack.givePlayerHarvestedItemstack(player, new ItemStack(startBlock.getBlock(), calculateLogs(player)));
             return;
         }
 

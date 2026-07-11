@@ -1,0 +1,26 @@
+{
+  "values": {
+    "#minecraft:flowers": 1.0,
+    "minecraft:acacia_log": 6.0,
+    "minecraft:birch_log": 6.0,
+    "minecraft:brown_mushroom": 6.0,
+    "minecraft:brown_mushroom_block": 2.0,
+    "minecraft:cactus": 2.0,
+    "minecraft:carrots": 4.0,
+    "minecraft:cocoa": 4.0,
+    "minecraft:dark_oak_log": 6.0,
+    "minecraft:jungle_log": 6.0,
+    "minecraft:melon": 4.0,
+    "minecraft:mushroom_stem": 2.0,
+    "minecraft:nether_wart": 4.0,
+    "minecraft:oak_log": 6.0,
+    "minecraft:potatoes": 4.0,
+    "minecraft:pumpkin": 4.5,
+    "minecraft:red_mushroom": 6.0,
+    "minecraft:red_mushroom_block": 2.0,
+    "minecraft:spruce_log": 6.0,
+    "minecraft:sugar_cane": 2.0,
+    "minecraft:wheat": 4.0,
+    "unshattered:breakable_fig_log": 15.0
+  }
+}
