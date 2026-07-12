@@ -1,6 +1,10 @@
 package io.github.moosyu.attachments;
 
 import com.mojang.serialization.Codec;
+import io.github.moosyu.collectables.CollectableEntries;
+import io.github.moosyu.collectables.CollectableItemEntry;
+import io.github.moosyu.collectables.CollectableLevel;
+import io.github.moosyu.collectables.rewards.CollectableReward;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -8,10 +12,12 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public record PlayerCollectionsAttachment(Map<Holder<Item>, Integer> collectedItems) {
@@ -23,8 +29,24 @@ public record PlayerCollectionsAttachment(Map<Holder<Item>, Integer> collectedIt
         this.collectedItems = new HashMap<>(collectedItems);
     }
 
-    public void addPickedUpItem(ItemStack itemStack) {
-        this.collectedItems.put(itemStack.typeHolder(), this.collectedItems.getOrDefault(itemStack.typeHolder(), 0) + itemStack.count());
+    public void addPickedUpItem(ItemStack itemStack, Player player) {
+        Holder<Item> itemHolder = itemStack.typeHolder();
+        CollectableItemEntry collectableItemEntry = CollectableEntries.getCollectableEntry(itemHolder);
+
+        if (collectableItemEntry == null) return;
+
+        int currentLevel = getLevel(player, collectableItemEntry);
+
+        this.collectedItems.put(itemHolder, this.collectedItems.getOrDefault(itemHolder, 0) + itemStack.count());
+
+        int newLevel = getLevel(player, collectableItemEntry);
+        if (newLevel > currentLevel) {
+            for (int i = 0; i < newLevel - currentLevel; i++) {
+                for (CollectableReward collectableReward : collectableItemEntry.levels().get(currentLevel + i).rewards()) {
+                    collectableReward.reward(player);
+                }
+            }
+        }
     }
 
     public int getCount(Holder<Item> item) {
@@ -33,6 +55,35 @@ public record PlayerCollectionsAttachment(Map<Holder<Item>, Integer> collectedIt
 
     public Map<Holder<Item>, Integer> getMap() {
         return this.collectedItems;
+    }
+
+    /**
+     * @param player player having their level checked
+     * @param entry collectable item being checked
+     * @return the level the player is currently at for the specified collectable item
+     */
+    public int getLevel(Player player, CollectableItemEntry entry) {
+        PlayerCollectionsAttachment collections = player.getData(UnshatteredAttachments.PLAYER_COLLECTIONS.get());
+        int itemCount = collections.getCount(BuiltInRegistries.ITEM.wrapAsHolder(entry.item()));
+        List<CollectableLevel> levels = entry.levels();
+
+        int currentLevel = 0;
+        float totalItemsRequiredForNextLevel = 0;
+        for (int i = 0; i < levels.size(); i++) {
+            totalItemsRequiredForNextLevel += levels.get(i).itemRequirement();
+
+            if (itemCount >= totalItemsRequiredForNextLevel) {
+                currentLevel = i + 1;
+            } else {
+                break;
+            }
+        }
+
+        return currentLevel;
+    }
+
+    public void checkCollectionLevelUp() {
+
     }
 
     public static final Codec<PlayerCollectionsAttachment> RECORD_CODEC = Codec.unboundedMap(BuiltInRegistries.ITEM.holderByNameCodec(), Codec.INT)

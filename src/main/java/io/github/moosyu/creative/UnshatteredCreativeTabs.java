@@ -1,5 +1,6 @@
 package io.github.moosyu.creative;
 
+import io.github.moosyu.items.UnshatteredItems;
 import
 net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -74,6 +75,7 @@ public class UnshatteredCreativeTabs {
         .icon(() -> ENCHANTED_FIG_LOG.get().getDefaultInstance())
         .displayItems((_, output) -> {
                 output.accept(ENCHANTED_FIG_LOG.get());
+                output.accept(ENCHANTED_ROTTEN_FLESH);
         }).build());
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_ARMOR_TAB = CREATIVE_MODE_TABS.register("unshattered_armor_tab",

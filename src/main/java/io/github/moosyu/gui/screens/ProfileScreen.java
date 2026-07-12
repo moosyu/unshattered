@@ -20,6 +20,8 @@ import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.attributes.UnshatteredAttributeTypes;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.collectables.CollectableCategories;
+import io.github.moosyu.collectables.CollectableEntries;
 import io.github.moosyu.util.TextUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -195,10 +197,9 @@ public class ProfileScreen {
 
     private static Consumer<ScrollerView> createCollectionsScroller(Player player) {
         return scrollerView -> {
-            PlayerCollectionsAttachment collections = player.getData(UnshatteredAttachments.PLAYER_COLLECTIONS.get());
-            collections.getMap().forEach((key, value) -> {
-                scrollerView.addScrollViewChild(new Label().setText(Component.translatable(key.value().getDescriptionId()).getString() + " " + value));
-            });
+            for (CollectableCategories category : CollectableCategories.values()) {
+                scrollerView.addScrollViewChild(new Button().setText(category.name()));
+            }
         };
     }
 }

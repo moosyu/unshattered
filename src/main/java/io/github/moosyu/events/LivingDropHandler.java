@@ -1,6 +1,6 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.util.GiveHarvestedItemstack;
+import io.github.moosyu.util.CollectionUtil;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -19,7 +19,7 @@ public class LivingDropHandler {
             // why are block drops in lists but living drops are in a collection?? do we have the data on this? <-- just gonna leave this there because what was i even talking about lists are collections??
             List<ItemEntity> drops = event.getDrops().stream().toList();
             for (ItemEntity drop : drops) {
-                GiveHarvestedItemstack.givePlayerHarvestedItemstack(player, drop.getItem());
+                CollectionUtil.givePlayerHarvestedItemStack(player, drop.getItem());
             }
         }
     }

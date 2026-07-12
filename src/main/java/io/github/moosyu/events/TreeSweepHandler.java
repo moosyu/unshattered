@@ -4,15 +4,13 @@ import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.UnshatteredDataMaps;
-import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.util.GiveHarvestedItemstack;
+import io.github.moosyu.util.CollectionUtil;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -79,7 +77,7 @@ public class TreeSweepHandler {
 
             for (BreakTask current : tasks) {
                 int logs = calculateLogs(player);
-                GiveHarvestedItemstack.givePlayerHarvestedItemstack(player, new ItemStack(current.state().getBlock(), logs));
+                CollectionUtil.givePlayerHarvestedItemStack(player, new ItemStack(current.state().getBlock(), logs));
             }
 
             skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, tasks.size() * expReward, player);
@@ -114,7 +112,7 @@ public class TreeSweepHandler {
         if (sweep <= 0) {
             skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, 6.0f, player);
             player.syncData(PLAYER_SKILLS);
-            GiveHarvestedItemstack.givePlayerHarvestedItemstack(player, new ItemStack(startBlock.getBlock(), calculateLogs(player)));
+            CollectionUtil.givePlayerHarvestedItemStack(player, new ItemStack(startBlock.getBlock(), calculateLogs(player)));
             return;
         }
 

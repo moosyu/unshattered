@@ -447,7 +447,11 @@ public class UnshatteredItems {
             .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.COMMON)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.LOG)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-            .component(UnshatteredDataComponents.ITEM_COLLECTABLE.get(), true)
+    ));
+
+    public static final DeferredItem<UnshatteredEnchantedItem> ENCHANTED_ROTTEN_FLESH = ITEMS.registerItem("enchanted_rotten_flesh", props -> new UnshatteredEnchantedItem(props
+            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.UNCOMMON)
+            .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
     ));
 
     public static final DeferredItem<BlockItem> BREAKABLE_FIG_LOG = ITEMS.registerSimpleBlockItem(BREAKABLE_FIG_LOG_BLOCK.getDelegate());

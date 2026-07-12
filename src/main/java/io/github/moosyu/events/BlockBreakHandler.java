@@ -59,14 +59,14 @@ public class BlockBreakHandler {
 
         if (blockState.is(UnshatteredBlockTagsProvider.COLLECTABLE_MINING_BLOCKS)) {
             ItemStack blockDrops = getBlockDrop(BrokenBlocksItemResult.getItemDropped(block), player, UnshatteredAttributeValues.MINING_FORTUNE);
-            GiveHarvestedItemstack.givePlayerHarvestedItemstack(player, blockDrops);
+            CollectionUtil.givePlayerHarvestedItemStack(player, blockDrops);
             if (experienceReward > 0.0f) {
                 skills.addExp(PlayerSkillsAttachment.Skill.MINING, experienceReward, player);
                 player.syncData(PLAYER_SKILLS);
             }
         } else if (blockState.is(UnshatteredBlockTagsProvider.COLLECTABLE_FARMING_BLOCKS)) {
             ItemStack blockDrops = getBlockDrop(BrokenBlocksItemResult.getItemDropped(block), player, UnshatteredAttributeValues.FARMING_FORTUNE);
-            GiveHarvestedItemstack.givePlayerHarvestedItemstack(player, blockDrops);
+            CollectionUtil.givePlayerHarvestedItemStack(player, blockDrops);
             // todo: make braking cactus' both add their drops to inventory but count broken cactus parts for exp
             // could just do the same thing as done with sweeping but less costly as it's just the block above
             if (experienceReward > 0.0f) {

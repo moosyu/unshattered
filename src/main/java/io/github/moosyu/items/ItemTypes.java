@@ -24,6 +24,7 @@ public enum ItemTypes {
     WARHAMMER("item_type.unshattered.warhammer", true),
     WHIP("item_type.unshattered.whip", true),
     FISHING_ROD("item_type.unshattered.fishing_rod", true),
+    MATERIAL("item_type.unshattered.material", false),
     CLEAVER("item_type.unshattered.cleaver", true);
 
     private final String key;
