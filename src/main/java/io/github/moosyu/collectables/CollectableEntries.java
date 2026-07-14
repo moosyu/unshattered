@@ -16,7 +16,7 @@ import java.util.Map;
 public final class CollectableEntries {
     public static final Map<Holder<Item>, CollectableItemEntry> COLLECTABLE_ENTRIES = Map.ofEntries(
             Map.entry(BuiltInRegistries.ITEM.wrapAsHolder(Items.ROTTEN_FLESH),
-                    new CollectableItemEntry(CollectableCategories.FARMING, Items.ROTTEN_FLESH,
+                    new CollectableItemEntry(CollectableCategories.COMBAT, Items.ROTTEN_FLESH,
                             List.of(new CollectableLevel(50,
                                     List.of(new ExperienceCollectableReward(250, PlayerSkillsAttachment.Skill.COMBAT))
                             ), new CollectableLevel(100,

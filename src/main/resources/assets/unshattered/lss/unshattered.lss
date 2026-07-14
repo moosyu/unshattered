@@ -53,9 +53,9 @@ label {
     margin: 3 0 3 0;
 }
 
+// tab
 .tab {
     background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 32, 0, 32, 11, 3, 10, 3, 0);
-    clip: scissor;
 }
 
 .tab-opened {
@@ -68,7 +68,6 @@ label {
     height: 18;
 }
 
-// tab
 .__tab-view_tab_content_container__ {
   background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 16, 0, 16, 16, 4, 4, 4, 4);
   width: 176;
@@ -77,18 +76,22 @@ label {
   margin-bottom: 30;
 }
 
-tab-view .__tab-view_tab_scroller__ {
-  margin-bottom: -4;
-}
-
 tab:host {
-  base-background: built-in(ui-mc:TAB_OFF);
-  hover-background: built-in(ui-mc:TAB_OFF) color(#ddd);
-  pressed-background: built-in(ui-mc:TAB_ON);
-  padding-all: 4;
-  height: 18;
+  base-background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 32, 0, 32, 11, 3, 10, 3, 0);
+  hover-background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 32, 0, 32, 11, 3, 10, 3, 0);
+  pressed-background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 32, 0, 32, 11, 3, 10, 3, 0);
+  width: 32;
+  clip: scissor;
 }
 
+.tab-icon {
+    width: 16;
+    height: 16;
+    top: 12;
+    left: 8;
+}
+
+//scroller view
 scroller-vertical:host {
     width: 14;
 }
@@ -146,4 +149,36 @@ progress-bar:host {
 
 .__progress-bar_label__ {
     text: empty;
+}
+
+// button
+button:host > .__white_icon__ { //icon?
+  color: #222;
+}
+
+button.__white_icon__ > .__icon__ { //icon?
+  color: #222;
+}
+
+button:host .__button_text__ {
+  color: #222;
+  text-color: #222;
+  text-shadow: false;
+}
+
+button:host,
+tag-field:host button {
+  base-background: built-in(ui-ore:BTN_DEFAULT);
+  hover-background: built-in(ui-ore:BTN_PRESSED);
+  pressed-background: built-in(ui-ore:BTN_PRESSED) color(#dddddd);
+  padding-all: 2;
+  padding-bottom: 4;
+}
+
+.back-button {
+    width: 16;
+    height: 16;
+    base-background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 22, 32, 16, 16);
+    hover-background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 22, 32, 16, 16) color(#dddddd);
+    pressed-background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 22, 32, 16, 16) color(#dddddd);
 }

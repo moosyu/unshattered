@@ -1,7 +1,6 @@
 package io.github.moosyu.gui.screens;
 
 import com.lowdragmc.lowdraglib2.gui.factory.PlayerUIMenuType;
-import com.lowdragmc.lowdraglib2.gui.texture.IGuiTexture;
 import com.lowdragmc.lowdraglib2.gui.texture.SpriteTexture;
 import com.lowdragmc.lowdraglib2.gui.ui.ModularUI;
 import com.lowdragmc.lowdraglib2.gui.ui.UI;
@@ -11,11 +10,9 @@ import com.lowdragmc.lowdraglib2.gui.ui.elements.inventory.InventorySlots;
 import com.lowdragmc.lowdraglib2.gui.ui.event.HoverTooltips;
 import com.lowdragmc.lowdraglib2.gui.ui.event.UIEvents;
 import com.lowdragmc.lowdraglib2.gui.ui.style.StylesheetManager;
-import com.lowdragmc.lowdraglib2.gui.ui.styletemplate.Sprites;
 import dev.vfyjxf.taffy.style.AlignContent;
 import dev.vfyjxf.taffy.style.FlexDirection;
 import io.github.moosyu.Unshattered;
-import io.github.moosyu.attachments.PlayerCollectionsAttachment;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.attributes.UnshatteredAttributeTypes;
@@ -71,15 +68,16 @@ public class ProfileScreen {
         tabView.addTab(createTabHeader(Tabs.CRAFTING), createCraftingContent());
         tabView.addTab(createTabHeader(Tabs.STATS), createScrollableContent(createStatsScroller(player)));
         tabView.addTab(createTabHeader(Tabs.SKILLS), createScrollableContent(createSkillsScroller(player)));
-        tabView.addTab(createTabHeader(Tabs.COLLECTIONS), createScrollableContent(createCollectionsScroller(player)));
+        tabView.addTab(createTabHeader(Tabs.COLLECTIONS), createCollectionsContainer(player));
 
         return ModularUI.of(UI.of(tabView, StylesheetManager.INSTANCE.getStylesheetSafe(Identifier.fromNamespaceAndPath(MODID, "lss/unshattered.lss"))), player);
     }
 
     private static Tab createTabHeader(Tabs tab) {
         Tab header = new Tab();
-        header.addEventListener(UIEvents.HOVER_TOOLTIPS, event -> event.hoverTooltips = HoverTooltips.empty().append(Component.translatable("gui.title.unshattered." + tab.name().toLowerCase())))
-                .addChild(new UIElement().style(style -> style.background(tab.spriteTexture)));
+        header.addEventListener(UIEvents.HOVER_TOOLTIPS, event -> event.hoverTooltips = HoverTooltips.empty().append(Component.translatable("gui.title.unshattered." + tab.name().toLowerCase())));
+        header.layout(layout -> layout.height(18));
+        header.addChild(new UIElement().style(style -> style.background(tab.spriteTexture)).addClass("tab-icon"));
         return header;
     }
 
@@ -195,11 +193,30 @@ public class ProfileScreen {
         };
     }
 
-    private static Consumer<ScrollerView> createCollectionsScroller(Player player) {
-        return scrollerView -> {
-            for (CollectableCategories category : CollectableCategories.values()) {
-                scrollerView.addScrollViewChild(new Button().setText(category.name()));
-            }
-        };
+    private static UIElement createCollectionsContainer(Player player) {
+        UIElement collectionsContainer = new UIElement();
+        ScrollerView scrollableContainer = new ScrollerView();
+
+        scrollableContainer.addClass("scrollable-container");
+        createCategoryList(scrollableContainer, collectionsContainer, player);
+        collectionsContainer.addChild(scrollableContainer);
+        return collectionsContainer;
+    }
+
+    private static void createCategoryList(ScrollerView scrollableContainer, UIElement collectionsContainer, Player player) {
+        for (CollectableCategories category : CollectableCategories.values()) {
+            scrollableContainer.addScrollViewChild(new Button().setText(category.name()).setOnClick(_ -> {
+                collectionsContainer.getChildren().forEach(collectionsContainer::removeChild);
+                CollectableEntries.COLLECTABLE_ENTRIES.forEach(((itemHolder, collectableItemEntry) -> {
+                    if (collectableItemEntry.category() == category) {
+                        collectionsContainer.addChild(new Label().setText(itemHolder.value().getDescriptionId() +
+                                TextUtils.convertTextToRomanNumeral(player.getData(UnshatteredAttachments.PLAYER_COLLECTIONS.get()).getLevel(player, collectableItemEntry))));
+                    }
+                }));
+                collectionsContainer.addChild(new Button().setText("").setOnClick(_ -> {
+                    createCategoryList(scrollableContainer, collectionsContainer, player);
+                }).addClass("back-button"));
+            }));
+        }
     }
 }
