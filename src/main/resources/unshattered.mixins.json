@@ -8,6 +8,7 @@
   },
   "mixins": [
     "ItemStackMixin",
-    "FishingHookMixin"
+    "FishingHookMixin",
+    "CustomSpawnersMixin"
   ]
 }

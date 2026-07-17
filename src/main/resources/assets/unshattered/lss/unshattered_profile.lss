@@ -54,41 +54,48 @@ label {
 }
 
 // tab
-.tab {
-    background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 32, 0, 32, 11, 3, 10, 3, 0);
-}
-
-.tab-opened {
-    width: 32;
-    height: 32;
-}
-
-.tab-closed {
-    width: 32;
-    height: 18;
+#tab-header {
+    padding-all: 0;
 }
 
 .__tab-view_tab_content_container__ {
-  background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 16, 0, 16, 16, 4, 4, 4, 4);
-  width: 176;
-  height: 166;
-  // just to try to position the menu more like the vanilla inventory
-  margin-bottom: 30;
+    background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 16, 0, 16, 16, 4, 4, 4, 4);
+    width: 176;
+    height: 166;
+    // just to try to position the menu more like the vanilla inventory
+    margin-bottom: 30;
 }
 
 tab:host {
-  base-background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 32, 0, 32, 11, 3, 10, 3, 0);
-  hover-background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 32, 0, 32, 11, 3, 10, 3, 0);
-  pressed-background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 32, 0, 32, 11, 3, 10, 3, 0);
-  width: 32;
-  clip: scissor;
+    base-background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 32, 0, 32, 11, 3, 10, 3, 0);
+    hover-background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 32, 0, 32, 11, 3, 10, 3, 0);
+    pressed-background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 32, 0, 32, 11, 3, 10, 3, 0);
+    height: 16;
+    width: 32;
+    padding-all: 0;
+    justify-content: center;
+    clip: scissor;
+}
+
+.__selected__ {
+    height: 26;
 }
 
 .tab-icon {
     width: 16;
     height: 16;
-    top: 12;
-    left: 8;
+    top: 10;
+}
+
+.tab-scroller {
+    bottom: 2;
+}
+
+// holds the tabs
+.tab-scroller-view-container {
+    gap: 2;
+    align-items: end;
+    justify-content: center;
 }
 
 //scroller view
@@ -153,26 +160,26 @@ progress-bar:host {
 
 // button
 button:host > .__white_icon__ { //icon?
-  color: #222;
+    color: #222;
 }
 
 button.__white_icon__ > .__icon__ { //icon?
-  color: #222;
+    color: #222;
 }
 
 button:host .__button_text__ {
-  color: #222;
-  text-color: #222;
-  text-shadow: false;
+    color: #222;
+    text-color: #222;
+    text-shadow: false;
 }
 
 button:host,
 tag-field:host button {
-  base-background: built-in(ui-ore:BTN_DEFAULT);
-  hover-background: built-in(ui-ore:BTN_PRESSED);
-  pressed-background: built-in(ui-ore:BTN_PRESSED) color(#dddddd);
-  padding-all: 2;
-  padding-bottom: 4;
+    base-background: built-in(ui-ore:BTN_DEFAULT);
+    hover-background: built-in(ui-ore:BTN_PRESSED);
+    pressed-background: built-in(ui-ore:BTN_PRESSED) color(#dddddd);
+    padding-all: 2;
+    padding-bottom: 4;
 }
 
 .back-button {

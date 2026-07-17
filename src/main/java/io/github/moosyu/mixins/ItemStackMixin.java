@@ -4,15 +4,14 @@ import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-// Very smart but very dangerous, taken verbatim from https://github.com/CursedFlames/MCTweaks/blob/stonecutter/NoDurability/src/main/java/cursedflames/nodurability/mixin/MixinItemStack.java
-// I'd just rather not learn how mixins work to be completely honest.
+// shoutout https://github.com/CursedFlames/MCTweaks/blob/stonecutter/NoDurability/src/main/java/cursedflames/nodurability/mixin/MixinItemStack.java
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
     @Inject(method = "isDamageableItem", at = @At("HEAD"), cancellable = true)
     private void isDamageableItem(CallbackInfoReturnable<Boolean> cir) {
         cir.setReturnValue(false);
-        cir.cancel();
     }
 }

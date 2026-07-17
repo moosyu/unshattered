@@ -78,6 +78,7 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.SWAMP_THE_FISH.get(), Items.COOKED_SALMON, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.ZOOP_THE_FISH.get(), Items.SALMON, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.CAKE_SOUL.get(), Items.PINK_DYE, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_ROTTEN_FLESH.get(), Items.ROTTEN_FLESH, ModelTemplates.FLAT_ITEM);
         itemModels.generateFishingRod(UnshatteredItems.CHALLENGING_ROD.get());
         itemModels.itemModelOutput.accept(UnshatteredItems.ENCHANTED_FIG_LOG.get(), ItemModelUtils.plainModel(ModelTemplates.CUBE_COLUMN.create(Identifier.fromNamespaceAndPath("unshattered", "block/enchanted_fig_log"), TextureMapping.column(UnshatteredBlocks.FIG_LOG_BLOCK.get()), blockModels.modelOutput)));
         itemModels.itemModelOutput.accept(UnshatteredItems.BEDROCK.get(), ItemModelUtils.plainModel(ModelTemplates.CUBE_ALL.create(Identifier.fromNamespaceAndPath("unshattered", "block/bedrock"), TextureMapping.cube(Blocks.BEDROCK), blockModels.modelOutput)));

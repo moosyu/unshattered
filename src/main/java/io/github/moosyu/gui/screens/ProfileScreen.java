@@ -10,7 +10,9 @@ import com.lowdragmc.lowdraglib2.gui.ui.elements.inventory.InventorySlots;
 import com.lowdragmc.lowdraglib2.gui.ui.event.HoverTooltips;
 import com.lowdragmc.lowdraglib2.gui.ui.event.UIEvents;
 import com.lowdragmc.lowdraglib2.gui.ui.style.StylesheetManager;
+import com.lowdragmc.lowdraglib2.gui.ui.styletemplate.Sprites;
 import dev.vfyjxf.taffy.style.AlignContent;
+import dev.vfyjxf.taffy.style.AlignItems;
 import dev.vfyjxf.taffy.style.FlexDirection;
 import io.github.moosyu.Unshattered;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
@@ -64,19 +66,20 @@ public class ProfileScreen {
     public static ModularUI createProfileScreen(Player player) {
         TabView tabView = new TabView();
 
+        tabView.tabScroller.addClass("tab-scroller");
+        tabView.tabScroller.viewContainer.addClass("tab-scroller-view-container");
         tabView.addTab(createTabHeader(Tabs.INVENTORY), createInventoryContent(player));
         tabView.addTab(createTabHeader(Tabs.CRAFTING), createCraftingContent());
         tabView.addTab(createTabHeader(Tabs.STATS), createScrollableContent(createStatsScroller(player)));
         tabView.addTab(createTabHeader(Tabs.SKILLS), createScrollableContent(createSkillsScroller(player)));
         tabView.addTab(createTabHeader(Tabs.COLLECTIONS), createCollectionsContainer(player));
 
-        return ModularUI.of(UI.of(tabView, StylesheetManager.INSTANCE.getStylesheetSafe(Identifier.fromNamespaceAndPath(MODID, "lss/unshattered.lss"))), player);
+        return ModularUI.of(UI.of(tabView, StylesheetManager.INSTANCE.getStylesheetSafe(Identifier.fromNamespaceAndPath(MODID, "lss/unshattered_profile.lss"))), player);
     }
 
     private static Tab createTabHeader(Tabs tab) {
         Tab header = new Tab();
         header.addEventListener(UIEvents.HOVER_TOOLTIPS, event -> event.hoverTooltips = HoverTooltips.empty().append(Component.translatable("gui.title.unshattered." + tab.name().toLowerCase())));
-        header.layout(layout -> layout.height(18));
         header.addChild(new UIElement().style(style -> style.background(tab.spriteTexture)).addClass("tab-icon"));
         return header;
     }
@@ -195,28 +198,42 @@ public class ProfileScreen {
 
     private static UIElement createCollectionsContainer(Player player) {
         UIElement collectionsContainer = new UIElement();
+        collectionsContainer.setId("collections-container");
         ScrollerView scrollableContainer = new ScrollerView();
 
         scrollableContainer.addClass("scrollable-container");
         createCategoryList(scrollableContainer, collectionsContainer, player);
-        collectionsContainer.addChild(scrollableContainer);
         return collectionsContainer;
     }
 
     private static void createCategoryList(ScrollerView scrollableContainer, UIElement collectionsContainer, Player player) {
+        UIElement content = new UIElement();
+        UIElement navigation = new UIElement();
+
+        navigation.style(style -> style.background(Sprites.RECT_SOLID)).layout(layout -> layout.alignItems(AlignItems.CENTER));
+        content.addChild(scrollableContainer);
+
         for (CollectableCategories category : CollectableCategories.values()) {
             scrollableContainer.addScrollViewChild(new Button().setText(category.name()).setOnClick(_ -> {
-                collectionsContainer.getChildren().forEach(collectionsContainer::removeChild);
+                content.clearAllChildren();
+                scrollableContainer.clearAllChildren();
                 CollectableEntries.COLLECTABLE_ENTRIES.forEach(((itemHolder, collectableItemEntry) -> {
                     if (collectableItemEntry.category() == category) {
-                        collectionsContainer.addChild(new Label().setText(itemHolder.value().getDescriptionId() +
+                        content.addChild(new Label().setText(itemHolder.value().getDescriptionId() +
                                 TextUtils.convertTextToRomanNumeral(player.getData(UnshatteredAttachments.PLAYER_COLLECTIONS.get()).getLevel(player, collectableItemEntry))));
                     }
                 }));
-                collectionsContainer.addChild(new Button().setText("").setOnClick(_ -> {
-                    createCategoryList(scrollableContainer, collectionsContainer, player);
-                }).addClass("back-button"));
+                if (navigation.getChildren().isEmpty()) {
+                    navigation.addChild(new Button().setText("").setOnClick(_ -> {
+                        content.clearAllChildren();
+                        // ideally this should just be the nav button but if something bizarre happens this should hopefully stop the if from breaking
+                        navigation.clearAllChildren();
+                        createCategoryList(scrollableContainer, collectionsContainer, player);
+                    }).addClass("back-button"));
+                }
             }));
         }
+
+        collectionsContainer.addChildren(content, navigation);
     }
 }

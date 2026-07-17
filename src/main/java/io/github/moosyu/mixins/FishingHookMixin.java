@@ -36,7 +36,7 @@ public abstract class FishingHookMixin {
     private static EntityDataAccessor<Boolean> DATA_BITING;
 
     @Inject(method = "catchingFish", at = @At("HEAD"), cancellable = true)
-    private void unshattered$catchingFish(CallbackInfo ci) {
+    private void catchingFish(CallbackInfo ci) {
         ci.cancel();
         FishingHook hook = (FishingHook)(Object)this;
         if (!(hook.getOwner() instanceof Player player)) return;
