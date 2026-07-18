@@ -57,6 +57,7 @@ public class AttackEntityHandler {
                 // has to be placed after hurt as hurt sets its own invulnerability
                 target.invulnerableTime = 10;
             } else {
+                targetHealth.setBaseValue(0.0);
                 // this should one shot just about any vanilla mob to my knowledge (and actually calculating it wouldnt make sense as custom mobs ill make will have a base normal hp of like 1)
                 target.hurtServer((ServerLevel) target.level(), target.damageSources().playerAttack(player), 500.0f);
             }
