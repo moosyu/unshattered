@@ -46,7 +46,8 @@ public class UnshatteredCreativeTabs {
                 output.accept(ZOOP_THE_FISH.get());
                 output.accept(BEDROCK.get());
                 output.accept(CAKE_SOUL.get());
-        }).build());
+        }).build()
+    );
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_DECORATIVE_BLOCKS_TAB = CREATIVE_MODE_TABS.register("unshattered_decorative_blocks_tab",
         () -> CreativeModeTab.builder()
@@ -55,7 +56,8 @@ public class UnshatteredCreativeTabs {
         .icon(() -> FIG_LOG.get().getDefaultInstance())
         .displayItems((_, output) -> {
                 output.accept(FIG_LOG.get());
-        }).build());
+        }).build()
+    );
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_BREAKABLE_BLOCKS_TAB = CREATIVE_MODE_TABS.register("unshattered_breakable_blocks_tab",
         () -> CreativeModeTab.builder()
@@ -66,7 +68,8 @@ public class UnshatteredCreativeTabs {
                 output.accept(BREAKABLE_STONE.get());
                 output.accept(BREAKABLE_COBBLESTONE.get());
                 output.accept(BREAKABLE_FIG_LOG.get());
-        }).build());
+        }).build()
+    );
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_RESOURCES_TAB = CREATIVE_MODE_TABS.register("unshattered_resources_tab",
         () -> CreativeModeTab.builder()
@@ -76,7 +79,8 @@ public class UnshatteredCreativeTabs {
         .displayItems((_, output) -> {
                 output.accept(ENCHANTED_FIG_LOG.get());
                 output.accept(ENCHANTED_ROTTEN_FLESH);
-        }).build());
+        }).build()
+    );
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_ARMOR_TAB = CREATIVE_MODE_TABS.register("unshattered_armor_tab",
         () -> CreativeModeTab.builder()
@@ -88,7 +92,9 @@ public class UnshatteredCreativeTabs {
                 output.accept(LEAFLET_CHESTPLATE.get());
                 output.accept(LEAFLET_LEGGINGS.get());
                 output.accept(LEAFLET_BOOTS.get());
-        }).build());
+                output.accept(GLOW_SQUID_BOOTS.get());
+        }).build()
+    );
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_TOOLS_TAB = CREATIVE_MODE_TABS.register("unshattered_tools_tab",
         () -> CreativeModeTab.builder()
@@ -104,7 +110,8 @@ public class UnshatteredCreativeTabs {
                 output.accept(FIGSTONE_SPLITTER.get());
                 output.accept(CHALLENGING_ROD.get());
                 output.accept(FISHING_ROD.get());
-        }).build());
+        }).build()
+    );
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_WEAPONS_TAB = CREATIVE_MODE_TABS.register("unshattered_weapons_tab",
         () -> CreativeModeTab.builder()
@@ -134,5 +141,16 @@ public class UnshatteredCreativeTabs {
                 output.accept(SUPER_CLEAVER.get());
                 output.accept(HYPER_CLEAVER.get());
                 output.accept(GIANT_CLEAVER.get());
-        }).build());
+        }).build()
+    );
+
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_ACCESSORIES_TAB = CREATIVE_MODE_TABS.register("unshattered_accessories_tab",
+            () -> CreativeModeTab.builder()
+                .title(Component.translatable("item_group.unshattered.accessories"))
+                .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
+                .icon(() -> BAT_TALISMAN.get().getDefaultInstance())
+                .displayItems((_, output) -> {
+                    output.accept(BAT_TALISMAN.get());
+            }).build()
+    );
 }

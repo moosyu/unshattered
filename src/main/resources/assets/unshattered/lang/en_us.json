@@ -6,6 +6,7 @@
   "item_group.unshattered.decorative_blocks": "Skyblock: Unshattered - Decorative Blocks",
   "item_group.unshattered.breakable_blocks": "Skyblock: Unshattered - Breakable Blocks",
   "item_group.unshattered.unshattered_resources": "Skyblock: Unshattered - Resources",
+  "item_group.unshattered.accessories": "Skyblock: Unshattered - Accessories",
 
   "misc.unshattered.coins": "Coins",
 
@@ -75,6 +76,8 @@
   "item.unshattered.giant_cleaver": "Giant Cleaver",
   "item.unshattered.fishing_rod": "Fishing Rod",
   "item.unshattered.enchanted_rotten_flesh": "Enchanted Rotten Flesh",
+  "item.unshattered.bat_talisman": "Bat Talisman",
+  "item.unshattered.glow_squid_boots": "Glow Squid Boots",
 
   "item.ability.unshattered.speed_boost": "Speed Boost",
   "item.ability.unshattered.mind_blowing": "Mind Blowing",
@@ -163,6 +166,7 @@
   "item.description.unshattered.squire_sword": "Its balance is lousy.",
   "item.description.unshattered.challenging_rod": "Sea creatures can't help but stare.",
   "item.description.unshattered.fishing_rod": "Ol' reliable.",
+  "item.description.unshattered.bat_talisman": "I'm all ears!",
 
   "attribute.name.unshattered.sweep": "Sweep",
   "attribute.name.unshattered.foraging_fortune": "Foraging Fortune",

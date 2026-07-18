@@ -53,6 +53,8 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.LEAFLET_CHESTPLATE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.LEAFLET_LEGGINGS.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.LEAFLET_BOOTS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.GLOW_SQUID_BOOTS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.BAT_TALISMAN.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.BAT_THE_FISH.get(), Items.COOKED_COD, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.CENTURY_THE_FISH.get(), Items.TROPICAL_FISH, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.CHILL_THE_FISH.get(), Items.COOKED_COD, ModelTemplates.FLAT_ITEM);

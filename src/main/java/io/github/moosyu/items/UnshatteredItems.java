@@ -3,6 +3,7 @@ package io.github.moosyu.items;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.SkillRequirement;
+import io.github.moosyu.items.accessories.BatTalisman;
 import io.github.moosyu.items.tools.axes.UnshatteredAxeTool;
 import io.github.moosyu.items.tools.rods.UnshatteredRod;
 import io.github.moosyu.items.weapons.axes.UnshatteredAxeWeapon;
@@ -20,6 +21,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import static io.github.moosyu.Unshattered.MODID;
+import static io.github.moosyu.materials.ArmorMaterials.GLOW_SQUID_BOOTS_MATERIAL;
 import static io.github.moosyu.materials.ArmorMaterials.LEAFLET_ARMOR_MATERIAL;
 import static io.github.moosyu.blocks.UnshatteredBlocks.*;
 
@@ -482,4 +484,17 @@ public class UnshatteredItems {
     public static final DeferredItem<Item> SUPER_CLEAVER = ITEMS.registerItem("super_cleaver", SuperCleaver::new);
     public static final DeferredItem<Item> HYPER_CLEAVER = ITEMS.registerItem("hyper_cleaver", HyperCleaver::new);
     public static final DeferredItem<Item> GIANT_CLEAVER = ITEMS.registerItem("giant_cleaver", GiantCleaver::new);
+    public static final DeferredItem<Item> BAT_TALISMAN = ITEMS.registerItem("bat_talisman", BatTalisman::new);
+
+    public static final DeferredItem<Item> GLOW_SQUID_BOOTS = ITEMS.registerItem("glow_squid_boots", props -> new Item(props
+            .humanoidArmor(GLOW_SQUID_BOOTS_MATERIAL, ArmorType.BOOTS)
+            .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.BOOTS)
+            .component(UnshatteredDataComponents.ITEM_SELL_VALUE.get(), 15)
+            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.UNCOMMON)
+            .attributes(ItemAttributeModifiers.builder()
+                    .add(UnshatteredAttributeValues.FISHING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "squid_boots_fishing_fortune"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
+                    .add(UnshatteredAttributeValues.HEALTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "squid_boots_health"), 100, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
+                    .build()
+            )
+    ));
 }

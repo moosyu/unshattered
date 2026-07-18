@@ -1,6 +1,7 @@
 package io.github.moosyu.attachments;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.packets.ExpSoundEffectPacket;
 import io.github.moosyu.util.TextUtils;
@@ -12,9 +13,12 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.PacketDistributor;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 public final class PlayerSkillsAttachment {
     private static final int[] SKILL_LEVEL_TABLE = {50, 175, 375, 675, 1175, 1925, 2925, 4425, 6425, 9925};
@@ -103,6 +107,18 @@ public final class PlayerSkillsAttachment {
             UnshatteredAttributeValues.modifyAttributeBaseValue(player, attribute, amount);
             player.sendSystemMessage(attributeGainMessage(attribute, amount));
         }
+
+        public String getId() {
+            return id;
+        }
+
+        private static final Map<String, Skill> BY_ID = Arrays.stream(values()).collect(Collectors.toMap(Skill::getId, s -> s));
+
+        public static Optional<Skill> byId(String id) {
+            return Optional.ofNullable(BY_ID.get(id));
+        }
+
+        public static final Codec<Skill> CODEC = Codec.STRING.comapFlatMap(id -> byId(id).map(DataResult::success).orElseGet(() -> DataResult.error(() -> "broken id: " + id)), Skill::getId);
     }
 
     public PlayerSkillsAttachment(float combatExp, float farmingExp, float fishingExp, float miningExp, float foragingExp, float magecraftExp) {

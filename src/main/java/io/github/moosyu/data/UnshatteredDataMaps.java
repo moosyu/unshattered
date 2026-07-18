@@ -29,15 +29,11 @@ public class UnshatteredDataMaps {
             Codec.FLOAT
     ).build();
 
-    public static final DataMapType<EntityType<?>, Float> FARMING_MOBS_EXP_DATA = DataMapType.builder(
-            Identifier.fromNamespaceAndPath(MODID, "farming_mobs_exp_data"),
-            Registries.ENTITY_TYPE,
-            Codec.FLOAT
-    ).build();
-
-    public static final DataMapType<EntityType<?>, Float> COMBATABLE_MOBS_EXP_DATA = DataMapType.builder(
+    public static final DataMapType<EntityType<?>, MobRewardData> COMBATABLE_MOBS_LOOT_DATA = DataMapType.builder(
             Identifier.fromNamespaceAndPath(MODID, "combatable_mobs_exp_data"),
             Registries.ENTITY_TYPE,
-            Codec.FLOAT
+            MobRewardData.CODEC
     ).build();
+
+
 }

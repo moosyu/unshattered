@@ -19,6 +19,7 @@ import static io.github.moosyu.Unshattered.MODID;
 public class ArmorMaterials {
     private static final ResourceKey<? extends Registry<EquipmentAsset>> ROOT_ID = ResourceKey.createRegistryKey(Identifier.withDefaultNamespace("equipment_asset"));
     public static ResourceKey<EquipmentAsset> LEAFLET_KEY = ResourceKey.create(ROOT_ID, Identifier.fromNamespaceAndPath(MODID, "leaflet"));
+    public static ResourceKey<EquipmentAsset> GLOW_SQUID_BOOTS_KEY = ResourceKey.create(ROOT_ID, Identifier.fromNamespaceAndPath(MODID, "glow_squid_boots"));
 
     public static final ArmorMaterial LEAFLET_ARMOR_MATERIAL = new ArmorMaterial(
 1,
@@ -39,6 +40,25 @@ public class ArmorMaterials {
 0.0f,
 0.0f,
         Tags.Items.NUGGETS,
-        ResourceKey.create(EquipmentAssets.ROOT_ID, Identifier.fromNamespaceAndPath("unshattered", "leaflet"))
+        LEAFLET_KEY
     );
+
+    public static final ArmorMaterial GLOW_SQUID_BOOTS_MATERIAL = new ArmorMaterial(
+            1,
+            // Determines the defense value of this armor material, depending on what armor piece it is.
+            Util.make(new EnumMap<>(ArmorType.class), map -> {
+                map.put(ArmorType.BOOTS, 0);
+            }),
+            // Determines the enchantability of the tier. This represents how good the enchantments on this armor will be.
+            // Gold uses 25, we put copper slightly below that.
+            20,
+            // Determines the sound played when equipping this armor.
+            // This is wrapped with a Holder.
+            BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.GLOW_SQUID_SQUIRT),
+            0.0f,
+            0.0f,
+            Tags.Items.NUGGETS,
+            GLOW_SQUID_BOOTS_KEY
+    );
+
 }

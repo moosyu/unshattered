@@ -1,7 +1,9 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.Unshattered;
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.MobRewardData;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.damagesource.DamageSource;
@@ -28,18 +30,14 @@ public class KillHandler {
             PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
             Entity entity = event.getEntity();
 
-            float combatExp = Objects.requireNonNullElse(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.getType()).getData(UnshatteredDataMaps.COMBATABLE_MOBS_EXP_DATA), 0.0f);
-            if (combatExp > 0.0f) {
-                skills.addExp(PlayerSkillsAttachment.Skill.COMBAT, combatExp, player);
-                player.syncData(PLAYER_SKILLS);
+            MobRewardData mobLoot = BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.getType()).getData(UnshatteredDataMaps.COMBATABLE_MOBS_LOOT_DATA);
+            if (mobLoot == null) {
+                Unshattered.LOGGER.warn("entity {} is missing loot", entity.getPlainTextName());
                 return;
             }
 
-            float farmingExp = Objects.requireNonNullElse(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.getType()).getData(UnshatteredDataMaps.FARMING_MOBS_EXP_DATA), 0.0f);
-            System.out.println(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.getType()));
-            System.out.println(farmingExp);
-            if (farmingExp > 0.0f) {
-                skills.addExp(PlayerSkillsAttachment.Skill.FARMING, farmingExp, player);
+            if (mobLoot.experience() > 0.0f) {
+                skills.addExp(mobLoot.skill(), mobLoot.experience(), player);
                 player.syncData(PLAYER_SKILLS);
             }
         }

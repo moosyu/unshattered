@@ -1,16 +1,393 @@
 {
   "values": {
-    "minecraft:bat": 33.0,
-    "minecraft:blaze": 10.0,
-    "minecraft:cave_spider": 8.0,
-    "minecraft:creeper": 8.0,
-    "minecraft:enderman": 15.0,
-    "minecraft:glow_squid": 36.0,
-    "minecraft:skeleton": 6.0,
-    "minecraft:slime": 4.0,
-    "minecraft:spider": 8.0,
-    "minecraft:squid": 12.0,
-    "minecraft:witch": 15.0,
-    "minecraft:zombie": 6.0
+    "minecraft:bat": {
+      "drops": [
+        {
+          "base_drop_chance": 0.01,
+          "combat_fortune_boosted": true,
+          "item": "unshattered:bat_talisman",
+          "max": 1,
+          "min": 1
+        }
+      ],
+      "experience": 33.0,
+      "max_coins": 100,
+      "min_coins": 100,
+      "skill": "combat"
+    },
+    "minecraft:blaze": {
+      "drops": [
+        {
+          "base_drop_chance": 1.0,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:blaze_rod",
+          "max": 1,
+          "min": 1
+        }
+      ],
+      "experience": 10.0,
+      "max_coins": 3,
+      "min_coins": 3,
+      "skill": "combat"
+    },
+    "minecraft:cave_spider": {
+      "drops": [
+        {
+          "base_drop_chance": 1.0,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:string",
+          "max": 1,
+          "min": 1
+        },
+        {
+          "base_drop_chance": 0.5,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:spider_eye",
+          "max": 1,
+          "min": 1
+        }
+      ],
+      "experience": 8.0,
+      "max_coins": 8,
+      "min_coins": 1,
+      "skill": "combat"
+    },
+    "minecraft:chicken": {
+      "drops": [
+        {
+          "base_drop_chance": 1.0,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:feather",
+          "max": 1,
+          "min": 1
+        },
+        {
+          "base_drop_chance": 1.0,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:chicken",
+          "max": 1,
+          "min": 1
+        }
+      ],
+      "experience": 2.0,
+      "max_coins": 0,
+      "min_coins": 0,
+      "skill": "farming"
+    },
+    "minecraft:cow": {
+      "drops": [
+        {
+          "base_drop_chance": 1.0,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:beef",
+          "max": 1,
+          "min": 1
+        },
+        {
+          "base_drop_chance": 1.0,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:leather",
+          "max": 1,
+          "min": 1
+        }
+      ],
+      "experience": 3.0,
+      "max_coins": 0,
+      "min_coins": 0,
+      "skill": "farming"
+    },
+    "minecraft:creeper": {
+      "drops": [
+        {
+          "base_drop_chance": 1.0,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:gunpowder",
+          "max": 1,
+          "min": 1
+        }
+      ],
+      "experience": 8.0,
+      "max_coins": 2,
+      "min_coins": 2,
+      "skill": "combat"
+    },
+    "minecraft:enderman": {
+      "drops": [
+        {
+          "base_drop_chance": 1.0,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:ender_pearl",
+          "max": 1,
+          "min": 1
+        }
+      ],
+      "experience": 15.0,
+      "max_coins": 12,
+      "min_coins": 2,
+      "skill": "combat"
+    },
+    "minecraft:glow_squid": {
+      "drops": [
+        {
+          "base_drop_chance": 1.0,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:ink_sac",
+          "max": 6,
+          "min": 3
+        },
+        {
+          "base_drop_chance": 1.0,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:lily_pad",
+          "max": 1,
+          "min": 1
+        },
+        {
+          "base_drop_chance": 0.08,
+          "combat_fortune_boosted": true,
+          "item": "unshattered:glow_squid_boots",
+          "max": 1,
+          "min": 1
+        }
+      ],
+      "experience": 36.0,
+      "max_coins": 5,
+      "min_coins": 5,
+      "skill": "combat"
+    },
+    "minecraft:mooshroom": {
+      "drops": [
+        {
+          "base_drop_chance": 1.0,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:beef",
+          "max": 1,
+          "min": 1
+        },
+        {
+          "base_drop_chance": 1.0,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:red_mushroom",
+          "max": 4,
+          "min": 1
+        },
+        {
+          "base_drop_chance": 1.0,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:leather",
+          "max": 1,
+          "min": 1
+        }
+      ],
+      "experience": 5.0,
+      "max_coins": 0,
+      "min_coins": 0,
+      "skill": "farming"
+    },
+    "minecraft:pig": {
+      "drops": [
+        {
+          "base_drop_chance": 1.0,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:porkchop",
+          "max": 1,
+          "min": 1
+        }
+      ],
+      "experience": 3.0,
+      "max_coins": 0,
+      "min_coins": 0,
+      "skill": "farming"
+    },
+    "minecraft:rabbit": {
+      "drops": [
+        {
+          "base_drop_chance": 1.0,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:rabbit",
+          "max": 1,
+          "min": 1
+        },
+        {
+          "base_drop_chance": 0.7,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:rabbit_hide",
+          "max": 1,
+          "min": 1
+        },
+        {
+          "base_drop_chance": 0.7,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:rabbit_foot",
+          "max": 1,
+          "min": 1
+        }
+      ],
+      "experience": 5.0,
+      "max_coins": 0,
+      "min_coins": 0,
+      "skill": "farming"
+    },
+    "minecraft:sheep": {
+      "drops": [
+        {
+          "base_drop_chance": 1.0,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:mutton",
+          "max": 1,
+          "min": 1
+        },
+        {
+          "base_drop_chance": 1.0,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:white_wool",
+          "max": 1,
+          "min": 1
+        }
+      ],
+      "experience": 3.0,
+      "max_coins": 0,
+      "min_coins": 0,
+      "skill": "farming"
+    },
+    "minecraft:skeleton": {
+      "drops": [
+        {
+          "base_drop_chance": 1.5,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:bone",
+          "max": 1,
+          "min": 1
+        }
+      ],
+      "experience": 6.0,
+      "max_coins": 8,
+      "min_coins": 1,
+      "skill": "combat"
+    },
+    "minecraft:slime": {
+      "drops": [
+        {
+          "base_drop_chance": 1.0,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:slime_ball",
+          "max": 1,
+          "min": 1
+        }
+      ],
+      "experience": 6.0,
+      "max_coins": 8,
+      "min_coins": 1,
+      "skill": "combat"
+    },
+    "minecraft:spider": {
+      "drops": [
+        {
+          "base_drop_chance": 1.0,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:string",
+          "max": 1,
+          "min": 1
+        },
+        {
+          "base_drop_chance": 0.5,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:spider_eye",
+          "max": 1,
+          "min": 1
+        }
+      ],
+      "experience": 8.0,
+      "max_coins": 8,
+      "min_coins": 1,
+      "skill": "combat"
+    },
+    "minecraft:squid": {
+      "drops": [
+        {
+          "base_drop_chance": 1.5,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:ink_sac",
+          "max": 1,
+          "min": 1
+        },
+        {
+          "base_drop_chance": 1.0,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:lily_pad",
+          "max": 1,
+          "min": 1
+        }
+      ],
+      "experience": 75.0,
+      "max_coins": 5,
+      "min_coins": 5,
+      "skill": "combat"
+    },
+    "minecraft:witch": {
+      "drops": [
+        {
+          "base_drop_chance": 0.5,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:gunpowder",
+          "max": 1,
+          "min": 1
+        },
+        {
+          "base_drop_chance": 0.5,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:glowstone_dust",
+          "max": 1,
+          "min": 1
+        },
+        {
+          "base_drop_chance": 0.2,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:glass_bottle",
+          "max": 2,
+          "min": 1
+        }
+      ],
+      "experience": 15.0,
+      "max_coins": 1,
+      "min_coins": 1,
+      "skill": "combat"
+    },
+    "minecraft:zombie": {
+      "drops": [
+        {
+          "base_drop_chance": 1.0,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:rotten_flesh",
+          "max": 1,
+          "min": 1
+        },
+        {
+          "base_drop_chance": 0.02,
+          "combat_fortune_boosted": true,
+          "item": "minecraft:poisonous_potato",
+          "max": 1,
+          "min": 1
+        },
+        {
+          "base_drop_chance": 0.01,
+          "combat_fortune_boosted": true,
+          "item": "minecraft:potato",
+          "max": 1,
+          "min": 1
+        },
+        {
+          "base_drop_chance": 0.01,
+          "combat_fortune_boosted": true,
+          "item": "minecraft:carrot",
+          "max": 1,
+          "min": 1
+        }
+      ],
+      "experience": 6.0,
+      "max_coins": 8,
+      "min_coins": 1,
+      "skill": "combat"
+    }
   }
 }

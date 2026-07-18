@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.TriState;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -32,23 +33,24 @@ public class RenderNameTagHandler {
     public static void onNameTagCanRender(RenderNameTagEvent.CanRender event) {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
+        Entity entity = event.getEntity();
 
-        if (player == null || event.getEntity().distanceToSqr(player) > 512) {
+        if (player == null || entity.distanceToSqr(player) > 512 || entity == player) {
             event.setCanRender(TriState.FALSE);
             return;
         }
 
-        if (event.getEntity() instanceof LivingEntity entity) {
+        if (entity instanceof LivingEntity livingEntity) {
             event.setCanRender(TriState.TRUE);
-            AttributeInstance healthAttribute = entity.getAttribute(UnshatteredAttributeValues.HEALTH.holder);
+            AttributeInstance healthAttribute = livingEntity.getAttribute(UnshatteredAttributeValues.HEALTH.holder);
             if (healthAttribute == null) {
                 event.setContent(Component.literal("SOMETHING WENT WRONG!! (NO HEALTH ASSIGNED)").withColor(0xFFFF5555));
                 return;
             }
 
-            Optional<AttributeSupplier> supplier = getDefaultSupplier(entity);
+            Optional<AttributeSupplier> supplier = getDefaultSupplier(livingEntity);
             double baseHealth = supplier.map(s -> s.getBaseValue(UnshatteredAttributeValues.HEALTH.holder)).orElse(0.0);
-            event.setContent(Component.literal(entity.getPlainTextName()).withColor(0xFFFF5555)
+            event.setContent(Component.literal(livingEntity.getPlainTextName()).withColor(0xFFFF5555)
                             .append(Component.literal(" " + TextUtils.oneDecimalFormat.format(healthAttribute.getValue())).withColor(0xFF55FF55))
                             .append(Component.literal("/").withColor(0xFFFFFFFF))
                             .append(Component.literal(TextUtils.oneDecimalFormat.format(baseHealth)).withColor(0xFF55FF55))
@@ -71,7 +73,7 @@ public class RenderNameTagHandler {
         poseStack.pushPose();
 
         float entityHeight = state.boundingBoxHeight;
-        poseStack.translate(0.0D, entityHeight + 0.5D, 0.0D);
+        poseStack.translate(0.0d, entityHeight + 0.5d, 0.0d);
         poseStack.mulPose(camera.rotation());
         poseStack.scale(EntityRenderer.NAMETAG_SCALE, -EntityRenderer.NAMETAG_SCALE, EntityRenderer.NAMETAG_SCALE);
         // text, x, y, color, ordered text, shadow, text layer type, light, color, background color, outline color

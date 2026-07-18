@@ -1,0 +1,19 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "unshattered:glow_squid_boots"
+      }
+    ],
+    "humanoid_baby": [
+      {
+        "texture": "unshattered:glow_squid_boots"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "unshattered:glow_squid_boots"
+      }
+    ]
+  }
+}

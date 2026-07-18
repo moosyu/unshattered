@@ -1,6 +1,10 @@
 package io.github.moosyu.datagen;
 
+import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.blocks.UnshatteredBlocks;
+import io.github.moosyu.data.MobItemDropData;
+import io.github.moosyu.data.MobRewardData;
+import io.github.moosyu.items.UnshatteredItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -11,6 +15,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.DataMapProvider;
 import org.jspecify.annotations.NonNull;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import static io.github.moosyu.data.UnshatteredDataMaps.*;
@@ -57,25 +62,149 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         this.builder(FISHABLE_MOBS_EXP_DATA)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SQUID), 25.0f, false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.GLOW_SQUID), 90.0f, false);
-        this.builder(COMBATABLE_MOBS_EXP_DATA)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.ZOMBIE), 6.0f, false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SKELETON), 6.0f, false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SLIME), 4.0f, false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SPIDER), 8.0f, false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.CAVE_SPIDER), 8.0f, false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.WITCH), 15.0f, false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.ENDERMAN), 15.0f, false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.BAT), 33.0f, false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.CREEPER), 8.0f, false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.BLAZE), 10.0f, false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SQUID), 12.0f, false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.GLOW_SQUID), 36.0f, false);
-        this.builder(FARMING_MOBS_EXP_DATA)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SHEEP), 4.0f, false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.COW), 3.0f, false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.CHICKEN), 4.0f, false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.RABBIT), 4.0f, false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.PIG), 4.0f, false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.MOOSHROOM), 5.0f, false);
+        this.builder(COMBATABLE_MOBS_LOOT_DATA)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.ZOMBIE), new MobRewardData(
+                        List.of(new MobItemDropData(Items.ROTTEN_FLESH, 1.0f, false, 1),
+                                new MobItemDropData(Items.POISONOUS_POTATO, 0.02f, true, 1),
+                                new MobItemDropData(Items.POTATO, 0.01f, true, 1),
+                                new MobItemDropData(Items.CARROT, 0.01f, true, 1)
+                        ),
+                        1,
+                        8,
+                        PlayerSkillsAttachment.Skill.COMBAT,
+                        6.0f
+                ), false)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SKELETON), new MobRewardData(
+                        List.of(new MobItemDropData(Items.BONE, 1.5f, false, 1)),
+                        1,
+                        8,
+                        PlayerSkillsAttachment.Skill.COMBAT,
+                        6.0f
+                ), false)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SLIME), new MobRewardData(
+                        List.of(new MobItemDropData(Items.SLIME_BALL, 1.0f, false, 1)),
+                        1,
+                        8,
+                        PlayerSkillsAttachment.Skill.COMBAT,
+                        6.0f
+                ), false)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SPIDER), new MobRewardData(
+                        List.of(new MobItemDropData(Items.STRING, 1.0f, false, 1),
+                                new MobItemDropData(Items.SPIDER_EYE, 0.5f, false, 1)
+                        ),
+                        1,
+                        8,
+                        PlayerSkillsAttachment.Skill.COMBAT,
+                        8.0f
+                ), false)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.CAVE_SPIDER), new MobRewardData(
+                        List.of(new MobItemDropData(Items.STRING, 1.0f, false, 1),
+                                new MobItemDropData(Items.SPIDER_EYE, 0.5f, false, 1)
+                        ),
+                        1,
+                        8,
+                        PlayerSkillsAttachment.Skill.COMBAT,
+                        8.0f
+                ), false)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.WITCH), new MobRewardData(
+                        List.of(new MobItemDropData(Items.GUNPOWDER, 0.5f, false, 1),
+                                new MobItemDropData(Items.GLOWSTONE_DUST, 0.5f, false, 1),
+                                new MobItemDropData(Items.GLASS_BOTTLE, 0.2f, false, 1, 2)
+                        ),
+                        1,
+                        PlayerSkillsAttachment.Skill.COMBAT,
+                        15.0f
+                ), false)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.ENDERMAN), new MobRewardData(
+                        List.of(new MobItemDropData(Items.ENDER_PEARL, 1.0f, false, 1)),
+                        2,
+                        12,
+                        PlayerSkillsAttachment.Skill.COMBAT,
+                        15.0f
+                ), false)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.BAT), new MobRewardData(
+                        List.of(new MobItemDropData(UnshatteredItems.BAT_TALISMAN.get(), 0.01f, true, 1)),
+                        100,
+                        PlayerSkillsAttachment.Skill.COMBAT,
+                        33.0f
+                ), false)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.CREEPER), new MobRewardData(
+                        List.of(new MobItemDropData(Items.GUNPOWDER, 1.0f, false, 1)),
+                        2,
+                        PlayerSkillsAttachment.Skill.COMBAT,
+                        8.0f
+                ), false)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.BLAZE), new MobRewardData(
+                        List.of(new MobItemDropData(Items.BLAZE_ROD, 1.0f, false, 1)),
+                        3,
+                        PlayerSkillsAttachment.Skill.COMBAT,
+                        10.0f
+                ), false)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SQUID), new MobRewardData(
+                        List.of(new MobItemDropData(Items.INK_SAC, 1.5f, false, 1),
+                                new MobItemDropData(Items.LILY_PAD, 1.0f, false, 1)
+                        ),
+                        5,
+                        PlayerSkillsAttachment.Skill.COMBAT,
+                        75.0f
+                ), false)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.GLOW_SQUID), new MobRewardData(
+                        List.of(new MobItemDropData(Items.INK_SAC, 1.0f, false, 3, 6),
+                                new MobItemDropData(Items.LILY_PAD, 1.0f, false, 1),
+                                new MobItemDropData(UnshatteredItems.GLOW_SQUID_BOOTS.get(), 0.08f, true, 1)
+                        ),
+                        5,
+                        PlayerSkillsAttachment.Skill.COMBAT,
+                        36.0f
+                ), false)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SHEEP), new MobRewardData(
+                        List.of(new MobItemDropData(Items.MUTTON, 1.0f, false, 1),
+                                new MobItemDropData(Items.WHITE_WOOL, 1.0f, false, 1)
+                        ),
+                        0,
+                        PlayerSkillsAttachment.Skill.FARMING,
+                        3.0f
+                ), false)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.COW), new MobRewardData(
+                        List.of(new MobItemDropData(Items.BEEF, 1.0f, false, 1),
+                                new MobItemDropData(Items.LEATHER, 1.0f, false, 1)
+                        ),
+                        0,
+                        PlayerSkillsAttachment.Skill.FARMING,
+                        3.0f
+                ), false)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.CHICKEN), new MobRewardData(
+                        List.of(new MobItemDropData(Items.FEATHER, 1.0f, false, 1),
+                                new MobItemDropData(Items.CHICKEN, 1.0f, false, 1)
+                        ),
+                        0,
+                        PlayerSkillsAttachment.Skill.FARMING,
+                        2.0f
+                ), false)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.RABBIT), new MobRewardData(
+                        List.of(new MobItemDropData(Items.RABBIT, 1.0f, false, 1),
+                                new MobItemDropData(Items.RABBIT_HIDE, 0.7f, false, 1),
+                                new MobItemDropData(Items.RABBIT_FOOT, 0.7f, false, 1)
+                        ),
+                        0,
+                        PlayerSkillsAttachment.Skill.FARMING,
+                        5.0f
+                ), false)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.PIG), new MobRewardData(
+                        List.of(new MobItemDropData(Items.PORKCHOP, 1.0f, false, 1)
+                        ),
+                        0,
+                        PlayerSkillsAttachment.Skill.FARMING,
+                        3.0f
+                ), false)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.MOOSHROOM), new MobRewardData(
+                        List.of(new MobItemDropData(Items.BEEF, 1.0f, false, 1),
+                                new MobItemDropData(Items.RED_MUSHROOM, 1.0f, false, 1, 4),
+                                new MobItemDropData(Items.LEATHER, 1.0f, false, 1)
+                        ),
+                        0,
+                        PlayerSkillsAttachment.Skill.FARMING,
+                        5.0f
+                ), false);
     }
 }

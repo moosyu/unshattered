@@ -7,6 +7,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.equipment.EquipmentAsset;
+import org.jspecify.annotations.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +15,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
 import static io.github.moosyu.Unshattered.MODID;
+import static io.github.moosyu.materials.ArmorMaterials.GLOW_SQUID_BOOTS_KEY;
 import static io.github.moosyu.materials.ArmorMaterials.LEAFLET_KEY;
 
 // thanks for the code pookie
@@ -27,10 +29,11 @@ public class EquipmentAssets implements DataProvider {
 
     private static void bootstrap(BiConsumer<ResourceKey<EquipmentAsset>, EquipmentClientInfo> output) {
         output.accept(LEAFLET_KEY, EquipmentClientInfo.builder().addHumanoidLayers(Identifier.fromNamespaceAndPath(MODID, "leaflet"), false).build());
+        output.accept(GLOW_SQUID_BOOTS_KEY, EquipmentClientInfo.builder().addHumanoidLayers(Identifier.fromNamespaceAndPath(MODID, "glow_squid_boots"), false).build());
     }
 
     @Override
-    public CompletableFuture<?> run(CachedOutput cache) {
+    public @NonNull CompletableFuture<?> run(@NonNull CachedOutput cache) {
         Map<ResourceKey<EquipmentAsset>, EquipmentClientInfo> equipmentAssets = new HashMap<>();
         bootstrap((id, asset) -> {
             if (equipmentAssets.putIfAbsent(id, asset) != null) {
@@ -41,7 +44,7 @@ public class EquipmentAssets implements DataProvider {
     }
 
     @Override
-    public String getName() {
+    public @NonNull String getName() {
         return "Unshattered Equipment Definitions";
     }
 }

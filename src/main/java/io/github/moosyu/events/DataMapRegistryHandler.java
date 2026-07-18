@@ -13,7 +13,7 @@ public class DataMapRegistryHandler {
     public static void registerDataMapTypes(RegisterDataMapTypesEvent event) {
         event.register(HARVESTABLE_BLOCKS_EXP_DATA);
         event.register(FISHABLE_ITEMS_EXP_DATA);
-        event.register(FARMING_MOBS_EXP_DATA);
-        event.register(COMBATABLE_MOBS_EXP_DATA);
+        event.register(FISHABLE_MOBS_EXP_DATA);
+        event.register(COMBATABLE_MOBS_LOOT_DATA);
     }
 }
