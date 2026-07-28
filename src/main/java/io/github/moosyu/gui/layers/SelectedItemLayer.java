@@ -59,7 +59,7 @@ public class SelectedItemLayer implements GuiLayer {
         ItemStack heldItemStack = heldItem.getDefaultInstance();
         Component itemName = heldItem.getName(heldItemStack);
         RarityTypes rarity = heldItem.components().get(UnshatteredDataComponents.RARITY);
-        int itemColor = rarity != null ? rarity.getColor(opacity) : RarityTypes.COMMON.getColor(1.0f);
+        int itemColor = rarity != null ? rarity.getColour(opacity) : RarityTypes.COMMON.getColour(1.0f);
         graphics.text(Minecraft.getInstance().font, itemName, (graphics.guiWidth() / 2) - (minecraft.font.width(itemName) / 2), graphics.guiHeight() - 50, itemColor, true);
     }
 }

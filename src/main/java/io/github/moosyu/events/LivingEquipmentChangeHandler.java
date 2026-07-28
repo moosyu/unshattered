@@ -19,6 +19,7 @@ public class LivingEquipmentChangeHandler {
     @SubscribeEvent
     public static void onLivingEquipmentChange(LivingEquipmentChangeEvent event) {
         if (event.getEntity() instanceof Player player) {
+            if (player.level().isClientSide()) return;
             ItemStack itemStack = event.getTo();
             SkillRequirement itemSkillRequirement = itemStack.get(UnshatteredDataComponents.SKILL_REQUIREMENT.get());
             // possibly the worst way to do this but A: any good ways will be annoying to get working and B: the delay kind of reminds

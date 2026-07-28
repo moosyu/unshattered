@@ -3,7 +3,6 @@ package io.github.moosyu.util;
 import java.util.Random;
 
 public final class FortuneCalculation {
-
     /**
      *
      * @param fortuneAmount the fortune of whatever type is being used

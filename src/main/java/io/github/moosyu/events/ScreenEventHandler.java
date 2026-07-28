@@ -5,6 +5,7 @@ import io.github.moosyu.packets.OpenProfilePayload;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ScreenEvent;
@@ -12,7 +13,7 @@ import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 import static io.github.moosyu.Unshattered.MODID;
 
-@EventBusSubscriber(modid = MODID)
+@EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
 public class ScreenEventHandler {
     @SubscribeEvent
     public static void onScreenEventOpen(ScreenEvent.Opening event) {

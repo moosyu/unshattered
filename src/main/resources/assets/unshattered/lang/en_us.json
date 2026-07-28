@@ -262,5 +262,12 @@
   "gui.title.unshattered.crafting": "Crafting",
   "gui.title.unshattered.stats": "Stats",
   "gui.title.unshattered.skills": "Skills",
-  "gui.title.unshattered.collections": "Collections"
+  "gui.title.unshattered.collections": "Collections",
+
+  "drop_type.message.unshattered.common": "Common Drop!",
+  "drop_type.message.unshattered.occasional": "Uncommon Drop!",
+  "drop_type.message.unshattered.rare": "Rare Drop!",
+  "drop_type.message.unshattered.crazy_rare": "Crazy Rare Drop!",
+  "drop_type.message.unshattered.pray_rngesus": "Pray to Rngesus Drop!",
+  "drop_type.message.unshattered.rngesus_incarnate": "Rngesus Incarnate Drop!"
 }

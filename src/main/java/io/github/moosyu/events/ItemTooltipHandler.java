@@ -18,9 +18,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
@@ -29,7 +29,7 @@ import java.util.List;
 
 import static io.github.moosyu.Unshattered.MODID;
 
-@EventBusSubscriber(modid = MODID)
+@EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
 public class ItemTooltipHandler {
     final static int MAX_WIDTH = 200;
     @SubscribeEvent
@@ -39,8 +39,8 @@ public class ItemTooltipHandler {
         if (player == null) return;
         ItemStack stack = event.getItemStack();
         List<Component> tooltipComponents = event.getToolTip();
-        RarityTypes itemRarity = stack.get(UnshatteredDataComponents.RARITY.get());
-        ItemTypes itemType = stack.get(UnshatteredDataComponents.ITEM_TYPE.get());
+        RarityTypes itemRarity = stack.getOrDefault(UnshatteredDataComponents.RARITY.get(), RarityTypes.COMMON);
+        ItemTypes itemType = stack.getOrDefault(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.ITEM);
         boolean hasModifiers = false;
         boolean itemDescription = Boolean.TRUE.equals(stack.get(UnshatteredDataComponents.DESCRIPTION.get()));
         SkillRequirement itemSkillRequirement = stack.get(UnshatteredDataComponents.SKILL_REQUIREMENT.get());
@@ -48,10 +48,8 @@ public class ItemTooltipHandler {
         ItemCharges itemCharges = stack.get(UnshatteredDataComponents.ITEM_CHARGES);
 
         event.getToolTip().clear();
-        if (itemRarity == null) itemRarity = RarityTypes.COMMON;
-        if (itemType == null) itemType = ItemTypes.ITEM;
 
-        tooltipComponents.add(Component.translatable(stack.getItemName().getString()).withColor(itemRarity.getColor(1.0f)));
+        tooltipComponents.add(Component.translatable(stack.getItemName().getString()).withColor(itemRarity.getColour(1.0f)));
         ItemAttributeModifiers modifiers = stack.getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY);
 
         for (ItemAttributeModifiers.Entry entry : modifiers.modifiers()) {
@@ -103,6 +101,6 @@ public class ItemTooltipHandler {
             }
         }
 
-        tooltipComponents.add(Component.literal(Component.translatable("rarity.unshattered." + itemRarity.name().toLowerCase()).getString().toUpperCase() + " " + Component.translatable(itemType.getKey()).getString().toUpperCase()).withColor(itemRarity.getColor(1.0f)).withStyle(ChatFormatting.BOLD));
+        tooltipComponents.add(Component.literal(Component.translatable("rarity.unshattered." + itemRarity.name().toLowerCase()).getString().toUpperCase() + " " + Component.translatable(itemType.getKey()).getString().toUpperCase()).withColor(itemRarity.getColour(1.0f)).withStyle(ChatFormatting.BOLD));
     }
 }

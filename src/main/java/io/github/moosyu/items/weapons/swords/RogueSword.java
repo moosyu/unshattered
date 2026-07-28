@@ -17,12 +17,13 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.common.EventBusSubscriber;
 import org.jspecify.annotations.NonNull;
 
 import static io.github.moosyu.Unshattered.MODID;
 
-@EventBusSubscriber(modid = MODID)
+@EventBusSubscriber(modid = MODID, value = Dist.DEDICATED_SERVER)
 public class RogueSword extends UnshatteredSword {
     private static final Identifier ABILITY_IDENTIFIER = Identifier.fromNamespaceAndPath(MODID, "rogue_sword_speed_boost");
     private static final ItemAbility SPEED_BOOST_ABILITY = new ItemAbility("speed_boost",50, 100, 600, false);

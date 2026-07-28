@@ -2,6 +2,7 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.gui.layers.*;
 import net.minecraft.resources.Identifier;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
@@ -9,7 +10,7 @@ import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
 import static io.github.moosyu.Unshattered.MODID;
 
-@EventBusSubscriber(modid = MODID)
+@EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
 public class RegisterGuiLayersHandler {
     @SubscribeEvent
     public static void onRegisterGuiLayer(RegisterGuiLayersEvent event) {

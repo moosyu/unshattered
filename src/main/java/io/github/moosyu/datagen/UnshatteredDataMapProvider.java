@@ -75,7 +75,7 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         6.0f
                 ), false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SKELETON), new MobRewardData(
-                        List.of(new MobItemDropData(Items.BONE, 1.5f, false, 1)),
+                        List.of(new MobItemDropData(Items.BONE, 1.0f, false, 1, 2)),
                         1,
                         8,
                         PlayerSkillsAttachment.Skill.COMBAT,
@@ -141,7 +141,7 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         10.0f
                 ), false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SQUID), new MobRewardData(
-                        List.of(new MobItemDropData(Items.INK_SAC, 1.5f, false, 1),
+                        List.of(new MobItemDropData(Items.INK_SAC, 1.0f, false, 1, 2),
                                 new MobItemDropData(Items.LILY_PAD, 1.0f, false, 1)
                         ),
                         5,

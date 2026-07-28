@@ -9,7 +9,7 @@ import net.minecraft.world.item.Item;
 /**
  * record for normal items dropped by mobs
  * @param item the item reward
- * @param baseDropChance drop chance from 0.0 -> 1.0, above 1.0 means a chance to roll again + the original 100% drop
+ * @param baseDropChance drop chance from 0.0 -> 1.0
  * @param combatFortuneBoosted whether the drop chance is boosted by combat fortune
  * @param minItemAmount the minimum amount of the item able to be dropped on the condition that it drops
  * @param maxItemAmount the maximum amount of the item able to be dropped on the condition that it drops

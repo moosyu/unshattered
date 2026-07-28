@@ -2,6 +2,7 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.packets.*;
 import io.github.moosyu.packets.handlers.*;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -9,7 +10,7 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 import static io.github.moosyu.Unshattered.MODID;
 
-@EventBusSubscriber(modid = MODID)
+@EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
 public class RegisterPayloadHandler {
     @SubscribeEvent
     public static void registerPayloads(RegisterPayloadHandlersEvent event) {

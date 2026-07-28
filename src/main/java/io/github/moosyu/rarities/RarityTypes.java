@@ -19,7 +19,12 @@ public enum RarityTypes {
         this.color = color;
     }
 
-    public int getColor(float opacity) {
+    /**
+     *
+     * @param opacity 0.0 -> 1.0, why did i include opacity here? whos to say.
+     * @return the colour
+     */
+    public int getColour(float opacity) {
         return GetOpacity.getOpacityColor(color, opacity);
     }
     public static final Codec<RarityTypes> CODEC = Codec.STRING.xmap(RarityTypes::valueOf, RarityTypes::name);
