@@ -11,8 +11,11 @@ import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.rarities.RarityTypes;
 import io.github.moosyu.util.CollectionUtil;
+import io.github.moosyu.util.TextUtils;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -61,9 +64,18 @@ public class EntityDeathHandler {
                             RarityTypes itemRarity = itemDrop.item().components().getOrDefault(UnshatteredDataComponents.RARITY.get(), RarityTypes.COMMON);
                             DropTypes type = getDropType((float) modifiedDropChance);
 
-                            player.sendSystemMessage(Component.translatable("drop_type.message.unshattered." + type.key).withColor(type.colour)
-                                    .append(Component.literal(" ")).append("(" + itemDrop.item().getDescriptionId() + ")").withColor(itemRarity.getColour(1.0f))
-                                    .append(Component.literal("+ " + combatFortune.getValue()).append(Component.translatable(UnshatteredAttributeValues.COMBAT_FORTUNE.getTranslationKey()))).withColor(UnshatteredAttributeValues.COMBAT_FORTUNE.color)
+                            player.sendSystemMessage(Component.empty()
+                                    .append(Component.literal(Component.translatable("drop_type.message.unshattered." + type.key).getString().toUpperCase())
+                                            .withStyle(style -> style.withColor(type.colour).withBold(true)))
+                                    .append(Component.literal(" "))
+                                    .append(Component.translatable(itemDrop.item().getDescriptionId())
+                                            .withStyle(style -> style.withColor(itemRarity.getColour(1.0f)).withBold(false)))
+                                    .append(Component.literal(" "))
+                                    .append(Component.literal("(+" + Math.round(combatFortune.getValue()) + " " + UnshatteredAttributeValues.COMBAT_FORTUNE.symbol + " ")
+                                            .append(Component.translatable(UnshatteredAttributeValues.COMBAT_FORTUNE.getTranslationKey()))
+                                            .append(Component.literal(")"))
+                                            .withStyle(style -> style.withColor(UnshatteredAttributeValues.COMBAT_FORTUNE.color).withBold(false))
+                                    )
                             );
                         }
                     // for if you didnt get the drop

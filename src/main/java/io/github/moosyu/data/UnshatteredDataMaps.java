@@ -10,7 +10,7 @@ import net.neoforged.neoforge.registries.datamaps.DataMapType;
 
 import static io.github.moosyu.Unshattered.MODID;
 
-public class UnshatteredDataMaps {
+public final class UnshatteredDataMaps {
     public static final DataMapType<Block, Float> HARVESTABLE_BLOCKS_EXP_DATA = DataMapType.builder(
             Identifier.fromNamespaceAndPath(MODID, "harvestable_blocks_exp_data"),
             Registries.BLOCK,
@@ -34,6 +34,4 @@ public class UnshatteredDataMaps {
             Registries.ENTITY_TYPE,
             MobRewardData.CODEC
     ).build();
-
-
 }
