@@ -11,11 +11,8 @@ import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.rarities.RarityTypes;
 import io.github.moosyu.util.CollectionUtil;
-import io.github.moosyu.util.TextUtils;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -54,16 +51,21 @@ public class EntityDeathHandler {
                 Unshattered.LOGGER.error("combat fortune is null! drops not rolled!");
                 return;
             }
-            // may end up doing it weighted instead of rolling them all at once
-            // we'll see though
+
+            boolean rolledAboveOccasional = false;
+            // may end up doing it weighted instead of rolling them all at once, we'll see though
             for (MobItemDropData itemDrop : mobLoot.drops()) {
                 double modifiedDropChance = (itemDrop.combatFortuneBoosted() ? itemDrop.baseDropChance() * (1 + (combatFortune.getValue() / 100)) : itemDrop.baseDropChance());
                 if (itemDrop.baseDropChance() < 1.0) {
+                    DropTypes type = getDropType(itemDrop.baseDropChance());
+                    // so the player cant roll a bunch of super rare drops in a single go ever if they're really lucky
+                    if (itemDrop.baseDropChance() < DropTypes.OCCASIONAL.minRate && !rolledAboveOccasional) {
+                        rolledAboveOccasional = true;
+                    } else continue;
+
                     if (ThreadLocalRandom.current().nextFloat(1.0f) < modifiedDropChance) {
                         if (itemDrop.combatFortuneBoosted()) {
                             RarityTypes itemRarity = itemDrop.item().components().getOrDefault(UnshatteredDataComponents.RARITY.get(), RarityTypes.COMMON);
-                            DropTypes type = getDropType((float) modifiedDropChance);
-
                             player.sendSystemMessage(Component.empty()
                                     .append(Component.literal(Component.translatable("drop_type.message.unshattered." + type.key).getString().toUpperCase())
                                             .withStyle(style -> style.withColor(type.colour).withBold(true)))
@@ -79,9 +81,7 @@ public class EntityDeathHandler {
                             );
                         }
                     // for if you didnt get the drop
-                    } else {
-                        continue;
-                    }
+                    } else continue;
                 }
 
                 int dropAmount = itemDrop.minItemAmount() == itemDrop.maxItemAmount() ?

@@ -22,7 +22,7 @@ public enum DropTypes {
 
     /**
      * get the drop type based on drop chance
-     * @param dropChance probably use the value of it modified by combat fortune in most situations
+     * @param dropChance drop chance of the item (unmodified)
      * @return the drop type
      */
     public static @NonNull DropTypes getDropType(float dropChance) {
