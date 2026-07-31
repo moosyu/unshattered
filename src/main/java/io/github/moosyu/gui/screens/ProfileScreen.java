@@ -24,10 +24,13 @@ import io.github.moosyu.collectables.CollectableEntries;
 import io.github.moosyu.util.TextUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 
 import java.util.Arrays;

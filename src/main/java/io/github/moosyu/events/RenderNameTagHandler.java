@@ -50,8 +50,19 @@ public class RenderNameTagHandler {
 
             Optional<AttributeSupplier> supplier = getDefaultSupplier(livingEntity);
             double baseHealth = supplier.map(s -> s.getBaseValue(UnshatteredAttributeValues.HEALTH.holder)).orElse(0.0);
+            int healthColour;
+
+            double healthFraction = healthAttribute.getValue() / baseHealth;
+            if (healthAttribute.getValue() / baseHealth <= 0.1) {
+                healthColour = 0xFFFF5555;
+            } else if (healthFraction <= 0.5) {
+                healthColour = 0xFFFFFF55;
+            } else {
+                healthColour = 0xFF55FF55;
+            }
+
             event.setContent(Component.literal(livingEntity.getPlainTextName()).withColor(0xFFFF5555)
-                            .append(Component.literal(" " + TextUtils.oneDecimalFormat.format(healthAttribute.getValue())).withColor(0xFF55FF55))
+                            .append(Component.literal(" " + TextUtils.oneDecimalFormat.format(healthAttribute.getValue())).withColor(healthColour))
                             .append(Component.literal("/").withColor(0xFFFFFFFF))
                             .append(Component.literal(TextUtils.oneDecimalFormat.format(baseHealth)).withColor(0xFF55FF55))
                             .append(Component.literal("❤").withColor(0xFFFF5555))
