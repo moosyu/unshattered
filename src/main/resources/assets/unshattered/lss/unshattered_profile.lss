@@ -27,6 +27,11 @@ item-slot {
     background: sprite(unshattered:textures/gui/unshattered_base_gui.png, 32, 11, 18, 18);
 }
 
+.armour-icon {
+    width: 16;
+    height: 16;
+}
+
 .armour-slots-container {
     margin: 2 0 4 2;
     flex-direction: column;

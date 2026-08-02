@@ -1,6 +1,7 @@
 package io.github.moosyu.gui.screens;
 
 import com.lowdragmc.lowdraglib2.gui.factory.PlayerUIMenuType;
+import com.lowdragmc.lowdraglib2.gui.texture.GuiTexture;
 import com.lowdragmc.lowdraglib2.gui.texture.SpriteTexture;
 import com.lowdragmc.lowdraglib2.gui.ui.ModularUI;
 import com.lowdragmc.lowdraglib2.gui.ui.UI;
@@ -21,17 +22,19 @@ import io.github.moosyu.attributes.UnshatteredAttributeTypes;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.collectables.CollectableCategories;
 import io.github.moosyu.collectables.CollectableEntries;
+import io.github.moosyu.gui.screens.slots.ArmourSlot;
 import io.github.moosyu.util.TextUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
@@ -88,16 +91,37 @@ public class ProfileScreen {
     }
 
     private static UIElement createInventoryContent(Player player) {
+        Identifier HELMET_ICON = Identifier.withDefaultNamespace("textures/gui/sprites/container/slot/helmet.png");
+        Identifier CHESTPLATE_ICON = Identifier.withDefaultNamespace("textures/gui/sprites/container/slot/chestplate.png");
+        Identifier LEGGINGS_ICON = Identifier.withDefaultNamespace("textures/gui/sprites/container/slot/leggings.png");
+        Identifier BOOTS_ICON = Identifier.withDefaultNamespace("textures/gui/sprites/container/slot/boots.png");
+
         UIElement inventoryContainer = new UIElement();
         UIElement armourContainer = new UIElement();
         Inventory inventory = player.getInventory();
 
+        // todo: addClass("armour-icon") when i figure out why it isnt molesting my mouse
+        UIElement helmetSlotIcon = new UIElement().style(style -> style.background(SpriteTexture.of(HELMET_ICON)));
+        UIElement chestplateSlotIcon = new UIElement().style(style -> style.background(SpriteTexture.of(CHESTPLATE_ICON)));
+        UIElement leggingsSlotIcon = new UIElement().style(style -> style.background(SpriteTexture.of(LEGGINGS_ICON)));
+        UIElement bootsSlotIcon = new UIElement().style(style -> style.background(SpriteTexture.of(BOOTS_ICON)));
+
+        ItemSlot helmetSlot = new ItemSlot(new ArmourSlot(inventory, 39, player, EquipmentSlot.HEAD, helmetSlotIcon));
+        ItemSlot chestplateSlot = new ItemSlot(new ArmourSlot(inventory, 38, player, EquipmentSlot.CHEST, chestplateSlotIcon));
+        ItemSlot leggingsSlot = new ItemSlot(new ArmourSlot(inventory, 37, player, EquipmentSlot.LEGS, leggingsSlotIcon));
+        ItemSlot bootsSlot = new ItemSlot(new ArmourSlot(inventory, 36, player, EquipmentSlot.FEET, bootsSlotIcon));
+
+        helmetSlot.addChild(helmetSlotIcon);
+        chestplateSlot.addChild(chestplateSlotIcon);
+        leggingsSlot.addChild(leggingsSlotIcon);
+        bootsSlot.addChild(bootsSlotIcon);
+
         armourContainer.addClass("armour-slots-container");
         armourContainer.addChildren(
-                new ItemSlot(new Slot(inventory, 39, 0, 0)), // helmet
-                new ItemSlot(new Slot(inventory, 38, 0, 0)), // chestplate
-                new ItemSlot(new Slot(inventory, 37, 0, 0)), // leggings
-                new ItemSlot(new Slot(inventory, 36, 0, 0))  // boots
+                helmetSlot,
+                chestplateSlot,
+                leggingsSlot,
+                bootsSlot
         );
 
         inventoryContainer.addChildren(armourContainer, new InventorySlots());
@@ -108,21 +132,31 @@ public class ProfileScreen {
         UIElement craftingScreenContainer = new UIElement();
         UIElement craftingContainer = new UIElement();
         UIElement craftingTableContainer = new UIElement();
-        UIElement quickCraftingContainer = new UIElement();
+        SimpleContainer quickCraftingContainer = new SimpleContainer(3);
+        UIElement quickCraftingDivContainer = new UIElement();
         ProfileCraftingGrid grid = new ProfileCraftingGrid();
 
         for (int row = 0; row < 3; row++) {
             UIElement rowSlots = new UIElement().layout(layout -> layout.flexDirection(FlexDirection.ROW));
             for (int col = 0; col < 3; col++) {
                 int index = row * 3 + col;
-                rowSlots.addChild(new ItemSlot().bind(grid.input, index));
+                rowSlots.addChild(new ItemSlot().bind(grid.input, index).slotStyle(slot -> {
+                    slot.acceptQuickMove(false);
+                    slot.isPlayerSlot(false);
+                }));
             }
             craftingTableContainer.addChild(rowSlots);
         }
 
         for (int slot = 0; slot < 3; slot++) {
-            // slot + 1 because 0 is reserved for the results
-            quickCraftingContainer.addChild(new ItemSlot().bind(grid.result, slot + 1));
+            quickCraftingDivContainer.addChild(new ItemSlot(new Slot(quickCraftingContainer, slot, 0, 0) {
+                @Override
+                public boolean mayPlace(@NonNull ItemStack itemStack) {
+                    System.out.println("hi");
+                    return false;
+                }
+                // slot + 1 because 0 is reserved for the results
+            }).slotStyle(slotStyle -> slotStyle.acceptQuickMove(false)).bind(grid.result, slot + 1));
         }
 
         craftingContainer.addChildren(
@@ -139,7 +173,7 @@ public class ProfileScreen {
                     layout.marginLeft(8);
                     layout.marginRight(8);
                 }),
-                quickCraftingContainer
+                quickCraftingDivContainer
         );
         craftingContainer.addClass("crafting-container");
         craftingScreenContainer.addChildren(craftingContainer, new InventorySlots()).layout(layout -> layout.justifyContent(AlignContent.CENTER));
