@@ -15,6 +15,8 @@
 .crafting-container {
     flex-direction: row;
     align-items: center;
+    margin: 8 0 16 0;
+    justify-content: center;
 }
 
 .inventory-container, .crafting-screen-container {

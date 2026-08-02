@@ -127,13 +127,18 @@ public class ProfileScreen {
 
         craftingContainer.addChildren(
                 craftingTableContainer,
+                // arrow
                 new UIElement().style(style -> style.background(SpriteTexture.of(Identifier.fromNamespaceAndPath(MODID, "textures/gui/unshattered_base_gui.png"))
-                        .setSprite(0, 32, 25, 15)))
+                        .setSprite(0, 32, 22, 15)))
                         .layout(layout -> {
                             layout.width(25);
                             layout.height(15);
+                            layout.marginLeft(8);
                         }),
-                new ItemSlot().bind(grid.result, 0),
+                new ItemSlot().bind(grid.result, 0).layout(layout -> {
+                    layout.marginLeft(8);
+                    layout.marginRight(8);
+                }),
                 quickCraftingContainer
         );
         craftingContainer.addClass("crafting-container");
