@@ -10,13 +10,15 @@ import org.joml.Vector2i;
  * @param topLeftCornerCoordinates the bottom left point of the rectangle. these integers are meant to relate to points in the minecraft world so just pretend Vector2i's y is minecraft's z
  * @param width rectangle width
  * @param height rectangle height
+ * @param priority whether this takes priority over other regions the player is in. highest priority wins.
  */
-public record BoundaryCoordinates(Vector2i topLeftCornerCoordinates, int width, int height) {
+public record BoundaryCoordinates(Vector2i topLeftCornerCoordinates, int width, int height, int priority) {
     public static final Codec<BoundaryCoordinates> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     UnshatteredCodecs.VECTOR_2I_CODEC.fieldOf("top_left_corner_coordinates").forGetter(BoundaryCoordinates::topLeftCornerCoordinates),
                     Codec.INT.fieldOf("width").forGetter(BoundaryCoordinates::width),
-                    Codec.INT.fieldOf("height").forGetter(BoundaryCoordinates::height)
+                    Codec.INT.fieldOf("height").forGetter(BoundaryCoordinates::height),
+                    Codec.INT.fieldOf("priority").forGetter(BoundaryCoordinates::priority)
             ).apply(instance, BoundaryCoordinates::new)
     );
 }

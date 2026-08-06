@@ -59,7 +59,7 @@ public class SidebarLayer implements ModularHudLayer {
         }));
 
         Label purseLabel = new Label();
-        purseLabel.textStyle(style -> style.adaptiveWidth(true).textColor(0xFFFFFF55));
+        purseLabel.textStyle(style -> style.adaptiveWidth(true).textColor(0xFFF9A604));
         purseLabel.bindDataSource(SupplierDataSource.of(() -> {
             Player player = Minecraft.getInstance().player;
             if (player == null) return Component.literal("Purse: -");
