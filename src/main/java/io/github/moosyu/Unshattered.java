@@ -26,7 +26,6 @@ import static io.github.moosyu.creative.UnshatteredCreativeTabs.CREATIVE_MODE_TA
 import static io.github.moosyu.data.components.UnshatteredDataComponents.DATA_COMPONENTS;
 import static io.github.moosyu.entities.UnshatteredEntities.ENTITY_TYPES;
 import static io.github.moosyu.gui.screens.ProfileScreen.PROFILE_UI_ID;
-import static io.github.moosyu.gui.screens.ProfileScreen.createProfileScreen;
 import static io.github.moosyu.items.UnshatteredItems.*;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file

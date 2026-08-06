@@ -19,7 +19,6 @@ public class ScreenEventHandler {
     public static void onScreenEventOpen(ScreenEvent.Opening event) {
         Player player = Minecraft.getInstance().player;
         if (player == null) {
-            Unshattered.LOGGER.error("player is null... (from screen opening)");
             return;
         }
         // override inventory

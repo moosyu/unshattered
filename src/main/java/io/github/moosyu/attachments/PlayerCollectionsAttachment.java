@@ -86,8 +86,7 @@ public record PlayerCollectionsAttachment(Map<Holder<Item>, Integer> collectedIt
 
     }
 
-    public static final Codec<PlayerCollectionsAttachment> RECORD_CODEC = Codec.unboundedMap(BuiltInRegistries.ITEM.holderByNameCodec(), Codec.INT)
-            .xmap(PlayerCollectionsAttachment::new, PlayerCollectionsAttachment::collectedItems);
+    public static final Codec<PlayerCollectionsAttachment> RECORD_CODEC = Codec.unboundedMap(BuiltInRegistries.ITEM.holderByNameCodec(), Codec.INT).xmap(PlayerCollectionsAttachment::new, PlayerCollectionsAttachment::collectedItems);
 
     private static final StreamCodec<RegistryFriendlyByteBuf, Map<Holder<Item>, Integer>> MAP_STREAM_CODEC =
             ByteBufCodecs.map(

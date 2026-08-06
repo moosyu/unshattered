@@ -1,0 +1,11 @@
+{
+  "boundary_coordinates": {
+    "height": 50,
+    "top_left_corner_coordinates": {
+      "x": -50,
+      "z": -50
+    },
+    "width": 50
+  },
+  "region": "unshattered:unincorporated"
+}

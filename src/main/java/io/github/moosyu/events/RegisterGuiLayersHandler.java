@@ -1,5 +1,8 @@
 package io.github.moosyu.events;
 
+import com.lowdragmc.lowdraglib2.gui.hud.ModularHudLayer;
+import com.lowdragmc.lowdraglib2.gui.ui.ModularUI;
+import com.lowdragmc.lowdraglib2.gui.ui.UI;
 import io.github.moosyu.gui.layers.*;
 import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
@@ -7,6 +10,9 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
+import org.spongepowered.include.com.google.common.base.Suppliers;
+
+import java.util.function.Supplier;
 
 import static io.github.moosyu.Unshattered.MODID;
 

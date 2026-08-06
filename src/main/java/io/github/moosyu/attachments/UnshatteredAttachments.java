@@ -1,8 +1,17 @@
 package io.github.moosyu.attachments;
 
+import com.mojang.serialization.Codec;
+import io.github.moosyu.data.regions.Region;
+import io.github.moosyu.data.regions.RegionTemperatureTypes;
+import io.github.moosyu.data.regions.UnshatteredRegions;
+import io.github.moosyu.events.DataPackRegistryHandler;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.resources.RegistryFixedCodec;
+import net.minecraft.resources.ResourceKey;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import org.joml.Vector2i;
 
 import java.util.function.Supplier;
 
@@ -47,4 +56,20 @@ public final class UnshatteredAttachments {
                     .copyOnDeath()
                     .build()
     );
+
+    public static final Supplier<AttachmentType<ResourceKey<Region>>> PLAYER_REGION = ATTACHMENT_TYPES.register("player_region", () ->
+            AttachmentType.builder(() -> UnshatteredRegions.DEFAULT_REGION)
+                    .serialize(ResourceKey.codec(DataPackRegistryHandler.REGION_REGISTRY_KEY).fieldOf("region"))
+                    .sync(ResourceKey.streamCodec(DataPackRegistryHandler.REGION_REGISTRY_KEY))
+                    .copyOnDeath()
+                    .build()
+    );
+
+    public static final Supplier<AttachmentType<Float>> PLAYER_TEMPERATURE = ATTACHMENT_TYPES.register("player_temperature", () ->
+            AttachmentType.builder(() -> 37.0f)
+                    .serialize(Codec.FLOAT.fieldOf("temperature"))
+                    .sync(ByteBufCodecs.FLOAT)
+                    .copyOnDeath()
+                    .build()
+            );
 }

@@ -1,39 +1,74 @@
 package io.github.moosyu.gui.layers;
 
+import com.lowdragmc.lowdraglib2.gui.hud.ModularHudLayer;
+import com.lowdragmc.lowdraglib2.gui.sync.bindings.impl.SupplierDataSource;
+import com.lowdragmc.lowdraglib2.gui.texture.ColorRectTexture;
+import com.lowdragmc.lowdraglib2.gui.ui.ModularUI;
+import com.lowdragmc.lowdraglib2.gui.ui.UI;
+import com.lowdragmc.lowdraglib2.gui.ui.UIElement;
+import com.lowdragmc.lowdraglib2.gui.ui.elements.Label;
+import dev.vfyjxf.taffy.style.AlignItems;
+import dev.vfyjxf.taffy.style.FlexDirection;
 import io.github.moosyu.attachments.PlayerCurrencyAttachment;
 import io.github.moosyu.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.regions.Region;
+import io.github.moosyu.events.DataPackRegistryHandler;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.client.gui.GuiLayer;
-import org.jspecify.annotations.NonNull;
+import org.jetbrains.annotations.Nullable;
+import org.spongepowered.include.com.google.common.base.Suppliers;
 
-public class SidebarLayer implements GuiLayer {
+import java.util.function.Supplier;
+
+public class SidebarLayer implements ModularHudLayer {
+    private static final Supplier<ModularUI> MODULAR_UI = Suppliers.memoize(() -> ModularUI.of(UI.of(createSidebarLayer())));
+
     @Override
-    public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
-        Minecraft minecraft = Minecraft.getInstance();
-        Font font = minecraft.font;
-        Player player = minecraft.player;
-        if (player == null || !player.level().isClientSide() || minecraft.options.hideGui) return;
-        final String TITLE = "UNSHATTERED";
-        final int SIDEBAR_HEIGHT = 96;
-        final int HORIZONTAL_MARGIN = 3;
-        final int VERTICAL_MARGIN = 12;
+    public @Nullable ModularUI getModularUI() {
+        return MODULAR_UI.get();
+    }
 
-        final PlayerCurrencyAttachment CURRENCY_ATTACHMENT = player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get());
-        final int PURSE_WIDTH = font.width("Purse: " + CURRENCY_ATTACHMENT.getCoins()) + 20;
-        final int TITLE_WIDTH = font.width(Component.literal(TITLE).withStyle(ChatFormatting.BOLD));
-        final int SIDEBAR_WIDTH = Math.max(PURSE_WIDTH, TITLE_WIDTH) + (HORIZONTAL_MARGIN * 4);
-        final int CORNER_POS_X = (graphics.guiWidth() - SIDEBAR_WIDTH) - 2;
-        final int CORNER_POS_Y = (graphics.guiHeight() - SIDEBAR_HEIGHT) / 2;
+    public static UIElement createSidebarLayer() {
+        UIElement root = new UIElement()
+                .layout(l -> l.widthPercent(100).heightPercent(100));
 
-        graphics.fill(CORNER_POS_X, CORNER_POS_Y, CORNER_POS_X + SIDEBAR_WIDTH, CORNER_POS_Y + SIDEBAR_HEIGHT, 0x66000000);
-        graphics.text(font, Component.literal(TITLE).withStyle(ChatFormatting.BOLD), CORNER_POS_X + ((SIDEBAR_WIDTH - TITLE_WIDTH) / 2), CORNER_POS_Y + 2, 0xFFFFFF55);
-        graphics.text(font, "Purse: ", CORNER_POS_X + HORIZONTAL_MARGIN, CORNER_POS_Y + VERTICAL_MARGIN, 0xFFFFFFFF, false);
-        graphics.text(font, String.format("%,d", CURRENCY_ATTACHMENT.getCoins()), CORNER_POS_X + font.width("Purse: ") + HORIZONTAL_MARGIN, CORNER_POS_Y + VERTICAL_MARGIN, 0xFFFFFF55, false);
+        UIElement sidebarBox = new UIElement()
+                .layout(layout -> layout
+                        .flexDirection(FlexDirection.ROW)
+                        .widthPercent(100)
+                        .height(20)
+                        .gapAll(8)
+                        .alignItems(AlignItems.CENTER)
+                        .paddingLeft(6)
+                        .paddingRight(6)
+                )
+                .style(style -> style.background(new ColorRectTexture(0x64000000)));
+
+        Label regionLabel = new Label();
+        regionLabel.textStyle(style -> style.adaptiveWidth(true));
+        regionLabel.bindDataSource(SupplierDataSource.of(() -> {
+            Player player = Minecraft.getInstance().player;
+            if (player == null) return Component.literal("");
+            ResourceKey<Region> regionResourceKey = player.getData(UnshatteredAttachments.PLAYER_REGION.get());
+            Region region = Region.getRegion(regionResourceKey, player);
+            return Component.literal("⏣ ").withColor(0xFFAAAAAA).append(Component.translatable(Region.getRegionTranslationKey(regionResourceKey)).withColor(region.colour()));
+        }));
+
+        Label purseLabel = new Label();
+        purseLabel.textStyle(style -> style.adaptiveWidth(true).textColor(0xFFFFFF55));
+        purseLabel.bindDataSource(SupplierDataSource.of(() -> {
+            Player player = Minecraft.getInstance().player;
+            if (player == null) return Component.literal("Purse: -");
+            PlayerCurrencyAttachment currency = player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get());
+            return Component.literal("Purse: " + String.format("%,d", currency.getCoins()));
+        }));
+
+        sidebarBox.addChildren(regionLabel, purseLabel);
+        root.addChild(sidebarBox);
+        return root;
     }
 }

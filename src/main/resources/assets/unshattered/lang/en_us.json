@@ -269,5 +269,8 @@
   "drop_type.message.unshattered.rare": "Rare Drop!",
   "drop_type.message.unshattered.crazy_rare": "Crazy Rare Drop!",
   "drop_type.message.unshattered.pray_rngesus": "Pray to Rngesus Drop!",
-  "drop_type.message.unshattered.rngesus_incarnate": "Rngesus Incarnate Drop!"
+  "drop_type.message.unshattered.rngesus_incarnate": "Rngesus Incarnate Drop!",
+
+  "region.name.unshattered.unincorporated": "Unincorporated",
+  "region.name.unshattered.plains": "Plains"
 }

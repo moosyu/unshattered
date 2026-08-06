@@ -34,4 +34,10 @@ public final class UnshatteredDataMaps {
             Registries.ENTITY_TYPE,
             MobRewardData.CODEC
     ).build();
+
+    public static final DataMapType<EntityType<?>, MobRewardData> REGION_DATA = DataMapType.builder(
+            Identifier.fromNamespaceAndPath(MODID, "region_data"),
+            Registries.ENTITY_TYPE,
+            MobRewardData.CODEC
+    ).build();
 }
