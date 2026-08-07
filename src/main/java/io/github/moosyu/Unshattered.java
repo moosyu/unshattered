@@ -3,7 +3,15 @@ package io.github.moosyu;
 import com.lowdragmc.lowdraglib2.gui.factory.PlayerUIMenuType;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.attributes.UnshatteredAttributes;
+import io.github.moosyu.data.regions.BoundaryCoordinates;
+import io.github.moosyu.data.regions.RegionAreas;
+import io.github.moosyu.data.regions.RegionBoundary;
+import io.github.moosyu.data.regions.UnshatteredRegions;
+import io.github.moosyu.events.DatagenHandler;
 import io.github.moosyu.gui.screens.ProfileScreen;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
+import org.joml.Vector2i;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -19,14 +27,19 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static io.github.moosyu.attachments.UnshatteredAttachments.ATTACHMENT_TYPES;
 import static io.github.moosyu.attributes.UnshatteredAttributes.ATTRIBUTES;
 import static io.github.moosyu.blocks.UnshatteredBlocks.BLOCKS;
 import static io.github.moosyu.creative.UnshatteredCreativeTabs.CREATIVE_MODE_TABS;
 import static io.github.moosyu.data.components.UnshatteredDataComponents.DATA_COMPONENTS;
 import static io.github.moosyu.entities.UnshatteredEntities.ENTITY_TYPES;
+import static io.github.moosyu.events.DataPackRegistryHandler.REGION_BOUNDARY_REGISTRY_KEY;
 import static io.github.moosyu.gui.screens.ProfileScreen.PROFILE_UI_ID;
 import static io.github.moosyu.items.UnshatteredItems.*;
+import static net.minecraft.world.level.Level.OVERWORLD;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Unshattered.MODID)
@@ -77,7 +90,6 @@ public class Unshattered {
         LOGGER.info("{}{}", Config.MAGIC_NUMBER_INTRODUCTION.get(), Config.MAGIC_NUMBER.getAsInt());
 
         Config.ITEM_STRINGS.get().forEach(item -> LOGGER.info("ITEM >> {}", item));
-        event.enqueueWork(UnshatteredAttributeValues::buildLookup);
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
@@ -86,5 +98,13 @@ public class Unshattered {
         // Do something when the server starts
         LOGGER.info("HELLO from server starting");
         UnshatteredAttributeValues.buildLookup();
+        ServerLevel serverLevel = event.getServer().getLevel(OVERWORLD);
+        BoundaryCoordinates boundaryCoordinates = BoundaryCoordinates.getRegionCoordinates(serverLevel, UnshatteredRegions.DEFAULT_REGION);
+        if (serverLevel != null) {
+            if (boundaryCoordinates != null) {
+                RegionAreas.createRegionAreaGrid(new Vector2i(boundaryCoordinates.width(), boundaryCoordinates.height()), serverLevel.registryAccess().lookupOrThrow(REGION_BOUNDARY_REGISTRY_KEY).stream().toList());
+                System.out.println(Arrays.deepToString(RegionAreas.chunks));
+            }
+        }
     }
 }

@@ -10,6 +10,7 @@ import com.lowdragmc.lowdraglib2.gui.ui.elements.Label;
 import dev.vfyjxf.taffy.style.AlignItems;
 import dev.vfyjxf.taffy.style.FlexDirection;
 import io.github.moosyu.attachments.PlayerCurrencyAttachment;
+import io.github.moosyu.attachments.PlayerRegionAttachment;
 import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.regions.Region;
 import io.github.moosyu.events.DataPackRegistryHandler;
@@ -53,9 +54,9 @@ public class SidebarLayer implements ModularHudLayer {
         regionLabel.bindDataSource(SupplierDataSource.of(() -> {
             Player player = Minecraft.getInstance().player;
             if (player == null) return Component.literal("");
-            ResourceKey<Region> regionResourceKey = player.getData(UnshatteredAttachments.PLAYER_REGION.get());
-            Region region = Region.getRegion(regionResourceKey, player);
-            return Component.literal("⏣ ").withColor(0xFFAAAAAA).append(Component.translatable(Region.getRegionTranslationKey(regionResourceKey)).withColor(region.colour()));
+            PlayerRegionAttachment regionAttachment = player.getData(UnshatteredAttachments.PLAYER_REGION.get());
+            Region region = Region.getRegion(regionAttachment.regionKey(), player);
+            return Component.literal("⏣ ").withColor(0xFFAAAAAA).append(Component.translatable(Region.getRegionTranslationKey(regionAttachment.regionKey())).withColor(region.colour()));
         }));
 
         Label purseLabel = new Label();

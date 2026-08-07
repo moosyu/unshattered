@@ -5,6 +5,7 @@ import io.github.moosyu.data.regions.Region;
 import io.github.moosyu.data.regions.RegionTemperatureTypes;
 import io.github.moosyu.data.regions.UnshatteredRegions;
 import io.github.moosyu.events.DataPackRegistryHandler;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.resources.RegistryFixedCodec;
 import net.minecraft.resources.ResourceKey;
@@ -57,10 +58,10 @@ public final class UnshatteredAttachments {
                     .build()
     );
 
-    public static final Supplier<AttachmentType<ResourceKey<Region>>> PLAYER_REGION = ATTACHMENT_TYPES.register("player_region", () ->
-            AttachmentType.builder(() -> UnshatteredRegions.DEFAULT_REGION)
-                    .serialize(ResourceKey.codec(DataPackRegistryHandler.REGION_REGISTRY_KEY).fieldOf("region"))
-                    .sync(ResourceKey.streamCodec(DataPackRegistryHandler.REGION_REGISTRY_KEY))
+    public static final Supplier<AttachmentType<PlayerRegionAttachment>> PLAYER_REGION = ATTACHMENT_TYPES.register("player_region", () ->
+            AttachmentType.builder(() -> new PlayerRegionAttachment(UnshatteredRegions.DEFAULT_REGION, new Vector2i(0, 0), new BlockPos(0, 0, 0)))
+                    .serialize(PlayerRegionAttachment.RECORD_CODEC.fieldOf("region"))
+                    .sync(PlayerRegionAttachment.STREAM_CODEC)
                     .copyOnDeath()
                     .build()
     );

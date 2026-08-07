@@ -1,5 +1,6 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.attachments.PlayerRegionAttachment;
 import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.attachments.PlayerStateAttachment;
@@ -34,7 +35,7 @@ public class PlayerTickHandler {
         player.getFoodData().setSaturation(5.0f);
         //player.getFoodData().setExhaustion(0.0f);
 
-        // heal every 2 seconds
+        // incremental for every 2 seconds
         if (player.tickCount % 40 == 0) {
             double healthGained = (1.5 + MAX_HEALTH_VALUE / 100) * (HEALTH_REGEN_VALUE / 100);
             double manaGained = (MAX_MANA_VALUE * 0.04) * (MANA_REGEN_VALUE / 100);
@@ -49,6 +50,10 @@ public class PlayerTickHandler {
                 state.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, MAX_HEALTH_VALUE);
             }
             player.syncData(PLAYER_STATE);
+        }
+
+        if (player.tickCount % 20 == 0) {
+            // may become a problem later but probably doesn't need to be updated more than once a second
         }
         state.decrementInvulnerableTime();
 

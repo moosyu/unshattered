@@ -16,6 +16,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.joml.Vector2i;
 
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 import static io.github.moosyu.Unshattered.MODID;
@@ -42,8 +43,8 @@ public class DatagenHandler {
                 }).add(DataPackRegistryHandler.REGION_BOUNDARY_REGISTRY_KEY, bootstrap -> {
                     HolderGetter<Region> regions = bootstrap.lookup(DataPackRegistryHandler.REGION_REGISTRY_KEY);
 
-                    registerRegionBoundary(bootstrap, new BoundaryCoordinates(new Vector2i(0, 0), 1, 1), UnshatteredRegions.PLAINS_REGION, regions);
-                    registerRegionBoundary(bootstrap, new BoundaryCoordinates(new Vector2i(-50, -50), 50, 50), UnshatteredRegions.DEFAULT_REGION, regions);
+                    registerRegionBoundary(bootstrap, new BoundaryCoordinates(new Vector2i(-2048, -2048), 4096, 4096, 0), UnshatteredRegions.DEFAULT_REGION, regions);
+                    registerRegionBoundary(bootstrap, new BoundaryCoordinates(new Vector2i(0, 0), 1, 1, 1), UnshatteredRegions.PLAINS_REGION, regions);
                 })
         );
     }

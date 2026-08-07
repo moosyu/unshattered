@@ -1,6 +1,7 @@
 {
   "boundary_coordinates": {
     "height": 1,
+    "priority": 1,
     "top_left_corner_coordinates": {
       "x": 0,
       "z": 0
