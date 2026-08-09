@@ -100,11 +100,10 @@ public class Unshattered {
         UnshatteredAttributeValues.buildLookup();
         ServerLevel serverLevel = event.getServer().getLevel(OVERWORLD);
         BoundaryCoordinates boundaryCoordinates = BoundaryCoordinates.getRegionCoordinates(serverLevel, UnshatteredRegions.DEFAULT_REGION);
-        if (serverLevel != null) {
-            if (boundaryCoordinates != null) {
-                RegionAreas.createRegionAreaGrid(new Vector2i(boundaryCoordinates.width(), boundaryCoordinates.height()), serverLevel.registryAccess().lookupOrThrow(REGION_BOUNDARY_REGISTRY_KEY).stream().toList());
-                System.out.println(Arrays.deepToString(RegionAreas.chunks));
-            }
+        if (serverLevel != null && boundaryCoordinates != null) {
+            Vector2i boundaryCoordinatesLength = boundaryCoordinates.getRectangleLengths();
+            RegionAreas.createRegionAreaGrid(new Vector2i(boundaryCoordinatesLength.x, boundaryCoordinatesLength.y), serverLevel.registryAccess().lookupOrThrow(REGION_BOUNDARY_REGISTRY_KEY).stream().toList());
+            System.out.println(Arrays.deepToString(RegionAreas.chunks));
         }
     }
 }

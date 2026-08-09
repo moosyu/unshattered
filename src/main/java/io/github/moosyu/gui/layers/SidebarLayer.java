@@ -13,7 +13,9 @@ import io.github.moosyu.attachments.PlayerCurrencyAttachment;
 import io.github.moosyu.attachments.PlayerRegionAttachment;
 import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.regions.Region;
+import io.github.moosyu.data.regions.TemperatureTypes;
 import io.github.moosyu.events.DataPackRegistryHandler;
+import io.github.moosyu.util.TextUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Holder;
@@ -34,8 +36,10 @@ public class SidebarLayer implements ModularHudLayer {
     }
 
     public static UIElement createSidebarLayer() {
-        UIElement root = new UIElement()
-                .layout(l -> l.widthPercent(100).heightPercent(100));
+        UIElement root = new UIElement().layout(l -> l.widthPercent(100).heightPercent(100));
+        Player player = Minecraft.getInstance().player;
+
+        if (player == null) return root;
 
         UIElement sidebarBox = new UIElement()
                 .layout(layout -> layout
@@ -49,26 +53,39 @@ public class SidebarLayer implements ModularHudLayer {
                 )
                 .style(style -> style.background(new ColorRectTexture(0x64000000)));
 
+        Label purseLabel = new Label();
+        purseLabel.textStyle(style -> style.adaptiveWidth(true).textColor(0xFFF9A604));
+        purseLabel.bindDataSource(SupplierDataSource.of(() -> {
+            PlayerCurrencyAttachment currency = player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get());
+            return Component.literal("Purse: " + String.format("%,d", currency.getCoins()));
+        }));
+
         Label regionLabel = new Label();
         regionLabel.textStyle(style -> style.adaptiveWidth(true));
         regionLabel.bindDataSource(SupplierDataSource.of(() -> {
-            Player player = Minecraft.getInstance().player;
-            if (player == null) return Component.literal("");
             PlayerRegionAttachment regionAttachment = player.getData(UnshatteredAttachments.PLAYER_REGION.get());
             Region region = Region.getRegion(regionAttachment.regionKey(), player);
             return Component.literal("⏣ ").withColor(0xFFAAAAAA).append(Component.translatable(Region.getRegionTranslationKey(regionAttachment.regionKey())).withColor(region.colour()));
         }));
 
-        Label purseLabel = new Label();
-        purseLabel.textStyle(style -> style.adaptiveWidth(true).textColor(0xFFF9A604));
-        purseLabel.bindDataSource(SupplierDataSource.of(() -> {
-            Player player = Minecraft.getInstance().player;
-            if (player == null) return Component.literal("Purse: -");
-            PlayerCurrencyAttachment currency = player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get());
-            return Component.literal("Purse: " + String.format("%,d", currency.getCoins()));
+        Label temperatureLabel = new Label();
+        temperatureLabel.textStyle(style -> style.adaptiveWidth(true));
+        temperatureLabel.bindDataSource(SupplierDataSource.of(() -> {
+            float playerTemperature = player.getData(UnshatteredAttachments.PLAYER_TEMPERATURE.get());
+            TemperatureTypes temperatureTypes;
+
+            if (playerTemperature >= TemperatureTypes.HIGH_TEMP.getValue()) {
+                temperatureTypes = TemperatureTypes.HIGH_TEMP;
+            } else if (playerTemperature <= TemperatureTypes.LOW_TEMP.getValue()) {
+                temperatureTypes = TemperatureTypes.LOW_TEMP;
+            } else {
+                temperatureTypes = TemperatureTypes.BASE_TEMP;
+            }
+            return Component.literal(temperatureTypes.getSymbol() + " ")
+                    .append(Component.literal(TextUtils.oneDecimalFormat.format(playerTemperature))).withColor(temperatureTypes.getColour());
         }));
 
-        sidebarBox.addChildren(regionLabel, purseLabel);
+        sidebarBox.addChildren(purseLabel, regionLabel, temperatureLabel);
         root.addChild(sidebarBox);
         return root;
     }

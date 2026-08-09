@@ -1,12 +1,14 @@
 {
   "boundary_coordinates": {
-    "height": 1,
+    "bottom_right_corner_coordinates": {
+      "x": 400,
+      "z": 400
+    },
     "priority": 1,
     "top_left_corner_coordinates": {
       "x": 0,
       "z": 0
-    },
-    "width": 1
+    }
   },
   "region": "unshattered:plains"
 }

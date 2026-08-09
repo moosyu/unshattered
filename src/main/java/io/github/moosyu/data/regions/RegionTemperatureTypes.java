@@ -8,8 +8,9 @@ import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
 import org.jspecify.annotations.NonNull;
 
 public enum RegionTemperatureTypes implements StringRepresentable {
+    FREEZING("freezing", false, -0.1f),
     COLD("cold", false, -0.01f),
-    COMFORTABLE("comfortable", true, 0.f),
+    COMFORTABLE("comfortable", true, 0.0f),
     WARM("warm", false, 0.01f),
     HOT("hot", false, 0.05f);
 
@@ -19,13 +20,14 @@ public enum RegionTemperatureTypes implements StringRepresentable {
 
     /**
      * set definitions for how hot regions can be
+     * @param serialisedName required for StringRepresentable
      * @param safe whether the temperature with increase/decrease to a safe temperature or keep going to dangerous level
      * @param temperatureChange the base amount the temperature increases/decreases per increment. -ve for decrease
      */
     RegionTemperatureTypes(String serialisedName, boolean safe, float temperatureChange) {
+        this.serialisedName = serialisedName;
         this.safe = safe;
         this.temperatureChange = temperatureChange;
-        this.serialisedName = serialisedName;
     }
 
     public boolean isRegionSafe() {

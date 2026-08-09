@@ -3,18 +3,12 @@ package io.github.moosyu.data.regions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.moosyu.events.DataPackRegistryHandler;
-import io.netty.buffer.ByteBuf;
 import net.minecraft.core.Holder;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.player.Player;
-import org.joml.Vector2i;
-
-import static io.github.moosyu.Unshattered.MODID;
 
 /**
  * a world region's data. doesn't contain world position bounds.

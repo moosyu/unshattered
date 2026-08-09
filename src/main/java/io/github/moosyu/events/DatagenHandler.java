@@ -43,8 +43,8 @@ public class DatagenHandler {
                 }).add(DataPackRegistryHandler.REGION_BOUNDARY_REGISTRY_KEY, bootstrap -> {
                     HolderGetter<Region> regions = bootstrap.lookup(DataPackRegistryHandler.REGION_REGISTRY_KEY);
 
-                    registerRegionBoundary(bootstrap, new BoundaryCoordinates(new Vector2i(-2048, -2048), 4096, 4096, 0), UnshatteredRegions.DEFAULT_REGION, regions);
-                    registerRegionBoundary(bootstrap, new BoundaryCoordinates(new Vector2i(0, 0), 1, 1, 1), UnshatteredRegions.PLAINS_REGION, regions);
+                    registerRegionBoundary(bootstrap, new BoundaryCoordinates(new Vector2i(-2048, -2048), new Vector2i(2048, 2048), 0), UnshatteredRegions.DEFAULT_REGION, regions);
+                    registerRegionBoundary(bootstrap, new BoundaryCoordinates(new Vector2i(0, 0), new Vector2i(400, 400), 1), UnshatteredRegions.PLAINS_REGION, regions);
                 })
         );
     }

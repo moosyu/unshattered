@@ -14,21 +14,21 @@ import org.joml.Vector2i;
 /**
  *
  * @param regionKey the key for the region the player is currently in
- * @param currentChunk the region area chunk not minecraft chunk
+ * @param currentArea the region area the player is in (not the chunk)
  * @param currentBlockPos
  */
-public record PlayerRegionAttachment(ResourceKey<Region> regionKey, Vector2i currentChunk, BlockPos currentBlockPos) {
+public record PlayerRegionAttachment(ResourceKey<Region> regionKey, Vector2i currentArea, BlockPos currentBlockPos) {
     public static final Codec<PlayerRegionAttachment> RECORD_CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     ResourceKey.codec(DataPackRegistryHandler.REGION_REGISTRY_KEY).fieldOf("region").forGetter(PlayerRegionAttachment::regionKey),
-                    UnshatteredCodecs.VECTOR_2I_CODEC.fieldOf("current_chunk").forGetter(PlayerRegionAttachment::currentChunk),
+                    UnshatteredCodecs.VECTOR_2I_CODEC.fieldOf("current_area").forGetter(PlayerRegionAttachment::currentArea),
                     BlockPos.CODEC.fieldOf("current_block_pos").forGetter(PlayerRegionAttachment::currentBlockPos)
             ).apply(instance, PlayerRegionAttachment::new)
     );
 
     public static final StreamCodec<ByteBuf, PlayerRegionAttachment> STREAM_CODEC = StreamCodec.composite(
             ResourceKey.streamCodec(DataPackRegistryHandler.REGION_REGISTRY_KEY), PlayerRegionAttachment::regionKey,
-            UnshatteredCodecs.VECTOR_2I_STREAM_CODEC, PlayerRegionAttachment::currentChunk,
+            UnshatteredCodecs.VECTOR_2I_STREAM_CODEC, PlayerRegionAttachment::currentArea,
             BlockPos.STREAM_CODEC, PlayerRegionAttachment::currentBlockPos,
             PlayerRegionAttachment::new
     );

@@ -5,6 +5,10 @@ import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.attachments.PlayerStateAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.data.regions.Region;
+import io.github.moosyu.data.regions.RegionAreas;
+import io.github.moosyu.data.regions.RegionTemperatureTypes;
+import io.github.moosyu.data.regions.TemperatureTypes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.level.Level;
@@ -14,6 +18,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_STATE;
+import static io.github.moosyu.events.DataPackRegistryHandler.REGION_REGISTRY_KEY;
 
 @EventBusSubscriber(modid = MODID)
 public class PlayerTickHandler {
@@ -54,7 +59,28 @@ public class PlayerTickHandler {
 
         if (player.tickCount % 20 == 0) {
             // may become a problem later but probably doesn't need to be updated more than once a second
+            RegionAreas.updatePlayerRegion(player);
+
+            PlayerRegionAttachment regionAttachment = player.getData(UnshatteredAttachments.PLAYER_REGION.get());
+            Region region = player.level().registryAccess().lookupOrThrow(REGION_REGISTRY_KEY).getValue(regionAttachment.regionKey());
+            float temperature = player.getData(UnshatteredAttachments.PLAYER_TEMPERATURE.get());
+            if (region == null) return;
+            float temperatureChange =  region.temperatureType().getRegionTemperatureChange();
+            float newTemperature = temperature + temperatureChange;
+
+            if (newTemperature < TemperatureTypes.HIGH_TEMP.getValue()
+                    && newTemperature > TemperatureTypes.LOW_TEMP.getValue()
+                    || !region.temperatureType().isRegionSafe()
+            ) {
+                player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(), newTemperature);
+            } else {
+                // i dont think this works
+                player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(),
+                        temperature + Math.abs(temperature + 0.01f) < Math.abs(temperature - 0.01f) ? 0.01f : -0.01f
+                );
+            }
         }
+
         state.decrementInvulnerableTime();
 
         PlayerAbilityEffectsAttachment abilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES.get());

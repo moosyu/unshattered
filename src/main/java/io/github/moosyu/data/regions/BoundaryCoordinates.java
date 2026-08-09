@@ -17,17 +17,16 @@ import static io.github.moosyu.events.DataPackRegistryHandler.REGION_BOUNDARY_RE
 /**
  * coordinates to create a rectangle. z axis isn't tracked as it'd be pointless (i'll probably be instancing underground areas, but we'll see)
  * priority 0 -> base (entire world) region so have a maximum of 1 at that level. anything above that is for normal regions.
+ * when setting these, if the player is facing east then width
  * @param topLeftCornerCoordinates the bottom left point of the rectangle. these integers are meant to relate to points in the minecraft world so just pretend Vector2i's y is minecraft's z
- * @param width rectangle width
- * @param height rectangle height
+ * @param bottomRightCornerCoordinates
  * @param priority whether this takes priority over other regions the player is in. highest priority wins. two regions with the same priority wont throw an error but which region is picked becomes unpredictable.
  */
-public record BoundaryCoordinates(Vector2i topLeftCornerCoordinates, int width, int height, int priority) {
+public record BoundaryCoordinates(Vector2i topLeftCornerCoordinates, Vector2i bottomRightCornerCoordinates, int priority) {
     public static final Codec<BoundaryCoordinates> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     UnshatteredCodecs.VECTOR_2I_CODEC.fieldOf("top_left_corner_coordinates").forGetter(BoundaryCoordinates::topLeftCornerCoordinates),
-                    Codec.INT.fieldOf("width").forGetter(BoundaryCoordinates::width),
-                    Codec.INT.fieldOf("height").forGetter(BoundaryCoordinates::height),
+                    UnshatteredCodecs.VECTOR_2I_CODEC.fieldOf("bottom_right_corner_coordinates").forGetter(BoundaryCoordinates::bottomRightCornerCoordinates),
                     Codec.INT.fieldOf("priority").forGetter(BoundaryCoordinates::priority)
             ).apply(instance, BoundaryCoordinates::new)
     );
@@ -50,5 +49,13 @@ public record BoundaryCoordinates(Vector2i topLeftCornerCoordinates, int width, 
         }
         Unshattered.LOGGER.error("get region coordinates failed with {}", region.identifier());
         return null;
+    }
+
+    /**
+     * just to simplify the process when i need widths and heights, shits long
+     * @return x as the rectangle width and y as the height
+     */
+    public Vector2i getRectangleLengths() {
+        return new Vector2i(Math.abs(topLeftCornerCoordinates.x - bottomRightCornerCoordinates.x), Math.abs(topLeftCornerCoordinates.y - bottomRightCornerCoordinates.y));
     }
 }

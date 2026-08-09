@@ -158,7 +158,7 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         36.0f
                 ), false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SHEEP), new MobRewardData(
-                        List.of(new MobItemDropData(Items.MUTTON, 1.0f, false, 1),
+                        List.of(new MobItemDropData(Items.MUTTON, 1.0f, false, 1, 2),
                                 new MobItemDropData(Items.WHITE_WOOL, 1.0f, false, 1)
                         ),
                         0,
