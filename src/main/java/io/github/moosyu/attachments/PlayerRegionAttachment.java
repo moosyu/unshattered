@@ -11,6 +11,12 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import org.joml.Vector2i;
 
+/**
+ *
+ * @param regionKey the key for the region the player is currently in
+ * @param currentChunk the region area chunk not minecraft chunk
+ * @param currentBlockPos
+ */
 public record PlayerRegionAttachment(ResourceKey<Region> regionKey, Vector2i currentChunk, BlockPos currentBlockPos) {
     public static final Codec<PlayerRegionAttachment> RECORD_CODEC = RecordCodecBuilder.create(instance ->
             instance.group(

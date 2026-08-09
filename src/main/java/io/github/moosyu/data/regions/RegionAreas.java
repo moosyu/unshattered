@@ -6,6 +6,7 @@ import io.github.moosyu.events.DatagenHandler;
 import net.minecraft.world.entity.player.Player;
 import org.joml.Vector2i;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,8 +55,20 @@ public final class RegionAreas {
                 (point.y <= rectangleTopLeft.y && point.y >= rectangleTopLeft.y - rectangleHeight);
     }
 
+    @Nullable
+    public static Vector2i checkAdjacentChunks() {
+        return null;
+    }
+
+    public static void updatePlayerRegionAttachment(Player player, RegionBoundary selectedBoundary, Vector2i selectedChunk) {
+        if (selectedBoundary == null) return;
+        player.setData(UnshatteredAttachments.PLAYER_REGION.get(), new PlayerRegionAttachment(selectedBoundary.region().getKey(), selectedChunk, player.blockPosition()));
+    }
+
     public static void updatePlayerRegion(Player player) {
         PlayerRegionAttachment regionAttachment = player.getData(UnshatteredAttachments.PLAYER_REGION.get());
+        RegionBoundary selectedBoundary = null;
+        Vector2i selectedChunk = new Vector2i(0, 0);
         if (regionAttachment.currentBlockPos() != player.blockPosition()) {
             // todo: check 8 adjacent tiles if the player isnt inside and if that also doesnt turn up anything check every single one
             // base selected region on highest boundary
@@ -65,10 +78,18 @@ public final class RegionAreas {
                     REGION_CHUNK_SIZE, REGION_CHUNK_SIZE,
                     new Vector2i(player.getBlockX(), player.getBlockZ()))
             ) {
+                selectedChunk = regionAttachment.currentChunk();
                 for (RegionBoundary regionBoundary : chunks[regionAttachment.currentChunk().x][regionAttachment.currentChunk().y]) {
+                    if (selectedBoundary == null || regionBoundary.boundaryCoordinates().priority() > selectedBoundary.boundaryCoordinates().priority()) {
+                        selectedBoundary = regionBoundary;
+                    }
                 }
+                updatePlayerRegionAttachment(player, selectedBoundary, selectedChunk);
+                return;
             }
-            // player.setData(UnshatteredAttachments.PLAYER_REGION.get(), new PlayerRegionAttachment());
+        }
+        Vector2i successfulAdjacentChunk = checkAdjacentChunks();
+        if (successfulAdjacentChunk != null) {
         }
     }
 }
