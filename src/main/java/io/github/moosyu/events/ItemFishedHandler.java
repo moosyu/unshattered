@@ -12,6 +12,7 @@ import io.github.moosyu.util.CollectionUtil;
 import io.github.moosyu.util.FortuneCalculation;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
@@ -34,6 +35,9 @@ import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_SKILLS;
 
 @EventBusSubscriber(modid = MODID)
 public class ItemFishedHandler {
+    private static final double ENTITY_FISHED_STRENGTH = 0.12d;
+    private static final double ENTITY_FISHED_VERTICAL_STRENGTH = 0.18d;
+
     @SubscribeEvent
     public static void onItemFished(ItemFishedEvent event) {
         Player player = event.getEntity();
@@ -85,13 +89,20 @@ public class ItemFishedHandler {
                     EntityType<?> entityType = entry.getKey().entity();
                     Entity entity = entityType.create(level, EntitySpawnReason.TRIGGERED);
                     if (entity != null) {
+                        // https://github.com/ExpensiveKoala/Fishing-Real/blob/master/common/src/main/java/koala/fishingreal/FishingReal.java#L85
                         FishingHook hook = event.getHookEntity();
+                        double dX = player.getX() - hook.getX();
+                        double dY = player.getY() - hook.getY();
+                        double dZ = player.getZ() - hook.getZ();
                         float expReward = Objects.requireNonNullElse(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entityType).getData(UnshatteredDataMaps.FISHABLE_MOBS_EXP_DATA), 0.0f);
 
-                        entity.setPos(hook.position());
-                        entity.setDeltaMovement(player.position().subtract(entity.position()).normalize().scale(3.5D));
+                        entity.getSelfAndPassengers().forEach(e -> e.setPos(hook.getX(), hook.getY(), hook.getZ()));
+                        entity.setDeltaMovement(dX * ENTITY_FISHED_STRENGTH, dY * ENTITY_FISHED_STRENGTH + Math.sqrt(Math.sqrt(dX * dX + dY * dY + dZ * dZ)) * ENTITY_FISHED_VERTICAL_STRENGTH, dZ * ENTITY_FISHED_STRENGTH);
                         player.sendSystemMessage(Component.translatable("fishing.messages." + entityType.getDescriptionId()).withColor(0xFF55FF55));
-                        level.addFreshEntity(entity);
+
+                        if (level instanceof ServerLevel serverLevel) {
+                            serverLevel.tryAddFreshEntityWithPassengers(entity);
+                        }
 
                         skills.addExp(PlayerSkillsAttachment.Skill.FISHING, expReward, player);
                     }

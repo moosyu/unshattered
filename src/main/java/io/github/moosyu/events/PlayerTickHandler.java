@@ -65,19 +65,20 @@ public class PlayerTickHandler {
             Region region = player.level().registryAccess().lookupOrThrow(REGION_REGISTRY_KEY).getValue(regionAttachment.regionKey());
             float temperature = player.getData(UnshatteredAttachments.PLAYER_TEMPERATURE.get());
             if (region == null) return;
-            float temperatureChange =  region.temperatureType().getRegionTemperatureChange();
-            float newTemperature = temperature + temperatureChange;
 
-            if (newTemperature < TemperatureTypes.HIGH_TEMP.getValue()
-                    && newTemperature > TemperatureTypes.LOW_TEMP.getValue()
-                    || !region.temperatureType().isRegionSafe()
-            ) {
-                player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(), newTemperature);
+            if (region.temperatureType() == RegionTemperatureTypes.COMFORTABLE) {
+                float temperatureChange = RegionTemperatureTypes.COMFORTABLE.getRegionTemperatureChange();
+
+                temperature += temperature < TemperatureTypes.BASE_TEMP.getValue() ? temperatureChange : -temperatureChange;
+                player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(), temperature);
             } else {
-                // i dont think this works
-                player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(),
-                        temperature + Math.abs(temperature + 0.01f) < Math.abs(temperature - 0.01f) ? 0.01f : -0.01f
-                );
+                temperature += region.temperatureType().getRegionTemperatureChange();
+                if (temperature < TemperatureTypes.HIGH_TEMP.getValue()
+                        && temperature > TemperatureTypes.LOW_TEMP.getValue()
+                        || !region.temperatureType().isRegionSafe()
+                ) {
+                    player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(), temperature);
+                }
             }
         }
 

@@ -234,7 +234,7 @@
           "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
           "item": "minecraft:mutton",
-          "max": 1,
+          "max": 2,
           "min": 1
         },
         {

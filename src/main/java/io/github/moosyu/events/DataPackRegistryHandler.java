@@ -1,5 +1,6 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.data.dialogue.DialogueNode;
 import io.github.moosyu.data.regions.Region;
 import io.github.moosyu.data.regions.RegionBoundary;
 import net.minecraft.core.Registry;
@@ -15,6 +16,7 @@ import static io.github.moosyu.Unshattered.MODID;
 public class DataPackRegistryHandler {
     public static final ResourceKey<Registry<Region>> REGION_REGISTRY_KEY = ResourceKey.createRegistryKey(Identifier.fromNamespaceAndPath(MODID, "regions"));
     public static final ResourceKey<Registry<RegionBoundary>> REGION_BOUNDARY_REGISTRY_KEY = ResourceKey.createRegistryKey(Identifier.fromNamespaceAndPath(MODID, "region_boundaries"));
+    public static final ResourceKey<Registry<DialogueNode>> DIALOGUE_NODE_REGISTRY_KEY = ResourceKey.createRegistryKey(Identifier.fromNamespaceAndPath(MODID, "dialogue_nodes"));
 
     @SubscribeEvent
     public static void registerDatapackRegistries(DataPackRegistryEvent.NewRegistry event) {
@@ -27,6 +29,11 @@ public class DataPackRegistryHandler {
         event.dataPackRegistry(
                 REGION_BOUNDARY_REGISTRY_KEY,
                 RegionBoundary.CODEC
+        );
+
+        event.dataPackRegistry(
+                DIALOGUE_NODE_REGISTRY_KEY,
+                DialogueNode.CODEC
         );
     }
 }

@@ -10,7 +10,7 @@ import org.jspecify.annotations.NonNull;
 public enum RegionTemperatureTypes implements StringRepresentable {
     FREEZING("freezing", false, -0.1f),
     COLD("cold", false, -0.01f),
-    COMFORTABLE("comfortable", true, 0.0f),
+    COMFORTABLE("comfortable", true, 1.0f),
     WARM("warm", false, 0.01f),
     HOT("hot", false, 0.05f);
 
