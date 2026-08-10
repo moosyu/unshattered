@@ -69,7 +69,11 @@ public class PlayerTickHandler {
             if (region.temperatureType() == RegionTemperatureTypes.COMFORTABLE) {
                 float temperatureChange = RegionTemperatureTypes.COMFORTABLE.getRegionTemperatureChange();
 
-                temperature += temperature < TemperatureTypes.BASE_TEMP.getValue() ? temperatureChange : -temperatureChange;
+                if (Math.abs(TemperatureTypes.BASE_TEMP.getValue() - temperature) <= temperatureChange) {
+                    temperature = TemperatureTypes.BASE_TEMP.getValue();
+                } else {
+                    temperature += temperature < TemperatureTypes.BASE_TEMP.getValue() ? temperatureChange : -temperatureChange;
+                }
                 player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(), temperature);
             } else {
                 temperature += region.temperatureType().getRegionTemperatureChange();

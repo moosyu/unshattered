@@ -18,4 +18,5 @@ public final class UnshatteredBlocks {
     public static final DeferredBlock<Block> BREAKABLE_FIG_LOG_BLOCK = BLOCKS.register("breakable_fig_log", registerName -> new RotatedPillarBlock(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, registerName)).destroyTime(2.0f).sound(SoundType.WOOD)));
     public static final DeferredBlock<Block> BREAKABLE_COBBLESTONE_BLOCK = BLOCKS.registerBlock("breakable_cobblestone_block", props -> new Block(props.destroyTime(2.0f).sound(SoundType.STONE)));
     public static final DeferredBlock<Block> BREAKABLE_STONE_BLOCK = BLOCKS.registerBlock("breakable_stone_block", props -> new Block(props.destroyTime(2.0f).sound(SoundType.STONE)));
+    public static final DeferredBlock<Block> TEST_BLOCk = BLOCKS.registerBlock("test_block", TestBlock::new);
 }

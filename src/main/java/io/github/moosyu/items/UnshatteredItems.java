@@ -497,4 +497,6 @@ public class UnshatteredItems {
                     .build()
             )
     ));
+
+    public static final DeferredItem<BlockItem> TEST_BLOCK = ITEMS.registerSimpleBlockItem(TEST_BLOCk.getDelegate());
 }
