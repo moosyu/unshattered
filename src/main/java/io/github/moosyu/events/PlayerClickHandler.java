@@ -1,5 +1,6 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.dialogue.DialogueInteractable;
 import io.github.moosyu.util.CheckItemRequirement;
 import net.minecraft.core.BlockPos;
@@ -61,7 +62,7 @@ public class PlayerClickHandler {
             event.setUseItem(TriState.FALSE);
         }
 
-        if (interactedBlock instanceof DialogueInteractable dialogueBlock) {
+        if (interactedBlock.getBlock() instanceof DialogueInteractable dialogueBlock) {
             if (dialogueBlock.dialogueConditionsMet(player)) {
                 dialogueBlock.onDialogueTriggered(player);
             }

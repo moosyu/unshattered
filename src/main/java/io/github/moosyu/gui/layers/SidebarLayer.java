@@ -36,7 +36,7 @@ public class SidebarLayer implements ModularHudLayer {
     }
 
     public static UIElement createSidebarLayer() {
-        UIElement root = new UIElement().layout(l -> l.widthPercent(100).heightPercent(100));
+        UIElement root = new UIElement().layout(layout -> layout.widthPercent(100).heightPercent(100));
         Player player = Minecraft.getInstance().player;
 
         if (player == null) return root;

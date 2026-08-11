@@ -20,5 +20,6 @@ public class RegisterPayloadHandler {
         registrar.playToClient(DeathSoundEffectPacket.TYPE, DeathSoundEffectPacket.STREAM_CODEC, DeathSoundEffectPayloadHandler::handleData);
         registrar.playToClient(DamageNumberPacket.TYPE, DamageNumberPacket.STREAM_CODEC, DamageNumberHandler::handleData);
         registrar.playToServer(OpenProfilePayload.TYPE, OpenProfilePayload.STREAM_CODEC, OpenProfileHandler::handleData);
+        registrar.playToClient(OpenDialoguePacket.TYPE, OpenDialoguePacket.STREAM_CODEC, OpenDialogueHandler::handleData);
     }
 }

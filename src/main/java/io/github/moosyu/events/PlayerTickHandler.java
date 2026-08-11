@@ -69,6 +69,8 @@ public class PlayerTickHandler {
             if (region.temperatureType() == RegionTemperatureTypes.COMFORTABLE) {
                 float temperatureChange = RegionTemperatureTypes.COMFORTABLE.getRegionTemperatureChange();
 
+                // if the amount is close to the base (37) then just set to the base
+                // or else it just kinda gets close forever
                 if (Math.abs(TemperatureTypes.BASE_TEMP.getValue() - temperature) <= temperatureChange) {
                     temperature = TemperatureTypes.BASE_TEMP.getValue();
                 } else {
