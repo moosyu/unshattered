@@ -2,8 +2,11 @@ package io.github.moosyu.data.dialogue;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 
 import java.util.List;
 
@@ -19,4 +22,11 @@ public record DialogueNode(Component text, List<DialogueChoice> dialogueChoices)
                     DialogueChoice.CODEC.listOf().fieldOf("dialogue_choices").forGetter(DialogueNode::dialogueChoices)
             ).apply(instance, DialogueNode::new)
     );
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, DialogueNode> STREAM_CODEC = StreamCodec.composite(
+                    ComponentSerialization.STREAM_CODEC, DialogueNode::text,
+                    DialogueChoice.STREAM_CODEC.apply(ByteBufCodecs.list()), DialogueNode::dialogueChoices,
+                    DialogueNode::new
+            );
+
 }

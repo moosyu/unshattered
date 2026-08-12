@@ -2,9 +2,11 @@ package io.github.moosyu.data.dialogue;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.Holder;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 
@@ -31,4 +33,13 @@ public record DialogueChoice(Component text, ResourceKey<DialogueNode> targetNod
                     Identifier.CODEC.optionalFieldOf("action").forGetter(DialogueChoice::triggeredEvent)
             ).apply(instance, DialogueChoice::new)
     );
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, DialogueChoice> STREAM_CODEC = StreamCodec.composite(
+                    ComponentSerialization.STREAM_CODEC, DialogueChoice::text,
+                    ResourceKey.streamCodec(DIALOGUE_NODE_REGISTRY_KEY), DialogueChoice::targetNode,
+                    ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()), DialogueChoice::requiredFlags,
+                    ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()), DialogueChoice::setFlags,
+                    ByteBufCodecs.optional(Identifier.STREAM_CODEC), DialogueChoice::triggeredEvent,
+                    DialogueChoice::new
+            );
 }

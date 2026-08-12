@@ -1,5 +1,6 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.blocks.TestBlock;
 import io.github.moosyu.data.dialogue.DialogueChoice;
 import io.github.moosyu.data.dialogue.DialogueNode;
 import io.github.moosyu.data.regions.*;
@@ -50,7 +51,7 @@ public class DatagenHandler {
                     registerRegionBoundary(bootstrap, new BoundaryCoordinates(new Vector2i(-2048, -2048), new Vector2i(2048, 2048), 0), UnshatteredRegions.DEFAULT_REGION, regions);
                     registerRegionBoundary(bootstrap, new BoundaryCoordinates(new Vector2i(0, 0), new Vector2i(400, 400), 1), UnshatteredRegions.PLAINS_REGION, regions);
                 }).add(DataPackRegistryHandler.DIALOGUE_NODE_REGISTRY_KEY, bootstrap -> {
-                    registerDialogueNode(bootstrap, "rock", "hi", Component.literal("hi, im a rock!"), List.of());
+                    registerDialogueNode(bootstrap, Component.literal("hi, im a rock!"), List.of(), TestBlock.HI_MESSAGE_IDENTIFIER);
                 })
         );
     }
@@ -64,16 +65,9 @@ public class DatagenHandler {
         );
     }
 
-    public static void registerDialogueNode(BootstrapContext<DialogueNode> bootstrap, String dialogueInitiatorName, String dialogueTreeName, String dialogueID, Component dialogueText, List<DialogueChoice> dialogueChoices) {
+    public static void registerDialogueNode(BootstrapContext<DialogueNode> bootstrap, Component dialogueText, List<DialogueChoice> dialogueChoices, Identifier nodeIdentifier) {
         bootstrap.register(
-                ResourceKey.create(DataPackRegistryHandler.DIALOGUE_NODE_REGISTRY_KEY, Identifier.fromNamespaceAndPath(MODID, dialogueInitiatorName + "/" + dialogueTreeName + dialogueID)),
-                new DialogueNode(dialogueText, dialogueChoices)
-        );
-    }
-
-    public static void registerDialogueNode(BootstrapContext<DialogueNode> bootstrap, String dialogueInitiatorName, String dialogueID, Component dialogueText, List<DialogueChoice> dialogueChoices) {
-        bootstrap.register(
-                ResourceKey.create(DataPackRegistryHandler.DIALOGUE_NODE_REGISTRY_KEY, Identifier.fromNamespaceAndPath(MODID, dialogueInitiatorName + "/" + dialogueID)),
+                ResourceKey.create(DataPackRegistryHandler.DIALOGUE_NODE_REGISTRY_KEY, nodeIdentifier),
                 new DialogueNode(dialogueText, dialogueChoices)
         );
     }
