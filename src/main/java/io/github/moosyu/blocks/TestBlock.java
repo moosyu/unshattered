@@ -19,6 +19,7 @@ import java.util.List;
 public class TestBlock extends Block implements DialogueInteractable {
     public static final Component name = Component.literal("Rock");
     public static final Identifier HI_MESSAGE_IDENTIFIER = DialogueUtil.createDialogueNodeIdentifier(name.getString().toLowerCase(), "hi");
+    public static final Identifier HI_2_MESSAGE_IDENTIFIER = DialogueUtil.createDialogueNodeIdentifier(name.getString().toLowerCase(), "hi2");
 
     public TestBlock(Properties properties) {
         super(properties);
@@ -31,11 +32,6 @@ public class TestBlock extends Block implements DialogueInteractable {
 
     @Override
     public List<DialogueTreeOrigin> getDialogueTreeOrigins(RegistryAccess registryAccess) {
-        return List.of(new DialogueTreeOrigin(List.of(), 0, registryAccess.lookupOrThrow(DataPackRegistryHandler.DIALOGUE_NODE_REGISTRY_KEY).getValue(HI_MESSAGE_IDENTIFIER)));
-    }
-
-    @Override
-    public boolean dialogueConditionsMet(Player player) {
-        return true;
+        return List.of(new DialogueTreeOrigin(List.of(), 0, registryAccess.lookupOrThrow(DataPackRegistryHandler.DIALOGUE_NODE_REGISTRY_KEY).getValue(HI_MESSAGE_IDENTIFIER), List.of("initial")), new DialogueTreeOrigin(List.of("initial"), 1, registryAccess.lookupOrThrow(DataPackRegistryHandler.DIALOGUE_NODE_REGISTRY_KEY).getValue(HI_2_MESSAGE_IDENTIFIER), List.of()));
     }
 }

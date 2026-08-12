@@ -1,5 +1,8 @@
 package io.github.moosyu.data.dialogue;
 
+import io.github.moosyu.Unshattered;
+import io.github.moosyu.attachments.PlayerDialogueFlagsAttachment;
+import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.packets.OpenDialoguePacket;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
@@ -26,19 +29,22 @@ public interface DialogueInteractable {
      */
     default void onDialogueTriggered(Player player) {
         if (!player.level().isClientSide()) {
-            // todo: change this once flags are set up
-            DialogueTreeOrigin chosenOrigin = getDialogueTreeOrigins(player.registryAccess()).getFirst();
-//            for (DialogueTreeOrigin dialogueTreeOrigin : getDialogueTreeOrigins()) {
-//
-//            }
+            PlayerDialogueFlagsAttachment playerDialogueFlagsAttachment = player.getData(UnshatteredAttachments.PLAYER_DIALOGUE_FLAGS);
+            DialogueTreeOrigin chosenOrigin = null;
+            for (DialogueTreeOrigin dialogueTreeOrigin : getDialogueTreeOrigins(player.registryAccess())) {
+                if (playerDialogueFlagsAttachment.hasAllFlags(dialogueTreeOrigin.requiredFlags())
+                        && (chosenOrigin == null || dialogueTreeOrigin.priority() > chosenOrigin.priority())) {
+                    chosenOrigin = dialogueTreeOrigin;
+                }
+            }
+
+            if (chosenOrigin == null) {
+                Unshattered.LOGGER.error("failed to find a dialogue to trigger for {}", getInteractableName());
+                return;
+            }
+
+            playerDialogueFlagsAttachment.addFlags(chosenOrigin.setFlags());
             PacketDistributor.sendToPlayer((ServerPlayer) player, new OpenDialoguePacket(getInteractableName(), chosenOrigin.dialogueNode()));
         }
     }
-
-    /**
-     * check if the player can trigger the dialogue
-     * @param player the player attempting to trigger the dialogue
-     * @return true if the conditions are met
-     */
-    boolean dialogueConditionsMet(Player player);
 }

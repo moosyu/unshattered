@@ -14,6 +14,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.joml.Vector2i;
 
+import java.util.Set;
 import java.util.function.Supplier;
 
 import static io.github.moosyu.Unshattered.MODID;
@@ -72,5 +73,13 @@ public final class UnshatteredAttachments {
                     .sync(ByteBufCodecs.FLOAT)
                     .copyOnDeath()
                     .build()
-            );
+    );
+
+    public static final Supplier<AttachmentType<PlayerDialogueFlagsAttachment>> PLAYER_DIALOGUE_FLAGS = ATTACHMENT_TYPES.register("player_dialogue_flags", () ->
+            AttachmentType.builder(PlayerDialogueFlagsAttachment::new)
+                    .serialize(PlayerDialogueFlagsAttachment.CODEC.fieldOf("flags"))
+                    .sync(PlayerDialogueFlagsAttachment.STREAM_CODEC)
+                    .copyOnDeath()
+                    .build()
+    );
 }

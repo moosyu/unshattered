@@ -63,9 +63,7 @@ public class PlayerClickHandler {
         }
 
         if (interactedBlock.getBlock() instanceof DialogueInteractable dialogueBlock) {
-            if (dialogueBlock.dialogueConditionsMet(player)) {
-                dialogueBlock.onDialogueTriggered(player);
-            }
+            dialogueBlock.onDialogueTriggered(player);
         }
     }
 

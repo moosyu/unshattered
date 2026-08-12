@@ -51,7 +51,7 @@ public class DialogueScreen extends ModularUIScreen {
                         .setSprite(50, 11, 4, 4).setBorder(1)
         ));
 
-        dialogueBox.addScrollViewChild(new Label().setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit. In feugiat diam eu semper volutpat. Sed eu diam turpis. Donec dictum bibendum purus, ut ultrices ex bibendum quis. Sed eu justo non elit maximus condimentum nec sed justo. Aenean lacinia nunc at quam euismod, et vehicula augue porta. Duis ac ipsum mollis, condimentum augue id, ullamcorper diam. Nunc eu scelerisque nulla. Nullam a luctus odio. Aenean at libero ut arcu vulputate mattis. Maecenas condimentum volutpat mauris, at bibendum nisl rutrum ut.").textStyle(textStyle -> textStyle.textWrap(TextWrap.WRAP)));
+        dialogueBox.addScrollViewChild(new Label().setText(initialDialogue.text()).textStyle(textStyle -> textStyle.textWrap(TextWrap.WRAP)));
         dialogueChoiceContainer.addChild(new Button());
         dialogueContainer.addChildren(new Label().setText(talkableName).textStyle(textStyle -> textStyle.fontSize(18)).layout(layout -> layout.leftPercent(-34).topPercent(-2)), dialogueBox, dialogueChoiceContainer);
         root.addChild(dialogueContainer);

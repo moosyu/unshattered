@@ -52,6 +52,7 @@ public class DatagenHandler {
                     registerRegionBoundary(bootstrap, new BoundaryCoordinates(new Vector2i(0, 0), new Vector2i(400, 400), 1), UnshatteredRegions.PLAINS_REGION, regions);
                 }).add(DataPackRegistryHandler.DIALOGUE_NODE_REGISTRY_KEY, bootstrap -> {
                     registerDialogueNode(bootstrap, Component.literal("hi, im a rock!"), List.of(), TestBlock.HI_MESSAGE_IDENTIFIER);
+                    registerDialogueNode(bootstrap, Component.literal("hiii im still a rock"), List.of(), TestBlock.HI_2_MESSAGE_IDENTIFIER);
                 })
         );
     }
