@@ -3,6 +3,7 @@ package io.github.moosyu.events;
 import io.github.moosyu.blocks.TestBlock;
 import io.github.moosyu.data.dialogue.DialogueChoice;
 import io.github.moosyu.data.dialogue.DialogueNode;
+import io.github.moosyu.data.dialogue.DialogueTreeOrigin;
 import io.github.moosyu.data.regions.*;
 import io.github.moosyu.datagen.*;
 import net.minecraft.core.Holder;
@@ -51,8 +52,9 @@ public class DatagenHandler {
                     registerRegionBoundary(bootstrap, new BoundaryCoordinates(new Vector2i(-2048, -2048), new Vector2i(2048, 2048), 0), UnshatteredRegions.DEFAULT_REGION, regions);
                     registerRegionBoundary(bootstrap, new BoundaryCoordinates(new Vector2i(0, 0), new Vector2i(400, 400), 1), UnshatteredRegions.PLAINS_REGION, regions);
                 }).add(DataPackRegistryHandler.DIALOGUE_NODE_REGISTRY_KEY, bootstrap -> {
-                    registerDialogueNode(bootstrap, Component.literal("hi, im a rock!"), List.of(), TestBlock.HI_MESSAGE_IDENTIFIER);
-                    registerDialogueNode(bootstrap, Component.literal("hiii im still a rock"), List.of(), TestBlock.HI_2_MESSAGE_IDENTIFIER);
+                }).add(DataPackRegistryHandler.DIALOGUE_TREE_ORIGIN_REGISTRY_KEY, bootstrap -> {
+                    registerDialogueTreeOriginSelfFlag(bootstrap, List.of(), List.of(), 0, new DialogueNode(Component.literal("hi, im a rock!"), List.of()), TestBlock.HI_MESSAGE_IDENTIFIER);
+                    registerDialogueTreeOriginSelfFlag(bootstrap, List.of(TestBlock.HI_MESSAGE_IDENTIFIER), List.of(TestBlock.HI_2_MESSAGE_IDENTIFIER), 1, new DialogueNode(Component.literal("hiii im still a rock"), List.of()), TestBlock.HI_2_MESSAGE_IDENTIFIER);
                 })
         );
     }
@@ -70,6 +72,23 @@ public class DatagenHandler {
         bootstrap.register(
                 ResourceKey.create(DataPackRegistryHandler.DIALOGUE_NODE_REGISTRY_KEY, nodeIdentifier),
                 new DialogueNode(dialogueText, dialogueChoices)
+        );
+    }
+
+    public static void registerDialogueTreeOrigin(BootstrapContext<DialogueTreeOrigin> bootstrap, List<Identifier> requiredFlags, List<Identifier> excludedFlags, int priority, DialogueNode dialogueNode, List<Identifier> setFlags, Identifier nodeIdentifier) {
+        bootstrap.register(
+                ResourceKey.create(DataPackRegistryHandler.DIALOGUE_TREE_ORIGIN_REGISTRY_KEY, nodeIdentifier),
+                new DialogueTreeOrigin(requiredFlags, excludedFlags, priority, dialogueNode, setFlags)
+        );
+    }
+
+    /**
+     * registers a dialogue tree origin with a flag that identifies itself as having been seen
+     */
+    public static void registerDialogueTreeOriginSelfFlag(BootstrapContext<DialogueTreeOrigin> bootstrap, List<Identifier> requiredFlags, List<Identifier> excludedFlags, int priority, DialogueNode dialogueNode, Identifier nodeIdentifier) {
+        bootstrap.register(
+                ResourceKey.create(DataPackRegistryHandler.DIALOGUE_TREE_ORIGIN_REGISTRY_KEY, nodeIdentifier),
+                new DialogueTreeOrigin(requiredFlags, excludedFlags, priority, dialogueNode, List.of(nodeIdentifier))
         );
     }
 

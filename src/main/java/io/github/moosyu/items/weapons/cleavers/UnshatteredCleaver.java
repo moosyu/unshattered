@@ -39,7 +39,7 @@ public class UnshatteredCleaver extends Item implements UnshatteredPassiveAbilit
                 ABILITY_IDENTIFIER,
                 0,
                 level,
-                _ -> {},
+                null,
                 player.getItemInHand(InteractionHand.MAIN_HAND)
         );
         for (Entity entity : level.getEntities(null, boundingBox)) {

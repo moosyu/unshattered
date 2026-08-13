@@ -2,6 +2,7 @@ package io.github.moosyu.items;
 
 import io.github.moosyu.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.components.SkillRequirement;
 import io.github.moosyu.items.accessories.BatTalisman;
 import io.github.moosyu.items.tools.axes.UnshatteredAxeTool;
@@ -498,5 +499,5 @@ public class UnshatteredItems {
             )
     ));
 
-    public static final DeferredItem<BlockItem> TEST_BLOCK = ITEMS.registerSimpleBlockItem(TEST_BLOCk.getDelegate());
+    public static final DeferredItem<BlockItem> TEST_BLOCK = ITEMS.registerSimpleBlockItem(UnshatteredBlocks.TEST_BLOCK.getDelegate());
 }

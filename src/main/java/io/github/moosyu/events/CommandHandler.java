@@ -16,5 +16,6 @@ public class CommandHandler {
         StatCommand.register(event.getDispatcher());
         GetCoinsCommand.register(event.getDispatcher());
         SetCoinsCommand.register(event.getDispatcher());
+        ResetFlagsCommand.register(event.getDispatcher());
     }
 }

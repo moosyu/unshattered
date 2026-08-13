@@ -7,6 +7,7 @@ import io.github.moosyu.packets.OpenDialoguePacket;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.PacketDistributor;
 
@@ -28,18 +29,21 @@ public interface DialogueInteractable {
      * @param player the player triggering the dialogue
      */
     default void onDialogueTriggered(Player player) {
+        player.swing(InteractionHand.MAIN_HAND);
+
         if (!player.level().isClientSide()) {
             PlayerDialogueFlagsAttachment playerDialogueFlagsAttachment = player.getData(UnshatteredAttachments.PLAYER_DIALOGUE_FLAGS);
             DialogueTreeOrigin chosenOrigin = null;
             for (DialogueTreeOrigin dialogueTreeOrigin : getDialogueTreeOrigins(player.registryAccess())) {
                 if (playerDialogueFlagsAttachment.hasAllFlags(dialogueTreeOrigin.requiredFlags())
+                        && dialogueTreeOrigin.excludedFlags().stream().noneMatch(playerDialogueFlagsAttachment.getFlags()::contains)
                         && (chosenOrigin == null || dialogueTreeOrigin.priority() > chosenOrigin.priority())) {
                     chosenOrigin = dialogueTreeOrigin;
                 }
             }
 
             if (chosenOrigin == null) {
-                Unshattered.LOGGER.error("failed to find a dialogue to trigger for {}", getInteractableName());
+                Unshattered.LOGGER.error("failed to find a dialogue to trigger for {}", getInteractableName().getString());
                 return;
             }
 

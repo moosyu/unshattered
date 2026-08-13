@@ -1,9 +1,11 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.blocks.UnshatteredBlocks;
+import io.github.moosyu.attachments.PlayerAbilityEffectsAttachment;
+import io.github.moosyu.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.dialogue.DialogueInteractable;
 import io.github.moosyu.util.CheckItemRequirement;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.TriState;
 import net.minecraft.world.InteractionHand;
@@ -15,11 +17,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-
 import static io.github.moosyu.Unshattered.MODID;
 
 @EventBusSubscriber(modid = MODID)
 public class PlayerClickHandler {
+    public static final Identifier ACTIVE_RIGHT_CLICK = Identifier.fromNamespaceAndPath(MODID, "active_right_click");
+
     @SubscribeEvent
     public static void onPlayerRightClick(PlayerInteractEvent.RightClickBlock event) {
         BlockPos pos = event.getPos();
@@ -54,16 +57,19 @@ public class PlayerClickHandler {
         // anvils and crafting tables will have custom logic
         if (interactedBlock.is(Blocks.CRAFTING_TABLE) || interactedBlock.is(Blocks.ANVIL)) {
             event.setCanceled(true);
-            event.getEntity().swing(InteractionHand.MAIN_HAND);
+            player.swing(InteractionHand.MAIN_HAND);
         }
 
         // disables block placement
-        if (event.getItemStack().getItem() instanceof BlockItem && !event.getEntity().isCreative()) {
+        if (event.getItemStack().getItem() instanceof BlockItem && !player.isCreative()) {
             event.setUseItem(TriState.FALSE);
         }
 
         if (interactedBlock.getBlock() instanceof DialogueInteractable dialogueBlock) {
+            PlayerAbilityEffectsAttachment playerAbilityEffectsAttachment = player.getData(UnshatteredAttachments.PLAYER_ABILITIES);
+            if (playerAbilityEffectsAttachment.hasActiveEffect(ACTIVE_RIGHT_CLICK)) return;
             dialogueBlock.onDialogueTriggered(player);
+            playerAbilityEffectsAttachment.addActiveEffect(ACTIVE_RIGHT_CLICK, 20, player.level(), null);
         }
     }
 

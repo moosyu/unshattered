@@ -105,6 +105,7 @@ public class ZombieSword extends UnshatteredSword {
         if (owner instanceof Player player) {
             PlayerAbilityEffectsAttachment abilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES.get());
             ItemCharges itemCharges = itemStack.get(UnshatteredDataComponents.ITEM_CHARGES.get());
+            if (itemCharges == null) return;
             if (itemCharges.currentCharges() < itemCharges.maxCharges() && !abilities.hasActiveEffect(ABILITY_IDENTIFIER)) {
                 abilities.addActiveEffect(ABILITY_IDENTIFIER, itemCharges.rechargeTime(), level, p -> onRecharge(p, itemStack), player.getItemBySlot(slot));
             }

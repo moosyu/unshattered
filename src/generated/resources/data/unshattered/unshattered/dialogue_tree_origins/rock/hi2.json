@@ -1,0 +1,16 @@
+{
+  "dialogue_node": {
+    "dialogue_choices": [],
+    "text": "hiii im still a rock"
+  },
+  "excluded_flags": [
+    "unshattered:rock/hi2"
+  ],
+  "priority": 1,
+  "required_flags": [
+    "unshattered:rock/hi"
+  ],
+  "set_flags": [
+    "unshattered:rock/hi2"
+  ]
+}

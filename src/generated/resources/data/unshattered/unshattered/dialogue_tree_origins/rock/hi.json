@@ -1,0 +1,10 @@
+{
+  "dialogue_node": {
+    "dialogue_choices": [],
+    "text": "hi, im a rock!"
+  },
+  "priority": 0,
+  "set_flags": [
+    "unshattered:rock/hi"
+  ]
+}

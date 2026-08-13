@@ -90,5 +90,6 @@ public class UnshatteredModelProvider extends ModelProvider {
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get(), BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get(), TextureMapping.cube(Blocks.STONE), blockModels.modelOutput))));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(), BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(), TextureMapping.cube(Blocks.COBBLESTONE), blockModels.modelOutput))));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK.get(), BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK.get(), TextureMapping.column(UnshatteredBlocks.FIG_LOG_BLOCK.get()), blockModels.modelOutput))));
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.TEST_BLOCK.get(), BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(UnshatteredBlocks.TEST_BLOCK.get(), TextureMapping.cube(UnshatteredBlocks.TEST_BLOCK.get()), blockModels.modelOutput))));
     }
 }

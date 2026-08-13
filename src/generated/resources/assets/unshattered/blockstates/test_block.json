@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "unshattered:block/test_block"
+    }
+  }
+}
