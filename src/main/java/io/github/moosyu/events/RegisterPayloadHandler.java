@@ -21,5 +21,6 @@ public class RegisterPayloadHandler {
         registrar.playToClient(DamageNumberPacket.TYPE, DamageNumberPacket.STREAM_CODEC, DamageNumberHandler::handleData);
         registrar.playToServer(OpenProfilePayload.TYPE, OpenProfilePayload.STREAM_CODEC, OpenProfileHandler::handleData);
         registrar.playToClient(OpenDialoguePacket.TYPE, OpenDialoguePacket.STREAM_CODEC, OpenDialogueHandler::handleData);
+        registrar.playToServer(ResetFlagQueuePacket.TYPE, ResetFlagQueuePacket.STREAM_CODEC, ResetFlagQueueHandler::handleData);
     }
 }

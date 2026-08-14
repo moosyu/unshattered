@@ -14,8 +14,11 @@ import dev.vfyjxf.taffy.style.AlignItems;
 import dev.vfyjxf.taffy.style.FlexDirection;
 import io.github.moosyu.data.dialogue.DialogueChoice;
 import io.github.moosyu.data.dialogue.DialogueNode;
+import io.github.moosyu.packets.ResetFlagQueuePacket;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 import static io.github.moosyu.Unshattered.MODID;
 
@@ -60,12 +63,12 @@ public class DialogueScreen extends ModularUIScreen {
                 dialogueChoiceContainer.addChild(new Button().setText(dialogueChoice.text()));
             }
         } else {
-            if (initialDialogue.dialogueChoices().isEmpty()
-                    || initialDialogue.dialogueChoices().getFirst().text() == null
-                    || initialDialogue.dialogueChoices().getFirst().text().getString().isEmpty()
-            ) {
-                dialogueChoiceContainer.addChild(new Button().setText("..."));
+            if (initialDialogue.dialogueChoices().isEmpty()) {
+                dialogueChoiceContainer.addChild(createClosingButton(Component.literal("...")));
             } else {
+                if (initialDialogue.dialogueChoices().getFirst().text() == null || initialDialogue.dialogueChoices().getFirst().text().getString().isEmpty()) {
+                    dialogueChoiceContainer.addChild(new Button().setText("..."));
+                }
                 dialogueChoiceContainer.addChild(new Button().setText(initialDialogue.dialogueChoices().getFirst().text()));
             }
         }
@@ -74,5 +77,12 @@ public class DialogueScreen extends ModularUIScreen {
 
         UI ui = UI.of(root);
         return ModularUI.of(ui);
+    }
+
+    private static Button createClosingButton(Component text) {
+        return new Button().setText(text.getString().isEmpty() ? Component.literal("...") : text).setOnClick(_ -> {
+            ClientPacketDistributor.sendToServer(new ResetFlagQueuePacket(true));
+            Minecraft.getInstance().setScreen(null);
+        });
     }
 }

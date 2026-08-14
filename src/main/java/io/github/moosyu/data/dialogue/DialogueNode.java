@@ -12,8 +12,8 @@ import java.util.List;
 
 /**
  * nodes used to construct a dialogue tree
- * @param text the text being displayed
- * @param dialogueChoices the possible choices for the next dialogue. <bold>if there is just one choice AND its text is empty it wont be displayed but its effects will still trigger.</bold>
+ * @param text the text being displayed.
+ * @param dialogueChoices the possible choices for the next dialogue. leaving list empty or if  choice text is nothing it becomes ...
  */
 public record DialogueNode(Component text, List<DialogueChoice> dialogueChoices) {
     public static final Codec<DialogueNode> CODEC = RecordCodecBuilder.create(instance ->
@@ -28,5 +28,4 @@ public record DialogueNode(Component text, List<DialogueChoice> dialogueChoices)
                     DialogueChoice.STREAM_CODEC.apply(ByteBufCodecs.list()), DialogueNode::dialogueChoices,
                     DialogueNode::new
             );
-
 }

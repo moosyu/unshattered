@@ -47,7 +47,7 @@ public interface DialogueInteractable {
                 return;
             }
 
-            playerDialogueFlagsAttachment.addFlags(chosenOrigin.setFlags());
+            playerDialogueFlagsAttachment.addFlagsToQueue(chosenOrigin.setFlags());
             PacketDistributor.sendToPlayer((ServerPlayer) player, new OpenDialoguePacket(getInteractableName(), chosenOrigin.dialogueNode()));
         }
     }

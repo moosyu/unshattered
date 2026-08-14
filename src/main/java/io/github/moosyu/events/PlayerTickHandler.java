@@ -58,6 +58,7 @@ public class PlayerTickHandler {
         }
 
         if (player.tickCount % 20 == 0) {
+            System.out.println(player.getData(UnshatteredAttachments.PLAYER_DIALOGUE_FLAGS.get()).getQueuedFlags());
             // may become a problem later but probably doesn't need to be updated more than once a second
             RegionAreas.updatePlayerRegion(player);
 
