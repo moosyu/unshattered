@@ -10,7 +10,7 @@ public class OpenDialogueHandler {
     public static void handleData(final OpenDialoguePacket data, final IPayloadContext context) {
         context.enqueueWork(() -> {
             Minecraft minecraft = Minecraft.getInstance();
-            minecraft.setScreen(new DialogueScreen(data.talkableName(), data.selectedDialogueNode()));
+            minecraft.setScreen(new DialogueScreen(data.talkableName(), data.selectedDialogueNode(), context.player()));
         });
     }
 }

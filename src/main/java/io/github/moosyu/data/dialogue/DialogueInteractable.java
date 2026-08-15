@@ -11,8 +11,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-import java.util.List;
-
 public interface DialogueInteractable {
     /**
      * @return the name of whatever is triggering the dialgoue
@@ -22,7 +20,7 @@ public interface DialogueInteractable {
     /**
      * @return the origin trees for possible dialogue
      */
-    List<DialogueTreeOrigin> getDialogueTreeOrigins(RegistryAccess registryAccess);
+    DialogueTree getDialogueTree(RegistryAccess registryAccess);
 
     /**
      * code to run when dialogue is triggered
@@ -33,11 +31,13 @@ public interface DialogueInteractable {
 
         if (!player.level().isClientSide()) {
             PlayerDialogueFlagsAttachment playerDialogueFlagsAttachment = player.getData(UnshatteredAttachments.PLAYER_DIALOGUE_FLAGS);
+            DialogueTree dialogueTree = getDialogueTree(player.registryAccess());
             DialogueTreeOrigin chosenOrigin = null;
-            for (DialogueTreeOrigin dialogueTreeOrigin : getDialogueTreeOrigins(player.registryAccess())) {
-                if (playerDialogueFlagsAttachment.hasAllFlags(dialogueTreeOrigin.requiredFlags())
-                        && dialogueTreeOrigin.excludedFlags().stream().noneMatch(playerDialogueFlagsAttachment.getFlags()::contains)
-                        && (chosenOrigin == null || dialogueTreeOrigin.priority() > chosenOrigin.priority())) {
+            for (DialogueTreeOrigin dialogueTreeOrigin : dialogueTree.dialogueTreeOrigins()) {
+                if ((dialogueTreeOrigin.dialogueFlagRequirements().isEmpty()
+                        || dialogueTreeOrigin.dialogueFlagRequirements().get().isSatisfied(playerDialogueFlagsAttachment))
+                        && (chosenOrigin == null || dialogueTreeOrigin.priority() > chosenOrigin.priority())
+                ) {
                     chosenOrigin = dialogueTreeOrigin;
                 }
             }

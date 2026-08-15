@@ -1,0 +1,45 @@
+{
+  "dialogue_tree_origins": [
+    {
+      "dialogue_node": {
+        "dialogue_choices": [
+          {
+            "target_node": {
+              "dialogue_choices": [],
+              "text": "im glad you think so :)"
+            },
+            "text": "interesting"
+          },
+          {
+            "text": "..."
+          }
+        ],
+        "text": "hi, im a rock"
+      },
+      "priority": 0,
+      "set_flags": [
+        "unshattered:rock/rock_dialogue_tree/rock_hi"
+      ]
+    },
+    {
+      "dialogue_flag_requirements": {
+        "required_flags": [
+          "unshattered:rock/rock_dialogue_tree/rock_hi"
+        ]
+      },
+      "dialogue_node": {
+        "dialogue_choices": [
+          {
+            "action": "unshattered:rock_complete_event",
+            "text": "i know right"
+          }
+        ],
+        "text": "you've already spoken to me"
+      },
+      "priority": 1,
+      "set_flags": [
+        "unshattered:rock/rock_dialogue_tree/rock_hi_2"
+      ]
+    }
+  ]
+}

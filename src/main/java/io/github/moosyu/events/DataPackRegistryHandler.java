@@ -1,6 +1,7 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.data.dialogue.DialogueNode;
+import io.github.moosyu.data.dialogue.DialogueTree;
 import io.github.moosyu.data.dialogue.DialogueTreeOrigin;
 import io.github.moosyu.data.regions.Region;
 import io.github.moosyu.data.regions.RegionBoundary;
@@ -17,8 +18,7 @@ import static io.github.moosyu.Unshattered.MODID;
 public class DataPackRegistryHandler {
     public static final ResourceKey<Registry<Region>> REGION_REGISTRY_KEY = ResourceKey.createRegistryKey(Identifier.fromNamespaceAndPath(MODID, "regions"));
     public static final ResourceKey<Registry<RegionBoundary>> REGION_BOUNDARY_REGISTRY_KEY = ResourceKey.createRegistryKey(Identifier.fromNamespaceAndPath(MODID, "region_boundaries"));
-    public static final ResourceKey<Registry<DialogueNode>> DIALOGUE_NODE_REGISTRY_KEY = ResourceKey.createRegistryKey(Identifier.fromNamespaceAndPath(MODID, "dialogue_nodes"));
-    public static final ResourceKey<Registry<DialogueTreeOrigin>> DIALOGUE_TREE_ORIGIN_REGISTRY_KEY = ResourceKey.createRegistryKey(Identifier.fromNamespaceAndPath(MODID, "dialogue_tree_origins"));
+    public static final ResourceKey<Registry<DialogueTree>> DIALOGUE_TREE_REGISTRY_KEY = ResourceKey.createRegistryKey(Identifier.fromNamespaceAndPath(MODID, "dialogue_trees"));
 
     @SubscribeEvent
     public static void registerDatapackRegistries(DataPackRegistryEvent.NewRegistry event) {
@@ -34,13 +34,8 @@ public class DataPackRegistryHandler {
         );
 
         event.dataPackRegistry(
-                DIALOGUE_NODE_REGISTRY_KEY,
-                DialogueNode.CODEC
-        );
-
-        event.dataPackRegistry(
-                DIALOGUE_TREE_ORIGIN_REGISTRY_KEY,
-                DialogueTreeOrigin.CODEC
+                DIALOGUE_TREE_REGISTRY_KEY,
+                DialogueTree.CODEC
         );
     }
 }

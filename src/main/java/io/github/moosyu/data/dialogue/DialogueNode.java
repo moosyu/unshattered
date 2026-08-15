@@ -16,6 +16,9 @@ import java.util.List;
  * @param dialogueChoices the possible choices for the next dialogue. leaving list empty or if  choice text is nothing it becomes ...
  */
 public record DialogueNode(Component text, List<DialogueChoice> dialogueChoices) {
+    public DialogueNode(Component text) {
+        this(text, List.of());
+    }
     public static final Codec<DialogueNode> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     ComponentSerialization.CODEC.fieldOf("text").forGetter(DialogueNode::text),

@@ -1,6 +1,7 @@
 package io.github.moosyu.data;
 
 import com.mojang.serialization.Codec;
+import io.github.moosyu.data.dialogue.DialogueTriggeredEvent;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
@@ -31,12 +32,6 @@ public final class UnshatteredDataMaps {
 
     public static final DataMapType<EntityType<?>, MobRewardData> COMBATABLE_MOBS_LOOT_DATA = DataMapType.builder(
             Identifier.fromNamespaceAndPath(MODID, "combatable_mobs_exp_data"),
-            Registries.ENTITY_TYPE,
-            MobRewardData.CODEC
-    ).build();
-
-    public static final DataMapType<EntityType<?>, MobRewardData> REGION_DATA = DataMapType.builder(
-            Identifier.fromNamespaceAndPath(MODID, "region_data"),
             Registries.ENTITY_TYPE,
             MobRewardData.CODEC
     ).build();

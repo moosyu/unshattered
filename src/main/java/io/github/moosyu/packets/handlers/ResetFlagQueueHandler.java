@@ -12,6 +12,7 @@ public class ResetFlagQueueHandler {
             PlayerDialogueFlagsAttachment playerDialogueFlagsAttachment = serverPlayer.getData(UnshatteredAttachments.PLAYER_DIALOGUE_FLAGS);
             if (data.addToPlayerFlags()) {
                 playerDialogueFlagsAttachment.addQueuedFlags();
+                serverPlayer.syncData(UnshatteredAttachments.PLAYER_DIALOGUE_FLAGS);
             } else {
                 playerDialogueFlagsAttachment.clearFlagQueue();
             }

@@ -1,20 +1,14 @@
 package io.github.moosyu.attachments;
 
 import com.mojang.serialization.Codec;
-import io.github.moosyu.data.regions.Region;
-import io.github.moosyu.data.regions.RegionTemperatureTypes;
 import io.github.moosyu.data.regions.UnshatteredRegions;
-import io.github.moosyu.events.DataPackRegistryHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.resources.RegistryFixedCodec;
-import net.minecraft.resources.ResourceKey;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.joml.Vector2i;
 
-import java.util.Set;
 import java.util.function.Supplier;
 
 import static io.github.moosyu.Unshattered.MODID;
@@ -79,6 +73,14 @@ public final class UnshatteredAttachments {
             AttachmentType.builder(PlayerDialogueFlagsAttachment::new)
                     .serialize(PlayerDialogueFlagsAttachment.CODEC.fieldOf("flags"))
                     .sync(PlayerDialogueFlagsAttachment.STREAM_CODEC)
+                    .copyOnDeath()
+                    .build()
+    );
+
+    public static final Supplier<AttachmentType<PlayerQuestsAttachment>> PLAYER_QUESTS = ATTACHMENT_TYPES.register("player_quests", () ->
+            AttachmentType.builder(PlayerQuestsAttachment::new)
+                    .serialize(PlayerQuestsAttachment.CODEC.fieldOf("quests"))
+                    .sync(PlayerQuestsAttachment.STREAM_CODEC)
                     .copyOnDeath()
                     .build()
     );
