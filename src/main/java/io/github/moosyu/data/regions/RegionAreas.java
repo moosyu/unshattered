@@ -1,7 +1,7 @@
 package io.github.moosyu.data.regions;
 
-import io.github.moosyu.attachments.PlayerRegionAttachment;
-import io.github.moosyu.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.attachments.PlayerRegionAttachment;
+import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import org.joml.Vector2i;

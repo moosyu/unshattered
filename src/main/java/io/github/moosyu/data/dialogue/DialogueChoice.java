@@ -21,7 +21,7 @@ import java.util.Optional;
  * @param setFlags tracking flag/s (queued) to being added to the player after this is pressed. note that this will only be actually added once the dialogue has been completed so don't check for this in the same dialogue chain.
  * @param triggeredEvent id for event to be queued to run if this option is pressed. note that this will only be actually added once the dialogue has been completed.
  */
-public record DialogueChoice(Component text, Optional<DialogueNode> targetNode, Optional<DialogueFlagRequirements> dialogueFlagRequirements, List<Identifier> setFlags, Optional<Identifier> triggeredEvent) {
+public record DialogueChoice(Component text, Optional<DialogueNode> targetNode, Optional<DialogueFlagRequirements> dialogueFlagRequirements, List<Identifier> setFlags, Optional<DialogueTriggeredEvent> triggeredEvent) {
     public DialogueChoice(Component text, DialogueNode targetNode) {
         this(text, Optional.of(targetNode), Optional.empty(), List.of(), Optional.empty());
     }
@@ -30,9 +30,14 @@ public record DialogueChoice(Component text, Optional<DialogueNode> targetNode, 
         this(text, Optional.empty(), Optional.empty(), List.of(), Optional.empty());
     }
 
-    public DialogueChoice(Component text, Identifier triggeredEvent) {
+    public DialogueChoice(Component text, DialogueTriggeredEvent triggeredEvent) {
         this(text, Optional.empty(), Optional.empty(), List.of(), Optional.of(triggeredEvent));
     }
+
+    public DialogueChoice(Component text, List<Identifier> setFlags, DialogueTriggeredEvent triggeredEvent) {
+        this(text, Optional.empty(), Optional.empty(), setFlags, Optional.of(triggeredEvent));
+    }
+
 
     public static final Codec<DialogueChoice> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
@@ -41,7 +46,7 @@ public record DialogueChoice(Component text, Optional<DialogueNode> targetNode, 
                     Codec.lazyInitialized(() -> DialogueNode.CODEC).optionalFieldOf("target_node").forGetter(DialogueChoice::targetNode),
                     DialogueFlagRequirements.CODEC.optionalFieldOf("dialogue_flag_requirements").forGetter(DialogueChoice::dialogueFlagRequirements),
                     Identifier.CODEC.listOf().optionalFieldOf("set_flags", List.of()).forGetter(DialogueChoice::setFlags),
-                    Identifier.CODEC.optionalFieldOf("action").forGetter(DialogueChoice::triggeredEvent)
+                    DialogueEventTypes.CODEC.optionalFieldOf("triggered_event").forGetter(DialogueChoice::triggeredEvent)
             ).apply(instance, DialogueChoice::new)
     );
 
@@ -50,7 +55,7 @@ public record DialogueChoice(Component text, Optional<DialogueNode> targetNode, 
             ByteBufCodecs.optional(NeoForgeStreamCodecs.lazy(() -> DialogueNode.STREAM_CODEC)), DialogueChoice::targetNode,
             ByteBufCodecs.optional(DialogueFlagRequirements.STREAM_CODEC), DialogueChoice::dialogueFlagRequirements,
             Identifier.STREAM_CODEC.apply(ByteBufCodecs.list()), DialogueChoice::setFlags,
-            ByteBufCodecs.optional(Identifier.STREAM_CODEC), DialogueChoice::triggeredEvent,
+            ByteBufCodecs.optional(DialogueEventTypes.STREAM_CODEC), DialogueChoice::triggeredEvent,
             DialogueChoice::new
     );
 }

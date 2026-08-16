@@ -1,4 +1,4 @@
-package io.github.moosyu.attachments;
+package io.github.moosyu.data.attachments;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;

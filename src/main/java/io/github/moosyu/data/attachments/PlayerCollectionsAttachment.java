@@ -1,11 +1,10 @@
-package io.github.moosyu.attachments;
+package io.github.moosyu.data.attachments;
 
 import com.mojang.serialization.Codec;
 import io.github.moosyu.collectables.CollectableEntries;
 import io.github.moosyu.collectables.CollectableItemEntry;
 import io.github.moosyu.collectables.CollectableLevel;
 import io.github.moosyu.collectables.rewards.CollectableReward;
-import io.netty.buffer.ByteBuf;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;

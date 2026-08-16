@@ -1,8 +1,8 @@
 package io.github.moosyu.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
-import io.github.moosyu.attachments.PlayerStateAttachment;
-import io.github.moosyu.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.attachments.PlayerStateAttachment;
+import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.server.level.ServerPlayer;

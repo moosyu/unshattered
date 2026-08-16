@@ -1,8 +1,8 @@
-package io.github.moosyu.attachments;
+package io.github.moosyu.data.attachments;
 
 import com.mojang.serialization.Codec;
 import io.github.moosyu.data.quests.Quest;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
@@ -44,7 +44,7 @@ public class PlayerQuestsAttachment {
                 }, attachment -> attachment.quests
             );
 
-    public static final StreamCodec<FriendlyByteBuf, PlayerQuestsAttachment> STREAM_CODEC =
+    public static final StreamCodec<RegistryFriendlyByteBuf, PlayerQuestsAttachment> STREAM_CODEC =
             ByteBufCodecs.map(HashMap::new,
                     Quest.STREAM_CODEC,
                     ByteBufCodecs.BOOL

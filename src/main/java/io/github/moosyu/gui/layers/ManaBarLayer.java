@@ -1,6 +1,6 @@
 package io.github.moosyu.gui.layers;
 
-import io.github.moosyu.attachments.PlayerStateAttachment;
+import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -14,7 +14,7 @@ import net.minecraft.world.level.GameType;
 import net.neoforged.neoforge.client.gui.GuiLayer;
 import org.jspecify.annotations.NonNull;
 
-import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_STATE;
+import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_STATE;
 
 public class ManaBarLayer implements GuiLayer {
     @Override

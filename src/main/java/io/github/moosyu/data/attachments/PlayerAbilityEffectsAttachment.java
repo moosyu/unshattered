@@ -1,4 +1,4 @@
-package io.github.moosyu.attachments;
+package io.github.moosyu.data.attachments;
 
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 public final class PlayerAbilityEffectsAttachment {
     private final Map<Identifier, ActiveEffectEntry> activeEffects = new HashMap<>();

@@ -1,20 +1,17 @@
 package io.github.moosyu.fishing;
 
-import io.github.moosyu.attachments.PlayerCurrencyAttachment;
-import io.github.moosyu.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.packets.ExpSoundEffectPacket;
+import io.github.moosyu.data.attachments.PlayerCurrencyAttachment;
+import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_CURRENCY;
-import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_SKILLS;
+import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_CURRENCY;
+import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_SKILLS;
 
 public record FishingMiscEntry(Consumer<Player> reward, Predicate<Player> condition) implements FishingEntry {
     public FishingMiscEntry(Consumer<Player> reward) {

@@ -1,13 +1,13 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.attachments.PlayerSkillsAttachment;
+import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.fishing.FishingItemEntry;
 import io.github.moosyu.fishing.FishingMiscEntry;
 import io.github.moosyu.fishing.FishingMobEntry;
 import io.github.moosyu.fishing.tables.WaterEntries;
-import io.github.moosyu.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.util.CollectionUtil;
 import io.github.moosyu.util.FortuneCalculation;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -31,7 +31,7 @@ import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_SKILLS;
+import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_SKILLS;
 
 @EventBusSubscriber(modid = MODID)
 public class ItemFishedHandler {

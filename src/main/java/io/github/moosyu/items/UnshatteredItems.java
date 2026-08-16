@@ -1,6 +1,6 @@
 package io.github.moosyu.items;
 
-import io.github.moosyu.attachments.PlayerSkillsAttachment;
+import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.components.SkillRequirement;

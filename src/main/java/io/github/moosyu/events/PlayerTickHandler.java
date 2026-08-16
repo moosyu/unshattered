@@ -1,23 +1,22 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.attachments.PlayerRegionAttachment;
-import io.github.moosyu.attachments.UnshatteredAttachments;
-import io.github.moosyu.attachments.PlayerAbilityEffectsAttachment;
-import io.github.moosyu.attachments.PlayerStateAttachment;
+import io.github.moosyu.data.attachments.PlayerRegionAttachment;
+import io.github.moosyu.data.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
+import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.regions.Region;
 import io.github.moosyu.data.regions.RegionAreas;
 import io.github.moosyu.data.regions.RegionTemperatureTypes;
 import io.github.moosyu.data.regions.TemperatureTypes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_STATE;
+import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_STATE;
 import static io.github.moosyu.events.DataPackRegistryHandler.REGION_REGISTRY_KEY;
 
 @EventBusSubscriber(modid = MODID)

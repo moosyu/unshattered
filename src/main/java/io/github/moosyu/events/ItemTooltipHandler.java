@@ -1,6 +1,6 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.attachments.PlayerSkillsAttachment;
+import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.data.components.SkillRequirement;
@@ -8,7 +8,7 @@ import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.util.TextUtils;
 import io.github.moosyu.items.ItemTypes;
 import io.github.moosyu.rarities.RarityTypes;
-import io.github.moosyu.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;

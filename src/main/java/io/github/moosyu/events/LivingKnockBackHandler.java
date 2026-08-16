@@ -1,7 +1,7 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.attachments.PlayerStateAttachment;
-import io.github.moosyu.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.attachments.PlayerStateAttachment;
+import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;

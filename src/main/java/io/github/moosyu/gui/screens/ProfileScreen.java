@@ -1,7 +1,6 @@
 package io.github.moosyu.gui.screens;
 
 import com.lowdragmc.lowdraglib2.gui.factory.PlayerUIMenuType;
-import com.lowdragmc.lowdraglib2.gui.texture.GuiTexture;
 import com.lowdragmc.lowdraglib2.gui.texture.SpriteTexture;
 import com.lowdragmc.lowdraglib2.gui.ui.ModularUI;
 import com.lowdragmc.lowdraglib2.gui.ui.UI;
@@ -16,8 +15,8 @@ import dev.vfyjxf.taffy.style.AlignContent;
 import dev.vfyjxf.taffy.style.AlignItems;
 import dev.vfyjxf.taffy.style.FlexDirection;
 import io.github.moosyu.Unshattered;
-import io.github.moosyu.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
+import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.attributes.UnshatteredAttributeTypes;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.collectables.CollectableCategories;

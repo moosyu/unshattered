@@ -1,4 +1,4 @@
-package io.github.moosyu.datagen;
+package io.github.moosyu.data.datagen;
 
 import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.items.UnshatteredItems;

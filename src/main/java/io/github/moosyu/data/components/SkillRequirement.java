@@ -2,7 +2,7 @@ package io.github.moosyu.data.components;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.github.moosyu.attachments.PlayerSkillsAttachment;
+import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 
 public record SkillRequirement(PlayerSkillsAttachment.Skill skill, int level) {
     public static final Codec<SkillRequirement> CODEC = RecordCodecBuilder.create(instance -> instance.group(

@@ -1,6 +1,6 @@
-package io.github.moosyu.datagen;
+package io.github.moosyu.data.datagen;
 
-import io.github.moosyu.attachments.PlayerSkillsAttachment;
+import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.MobItemDropData;
 import io.github.moosyu.data.MobRewardData;

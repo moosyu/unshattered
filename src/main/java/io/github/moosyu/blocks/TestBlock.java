@@ -9,11 +9,14 @@ import net.minecraft.world.level.block.Block;
 
 import java.util.List;
 
+import static io.github.moosyu.Unshattered.MODID;
+
 public class TestBlock extends Block implements DialogueInteractable {
     public static final Component name = Component.literal("Rock");
     public static final Identifier ROCK_DIALOGUE_TREE = DialogueUtil.createDialogueTreeIdentifier(name.getString().toLowerCase(), "rock_dialogue_tree");
     public static final Identifier HI_MESSAGE_IDENTIFIER = DialogueUtil.createDialogueNodeIdentifier(ROCK_DIALOGUE_TREE, name.getString(), "hi");
     public static final Identifier HI2_MESSAGE_IDENTIFIER = DialogueUtil.createDialogueNodeIdentifier(ROCK_DIALOGUE_TREE, name.getString(), "hi_2");
+    public static final Identifier ROCKS_QUEST = Identifier.fromNamespaceAndPath(MODID, "rocks_quest");
 
     public TestBlock(Properties properties) {
         super(properties);

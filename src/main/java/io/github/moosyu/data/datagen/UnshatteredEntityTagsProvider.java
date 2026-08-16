@@ -1,4 +1,4 @@
-package io.github.moosyu.datagen;
+package io.github.moosyu.data.datagen;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;

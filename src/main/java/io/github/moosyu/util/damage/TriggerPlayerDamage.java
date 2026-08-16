@@ -1,7 +1,7 @@
 package io.github.moosyu.util.damage;
 
-import io.github.moosyu.attachments.PlayerCurrencyAttachment;
-import io.github.moosyu.attachments.PlayerStateAttachment;
+import io.github.moosyu.data.attachments.PlayerCurrencyAttachment;
+import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.packets.DeathSoundEffectPacket;
 import net.minecraft.ChatFormatting;
@@ -12,8 +12,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_CURRENCY;
-import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_STATE;
+import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_CURRENCY;
+import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_STATE;
 
 public final class TriggerPlayerDamage {
     public static void damagePlayer(Player player, double damageDealt, Level level, String deathMessage) {

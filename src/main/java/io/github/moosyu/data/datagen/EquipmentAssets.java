@@ -1,4 +1,4 @@
-package io.github.moosyu.datagen;
+package io.github.moosyu.data.datagen;
 
 import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.data.CachedOutput;

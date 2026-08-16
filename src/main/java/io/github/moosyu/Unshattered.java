@@ -5,11 +5,8 @@ import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.data.regions.BoundaryCoordinates;
 import io.github.moosyu.data.regions.RegionAreas;
-import io.github.moosyu.data.regions.RegionBoundary;
 import io.github.moosyu.data.regions.UnshatteredRegions;
-import io.github.moosyu.events.DatagenHandler;
 import io.github.moosyu.gui.screens.ProfileScreen;
-import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import org.joml.Vector2i;
 import org.slf4j.Logger;
@@ -28,9 +25,8 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
 import java.util.Arrays;
-import java.util.List;
 
-import static io.github.moosyu.attachments.UnshatteredAttachments.ATTACHMENT_TYPES;
+import static io.github.moosyu.data.attachments.UnshatteredAttachments.ATTACHMENT_TYPES;
 import static io.github.moosyu.attributes.UnshatteredAttributes.ATTRIBUTES;
 import static io.github.moosyu.blocks.UnshatteredBlocks.BLOCKS;
 import static io.github.moosyu.creative.UnshatteredCreativeTabs.CREATIVE_MODE_TABS;

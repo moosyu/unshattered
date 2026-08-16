@@ -1,9 +1,9 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.attachments.PlayerSkillsAttachment;
+import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.SkillRequirement;
-import io.github.moosyu.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.UnshatteredPassiveAbilityItem;
 import io.github.moosyu.packets.DamageNumberPacket;

@@ -2,8 +2,8 @@ package io.github.moosyu.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
-import io.github.moosyu.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
+import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;

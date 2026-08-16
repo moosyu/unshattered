@@ -1,6 +1,6 @@
 package io.github.moosyu.collectables;
 
-import io.github.moosyu.attachments.PlayerSkillsAttachment;
+import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.collectables.rewards.ExperienceCollectableReward;
 import io.github.moosyu.collectables.rewards.ItemCollectableReward;
 import io.github.moosyu.items.UnshatteredItems;

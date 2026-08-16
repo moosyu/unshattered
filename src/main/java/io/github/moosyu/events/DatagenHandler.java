@@ -2,18 +2,22 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.blocks.TestBlock;
 import io.github.moosyu.data.dialogue.*;
+import io.github.moosyu.data.quests.Quest;
+import io.github.moosyu.data.quests.QuestTypes;
 import io.github.moosyu.data.regions.*;
-import io.github.moosyu.datagen.*;
+import io.github.moosyu.data.datagen.*;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.Items;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
@@ -25,7 +29,6 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.data.dialogue.DialogueEvents.ROCK_COMPLETE_EVENT;
 
 @EventBusSubscriber(modid = MODID)
 public class DatagenHandler {
@@ -66,15 +69,27 @@ public class DatagenHandler {
                                     TestBlock.HI_MESSAGE_IDENTIFIER),
                                     createDialogueOriginWithSelfFlag(1,
                                             new DialogueNode(Component.literal("you've already spoken to me"),
-                                                    List.of(new DialogueChoice(Component.literal("i know right"), ROCK_COMPLETE_EVENT))
+                                                    List.of(new DialogueChoice(Component.literal("i know right"),
+                                                            new GiveItemDialogueEvent(BuiltInRegistries.ITEM.wrapAsHolder(Items.DIAMOND), 1))
+                                                    )
                                             ),
                                             List.of(TestBlock.HI_MESSAGE_IDENTIFIER),
                                             List.of(),
                                             List.of(),
                                             TestBlock.HI2_MESSAGE_IDENTIFIER
+                                    ),
+                                    createDialogueOrigin(2,
+                                            new DialogueNode(Component.literal("find my pages"),
+                                                    List.of(new DialogueChoice(Component.literal("i guess"), List.of(TestBlock.ROCKS_QUEST), new StartQuestDialogueEvent(TestBlock.ROCKS_QUEST)),
+                                                            new DialogueChoice(Component.literal("no thanks")))
+                                            ),
+                                            List.of(TestBlock.HI2_MESSAGE_IDENTIFIER),
+                                            List.of(TestBlock.ROCKS_QUEST)
                                     )
                             ))
                     );
+                }).add(DataPackRegistryHandler.QUEST_REGISTRY_KEY, bootstrap -> {
+                    registerQuest(bootstrap, TestBlock.ROCKS_QUEST, QuestTypes.NOVICE, new GiveItemDialogueEvent(BuiltInRegistries.ITEM.wrapAsHolder(Items.STONE), 1));
                 })
         );
     }
@@ -90,6 +105,11 @@ public class DatagenHandler {
 
     public static void registerDialogueTree(BootstrapContext<DialogueTree> bootstrap, Identifier dialogueTreeIdentifier, DialogueTree dialogueTree) {
         bootstrap.register(ResourceKey.create(DataPackRegistryHandler.DIALOGUE_TREE_REGISTRY_KEY, dialogueTreeIdentifier), dialogueTree);
+    }
+
+
+    public static DialogueTreeOrigin createDialogueOrigin(int priority, DialogueNode dialogueNode, List<Identifier> requiredFlags, List<Identifier> excludedFlags) {
+        return new DialogueTreeOrigin(priority, dialogueNode, Optional.of(new DialogueFlagRequirements(requiredFlags, excludedFlags)), List.of());
     }
 
     /**
@@ -108,5 +128,13 @@ public class DatagenHandler {
      */
     public static DialogueTreeOrigin createDialogueOriginWithSelfFlag(int priority, DialogueNode dialogueNode, Identifier treeOriginIdentifier) {
         return new DialogueTreeOrigin(priority, dialogueNode, List.of(treeOriginIdentifier));
+    }
+
+    public static void registerQuest(BootstrapContext<Quest> bootstrap, Identifier questIdentifier, QuestTypes questTypes, DialogueTriggeredEvent questCompleteEvent) {
+        bootstrap.register(ResourceKey.create(DataPackRegistryHandler.QUEST_REGISTRY_KEY, questIdentifier), new Quest(questTypes, Optional.of(questCompleteEvent)));
+    }
+
+    public static void registerQuest(BootstrapContext<Quest> bootstrap, Identifier questIdentifier, QuestTypes questTypes) {
+        bootstrap.register(ResourceKey.create(DataPackRegistryHandler.QUEST_REGISTRY_KEY, questIdentifier), new Quest(questTypes));
     }
 }

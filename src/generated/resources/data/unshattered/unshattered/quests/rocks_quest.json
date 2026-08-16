@@ -1,0 +1,8 @@
+{
+  "quest_complete_event": {
+    "type": "unshattered:give_item",
+    "count": 1,
+    "item": "minecraft:stone"
+  },
+  "quest_type": "novice"
+}

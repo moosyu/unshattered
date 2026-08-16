@@ -1,8 +1,8 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.Unshattered;
-import io.github.moosyu.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
+import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.DropTypes;
 import io.github.moosyu.data.MobItemDropData;
@@ -25,7 +25,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_SKILLS;
+import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_SKILLS;
 import static io.github.moosyu.data.DropTypes.getDropType;
 
 @EventBusSubscriber(modid = MODID)

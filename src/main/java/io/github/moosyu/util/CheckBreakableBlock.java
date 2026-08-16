@@ -1,7 +1,7 @@
 package io.github.moosyu.util;
 
 import io.github.moosyu.blocks.BrokenBlocksWorldResult;
-import io.github.moosyu.datagen.UnshatteredBlockTagsProvider;
+import io.github.moosyu.data.datagen.UnshatteredBlockTagsProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 

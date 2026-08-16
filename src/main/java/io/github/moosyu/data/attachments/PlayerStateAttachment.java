@@ -1,7 +1,6 @@
-package io.github.moosyu.attachments;
+package io.github.moosyu.data.attachments;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 public final class PlayerStateAttachment {

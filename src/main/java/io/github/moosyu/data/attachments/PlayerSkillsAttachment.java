@@ -1,4 +1,4 @@
-package io.github.moosyu.attachments;
+package io.github.moosyu.data.attachments;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;

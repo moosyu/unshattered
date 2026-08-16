@@ -1,9 +1,8 @@
 package io.github.moosyu.util;
 
-import io.github.moosyu.attachments.PlayerCollectionsAttachment;
-import io.github.moosyu.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.attachments.PlayerCollectionsAttachment;
+import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.collectables.CollectableEntries;
-import io.github.moosyu.data.components.UnshatteredDataComponents;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 

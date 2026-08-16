@@ -1,10 +1,10 @@
 package io.github.moosyu.util;
 
-import io.github.moosyu.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.attachments.PlayerStateAttachment;
+import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
+import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.data.components.SkillRequirement;
-import io.github.moosyu.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;

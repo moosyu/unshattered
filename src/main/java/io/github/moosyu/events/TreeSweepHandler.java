@@ -1,8 +1,8 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.attachments.PlayerSkillsAttachment;
+import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.util.CollectionUtil;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
@@ -22,7 +22,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import java.util.*;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_SKILLS;
+import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_SKILLS;
 
 // shouldnt need to check if serverside as this will being run from BlockBreakHandler which already had that check
 @EventBusSubscriber(modid = MODID)

@@ -1,13 +1,13 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.attachments.PlayerSkillsAttachment;
+import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.blocks.BrokenBlocksItemResult;
 import io.github.moosyu.data.RegenBlocksSavedData;
 import io.github.moosyu.data.UnshatteredDataMaps;
-import io.github.moosyu.datagen.UnshatteredBlockTagsProvider;
+import io.github.moosyu.data.datagen.UnshatteredBlockTagsProvider;
 import io.github.moosyu.util.*;
-import io.github.moosyu.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
@@ -25,7 +25,7 @@ import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 import java.util.*;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_SKILLS;
+import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_SKILLS;
 
 // ran just before a player is to break a block
 @EventBusSubscriber(modid = MODID)

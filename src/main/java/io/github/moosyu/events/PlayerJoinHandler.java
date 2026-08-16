@@ -1,6 +1,6 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.attachments.PlayerStateAttachment;
+import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
@@ -9,7 +9,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.attachments.UnshatteredAttachments.PLAYER_STATE;
+import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_STATE;
 
 // triggers when the player starts the game or switches world
 // however when the game starts this gives you the wrong value. idk why, maybe attributes arent properly loaded yet so you dont get modifiers.

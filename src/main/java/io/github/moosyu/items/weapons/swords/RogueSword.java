@@ -1,8 +1,8 @@
 package io.github.moosyu.items.weapons.swords;
 
-import io.github.moosyu.attachments.UnshatteredAttachments;
-import io.github.moosyu.attachments.PlayerAbilityEffectsAttachment;
-import io.github.moosyu.attachments.PlayerStateAttachment;
+import io.github.moosyu.data.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
+import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;

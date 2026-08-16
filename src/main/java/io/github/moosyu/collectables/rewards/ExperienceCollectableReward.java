@@ -1,7 +1,7 @@
 package io.github.moosyu.collectables.rewards;
 
-import io.github.moosyu.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
+import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import net.minecraft.world.entity.player.Player;
 
 public record ExperienceCollectableReward(float amount, PlayerSkillsAttachment.Skill experienceType) implements CollectableReward {

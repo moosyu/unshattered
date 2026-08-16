@@ -1,6 +1,6 @@
 package io.github.moosyu.packets.handlers;
 
-import io.github.moosyu.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.packets.QueueNewFlagsPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.handling.IPayloadContext;

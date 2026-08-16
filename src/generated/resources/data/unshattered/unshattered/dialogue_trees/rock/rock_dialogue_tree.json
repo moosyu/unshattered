@@ -30,8 +30,12 @@
       "dialogue_node": {
         "dialogue_choices": [
           {
-            "action": "unshattered:rock_complete_event",
-            "text": "i know right"
+            "text": "i know right",
+            "triggered_event": {
+              "type": "unshattered:give_item",
+              "count": 1,
+              "item": "minecraft:diamond"
+            }
           }
         ],
         "text": "you've already spoken to me"
@@ -40,6 +44,35 @@
       "set_flags": [
         "unshattered:rock/rock_dialogue_tree/rock_hi_2"
       ]
+    },
+    {
+      "dialogue_flag_requirements": {
+        "excluded_flags": [
+          "unshattered:rocks_quest"
+        ],
+        "required_flags": [
+          "unshattered:rock/rock_dialogue_tree/rock_hi_2"
+        ]
+      },
+      "dialogue_node": {
+        "dialogue_choices": [
+          {
+            "set_flags": [
+              "unshattered:rocks_quest"
+            ],
+            "text": "i guess",
+            "triggered_event": {
+              "type": "unshattered:start_quest",
+              "quest_identifier": "unshattered:rocks_quest"
+            }
+          },
+          {
+            "text": "no thanks"
+          }
+        ],
+        "text": "find my pages"
+      },
+      "priority": 2
     }
   ]
 }

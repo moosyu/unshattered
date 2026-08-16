@@ -1,8 +1,8 @@
 package io.github.moosyu.data.dialogue;
 
 import io.github.moosyu.Unshattered;
-import io.github.moosyu.attachments.PlayerDialogueFlagsAttachment;
-import io.github.moosyu.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.attachments.PlayerDialogueFlagsAttachment;
+import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.packets.OpenDialoguePacket;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
