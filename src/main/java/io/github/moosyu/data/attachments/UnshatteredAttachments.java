@@ -47,7 +47,7 @@ public final class UnshatteredAttachments {
 
     public static final Supplier<AttachmentType<PlayerCollectionsAttachment>> PLAYER_COLLECTIONS = ATTACHMENT_TYPES.register("player_collections", () ->
             AttachmentType.builder(() -> new PlayerCollectionsAttachment())
-                    .serialize(PlayerCollectionsAttachment.RECORD_CODEC.fieldOf("collections"))
+                    .serialize(PlayerCollectionsAttachment.CODEC.fieldOf("collections"))
                     .sync(PlayerCollectionsAttachment.STREAM_CODEC)
                     .copyOnDeath()
                     .build()

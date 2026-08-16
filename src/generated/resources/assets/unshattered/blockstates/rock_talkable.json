@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "unshattered:block/rock_talkable",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "unshattered:block/rock_talkable",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "unshattered:block/rock_talkable"
+    },
+    "facing=west": {
+      "model": "unshattered:block/rock_talkable",
+      "y": 90
+    }
+  }
+}

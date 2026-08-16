@@ -136,13 +136,14 @@ public class DialogueScreen extends ModularUIScreen {
 
     private void selectChoice(DialogueChoice choice, Player player) {
         Optional<DialogueNode> targetNode = choice.targetNode();
+        ClientPacketDistributor.sendToServer(new QueueNewFlagsPacket(choice.setFlags()));
+
         if (targetNode.isEmpty()) {
             ClientPacketDistributor.sendToServer(new ResetFlagQueuePacket(true));
             Minecraft.getInstance().setScreen(null);
             return;
         }
 
-        ClientPacketDistributor.sendToServer(new QueueNewFlagsPacket(choice.setFlags()));
         showNode(targetNode.get(), player);
     }
 

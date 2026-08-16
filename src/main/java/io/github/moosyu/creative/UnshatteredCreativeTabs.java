@@ -1,8 +1,6 @@
 package io.github.moosyu.creative;
 
-import io.github.moosyu.items.UnshatteredItems;
-import
-net.minecraft.core.registries.Registries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -11,6 +9,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.items.UnshatteredItems.*;
+
 public class UnshatteredCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
@@ -55,7 +54,8 @@ public class UnshatteredCreativeTabs {
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
         .icon(() -> FIG_LOG.get().getDefaultInstance())
         .displayItems((_, output) -> {
-                output.accept(FIG_LOG.get());
+            output.accept(FIG_LOG.get());
+            output.accept(ROCK_TALKABLE_BLOCK.get());
         }).build()
     );
 

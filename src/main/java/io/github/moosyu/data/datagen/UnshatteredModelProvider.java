@@ -5,12 +5,17 @@ import io.github.moosyu.items.UnshatteredItems;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.*;
+import net.minecraft.client.renderer.block.dispatch.Variant;
 import net.minecraft.client.renderer.item.properties.conditional.FishingRodCast;
+import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import static io.github.moosyu.Unshattered.MODID;
 
@@ -90,6 +95,14 @@ public class UnshatteredModelProvider extends ModelProvider {
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get(), BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get(), TextureMapping.cube(Blocks.STONE), blockModels.modelOutput))));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(), BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(), TextureMapping.cube(Blocks.COBBLESTONE), blockModels.modelOutput))));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK.get(), BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK.get(), TextureMapping.column(UnshatteredBlocks.FIG_LOG_BLOCK.get()), blockModels.modelOutput))));
-        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.TEST_BLOCK.get(), BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(UnshatteredBlocks.TEST_BLOCK.get(), TextureMapping.cube(UnshatteredBlocks.TEST_BLOCK.get()), blockModels.modelOutput))));
+        blockModels.blockStateOutput.accept(MultiVariantGenerator
+                .dispatch(UnshatteredBlocks.ROCK_TALKABLE_BLOCK.get(), BlockModelGenerators.variant(new Variant(Identifier.fromNamespaceAndPath(MODID, "block/rock_talkable"))))
+                .with(PropertyDispatch.modify(BlockStateProperties.HORIZONTAL_FACING)
+                        .select(Direction.SOUTH, BlockModelGenerators.NOP)
+                        .select(Direction.WEST,  BlockModelGenerators.Y_ROT_90)
+                        .select(Direction.NORTH, BlockModelGenerators.Y_ROT_180)
+                        .select(Direction.EAST,  BlockModelGenerators.Y_ROT_270)
+                )
+        );
     }
 }

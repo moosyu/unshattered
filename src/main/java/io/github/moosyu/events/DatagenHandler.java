@@ -1,6 +1,6 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.blocks.TestBlock;
+import io.github.moosyu.blocks.TalkingRockBlock;
 import io.github.moosyu.data.dialogue.*;
 import io.github.moosyu.data.quests.Quest;
 import io.github.moosyu.data.quests.QuestTypes;
@@ -56,7 +56,7 @@ public class DatagenHandler {
                     registerRegionBoundary(bootstrap, new BoundaryCoordinates(new Vector2i(0, 0), new Vector2i(400, 400), 1), UnshatteredRegions.PLAINS_REGION, regions);
                 }).add(DataPackRegistryHandler.DIALOGUE_TREE_REGISTRY_KEY, bootstrap -> {
                     registerDialogueTree(bootstrap,
-                            TestBlock.ROCK_DIALOGUE_TREE,
+                            TalkingRockBlock.ROCK_DIALOGUE_TREE,
                             new DialogueTree(List.of(
                                     createDialogueOriginWithSelfFlag(
                                     0,
@@ -66,30 +66,30 @@ public class DatagenHandler {
                                                     new DialogueChoice(Component.literal("..."))
                                             )
                                     ),
-                                    TestBlock.HI_MESSAGE_IDENTIFIER),
+                                    TalkingRockBlock.HI_MESSAGE_IDENTIFIER),
                                     createDialogueOriginWithSelfFlag(1,
                                             new DialogueNode(Component.literal("you've already spoken to me"),
                                                     List.of(new DialogueChoice(Component.literal("i know right"),
                                                             new GiveItemDialogueEvent(BuiltInRegistries.ITEM.wrapAsHolder(Items.DIAMOND), 1))
                                                     )
                                             ),
-                                            List.of(TestBlock.HI_MESSAGE_IDENTIFIER),
+                                            List.of(TalkingRockBlock.HI_MESSAGE_IDENTIFIER),
                                             List.of(),
                                             List.of(),
-                                            TestBlock.HI2_MESSAGE_IDENTIFIER
+                                            TalkingRockBlock.HI2_MESSAGE_IDENTIFIER
                                     ),
                                     createDialogueOrigin(2,
                                             new DialogueNode(Component.literal("find my pages"),
-                                                    List.of(new DialogueChoice(Component.literal("i guess"), List.of(TestBlock.ROCKS_QUEST), new StartQuestDialogueEvent(TestBlock.ROCKS_QUEST)),
+                                                    List.of(new DialogueChoice(Component.literal("i guess"), List.of(TalkingRockBlock.ROCKS_QUEST), new StartQuestDialogueEvent(TalkingRockBlock.ROCKS_QUEST)),
                                                             new DialogueChoice(Component.literal("no thanks")))
                                             ),
-                                            List.of(TestBlock.HI2_MESSAGE_IDENTIFIER),
-                                            List.of(TestBlock.ROCKS_QUEST)
+                                            List.of(TalkingRockBlock.HI2_MESSAGE_IDENTIFIER),
+                                            List.of(TalkingRockBlock.ROCKS_QUEST)
                                     )
                             ))
                     );
                 }).add(DataPackRegistryHandler.QUEST_REGISTRY_KEY, bootstrap -> {
-                    registerQuest(bootstrap, TestBlock.ROCKS_QUEST, QuestTypes.NOVICE, new GiveItemDialogueEvent(BuiltInRegistries.ITEM.wrapAsHolder(Items.STONE), 1));
+                    registerQuest(bootstrap, TalkingRockBlock.ROCKS_QUEST, QuestTypes.NOVICE, new GiveItemDialogueEvent(BuiltInRegistries.ITEM.wrapAsHolder(Items.STONE), 1));
                 })
         );
     }

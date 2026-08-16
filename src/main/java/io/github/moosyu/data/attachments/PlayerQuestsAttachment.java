@@ -1,12 +1,17 @@
 package io.github.moosyu.data.attachments;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.moosyu.data.quests.Quest;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class PlayerQuestsAttachment {
     private final HashMap<Quest, Boolean> quests = new HashMap<>();
@@ -36,13 +41,23 @@ public class PlayerQuestsAttachment {
         return quests.get(quest);
     }
 
-    public static final Codec<PlayerQuestsAttachment> CODEC =
-            Codec.unboundedMap(Quest.CODEC, Codec.BOOL).xmap(map -> {
-                PlayerQuestsAttachment attachment = new PlayerQuestsAttachment();
-                attachment.quests.putAll(map);
-                return attachment;
-                }, attachment -> attachment.quests
-            );
+    public HashMap<Quest, Boolean> getQuests() {
+        return quests;
+    }
+
+    private static final Codec<Map.Entry<Quest, Boolean>> ENTRY_CODEC = RecordCodecBuilder.create(instance ->
+            instance.group(
+                    Quest.CODEC.fieldOf("quest").forGetter(Map.Entry::getKey),
+                    Codec.BOOL.fieldOf("completed").forGetter(Map.Entry::getValue)
+            ).apply(instance, Map::entry)
+    );
+
+    public static final Codec<PlayerQuestsAttachment> CODEC = ENTRY_CODEC.listOf().xmap(list -> {
+        PlayerQuestsAttachment attachment = new PlayerQuestsAttachment();
+        list.forEach(entry -> attachment.quests.put(entry.getKey(), entry.getValue()));
+        return attachment;
+        }, attachment -> new ArrayList<>(attachment.quests.entrySet())
+    );
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerQuestsAttachment> STREAM_CODEC =
             ByteBufCodecs.map(HashMap::new,

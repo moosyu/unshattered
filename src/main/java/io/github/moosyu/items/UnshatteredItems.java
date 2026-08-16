@@ -499,5 +499,5 @@ public class UnshatteredItems {
             )
     ));
 
-    public static final DeferredItem<BlockItem> TEST_BLOCK = ITEMS.registerSimpleBlockItem(UnshatteredBlocks.TEST_BLOCK.getDelegate());
+    public static final DeferredItem<BlockItem> ROCK_TALKABLE_BLOCK = ITEMS.registerSimpleBlockItem(UnshatteredBlocks.ROCK_TALKABLE_BLOCK.getDelegate());
 }
