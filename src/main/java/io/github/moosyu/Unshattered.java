@@ -99,7 +99,6 @@ public class Unshattered {
         if (serverLevel != null && boundaryCoordinates != null) {
             Vector2i boundaryCoordinatesLength = boundaryCoordinates.getRectangleLengths();
             RegionAreas.createRegionAreaGrid(new Vector2i(boundaryCoordinatesLength.x, boundaryCoordinatesLength.y), serverLevel.registryAccess().lookupOrThrow(REGION_BOUNDARY_REGISTRY_KEY).stream().toList());
-            System.out.println(Arrays.deepToString(RegionAreas.chunks));
         }
     }
 }

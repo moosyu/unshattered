@@ -1,7 +1,5 @@
 package io.github.moosyu.packets.handlers;
 
-import io.github.moosyu.data.dialogue.DialogueEventTypes;
-import io.github.moosyu.data.dialogue.DialogueTriggeredEvent;
 import io.github.moosyu.packets.TriggerEventPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.handling.IPayloadContext;

@@ -1,5 +1,7 @@
 package io.github.moosyu.packets.handlers;
 
+import io.github.moosyu.gui.screens.DialogueScreen;
+import io.github.moosyu.packets.OpenDialoguePacket;
 import io.github.moosyu.packets.ZombieSwordEffectsPacket;
 import io.github.moosyu.util.PlayClientsideSound;
 import net.minecraft.client.Minecraft;
@@ -8,13 +10,20 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 import java.util.Random;
 
 public class ZombieSwordEffectsPayloadHandler {
     public static void handleData(final ZombieSwordEffectsPacket data, final IPayloadContext context) {
-        context.enqueueWork(() -> {
+        context.enqueueWork(() -> ClientHandler.handle(data, context));
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private static class ClientHandler {
+        static void handle(final ZombieSwordEffectsPacket data, final IPayloadContext context) {
             Player player = context.player();
             Vec3 look = player.getLookAngle().normalize();
             Random rand = new Random();
@@ -27,6 +36,6 @@ public class ZombieSwordEffectsPayloadHandler {
                 Minecraft.getInstance().particleEngine.createParticle(ParticleTypes.HEART, particlePos.x, particlePos.y, particlePos.z, 0.0d, 0.02d, 0.0d);
                 PlayClientsideSound.playClientsideSound(player, SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.PLAYERS, 0.1f, 1.0f);
             }
-        });
+        }
     }
 }
