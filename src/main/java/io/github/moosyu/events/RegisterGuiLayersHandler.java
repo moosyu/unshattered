@@ -18,7 +18,7 @@ public class RegisterGuiLayersHandler {
         event.replaceLayer(VanillaGuiLayers.FOOD_LEVEL, new ManaBarLayer());
         event.replaceLayer(VanillaGuiLayers.SELECTED_ITEM_NAME, new SelectedItemLayer());
         event.replaceLayer(VanillaGuiLayers.AIR_LEVEL, new BreathBarLayer());
-        event.replaceLayer(VanillaGuiLayers.SCOREBOARD_SIDEBAR, new SidebarLayer());
+        event.replaceLayer(VanillaGuiLayers.SCOREBOARD_SIDEBAR, new InfoBarLayer());
         event.registerAbove(VanillaGuiLayers.PLAYER_HEALTH, Identifier.fromNamespaceAndPath(MODID, "charges_layer"), new ChargesLayer());
         // hiding some vanilla bits
         event.replaceLayer(VanillaGuiLayers.CONTEXTUAL_INFO_BAR, (_, _) -> {});

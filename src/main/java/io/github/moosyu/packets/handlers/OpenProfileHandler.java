@@ -7,8 +7,10 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class OpenProfileHandler {
     public static void handleData(final OpenProfilePayload data, final IPayloadContext context) {
-        if (context.player() instanceof ServerPlayer serverPlayer) {
-            ProfileScreen.openProfile(serverPlayer);
-        }
+        context.enqueueWork(() -> {
+            if (context.player() instanceof ServerPlayer serverPlayer) {
+                ProfileScreen.openProfile(serverPlayer);
+            }
+        });
     }
 }

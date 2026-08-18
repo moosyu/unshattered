@@ -6,8 +6,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Vector3f;
-import org.joml.Vector3fc;
+import org.jspecify.annotations.NonNull;
 
 import static io.github.moosyu.Unshattered.MODID;
 
@@ -30,7 +29,7 @@ public record DamageNumberPacket(int number, Vec3 pos) implements CustomPacketPa
     public double getZ() { return pos.z; }
 
     @Override
-    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
+    public CustomPacketPayload.@NonNull Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 }

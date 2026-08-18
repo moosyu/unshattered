@@ -6,8 +6,10 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class TriggerEventHandler {
     public static void handleData(final TriggerEventPacket data, final IPayloadContext context) {
-        if (context.player() instanceof ServerPlayer serverPlayer) {
-            data.dialogueTriggeredEvent().trigger(serverPlayer);
-        }
+        context.enqueueWork(() -> {
+            if (context.player() instanceof ServerPlayer serverPlayer) {
+                data.dialogueTriggeredEvent().trigger(serverPlayer);
+            }
+        });
     }
 }

@@ -7,8 +7,10 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class QueueNewFlagsHandler {
     public static void handleData(final QueueNewFlagsPacket data, final IPayloadContext context) {
-        if (context.player() instanceof ServerPlayer serverPlayer) {
-            serverPlayer.getData(UnshatteredAttachments.PLAYER_DIALOGUE_FLAGS.get()).addFlagsToQueue(data.flags());
-        }
+        context.enqueueWork(() -> {
+            if (context.player() instanceof ServerPlayer serverPlayer) {
+                serverPlayer.getData(UnshatteredAttachments.PLAYER_DIALOGUE_FLAGS.get()).addFlagsToQueue(data.flags());
+            }
+        });
     }
 }

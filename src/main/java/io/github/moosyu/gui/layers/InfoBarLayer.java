@@ -23,11 +23,14 @@ import org.spongepowered.include.com.google.common.base.Suppliers;
 
 import java.util.function.Supplier;
 
-public class SidebarLayer implements ModularHudLayer {
+public class InfoBarLayer implements ModularHudLayer {
     private static final Supplier<ModularUI> MODULAR_UI = Suppliers.memoize(() -> ModularUI.of(UI.of(createSidebarLayer())));
 
     @Override
     public @Nullable ModularUI getModularUI() {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.options.hideGui) return null;
+
         return MODULAR_UI.get();
     }
 

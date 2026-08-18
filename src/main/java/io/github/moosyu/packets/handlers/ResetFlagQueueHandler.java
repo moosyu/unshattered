@@ -8,14 +8,16 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class ResetFlagQueueHandler {
     public static void handleData(final ResetFlagQueuePacket data, final IPayloadContext context) {
-        if (context.player() instanceof ServerPlayer serverPlayer) {
-            PlayerDialogueFlagsAttachment playerDialogueFlagsAttachment = serverPlayer.getData(UnshatteredAttachments.PLAYER_DIALOGUE_FLAGS);
-            if (data.addToPlayerFlags()) {
-                playerDialogueFlagsAttachment.addQueuedFlags();
-                serverPlayer.syncData(UnshatteredAttachments.PLAYER_DIALOGUE_FLAGS);
-            } else {
-                playerDialogueFlagsAttachment.clearFlagQueue();
+        context.enqueueWork(() -> {
+            if (context.player() instanceof ServerPlayer serverPlayer) {
+                PlayerDialogueFlagsAttachment playerDialogueFlagsAttachment = serverPlayer.getData(UnshatteredAttachments.PLAYER_DIALOGUE_FLAGS);
+                if (data.addToPlayerFlags()) {
+                    playerDialogueFlagsAttachment.addQueuedFlags();
+                    serverPlayer.syncData(UnshatteredAttachments.PLAYER_DIALOGUE_FLAGS);
+                } else {
+                    playerDialogueFlagsAttachment.clearFlagQueue();
+                }
             }
-        }
+        });
     }
 }
