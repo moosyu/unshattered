@@ -206,5 +206,8 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         PlayerSkillsAttachment.Skill.FARMING,
                         5.0f
                 ), false);
+        this.builder(BLOCK_BREAKING_POWER_DATA)
+                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get()), 1, false)
+                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get()), 1, false);
     }
 }

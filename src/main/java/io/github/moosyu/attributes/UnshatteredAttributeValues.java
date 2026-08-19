@@ -35,7 +35,8 @@ public enum UnshatteredAttributeValues {
     FISHING_SPEED("fishing_speed", "☂", 0.0, 0.0, 448.0, 0xFF55FFFF, UnshatteredAttributeTypes.VISIBLE, false, false),
     FISHING_FORTUNE("fishing_fortune", "⛃", 0.0, 0.0, 2048.0, 0xFF00AAAA, UnshatteredAttributeTypes.VISIBLE, false, false),
     DAMAGE("damage", 0.0, 0.0, 2147483647.0),
-    FINAL_DAMAGE_MODIFIER("final_damage_modifier", 1, 0, 10.0);
+    FINAL_DAMAGE_MODIFIER("final_damage_modifier", 1, 0, 10.0),
+    BREAKING_POWER("breaking_power", "Ⓟ", 0, 0, 20, 0xFF00AA00, UnshatteredAttributeTypes.VISIBLE, false, false);
 
     private static final Map<Attribute, UnshatteredAttributeValues> ATTRIBUTE_MAP = new HashMap<>();
     public final String id;

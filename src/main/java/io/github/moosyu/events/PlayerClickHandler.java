@@ -3,12 +3,14 @@ package io.github.moosyu.events;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.dialogue.DialogueInteractable;
+import io.github.moosyu.util.BlockBreakingUtil;
 import io.github.moosyu.util.CheckItemRequirement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.TriState;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.Level;
@@ -82,7 +84,20 @@ public class PlayerClickHandler {
     @SubscribeEvent
     public static void onPlayerLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
         Level level = event.getLevel();
+        Player player = event.getEntity();
         if (level.isClientSide()) return;
-        if (!CheckItemRequirement.passesSkillCheck(event.getEntity(), event.getItemStack())) event.setCanceled(true);
+        if (!CheckItemRequirement.passesSkillCheck(player, event.getItemStack())
+                || !BlockBreakingUtil.canBreakBlock(player, level.getBlockState(event.getPos()).typeHolder())) {
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
+        Level level = event.getLevel();
+        if (level.isClientSide()) return;
+        if (event.getTarget().is(EntityType.ARMOR_STAND) && !event.getEntity().isCreative()) {
+            event.setCanceled(true);
+        }
     }
 }

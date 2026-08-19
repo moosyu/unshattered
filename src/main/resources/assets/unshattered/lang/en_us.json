@@ -192,6 +192,7 @@
   "attribute.name.unshattered.mana_regen": "Mana Regen",
   "attribute.name.unshattered.fishing_speed": "Fishing Speed",
   "attribute.name.unshattered.fishing_fortune": "Fishing Fortune",
+  "attribute.name.unshattered.breaking_power": "Breaking Power",
 
   "skills.name.unshattered.combat": "Combat",
   "skills.name.unshattered.farming": "Farming",
@@ -274,5 +275,10 @@
   "drop_type.message.unshattered.rngesus_incarnate": "Rngesus Incarnate Drop!",
 
   "region.name.unshattered.unincorporated": "Unincorporated",
-  "region.name.unshattered.plains": "Plains"
+  "region.name.unshattered.plains": "Plains",
+
+  "breaking_power.messages.unshattered.generic_breaking_power_requirment_start": "A breaking power of ",
+  "breaking_power.messages.unshattered.generic_breaking_power_requirment_end": " is required to break this block",
+  "breaking_power.messages.unshattered.hand": "Your hand was too weak. ",
+  "breaking_power.messages.unshattered.tool": "The block is too hard for you to break.  "
 }

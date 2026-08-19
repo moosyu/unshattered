@@ -36,6 +36,7 @@ public class EntityAttributeModificationHandler {
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.FISHING_SPEED.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.FISHING_FORTUNE.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributeValues.BREAKING_POWER.holder);
 
         event.add(EntityType.ZOMBIE, UnshatteredAttributeValues.HEALTH.holder, 70.0d);
         event.add(EntityType.ZOMBIE, UnshatteredAttributeValues.DAMAGE.holder, 20.0d);
@@ -98,5 +99,7 @@ public class EntityAttributeModificationHandler {
         event.add(EntityType.PIG, UnshatteredAttributeValues.HEALTH.holder, 50.0d);
 
         event.add(EntityType.MOOSHROOM, UnshatteredAttributeValues.HEALTH.holder, 50.0d);
+
+        event.add(EntityType.ARMOR_STAND, UnshatteredAttributeValues.HEALTH.holder, 0.1d);
     }
 }

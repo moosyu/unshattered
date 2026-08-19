@@ -35,4 +35,10 @@ public final class UnshatteredDataMaps {
             Registries.ENTITY_TYPE,
             MobRewardData.CODEC
     ).build();
+
+    public static final DataMapType<Block, Integer> BLOCK_BREAKING_POWER_DATA = DataMapType.builder(
+            Identifier.fromNamespaceAndPath(MODID, "block_breaking_power_data"),
+            Registries.BLOCK,
+            Codec.INT
+    ).build();
 }

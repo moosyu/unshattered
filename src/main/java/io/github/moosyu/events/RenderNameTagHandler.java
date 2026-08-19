@@ -40,7 +40,7 @@ public class RenderNameTagHandler {
             return;
         }
 
-        if (entity instanceof LivingEntity livingEntity) {
+        if (entity instanceof LivingEntity livingEntity && !livingEntity.is(EntityType.ARMOR_STAND)) {
             event.setCanRender(TriState.TRUE);
             AttributeInstance healthAttribute = livingEntity.getAttribute(UnshatteredAttributeValues.HEALTH.holder);
             if (healthAttribute == null) {

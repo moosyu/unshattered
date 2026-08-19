@@ -60,31 +60,29 @@ public class PlayerTickHandler {
             // may become a problem later but probably doesn't need to be updated more than once a second
             RegionAreas.updatePlayerRegion(player);
 
-            if (!player.isCreative()) {
-                PlayerRegionAttachment regionAttachment = player.getData(UnshatteredAttachments.PLAYER_REGION.get());
-                Region region = player.level().registryAccess().lookupOrThrow(REGION_REGISTRY_KEY).getValue(regionAttachment.regionKey());
-                float temperature = player.getData(UnshatteredAttachments.PLAYER_TEMPERATURE.get());
-                if (region == null) return;
+            PlayerRegionAttachment regionAttachment = player.getData(UnshatteredAttachments.PLAYER_REGION.get());
+            Region region = player.level().registryAccess().lookupOrThrow(REGION_REGISTRY_KEY).getValue(regionAttachment.regionKey());
+            float temperature = player.getData(UnshatteredAttachments.PLAYER_TEMPERATURE.get());
+            if (region == null) return;
 
-                if (region.temperatureType() == RegionTemperatureTypes.COMFORTABLE) {
-                    float temperatureChange = RegionTemperatureTypes.COMFORTABLE.getRegionTemperatureChange();
+            if (region.temperatureType() == RegionTemperatureTypes.COMFORTABLE || player.isCreative()) {
+                float temperatureChange = RegionTemperatureTypes.COMFORTABLE.getRegionTemperatureChange();
 
-                    // if the amount is close to the base (37) then just set to the base
-                    // or else it just kinda gets close forever
-                    if (Math.abs(TemperatureTypes.BASE_TEMP.getValue() - temperature) <= temperatureChange) {
-                        temperature = TemperatureTypes.BASE_TEMP.getValue();
-                    } else {
-                        temperature += temperature < TemperatureTypes.BASE_TEMP.getValue() ? temperatureChange : -temperatureChange;
-                    }
-                    player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(), temperature);
+                // if the amount is close to the base (37) then just set to the base
+                // or else it just kinda gets close forever
+                if (Math.abs(TemperatureTypes.BASE_TEMP.getValue() - temperature) <= temperatureChange) {
+                    temperature = TemperatureTypes.BASE_TEMP.getValue();
                 } else {
-                    temperature += region.temperatureType().getRegionTemperatureChange();
-                    if (temperature < TemperatureTypes.HIGH_TEMP.getValue()
-                            && temperature > TemperatureTypes.LOW_TEMP.getValue()
-                            || !region.temperatureType().isRegionSafe()
-                    ) {
-                        player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(), temperature);
-                    }
+                    temperature += temperature < TemperatureTypes.BASE_TEMP.getValue() ? temperatureChange : -temperatureChange;
+                }
+                player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(), temperature);
+            } else {
+                temperature += region.temperatureType().getRegionTemperatureChange();
+                if (temperature < TemperatureTypes.HIGH_TEMP.getValue()
+                        && temperature > TemperatureTypes.LOW_TEMP.getValue()
+                        || !region.temperatureType().isRegionSafe()
+                ) {
+                    player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(), temperature);
                 }
             }
         }

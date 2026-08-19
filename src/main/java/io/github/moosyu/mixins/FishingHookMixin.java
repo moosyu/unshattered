@@ -1,6 +1,7 @@
 package io.github.moosyu.mixins;
 
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.util.DamageUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -8,10 +9,16 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.EntityHitResult;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,7 +26,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(FishingHook.class)
-public abstract class FishingHookMixin {
+public abstract class FishingHookMixin extends Projectile {
+    protected FishingHookMixin(EntityType<? extends Projectile> type, Level level) {
+        super(type, level);
+    }
+
     @Shadow
     private int timeUntilLured;
 
@@ -34,6 +45,20 @@ public abstract class FishingHookMixin {
 
     @Shadow
     private static EntityDataAccessor<Boolean> DATA_BITING;
+
+    @Inject(method = "onHitEntity", at = @At("HEAD"), cancellable = true)
+    protected void onHitEntity(EntityHitResult hitResult, CallbackInfo ci) {
+        if (this.getOwner() instanceof Player player) {
+            Entity entity = hitResult.getEntity();
+            if (entity.is(EntityType.ARMOR_STAND) && !player.isCreative()) {
+                ci.cancel();
+            } else {
+                if (entity instanceof LivingEntity livingEntity && !player.level().isClientSide()) {
+                    DamageUtil.dealDamage(player, livingEntity);
+                }
+            }
+        }
+    }
 
     @Inject(method = "catchingFish", at = @At("HEAD"), cancellable = true)
     private void catchingFish(CallbackInfo ci) {

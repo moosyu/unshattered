@@ -9,6 +9,7 @@ import io.github.moosyu.data.datagen.UnshatteredBlockTagsProvider;
 import io.github.moosyu.util.*;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
@@ -33,6 +34,7 @@ public class BlockBreakHandler {
     private static final int TIME_BROKEN = 120;
     private static final Map<BlockPos, RegenBlock> BLOCKS_AWAITING_REGEN = new HashMap<>();
     public record RegenBlock(Level level, BlockState currentBlock, long regenTick) {}
+
     @SubscribeEvent
     public static void onBlockBreak(BreakBlockEvent event) {
         Player player = event.getPlayer();
@@ -42,10 +44,10 @@ public class BlockBreakHandler {
         event.setCanceled(true);
 
         BlockState blockState = event.getState();
-        Float data = blockState.typeHolder().getData(UnshatteredDataMaps.HARVESTABLE_BLOCKS_EXP_DATA);
-        float experienceReward = Objects.requireNonNullElse(data, 0.0f);
+        Holder<Block> blockHolder = blockState.typeHolder();
+        float experienceReward = Objects.requireNonNullElse(blockHolder.getData(UnshatteredDataMaps.HARVESTABLE_BLOCKS_EXP_DATA), 0.0f);
         Block block = blockState.getBlock();
-        BlockState replacementBlock = CheckBreakableBlock.canBreakBlock(blockState, player);
+        BlockState replacementBlock = BlockBreakingUtil.isBreakableBlock(blockState, player);
 
         if (replacementBlock == null) return;
         else {
@@ -87,7 +89,7 @@ public class BlockBreakHandler {
     @SubscribeEvent
     public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
         if (!CheckItemRequirement.passesSkillCheck(event.getEntity(), event.getEntity().getMainHandItem())
-                || CheckBreakableBlock.canBreakBlock(event.getState(), event.getEntity()) == null) {
+                || BlockBreakingUtil.isBreakableBlock(event.getState(), event.getEntity()) == null) {
             event.setNewSpeed(0.0F);
         }
     }

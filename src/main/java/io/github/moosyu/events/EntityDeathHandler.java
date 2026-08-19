@@ -72,13 +72,12 @@ public class EntityDeathHandler {
                                     .append(Component.literal(" "))
                                     .append(Component.translatable(itemDrop.item().getDescriptionId())
                                             .withStyle(style -> style.withColor(itemRarity.getColour(1.0f)).withBold(false)))
-                                    .append(Component.literal(" "))
-                                    .append(Component.literal("(+" + Math.round(combatFortune.getValue()) + " " + UnshatteredAttributeValues.COMBAT_FORTUNE.symbol + " ")
+                                    .append(combatFortune.getValue() > 0 ?
+                                            Component.literal(" (+" + Math.round(combatFortune.getValue()) + UnshatteredAttributeValues.COMBAT_FORTUNE.symbol + " ")
                                             .append(Component.translatable(UnshatteredAttributeValues.COMBAT_FORTUNE.getTranslationKey()))
                                             .append(Component.literal(")"))
-                                            .withStyle(style -> style.withColor(UnshatteredAttributeValues.COMBAT_FORTUNE.color).withBold(false))
-                                    )
-                            );
+                                            .withStyle(style -> style.withColor(UnshatteredAttributeValues.COMBAT_FORTUNE.color).withBold(false)) : Component.empty()
+                                    ));
                         }
                     // for if you didnt get the drop
                     } else continue;
