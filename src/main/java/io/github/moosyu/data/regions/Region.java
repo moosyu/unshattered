@@ -18,7 +18,7 @@ import net.minecraft.world.entity.player.Player;
  */
 public record Region(int colour, RegionTemperatureTypes temperatureType, boolean harvestable) {
     // region to fall back on if something goes terribly wrong like if the player runs out of bounds
-    public static final Codec<Region> RECORD_CODEC = RecordCodecBuilder.create(instance ->
+    public static final Codec<Region> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     Codec.INT.fieldOf("colour").forGetter(Region::colour),
                     RegionTemperatureTypes.CODEC.fieldOf("temperature_type").forGetter(Region::temperatureType),

@@ -3,6 +3,7 @@ package io.github.moosyu.util;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.blocks.BrokenBlocksWorldResult;
 import io.github.moosyu.data.UnshatteredDataMaps;
+import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.datagen.UnshatteredBlockTagsProvider;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -38,16 +39,17 @@ public final class BlockBreakingUtil {
         int requiredBreakingPower = Objects.requireNonNullElse(block.getData(UnshatteredDataMaps.BLOCK_BREAKING_POWER_DATA), 0);
         int playerBreakingPower = (int) player.getAttributeValue(UnshatteredAttributeValues.BREAKING_POWER.holder);
         if (playerBreakingPower >= requiredBreakingPower) return true;
-        else {
+        else if (!player.getData(UnshatteredAttachments.PLAYER_FAILED_REQUIREMENT_MESSAGED_FIRED) && !player.level().isClientSide()) {
             player.sendSystemMessage(
-                    Component.translatable(player.getItemInHand(InteractionHand.MAIN_HAND) == ItemStack.EMPTY ? "breaking_power.messages.unshattered.hand" : "breaking_power.messages.unshattered.tool")
+                    Component.translatable(player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty() ? "breaking_power.messages.unshattered.hand" : "breaking_power.messages.unshattered.tool")
                             .append(Component.translatable("breaking_power.messages.unshattered.generic_breaking_power_requirment_start"))
                             .append(Component.literal(requiredBreakingPower + UnshatteredAttributeValues.BREAKING_POWER.symbol).withColor(UnshatteredAttributeValues.BREAKING_POWER.color))
                             .append(Component.translatable("breaking_power.messages.unshattered.generic_breaking_power_requirment_end"))
                             .append(".")
             );
-            return false;
+            player.setData(UnshatteredAttachments.PLAYER_FAILED_REQUIREMENT_MESSAGED_FIRED, true);
         }
+        return false;
     }
 }
 

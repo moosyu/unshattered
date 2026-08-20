@@ -82,22 +82,23 @@ public class PlayerClickHandler {
     }
 
     @SubscribeEvent
-    public static void onPlayerLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
-        Level level = event.getLevel();
-        Player player = event.getEntity();
-        if (level.isClientSide()) return;
-        if (!CheckItemRequirement.passesSkillCheck(player, event.getItemStack())
-                || !BlockBreakingUtil.canBreakBlock(player, level.getBlockState(event.getPos()).typeHolder())) {
-            event.setCanceled(true);
-        }
-    }
-
-    @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
         Level level = event.getLevel();
         if (level.isClientSide()) return;
         if (event.getTarget().is(EntityType.ARMOR_STAND) && !event.getEntity().isCreative()) {
             event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
+        Player player = event.getEntity();
+        if (event.getAction() == PlayerInteractEvent.LeftClickBlock.Action.ABORT
+                && !player.level().isClientSide()
+                && player.getData(UnshatteredAttachments.PLAYER_FAILED_REQUIREMENT_MESSAGED_FIRED)
+        ) {
+            System.out.println("fire reset");
+            player.setData(UnshatteredAttachments.PLAYER_FAILED_REQUIREMENT_MESSAGED_FIRED, false);
         }
     }
 }

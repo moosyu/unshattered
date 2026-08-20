@@ -84,4 +84,8 @@ public final class UnshatteredAttachments {
                     .copyOnDeath()
                     .build()
     );
+
+    public static final Supplier<AttachmentType<Boolean>> PLAYER_FAILED_REQUIREMENT_MESSAGED_FIRED = ATTACHMENT_TYPES.register("player_failed_requirement_message_fired", () ->
+            AttachmentType.builder(() -> false).build()
+    );
 }

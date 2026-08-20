@@ -1,6 +1,12 @@
 {
   "values": {
-    "unshattered:breakable_cobblestone_block": 1,
-    "unshattered:breakable_stone_block": 1
+    "unshattered:breakable_stone_block": {
+      "regen_blocks": [
+        "minecraft:stone",
+        "minecraft:cobblestone",
+        "minecraft:bedrock"
+      ],
+      "ticks_per_stage": 100
+    }
   }
 }

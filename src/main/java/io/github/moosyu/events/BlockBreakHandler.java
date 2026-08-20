@@ -3,14 +3,12 @@ package io.github.moosyu.events;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.blocks.BrokenBlocksItemResult;
-import io.github.moosyu.data.RegenBlocksSavedData;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.datagen.UnshatteredBlockTagsProvider;
 import io.github.moosyu.util.*;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -38,7 +36,6 @@ public class BlockBreakHandler {
     @SubscribeEvent
     public static void onBlockBreak(BreakBlockEvent event) {
         Player player = event.getPlayer();
-        Level level = player.level();
         // so you can still break stuff normally in creative
         if (player.isCreative() || player.level().isClientSide()) return;
         event.setCanceled(true);
@@ -47,15 +44,6 @@ public class BlockBreakHandler {
         Holder<Block> blockHolder = blockState.typeHolder();
         float experienceReward = Objects.requireNonNullElse(blockHolder.getData(UnshatteredDataMaps.HARVESTABLE_BLOCKS_EXP_DATA), 0.0f);
         Block block = blockState.getBlock();
-        BlockState replacementBlock = BlockBreakingUtil.isBreakableBlock(blockState, player);
-
-        if (replacementBlock == null) return;
-        else {
-            BlockPos blockPos = event.getPos();
-            level.setBlock(blockPos, replacementBlock, 3);
-            // server tick count and world tick count are different (i know now)
-            RegenBlocksSavedData.get((ServerLevel) level).addBlock(blockPos, level.getGameTime() + TIME_BROKEN, replacementBlock);
-        }
 
         PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
 
@@ -88,8 +76,13 @@ public class BlockBreakHandler {
     // to stop players from attempting to break blocks
     @SubscribeEvent
     public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
-        if (!CheckItemRequirement.passesSkillCheck(event.getEntity(), event.getEntity().getMainHandItem())
-                || BlockBreakingUtil.isBreakableBlock(event.getState(), event.getEntity()) == null) {
+        Player player = event.getEntity();
+        Level level = player.level();
+        if ((event.getPosition().isPresent()
+                && !BlockBreakingUtil.canBreakBlock(player, level.getBlockState(event.getPosition().get()).typeHolder()))
+                || BlockBreakingUtil.isBreakableBlock(event.getState(), event.getEntity()) == null
+                || !CheckItemRequirement.passesSkillCheck(player, player.getMainHandItem())
+        ) {
             event.setNewSpeed(0.0F);
         }
     }

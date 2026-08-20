@@ -26,8 +26,8 @@ public class DataPackRegistryHandler {
     public static void registerDatapackRegistries(DataPackRegistryEvent.NewRegistry event) {
         event.dataPackRegistry(
                 REGION_REGISTRY_KEY,
-                Region.RECORD_CODEC,
-                Region.RECORD_CODEC
+                Region.CODEC,
+                Region.CODEC
         );
 
         event.dataPackRegistry(

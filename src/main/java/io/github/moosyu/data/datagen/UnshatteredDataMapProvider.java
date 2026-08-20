@@ -4,6 +4,7 @@ import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.MobItemDropData;
 import io.github.moosyu.data.MobRewardData;
+import io.github.moosyu.data.regen.RegenPath;
 import io.github.moosyu.items.UnshatteredItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -209,5 +210,7 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         this.builder(BLOCK_BREAKING_POWER_DATA)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get()), 1, false)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get()), 1, false);
+        this.builder(BLOCK_REGEN_DATA)
+                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get()), new RegenPath(List.of(Blocks.STONE, Blocks.COBBLESTONE, Blocks.BEDROCK), 100), false);
     }
 }
