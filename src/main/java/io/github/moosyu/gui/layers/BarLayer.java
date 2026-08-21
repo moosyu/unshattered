@@ -30,6 +30,16 @@ public class BarLayer implements GuiLayer {
     final int posYOffset;
     final Predicate<Player> visibilityConditions;
 
+    /**
+     * a coloured info bar gui layer that can display percentage and number value (converted to an int)
+     * @param barColour the colour of the bar
+     * @param textColour the colour of the bar's text
+     * @param posXOffset the x offset of the bar and text
+     * @param postYOffset the y offset of the bar and text
+     * @param getCurrentValue the current value of whatever information is being displayed by the info bar
+     * @param getMaxValue the current value of whatever information is being displayed by the info bar to find percentage of the bar required to be filled
+     * @param visibilityConditions conditions aside from the base ones required for the bar to display
+     */
     public BarLayer(int barColour, int textColour, int posXOffset, int postYOffset, ToDoubleFunction<Player> getCurrentValue, ToDoubleFunction<Player> getMaxValue, Predicate<Player> visibilityConditions) {
         this.barColour = barColour;
         this.textColour = textColour;
@@ -40,6 +50,15 @@ public class BarLayer implements GuiLayer {
         this.visibilityConditions = visibilityConditions;
     }
 
+    /**
+     * a coloured info bar gui layer that can display percentage and number value (converted to an int)
+     * @param barColour the colour of the bar
+     * @param textColour the colour of the bar's text
+     * @param posXOffset the x offset of the bar and text
+     * @param postYOffset the y offset of the bar and text
+     * @param getCurrentValue the current value of whatever information is being displayed by the info bar
+     * @param getMaxValue the current value of whatever information is being displayed by the info bar to find percentage of the bar required to be filled
+     */
     public BarLayer(int barColour, int textColour, int posXOffset, int postYOffset, ToDoubleFunction<Player> getCurrentValue, ToDoubleFunction<Player> getMaxValue) {
         this.barColour = barColour;
         this.textColour = textColour;
