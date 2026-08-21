@@ -23,5 +23,6 @@ public class RegisterPayloadsHandler {
         registrar.playToServer(ResetFlagQueuePacket.TYPE, ResetFlagQueuePacket.STREAM_CODEC, ResetFlagQueueHandler::handleData);
         registrar.playToServer(QueueNewFlagsPacket.TYPE, QueueNewFlagsPacket.STREAM_CODEC, QueueNewFlagsHandler::handleData);
         registrar.playToServer(TriggerEventPacket.TYPE, TriggerEventPacket.STREAM_CODEC, TriggerEventHandler::handleData);
+        registrar.playToServer(UpdateDialogueStatePacket.TYPE, UpdateDialogueStatePacket.STREAM_CODEC, UpdateDialogueStateHandler::handleData);
     }
 }

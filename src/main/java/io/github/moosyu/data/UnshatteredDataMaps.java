@@ -45,7 +45,7 @@ public final class UnshatteredDataMaps {
     ).build();
 
     public static final DataMapType<Block, RegenPath> BLOCK_REGEN_DATA = DataMapType.builder(
-            Identifier.fromNamespaceAndPath(MODID, "block_breaking_power_data"),
+            Identifier.fromNamespaceAndPath(MODID, "block_regen_data"),
             Registries.BLOCK,
             RegenPath.CODEC
     ).build();

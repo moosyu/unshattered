@@ -15,7 +15,7 @@ public record StartQuestDialogueEvent(Identifier questIdentifier) implements Dia
     @Override
     public void trigger(ServerPlayer player) {
         Quest quest = player.registryAccess().getOrThrow(ResourceKey.create(DataPackRegistryHandler.QUEST_REGISTRY_KEY, questIdentifier)).value();
-        player.getData(UnshatteredAttachments.PLAYER_QUESTS).addQuest(quest);
+        player.getData(UnshatteredAttachments.PLAYER_QUESTS).addQuest(quest, player, questIdentifier);
         player.syncData(UnshatteredAttachments.PLAYER_QUESTS);
     }
 

@@ -280,5 +280,9 @@
   "breaking_power.messages.unshattered.generic_breaking_power_requirment_start": "A breaking power of ",
   "breaking_power.messages.unshattered.generic_breaking_power_requirment_end": " is required to break this block",
   "breaking_power.messages.unshattered.hand": "Your hand was too weak. ",
-  "breaking_power.messages.unshattered.tool": "The block is too hard for you to break.  "
+  "breaking_power.messages.unshattered.tool": "The block is too hard for you to break. ",
+
+  "interactable.name.unshattered.rock": "Rock",
+  "quest.name.unshattered.rocks_quest": "Rock's Quest",
+  "quest.title.unshattered.quest_started": "Quest Started"
 }

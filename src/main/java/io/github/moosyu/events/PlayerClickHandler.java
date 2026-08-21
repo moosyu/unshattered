@@ -95,10 +95,11 @@ public class PlayerClickHandler {
         Player player = event.getEntity();
         if (event.getAction() == PlayerInteractEvent.LeftClickBlock.Action.ABORT
                 && !player.level().isClientSide()
-                && player.getData(UnshatteredAttachments.PLAYER_FAILED_REQUIREMENT_MESSAGED_FIRED)
+                && player.getData(UnshatteredAttachments.PLAYER_STATE).isFailedMessageFired()
         ) {
             System.out.println("fire reset");
-            player.setData(UnshatteredAttachments.PLAYER_FAILED_REQUIREMENT_MESSAGED_FIRED, false);
+            player.getData(UnshatteredAttachments.PLAYER_STATE).setFailedMessageFired(false);
+            player.syncData(UnshatteredAttachments.PLAYER_STATE);
         }
     }
 }

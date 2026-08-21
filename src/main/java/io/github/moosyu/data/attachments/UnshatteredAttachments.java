@@ -33,8 +33,7 @@ public final class UnshatteredAttachments {
     );
 
     public static final Supplier<AttachmentType<PlayerAbilityEffectsAttachment>> PLAYER_ABILITIES = ATTACHMENT_TYPES.register("player_abilities", () ->
-            AttachmentType.builder(PlayerAbilityEffectsAttachment::new)
-                    .build()
+            AttachmentType.builder(PlayerAbilityEffectsAttachment::new).build()
     );
 
     public static final Supplier<AttachmentType<PlayerCurrencyAttachment>> PLAYER_CURRENCY = ATTACHMENT_TYPES.register("player_currency", () ->
@@ -83,9 +82,5 @@ public final class UnshatteredAttachments {
                     .sync(PlayerQuestsAttachment.STREAM_CODEC)
                     .copyOnDeath()
                     .build()
-    );
-
-    public static final Supplier<AttachmentType<Boolean>> PLAYER_FAILED_REQUIREMENT_MESSAGED_FIRED = ATTACHMENT_TYPES.register("player_failed_requirement_message_fired", () ->
-            AttachmentType.builder(() -> false).build()
     );
 }

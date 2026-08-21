@@ -1,6 +1,7 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.Unshattered;
+import io.github.moosyu.gui.screens.DialogueScreen;
+import io.github.moosyu.packets.UpdateDialogueStatePacket;
 import io.github.moosyu.packets.OpenProfilePayload;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -18,13 +19,24 @@ public class ScreenEventHandler {
     @SubscribeEvent
     public static void onScreenEventOpen(ScreenEvent.Opening event) {
         Player player = Minecraft.getInstance().player;
-        if (player == null) {
-            return;
-        }
+        if (player == null) return;
+
         // override inventory
         if (event.getNewScreen() instanceof InventoryScreen && !player.isCreative()) {
             event.setCanceled(true);
             ClientPacketDistributor.sendToServer(new OpenProfilePayload());
+        } else if (event.getScreen() instanceof DialogueScreen) {
+            ClientPacketDistributor.sendToServer(new UpdateDialogueStatePacket(true));
         }
     }
+
+    @SubscribeEvent
+    public static void onScreenEventClose(ScreenEvent.Closing event) {
+        if (Minecraft.getInstance().player == null) return;
+
+        if (event.getScreen() instanceof DialogueScreen) {
+            ClientPacketDistributor.sendToServer(new UpdateDialogueStatePacket(false));
+        }
+    }
+
 }

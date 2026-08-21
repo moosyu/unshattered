@@ -1,6 +1,8 @@
 package io.github.moosyu.gui.screens;
 
 import com.lowdragmc.lowdraglib2.gui.holder.ModularUIScreen;
+import com.lowdragmc.lowdraglib2.gui.texture.IGuiTexture;
+import com.lowdragmc.lowdraglib2.gui.texture.RectTexture;
 import com.lowdragmc.lowdraglib2.gui.texture.SpriteTexture;
 import com.lowdragmc.lowdraglib2.gui.ui.ModularUI;
 import com.lowdragmc.lowdraglib2.gui.ui.UI;
@@ -55,32 +57,33 @@ public class DialogueScreen extends ModularUIScreen {
         );
 
         UIElement dialogueContainer = new UIElement().layout(layout -> layout
-                .widthPercent(100)
+                .widthPercent(30)
                 .heightPercent(100)
                 .paddingBottom(30)
                 .flexDirection(FlexDirection.COLUMN)
                 .justifyContent(AlignContent.FLEX_END)
-                .alignItems(AlignItems.CENTER)
+                .alignSelf(AlignItems.CENTER)
+                .minWidth(300)
+                .gapColumn(5)
         );
 
         ScrollerView dialogueBox = new ScrollerView();
         dialogueBox.layout(layout -> layout
-                .widthPercent(70)
-                .heightPercent(25)
-                .marginBottom(5)
+                .widthPercent(100)
+                .heightPercent(20)
+                .alignSelf(AlignItems.CENTER)
         );
-        dialogueBox.style(style -> style.background(
-                SpriteTexture.of(Identifier.fromNamespaceAndPath(MODID, "textures/gui/unshattered_base_gui.png"))
-                        .setSprite(50, 11, 4, 4).setBorder(1)
-        ));
+        dialogueBox.viewPort.layout(layout -> layout.paddingAll(0).paddingLeft(10).paddingRight(10).paddingTop(5).paddingBottom(5));
+        dialogueBox.viewPort.style(style -> style.background(IGuiTexture.EMPTY));
+        dialogueBox.style(style -> style.background(new RectTexture().setColor(0x8C2F2F31)));
 
         UIElement dialogueChoiceContainer = new UIElement();
-        dialogueChoiceContainer.layout(layout -> layout.flexDirection(FlexDirection.ROW).gapAll(10));
+        dialogueChoiceContainer.layout(layout -> layout.flexDirection(FlexDirection.ROW).gapAll(10).justifyContent(AlignContent.FLEX_END));
 
         Label nameLabel = new Label();
         nameLabel.setText(talkableName)
                 .textStyle(textStyle -> textStyle.fontSize(18))
-                .layout(layout -> layout.leftPercent(-34).topPercent(-2));
+                .layout(layout -> layout.height(18).marginBottom(2));
 
         dialogueContainer.addChildren(nameLabel, dialogueBox, dialogueChoiceContainer);
         root.addChild(dialogueContainer);

@@ -5,8 +5,12 @@ import org.jetbrains.annotations.Nullable;
 
 public final class PlayerStateAttachment {
     private final double[] stats = new double[Stat.values().length];
-    private boolean cancelKnockback = false;
-    private int invulnerableTime = 0;
+    // unsynced
+    private boolean cancelKnockback;
+    private boolean failedMessageFired;
+    private boolean dialogueOpen;
+    // unsynced
+    private int invulnerableTime;
     private int lastUpdatedStat = -1;
 
     public enum Stat {
@@ -17,9 +21,11 @@ public final class PlayerStateAttachment {
     public PlayerStateAttachment() {
         stats[Stat.HEALTH.ordinal()] = 0.0f;
         stats[Stat.MANA.ordinal()] = 0.0f;
+        cancelKnockback = false;
+        failedMessageFired = false;
+        dialogueOpen = false;
+        invulnerableTime = 0;
     }
-
-    public double[] getStats() {return stats;}
 
     public void setStats(double[] newStats) {System.arraycopy(newStats, 0, stats, 0, stats.length);}
 
@@ -55,6 +61,22 @@ public final class PlayerStateAttachment {
     public void decrementInvulnerableTime() {invulnerableTime = Math.max(0, invulnerableTime - 1);}
 
     public void setInvulnerableTime(int invulnerable) {this.invulnerableTime = invulnerable;}
+
+    public boolean isFailedMessageFired() {
+        return failedMessageFired;
+    }
+
+    public void setFailedMessageFired(boolean failedMessageFired) {
+        this.failedMessageFired = failedMessageFired;
+    }
+
+    public boolean isDialogueOpen() {
+        return dialogueOpen;
+    }
+
+    public void setDialogueOpen(boolean dialogueOpen) {
+        this.dialogueOpen = dialogueOpen;
+    }
 
     public void writeSync(RegistryFriendlyByteBuf buf, boolean initialSync) {
         boolean fullSync = initialSync || lastUpdatedStat < 0;
