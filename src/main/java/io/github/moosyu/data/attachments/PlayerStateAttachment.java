@@ -6,11 +6,11 @@ import org.jetbrains.annotations.Nullable;
 public final class PlayerStateAttachment {
     private final double[] stats = new double[Stat.values().length];
     // unsynced
-    private boolean cancelKnockback;
-    private boolean failedMessageFired;
-    private boolean dialogueOpen;
+    private boolean cancelKnockback = false;
+    private boolean failedMessageFired = false;
+    private boolean dialogueOpen = false;
     // unsynced
-    private int invulnerableTime;
+    private int invulnerableTime = 0;
     private int lastUpdatedStat = -1;
 
     public enum Stat {
@@ -21,10 +21,6 @@ public final class PlayerStateAttachment {
     public PlayerStateAttachment() {
         stats[Stat.HEALTH.ordinal()] = 0.0f;
         stats[Stat.MANA.ordinal()] = 0.0f;
-        cancelKnockback = false;
-        failedMessageFired = false;
-        dialogueOpen = false;
-        invulnerableTime = 0;
     }
 
     public void setStats(double[] newStats) {System.arraycopy(newStats, 0, stats, 0, stats.length);}
@@ -90,6 +86,9 @@ public final class PlayerStateAttachment {
             buf.writeInt(lastUpdatedStat);
             buf.writeDouble(stats[lastUpdatedStat]);
         }
+        // cant be bothered optimising this (pretty sure its like 2 bytes anyways)
+        buf.writeBoolean(failedMessageFired);
+        buf.writeBoolean(dialogueOpen);
     }
 
     public static PlayerStateAttachment readSync(RegistryFriendlyByteBuf buf, @Nullable PlayerStateAttachment existing) {
@@ -109,6 +108,8 @@ public final class PlayerStateAttachment {
 
             attachment.setCurrentStatByIndex(statIndex, value);
         }
+        attachment.setFailedMessageFired(buf.readBoolean());
+        attachment.setDialogueOpen(buf.readBoolean());
         return attachment;
     }
 }
