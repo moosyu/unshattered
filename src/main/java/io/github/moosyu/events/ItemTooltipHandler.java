@@ -26,6 +26,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
 import java.util.List;
+import java.util.Objects;
 
 import static io.github.moosyu.Unshattered.MODID;
 
@@ -44,22 +45,24 @@ public class ItemTooltipHandler {
         boolean hasModifiers = false;
         boolean itemDescription = Boolean.TRUE.equals(stack.get(UnshatteredDataComponents.DESCRIPTION.get()));
         SkillRequirement itemSkillRequirement = stack.get(UnshatteredDataComponents.SKILL_REQUIREMENT.get());
-        ItemAbility itemAbility = stack.get(UnshatteredDataComponents.ITEM_ABILITY);
-        ItemCharges itemCharges = stack.get(UnshatteredDataComponents.ITEM_CHARGES);
+        ItemAbility itemAbility = stack.get(UnshatteredDataComponents.ABILITY);
+        ItemCharges itemCharges = stack.get(UnshatteredDataComponents.CHARGES);
+        ItemAttributeModifiers modifiers = stack.getAttributeModifiers();
 
         event.getToolTip().clear();
-
         tooltipComponents.add(Component.translatable(stack.getItemName().getString()).withColor(itemRarity.getColour(1.0f)));
-        ItemAttributeModifiers modifiers = stack.getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY);
 
         for (ItemAttributeModifiers.Entry entry : modifiers.modifiers()) {
             Holder<Attribute> attributeHolder = entry.attribute();
             AttributeModifier modifier = entry.modifier();
-            UnshatteredAttributeValues modAttribute = UnshatteredAttributeValues.fromAttribute(attributeHolder.value());
-
-            if (modAttribute == null) continue;
+            UnshatteredAttributeValues itemAttribute = UnshatteredAttributeValues.fromAttribute(attributeHolder.value());
+            if (itemAttribute == null) continue;
             hasModifiers = true;
-            tooltipComponents.add(Component.translatable(attributeHolder.value().getDescriptionId()).append(Component.literal(": ")).withStyle(ChatFormatting.GRAY).append(Component.literal("+" + (int) modifier.amount() + (modAttribute.percentage ? "%" : "")).withStyle((modAttribute.offensive) ? ChatFormatting.RED : ChatFormatting.GREEN)));
+            tooltipComponents.add(Component.translatable(attributeHolder.value().getDescriptionId())
+                    .append(Component.literal(": ")).withStyle(ChatFormatting.GRAY)
+                    .append(Component.literal("+" + (int) modifier.amount() + (itemAttribute.percentage ? "%" : ""))
+                            .withStyle((itemAttribute.offensive) ? ChatFormatting.RED : ChatFormatting.GREEN))
+            );
         }
 
         if (itemDescription) {
@@ -70,11 +73,11 @@ public class ItemTooltipHandler {
         if (itemAbility != null) {
             tooltipComponents.add(Component.empty());
             if (itemAbility.passive()) {
-                tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.abilityId())).withColor(0xFFFFAA00));
-                TextUtils.addWrappedText(tooltipComponents, TextUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityId()).getString(), 0xFFAAAAAA), MAX_WIDTH);
+                tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.abilityId().getPath())).withColor(0xFFFFAA00));
+                TextUtils.addWrappedText(tooltipComponents, TextUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityId().getPath()).getString(), 0xFFAAAAAA), MAX_WIDTH);
             } else {
-                tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.abilityId())).withColor(0xFFFFAA00).append(Component.literal(" RIGHT CLICK").withColor(0xFFFFFF55).withStyle(ChatFormatting.BOLD)));
-                TextUtils.addWrappedText(tooltipComponents,TextUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityId()).getString(), 0xFFAAAAAA), MAX_WIDTH);
+                tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.abilityId().getPath())).withColor(0xFFFFAA00).append(Component.literal(" RIGHT CLICK").withColor(0xFFFFFF55).withStyle(ChatFormatting.BOLD)));
+                TextUtils.addWrappedText(tooltipComponents,TextUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityId().getPath()).getString(), 0xFFAAAAAA), MAX_WIDTH);
 
                 if (itemAbility.manaCost() > 0) tooltipComponents.add(Component.literal("Mana Cost: ").withColor(0xFF555555).append(Component.literal(String.valueOf(itemAbility.manaCost())).withColor(0xFF00AAAA)));
                 if (itemAbility.cooldown() > 0) tooltipComponents.add(Component.literal("Cooldown: ").withColor(0xFF555555).append(Component.literal(String.format("%.1f", (float) itemAbility.cooldown() / 20 /* convert ticks to seconds */)).append("s").withColor(0xFF55FF55)));

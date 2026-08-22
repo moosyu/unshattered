@@ -4,11 +4,15 @@ import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.UnshatteredDataMaps;
+import io.github.moosyu.items.UnshatteredPassiveAbilityItem;
+import io.github.moosyu.util.AbilityUtils;
 import io.github.moosyu.util.CollectionUtil;
+import io.github.moosyu.util.FortuneCalculation;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -86,19 +90,10 @@ public class TreeSweepHandler {
     }
 
     private static int calculateLogs(Player player) {
-        AttributeInstance attribute = player.getAttribute(UnshatteredAttributeValues.FORAGING_FORTUNE.holder);
-        // making sure attribute isnt null, probably pointless but i also managed to fuck up registering it last time and it made the game crash
-        double fortune = attribute != null ? attribute.getValue() : 0.0;
-        double multiplier = 1.0 + (fortune / 100.0);
-        int guaranteedMultiplier = (int) multiplier;
-        int finalMultiplier = guaranteedMultiplier;
-
-        // todo: fix something about this (not giving giving bonus drops aside from the guaranteed)
-        if (RANDOM.nextDouble() < (multiplier - guaranteedMultiplier)) {
-            finalMultiplier++;
-        }
-
-        return finalMultiplier;
+        UnshatteredPassiveAbilityItem passiveAbilityItem = AbilityUtils.triggerPassiveAbility(player, null, player.getItemInHand(InteractionHand.MAIN_HAND).getItem());
+        int itemCount = FortuneCalculation.getItemsCount(player.getAttributeValue(UnshatteredAttributeValues.FORAGING_FORTUNE.holder), 1);
+        AbilityUtils.finishPassiveAbility(player, null, passiveAbilityItem);
+        return itemCount;
     }
 
     public static void trySweep(Level level, BlockPos startPos, Player player) {

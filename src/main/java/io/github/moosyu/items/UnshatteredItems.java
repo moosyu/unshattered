@@ -3,8 +3,11 @@ package io.github.moosyu.items;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.blocks.UnshatteredBlocks;
+import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.SkillRequirement;
+import io.github.moosyu.data.regions.UnshatteredRegions;
 import io.github.moosyu.items.accessories.BatTalisman;
+import io.github.moosyu.items.tools.axes.RegionLockedFortuneAxe;
 import io.github.moosyu.items.tools.axes.UnshatteredAxeTool;
 import io.github.moosyu.items.tools.rods.UnshatteredRod;
 import io.github.moosyu.items.weapons.axes.UnshatteredAxeWeapon;
@@ -42,7 +45,7 @@ public class UnshatteredItems {
 
     public static final DeferredItem<UnshatteredSword> WOODEN_SWORD = ITEMS.registerItem("wooden_sword", props -> new UnshatteredSword(props
             .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.COMMON).component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-            .component(UnshatteredDataComponents.ITEM_SELL_VALUE.get(), 1)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 1)
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "wooden_sword_damage"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
@@ -52,7 +55,7 @@ public class UnshatteredItems {
     public static final DeferredItem<UnshatteredSword> STONE_SWORD = ITEMS.registerItem("stone_sword", props -> new UnshatteredSword(props
             .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.COMMON)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-            .component(UnshatteredDataComponents.ITEM_SELL_VALUE.get(), 1)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 1)
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "stone_sword_damage"), 25, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
@@ -61,7 +64,7 @@ public class UnshatteredItems {
 
     public static final DeferredItem<UnshatteredSword> IRON_SWORD = ITEMS.registerItem("iron_sword", props -> new UnshatteredSword(props
             .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.COMMON).component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-            .component(UnshatteredDataComponents.ITEM_SELL_VALUE.get(), 3)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 3)
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "iron_sword_damage"), 30, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
@@ -70,7 +73,7 @@ public class UnshatteredItems {
 
     public static final DeferredItem<UnshatteredSword> GOLDEN_SWORD = ITEMS.registerItem("golden_sword", props -> new UnshatteredSword(props
             .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.COMMON).component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-            .component(UnshatteredDataComponents.ITEM_SELL_VALUE.get(), 4)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 4)
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "golden_sword_damage"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
@@ -80,7 +83,7 @@ public class UnshatteredItems {
     public static final DeferredItem<UnshatteredSword> DIAMOND_SWORD = ITEMS.registerItem("diamond_sword", props -> new UnshatteredSword(props
             .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.UNCOMMON)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-            .component(UnshatteredDataComponents.ITEM_SELL_VALUE.get(), 8)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 8)
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "diamond_sword_damage"), 35, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
@@ -90,7 +93,7 @@ public class UnshatteredItems {
     public static final DeferredItem<UnshatteredAxeWeapon> WOODEN_AXE = ITEMS.registerItem("wooden_axe", props -> new UnshatteredAxeWeapon(props
             .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.COMMON)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-            .component(UnshatteredDataComponents.ITEM_SELL_VALUE.get(), 1)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 1)
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "wooden_axe_damage"), 10, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
@@ -99,7 +102,7 @@ public class UnshatteredItems {
 
     public static final DeferredItem<UnshatteredAxeWeapon> STONE_AXE = ITEMS.registerItem("stone_axe", props -> new UnshatteredAxeWeapon(props
             .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.COMMON).component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-            .component(UnshatteredDataComponents.ITEM_SELL_VALUE.get(), 2)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 2)
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "stone_axe_damage"), 15, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
@@ -109,7 +112,7 @@ public class UnshatteredItems {
     public static final DeferredItem<UnshatteredAxeWeapon> GOLDEN_AXE = ITEMS.registerItem("golden_axe", props -> new UnshatteredAxeWeapon(props
             .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.COMMON)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-            .component(UnshatteredDataComponents.ITEM_SELL_VALUE.get(), 1)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 1)
             .attributes(ItemAttributeModifiers.builder().add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "golden_axe_damage"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
             )
@@ -118,7 +121,7 @@ public class UnshatteredItems {
     public static final DeferredItem<UnshatteredAxeWeapon> IRON_AXE = ITEMS.registerItem("iron_axe", props -> new UnshatteredAxeWeapon(props
             .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.COMMON)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-            .component(UnshatteredDataComponents.ITEM_SELL_VALUE.get(), 6)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 6)
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "iron_axe_damage"), 25, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
@@ -127,34 +130,33 @@ public class UnshatteredItems {
 
     public static final DeferredItem<UnshatteredAxeWeapon> DIAMOND_AXE = ITEMS.registerItem("diamond_axe", props -> new UnshatteredAxeWeapon(props
             .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.UNCOMMON)
-            .component(UnshatteredDataComponents.DESCRIPTION.get(), true).component(UnshatteredDataComponents.ITEM_SELL_VALUE.get(), 12)
+            .component(UnshatteredDataComponents.DESCRIPTION.get(), true).component(UnshatteredDataComponents.SELL_VALUE.get(), 12)
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "diamond_axe_damage"), 30, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
             )
     ));
 
-    // todo: make it so the foraging fortune only applies in certain areas (the park, not the galatea)
-    public static final DeferredItem<UnshatteredAxeTool> TREECAPITATOR = ITEMS.registerItem("treecapitator", props -> new UnshatteredAxeTool(props
+    public static final DeferredItem<RegionLockedFortuneAxe> TREECAPITATOR = ITEMS.registerItem("treecapitator", props -> new RegionLockedFortuneAxe(props
             .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.EPIC)
-            .component(UnshatteredDataComponents.ITEM_SELL_VALUE.get(), 10000)
-            .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-            .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.SWEEP.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "treecapitator_sweep"), 25, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "treecapitator_foraging_fortune"), 100, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .build()),
-            12.0f
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 10000)
+            .component(UnshatteredDataComponents.DESCRIPTION.get(), true),
+            100.0f,
+            25.0f,
+            12.0f,
+            UnshatteredRegions.PLAINS_REGION,
+            Identifier.fromNamespaceAndPath(MODID, "treecapitator_park_enthusiast")
     ));
 
-    // todo: make it so the foraging fortune only applies in certain areas (the park, not the galatea)
-    public static final DeferredItem<UnshatteredAxeTool> SPRUCE_AXE = ITEMS.registerItem("spruce_axe", props -> new UnshatteredAxeTool(props
+    public static final DeferredItem<RegionLockedFortuneAxe> SPRUCE_AXE = ITEMS.registerItem("spruce_axe", props -> new RegionLockedFortuneAxe(props
             .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.UNCOMMON)
-            .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-            .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.SWEEP.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "spruce_axe_sweep"), 4, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "spruce_axe_foraging_fortune"), 50, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .build()),
-            6.0f
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 480)
+            .component(UnshatteredDataComponents.DESCRIPTION.get(), true),
+            50.0f,
+            25.0f,
+            6.0f,
+            UnshatteredRegions.PLAINS_REGION,
+            Identifier.fromNamespaceAndPath(MODID, "spruce_axe_park_enthusiast")
     ));
 
     public static final DeferredItem<UnshatteredAxeTool> SERIOUSLY_DAMAGED_AXE = ITEMS.registerItem("seriously_damaged_axe", props -> new UnshatteredAxeTool(props
@@ -200,7 +202,7 @@ public class UnshatteredItems {
     public static final DeferredItem<Item> LEAFLET_HELMET = ITEMS.registerItem("leaflet_helmet", props -> new Item(props
             .humanoidArmor(LEAFLET_ARMOR_MATERIAL, ArmorType.HELMET)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.HELMET)
-            .component(UnshatteredDataComponents.ITEM_SELL_VALUE.get(), 2)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 2)
             .attributes(ItemAttributeModifiers.builder().add(UnshatteredAttributeValues.HEALTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "leaflet_helmet_health"), 70, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.HEAD)
                     .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "leaflet_helmet_foraging_fortune"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.HEAD)
                     .build()
@@ -210,7 +212,7 @@ public class UnshatteredItems {
     public static final DeferredItem<Item> LEAFLET_CHESTPLATE = ITEMS.registerItem("leaflet_chestplate", props -> new Item(props
             .humanoidArmor(LEAFLET_ARMOR_MATERIAL, ArmorType.CHESTPLATE)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.CHESTPLATE)
-            .component(UnshatteredDataComponents.ITEM_SELL_VALUE.get(), 4)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 4)
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.HEALTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "leaflet_chestplate_health"), 80, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.CHEST)
                     .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "leaflet_chestplate_foraging_fortune"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.CHEST)
@@ -221,7 +223,7 @@ public class UnshatteredItems {
     public static final DeferredItem<Item> LEAFLET_LEGGINGS = ITEMS.registerItem("leaflet_leggings", props -> new Item(props
             .humanoidArmor(LEAFLET_ARMOR_MATERIAL, ArmorType.LEGGINGS)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.LEGGINGS)
-            .component(UnshatteredDataComponents.ITEM_SELL_VALUE.get(), 3)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 3)
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.HEALTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "leaflet_leggings_health"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.LEGS)
                     .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "leaflet_leggings_foraging_fortune"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.LEGS)
@@ -232,7 +234,7 @@ public class UnshatteredItems {
     public static final DeferredItem<Item> LEAFLET_BOOTS = ITEMS.registerItem("leaflet_boots", props -> new Item(props
             .humanoidArmor(LEAFLET_ARMOR_MATERIAL, ArmorType.BOOTS)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.BOOTS)
-            .component(UnshatteredDataComponents.ITEM_SELL_VALUE.get(), 2)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 2)
             .component(UnshatteredDataComponents.SKILL_REQUIREMENT.get(), new SkillRequirement(PlayerSkillsAttachment.Skill.COMBAT, 4))
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.HEALTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "leaflet_boots_health"), 25, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
@@ -466,7 +468,7 @@ public class UnshatteredItems {
             .stacksTo(1)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.SWORD)
             .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.UNCOMMON)
-            .component(UnshatteredDataComponents.ITEM_SELL_VALUE.get(), 2500)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 2500)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
             .component(UnshatteredDataComponents.SKILL_REQUIREMENT.get(), new SkillRequirement(PlayerSkillsAttachment.Skill.COMBAT, 4))
             .attributes(ItemAttributeModifiers.builder()
@@ -490,7 +492,7 @@ public class UnshatteredItems {
     public static final DeferredItem<Item> GLOW_SQUID_BOOTS = ITEMS.registerItem("glow_squid_boots", props -> new Item(props
             .humanoidArmor(GLOW_SQUID_BOOTS_MATERIAL, ArmorType.BOOTS)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.BOOTS)
-            .component(UnshatteredDataComponents.ITEM_SELL_VALUE.get(), 15)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 15)
             .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.UNCOMMON)
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.FISHING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "squid_boots_fishing_fortune"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)

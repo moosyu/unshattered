@@ -3,10 +3,11 @@ package io.github.moosyu.data.components;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.resources.Identifier;
 
-public record ItemAbility(String abilityId, int manaCost, int cooldown, int duration, boolean passive) {
+public record ItemAbility(Identifier abilityId, int manaCost, int cooldown, int duration, boolean passive) {
     public static final Codec<ItemAbility> CODEC = RecordCodecBuilder.create((RecordCodecBuilder.Instance<ItemAbility> instance) -> instance.group(
-            Codec.STRING.fieldOf("ability_id").forGetter(ItemAbility::abilityId),
+            Identifier.CODEC.fieldOf("ability_id").forGetter(ItemAbility::abilityId),
             Codec.INT.optionalFieldOf("mana_cost", 0).forGetter(ItemAbility::manaCost),
             Codec.INT.optionalFieldOf("cooldown", 0).forGetter(ItemAbility::cooldown),
             Codec.INT.optionalFieldOf("duration", 0).forGetter(ItemAbility::duration),

@@ -20,7 +20,7 @@ public class ChargesLayer implements GuiLayer {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = Minecraft.getInstance().player;
         if (player == null) return;
-        ItemCharges itemCharges = player.getItemInHand(InteractionHand.MAIN_HAND).get(UnshatteredDataComponents.ITEM_CHARGES);
+        ItemCharges itemCharges = player.getItemInHand(InteractionHand.MAIN_HAND).get(UnshatteredDataComponents.CHARGES);
         if (!player.level().isClientSide() || itemCharges == null || minecraft.options.hideGui || player.gameMode() != GameType.SURVIVAL) return;
         for (int i = 0; i < itemCharges.maxCharges(); i++) {
             graphics.blit(

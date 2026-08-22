@@ -33,7 +33,7 @@ public class SelectedItemLayer implements GuiLayer {
         if (player == null || !player.level().isClientSide() || minecraft.options.hideGui) return;
 
         ItemStack currentItemStack = player.getMainHandItem();
-        Set<DataComponentType<?>> ignoredComponents = Set.of(UnshatteredDataComponents.ITEM_CHARGES.get());
+        Set<DataComponentType<?>> ignoredComponents = Set.of(UnshatteredDataComponents.CHARGES.get());
         Item heldItem = currentItemStack.getItem();
         boolean hasItem = heldItem != Items.AIR;
         Level level = player.level();

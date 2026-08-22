@@ -46,6 +46,8 @@ public class LivingDamageHandler {
                 // this should eventually factor in true defense irc
                 double damageDealt = (double) (2 * 200) / 33;
                 TriggerPlayerDamage.damagePlayer(player, damageDealt, level, "☠ " +player.getName().getString() + " burnt to death!");
+            } else if (event.getSource().is(DamageTypeTags.IS_FREEZING)) {
+                // something something freezing damage idgaf
             } else {
                 LOGGER.error("A damage attribute wasn't defined for: {}", event.getSource().getMsgId());
             }

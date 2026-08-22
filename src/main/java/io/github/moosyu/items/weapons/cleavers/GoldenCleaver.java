@@ -15,9 +15,9 @@ public class GoldenCleaver extends UnshatteredCleaver {
     public GoldenCleaver(Properties properties) {
         super(properties
                 .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.UNCOMMON)
-                .component(UnshatteredDataComponents.ITEM_ABILITY.get(), new ItemAbility("golden_cleaver_cleave", 0, 0, 0, true))
+                .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(Identifier.fromNamespaceAndPath(MODID, "golden_cleaver_cleave"), 0, 0, 0, true))
                 .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-                .component(UnshatteredDataComponents.ITEM_SELL_VALUE.get(), 80)
+                .component(UnshatteredDataComponents.SELL_VALUE.get(), 80)
                 .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "golden_cleaver_damage"), 40, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "golden_cleaver_strength"), 10, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)

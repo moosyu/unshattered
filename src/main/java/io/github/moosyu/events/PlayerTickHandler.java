@@ -9,6 +9,7 @@ import io.github.moosyu.data.regions.Region;
 import io.github.moosyu.data.regions.RegionAreas;
 import io.github.moosyu.data.regions.RegionTemperatureTypes;
 import io.github.moosyu.data.regions.TemperatureTypes;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -39,6 +40,52 @@ public class PlayerTickHandler {
         player.getFoodData().setSaturation(5.0f);
         //player.getFoodData().setExhaustion(0.0f);
 
+        float currentTemperature = player.getData(UnshatteredAttachments.PLAYER_TEMPERATURE.get());
+        if (player.tickCount % 20 == 0) {
+            // may become a problem later but probably doesn't need to be updated more than once a second
+            RegionAreas.updatePlayerRegion(player);
+
+            PlayerRegionAttachment regionAttachment = player.getData(UnshatteredAttachments.PLAYER_REGION.get());
+            Region region = player.level().registryAccess().lookupOrThrow(REGION_REGISTRY_KEY).getValue(regionAttachment.regionKey());
+            if (region == null) return;
+
+            if (region.temperatureType() == RegionTemperatureTypes.COMFORTABLE || player.isCreative()) {
+                float temperatureChange = RegionTemperatureTypes.COMFORTABLE.getRegionTemperatureChange();
+
+                // if the amount is close to the base (37) then just set to the base
+                // or else it just kinda gets close forever
+                if (Math.abs(TemperatureTypes.BASE_TEMP.getValue() - currentTemperature) <= temperatureChange) {
+                    currentTemperature = TemperatureTypes.BASE_TEMP.getValue();
+                } else {
+                    currentTemperature += currentTemperature < TemperatureTypes.BASE_TEMP.getValue() ? temperatureChange : -temperatureChange;
+                }
+                player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(), currentTemperature);
+            } else {
+                currentTemperature += region.temperatureType().getRegionTemperatureChange();
+                if (currentTemperature < TemperatureTypes.HIGH_TEMP.getValue()
+                        && currentTemperature > TemperatureTypes.LOW_TEMP.getValue()
+                        || (!region.temperatureType().isRegionSafe()
+                        && currentTemperature < TemperatureTypes.MAX_TEMP.getValue()
+                        && currentTemperature > TemperatureTypes.MIN_TEMP.getValue())
+                ) {
+                    player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(), currentTemperature);
+                }
+            }
+        }
+
+        if (currentTemperature < 0) {
+            int required = player.getTicksRequiredToFreeze();
+            player.setTicksFrozen(Math.max(player.getTicksFrozen(),
+                    Mth.clamp(Mth.floor(Mth.map(currentTemperature,
+                                    0f, TemperatureTypes.MIN_TEMP.getValue(),
+                                    0f, required)),
+                            0, required
+                    )
+            ));
+        } else {
+            player.setTicksFrozen(Math.max(0, player.getTicksFrozen() - 1));
+        }
+
         // incremental for every 2 seconds
         if (player.tickCount % 40 == 0) {
             double healthGained = (1.5 + MAX_HEALTH_VALUE / 100) * (HEALTH_REGEN_VALUE / 100);
@@ -54,37 +101,6 @@ public class PlayerTickHandler {
                 state.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, MAX_HEALTH_VALUE);
             }
             player.syncData(PLAYER_STATE);
-        }
-
-        if (player.tickCount % 20 == 0) {
-            // may become a problem later but probably doesn't need to be updated more than once a second
-            RegionAreas.updatePlayerRegion(player);
-
-            PlayerRegionAttachment regionAttachment = player.getData(UnshatteredAttachments.PLAYER_REGION.get());
-            Region region = player.level().registryAccess().lookupOrThrow(REGION_REGISTRY_KEY).getValue(regionAttachment.regionKey());
-            float temperature = player.getData(UnshatteredAttachments.PLAYER_TEMPERATURE.get());
-            if (region == null) return;
-
-            if (region.temperatureType() == RegionTemperatureTypes.COMFORTABLE || player.isCreative()) {
-                float temperatureChange = RegionTemperatureTypes.COMFORTABLE.getRegionTemperatureChange();
-
-                // if the amount is close to the base (37) then just set to the base
-                // or else it just kinda gets close forever
-                if (Math.abs(TemperatureTypes.BASE_TEMP.getValue() - temperature) <= temperatureChange) {
-                    temperature = TemperatureTypes.BASE_TEMP.getValue();
-                } else {
-                    temperature += temperature < TemperatureTypes.BASE_TEMP.getValue() ? temperatureChange : -temperatureChange;
-                }
-                player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(), temperature);
-            } else {
-                temperature += region.temperatureType().getRegionTemperatureChange();
-                if (temperature < TemperatureTypes.HIGH_TEMP.getValue()
-                        && temperature > TemperatureTypes.LOW_TEMP.getValue()
-                        || !region.temperatureType().isRegionSafe()
-                ) {
-                    player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(), temperature);
-                }
-            }
         }
 
         state.decrementInvulnerableTime();

@@ -25,7 +25,8 @@ public enum ItemTypes {
     WHIP("item_type.unshattered.whip", true),
     FISHING_ROD("item_type.unshattered.fishing_rod", true),
     MATERIAL("item_type.unshattered.material", false),
-    CLEAVER("item_type.unshattered.cleaver", true);
+    CLEAVER("item_type.unshattered.cleaver", true),
+    PICKAXE("item_type.unshattered.pickaxe", true);
 
     private final String key;
     private final boolean reforgeable;

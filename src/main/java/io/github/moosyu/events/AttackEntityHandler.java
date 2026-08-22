@@ -1,6 +1,9 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.items.UnshatteredPassiveAbilityItem;
+import io.github.moosyu.util.AbilityUtils;
 import io.github.moosyu.util.DamageUtil;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -16,6 +19,10 @@ public class AttackEntityHandler {
         Player player = event.getEntity();
         if (!(event.getTarget() instanceof LivingEntity target) || player.level().isClientSide()) return;
         event.setCanceled(true);
-        DamageUtil.dealDamage(player, target);
+
+        DamageUtil.dealDamage(player, target, AbilityUtils.triggerPassiveAbility(player,
+                target,
+                player.getItemInHand(InteractionHand.MAIN_HAND).getItem())
+        );
     }
 }

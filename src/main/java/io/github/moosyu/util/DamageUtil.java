@@ -16,7 +16,10 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.network.PacketDistributor;
+
+import javax.annotation.Nullable;
 
 public final class DamageUtil {
     /**
@@ -44,19 +47,12 @@ public final class DamageUtil {
      * @param player player dealing damage
      * @param target target attempting to be damaged
      */
-    public static void dealDamage(Player player, LivingEntity target) {
+    public static void dealDamage(Player player, LivingEntity target, @Nullable UnshatteredPassiveAbilityItem item) {
         SkillRequirement skillRequirement = player.getItemInHand(InteractionHand.MAIN_HAND).get(UnshatteredDataComponents.SKILL_REQUIREMENT);
         PlayerSkillsAttachment playerSkill = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
-        AttributeInstance finalDamageAttribute = player.getAttribute(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder);
         if (skillRequirement != null && skillRequirement.level() > playerSkill.getLevel(playerSkill.getExp(skillRequirement.skill()))) {
             player.sendSystemMessage(Component.literal(Component.translatable(skillRequirement.skill().getTranslationKey()).getString() + " level " + skillRequirement.level() + " is required to use this weapon!").withColor(0xFFFF5555));
             return;
-        }
-
-        if (player.getMainHandItem().getItem() instanceof UnshatteredPassiveAbilityItem item) {
-            if (item.abilityConditionsMet(player, target)) {
-                item.onAbilityTriggered(player, target);
-            }
         }
 
         double critDamage = DamageUtil.getCritDamage(player.getAttributeValue(UnshatteredAttributeValues.CRITICAL_CHANCE.holder), player.getAttributeValue(UnshatteredAttributeValues.CRITICAL_DAMAGE.holder));
@@ -81,9 +77,8 @@ public final class DamageUtil {
             }
             PacketDistributor.sendToPlayer((ServerPlayer) player, new DamageNumberPacket((int) damage, target.position()));
         }
-        // this seemed easier than transient modifiers that must be removed
-        if (finalDamageAttribute != null) {
-            finalDamageAttribute.setBaseValue(1);
+        if (item != null) {
+            AbilityUtils.finishPassiveAbility(player, target, item);
         }
         player.resetAttackStrengthTicker();
         if (player.isSprinting()) player.setSprinting(true);

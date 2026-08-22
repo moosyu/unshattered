@@ -6,11 +6,12 @@ import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemTypes;
 import io.github.moosyu.items.UnshatteredPassiveAbilityItem;
+import io.github.moosyu.util.AbilityUtils;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
@@ -20,7 +21,8 @@ import static io.github.moosyu.Unshattered.MODID;
 
 public class UnshatteredCleaver extends Item implements UnshatteredPassiveAbilityItem {
     private static final Identifier ABILITY_IDENTIFIER = Identifier.fromNamespaceAndPath(MODID, "cleaver_cleave");
-    protected final float radius, cleaveDamageFraction;
+    private final float radius;
+    private final float cleaveDamageFraction;
 
     public UnshatteredCleaver(Properties properties, float radius, float cleaveDamageFraction) {
         super(properties.stacksTo(1).component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.CLEAVER));
@@ -44,14 +46,17 @@ public class UnshatteredCleaver extends Item implements UnshatteredPassiveAbilit
         );
         for (Entity entity : level.getEntities(null, boundingBox)) {
             if (entity instanceof LivingEntity && !(entity instanceof Player) && !(entity == target)) {
-                AttributeInstance finalDamageModifierAttribute = player.getAttribute(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder);
-                if (finalDamageModifierAttribute != null && finalDamageModifierAttribute.getValue() != 0.0d) {
-                    finalDamageModifierAttribute.setBaseValue(finalDamageModifierAttribute.getValue() - (1 - cleaveDamageFraction));
-                }
+                AbilityUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder).ifPresent(attribute -> attribute.addTransientModifier(new AttributeModifier(ABILITY_IDENTIFIER, -(attribute.getValue() - (1 - cleaveDamageFraction)), AttributeModifier.Operation.ADD_VALUE)));
                 player.attack(entity);
             }
         }
+    }
+
+    @Override
+    public void onAbilityFinished(Player player, LivingEntity target) {
+        PlayerAbilityEffectsAttachment abilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES);
         abilities.removeActiveEffect(ABILITY_IDENTIFIER, player);
+        AbilityUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder).ifPresent(attribute -> attribute.removeModifier(ABILITY_IDENTIFIER));
     }
 
     @Override

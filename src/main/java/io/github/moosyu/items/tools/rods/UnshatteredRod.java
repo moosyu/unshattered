@@ -1,33 +1,42 @@
 package io.github.moosyu.items.tools.rods;
 
-import io.github.moosyu.Unshattered;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.UnshatteredPassiveAbilityItem;
+import io.github.moosyu.util.AbilityUtils;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.FishingRodItem;
 
+import static io.github.moosyu.Unshattered.MODID;
+
 public class UnshatteredRod extends FishingRodItem implements UnshatteredPassiveAbilityItem {
+    private static final Identifier ABILITY_IDENTIFIER = Identifier.fromNamespaceAndPath(MODID, "fish_out_of_water");
+
     public UnshatteredRod(Properties properties) {
-        super(properties.component(UnshatteredDataComponents.ITEM_ABILITY.get(), new ItemAbility("fish_out_of_water", 0, 0, 0, true)));
+        super(properties.component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(ABILITY_IDENTIFIER, 0, 0, 0, true)));
     }
 
     @Override
     public void onAbilityTriggered(Player player, LivingEntity target) {
-        AttributeInstance finalDamageModifierAttribute = player.getAttribute(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder);
-        if (finalDamageModifierAttribute == null) {
-            Unshattered.LOGGER.error("final damage modifier is null!! (from rod base)");
-            return;
-        }
-        finalDamageModifierAttribute.setBaseValue(0.0d);
+        AbilityUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder).ifPresent(finalDamageModifierAttribute -> {
+            finalDamageModifierAttribute.addTransientModifier(new AttributeModifier(ABILITY_IDENTIFIER, -finalDamageModifierAttribute.getValue(), AttributeModifier.Operation.ADD_VALUE));
+        });
+    }
+
+    @Override
+    public void onAbilityFinished(Player player, LivingEntity target) {
+        AbilityUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder).ifPresent(finalDamageModifierAttribute -> {
+            finalDamageModifierAttribute.removeModifier(ABILITY_IDENTIFIER);
+        });
     }
 
     @Override
     public boolean abilityConditionsMet(Player player, LivingEntity target) {
-        return !target.is(EntityTypeTags.AQUATIC);
+        return target != null && !target.is(EntityTypeTags.AQUATIC);
     }
 }

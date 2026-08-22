@@ -29,7 +29,7 @@ public enum UnshatteredAttributeValues {
     MINING_SPREAD("mining_spread", "▚", 0.0, 0.0, 1024.0, 0xFFFFFF55, UnshatteredAttributeTypes.VISIBLE, false, false),
     PRISTINE("pristine", "✧", 0.0, 0.0, 32.0, 0xFFAA00AA, UnshatteredAttributeTypes.VISIBLE, false, false),
     FARMING_FORTUNE("farming_fortune", "☘", 0.0, 0.0, 2048.0, 0xFFFFAA00, UnshatteredAttributeTypes.IMPORTANT, false, false),
-    FORAGING_FORTUNE("foraging_fortune", "☘", 0.0, 0.0, 2048.0, 0xFFFFAA00, UnshatteredAttributeTypes.IMPORTANT, false, false),
+    FORAGING_FORTUNE("foraging_fortune", "\uD83E\uDE93", 0.0, 0.0, 2048.0, 0xFFFFAA00, UnshatteredAttributeTypes.IMPORTANT, false, false),
     SWEEP("sweep", "∮", 0.0, 0.0, 1024.0, 0xFF00AA00, UnshatteredAttributeTypes.VISIBLE, false, false),
     COMBAT_FORTUNE("combat_fortune", "✯", 0.0, 0.0, 900.0, 0xFF55FFFF, UnshatteredAttributeTypes.VISIBLE, false, false),
     FISHING_SPEED("fishing_speed", "☂", 0.0, 0.0, 448.0, 0xFF55FFFF, UnshatteredAttributeTypes.VISIBLE, false, false),
