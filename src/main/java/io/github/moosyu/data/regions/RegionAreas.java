@@ -41,6 +41,7 @@ public final class RegionAreas {
                 Vector2i chunkBottomRight = new Vector2i(chunkX + chunkWidth, chunkZ + chunkHeight);
 
                 for (RegionBoundary regionBoundary : regionBoundaries) {
+                    if (regionBoundary.region().getKey() == UnshatteredRegions.DEFAULT_REGION) continue;
                     BoundaryCoordinates boundaryCoordinates = regionBoundary.boundaryCoordinates();
 
                     if (checkRectangleOverlap(
@@ -56,23 +57,24 @@ public final class RegionAreas {
         }
     }
 
+    public static void updatePlayerRegionAttachment(Player player, RegionBoundary selectedBoundary) {
+        player.setData(UnshatteredAttachments.PLAYER_REGION.get(),
+                new PlayerRegionAttachment(selectedBoundary == null ? UnshatteredRegions.DEFAULT_REGION : selectedBoundary.region().getKey(), player.blockPosition())
+        );
+    }
+
     public static boolean checkRectangleOverlap(Vector2i aTopLeft, Vector2i aBottomRight, Vector2i bTopLeft, Vector2i bBottomRight) {
-        return aTopLeft.x <= bBottomRight.x && aBottomRight.x >= bTopLeft.x && aTopLeft.y <= bBottomRight.y && aBottomRight.y >= bTopLeft.y;
+        return Math.min(aTopLeft.x, aBottomRight.x) <= Math.max(bTopLeft.x, bBottomRight.x)
+                && Math.max(aTopLeft.x, aBottomRight.x) >= Math.min(bTopLeft.x, bBottomRight.x)
+                && Math.min(aTopLeft.y, aBottomRight.y) <= Math.max(bTopLeft.y, bBottomRight.y)
+                && Math.max(aTopLeft.y, aBottomRight.y) >= Math.min(bTopLeft.y, bBottomRight.y);
     }
 
-    public static void updatePlayerRegionAttachment(Player player, RegionBoundary selectedBoundary, Vector2i selectedChunk) {
-        if (selectedBoundary == null) return;
-        player.setData(UnshatteredAttachments.PLAYER_REGION.get(), new PlayerRegionAttachment(selectedBoundary.region().getKey(), selectedChunk, player.blockPosition()));
-    }
-
-    public static Vector2i getRegionChunkIndex(int blockX, int blockZ) {
-        int chunkX = Math.floorDiv(blockX - worldMinX, REGION_CHUNK_SIZE);
-        int chunkZ = Math.floorDiv(blockZ - worldMinZ, REGION_CHUNK_SIZE);
-        return new Vector2i(chunkX, chunkZ);
-    }
-
-    public static boolean containsPoint(BoundaryCoordinates b, int x, int z) {
-        return x >= b.topLeftCornerCoordinates().x && x <= b.bottomRightCornerCoordinates().x && z >= b.topLeftCornerCoordinates().y && z <= b.bottomRightCornerCoordinates().y;
+    public static boolean containsPoint(BoundaryCoordinates boundaryCoordinates, int x, int z) {
+        return x >= Math.min(boundaryCoordinates.topLeftCornerCoordinates().x, boundaryCoordinates.bottomRightCornerCoordinates().x)
+                && x <= Math.max(boundaryCoordinates.topLeftCornerCoordinates().x, boundaryCoordinates.bottomRightCornerCoordinates().x)
+                && z >= Math.min(boundaryCoordinates.topLeftCornerCoordinates().y, boundaryCoordinates.bottomRightCornerCoordinates().y)
+                && z <= Math.max(boundaryCoordinates.topLeftCornerCoordinates().y, boundaryCoordinates.bottomRightCornerCoordinates().y);
     }
 
     public static void updatePlayerRegion(Player player) {
@@ -84,7 +86,6 @@ public final class RegionAreas {
         int blockZ = player.getBlockZ();
         int chunkX = Mth.clamp(Math.floorDiv(blockX - worldMinX, REGION_CHUNK_SIZE), 0, chunks.length - 1);
         int chunkZ = Mth.clamp(Math.floorDiv(blockZ - worldMinZ, REGION_CHUNK_SIZE), 0, chunks[0].length - 1);
-        Vector2i selectedChunk = getRegionChunkIndex(blockX, blockZ);
         RegionBoundary selectedBoundary = null;
 
         for (RegionBoundary regionBoundary : chunks[chunkX][chunkZ]) {
@@ -94,6 +95,6 @@ public final class RegionAreas {
             }
         }
 
-        updatePlayerRegionAttachment(player, selectedBoundary, selectedChunk);
+        updatePlayerRegionAttachment(player, selectedBoundary);
     }
 }

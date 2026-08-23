@@ -53,7 +53,7 @@ public final class UnshatteredAttachments {
     );
 
     public static final Supplier<AttachmentType<PlayerRegionAttachment>> PLAYER_REGION = ATTACHMENT_TYPES.register("player_region", () ->
-            AttachmentType.builder(() -> new PlayerRegionAttachment(UnshatteredRegions.DEFAULT_REGION, new Vector2i(0, 0), new BlockPos(0, 0, 0)))
+            AttachmentType.builder(() -> new PlayerRegionAttachment(UnshatteredRegions.DEFAULT_REGION, new BlockPos(0, 0, 0)))
                     .serialize(PlayerRegionAttachment.RECORD_CODEC.fieldOf("region"))
                     .sync(PlayerRegionAttachment.STREAM_CODEC)
                     .copyOnDeath()

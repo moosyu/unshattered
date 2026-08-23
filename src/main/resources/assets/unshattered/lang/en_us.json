@@ -282,6 +282,8 @@
 
   "region.name.unshattered.unincorporated": "Unincorporated",
   "region.name.unshattered.plains": "Plains",
+  "region.name.unshattered.forgotten_dwelling": "Forgotten Dwelling",
+  "region.name.unshattered.hythe": "Hythe",
 
   "breaking_power.messages.unshattered.generic_breaking_power_requirment_start": "A breaking power of ",
   "breaking_power.messages.unshattered.generic_breaking_power_requirment_end": " is required to break this block",

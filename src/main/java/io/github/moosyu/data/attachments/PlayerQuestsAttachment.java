@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PlayerQuestsAttachment {
+public final class PlayerQuestsAttachment {
     // tracks whether a quest has been completed by a player
     private final HashMap<Quest, Boolean> quests = new HashMap<>();
 
