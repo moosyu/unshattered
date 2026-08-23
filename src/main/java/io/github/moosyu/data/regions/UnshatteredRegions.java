@@ -17,4 +17,15 @@ public final class UnshatteredRegions {
             DataPackRegistryHandler.REGION_REGISTRY_KEY,
             Identifier.fromNamespaceAndPath(MODID, "plains")
     );
+
+    public static final ResourceKey<Region> FORGOTTEN_DWELLING = ResourceKey.create(
+            DataPackRegistryHandler.REGION_REGISTRY_KEY,
+            Identifier.fromNamespaceAndPath(MODID, "forgotten_dwelling")
+    );
+
+    public static final ResourceKey<Region> HYTHE = ResourceKey.create(
+            DataPackRegistryHandler.REGION_REGISTRY_KEY,
+            Identifier.fromNamespaceAndPath(MODID, "hythe")
+    );
+
 }

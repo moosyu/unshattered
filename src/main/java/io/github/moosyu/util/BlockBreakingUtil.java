@@ -6,6 +6,9 @@ import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.datagen.UnshatteredBlockTagsProvider;
+import io.github.moosyu.data.regions.Region;
+import io.github.moosyu.events.DataPackRegistryHandler;
+import io.github.moosyu.events.DatagenHandler;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -24,7 +27,12 @@ public final class BlockBreakingUtil {
      * @return the blockstate of the block the broken block will be replaced with (or null if the player can't break the block)
      */
     public static BlockState isBreakableBlock(BlockState blockState, Player player) {
-        if (blockState.is(UnshatteredBlockTagsProvider.BREAKABLE_BLOCKS)) {
+        if (blockState.is(UnshatteredBlockTagsProvider.BREAKABLE_BLOCKS)
+                && player.registryAccess()
+                .lookupOrThrow(DataPackRegistryHandler.REGION_REGISTRY_KEY)
+                .getValueOrThrow(player.getData(UnshatteredAttachments.PLAYER_REGION).regionKey())
+                .harvestable())
+        {
             return BrokenBlocksWorldResult.getDegradedState(blockState.getBlock());
         }
         return null;

@@ -1,0 +1,14 @@
+{
+  "boundary_coordinates": {
+    "bottom_right_corner_coordinates": {
+      "x": -1070,
+      "z": 805
+    },
+    "priority": 2,
+    "top_left_corner_coordinates": {
+      "x": -1035,
+      "z": 837
+    }
+  },
+  "region": "unshattered:forgotten_dwelling"
+}

@@ -1,14 +1,14 @@
 {
   "boundary_coordinates": {
     "bottom_right_corner_coordinates": {
-      "x": -1119,
-      "z": 825
+      "x": -937,
+      "z": 792
     },
-    "priority": 1,
+    "priority": 2,
     "top_left_corner_coordinates": {
-      "x": -846,
-      "z": 688
+      "x": -864,
+      "z": 707
     }
   },
-  "region": "unshattered:plains"
+  "region": "unshattered:hythe"
 }

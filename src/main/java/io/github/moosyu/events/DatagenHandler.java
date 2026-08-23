@@ -49,11 +49,16 @@ public class DatagenHandler {
                 new RegistrySetBuilder().add(DataPackRegistryHandler.REGION_REGISTRY_KEY, bootstrap -> {
                     bootstrap.register(UnshatteredRegions.PLAINS_REGION, new Region(0xFF71AD1C, RegionTemperatureTypes.COMFORTABLE, false));
                     bootstrap.register(UnshatteredRegions.DEFAULT_REGION, new Region(0xFFFFFFFF, RegionTemperatureTypes.COLD, false));
+                    bootstrap.register(UnshatteredRegions.FORGOTTEN_DWELLING, new Region(0xFFCCD9E3, RegionTemperatureTypes.COMFORTABLE, false));
+                    bootstrap.register(UnshatteredRegions.HYTHE, new Region(0xFFB1FA96, RegionTemperatureTypes.COMFORTABLE, false));
                 }).add(DataPackRegistryHandler.REGION_BOUNDARY_REGISTRY_KEY, bootstrap -> {
                     HolderGetter<Region> regions = bootstrap.lookup(DataPackRegistryHandler.REGION_REGISTRY_KEY);
 
                     registerRegionBoundary(bootstrap, new BoundaryCoordinates(new Vector2i(-2048, -2048), new Vector2i(2048, 2048), 0), UnshatteredRegions.DEFAULT_REGION, regions);
-                    registerRegionBoundary(bootstrap, new BoundaryCoordinates(new Vector2i(0, 0), new Vector2i(400, 400), 1), UnshatteredRegions.PLAINS_REGION, regions);
+                    registerRegionBoundary(bootstrap, new BoundaryCoordinates(new Vector2i(-846, 688), new Vector2i(-1119, 825), 1), UnshatteredRegions.PLAINS_REGION, regions);
+                    registerRegionBoundary(bootstrap, new BoundaryCoordinates(new Vector2i(-1035, 837), new Vector2i(-1070, 805), 2), UnshatteredRegions.FORGOTTEN_DWELLING, regions);
+                    registerRegionBoundary(bootstrap, new BoundaryCoordinates(new Vector2i(-864, 707), new Vector2i(-937, 792), 2), UnshatteredRegions.HYTHE, regions);
+
                 }).add(DataPackRegistryHandler.DIALOGUE_TREE_REGISTRY_KEY, bootstrap -> {
                     registerDialogueTree(bootstrap,
                             TalkingRockBlock.ROCK_DIALOGUE_TREE,

@@ -1,8 +1,6 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.data.dialogue.DialogueNode;
 import io.github.moosyu.data.dialogue.DialogueTree;
-import io.github.moosyu.data.dialogue.DialogueTreeOrigin;
 import io.github.moosyu.data.quests.Quest;
 import io.github.moosyu.data.regions.Region;
 import io.github.moosyu.data.regions.RegionBoundary;

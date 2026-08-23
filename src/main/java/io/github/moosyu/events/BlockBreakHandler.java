@@ -75,12 +75,12 @@ public class BlockBreakHandler {
 
     // to stop players from attempting to break blocks
     @SubscribeEvent
-    public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
+    public static void modifyBreakSpeed(PlayerEvent.BreakSpeed event) {
         Player player = event.getEntity();
         Level level = player.level();
-        if ((event.getPosition().isPresent()
+        if (BlockBreakingUtil.isBreakableBlock(event.getState(), event.getEntity()) == null
+            || (event.getPosition().isPresent()
                 && !BlockBreakingUtil.canBreakBlock(player, level.getBlockState(event.getPosition().get()).typeHolder()))
-                || BlockBreakingUtil.isBreakableBlock(event.getState(), event.getEntity()) == null
                 || !CheckItemRequirement.passesSkillCheck(player, player.getMainHandItem())
         ) {
             event.setNewSpeed(0.0F);
