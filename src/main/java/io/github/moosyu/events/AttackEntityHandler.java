@@ -1,6 +1,5 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.items.UnshatteredPassiveAbilityItem;
 import io.github.moosyu.util.AbilityUtils;
 import io.github.moosyu.util.DamageUtil;
 import net.minecraft.world.InteractionHand;

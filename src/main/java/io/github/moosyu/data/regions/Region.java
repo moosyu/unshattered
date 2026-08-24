@@ -2,6 +2,7 @@ package io.github.moosyu.data.regions;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.github.moosyu.data.regen.RegenPath;
 import io.github.moosyu.events.DataPackRegistryHandler;
 import net.minecraft.core.Holder;
 import net.minecraft.network.FriendlyByteBuf;
@@ -9,6 +10,9 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.player.Player;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * a world region's data. doesn't contain world position bounds.

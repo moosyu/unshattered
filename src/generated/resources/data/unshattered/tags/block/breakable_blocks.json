@@ -1,7 +1,7 @@
 {
   "values": [
     "unshattered:breakable_fig_log",
-    "unshattered:breakable_stone_block",
-    "unshattered:breakable_cobblestone_block"
+    "unshattered:breakable_cobblestone_block",
+    "unshattered:breakable_stone_block"
   ]
 }
