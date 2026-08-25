@@ -212,5 +212,9 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get()), 1, false);
         this.builder(BLOCK_REGEN_DATA)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get()), new RegenPath(List.of(Blocks.STONE, Blocks.COBBLESTONE, Blocks.BEDROCK), 100), false);
+        this.builder(BREAKABLE_DROPS)
+                .add(UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK, UnshatteredItems.FIG_LOG.get(), false)
+                .add(UnshatteredBlocks.BREAKABLE_STONE_BLOCK, Items.COBBLESTONE, false)
+                .add(UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK, Items.COBBLESTONE, false);
     }
 }

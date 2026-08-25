@@ -1,7 +1,6 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.blocks.TalkingRockBlock;
-import io.github.moosyu.data.UnshatterredBlockLootSubProvider;
 import io.github.moosyu.data.dialogue.*;
 import io.github.moosyu.data.quests.Quest;
 import io.github.moosyu.data.quests.QuestTypes;
@@ -14,14 +13,11 @@ import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
@@ -30,7 +26,6 @@ import org.joml.Vector2i;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 import static io.github.moosyu.Unshattered.MODID;
@@ -49,10 +44,6 @@ public class DatagenHandler {
         generator.addProvider(true, new UnshatteredItemTagsProvider(packOutput, lookupProvider));
         generator.addProvider(true, new UnshatteredEntityTagsProvider(packOutput, lookupProvider));
         generator.addProvider(true, new UnshatteredDataMapProvider(packOutput, lookupProvider));
-        generator.addProvider(true, new LootTableProvider(packOutput, Set.of(), List.of(new LootTableProvider.SubProviderEntry(
-            UnshatterredBlockLootSubProvider::new,
-                LootContextParamSets.BLOCK
-        )), lookupProvider));
 
         event.createDatapackRegistryObjects(
                 new RegistrySetBuilder().add(DataPackRegistryHandler.REGION_REGISTRY_KEY, bootstrap -> {

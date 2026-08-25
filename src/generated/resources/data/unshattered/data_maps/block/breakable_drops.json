@@ -1,0 +1,7 @@
+{
+  "values": {
+    "unshattered:breakable_cobblestone_block": "minecraft:stone",
+    "unshattered:breakable_fig_log": "unshattered:fig_log",
+    "unshattered:breakable_stone_block": "minecraft:stone"
+  }
+}

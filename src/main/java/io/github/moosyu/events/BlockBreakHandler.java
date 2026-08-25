@@ -1,14 +1,16 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.Unshattered;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.blocks.BrokenBlocksItemResult;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.datagen.UnshatteredBlockTagsProvider;
 import io.github.moosyu.util.*;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -36,26 +38,32 @@ public class BlockBreakHandler {
     @SubscribeEvent
     public static void onBlockBreak(BreakBlockEvent event) {
         Player player = event.getPlayer();
-        // so you can still break stuff normally in creative
-        if (player.isCreative() || player.level().isClientSide()) return;
-        event.setCanceled(true);
-
+        Level level = player.level();
         BlockState blockState = event.getState();
         Holder<Block> blockHolder = blockState.typeHolder();
         float experienceReward = Objects.requireNonNullElse(blockHolder.getData(UnshatteredDataMaps.HARVESTABLE_BLOCKS_EXP_DATA), 0.0f);
         Block block = blockState.getBlock();
 
+        // so you can still break stuff normally in creative
+        if (player.isCreative()) return;
+        event.setCanceled(true);
+        // so the block doesnt flash in and out of existence when broken before the server says what's up
+        if (level.isClientSide()) {
+            PlayClientsideSound.playClientsideSound(player, blockState.getSoundType(level, event.getPos(), player).getBreakSound(), SoundSource.BLOCKS, 1.5f);
+            return;
+        }
+
         PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
 
         if (blockState.is(UnshatteredBlockTagsProvider.COLLECTABLE_MINING_BLOCKS)) {
-            ItemStack blockDrops = getBlockDrop(BrokenBlocksItemResult.getItemDropped(block), player, UnshatteredAttributeValues.MINING_FORTUNE);
+            ItemStack blockDrops = getBlockDrop(block, player, UnshatteredAttributeValues.MINING_FORTUNE);
             CollectionUtil.givePlayerHarvestedItemStack(player, blockDrops);
             if (experienceReward > 0.0f) {
                 skills.addExp(PlayerSkillsAttachment.Skill.MINING, experienceReward, player);
                 player.syncData(PLAYER_SKILLS);
             }
         } else if (blockState.is(UnshatteredBlockTagsProvider.COLLECTABLE_FARMING_BLOCKS)) {
-            ItemStack blockDrops = getBlockDrop(BrokenBlocksItemResult.getItemDropped(block), player, UnshatteredAttributeValues.FARMING_FORTUNE);
+            ItemStack blockDrops = getBlockDrop(block, player, UnshatteredAttributeValues.FARMING_FORTUNE);
             CollectionUtil.givePlayerHarvestedItemStack(player, blockDrops);
             // todo: make braking cactus' both add their drops to inventory but count broken cactus parts for exp
             // could just do the same thing as done with sweeping but less costly as it's just the block above
@@ -87,7 +95,13 @@ public class BlockBreakHandler {
         }
     }
 
-    private static ItemStack getBlockDrop(Item item, Player player, UnshatteredAttributeValues fortuneType) {
-        return new ItemStack(item, FortuneCalculation.getItemsCount(player.getAttributeValue(fortuneType.holder), 1));
+    private static ItemStack getBlockDrop(Block blockBroken, Player player, UnshatteredAttributeValues fortuneType) {
+        Item drop = BuiltInRegistries.BLOCK.wrapAsHolder(blockBroken).getData(UnshatteredDataMaps.BREAKABLE_DROPS);
+        if (drop == null) {
+            Unshattered.LOGGER.warn("{} doesn't have a drop but it was broken!", blockBroken.getName());
+            return ItemStack.EMPTY;
+        }
+
+        return new ItemStack(drop, FortuneCalculation.getItemsCount(player.getAttributeValue(fortuneType.holder), 1));
     }
 }

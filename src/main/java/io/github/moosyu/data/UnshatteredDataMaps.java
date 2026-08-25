@@ -4,6 +4,8 @@ import com.mojang.serialization.Codec;
 import io.github.moosyu.data.dialogue.DialogueTriggeredEvent;
 import io.github.moosyu.data.regen.RegenPath;
 import io.github.moosyu.events.BlockBreakHandler;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
@@ -48,5 +50,11 @@ public final class UnshatteredDataMaps {
             Identifier.fromNamespaceAndPath(MODID, "block_regen_data"),
             Registries.BLOCK,
             RegenPath.CODEC
+    ).build();
+
+    public static final DataMapType<Block, Item> BREAKABLE_DROPS = DataMapType.builder(
+            Identifier.fromNamespaceAndPath(MODID, "breakable_drops"),
+            Registries.BLOCK,
+            BuiltInRegistries.ITEM.byNameCodec()
     ).build();
 }
