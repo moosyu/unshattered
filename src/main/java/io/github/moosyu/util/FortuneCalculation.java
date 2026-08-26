@@ -4,7 +4,6 @@ import java.util.Random;
 
 public final class FortuneCalculation {
     /**
-     *
      * @param fortuneAmount the fortune of whatever type is being used
      * @param baseDropAmount base drop amount dropped when you break the block (usually itll be one but you never know)
      * @return amount of whatever the player should be given

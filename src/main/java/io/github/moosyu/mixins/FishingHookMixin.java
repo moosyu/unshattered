@@ -1,7 +1,6 @@
 package io.github.moosyu.mixins;
 
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.items.UnshatteredPassiveAbilityItem;
 import io.github.moosyu.util.AbilityUtils;
 import io.github.moosyu.util.DamageUtil;
 import net.minecraft.core.BlockPos;

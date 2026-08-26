@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 
 // only has code to make this do stuff if its for killing an enemy or during tree sweep, more will be added when required
 // not really passive as it only changes something the instant that the ability is to be triggered not always
-public interface UnshatteredPassiveAbilityItem {
+public interface UnshatteredInstantPassiveAbilityItem {
     /**
      * runs when a passive ability should be fired off
      * @param player player triggering passive

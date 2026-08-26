@@ -8,6 +8,7 @@ public enum ItemTypes {
     FISH("item_type.unshattered.fish", false),
     LOG("item_type.unshattered.log", false),
     SWORD("item_type.unshattered.sword", true),
+    DAGGER("item_type.unshattered.dagger", true),
     AXE("item_type.unshattered.axe", true),
     BATTLE_AXE("item_type.unshattered.battle_axe", true),
     BOW("item_type.unshattered.bow", true),

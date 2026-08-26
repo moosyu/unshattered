@@ -2,6 +2,8 @@ package io.github.moosyu.util;
 
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.blocks.BrokenBlocksWorldResult;
+import io.github.moosyu.blocks.RegeneratableBlock;
+import io.github.moosyu.blocks.RegeneratingBlock;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
@@ -27,13 +29,14 @@ public final class BlockBreakingUtil {
      * @return the blockstate of the block the broken block will be replaced with (or null if the player can't break the block)
      */
     public static BlockState isBreakableBlock(BlockState blockState, Player player) {
-        if (blockState.is(UnshatteredBlockTagsProvider.BREAKABLE_BLOCKS)
+        Block block = blockState.getBlock();
+        if (block instanceof RegeneratableBlock
                 && player.registryAccess()
                 .lookupOrThrow(DataPackRegistryHandler.REGION_REGISTRY_KEY)
                 .getValueOrThrow(player.getData(UnshatteredAttachments.PLAYER_REGION).regionKey())
                 .harvestable())
         {
-            return BrokenBlocksWorldResult.getDegradedState(blockState.getBlock());
+            return BrokenBlocksWorldResult.getDegradedState(block);
         }
         return null;
     }

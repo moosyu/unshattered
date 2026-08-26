@@ -21,7 +21,7 @@ public enum UnshatteredAttributeValues {
      */
     CRITICAL_CHANCE("critical_chance", "☣", 30.0, 0.0, 2048.0, 0xFF5454FC, UnshatteredAttributeTypes.IMPORTANT, false, true),
     CRITICAL_DAMAGE("critical_damage", "☠", 50.0, 0.0, 4096.0, 0xFF5454FC, UnshatteredAttributeTypes.IMPORTANT, true, true),
-    FEROCITY("ferocity", "⫽", 0.0, 0.0, 131072.0, 0xFFFF5555, UnshatteredAttributeTypes.VISIBLE, true, false),
+    FEROCITY("ferocity", "⫽", 0.0, 0.0, 500.0, 0xFFFF5555, UnshatteredAttributeTypes.VISIBLE, true, false),
     MANA("mana", "✎", 100.0, 0.0, 131072.0, 0xFF55D5FF, UnshatteredAttributeTypes.IMPORTANT, false, false),
     MANA_REGEN("mana_regen", "✎", 100.0, 100.0, 2048.0, 0xFF55D5FF, UnshatteredAttributeTypes.IMPORTANT, false, true),
     MINING_SPEED("mining_speed", "⸕", 0.0, 0.0, 131072.0, 0xFFFFAA00, UnshatteredAttributeTypes.VISIBLE, false, false),

@@ -5,63 +5,52 @@ import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.SkillRequirement;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.items.UnshatteredPassiveAbilityItem;
+import io.github.moosyu.events.TreeSweepHandler;
+import io.github.moosyu.items.UnshatteredInstantPassiveAbilityItem;
 import io.github.moosyu.packets.DamageNumberPacket;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class DamageUtil {
-    /**
-     * @param damage the damage attribute of the player
-     * @param strength the strength attribute of the player
-     * @param critDamage the crit damage of the player, presumably found from getCritDamage or this will always be critting
-     * @param finalDamageModifier the damage modifier attribute of the player
-     * @return the amount of damage done by a player's attack
-     */
-    public static double getDamage(double damage, double strength, double critDamage, double finalDamageModifier) {
-        return (5 + damage) * (1 + (strength / 100)) * (1 + (critDamage / 100)) * finalDamageModifier;
-    }
+    public static final List<FerocityHit> SCHEDULED_FEROCITY_ATTACKS = new ArrayList<>();
 
     /**
-     * @param critChance the player's crit chance
-     * @param baseCritDamage the player's crit damage
-     * @return the amount of critical damage added or 0 if a crit wasnt rolled
-     */
-    public static double getCritDamage(double critChance, double baseCritDamage) {
-        return critChance >= (Math.random() * 101) ? baseCritDamage : 0.0d;
-    }
-
-    /**
-     * runs custom unshattered damage code that factors in unshattered damage attributes and checks skill requirements
+     * runs unshattered damage code that factors in unshattered damage attributes and checks skill requirements
      * @param player player dealing damage
      * @param target target attempting to be damaged
      */
-    public static void dealDamage(Player player, LivingEntity target, @Nullable UnshatteredPassiveAbilityItem item) {
+    public static void dealDamage(Player player, LivingEntity target, @Nullable UnshatteredInstantPassiveAbilityItem item) {
         SkillRequirement skillRequirement = player.getItemInHand(InteractionHand.MAIN_HAND).get(UnshatteredDataComponents.SKILL_REQUIREMENT);
         PlayerSkillsAttachment playerSkill = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
+        float attackStrength = player.getAttackStrengthScale(0.0f);
+
         if (skillRequirement != null && skillRequirement.level() > playerSkill.getLevel(playerSkill.getExp(skillRequirement.skill()))) {
             player.sendSystemMessage(Component.literal(Component.translatable(skillRequirement.skill().getTranslationKey()).getString() + " level " + skillRequirement.level() + " is required to use this weapon!").withColor(0xFFFF5555));
             return;
         }
 
-        double critDamage = DamageUtil.getCritDamage(player.getAttributeValue(UnshatteredAttributeValues.CRITICAL_CHANCE.holder), player.getAttributeValue(UnshatteredAttributeValues.CRITICAL_DAMAGE.holder));
-        double damage = DamageUtil.getDamage(
-                player.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder),
-                player.getAttributeValue(UnshatteredAttributeValues.STRENGTH.holder),
-                critDamage,
-                player.getAttributeValue(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder)
-        );
+        double critDamage = player.getAttributeValue(UnshatteredAttributeValues.CRITICAL_CHANCE.holder) >= (Math.random() * 101) && attackStrength > 0.9f ? player.getAttributeValue(UnshatteredAttributeValues.CRITICAL_DAMAGE.holder) : 0.0d;
+        if (critDamage > 0.0d) {
+            player.crit(target);
+            target.playSound(SoundEvents.PLAYER_ATTACK_CRIT, 1.0F, 1.0F);
+        }
+        double damage = (5 + player.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder))
+                * (1 + (player.getAttributeValue(UnshatteredAttributeValues.STRENGTH.holder) / 100))
+                * (1 + (critDamage / 100))
+                * player.getAttributeValue(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder)
+                * attackStrength;
         AttributeInstance targetHealth = target.getAttribute(UnshatteredAttributeValues.HEALTH.holder);
         if (target.invulnerableTime <= 0 && targetHealth != null && (player.isCreative() || !target.is(EntityType.ARMOR_STAND))) {
             if ((targetHealth.getBaseValue() - damage) > 0) {
@@ -83,4 +72,11 @@ public final class DamageUtil {
         player.resetAttackStrengthTicker();
         if (player.isSprinting()) player.setSprinting(true);
     }
+
+    /**
+     * @param target the target of the ferocity hit
+     * @param triggerTime server time in ticks that the ferocity hit is scheduled for
+     * @param damage the amount of damage to be dealt
+     */
+    public record FerocityHit(LivingEntity target, int triggerTime, double damage) {};
 }

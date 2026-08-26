@@ -78,6 +78,7 @@
   "item.unshattered.enchanted_rotten_flesh": "Enchanted Rotten Flesh",
   "item.unshattered.bat_talisman": "Bat Talisman",
   "item.unshattered.glow_squid_boots": "Glow Squid Boots",
+  "item.unshattered.iron_dagger": "Iron Dagger",
 
   "item.ability.unshattered.rogue_sword_speed_boost": "Speed Boost",
   "item.ability.unshattered.mind_blowing": "Mind Blowing",
@@ -245,6 +246,7 @@
   "item_type.unshattered.material": "Material",
   "item_type.unshattered.cleaver": "Cleaver",
   "item_type.unshattered.pickaxe": "Pickaxe",
+  "item_type.unshattered.dagger": "Dagger",
 
   "unshattered.configuration.title": "unshattered Configs",
   "unshattered.configuration.section.unshattered.common.toml": "unshattered Configs",

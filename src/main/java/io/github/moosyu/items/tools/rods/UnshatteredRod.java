@@ -3,7 +3,7 @@ package io.github.moosyu.items.tools.rods;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.items.UnshatteredPassiveAbilityItem;
+import io.github.moosyu.items.UnshatteredInstantPassiveAbilityItem;
 import io.github.moosyu.util.AbilityUtils;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.EntityTypeTags;
@@ -14,7 +14,7 @@ import net.minecraft.world.item.FishingRodItem;
 
 import static io.github.moosyu.Unshattered.MODID;
 
-public class UnshatteredRod extends FishingRodItem implements UnshatteredPassiveAbilityItem {
+public class UnshatteredRod extends FishingRodItem implements UnshatteredInstantPassiveAbilityItem {
     private static final Identifier ABILITY_IDENTIFIER = Identifier.fromNamespaceAndPath(MODID, "fish_out_of_water");
 
     public UnshatteredRod(Properties properties) {

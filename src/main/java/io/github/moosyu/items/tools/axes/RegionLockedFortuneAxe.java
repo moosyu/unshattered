@@ -5,7 +5,7 @@ import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.data.regions.Region;
-import io.github.moosyu.items.UnshatteredPassiveAbilityItem;
+import io.github.moosyu.items.UnshatteredInstantPassiveAbilityItem;
 import io.github.moosyu.util.AbilityUtils;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -18,7 +18,7 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 import static io.github.moosyu.Unshattered.MODID;
 
 // may make this more general one day but im really running low on time at the moment so just foraging fortune rn ig
-public class RegionLockedFortuneAxe extends UnshatteredAxeTool implements UnshatteredPassiveAbilityItem {
+public class RegionLockedFortuneAxe extends UnshatteredAxeTool implements UnshatteredInstantPassiveAbilityItem {
     private final ResourceKey<Region> region;
     private final Identifier abilityIdentifier;
     private final float foragingFortuneAmount;

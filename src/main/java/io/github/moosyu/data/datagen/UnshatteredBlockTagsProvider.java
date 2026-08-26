@@ -1,5 +1,6 @@
 package io.github.moosyu.data.datagen;
 
+import io.github.moosyu.blocks.RegeneratingBlock;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
@@ -23,15 +24,9 @@ public class UnshatteredBlockTagsProvider extends BlockTagsProvider {
         super(output, lookupProvider, MODID);
     }
 
-    public static final TagKey<Block> BREAKABLE_BLOCKS = BlockTags.create(Identifier.fromNamespaceAndPath(MODID, "breakable_blocks"));
     public static final TagKey<Block> COLLECTABLE_MINING_BLOCKS = BlockTags.create(Identifier.fromNamespaceAndPath(MODID, "collectable_mining_blocks"));
     public static final TagKey<Block> COLLECTABLE_FARMING_BLOCKS = BlockTags.create(Identifier.fromNamespaceAndPath(MODID, "collectable_farming_blocks"));
     public static final TagKey<Block> COLLECTABLE_FORAGING_BLOCKS = BlockTags.create(Identifier.fromNamespaceAndPath(MODID, "collectable_foraging_blocks"));
-    public static final List<Block> BREAKABLE_BLOCKS_LIST = Stream.of(
-            BREAKABLE_FIG_LOG_BLOCK,
-            BREAKABLE_COBBLESTONE_BLOCK,
-            BREAKABLE_STONE_BLOCK
-    ).map(DeferredHolder::get).toList();
 
     @Override
     protected void addTags(HolderLookup.@NonNull Provider provider) {
@@ -40,7 +35,6 @@ public class UnshatteredBlockTagsProvider extends BlockTagsProvider {
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(BREAKABLE_COBBLESTONE_BLOCK.get());
         tag(BlockTags.LOGS).add(FIG_LOG_BLOCK.get());
         tag(BlockTags.LOGS).add(BREAKABLE_FIG_LOG_BLOCK.get());
-        tag(BREAKABLE_BLOCKS).addAll(BREAKABLE_BLOCKS_LIST);
         tag(COLLECTABLE_MINING_BLOCKS).add(BREAKABLE_STONE_BLOCK.get());
         tag(COLLECTABLE_MINING_BLOCKS).add(BREAKABLE_COBBLESTONE_BLOCK.get());
         tag(COLLECTABLE_FORAGING_BLOCKS).add(BREAKABLE_FIG_LOG_BLOCK.get());

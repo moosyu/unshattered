@@ -12,6 +12,7 @@ import io.github.moosyu.items.tools.axes.UnshatteredAxeTool;
 import io.github.moosyu.items.tools.rods.UnshatteredRod;
 import io.github.moosyu.items.weapons.axes.UnshatteredAxeWeapon;
 import io.github.moosyu.items.weapons.cleavers.*;
+import io.github.moosyu.items.weapons.daggers.IronDagger;
 import io.github.moosyu.items.weapons.swords.*;
 import io.github.moosyu.rarities.RarityTypes;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
@@ -39,53 +40,6 @@ public class UnshatteredItems {
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "mercenary_axe_damage"), 70, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "mercenary_axe_strength"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .build()
-            )
-    ));
-
-    public static final DeferredItem<UnshatteredSword> WOODEN_SWORD = ITEMS.registerItem("wooden_sword", props -> new UnshatteredSword(props
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.COMMON).component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-            .component(UnshatteredDataComponents.SELL_VALUE.get(), 1)
-            .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "wooden_sword_damage"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .build()
-            )
-    ));
-
-    public static final DeferredItem<UnshatteredSword> STONE_SWORD = ITEMS.registerItem("stone_sword", props -> new UnshatteredSword(props
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.COMMON)
-            .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-            .component(UnshatteredDataComponents.SELL_VALUE.get(), 1)
-            .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "stone_sword_damage"), 25, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .build()
-            )
-    ));
-
-    public static final DeferredItem<UnshatteredSword> IRON_SWORD = ITEMS.registerItem("iron_sword", props -> new UnshatteredSword(props
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.COMMON).component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-            .component(UnshatteredDataComponents.SELL_VALUE.get(), 3)
-            .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "iron_sword_damage"), 30, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .build()
-            )
-    ));
-
-    public static final DeferredItem<UnshatteredSword> GOLDEN_SWORD = ITEMS.registerItem("golden_sword", props -> new UnshatteredSword(props
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.COMMON).component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-            .component(UnshatteredDataComponents.SELL_VALUE.get(), 4)
-            .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "golden_sword_damage"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .build()
-            )
-    ));
-
-    public static final DeferredItem<UnshatteredSword> DIAMOND_SWORD = ITEMS.registerItem("diamond_sword", props -> new UnshatteredSword(props
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.UNCOMMON)
-            .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-            .component(UnshatteredDataComponents.SELL_VALUE.get(), 8)
-            .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "diamond_sword_damage"), 35, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
             )
     ));
@@ -488,6 +442,7 @@ public class UnshatteredItems {
     public static final DeferredItem<Item> HYPER_CLEAVER = ITEMS.registerItem("hyper_cleaver", HyperCleaver::new);
     public static final DeferredItem<Item> GIANT_CLEAVER = ITEMS.registerItem("giant_cleaver", GiantCleaver::new);
     public static final DeferredItem<Item> BAT_TALISMAN = ITEMS.registerItem("bat_talisman", BatTalisman::new);
+    public static final DeferredItem<Item> IRON_DAGGER = ITEMS.registerItem("iron_dagger", IronDagger::new);
 
     public static final DeferredItem<Item> GLOW_SQUID_BOOTS = ITEMS.registerItem("glow_squid_boots", props -> new Item(props
             .humanoidArmor(GLOW_SQUID_BOOTS_MATERIAL, ArmorType.BOOTS)

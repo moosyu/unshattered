@@ -5,7 +5,7 @@ import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemTypes;
-import io.github.moosyu.items.UnshatteredPassiveAbilityItem;
+import io.github.moosyu.items.UnshatteredInstantPassiveAbilityItem;
 import io.github.moosyu.util.AbilityUtils;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
@@ -19,7 +19,7 @@ import net.minecraft.world.phys.AABB;
 
 import static io.github.moosyu.Unshattered.MODID;
 
-public class UnshatteredCleaver extends Item implements UnshatteredPassiveAbilityItem {
+public class UnshatteredCleaver extends Item implements UnshatteredInstantPassiveAbilityItem {
     private static final Identifier ABILITY_IDENTIFIER = Identifier.fromNamespaceAndPath(MODID, "cleaver_cleave");
     private final float radius;
     private final float cleaveDamageFraction;

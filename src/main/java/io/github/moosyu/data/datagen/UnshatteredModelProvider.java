@@ -27,11 +27,6 @@ public class UnshatteredModelProvider extends ModelProvider {
     @Override
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
         itemModels.generateFlatItem(UnshatteredItems.MERCENARY_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
-        itemModels.generateFlatItem(UnshatteredItems.WOODEN_SWORD.get(), Items.WOODEN_SWORD, ModelTemplates.FLAT_HANDHELD_ITEM);
-        itemModels.generateFlatItem(UnshatteredItems.STONE_SWORD.get(), Items.STONE_SWORD, ModelTemplates.FLAT_HANDHELD_ITEM);
-        itemModels.generateFlatItem(UnshatteredItems.IRON_SWORD.get(), Items.IRON_SWORD, ModelTemplates.FLAT_HANDHELD_ITEM);
-        itemModels.generateFlatItem(UnshatteredItems.GOLDEN_SWORD.get(), Items.GOLDEN_SWORD, ModelTemplates.FLAT_HANDHELD_ITEM);
-        itemModels.generateFlatItem(UnshatteredItems.DIAMOND_SWORD.get(), Items.DIAMOND_SWORD, ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.WOODEN_AXE.get(), Items.WOODEN_AXE, ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.STONE_AXE.get(), Items.STONE_AXE, ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.IRON_AXE.get(), Items.IRON_AXE, ModelTemplates.FLAT_HANDHELD_ITEM);
@@ -49,6 +44,7 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.ZOMBIE_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.ORNATE_ZOMBIE_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.FLORID_ZOMBIE_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.IRON_DAGGER.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.GOLDEN_CLEAVER.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.SUPER_CLEAVER.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.HYPER_CLEAVER.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
