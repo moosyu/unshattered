@@ -1,44 +1,64 @@
 package io.github.moosyu.items;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.network.chat.Component;
+import net.minecraft.util.StringRepresentable;
+import org.jspecify.annotations.NonNull;
 
-public enum ItemTypes {
-    ITEM("item_type.unshattered.item", false),
-    FISH("item_type.unshattered.fish", false),
-    LOG("item_type.unshattered.log", false),
-    SWORD("item_type.unshattered.sword", true),
-    DAGGER("item_type.unshattered.dagger", true),
-    AXE("item_type.unshattered.axe", true),
-    BATTLE_AXE("item_type.unshattered.battle_axe", true),
-    BOW("item_type.unshattered.bow", true),
-    SHORTBOW("item_type.unshattered.shortbow", true),
-    HELMET("item_type.unshattered.helmet", true),
-    CHESTPLATE("item_type.unshattered.chestplate", true),
-    LEGGINGS("item_type.unshattered.leggings", true),
-    BOOTS("item_type.unshattered.boots", true),
-    WAND("item_type.unshattered.wand", true),
-    ACCESSORY("item_type.unshattered.accessory", true),
-    STAFF("item_type.unshattered.staff", true),
-    GRIMOIRES("item_type.unshattered.grimoire", true),
-    LONGSWORD("item_type.unshattered.longsword", true),
-    WARHAMMER("item_type.unshattered.warhammer", true),
-    WHIP("item_type.unshattered.whip", true),
-    FISHING_ROD("item_type.unshattered.fishing_rod", true),
-    MATERIAL("item_type.unshattered.material", false),
-    CLEAVER("item_type.unshattered.cleaver", true),
-    PICKAXE("item_type.unshattered.pickaxe", true);
+public enum ItemTypes implements StringRepresentable {
+    ITEM("item", false),
+    FISH("fish", false),
+    LOG("log", false),
+    SWORD("sword", true),
+    DAGGER("dagger", true, 4),
+    AXE("axe", true),
+    BATTLE_AXE("battle_axe", true),
+    BOW("bow", true),
+    SHORTBOW("shortbow", true),
+    HELMET("helmet", true),
+    CHESTPLATE("chestplate", true),
+    LEGGINGS("leggings", true),
+    BOOTS("boots", true),
+    WAND("wand", true),
+    ACCESSORY("accessory", true),
+    STAFF("staff", true),
+    GRIMOIRES("grimoire", true),
+    LONGSWORD("longsword", true),
+    WARHAMMER("warhammer", true),
+    WHIP("whip", true),
+    FISHING_ROD("fishing_rod", true),
+    MATERIAL("material", false),
+    CLEAVER("cleaver", true),
+    PICKAXE("pickaxe", true);
 
-    private final String key;
+    private final String serializedName;
     private final boolean reforgeable;
+    private final int invulnerability;
 
-    ItemTypes(String key, boolean reforgeable) {
-        this.key = key;
+    ItemTypes(String serializedName, boolean reforgeable, int invulnerability) {
+        this.serializedName = serializedName;
         this.reforgeable = reforgeable;
+        this.invulnerability = invulnerability;
     }
 
-    public String getKey() {return key;}
-    public boolean reforgeable() {return reforgeable;}
+    ItemTypes(String serializedName, boolean reforgeable) {
+        this.serializedName = serializedName;
+        this.reforgeable = reforgeable;
+        this.invulnerability = 10;
+    }
+
+    @Override
+    public @NonNull String getSerializedName() {
+        return serializedName;
+    }
+
+    public boolean reforgeable() {
+        return reforgeable;
+    }
+
+    public int getInvulnerability() {
+        return invulnerability;
+    }
 
     public static final Codec<ItemTypes> CODEC = Codec.STRING.xmap(ItemTypes::valueOf, ItemTypes::name);
+
 }

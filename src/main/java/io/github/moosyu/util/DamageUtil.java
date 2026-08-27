@@ -5,6 +5,7 @@ import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.SkillRequirement;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
+import io.github.moosyu.items.ItemTypes;
 import io.github.moosyu.items.UnshatteredInstantPassiveAbilityItem;
 import io.github.moosyu.packets.DamageNumberPacket;
 import io.github.moosyu.packets.FerocityEffectPacket;
@@ -29,12 +30,11 @@ public final class DamageUtil {
     public static final int FEROCITY_COOLDOWN = 4;
 
     /**
-     * runs unshattered damage code that factors in unshattered damage attributes and checks skill requirements
-     *
+     * runs damage code that factors in unshattered damage attributes and checks skill requirements
      * @param player player dealing damage
      * @param target target attempting to be damaged
      */
-    public static void dealDamage(Player player, LivingEntity target, @Nullable UnshatteredInstantPassiveAbilityItem item) {
+    public static void dealDamage(Player player, LivingEntity target, @Nullable UnshatteredInstantPassiveAbilityItem item, ItemTypes itemType) {
         if (!player.isCreative() && target.is(EntityType.ARMOR_STAND)) return;
 
         SkillRequirement skillRequirement = player.getItemInHand(InteractionHand.MAIN_HAND).get(UnshatteredDataComponents.SKILL_REQUIREMENT);
@@ -48,11 +48,6 @@ public final class DamageUtil {
 
         double critDamage = player.getAttributeValue(UnshatteredAttributeValues.CRITICAL_CHANCE.holder) >= (Math.random() * 101) && attackStrength > 0.9f ? player.getAttributeValue(UnshatteredAttributeValues.CRITICAL_DAMAGE.holder) : 0.0d;
 
-        if (critDamage > 0.0d) {
-            player.crit(target);
-            target.playSound(SoundEvents.PLAYER_ATTACK_CRIT, 1.0F, 1.0F);
-        }
-
         double damage = (5 + player.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder))
                 * (1 + (player.getAttributeValue(UnshatteredAttributeValues.STRENGTH.holder) / 100))
                 * (1 + (critDamage / 100))
@@ -60,6 +55,10 @@ public final class DamageUtil {
                 * attackStrength;
         AttributeInstance targetHealth = target.getAttribute(UnshatteredAttributeValues.HEALTH.holder);
         if (target.invulnerableTime <= 0 && targetHealth != null) {
+            if (critDamage > 0.0d) {
+                player.crit(target);
+                target.playSound(SoundEvents.PLAYER_ATTACK_CRIT, 1.0F, 1.0F);
+            }
 
             if ((targetHealth.getBaseValue() - damage) > 0) {
                 targetHealth.setBaseValue(targetHealth.getBaseValue() - damage);
@@ -84,7 +83,7 @@ public final class DamageUtil {
                     player.setData(UnshatteredAttachments.PLAYER_FEROCITY_COOLDOWN, FEROCITY_COOLDOWN * 2);
                 }
                 // has to be placed after hurt as hurt sets its own invulnerability
-                target.invulnerableTime = 10;
+                target.invulnerableTime = itemType.getInvulnerability();
             } else {
                 targetHealth.setBaseValue(0.0);
                 // this should one shot just about any vanilla mob to my knowledge (and actually calculating it wouldnt make sense as custom mobs ill make will have a base normal hp of like 1)
