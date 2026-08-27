@@ -44,6 +44,7 @@ public class DatagenHandler {
         generator.addProvider(true, new UnshatteredItemTagsProvider(packOutput, lookupProvider));
         generator.addProvider(true, new UnshatteredEntityTagsProvider(packOutput, lookupProvider));
         generator.addProvider(true, new UnshatteredDataMapProvider(packOutput, lookupProvider));
+        generator.addProvider(true, new UnshatteredSoundDefinitionsProvider(packOutput));
 
         event.createDatapackRegistryObjects(
                 new RegistrySetBuilder().add(DataPackRegistryHandler.REGION_REGISTRY_KEY, bootstrap -> {

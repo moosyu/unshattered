@@ -18,5 +18,6 @@ public class RegisterClientPayloadHandler {
         event.register(DeathSoundEffectPacket.TYPE, DeathSoundEffectPayloadHandler::handleData);
         event.register(DamageNumberPacket.TYPE, DamageNumberHandler::handleData);
         event.register(OpenDialoguePacket.TYPE, OpenDialogueHandler::handleData);
+        event.register(FerocityEffectPacket.TYPE, FerocityEffectHandler::handleData);
     }
 }

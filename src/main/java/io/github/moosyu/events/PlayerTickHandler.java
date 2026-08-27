@@ -103,6 +103,11 @@ public class PlayerTickHandler {
             player.syncData(PLAYER_STATE);
         }
 
+        int ferocityCooldown = player.getData(UnshatteredAttachments.PLAYER_FEROCITY_COOLDOWN);
+        if (ferocityCooldown > 0) {
+            player.setData(UnshatteredAttachments.PLAYER_FEROCITY_COOLDOWN, ferocityCooldown - 1);
+        }
+
         state.decrementInvulnerableTime();
 
         PlayerAbilityEffectsAttachment abilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES.get());

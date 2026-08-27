@@ -294,5 +294,7 @@
 
   "interactable.name.unshattered.rock": "Rock",
   "quest.name.unshattered.rocks_quest": "Rock's Quest",
-  "quest.title.unshattered.quest_started": "Quest Started"
+  "quest.title.unshattered.quest_started": "Quest Started",
+
+  "sound.unshattered.ferocity_trigger": "Ferocity Slash"
 }

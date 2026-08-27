@@ -83,4 +83,6 @@ public final class UnshatteredAttachments {
                     .copyOnDeath()
                     .build()
     );
+
+    public static final Supplier<AttachmentType<Integer>> PLAYER_FEROCITY_COOLDOWN = ATTACHMENT_TYPES.register("player_ferocity_cooldown", () -> AttachmentType.builder(() -> 0).build());
 }

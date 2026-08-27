@@ -1,0 +1,8 @@
+{
+  "ferocity_trigger_sound": {
+    "sounds": [
+      "unshattered:ferocity_trigger"
+    ],
+    "subtitle": "sound.unshattered.ferocity_trigger"
+  }
+}

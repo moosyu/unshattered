@@ -9,8 +9,6 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
-import java.util.Iterator;
-
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.util.DamageUtil.*;
 
@@ -29,15 +27,7 @@ public class AttackEntityHandler {
     }
 
     @SubscribeEvent
-    public static void onReachedFerocityHits(ServerTickEvent event) {
-        Iterator<FerocityHit> iterator = SCHEDULED_FEROCITY_ATTACKS.iterator();
-
-        while (iterator.hasNext()) {
-            FerocityHit instance = iterator.next();
-
-            if (instance.triggerTime() <= event.getServer().getTickCount()) {
-                iterator.remove();
-            }
-        }
+    public static void onReachedFerocityHits(ServerTickEvent.Post event) {
+        SCHEDULED_FEROCITY_ATTACKS.removeIf(FerocityHit::tick);
     }
 }

@@ -35,6 +35,7 @@ import static io.github.moosyu.entities.UnshatteredEntities.ENTITY_TYPES;
 import static io.github.moosyu.events.DataPackRegistryHandler.REGION_BOUNDARY_REGISTRY_KEY;
 import static io.github.moosyu.gui.screens.ProfileScreen.PROFILE_UI_ID;
 import static io.github.moosyu.items.UnshatteredItems.*;
+import static io.github.moosyu.sounds.UnshatteredSounds.SOUND_EVENTS;
 import static net.minecraft.world.level.Level.OVERWORLD;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -62,6 +63,7 @@ public class Unshattered {
         ATTRIBUTES.register(modEventBus);
         DATA_COMPONENTS.register(modEventBus);
         ENTITY_TYPES.register(modEventBus);
+        SOUND_EVENTS.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (unshattered) to respond directly to events.
