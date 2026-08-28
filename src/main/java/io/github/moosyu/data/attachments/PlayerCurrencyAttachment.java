@@ -39,7 +39,7 @@ public final class PlayerCurrencyAttachment {
         this.motes = motes;
     }
 
-    public static final Codec<PlayerCurrencyAttachment> RECORD_CODEC = RecordCodecBuilder.create(instance ->
+    public static final Codec<PlayerCurrencyAttachment> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     Codec.INT.fieldOf("coins").forGetter(PlayerCurrencyAttachment::getCoins),
                     Codec.INT.fieldOf("motes").forGetter(PlayerCurrencyAttachment::getMotes)

@@ -7,7 +7,6 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import org.joml.Vector2i;
 
 import java.util.function.Supplier;
 
@@ -38,7 +37,7 @@ public final class UnshatteredAttachments {
 
     public static final Supplier<AttachmentType<PlayerCurrencyAttachment>> PLAYER_CURRENCY = ATTACHMENT_TYPES.register("player_currency", () ->
             AttachmentType.builder(() -> new PlayerCurrencyAttachment(0, 0))
-                    .serialize(PlayerCurrencyAttachment.RECORD_CODEC.fieldOf("currency"))
+                    .serialize(PlayerCurrencyAttachment.CODEC.fieldOf("currency"))
                     .sync(PlayerCurrencyAttachment.STREAM_CODEC)
                     .copyOnDeath()
                     .build()

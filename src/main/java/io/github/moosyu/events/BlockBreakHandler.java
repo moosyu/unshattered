@@ -1,6 +1,7 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.Unshattered;
+import io.github.moosyu.blocks.RegenSavedData;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.UnshatteredDataMaps;
@@ -8,8 +9,10 @@ import io.github.moosyu.data.datagen.UnshatteredBlockTagsProvider;
 import io.github.moosyu.util.*;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.GlobalPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
@@ -31,10 +34,6 @@ import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_SK
 // ran just before a player is to break a block
 @EventBusSubscriber(modid = MODID)
 public class BlockBreakHandler {
-    private static final int TIME_BROKEN = 120;
-    private static final Map<BlockPos, RegenBlock> BLOCKS_AWAITING_REGEN = new HashMap<>();
-    public record RegenBlock(Level level, BlockState currentBlock, long regenTick) {}
-
     @SubscribeEvent
     public static void onBlockBreak(BreakBlockEvent event) {
         Player player = event.getPlayer();
@@ -43,13 +42,14 @@ public class BlockBreakHandler {
         Holder<Block> blockHolder = blockState.typeHolder();
         float experienceReward = Objects.requireNonNullElse(blockHolder.getData(UnshatteredDataMaps.HARVESTABLE_BLOCKS_EXP_DATA), 0.0f);
         Block block = blockState.getBlock();
+        BlockPos blockPos = event.getPos();
 
         // so you can still break stuff normally in creative
         if (player.isCreative()) return;
         event.setCanceled(true);
         // so the block doesnt flash in and out of existence when broken before the server says what's up
         if (level.isClientSide()) {
-            PlayClientsideSound.playClientsideSound(player, blockState.getSoundType(level, event.getPos(), player).getBreakSound(), SoundSource.BLOCKS, 1.5f);
+            PlayClientsideSound.playClientsideSound(player, blockState.getSoundType(level, blockPos, player).getBreakSound(), SoundSource.BLOCKS, 1.5f);
             return;
         }
 
@@ -57,11 +57,18 @@ public class BlockBreakHandler {
 
         if (blockState.is(UnshatteredBlockTagsProvider.COLLECTABLE_MINING_BLOCKS)) {
             ItemStack blockDrops = getBlockDrop(block, player, UnshatteredAttributeValues.MINING_FORTUNE);
+
             CollectionUtil.givePlayerHarvestedItemStack(player, blockDrops);
+
             if (experienceReward > 0.0f) {
                 skills.addExp(PlayerSkillsAttachment.Skill.MINING, experienceReward, player);
                 player.syncData(PLAYER_SKILLS);
             }
+
+            ServerLevel serverLevel = (ServerLevel) level;
+            RegenSavedData regenSavedData = serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID);
+
+            regenSavedData.destroyRegeneratingBlock(blockPos, serverLevel);
         } else if (blockState.is(UnshatteredBlockTagsProvider.COLLECTABLE_FARMING_BLOCKS)) {
             ItemStack blockDrops = getBlockDrop(block, player, UnshatteredAttributeValues.FARMING_FORTUNE);
             CollectionUtil.givePlayerHarvestedItemStack(player, blockDrops);
@@ -76,7 +83,7 @@ public class BlockBreakHandler {
                 skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, experienceReward, player);
                 player.syncData(PLAYER_SKILLS);
             } else {
-                TreeSweepHandler.trySweep(player.level(), event.getPos(), player);
+                TreeSweepHandler.trySweep(player.level(), blockPos, player);
             }
         }
     }
@@ -85,10 +92,18 @@ public class BlockBreakHandler {
     @SubscribeEvent
     public static void modifyBreakSpeed(PlayerEvent.BreakSpeed event) {
         Player player = event.getEntity();
+        Optional<BlockPos> blockPos = event.getPosition();
         Level level = player.level();
-        if (BlockBreakingUtil.isBreakableBlock(event.getState(), event.getEntity()) == null
-            || (event.getPosition().isPresent()
-                && !BlockBreakingUtil.canBreakBlock(player, level.getBlockState(event.getPosition().get()).typeHolder()))
+
+        if (blockPos.isEmpty()) {
+            event.setNewSpeed(0.0F);
+            return;
+        }
+
+        GlobalPos globalPos = GlobalPos.of(level.dimension(), blockPos.get());
+
+        if (!BlockBreakingUtil.isBreakableBlock(globalPos, player)
+                || !BlockBreakingUtil.hasBreakingPowerRequirement(player, level.getBlockState(blockPos.get()).typeHolder())
                 || !CheckItemRequirement.passesSkillCheck(player, player.getMainHandItem())
         ) {
             event.setNewSpeed(0.0F);

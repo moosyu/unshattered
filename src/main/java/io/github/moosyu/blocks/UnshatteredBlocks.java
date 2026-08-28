@@ -1,7 +1,5 @@
 package io.github.moosyu.blocks;
 
-import io.github.moosyu.blocks.regenerating.RegeneratingStoneBlockAnchor;
-import io.github.moosyu.data.regen.RegenPath;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Block;
@@ -10,8 +8,6 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
-
-import java.util.List;
 
 import static io.github.moosyu.Unshattered.MODID;
 
@@ -29,13 +25,20 @@ public final class UnshatteredBlocks {
                     .requiresCorrectToolForDrops()
             )
     );
-    public static final DeferredBlock<RegeneratingBlock> BREAKABLE_COBBLESTONE_BLOCK = BLOCKS.registerBlock("breakable_cobblestone_block",
-            props -> new RegeneratingBlock(props
+
+    public static final DeferredBlock<Block> BREAKABLE_COBBLESTONE_BLOCK = BLOCKS.registerBlock("breakable_cobblestone_block",
+            props -> new Block(props
                     .destroyTime(1.5f)
                     .sound(SoundType.STONE)
-                    .requiresCorrectToolForDrops(),
-                    new RegenPath(List.of(), 2)
+                    .requiresCorrectToolForDrops()
             )
     );
-    public static final DeferredBlock<Block> BREAKABLE_STONE_BLOCK = BLOCKS.registerBlock("breakable_stone_block", RegeneratingStoneBlockAnchor::new);
+
+    public static final DeferredBlock<Block> BREAKABLE_STONE_BLOCK = BLOCKS.registerBlock("breakable_stone_block",
+            props -> new Block(props
+                    .destroyTime(1.5f)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops()
+            )
+    );
 }

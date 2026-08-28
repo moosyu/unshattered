@@ -88,9 +88,24 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.itemModelOutput.accept(UnshatteredItems.FISHING_ROD.get(), ItemModelUtils.conditional(new FishingRodCast(), ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(Items.FISHING_ROD, "_cast")), ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(Items.FISHING_ROD))));
 
         blockModels.createRotatedPillarWithHorizontalVariant(UnshatteredBlocks.FIG_LOG_BLOCK.get(), TexturedModel.COLUMN, TexturedModel.COLUMN_HORIZONTAL);
-        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get(), BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get(), TextureMapping.cube(Blocks.STONE), blockModels.modelOutput))));
-        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(), BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(), TextureMapping.cube(Blocks.COBBLESTONE), blockModels.modelOutput))));
-        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK.get(), BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK.get(), TextureMapping.column(UnshatteredBlocks.FIG_LOG_BLOCK.get()), blockModels.modelOutput))));
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get(),
+                BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get(),
+                        TextureMapping.cube(Blocks.STONE),
+                        blockModels.modelOutput)
+                ))
+        );
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(),
+                BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(),
+                        TextureMapping.cube(Blocks.COBBLESTONE),
+                        blockModels.modelOutput)
+                ))
+        );
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK.get(),
+                BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK.get(),
+                        TextureMapping.column(UnshatteredBlocks.FIG_LOG_BLOCK.get()),
+                        blockModels.modelOutput)
+                ))
+        );
         blockModels.blockStateOutput.accept(MultiVariantGenerator
                 .dispatch(UnshatteredBlocks.ROCK_TALKABLE_BLOCK.get(), BlockModelGenerators.variant(new Variant(Identifier.fromNamespaceAndPath(MODID, "block/rock_talkable"))))
                 .with(PropertyDispatch.modify(BlockStateProperties.HORIZONTAL_FACING)

@@ -1,6 +1,5 @@
 package io.github.moosyu.data.datagen;
 
-import io.github.moosyu.blocks.RegeneratingBlock;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
@@ -8,13 +7,9 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.registries.DeferredBlock;
-import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jspecify.annotations.NonNull;
 
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Stream;
 
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.blocks.UnshatteredBlocks.*;

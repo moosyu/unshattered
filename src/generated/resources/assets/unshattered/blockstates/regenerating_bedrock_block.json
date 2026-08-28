@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "unshattered:block/regenerating_bedrock_block"
+    }
+  }
+}

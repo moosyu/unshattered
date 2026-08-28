@@ -1,44 +1,45 @@
 package io.github.moosyu.util;
 
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.blocks.BrokenBlocksWorldResult;
-import io.github.moosyu.blocks.RegeneratableBlock;
-import io.github.moosyu.blocks.RegeneratingBlock;
+import io.github.moosyu.blocks.RegenSavedData;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
-import io.github.moosyu.data.datagen.UnshatteredBlockTagsProvider;
-import io.github.moosyu.data.regions.Region;
 import io.github.moosyu.events.DataPackRegistryHandler;
-import io.github.moosyu.events.DatagenHandler;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.GlobalPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public final class BlockBreakingUtil {
     /**
-     * @param blockState the blockstate of the block being broken
+     * @param blockPos the position of the block being broken
      * @param player the player breaking the block
-     * @return the blockstate of the block the broken block will be replaced with (or null if the player can't break the block)
+     * @return true if it's breakable
      */
-    public static BlockState isBreakableBlock(BlockState blockState, Player player) {
-        Block block = blockState.getBlock();
-        if (block instanceof RegeneratableBlock
-                && player.registryAccess()
-                .lookupOrThrow(DataPackRegistryHandler.REGION_REGISTRY_KEY)
-                .getValueOrThrow(player.getData(UnshatteredAttachments.PLAYER_REGION).regionKey())
-                .harvestable())
-        {
-            return BrokenBlocksWorldResult.getDegradedState(block);
+    public static boolean isBreakableBlock(GlobalPos blockPos, Player player) {
+        Level level = player.level();
+        if (!level.isClientSide()) {
+            ServerLevel serverLevel = (ServerLevel) level;
+            RegenSavedData regenSavedData = serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID);
+
+            return player.registryAccess()
+                    .lookupOrThrow(DataPackRegistryHandler.REGION_REGISTRY_KEY)
+                    .getValueOrThrow(player.getData(UnshatteredAttachments.PLAYER_REGION).regionKey())
+                    .harvestable()
+                    && regenSavedData.canDestroyRegeneratingBLock(blockPos, serverLevel);
         }
-        return null;
+        return false;
     }
 
     /**
@@ -47,7 +48,7 @@ public final class BlockBreakingUtil {
      * @param block block attempting to be broken
      * @return whether the block can be broken by the player
      */
-    public static boolean canBreakBlock(Player player, Holder<Block> block) {
+    public static boolean hasBreakingPowerRequirement(Player player, Holder<Block> block) {
         int requiredBreakingPower = Objects.requireNonNullElse(block.getData(UnshatteredDataMaps.BLOCK_BREAKING_POWER_DATA), 0);
         int playerBreakingPower = (int) player.getAttributeValue(UnshatteredAttributeValues.BREAKING_POWER.holder);
         if (playerBreakingPower >= requiredBreakingPower) return true;
