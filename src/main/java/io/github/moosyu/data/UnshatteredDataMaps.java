@@ -42,7 +42,7 @@ public final class UnshatteredDataMaps {
             Codec.INT
     ).build();
 
-    public static final DataMapType<Block, Item> BREAKABLE_DROPS = DataMapType.builder(
+    public static final DataMapType<Block, Item> BREAKABLE_DROPS_DATA = DataMapType.builder(
             Identifier.fromNamespaceAndPath(MODID, "breakable_drops"),
             Registries.BLOCK,
             BuiltInRegistries.ITEM.byNameCodec()

@@ -1,6 +1,6 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.blocks.RegenSavedData;
+import io.github.moosyu.data.regen.RegenSavedData;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.server.MinecraftServer;
 import net.neoforged.bus.api.SubscribeEvent;

@@ -9,6 +9,7 @@
   "mixins": [
     "ItemStackMixin",
     "FishingHookMixin",
-    "CustomSpawnersMixin"
+    "CustomSpawnersMixin",
+    "BlocksAttacksMixin"
   ]
 }

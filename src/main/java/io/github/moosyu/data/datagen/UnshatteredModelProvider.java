@@ -115,5 +115,17 @@ public class UnshatteredModelProvider extends ModelProvider {
                         .select(Direction.EAST,  BlockModelGenerators.Y_ROT_270)
                 )
         );
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_COAL_ORE_BLOCK.get(),
+                BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(UnshatteredBlocks.BREAKABLE_COAL_ORE_BLOCK.get(),
+                        TextureMapping.cube(Blocks.COAL_ORE),
+                        blockModels.modelOutput)
+                ))
+        );
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK.get(),
+                BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK.get(),
+                        TextureMapping.cube(Blocks.WHEAT),
+                        blockModels.modelOutput)
+                ))
+        );
     }
 }

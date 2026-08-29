@@ -16,6 +16,6 @@ public class DataMapRegistryHandler {
         event.register(FISHABLE_MOBS_EXP_DATA);
         event.register(COMBATABLE_MOBS_LOOT_DATA);
         event.register(BLOCK_BREAKING_POWER_DATA);
-        event.register(BREAKABLE_DROPS);
+        event.register(BREAKABLE_DROPS_DATA);
     }
 }

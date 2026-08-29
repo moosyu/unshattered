@@ -20,7 +20,10 @@
     "minecraft:red_mushroom_block": 2.0,
     "minecraft:spruce_log": 6.0,
     "minecraft:sugar_cane": 2.0,
-    "minecraft:wheat": 4.0,
-    "unshattered:breakable_fig_log": 15.0
+    "unshattered:breakable_coal_ore_block": 4.0,
+    "unshattered:breakable_cobblestone_block": 1.0,
+    "unshattered:breakable_fig_log": 15.0,
+    "unshattered:breakable_stone_block": 1.0,
+    "unshattered:breakable_wheat_block": 4.0
   }
 }

@@ -41,4 +41,19 @@ public final class UnshatteredBlocks {
                     .requiresCorrectToolForDrops()
             )
     );
+
+    public static final DeferredBlock<Block> BREAKABLE_COAL_ORE_BLOCK = BLOCKS.registerBlock("breakable_coal_ore_block",
+            props -> new Block(props
+                    .destroyTime(3.0f)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops()
+            )
+    );
+
+    public static final DeferredBlock<Block> BREAKABLE_WHEAT_BLOCK = BLOCKS.registerBlock("breakable_wheat_block",
+            props -> new Block(props
+                    .sound(SoundType.CROP)
+                    .noCollision()
+            )
+    );
 }

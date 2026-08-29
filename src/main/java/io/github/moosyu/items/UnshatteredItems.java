@@ -3,7 +3,6 @@ package io.github.moosyu.items;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.blocks.UnshatteredBlocks;
-import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.SkillRequirement;
 import io.github.moosyu.data.regions.UnshatteredRegions;
 import io.github.moosyu.items.accessories.BatTalisman;
@@ -415,6 +414,8 @@ public class UnshatteredItems {
 
     public static final DeferredItem<BlockItem> BREAKABLE_FIG_LOG = ITEMS.registerSimpleBlockItem(BREAKABLE_FIG_LOG_BLOCK.getDelegate());
     public static final DeferredItem<BlockItem> BREAKABLE_STONE = ITEMS.registerSimpleBlockItem(BREAKABLE_STONE_BLOCK.getDelegate());
+    public static final DeferredItem<BlockItem> BREAKABLE_COAL_ORE = ITEMS.registerSimpleBlockItem(BREAKABLE_COAL_ORE_BLOCK.getDelegate());
+    public static final DeferredItem<BlockItem> BREAKABLE_WHEAT = ITEMS.registerSimpleBlockItem(BREAKABLE_WHEAT_BLOCK.getDelegate());
     public static final DeferredItem<BlockItem> BREAKABLE_COBBLESTONE = ITEMS.registerSimpleBlockItem(BREAKABLE_COBBLESTONE_BLOCK.getDelegate());
     public static final DeferredItem<Item> ROGUE_SWORD = ITEMS.registerItem("rogue_sword", RogueSword::new);
 

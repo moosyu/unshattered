@@ -28,11 +28,14 @@ public class UnshatteredBlockTagsProvider extends BlockTagsProvider {
         tag(BlockTags.MINEABLE_WITH_AXE).add(BREAKABLE_FIG_LOG_BLOCK.get());
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(BREAKABLE_STONE_BLOCK.get());
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(BREAKABLE_COBBLESTONE_BLOCK.get());
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(BREAKABLE_COAL_ORE_BLOCK.get());
         tag(BlockTags.LOGS).add(FIG_LOG_BLOCK.get());
         tag(BlockTags.LOGS).add(BREAKABLE_FIG_LOG_BLOCK.get());
         tag(COLLECTABLE_MINING_BLOCKS).add(BREAKABLE_STONE_BLOCK.get());
         tag(COLLECTABLE_MINING_BLOCKS).add(BREAKABLE_COBBLESTONE_BLOCK.get());
+        tag(COLLECTABLE_MINING_BLOCKS).add(BREAKABLE_COAL_ORE_BLOCK.get());
         tag(COLLECTABLE_FORAGING_BLOCKS).add(BREAKABLE_FIG_LOG_BLOCK.get());
+        tag(COLLECTABLE_FARMING_BLOCKS).add(BREAKABLE_WHEAT_BLOCK.get());
 
     }
 }

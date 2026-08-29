@@ -36,7 +36,6 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(Blocks.JUNGLE_LOG), 6.0f, false)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(Blocks.ACACIA_LOG), 6.0f, false)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(Blocks.DARK_OAK_LOG), 6.0f, false)
-                .add(BuiltInRegistries.BLOCK.wrapAsHolder(Blocks.WHEAT), 4.0f, false)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(Blocks.POTATOES), 4.0f, false)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(Blocks.CARROTS), 4.0f, false)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(Blocks.PUMPKIN), 4.5f, false)
@@ -49,6 +48,10 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(Blocks.RED_MUSHROOM), 6.0f, false)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(Blocks.CACTUS), 2.0f, false)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(Blocks.COCOA), 4.0f, false)
+                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get()), 1.0f, false)
+                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get()), 1.0f, false)
+                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_COAL_ORE_BLOCK.get()), 4.0f, false)
+                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK.get()), 4.0f, false)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(Blocks.NETHER_WART), 4.0f, false);
         this.builder(FISHABLE_ITEMS_EXP_DATA)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.COD), 0.5f, false)
@@ -208,10 +211,13 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 ), false);
         this.builder(BLOCK_BREAKING_POWER_DATA)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get()), 1, false)
-                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get()), 1, false);
-        this.builder(BREAKABLE_DROPS)
+                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get()), 1, false)
+                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_COAL_ORE_BLOCK.get()), 1, false);
+        this.builder(BREAKABLE_DROPS_DATA)
                 .add(UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK, UnshatteredItems.FIG_LOG.get(), false)
                 .add(UnshatteredBlocks.BREAKABLE_STONE_BLOCK, Items.COBBLESTONE, false)
-                .add(UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK, Items.COBBLESTONE, false);
+                .add(UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK, Items.COBBLESTONE, false)
+                .add(UnshatteredBlocks.BREAKABLE_COAL_ORE_BLOCK, Items.COAL, false)
+                .add(UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK, Items.WHEAT, false);
     }
 }

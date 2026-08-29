@@ -1,5 +1,6 @@
-package io.github.moosyu.blocks;
+package io.github.moosyu.data.regen;
 
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
@@ -16,6 +17,7 @@ import java.util.Map;
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.data.regen.RegenPaths.REGEN_IDENTIFIER_BY_BLOCK;
 import static io.github.moosyu.data.regen.RegenPaths.REGEN_STAGES;
+import static io.github.moosyu.data.regen.RegenPaths.RegenPath;
 
 public class RegenSavedData extends SavedData {
     public static final class RegenState {
@@ -64,7 +66,7 @@ public class RegenSavedData extends SavedData {
     }
 
     public RegenSavedData(Map<GlobalPos, RegenState> regenQueue) {
-        this.regenQueue = regenQueue;
+        this.regenQueue = new HashMap<>(regenQueue);
     }
 
     /**
@@ -96,10 +98,6 @@ public class RegenSavedData extends SavedData {
                 this.setDirty();
             }
         }
-    }
-
-    public boolean canDestroyRegeneratingBLock(GlobalPos blockPos, ServerLevel level) {
-        return REGEN_IDENTIFIER_BY_BLOCK.containsKey(level.getBlockState(blockPos.pos()));
     }
 
     public void regenerateBlock(GlobalPos blockPos, ServerLevel level) {
@@ -135,11 +133,25 @@ public class RegenSavedData extends SavedData {
         return false;
     }
 
+    public static final Codec<Map<GlobalPos, RegenState>> REGEN_QUEUE_CODEC = Codec.pair(
+            GlobalPos.CODEC.fieldOf("pos").codec(),
+            RegenState.CODEC.fieldOf("state").codec()
+    ).listOf().xmap(list -> {
+        Map<GlobalPos, RegenState> map = new HashMap<>();
+        for (Pair<GlobalPos, RegenState> pair : list) {
+            map.put(pair.getFirst(), pair.getSecond());
+        }
+        return map;
+        }, map -> map.entrySet().stream()
+            .map(entry -> Pair.of(entry.getKey(), entry.getValue()))
+            .toList()
+    );
+
     public static final SavedDataType<RegenSavedData> ID = new SavedDataType<>(
             Identifier.fromNamespaceAndPath(MODID, "regen_data"),
             RegenSavedData::new,
             RecordCodecBuilder.create(instance -> instance.group(
-                    Codec.unboundedMap(GlobalPos.CODEC, RegenState.CODEC).fieldOf("regen_queue").forGetter(data -> data.regenQueue)
+                    REGEN_QUEUE_CODEC.fieldOf("regen_queue").forGetter(data -> data.regenQueue)
             ).apply(instance, RegenSavedData::new))
     );
 }

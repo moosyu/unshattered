@@ -68,7 +68,8 @@ public class UnshatteredCreativeTabs {
             output.accept(BREAKABLE_STONE.get());
             output.accept(BREAKABLE_COBBLESTONE.get());
             output.accept(BREAKABLE_FIG_LOG.get());
-
+            output.accept(BREAKABLE_COAL_ORE.get());
+            output.accept(BREAKABLE_WHEAT.get());
         }).build()
     );
 

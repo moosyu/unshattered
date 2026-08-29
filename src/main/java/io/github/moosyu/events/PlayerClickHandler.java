@@ -3,7 +3,6 @@ package io.github.moosyu.events;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.dialogue.DialogueInteractable;
-import io.github.moosyu.util.BlockBreakingUtil;
 import io.github.moosyu.util.CheckItemRequirement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;

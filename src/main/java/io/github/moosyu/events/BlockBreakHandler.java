@@ -1,20 +1,23 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.Unshattered;
-import io.github.moosyu.blocks.RegenSavedData;
+import io.github.moosyu.data.regen.RegenSavedData;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.UnshatteredDataMaps;
+import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.datagen.UnshatteredBlockTagsProvider;
 import io.github.moosyu.util.*;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.GlobalPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -100,10 +103,15 @@ public class BlockBreakHandler {
             return;
         }
 
-        GlobalPos globalPos = GlobalPos.of(level.dimension(), blockPos.get());
+        Holder<Block> block = level.getBlockState(blockPos.get()).typeHolder();
 
-        if (!BlockBreakingUtil.isBreakableBlock(globalPos, player)
-                || !BlockBreakingUtil.hasBreakingPowerRequirement(player, level.getBlockState(blockPos.get()).typeHolder())
+        if (!block.unwrapKey()
+                .map(key -> level.registryAccess()
+                        .lookupOrThrow(Registries.BLOCK)
+                        .getDataMap(UnshatteredDataMaps.BREAKABLE_DROPS_DATA)
+                        .containsKey(key))
+                .orElse(false)
+                || !hasBreakingPowerRequirement(player, level.getBlockState(blockPos.get()).typeHolder())
                 || !CheckItemRequirement.passesSkillCheck(player, player.getMainHandItem())
         ) {
             event.setNewSpeed(0.0F);
@@ -111,12 +119,40 @@ public class BlockBreakHandler {
     }
 
     private static ItemStack getBlockDrop(Block blockBroken, Player player, UnshatteredAttributeValues fortuneType) {
-        Item drop = BuiltInRegistries.BLOCK.wrapAsHolder(blockBroken).getData(UnshatteredDataMaps.BREAKABLE_DROPS);
+        Item drop = BuiltInRegistries.BLOCK.wrapAsHolder(blockBroken).getData(UnshatteredDataMaps.BREAKABLE_DROPS_DATA);
         if (drop == null) {
             Unshattered.LOGGER.warn("{} doesn't have a drop but it was broken!", blockBroken.getName());
             return ItemStack.EMPTY;
         }
 
         return new ItemStack(drop, FortuneCalculation.getItemsCount(player.getAttributeValue(fortuneType.holder), 1));
+    }
+
+    /**
+     * check if a player can break a given block based on their breaking power, sending a message if not
+     * @param player player breaking the block
+     * @param block block attempting to be broken
+     * @return whether the block can be broken by the player
+     */
+    public static boolean hasBreakingPowerRequirement(Player player, Holder<Block> block) {
+        int requiredBreakingPower = Objects.requireNonNullElse(block.getData(UnshatteredDataMaps.BLOCK_BREAKING_POWER_DATA), 0);
+        int playerBreakingPower = (int) player.getAttributeValue(UnshatteredAttributeValues.BREAKING_POWER.holder);
+        if (playerBreakingPower >= requiredBreakingPower) return true;
+        else if (!player.level().isClientSide()) {
+            PlayerStateAttachment playerStateAttachment = player.getData(UnshatteredAttachments.PLAYER_STATE);
+            if (!playerStateAttachment.isFailedMessageFired()) {
+                player.sendSystemMessage(
+                        Component.translatable(player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty() ? "breaking_power.messages.unshattered.hand" : "breaking_power.messages.unshattered.tool")
+                                .append(Component.translatable("breaking_power.messages.unshattered.generic_breaking_power_requirment_start"))
+                                .append(Component.literal(requiredBreakingPower + UnshatteredAttributeValues.BREAKING_POWER.symbol).withColor(UnshatteredAttributeValues.BREAKING_POWER.color))
+                                .append(Component.translatable("breaking_power.messages.unshattered.generic_breaking_power_requirment_end"))
+                                .append(".")
+                );
+            }
+            playerStateAttachment.setFailedMessageFired(true);
+            player.syncData(UnshatteredAttachments.PLAYER_STATE);
+
+        }
+        return false;
     }
 }

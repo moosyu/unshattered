@@ -1,6 +1,7 @@
 {
   "values": [
     "unshattered:breakable_stone_block",
-    "unshattered:breakable_cobblestone_block"
+    "unshattered:breakable_cobblestone_block",
+    "unshattered:breakable_coal_ore_block"
   ]
 }
