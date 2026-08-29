@@ -121,11 +121,15 @@ public class UnshatteredModelProvider extends ModelProvider {
                         blockModels.modelOutput)
                 ))
         );
-        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK.get(),
-                BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK.get(),
-                        TextureMapping.cube(Blocks.WHEAT),
-                        blockModels.modelOutput)
-                ))
-        );
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(
+                UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK.get(),
+                BlockModelGenerators.plainVariant(
+                        ModelTemplates.CROP.create(
+                                UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK.get(),
+                                TextureMapping.crop(TextureMapping.getBlockTexture(Blocks.WHEAT, "_stage7")),
+                                blockModels.modelOutput
+                        )
+                )
+        ));
     }
 }

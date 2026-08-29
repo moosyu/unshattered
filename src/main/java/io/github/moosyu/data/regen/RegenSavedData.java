@@ -80,7 +80,7 @@ public class RegenSavedData extends SavedData {
         if (regenQueue.containsKey(globalPos)) {
             RegenState state = regenQueue.get(globalPos);
             RegenPath regenPath = REGEN_STAGES.get(state.regenPathIdentifier);
-            int newRegenPathIndex = state.regenPathIndex + 1;
+            int newRegenPathIndex = state.regenPathIndex + regenPath.stagesIncremented();
 
             if (newRegenPathIndex < regenPath.path().size()) {
                 level.setBlockAndUpdate(globalPos.pos(), regenPath.path().get(newRegenPathIndex));
@@ -93,12 +93,13 @@ public class RegenSavedData extends SavedData {
                 String regenerationIdentifier = REGEN_IDENTIFIER_BY_BLOCK.get(level.getBlockState(globalPos.pos()));
                 RegenPath regenPath = REGEN_STAGES.get(regenerationIdentifier);
 
-                level.setBlockAndUpdate(globalPos.pos(), regenPath.path().get(1));
-                regenQueue.put(globalPos, new RegenState(regenerationIdentifier, 1, regenPath.regenTicks()));
+                level.setBlockAndUpdate(globalPos.pos(), regenPath.path().get(regenPath.stagesIncremented()));
+                regenQueue.put(globalPos, new RegenState(regenerationIdentifier, regenPath.stagesIncremented(), regenPath.regenTicks()));
                 this.setDirty();
             }
         }
     }
+
 
     public void regenerateBlock(GlobalPos blockPos, ServerLevel level) {
         if (regenQueue.containsKey(blockPos)) {

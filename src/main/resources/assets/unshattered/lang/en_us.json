@@ -115,7 +115,7 @@
   "block.unshattered.breakable_stone_block": "Breakable Stone",
   "block.unshattered.breakable_cobblestone_block": "Breakable Cobblestone",
   "block.unshattered.breakable_coal_ore_block": "Breakable Coal Ore",
-  "block.unshattered.breakable_wheat": "Breakable Wheat",
+  "block.unshattered.breakable_wheat_block": "Breakable Wheat",
   "block.unshattered.rock_talkable": "Talking Rock",
 
   "item.description.unshattered.bat_the_fish": "Where is my cape!",

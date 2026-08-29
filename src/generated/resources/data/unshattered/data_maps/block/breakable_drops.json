@@ -3,6 +3,7 @@
     "unshattered:breakable_coal_ore_block": "minecraft:coal",
     "unshattered:breakable_cobblestone_block": "minecraft:cobblestone",
     "unshattered:breakable_fig_log": "unshattered:fig_log",
-    "unshattered:breakable_stone_block": "minecraft:cobblestone"
+    "unshattered:breakable_stone_block": "minecraft:cobblestone",
+    "unshattered:breakable_wheat_block": "minecraft:wheat"
   }
 }

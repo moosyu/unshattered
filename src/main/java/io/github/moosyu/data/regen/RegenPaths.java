@@ -14,12 +14,6 @@ import java.util.stream.Stream;
 
 public class RegenPaths {
     public record RegenPath(List<BlockState> path, int regenTicks, int stagesIncremented) {
-        public RegenPath(List<BlockState> path, int regenTicks, int stagesIncremented) {
-            this.path = path;
-            this.regenTicks = regenTicks;
-            this.stagesIncremented = stagesIncremented;
-        }
-
         public RegenPath(List<BlockState> path, int regenTicks) {
             this(path, regenTicks, 1);
         }
@@ -31,13 +25,14 @@ public class RegenPaths {
                     Blocks.BEDROCK), 120),
             createRegenPath("coal", List.of(UnshatteredBlocks.BREAKABLE_COAL_ORE_BLOCK.get(),
                     UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(), Blocks.BEDROCK), 150),
-            Map.entry("wheat", new RegenPath(Stream.concat(
-                    Stream.of(UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK.get().defaultBlockState()),
-                    IntStream.range(6, 0)
-                            .mapToObj(age -> Blocks.WHEAT.defaultBlockState()
-                                    .setValue(CropBlock.AGE, age))
-                            .toList().stream()
-                    ).toList(), 150, 6)
+            Map.entry("wheat", new RegenPath(List.of(UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK.get().defaultBlockState(),
+                    Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, 6),
+                    Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, 5),
+                    Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, 4),
+                    Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, 3),
+                    Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, 2),
+                    Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, 1),
+                    Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, 0)), 200, 6)
             )
     );
 

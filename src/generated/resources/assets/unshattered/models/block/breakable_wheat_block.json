@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/crop",
   "textures": {
-    "all": "minecraft:block/wheat"
+    "crop": "minecraft:block/wheat_stage7"
   }
 }

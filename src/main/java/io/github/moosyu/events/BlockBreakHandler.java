@@ -69,18 +69,19 @@ public class BlockBreakHandler {
             }
 
             ServerLevel serverLevel = (ServerLevel) level;
-            RegenSavedData regenSavedData = serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID);
-
-            regenSavedData.destroyRegeneratingBlock(blockPos, serverLevel);
+            serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID).destroyRegeneratingBlock(blockPos, serverLevel);
         } else if (blockState.is(UnshatteredBlockTagsProvider.COLLECTABLE_FARMING_BLOCKS)) {
             ItemStack blockDrops = getBlockDrop(block, player, UnshatteredAttributeValues.FARMING_FORTUNE);
             CollectionUtil.givePlayerHarvestedItemStack(player, blockDrops);
             // todo: make braking cactus' both add their drops to inventory but count broken cactus parts for exp
-            // could just do the same thing as done with sweeping but less costly as it's just the block above
+
             if (experienceReward > 0.0f) {
                 skills.addExp(PlayerSkillsAttachment.Skill.FARMING, experienceReward, player);
                 player.syncData(PLAYER_SKILLS);
             }
+
+            ServerLevel serverLevel = (ServerLevel) level;
+            serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID).destroyRegeneratingBlock(blockPos, serverLevel);
         } else if (blockState.is(UnshatteredBlockTagsProvider.COLLECTABLE_FORAGING_BLOCKS)) {
             if (blockState.is(BlockTags.FLOWERS)) {
                 skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, experienceReward, player);
@@ -118,6 +119,12 @@ public class BlockBreakHandler {
         }
     }
 
+    /**
+     * @param blockBroken the block being broken
+     * @param player the player getting the drop (and having their fortune checked)
+     * @param fortuneType the type of fortune to be used to calculate the drop amount
+     * @return item drop (with fortune calculation)
+     */
     private static ItemStack getBlockDrop(Block blockBroken, Player player, UnshatteredAttributeValues fortuneType) {
         Item drop = BuiltInRegistries.BLOCK.wrapAsHolder(blockBroken).getData(UnshatteredDataMaps.BREAKABLE_DROPS_DATA);
         if (drop == null) {
