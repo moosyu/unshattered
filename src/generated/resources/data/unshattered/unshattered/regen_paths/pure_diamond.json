@@ -1,0 +1,12 @@
+{
+  "path": [
+    {
+      "Name": "unshattered:pure_diamond_block"
+    },
+    {
+      "Name": "minecraft:bedrock"
+    }
+  ],
+  "regen_ticks": 200,
+  "stages_incremented": 1
+}

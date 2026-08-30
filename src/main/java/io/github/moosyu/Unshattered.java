@@ -3,11 +3,18 @@ package io.github.moosyu;
 import com.lowdragmc.lowdraglib2.gui.factory.PlayerUIMenuType;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.attributes.UnshatteredAttributes;
+import io.github.moosyu.data.regen.RegenPaths;
 import io.github.moosyu.data.regions.BoundaryCoordinates;
 import io.github.moosyu.data.regions.RegionAreas;
 import io.github.moosyu.data.regions.UnshatteredRegions;
 import io.github.moosyu.gui.screens.ProfileScreen;
+import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.fml.startup.Server;
 import org.joml.Vector2i;
 import org.slf4j.Logger;
 
@@ -25,6 +32,8 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
 import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static io.github.moosyu.data.attachments.UnshatteredAttachments.ATTACHMENT_TYPES;
 import static io.github.moosyu.attributes.UnshatteredAttributes.ATTRIBUTES;
@@ -32,7 +41,7 @@ import static io.github.moosyu.blocks.UnshatteredBlocks.BLOCKS;
 import static io.github.moosyu.creative.UnshatteredCreativeTabs.CREATIVE_MODE_TABS;
 import static io.github.moosyu.data.components.UnshatteredDataComponents.DATA_COMPONENTS;
 import static io.github.moosyu.entities.UnshatteredEntities.ENTITY_TYPES;
-import static io.github.moosyu.events.DataPackRegistryHandler.REGION_BOUNDARY_REGISTRY_KEY;
+import static io.github.moosyu.events.DataPackRegistryHandler.*;
 import static io.github.moosyu.gui.screens.ProfileScreen.PROFILE_UI_ID;
 import static io.github.moosyu.items.UnshatteredItems.*;
 import static io.github.moosyu.sounds.UnshatteredSounds.SOUND_EVENTS;
@@ -93,14 +102,24 @@ public class Unshattered {
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
-        // Do something when the server starts
+        MinecraftServer server = event.getServer();
         LOGGER.info("HELLO from server starting");
         UnshatteredAttributeValues.buildLookup();
-        ServerLevel serverLevel = event.getServer().getLevel(OVERWORLD);
+        ServerLevel serverLevel = server.getLevel(OVERWORLD);
         BoundaryCoordinates boundaryCoordinates = BoundaryCoordinates.getRegionCoordinates(serverLevel, UnshatteredRegions.DEFAULT_REGION);
-        if (serverLevel != null && boundaryCoordinates != null) {
+
+        if (serverLevel == null) return;
+
+        RegistryAccess registryAccess = serverLevel.registryAccess();
+        if (boundaryCoordinates != null) {
             Vector2i boundaryCoordinatesLength = boundaryCoordinates.getRectangleLengths();
-            RegionAreas.createRegionAreaGrid(new Vector2i(boundaryCoordinatesLength.x, boundaryCoordinatesLength.y), serverLevel.registryAccess().lookupOrThrow(REGION_BOUNDARY_REGISTRY_KEY).stream().toList());
+            RegionAreas.createRegionAreaGrid(new Vector2i(boundaryCoordinatesLength.x, boundaryCoordinatesLength.y), registryAccess.lookupOrThrow(REGION_BOUNDARY_REGISTRY_KEY).stream().toList());
         }
+
+        RegenPaths.REGEN_IDENTIFIER_BY_BLOCK = registryAccess.lookupOrThrow(REGEN_PATH_REGISTRY_KEY)
+                .listElements()
+                .collect(Collectors.toMap(ref -> ref.value().path().getFirst(),
+                        ref -> ref.key().identifier()
+                ));
     }
 }

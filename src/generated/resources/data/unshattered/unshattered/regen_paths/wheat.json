@@ -1,0 +1,51 @@
+{
+  "path": [
+    {
+      "Name": "unshattered:breakable_wheat_block"
+    },
+    {
+      "Name": "minecraft:wheat",
+      "Properties": {
+        "age": "6"
+      }
+    },
+    {
+      "Name": "minecraft:wheat",
+      "Properties": {
+        "age": "5"
+      }
+    },
+    {
+      "Name": "minecraft:wheat",
+      "Properties": {
+        "age": "4"
+      }
+    },
+    {
+      "Name": "minecraft:wheat",
+      "Properties": {
+        "age": "3"
+      }
+    },
+    {
+      "Name": "minecraft:wheat",
+      "Properties": {
+        "age": "2"
+      }
+    },
+    {
+      "Name": "minecraft:wheat",
+      "Properties": {
+        "age": "1"
+      }
+    },
+    {
+      "Name": "minecraft:wheat",
+      "Properties": {
+        "age": "0"
+      }
+    }
+  ],
+  "regen_ticks": 200,
+  "stages_incremented": 6
+}

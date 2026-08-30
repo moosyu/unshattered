@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "unshattered:block/breakable_redstone_ore_block"
+    }
+  }
+}

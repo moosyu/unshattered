@@ -83,5 +83,35 @@ public class ModifyDefaultComponentsHandler {
                 .set(UnshatteredDataComponents.DESCRIPTION.get(), true)
                 .set(UnshatteredDataComponents.SELL_VALUE.get(), 8))
         );
+        event.modify(Items.WOODEN_AXE, ((components, _, _) -> components
+                .set(UnshatteredDataComponents.ITEM_TYPE, ItemTypes.BATTLE_AXE)
+                .set(UnshatteredDataComponents.RARITY, RarityTypes.COMMON)
+                .set(UnshatteredDataComponents.DESCRIPTION.get(), true)
+                .set(UnshatteredDataComponents.SELL_VALUE.get(), 1))
+        );
+        event.modify(Items.STONE_AXE, ((components, _, _) -> components
+                .set(UnshatteredDataComponents.ITEM_TYPE, ItemTypes.BATTLE_AXE)
+                .set(UnshatteredDataComponents.RARITY, RarityTypes.COMMON)
+                .set(UnshatteredDataComponents.DESCRIPTION.get(), true)
+                .set(UnshatteredDataComponents.SELL_VALUE.get(), 2))
+        );
+        event.modify(Items.IRON_AXE, ((components, _, _) -> components
+                .set(UnshatteredDataComponents.ITEM_TYPE, ItemTypes.BATTLE_AXE)
+                .set(UnshatteredDataComponents.RARITY, RarityTypes.COMMON)
+                .set(UnshatteredDataComponents.DESCRIPTION.get(), true)
+                .set(UnshatteredDataComponents.SELL_VALUE.get(), 4))
+        );
+        event.modify(Items.GOLDEN_AXE, ((components, _, _) -> components
+                .set(UnshatteredDataComponents.ITEM_TYPE, ItemTypes.BATTLE_AXE)
+                .set(UnshatteredDataComponents.RARITY, RarityTypes.COMMON)
+                .set(UnshatteredDataComponents.DESCRIPTION.get(), true)
+                .set(UnshatteredDataComponents.SELL_VALUE.get(), 6))
+        );
+        event.modify(Items.DIAMOND_AXE, ((components, _, _) -> components
+                .set(UnshatteredDataComponents.ITEM_TYPE, ItemTypes.BATTLE_AXE)
+                .set(UnshatteredDataComponents.RARITY, RarityTypes.UNCOMMON)
+                .set(UnshatteredDataComponents.DESCRIPTION.get(), true)
+                .set(UnshatteredDataComponents.SELL_VALUE.get(), 12))
+        );
     }
 }

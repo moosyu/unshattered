@@ -3,9 +3,13 @@ package io.github.moosyu.data.regen;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.github.moosyu.Unshattered;
+import io.github.moosyu.events.DataPackRegistryHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.saveddata.SavedData;
@@ -16,22 +20,21 @@ import java.util.Map;
 
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.data.regen.RegenPaths.REGEN_IDENTIFIER_BY_BLOCK;
-import static io.github.moosyu.data.regen.RegenPaths.REGEN_STAGES;
 import static io.github.moosyu.data.regen.RegenPaths.RegenPath;
 
 public class RegenSavedData extends SavedData {
     public static final class RegenState {
-        private final String regenPathIdentifier;
+        private final ResourceKey<RegenPath> regenPathIdentifier;
         private final int regenPathIndex;
         private int ticksRemaining;
 
-        public RegenState(String regenPathIdentifier, int regenPathIndex, int ticksRemaining) {
+        public RegenState(ResourceKey<RegenPath> regenPathIdentifier, int regenPathIndex, int ticksRemaining) {
             this.regenPathIdentifier = regenPathIdentifier;
             this.regenPathIndex = regenPathIndex;
             this.ticksRemaining = ticksRemaining;
         }
 
-        public String regenPathIdentifier() {
+        public ResourceKey<RegenPath> regenPathIdentifier() {
             return regenPathIdentifier;
         }
 
@@ -49,7 +52,8 @@ public class RegenSavedData extends SavedData {
 
         public static final Codec<RegenState> CODEC = RecordCodecBuilder.create(instance ->
                 instance.group(
-                        Codec.STRING.fieldOf("regen_path_identifier")
+                        ResourceKey.codec(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY)
+                                .fieldOf("regen_path_identifier")
                                 .forGetter(RegenState::regenPathIdentifier),
                         Codec.INT.fieldOf("regen_path_index")
                                 .forGetter(RegenState::regenPathIndex),
@@ -69,6 +73,10 @@ public class RegenSavedData extends SavedData {
         this.regenQueue = new HashMap<>(regenQueue);
     }
 
+    private static Registry<RegenPath> regenPathRegistry(ServerLevel level) {
+        return level.registryAccess().lookupOrThrow(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY);
+    }
+
     /**
      * attempt to destroy a block
      * @param blockPos global position of block being broken
@@ -76,36 +84,52 @@ public class RegenSavedData extends SavedData {
      */
     public void destroyRegeneratingBlock(BlockPos blockPos, ServerLevel level) {
         GlobalPos globalPos = GlobalPos.of(level.dimension(), blockPos);
+        Registry<RegenPath> registry = regenPathRegistry(level);
 
         if (regenQueue.containsKey(globalPos)) {
             RegenState state = regenQueue.get(globalPos);
-            RegenPath regenPath = REGEN_STAGES.get(state.regenPathIdentifier);
+            RegenPath regenPath = registry.getValue(state.regenPathIdentifier());
+            if (regenPath == null) return;
+
             int newRegenPathIndex = state.regenPathIndex + regenPath.stagesIncremented();
 
             if (newRegenPathIndex < regenPath.path().size()) {
                 level.setBlockAndUpdate(globalPos.pos(), regenPath.path().get(newRegenPathIndex));
-                regenQueue.put(globalPos, new RegenState(state.regenPathIdentifier, newRegenPathIndex, regenPath.regenTicks()));
+                regenQueue.put(globalPos, new RegenState(state.regenPathIdentifier(), newRegenPathIndex, regenPath.regenTicks()));
                 this.setDirty();
             }
         } else {
             BlockState blockState = level.getBlockState(globalPos.pos());
-            if (REGEN_IDENTIFIER_BY_BLOCK.containsKey(blockState)) {
-                String regenerationIdentifier = REGEN_IDENTIFIER_BY_BLOCK.get(level.getBlockState(globalPos.pos()));
-                RegenPath regenPath = REGEN_STAGES.get(regenerationIdentifier);
+            Identifier regenerationIdentifier = REGEN_IDENTIFIER_BY_BLOCK.get(blockState);
+            if (regenerationIdentifier != null) {
+                ResourceKey<RegenPath> regenPathKey = ResourceKey.create(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY, regenerationIdentifier);
+                RegenPath regenPath = registry.getValue(regenPathKey);
+                if (regenPath == null) {
+                    Unshattered.LOGGER.error("missing regen path for {}", regenPathKey.identifier().getPath());
+                    return;
+                };
 
                 level.setBlockAndUpdate(globalPos.pos(), regenPath.path().get(regenPath.stagesIncremented()));
-                regenQueue.put(globalPos, new RegenState(regenerationIdentifier, regenPath.stagesIncremented(), regenPath.regenTicks()));
+                regenQueue.put(globalPos, new RegenState(regenPathKey, regenPath.stagesIncremented(), regenPath.regenTicks()));
                 this.setDirty();
             }
         }
     }
 
-
+    /**
+     * regenerates a block in the regen queue
+     * @param blockPos the position of the block being regenerated
+     * @param level server level
+     */
     public void regenerateBlock(GlobalPos blockPos, ServerLevel level) {
         if (regenQueue.containsKey(blockPos)) {
             RegenState state = regenQueue.get(blockPos);
             int newRegenPathIndex = state.regenPathIndex - 1;
-            RegenPath regenPath = REGEN_STAGES.get(state.regenPathIdentifier);
+
+            Registry<RegenPath> registry = regenPathRegistry(level);
+            RegenPath regenPath = registry.getValue(state.regenPathIdentifier());
+            if (regenPath == null) return;
+
             BlockState newBlockstate = regenPath.path().get(newRegenPathIndex);
 
             level.setBlockAndUpdate(blockPos.pos(), newBlockstate);
@@ -113,7 +137,7 @@ public class RegenSavedData extends SavedData {
             if (newRegenPathIndex == 0) {
                 regenQueue.remove(blockPos);
             } else {
-                regenQueue.put(blockPos, new RegenState(state.regenPathIdentifier, newRegenPathIndex, regenPath.regenTicks()));
+                regenQueue.put(blockPos, new RegenState(state.regenPathIdentifier(), newRegenPathIndex, regenPath.regenTicks()));
             }
 
             this.setDirty();
@@ -138,14 +162,14 @@ public class RegenSavedData extends SavedData {
             GlobalPos.CODEC.fieldOf("pos").codec(),
             RegenState.CODEC.fieldOf("state").codec()
     ).listOf().xmap(list -> {
-        Map<GlobalPos, RegenState> map = new HashMap<>();
-        for (Pair<GlobalPos, RegenState> pair : list) {
-            map.put(pair.getFirst(), pair.getSecond());
-        }
-        return map;
-        }, map -> map.entrySet().stream()
-            .map(entry -> Pair.of(entry.getKey(), entry.getValue()))
-            .toList()
+                Map<GlobalPos, RegenState> map = new HashMap<>();
+                for (Pair<GlobalPos, RegenState> pair : list) {
+                    map.put(pair.getFirst(), pair.getSecond());
+                }
+                return map;
+            }, map -> map.entrySet().stream()
+                    .map(entry -> Pair.of(entry.getKey(), entry.getValue()))
+                    .toList()
     );
 
     public static final SavedDataType<RegenSavedData> ID = new SavedDataType<>(

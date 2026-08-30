@@ -11,20 +11,17 @@ import java.util.Map;
 import static io.github.moosyu.Unshattered.LOGGER;
 
 public enum UnshatteredAttributeValues {
-    HEALTH("health", "❤", 100.0, 0.0, 2147483647.0, 0xFFFC3A3A, UnshatteredAttributeTypes.IMPORTANT, false, false),
+    HEALTH("health", "❤", 20.0, 0.0, 2147483647.0, 0xFFFC3A3A, UnshatteredAttributeTypes.IMPORTANT, false, false),
     HEALTH_REGEN("health_regen", "❣", 100.0, 0.0, 2048.0, 0xFFFC3A3A, UnshatteredAttributeTypes.VISIBLE, false, true),
     DEFENSE("defense", "❈", 0.0, 0.0, 131072.0, 0xFF55FF55, UnshatteredAttributeTypes.IMPORTANT, false, false),
     TRUE_DEFENSE("true_defense", "❂", 0.0, 0.0, 1024.0, 0xFFFFFFFF, UnshatteredAttributeTypes.VISIBLE, false, false),
     STRENGTH("strength", "❁", 0.0, 0.0, 4096.0, 0xFFFC3A3A, UnshatteredAttributeTypes.IMPORTANT, true, false),
-    /**
-     * still kinda a percentage, 100.0 is 100%
-     */
-    CRITICAL_CHANCE("critical_chance", "☣", 30.0, 0.0, 2048.0, 0xFF5454FC, UnshatteredAttributeTypes.IMPORTANT, false, true),
+    CRITICAL_CHANCE("critical_chance", "☣", 30.0, 0.0, 400.0, 0xFF5454FC, UnshatteredAttributeTypes.IMPORTANT, false, true),
     CRITICAL_DAMAGE("critical_damage", "☠", 50.0, 0.0, 4096.0, 0xFF5454FC, UnshatteredAttributeTypes.IMPORTANT, true, true),
     FEROCITY("ferocity", "⫽", 0.0, 0.0, 500.0, 0xFFFF5555, UnshatteredAttributeTypes.VISIBLE, true, false),
     MANA("mana", "✎", 100.0, 0.0, 131072.0, 0xFF55D5FF, UnshatteredAttributeTypes.IMPORTANT, false, false),
     MANA_REGEN("mana_regen", "✎", 100.0, 100.0, 2048.0, 0xFF55D5FF, UnshatteredAttributeTypes.IMPORTANT, false, true),
-    MINING_SPEED("mining_speed", "⸕", 0.0, 0.0, 131072.0, 0xFFFFAA00, UnshatteredAttributeTypes.VISIBLE, false, false),
+    MINING_SPEED("mining_speed", "⸕", 0.0, 0.0, 128.0, 0xFFFFAA00, UnshatteredAttributeTypes.VISIBLE, false, false),
     MINING_FORTUNE("mining_fortune", "☘", 0.0, 0.0, 2048.0, 0xFFFFAA00, UnshatteredAttributeTypes.IMPORTANT, false, false),
     MINING_SPREAD("mining_spread", "▚", 0.0, 0.0, 1024.0, 0xFFFFFF55, UnshatteredAttributeTypes.VISIBLE, false, false),
     PRISTINE("pristine", "✧", 0.0, 0.0, 32.0, 0xFFAA00AA, UnshatteredAttributeTypes.VISIBLE, false, false),

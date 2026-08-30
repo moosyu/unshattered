@@ -4,9 +4,9 @@ import io.github.moosyu.Unshattered;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.data.DropTypes;
-import io.github.moosyu.data.MobItemDropData;
-import io.github.moosyu.data.MobRewardData;
+import io.github.moosyu.data.drops.DropTypes;
+import io.github.moosyu.data.drops.MobItemDropData;
+import io.github.moosyu.data.drops.MobRewardData;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.rarities.RarityTypes;
@@ -26,7 +26,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_SKILLS;
-import static io.github.moosyu.data.DropTypes.getDropType;
+import static io.github.moosyu.data.drops.DropTypes.getDropType;
 
 @EventBusSubscriber(modid = MODID)
 public class EntityDeathHandler {

@@ -7,6 +7,7 @@ import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.datagen.UnshatteredBlockTagsProvider;
+import io.github.moosyu.items.ItemRange;
 import io.github.moosyu.util.*;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import net.minecraft.core.BlockPos;
@@ -100,7 +101,7 @@ public class BlockBreakHandler {
         Level level = player.level();
 
         if (blockPos.isEmpty()) {
-            event.setNewSpeed(0.0F);
+            event.setNewSpeed(0.0f);
             return;
         }
 
@@ -115,7 +116,12 @@ public class BlockBreakHandler {
                 || !hasBreakingPowerRequirement(player, level.getBlockState(blockPos.get()).typeHolder())
                 || !CheckItemRequirement.passesSkillCheck(player, player.getMainHandItem())
         ) {
-            event.setNewSpeed(0.0F);
+            event.setNewSpeed(0.0f);
+            return;
+        }
+
+        if (block.is(UnshatteredBlockTagsProvider.COLLECTABLE_MINING_BLOCKS)) {
+            event.setNewSpeed((float) player.getAttributeValue(UnshatteredAttributeValues.MINING_SPEED.holder));
         }
     }
 
@@ -126,13 +132,17 @@ public class BlockBreakHandler {
      * @return item drop (with fortune calculation)
      */
     private static ItemStack getBlockDrop(Block blockBroken, Player player, UnshatteredAttributeValues fortuneType) {
-        Item drop = BuiltInRegistries.BLOCK.wrapAsHolder(blockBroken).getData(UnshatteredDataMaps.BREAKABLE_DROPS_DATA);
+        ItemRange drop = BuiltInRegistries.BLOCK.wrapAsHolder(blockBroken).getData(UnshatteredDataMaps.BREAKABLE_DROPS_DATA);
         if (drop == null) {
             Unshattered.LOGGER.warn("{} doesn't have a drop but it was broken!", blockBroken.getName());
             return ItemStack.EMPTY;
         }
 
-        return new ItemStack(drop, FortuneCalculation.getItemsCount(player.getAttributeValue(fortuneType.holder), 1));
+        int dropAmount = drop.maxAmount() == drop.minAmount()
+                ? drop.maxAmount()
+                : player.getRandom().nextIntBetweenInclusive(drop.minAmount(), drop.maxAmount());
+
+        return new ItemStack(drop.item(), FortuneCalculation.getItemsCount(player.getAttributeValue(fortuneType.holder), dropAmount));
     }
 
     /**

@@ -27,12 +27,7 @@ public class UnshatteredModelProvider extends ModelProvider {
     @Override
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
         itemModels.generateFlatItem(UnshatteredItems.MERCENARY_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
-        itemModels.generateFlatItem(UnshatteredItems.WOODEN_AXE.get(), Items.WOODEN_AXE, ModelTemplates.FLAT_HANDHELD_ITEM);
-        itemModels.generateFlatItem(UnshatteredItems.STONE_AXE.get(), Items.STONE_AXE, ModelTemplates.FLAT_HANDHELD_ITEM);
-        itemModels.generateFlatItem(UnshatteredItems.IRON_AXE.get(), Items.IRON_AXE, ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.ROGUE_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
-        itemModels.generateFlatItem(UnshatteredItems.GOLDEN_AXE.get(), Items.GOLDEN_AXE, ModelTemplates.FLAT_HANDHELD_ITEM);
-        itemModels.generateFlatItem(UnshatteredItems.DIAMOND_AXE.get(), Items.DIAMOND_AXE, ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.TREECAPITATOR.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.SPRUCE_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.SERIOUSLY_DAMAGED_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
@@ -131,5 +126,53 @@ public class UnshatteredModelProvider extends ModelProvider {
                         )
                 )
         ));
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_IRON_ORE_BLOCK.get(),
+                BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(UnshatteredBlocks.BREAKABLE_IRON_ORE_BLOCK.get(),
+                        TextureMapping.cube(Blocks.IRON_ORE),
+                        blockModels.modelOutput)
+                ))
+        );
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_COPPER_ORE_BLOCK.get(),
+                BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(UnshatteredBlocks.BREAKABLE_COPPER_ORE_BLOCK.get(),
+                        TextureMapping.cube(Blocks.COPPER_ORE),
+                        blockModels.modelOutput)
+                ))
+        );
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_GOLD_ORE_BLOCK.get(),
+                BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(UnshatteredBlocks.BREAKABLE_GOLD_ORE_BLOCK.get(),
+                        TextureMapping.cube(Blocks.GOLD_ORE),
+                        blockModels.modelOutput)
+                ))
+        );
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_REDSTONE_ORE_BLOCK.get(),
+                BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(UnshatteredBlocks.BREAKABLE_REDSTONE_ORE_BLOCK.get(),
+                        TextureMapping.cube(Blocks.REDSTONE_ORE),
+                        blockModels.modelOutput)
+                ))
+        );
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_EMERALD_ORE_BLOCK.get(),
+                BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(UnshatteredBlocks.BREAKABLE_EMERALD_ORE_BLOCK.get(),
+                        TextureMapping.cube(Blocks.EMERALD_ORE),
+                        blockModels.modelOutput)
+                ))
+        );
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_DIAMOND_ORE_BLOCK.get(),
+                BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(UnshatteredBlocks.BREAKABLE_DIAMOND_ORE_BLOCK.get(),
+                        TextureMapping.cube(Blocks.DIAMOND_ORE),
+                        blockModels.modelOutput)
+                ))
+        );
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.PURE_DIAMOND_BLOCK.get(),
+                BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(UnshatteredBlocks.PURE_DIAMOND_BLOCK.get(),
+                        TextureMapping.cube(Blocks.DIAMOND_BLOCK),
+                        blockModels.modelOutput)
+                ))
+        );
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_OBSIDIAN_BLOCK.get(),
+                BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(UnshatteredBlocks.BREAKABLE_OBSIDIAN_BLOCK.get(),
+                        TextureMapping.cube(Blocks.OBSIDIAN),
+                        blockModels.modelOutput)
+                ))
+        );
     }
 }

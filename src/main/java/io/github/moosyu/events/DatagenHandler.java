@@ -1,9 +1,11 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.blocks.TalkingRockBlock;
+import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.dialogue.*;
 import io.github.moosyu.data.quests.Quest;
 import io.github.moosyu.data.quests.QuestTypes;
+import io.github.moosyu.data.regen.RegenPaths.*;
 import io.github.moosyu.data.regions.*;
 import io.github.moosyu.data.datagen.*;
 import net.minecraft.core.Holder;
@@ -18,6 +20,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
@@ -25,6 +31,7 @@ import org.joml.Vector2i;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -96,11 +103,64 @@ public class DatagenHandler {
                     );
                 }).add(DataPackRegistryHandler.QUEST_REGISTRY_KEY, bootstrap -> {
                     registerQuest(bootstrap, TalkingRockBlock.ROCKS_QUEST, QuestTypes.NOVICE, new GiveItemDialogueEvent(BuiltInRegistries.ITEM.wrapAsHolder(Items.STONE), 1));
+                }).add(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY, bootstrap -> {
+                    createRegenPathWithBlocks(bootstrap, "stone", List.of(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get(),
+                            UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(),
+                            Blocks.BEDROCK),
+                            120
+                    );
+                    createRegenPathWithBlocks(bootstrap, "coal", List.of(UnshatteredBlocks.BREAKABLE_COAL_ORE_BLOCK.get(),
+                            UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(), Blocks.BEDROCK),
+                            150
+                    );
+                    createRegenPathWithBlocks(bootstrap, "iron", List.of(UnshatteredBlocks.BREAKABLE_IRON_ORE_BLOCK.get(),
+                            UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(), Blocks.BEDROCK),
+                            150
+                    );
+                    createRegenPathWithBlocks(bootstrap, "copper", List.of(UnshatteredBlocks.BREAKABLE_COPPER_ORE_BLOCK.get(),
+                            UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(), Blocks.BEDROCK),
+                            150
+                    );
+                    createRegenPathWithBlocks(bootstrap,"gold", List.of(UnshatteredBlocks.BREAKABLE_GOLD_ORE_BLOCK.get(),
+                            UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(), Blocks.BEDROCK),
+                            150
+                    );
+                    createRegenPathWithBlocks(bootstrap, "redstone", List.of(UnshatteredBlocks.BREAKABLE_REDSTONE_ORE_BLOCK.get(),
+                            UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(), Blocks.BEDROCK),
+                            150
+                    );
+                    createRegenPathWithBlocks(bootstrap, "emerald", List.of(UnshatteredBlocks.BREAKABLE_EMERALD_ORE_BLOCK.get(),
+                            UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(), Blocks.BEDROCK),
+                            150
+                    );
+                    createRegenPathWithBlocks(bootstrap, "diamond", List.of(UnshatteredBlocks.BREAKABLE_DIAMOND_ORE_BLOCK.get(),
+                            UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(), Blocks.BEDROCK),
+                            150
+                    );
+                    createRegenPath(bootstrap, "wheat", List.of(UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK.get().defaultBlockState(),
+                            Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, 6),
+                            Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, 5),
+                            Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, 4),
+                            Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, 3),
+                            Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, 2),
+                            Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, 1),
+                            Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, 0)),
+                            200,
+                            6
+                    );
+                    createRegenPathWithBlocks(bootstrap, "pure_diamond", List.of(UnshatteredBlocks.PURE_DIAMOND_BLOCK.get(),
+                            Blocks.BEDROCK),
+                            200
+                    );
+                    createRegenPathWithBlocks(bootstrap, "obsidian", List.of(UnshatteredBlocks.BREAKABLE_OBSIDIAN_BLOCK.get(),
+                                    Blocks.BEDROCK),
+                            240
+                    );
                 })
         );
     }
 
-    public static void registerRegionBoundary(BootstrapContext<RegionBoundary> bootstrap, BoundaryCoordinates boundaryCoordinates, ResourceKey<Region> region, HolderGetter<Region> regions) {
+    private static void registerRegionBoundary(BootstrapContext<RegionBoundary> bootstrap, BoundaryCoordinates boundaryCoordinates, ResourceKey<Region> region, HolderGetter<Region> regions) {
         Holder<Region> regionHolder = regions.getOrThrow(region);
 
         bootstrap.register(
@@ -109,19 +169,19 @@ public class DatagenHandler {
         );
     }
 
-    public static void registerDialogueTree(BootstrapContext<DialogueTree> bootstrap, Identifier dialogueTreeIdentifier, DialogueTree dialogueTree) {
+    private static void registerDialogueTree(BootstrapContext<DialogueTree> bootstrap, Identifier dialogueTreeIdentifier, DialogueTree dialogueTree) {
         bootstrap.register(ResourceKey.create(DataPackRegistryHandler.DIALOGUE_TREE_REGISTRY_KEY, dialogueTreeIdentifier), dialogueTree);
     }
 
 
-    public static DialogueTreeOrigin createDialogueOrigin(int priority, DialogueNode dialogueNode, List<Identifier> requiredFlags, List<Identifier> excludedFlags) {
+    private static DialogueTreeOrigin createDialogueOrigin(int priority, DialogueNode dialogueNode, List<Identifier> requiredFlags, List<Identifier> excludedFlags) {
         return new DialogueTreeOrigin(priority, dialogueNode, Optional.of(new DialogueFlagRequirements(requiredFlags, excludedFlags)), List.of());
     }
 
     /**
      * @return a dialogue tree origin with itself as a flag along with any extra flags to be tracked
      */
-    public static DialogueTreeOrigin createDialogueOriginWithSelfFlag(int priority, DialogueNode dialogueNode, List<Identifier> requiredFlags, List<Identifier> excludedFlags, List<Identifier> extraSetFlags, Identifier treeOriginIdentifier) {
+    private static DialogueTreeOrigin createDialogueOriginWithSelfFlag(int priority, DialogueNode dialogueNode, List<Identifier> requiredFlags, List<Identifier> excludedFlags, List<Identifier> extraSetFlags, Identifier treeOriginIdentifier) {
         List<Identifier> combinedSetFlags = new ArrayList<>(1 + extraSetFlags.size());
         combinedSetFlags.add(treeOriginIdentifier);
         combinedSetFlags.addAll(extraSetFlags);
@@ -132,15 +192,30 @@ public class DatagenHandler {
     /**
      * @return a dialogue tree origin with itself as a flag to be tracked
      */
-    public static DialogueTreeOrigin createDialogueOriginWithSelfFlag(int priority, DialogueNode dialogueNode, Identifier treeOriginIdentifier) {
+    private static DialogueTreeOrigin createDialogueOriginWithSelfFlag(int priority, DialogueNode dialogueNode, Identifier treeOriginIdentifier) {
         return new DialogueTreeOrigin(priority, dialogueNode, List.of(treeOriginIdentifier));
     }
 
-    public static void registerQuest(BootstrapContext<Quest> bootstrap, Identifier questIdentifier, QuestTypes questTypes, DialogueTriggeredEvent questCompleteEvent) {
+    private static void registerQuest(BootstrapContext<Quest> bootstrap, Identifier questIdentifier, QuestTypes questTypes, DialogueTriggeredEvent questCompleteEvent) {
         bootstrap.register(ResourceKey.create(DataPackRegistryHandler.QUEST_REGISTRY_KEY, questIdentifier), new Quest(questTypes, Optional.of(questCompleteEvent)));
     }
 
-    public static void registerQuest(BootstrapContext<Quest> bootstrap, Identifier questIdentifier, QuestTypes questTypes) {
+    private static void registerQuest(BootstrapContext<Quest> bootstrap, Identifier questIdentifier, QuestTypes questTypes) {
         bootstrap.register(ResourceKey.create(DataPackRegistryHandler.QUEST_REGISTRY_KEY, questIdentifier), new Quest(questTypes));
+    }
+
+    private static void createRegenPathWithBlocks(BootstrapContext<RegenPath> bootstrap, String identifier, List<Block> blocks, int regenTicks) {
+        bootstrap.register(ResourceKey.create(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY, Identifier.fromNamespaceAndPath(MODID, identifier)),
+                new RegenPath(blocks.stream().map(Block::defaultBlockState).toList(), regenTicks));
+    }
+
+    private static void createRegenPath(BootstrapContext<RegenPath> bootstrap, String identifier, List<BlockState> blocks, int regenTicks, int stagesIncremented) {
+        bootstrap.register(ResourceKey.create(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY, Identifier.fromNamespaceAndPath(MODID, identifier)),
+                new RegenPath(blocks, regenTicks, stagesIncremented));
+    }
+
+    private static void createRegenPath(BootstrapContext<RegenPath> bootstrap, String identifier, List<BlockState> blocks, int regenTicks) {
+        bootstrap.register(ResourceKey.create(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY, Identifier.fromNamespaceAndPath(MODID, identifier)),
+                new RegenPath(blocks, regenTicks));
     }
 }

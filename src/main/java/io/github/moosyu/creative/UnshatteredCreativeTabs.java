@@ -69,6 +69,14 @@ public class UnshatteredCreativeTabs {
             output.accept(BREAKABLE_COBBLESTONE.get());
             output.accept(BREAKABLE_FIG_LOG.get());
             output.accept(BREAKABLE_COAL_ORE.get());
+            output.accept(BREAKABLE_IRON_ORE.get());
+            output.accept(BREAKABLE_COPPER_ORE.get());
+            output.accept(BREAKABLE_GOLD_ORE.get());
+            output.accept(BREAKABLE_REDSTONE_ORE.get());
+            output.accept(BREAKABLE_EMERALD_ORE.get());
+            output.accept(BREAKABLE_DIAMOND_ORE.get());
+            output.accept(PURE_DIAMOND.get());
+            output.accept(BREAKABLE_OBSIDIAN.get());
             output.accept(BREAKABLE_WHEAT.get());
         }).build()
     );
@@ -122,11 +130,6 @@ public class UnshatteredCreativeTabs {
         .icon(() -> MERCENARY_AXE.get().getDefaultInstance())
         .displayItems((_, output) -> {
             output.accept(MERCENARY_AXE.get());
-            output.accept(WOODEN_AXE.get());
-            output.accept(STONE_AXE.get());
-            output.accept(IRON_AXE.get());
-            output.accept(GOLDEN_AXE.get());
-            output.accept(DIAMOND_AXE.get());
             output.accept(ROGUE_SWORD.get());
             output.accept(SQUIRE_SWORD.get());
             output.accept(UNDEAD_SWORD.get());

@@ -38,35 +38,30 @@ public class EntityAttributeModificationHandler {
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.BREAKING_POWER.holder);
 
-        event.add(EntityType.ZOMBIE, UnshatteredAttributeValues.HEALTH.holder, 70.0d);
-        event.add(EntityType.ZOMBIE, UnshatteredAttributeValues.DAMAGE.holder, 20.0d);
+        event.add(EntityType.ZOMBIE, UnshatteredAttributeValues.HEALTH.holder, 20.0);
+        event.add(EntityType.ZOMBIE, UnshatteredAttributeValues.DAMAGE.holder, 3.0d);
 
-        event.add(EntityType.SKELETON, UnshatteredAttributeValues.HEALTH.holder, 100.0d);
-        event.add(EntityType.SKELETON, UnshatteredAttributeValues.DAMAGE.holder, 15.0d);
+        event.add(EntityType.SKELETON, UnshatteredAttributeValues.HEALTH.holder, 20.0d);
+        event.add(EntityType.SKELETON, UnshatteredAttributeValues.DAMAGE.holder, 3.0);
 
-        event.add(EntityType.SLIME, UnshatteredAttributeValues.HEALTH.holder, 80.0d);
-        event.add(EntityType.SLIME, UnshatteredAttributeValues.DAMAGE.holder, 15.0d);
+        event.add(EntityType.SPIDER, UnshatteredAttributeValues.HEALTH.holder, 16.0d);
+        event.add(EntityType.SPIDER, UnshatteredAttributeValues.DAMAGE.holder, 2.0d);
 
-        event.add(EntityType.SPIDER, UnshatteredAttributeValues.HEALTH.holder, 120.0d);
-        event.add(EntityType.SPIDER, UnshatteredAttributeValues.DAMAGE.holder, 35.0d);
+        event.add(EntityType.CAVE_SPIDER, UnshatteredAttributeValues.HEALTH.holder, 12.0d);
+        event.add(EntityType.CAVE_SPIDER, UnshatteredAttributeValues.DAMAGE.holder, 2.0d);
 
-        event.add(EntityType.CAVE_SPIDER, UnshatteredAttributeValues.HEALTH.holder, 110.0d);
-        event.add(EntityType.CAVE_SPIDER, UnshatteredAttributeValues.DAMAGE.holder, 40.0d);
+        event.add(EntityType.WITCH, UnshatteredAttributeValues.HEALTH.holder, 26.0d);
+        event.add(EntityType.WITCH, UnshatteredAttributeValues.DAMAGE.holder, 6.0d);
 
-        event.add(EntityType.WITCH, UnshatteredAttributeValues.HEALTH.holder, 150.0d);
-        event.add(EntityType.WITCH, UnshatteredAttributeValues.DAMAGE.holder, 20.0d);
+        event.add(EntityType.ENDERMAN, UnshatteredAttributeValues.HEALTH.holder, 40.0d);
+        event.add(EntityType.ENDERMAN, UnshatteredAttributeValues.DAMAGE.holder, 7.5d);
 
-        event.add(EntityType.ENDERMAN, UnshatteredAttributeValues.HEALTH.holder, 160.0d);
-        event.add(EntityType.ENDERMAN, UnshatteredAttributeValues.DAMAGE.holder, 40.0d);
-
-        event.add(EntityType.CREEPER, UnshatteredAttributeValues.HEALTH.holder, 80.0d);
+        event.add(EntityType.CREEPER, UnshatteredAttributeValues.HEALTH.holder, 20.0d);
         event.add(EntityType.CREEPER, UnshatteredAttributeValues.DAMAGE.holder, 20.0d);
 
-        event.add(EntityType.SQUID, UnshatteredAttributeValues.HEALTH.holder, 50.0d);
-        event.add(EntityType.SQUID, UnshatteredAttributeValues.DAMAGE.holder, 0.0d);
+        event.add(EntityType.SQUID, UnshatteredAttributeValues.HEALTH.holder, 10.0d);
 
-        event.add(EntityType.GLOW_SQUID, UnshatteredAttributeValues.HEALTH.holder, 4000.0d);
-        event.add(EntityType.GLOW_SQUID, UnshatteredAttributeValues.DAMAGE.holder, 0.0d);
+        event.add(EntityType.GLOW_SQUID, UnshatteredAttributeValues.HEALTH.holder, 40.0d);
 
         event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), UnshatteredAttributeValues.HEALTH.holder, 80.0d);
         event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), UnshatteredAttributeValues.DAMAGE.holder, 20.0d);
@@ -86,19 +81,17 @@ public class EntityAttributeModificationHandler {
         event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), Attributes.SAFE_FALL_DISTANCE, 1024.0d);
         event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), Attributes.FALL_DAMAGE_MULTIPLIER, 0.0d);
 
-        event.add(EntityType.MOOSHROOM, UnshatteredAttributeValues.HEALTH.holder, 50.0d);
+        event.add(EntityType.MOOSHROOM, UnshatteredAttributeValues.HEALTH.holder, 10.0d);
 
-        event.add(EntityType.SHEEP, UnshatteredAttributeValues.HEALTH.holder, 50.0d);
+        event.add(EntityType.SHEEP, UnshatteredAttributeValues.HEALTH.holder, 8.0d);
 
-        event.add(EntityType.COW, UnshatteredAttributeValues.HEALTH.holder, 50.0d);
+        event.add(EntityType.COW, UnshatteredAttributeValues.HEALTH.holder, 10.0d);
 
-        event.add(EntityType.CHICKEN, UnshatteredAttributeValues.HEALTH.holder, 20.0d);
+        event.add(EntityType.CHICKEN, UnshatteredAttributeValues.HEALTH.holder, 4.0d);
 
-        event.add(EntityType.RABBIT, UnshatteredAttributeValues.HEALTH.holder, 130.0d);
+        event.add(EntityType.RABBIT, UnshatteredAttributeValues.HEALTH.holder, 10.0d);
 
-        event.add(EntityType.PIG, UnshatteredAttributeValues.HEALTH.holder, 50.0d);
-
-        event.add(EntityType.MOOSHROOM, UnshatteredAttributeValues.HEALTH.holder, 50.0d);
+        event.add(EntityType.PIG, UnshatteredAttributeValues.HEALTH.holder, 10.0d);
 
         event.add(EntityType.ARMOR_STAND, UnshatteredAttributeValues.HEALTH.holder, 0.1d);
     }

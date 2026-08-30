@@ -88,7 +88,7 @@ public class PlayerTickHandler {
 
         // incremental for every 2 seconds
         if (player.tickCount % 40 == 0) {
-            double healthGained = (1.5 + MAX_HEALTH_VALUE / 100) * (HEALTH_REGEN_VALUE / 100);
+            double healthGained = (MAX_HEALTH_VALUE / 20) * (HEALTH_REGEN_VALUE / 100);
             double manaGained = (MAX_MANA_VALUE * 0.04) * (MANA_REGEN_VALUE / 100);
 
             state.addCurrentStat(PlayerStateAttachment.Stat.HEALTH, healthGained, MAX_HEALTH_VALUE);

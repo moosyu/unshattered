@@ -2,6 +2,7 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.data.dialogue.DialogueTree;
 import io.github.moosyu.data.quests.Quest;
+import io.github.moosyu.data.regen.RegenPaths.RegenPath;
 import io.github.moosyu.data.regions.Region;
 import io.github.moosyu.data.regions.RegionBoundary;
 import net.minecraft.core.Registry;
@@ -19,6 +20,7 @@ public class DataPackRegistryHandler {
     public static final ResourceKey<Registry<RegionBoundary>> REGION_BOUNDARY_REGISTRY_KEY = ResourceKey.createRegistryKey(Identifier.fromNamespaceAndPath(MODID, "region_boundaries"));
     public static final ResourceKey<Registry<DialogueTree>> DIALOGUE_TREE_REGISTRY_KEY = ResourceKey.createRegistryKey(Identifier.fromNamespaceAndPath(MODID, "dialogue_trees"));
     public static final ResourceKey<Registry<Quest>> QUEST_REGISTRY_KEY = ResourceKey.createRegistryKey(Identifier.fromNamespaceAndPath(MODID, "quests"));
+    public static final ResourceKey<Registry<RegenPath>> REGEN_PATH_REGISTRY_KEY = ResourceKey.createRegistryKey(Identifier.fromNamespaceAndPath(MODID, "regen_paths"));
 
     @SubscribeEvent
     public static void registerDatapackRegistries(DataPackRegistryEvent.NewRegistry event) {
@@ -41,6 +43,11 @@ public class DataPackRegistryHandler {
         event.dataPackRegistry(
                 QUEST_REGISTRY_KEY,
                 Quest.CODEC
+        );
+
+        event.dataPackRegistry(
+                REGEN_PATH_REGISTRY_KEY,
+                RegenPath.CODEC
         );
     }
 }

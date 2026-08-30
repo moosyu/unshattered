@@ -1,7 +1,9 @@
 package io.github.moosyu.data;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.core.registries.BuiltInRegistries;
+import io.github.moosyu.data.drops.MobRewardData;
+import io.github.moosyu.data.regen.RegenPaths;
+import io.github.moosyu.items.ItemRange;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
@@ -42,9 +44,9 @@ public final class UnshatteredDataMaps {
             Codec.INT
     ).build();
 
-    public static final DataMapType<Block, Item> BREAKABLE_DROPS_DATA = DataMapType.builder(
-            Identifier.fromNamespaceAndPath(MODID, "breakable_drops"),
+    public static final DataMapType<Block, ItemRange> BREAKABLE_DROPS_DATA = DataMapType.builder(
+            Identifier.fromNamespaceAndPath(MODID, "breakable_drops_data"),
             Registries.BLOCK,
-            BuiltInRegistries.ITEM.byNameCodec()
+            ItemRange.CODEC
     ).build();
 }

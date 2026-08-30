@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "unshattered:block/breakable_gold_ore_block"
+    }
+  }
+}

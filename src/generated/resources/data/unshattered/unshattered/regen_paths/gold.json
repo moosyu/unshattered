@@ -1,0 +1,15 @@
+{
+  "path": [
+    {
+      "Name": "unshattered:breakable_gold_ore_block"
+    },
+    {
+      "Name": "unshattered:breakable_cobblestone_block"
+    },
+    {
+      "Name": "minecraft:bedrock"
+    }
+  ],
+  "regen_ticks": 150,
+  "stages_incremented": 1
+}

@@ -1,0 +1,12 @@
+{
+  "path": [
+    {
+      "Name": "unshattered:breakable_obsidian_block"
+    },
+    {
+      "Name": "minecraft:bedrock"
+    }
+  ],
+  "regen_ticks": 240,
+  "stages_incremented": 1
+}
