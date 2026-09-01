@@ -1,6 +1,8 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.Unshattered;
+import io.github.moosyu.data.regen.RegenClientCache;
+import io.github.moosyu.data.regen.RegenPaths;
 import io.github.moosyu.data.regen.RegenSavedData;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
@@ -12,18 +14,22 @@ import io.github.moosyu.util.*;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -34,6 +40,7 @@ import java.util.*;
 
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_SKILLS;
+import static io.github.moosyu.data.regen.RegenPaths.REGEN_IDENTIFIER_BY_BLOCK;
 
 // ran just before a player is to break a block
 @EventBusSubscriber(modid = MODID)
@@ -51,8 +58,37 @@ public class BlockBreakHandler {
         // so you can still break stuff normally in creative
         if (player.isCreative()) return;
         event.setCanceled(true);
+
         // so the block doesnt flash in and out of existence when broken before the server says what's up
         if (level.isClientSide()) {
+            Registry<RegenPaths.RegenPath> registry = level.registryAccess().lookupOrThrow(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY);
+            RegenClientCache.State cached = RegenClientCache.get(blockPos);
+            BlockState predictedBlockstate = null;
+
+            if (cached != null) {
+                RegenPaths.RegenPath regenPath = registry.getValue(cached.pathIdentifier());
+                if (regenPath != null) {
+                    int newIndex = cached.index() + regenPath.stagesIncremented();
+                    if (newIndex < regenPath.path().size()) {
+                        RegenClientCache.put(blockPos, cached.pathIdentifier(), newIndex);
+                        predictedBlockstate = regenPath.path().get(newIndex);
+                    }
+                }
+            }
+
+            Identifier regenId = REGEN_IDENTIFIER_BY_BLOCK.get(blockState);
+            if (regenId != null) {
+                ResourceKey<RegenPaths.RegenPath> regenPathResourceKey = ResourceKey.create(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY, regenId);
+                RegenPaths.RegenPath regenPath = registry.getValue(regenPathResourceKey);
+                if (regenPath != null) {
+                    int index = regenPath.stagesIncremented();
+                    RegenClientCache.put(blockPos, regenPathResourceKey, index);
+                    predictedBlockstate = index < regenPath.path().size() ? regenPath.path().get(index) : null;
+                }
+            }
+
+            level.levelEvent(player, LevelEvent.PARTICLES_DESTROY_BLOCK, blockPos, Block.getId(blockState));
+            level.setBlockAndUpdate(blockPos, Objects.requireNonNullElseGet(predictedBlockstate, Blocks.BEDROCK::defaultBlockState));
             PlayClientsideSound.playClientsideSound(player, blockState.getSoundType(level, blockPos, player).getBreakSound(), SoundSource.BLOCKS, 1.5f);
             return;
         }
@@ -138,11 +174,7 @@ public class BlockBreakHandler {
             return ItemStack.EMPTY;
         }
 
-        int dropAmount = drop.maxAmount() == drop.minAmount()
-                ? drop.maxAmount()
-                : player.getRandom().nextIntBetweenInclusive(drop.minAmount(), drop.maxAmount());
-
-        return new ItemStack(drop.item(), FortuneCalculation.getItemsCount(player.getAttributeValue(fortuneType.holder), dropAmount));
+        return new ItemStack(drop.item(), FortuneCalculation.getItemsCount(player.getAttributeValue(fortuneType.holder), drop.getDropAmount(player.getRandom())));
     }
 
     /**

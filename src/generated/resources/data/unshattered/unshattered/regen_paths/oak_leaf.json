@@ -1,0 +1,17 @@
+{
+  "path": [
+    {
+      "Name": "minecraft:oak_leaves",
+      "Properties": {
+        "distance": "7",
+        "persistent": "false",
+        "waterlogged": "false"
+      }
+    },
+    {
+      "Name": "minecraft:air"
+    }
+  ],
+  "regen_ticks": 200,
+  "stages_incremented": 1
+}

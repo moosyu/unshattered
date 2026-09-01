@@ -7,12 +7,11 @@ import io.github.moosyu.data.components.SkillRequirement;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.util.TextUtils;
 import io.github.moosyu.items.ItemTypes;
-import io.github.moosyu.rarities.RarityTypes;
+import io.github.moosyu.rarities.UnshatteredRarities;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -26,7 +25,6 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
 import java.util.List;
-import java.util.Objects;
 
 import static io.github.moosyu.Unshattered.MODID;
 
@@ -40,7 +38,7 @@ public class ItemTooltipHandler {
         if (player == null) return;
         ItemStack stack = event.getItemStack();
         List<Component> tooltipComponents = event.getToolTip();
-        RarityTypes itemRarity = stack.getOrDefault(UnshatteredDataComponents.RARITY.get(), RarityTypes.COMMON);
+        UnshatteredRarities itemRarity = stack.getOrDefault(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.COMMON);
         ItemTypes itemType = stack.getOrDefault(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.ITEM);
         boolean hasModifiers = false;
         boolean itemDescription = Boolean.TRUE.equals(stack.get(UnshatteredDataComponents.DESCRIPTION.get()));

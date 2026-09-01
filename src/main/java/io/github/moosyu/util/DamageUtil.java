@@ -66,7 +66,7 @@ public final class DamageUtil {
                 target.hurtServer((ServerLevel) target.level(), target.damageSources().playerAttack(player), 0.0f);
 
                 double ferocityAmount = player.getAttributeValue(UnshatteredAttributeValues.FEROCITY.holder);
-                if (ferocityAmount > 0 || player.getData(UnshatteredAttachments.PLAYER_FEROCITY_COOLDOWN) <= 0) {
+                if (ferocityAmount > 0 && player.getData(UnshatteredAttachments.PLAYER_FEROCITY_COOLDOWN) <= 0) {
                     // shouldn't ever be negative so id hope this is fine
                     int prevHundredPlace = (int) (ferocityAmount / 100.0);
                     double nextHundredDiff = ferocityAmount - (prevHundredPlace * 100);

@@ -1,0 +1,15 @@
+{
+  "path": [
+    {
+      "Name": "unshattered:breakable_fig_log",
+      "Properties": {
+        "axis": "y"
+      }
+    },
+    {
+      "Name": "minecraft:air"
+    }
+  ],
+  "regen_ticks": 200,
+  "stages_incremented": 1
+}

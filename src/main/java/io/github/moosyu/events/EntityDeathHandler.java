@@ -9,7 +9,7 @@ import io.github.moosyu.data.drops.MobItemDropData;
 import io.github.moosyu.data.drops.MobRewardData;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.rarities.RarityTypes;
+import io.github.moosyu.rarities.UnshatteredRarities;
 import io.github.moosyu.util.CollectionUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -65,7 +65,7 @@ public class EntityDeathHandler {
 
                     if (ThreadLocalRandom.current().nextFloat(1.0f) < modifiedDropChance) {
                         if (itemDrop.combatFortuneBoosted()) {
-                            RarityTypes itemRarity = itemDrop.item().components().getOrDefault(UnshatteredDataComponents.RARITY.get(), RarityTypes.COMMON);
+                            UnshatteredRarities itemRarity = itemDrop.item().components().getOrDefault(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.COMMON);
                             player.sendSystemMessage(Component.empty()
                                     .append(Component.literal(Component.translatable("drop_type.message.unshattered." + type.key).getString().toUpperCase())
                                             .withStyle(style -> style.withColor(type.colour).withBold(true)))

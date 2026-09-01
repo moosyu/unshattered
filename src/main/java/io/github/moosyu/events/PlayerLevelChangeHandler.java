@@ -2,11 +2,13 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.data.regen.RegenClientCache;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent;
 
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_STATE;
@@ -15,7 +17,7 @@ import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_ST
 // however when the game starts this gives you the wrong value. idk why, maybe attributes arent properly loaded yet so you dont get modifiers.
 // todo: fix whatever causes that
 @EventBusSubscriber(modid = MODID)
-public class PlayerJoinHandler {
+public class PlayerLevelChangeHandler {
     @SubscribeEvent
     public static void onPlayerJoin(EntityJoinLevelEvent event) {
         if (event.getEntity() instanceof Player player && !player.level().isClientSide()) {
@@ -27,6 +29,13 @@ public class PlayerJoinHandler {
             player.syncData(PLAYER_STATE);
             stats.setCurrentStat(PlayerStateAttachment.Stat.MANA, manaAttribute.getValue());
             player.syncData(PLAYER_STATE);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerLeave(EntityLeaveLevelEvent event) {
+        if (event.getEntity() instanceof Player player && player.level().isClientSide()) {
+            RegenClientCache.clear();
         }
     }
 }

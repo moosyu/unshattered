@@ -121,5 +121,6 @@ public class Unshattered {
                 .collect(Collectors.toMap(ref -> ref.value().path().getFirst(),
                         ref -> ref.key().identifier()
                 ));
+        System.out.println(RegenPaths.REGEN_IDENTIFIER_BY_BLOCK);
     }
 }

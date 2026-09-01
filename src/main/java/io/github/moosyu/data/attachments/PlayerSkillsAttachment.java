@@ -26,7 +26,7 @@ public final class PlayerSkillsAttachment {
     private final float[] skillExp = new float[Skill.values().length];
 
     public enum Skill {
-        COMBAT("combat", (player, level) -> {
+        COMBAT("combat", (player, _) -> {
             // i know normal sb gives you a flat damage multiplier but i feel like thats a little strange so ill give people an actual stat
             addPlayerAttributeReward(player, UnshatteredAttributeValues.CRITICAL_DAMAGE, 10.0d);
             addPlayerAttributeReward(player, UnshatteredAttributeValues.CRITICAL_CHANCE, 0.5d);
@@ -35,18 +35,18 @@ public final class PlayerSkillsAttachment {
         FARMING("farming", (player, level) -> {
             double healthAmount;
             if (level < 15) {
-                healthAmount = 2.0d;
+                healthAmount = 1.0d;
             } else if (level < 20) {
-                healthAmount = 3.0d;
+                healthAmount = 2.0d;
             } else if (level < 25) {
-                healthAmount = 4.0d;
+                healthAmount = 3.0d;
             } else {
-                healthAmount = 5.0d;
+                healthAmount = 4.0d;
             }
             addPlayerAttributeReward(player, UnshatteredAttributeValues.HEALTH, healthAmount);
-            addPlayerAttributeReward(player, UnshatteredAttributeValues.FARMING_FORTUNE, 4.0d);
+            addPlayerAttributeReward(player, UnshatteredAttributeValues.FARMING_FORTUNE, 2.0d);
         }),
-        FISHING("fishing", (player, level) -> {
+        FISHING("fishing", (player, _) -> {
             addPlayerAttributeReward(player, UnshatteredAttributeValues.FISHING_SPEED, 1.0d);
             addPlayerAttributeReward(player, UnshatteredAttributeValues.FISHING_FORTUNE, 0.1d);
 
@@ -59,7 +59,7 @@ public final class PlayerSkillsAttachment {
                 defenseAmount = 2.0d;
             }
             addPlayerAttributeReward(player, UnshatteredAttributeValues.DEFENSE, defenseAmount);
-            addPlayerAttributeReward(player, UnshatteredAttributeValues.MINING_FORTUNE, 4.0d);
+            addPlayerAttributeReward(player, UnshatteredAttributeValues.MINING_FORTUNE, 2.0d);
 
         }),
         FORAGING("foraging", (player, level) -> {
@@ -70,11 +70,11 @@ public final class PlayerSkillsAttachment {
                 strengthAmount = 2.0d;
             }
             addPlayerAttributeReward(player, UnshatteredAttributeValues.STRENGTH, strengthAmount);
-            addPlayerAttributeReward(player, UnshatteredAttributeValues.FARMING_FORTUNE, 4.0d);
+            addPlayerAttributeReward(player, UnshatteredAttributeValues.FARMING_FORTUNE, 2.0d);
 
         }),
         MAGECRAFT("magecraft", (player, level) -> {
-            addPlayerAttributeReward(player, UnshatteredAttributeValues.MANA, 3.0d);
+            addPlayerAttributeReward(player, UnshatteredAttributeValues.MANA, 2.0d);
             addPlayerAttributeReward(player, UnshatteredAttributeValues.MANA_REGEN, 1.5d);
 
         }),

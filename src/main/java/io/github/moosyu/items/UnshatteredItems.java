@@ -13,7 +13,7 @@ import io.github.moosyu.items.weapons.axes.UnshatteredAxeWeapon;
 import io.github.moosyu.items.weapons.cleavers.*;
 import io.github.moosyu.items.weapons.daggers.IronDagger;
 import io.github.moosyu.items.weapons.swords.*;
-import io.github.moosyu.rarities.RarityTypes;
+import io.github.moosyu.rarities.UnshatteredRarities;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -25,88 +25,88 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.materials.ArmorMaterials.GLOW_SQUID_BOOTS_MATERIAL;
-import static io.github.moosyu.materials.ArmorMaterials.LEAFLET_ARMOR_MATERIAL;
+import static io.github.moosyu.items.ArmourMaterials.GLOW_SQUID_BOOTS_MATERIAL;
+import static io.github.moosyu.items.ArmourMaterials.LEAFLET_ARMOUR_MATERIAL;
 import static io.github.moosyu.blocks.UnshatteredBlocks.*;
 
 public class UnshatteredItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
 
     public static final DeferredItem<UnshatteredAxeWeapon> MERCENARY_AXE = ITEMS.registerItem("mercenary_axe", props -> new UnshatteredAxeWeapon(props
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.RARE)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.RARE)
             .component(UnshatteredDataComponents.SKILL_REQUIREMENT.get(), new SkillRequirement(PlayerSkillsAttachment.Skill.COMBAT, 4))
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
             .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "mercenary_axe_damage"), 13, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "mercenary_axe_strength"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "mercenary_axe_damage"), 8, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "mercenary_axe_strength"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
             )
     ));
 
     public static final DeferredItem<RegionLockedFortuneAxe> TREECAPITATOR = ITEMS.registerItem("treecapitator", props -> new RegionLockedFortuneAxe(props
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.EPIC)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.EPIC)
             .component(UnshatteredDataComponents.SELL_VALUE.get(), 10000)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true),
-            100.0f,
-            25.0f,
-            12.0f,
+            50,
+            5,
+            12,
             UnshatteredRegions.PLAINS_REGION,
             Identifier.fromNamespaceAndPath(MODID, "treecapitator_park_enthusiast")
     ));
 
     public static final DeferredItem<RegionLockedFortuneAxe> SPRUCE_AXE = ITEMS.registerItem("spruce_axe", props -> new RegionLockedFortuneAxe(props
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.UNCOMMON)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON)
             .component(UnshatteredDataComponents.SELL_VALUE.get(), 480)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true),
-            50.0f,
-            25.0f,
-            6.0f,
+            25,
+            2,
+            6,
             UnshatteredRegions.PLAINS_REGION,
             Identifier.fromNamespaceAndPath(MODID, "spruce_axe_park_enthusiast")
     ));
 
     public static final DeferredItem<UnshatteredAxeTool> SERIOUSLY_DAMAGED_AXE = ITEMS.registerItem("seriously_damaged_axe", props -> new UnshatteredAxeTool(props
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.UNCOMMON)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
             .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.SWEEP.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "seriously_damaged_axe_sweep"), 7, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "seriously_damaged_axe_foraging_fortune"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValues.SWEEP.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "seriously_damaged_axe_sweep"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "seriously_damaged_axe_foraging_fortune"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()),
             6.0f
     ));
 
     public static final DeferredItem<UnshatteredAxeTool> DECENT_AXE = ITEMS.registerItem("decent_axe", props -> new UnshatteredAxeTool(props
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.RARE)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.RARE)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
             .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.SWEEP.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "decent_axe_sweep"), 24, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValues.SWEEP.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "decent_axe_sweep"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "decent_axe_foraging_fortune"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()),
             8.0f
     ));
 
     public static final DeferredItem<UnshatteredAxeTool> FIG_HEW = ITEMS.registerItem("fig_hew", props -> new UnshatteredAxeTool(props
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.RARE)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.RARE)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
             .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.SWEEP.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "fig_hew_sweep"), 7, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "fig_hew_foraging_fortune"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValues.SWEEP.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "fig_hew_sweep"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "fig_hew_foraging_fortune"), 12, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()),
             10.0f
     ));
 
     public static final DeferredItem<UnshatteredAxeTool> FIGSTONE_SPLITTER = ITEMS.registerItem("figstone_splitter", props -> new UnshatteredAxeTool(props
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.EPIC)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.EPIC)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
             .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.SWEEP.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "figstone_splitter_sweep"), 24, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "figstone_splitter_foraging_fortune"), 35, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValues.SWEEP.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "figstone_splitter_sweep"), 15, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "figstone_splitter_foraging_fortune"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()),
             12.0f
     ));
 
     public static final DeferredItem<Item> LEAFLET_HELMET = ITEMS.registerItem("leaflet_helmet", props -> new Item(props
-            .humanoidArmor(LEAFLET_ARMOR_MATERIAL, ArmorType.HELMET)
+            .humanoidArmor(LEAFLET_ARMOUR_MATERIAL, ArmorType.HELMET)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.HELMET)
             .component(UnshatteredDataComponents.SELL_VALUE.get(), 2)
             .attributes(ItemAttributeModifiers.builder().add(UnshatteredAttributeValues.HEALTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "leaflet_helmet_health"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.HEAD)
@@ -116,7 +116,7 @@ public class UnshatteredItems {
     ));
 
     public static final DeferredItem<Item> LEAFLET_CHESTPLATE = ITEMS.registerItem("leaflet_chestplate", props -> new Item(props
-            .humanoidArmor(LEAFLET_ARMOR_MATERIAL, ArmorType.CHESTPLATE)
+            .humanoidArmor(LEAFLET_ARMOUR_MATERIAL, ArmorType.CHESTPLATE)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.CHESTPLATE)
             .component(UnshatteredDataComponents.SELL_VALUE.get(), 4)
             .attributes(ItemAttributeModifiers.builder()
@@ -127,7 +127,7 @@ public class UnshatteredItems {
     ));
 
     public static final DeferredItem<Item> LEAFLET_LEGGINGS = ITEMS.registerItem("leaflet_leggings", props -> new Item(props
-            .humanoidArmor(LEAFLET_ARMOR_MATERIAL, ArmorType.LEGGINGS)
+            .humanoidArmor(LEAFLET_ARMOUR_MATERIAL, ArmorType.LEGGINGS)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.LEGGINGS)
             .component(UnshatteredDataComponents.SELL_VALUE.get(), 3)
             .attributes(ItemAttributeModifiers.builder()
@@ -138,7 +138,7 @@ public class UnshatteredItems {
     ));
 
     public static final DeferredItem<Item> LEAFLET_BOOTS = ITEMS.registerItem("leaflet_boots", props -> new Item(props
-            .humanoidArmor(LEAFLET_ARMOR_MATERIAL, ArmorType.BOOTS)
+            .humanoidArmor(LEAFLET_ARMOUR_MATERIAL, ArmorType.BOOTS)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.BOOTS)
             .component(UnshatteredDataComponents.SELL_VALUE.get(), 2)
             .component(UnshatteredDataComponents.SKILL_REQUIREMENT.get(), new SkillRequirement(PlayerSkillsAttachment.Skill.COMBAT, 4))
@@ -151,192 +151,192 @@ public class UnshatteredItems {
 
     public static final DeferredItem<UnshatteredEnchantedItem> BAT_THE_FISH = ITEMS.registerItem("bat_the_fish", props -> new UnshatteredEnchantedItem(props
             .stacksTo(1)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> CENTURY_THE_FISH = ITEMS.registerItem("century_the_fish", props -> new UnshatteredEnchantedItem(props
             .stacksTo(1)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> CHILL_THE_FISH = ITEMS.registerItem("chill_the_fish", props -> new UnshatteredEnchantedItem(props
-            .stacksTo(1).component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL)
+            .stacksTo(1).component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> CLUNK_THE_FISH = ITEMS.registerItem("clunk_the_fish", props -> new UnshatteredEnchantedItem(props
-            .stacksTo(1).component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL).component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
+            .stacksTo(1).component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL).component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> DIAMOND_THE_FISH = ITEMS.registerItem("diamond_the_fish", props -> new UnshatteredEnchantedItem(props
             .stacksTo(1)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL).component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL).component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> DUST_THE_FISH = ITEMS.registerItem("dust_the_fish", props -> new UnshatteredEnchantedItem(props
             .stacksTo(1)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> EGG_THE_FISH = ITEMS.registerItem("egg_the_fish", props -> new UnshatteredEnchantedItem(props
-            .stacksTo(1).component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL)
+            .stacksTo(1).component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> EON_THE_FISH = ITEMS.registerItem("eon_the_fish", props -> new UnshatteredEnchantedItem(props
             .stacksTo(1)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> FLAKE_THE_FISH = ITEMS.registerItem("flake_the_fish", props -> new UnshatteredEnchantedItem(props
             .stacksTo(1)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH).component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> EXPERIMENT_THE_FISH = ITEMS.registerItem("experiment_the_fish", props -> new UnshatteredEnchantedItem(props
             .stacksTo(1)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH).component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> FOSSIL_THE_FISH = ITEMS.registerItem("fossil_the_fish", props -> new UnshatteredEnchantedItem(props
             .stacksTo(1)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH).component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> GABAGOOL_THE_FISH = ITEMS.registerItem("gabagool_the_fish", props -> new UnshatteredEnchantedItem(props
             .stacksTo(1)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> GIFT_THE_FISH = ITEMS.registerItem("gift_the_fish", props -> new UnshatteredEnchantedItem(props
             .stacksTo(1)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> HERRING_THE_FISH = ITEMS.registerItem("herring_the_fish", props -> new UnshatteredEnchantedItem(props
             .stacksTo(1)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> NOPE_THE_FISH = ITEMS.registerItem("nope_the_fish", props -> new UnshatteredEnchantedItem(props
             .stacksTo(1)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> OOPS_THE_FISH = ITEMS.registerItem("oops_the_fish", props -> new UnshatteredEnchantedItem(props
             .stacksTo(1)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> PARTY_THE_FISH = ITEMS.registerItem("party_the_fish", props -> new UnshatteredEnchantedItem(props
             .stacksTo(1)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> ROCK_THE_FISH = ITEMS.registerItem("rock_the_fish", props -> new UnshatteredEnchantedItem(props
             .stacksTo(1)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> SHRIMP_THE_FISH = ITEMS.registerItem("shrimp_the_fish", props -> new UnshatteredEnchantedItem(props
             .stacksTo(1)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> SKELETON_THE_FISH = ITEMS.registerItem("skeleton_the_fish", props -> new UnshatteredEnchantedItem(props
             .stacksTo(1)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> SPOOK_THE_FISH = ITEMS.registerItem("spook_the_fish", props -> new UnshatteredEnchantedItem(props
             .stacksTo(1)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> STEW_THE_FISH = ITEMS.registerItem("stew_the_fish", props -> new UnshatteredEnchantedItem(props
-            .stacksTo(1).component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL)
+            .stacksTo(1).component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> SWAMP_THE_FISH = ITEMS.registerItem("swamp_the_fish", props -> new UnshatteredEnchantedItem(props
-            .stacksTo(1).component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL)
+            .stacksTo(1).component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> ZOOP_THE_FISH = ITEMS.registerItem("zoop_the_fish", props -> new UnshatteredEnchantedItem(props
             .stacksTo(1)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.SPECIAL)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> ENCHANTED_FIG_LOG = ITEMS.registerItem("enchanted_fig_log", props -> new UnshatteredEnchantedItem(props
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.RARE)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.RARE)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.LOG)
     ));
 
     public static final DeferredItem<Item> BEDROCK = ITEMS.registerItem("bedrock", props -> new Item(props
             .stacksTo(1)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.LEGENDARY)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.LEGENDARY)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.ITEM)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<Item> CAKE_SOUL = ITEMS.registerItem("cake_soul", props -> new Item(props
             .stacksTo(1)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.MYTHIC)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.MYTHIC)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.ITEM)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredRod> CHALLENGING_ROD = ITEMS.registerItem("challenging_rod", props -> new UnshatteredRod(props
             .stacksTo(1)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.UNCOMMON)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISHING_ROD)
             .component(UnshatteredDataComponents.SKILL_REQUIREMENT.get(), new SkillRequirement(PlayerSkillsAttachment.Skill.FISHING, 5))
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
             .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "challenging_rod_damage"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "challenging_rod_strength"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.FISHING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "challenging_rod_fishing_fortune"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.FISHING_SPEED.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "challenging_rod_fishing_speed"), 25, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "challenging_rod_damage"), 8, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "challenging_rod_strength"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValues.FISHING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "challenging_rod_fishing_fortune"), 4, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValues.FISHING_SPEED.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "challenging_rod_fishing_speed"), 9, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
             )
     ));
@@ -348,20 +348,18 @@ public class UnshatteredItems {
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "fishing_rod_damage"), 10, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "fishing_rod_strength"), 10, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.FISHING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "fishing_rod_fishing_fortune"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.FISHING_SPEED.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "fishing_rod_fishing_speed"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
             )
     ));
 
     public static final DeferredItem<BlockItem> FIG_LOG = ITEMS.registerItem("fig_log", props -> new BlockItem(FIG_LOG_BLOCK.get(), props
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.COMMON)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.COMMON)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.LOG)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
     public static final DeferredItem<UnshatteredEnchantedItem> ENCHANTED_ROTTEN_FLESH = ITEMS.registerItem("enchanted_rotten_flesh", props -> new UnshatteredEnchantedItem(props
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.UNCOMMON)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
     ));
 
@@ -384,13 +382,13 @@ public class UnshatteredItems {
     public static final DeferredItem<Item> SQUIRE_SWORD = ITEMS.registerItem("squire_sword", props -> new Item(props
             .stacksTo(1)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.SWORD)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.UNCOMMON)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON)
             .component(UnshatteredDataComponents.SELL_VALUE.get(), 2500)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
             .component(UnshatteredDataComponents.SKILL_REQUIREMENT.get(), new SkillRequirement(PlayerSkillsAttachment.Skill.COMBAT, 4))
             .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "squire_sword_damage"), 50, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "squire_sword_strength"), 10, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "squire_sword_damage"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "squire_sword_strength"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
             )
     ));
@@ -411,10 +409,10 @@ public class UnshatteredItems {
             .humanoidArmor(GLOW_SQUID_BOOTS_MATERIAL, ArmorType.BOOTS)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.BOOTS)
             .component(UnshatteredDataComponents.SELL_VALUE.get(), 15)
-            .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.UNCOMMON)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON)
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.FISHING_FORTUNE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "squid_boots_fishing_fortune"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
-                    .add(UnshatteredAttributeValues.HEALTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "squid_boots_health"), 100, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
+                    .add(UnshatteredAttributeValues.HEALTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "squid_boots_health"), 12, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
                     .build()
             )
     ));

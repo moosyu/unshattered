@@ -10,7 +10,7 @@ import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.util.CheckItemRequirement;
 import io.github.moosyu.packets.ZombieSwordEffectsPacket;
-import io.github.moosyu.rarities.RarityTypes;
+import io.github.moosyu.rarities.UnshatteredRarities;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -36,18 +36,18 @@ import static io.github.moosyu.Unshattered.MODID;
 @EventBusSubscriber(modid = MODID, value = Dist.DEDICATED_SERVER)
 public class ZombieSword extends UnshatteredSword {
     private static final Identifier ABILITY_IDENTIFIER = Identifier.fromNamespaceAndPath(MODID, "zombie_sword_instant_heal");
-    private static final ItemAbility INSTANT_HEAL_ABILITY = new ItemAbility(ABILITY_IDENTIFIER,70, 10, 0, false);
+    private static final ItemAbility INSTANT_HEAL_ABILITY = new ItemAbility(ABILITY_IDENTIFIER,24, 10, 0, false);
 
     public ZombieSword(Properties properties) {
         super(properties
                 .component(UnshatteredDataComponents.ABILITY.get(), INSTANT_HEAL_ABILITY)
-                .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.RARE)
+                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.RARE)
                 .component(UnshatteredDataComponents.CHARGES.get(), new ItemCharges(4, 4, 300))
                 .component(UnshatteredDataComponents.SELL_VALUE.get(), 300000)
                 .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-                .attributes(ItemAttributeModifiers.builder().add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "zombie_sword_damage"), 100, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                        .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "zombie_sword_strength"), 50, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                        .add(UnshatteredAttributeValues.MANA.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "zombie_sword_mana"), 50, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                .attributes(ItemAttributeModifiers.builder().add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "zombie_sword_damage"), 28, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                        .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "zombie_sword_strength"), 12, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                        .add(UnshatteredAttributeValues.MANA.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "zombie_sword_mana"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                         .add(Attributes.ATTACK_SPEED, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "zombie_sword_attack_speed"), -2.4f, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                         .build()
                 )

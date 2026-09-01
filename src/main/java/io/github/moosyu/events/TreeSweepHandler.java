@@ -4,6 +4,8 @@ import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.UnshatteredDataMaps;
+import io.github.moosyu.data.regen.RegenSavedData;
+import io.github.moosyu.items.ItemRange;
 import io.github.moosyu.items.UnshatteredInstantPassiveAbilityItem;
 import io.github.moosyu.util.AbilityUtils;
 import io.github.moosyu.util.CollectionUtil;
@@ -11,6 +13,7 @@ import io.github.moosyu.util.FortuneCalculation;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -32,7 +35,6 @@ import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_SK
 public class TreeSweepHandler {
     private static final int BREAK_COOLDOWN_MAX = 2;
     private static final List<TreeBreakInstance> ACTIVE_BREAKS = new ArrayList<>();
-    private static final Random RANDOM = new Random();
     // todo: play a sound if the tree has been completely destroyed (creaking death)
     private record BreakTask(Level level, BlockPos pos, Player player, BlockState state) {}
 
@@ -61,7 +63,8 @@ public class TreeSweepHandler {
             BlockPos pos = current.pos();
 
             if (!level.isEmptyBlock(pos)) {
-                level.removeBlock(pos, false);
+                ServerLevel serverLevel = (ServerLevel) level;
+                serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID).destroyRegeneratingBlock(pos, serverLevel);
             }
 
             listPos++;
@@ -79,8 +82,7 @@ public class TreeSweepHandler {
             float expReward = Objects.requireNonNullElse(BuiltInRegistries.BLOCK.wrapAsHolder(logItem).getData(UnshatteredDataMaps.HARVESTABLE_BLOCKS_EXP_DATA), 0.0f);
 
             for (BreakTask current : tasks) {
-                int logs = calculateLogs(player);
-                CollectionUtil.givePlayerHarvestedItemStack(player, new ItemStack(current.state().getBlock(), logs));
+                giveHarvestedLogs(player, current.state.getBlock());
             }
 
             skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, tasks.size() * expReward, player);
@@ -88,9 +90,9 @@ public class TreeSweepHandler {
         }
     }
 
-    private static int calculateLogs(Player player) {
+    private static int calculateLogs(Player player, int dropAmount) {
         UnshatteredInstantPassiveAbilityItem passiveAbilityItem = AbilityUtils.triggerPassiveAbility(player, null, player.getItemInHand(InteractionHand.MAIN_HAND).getItem());
-        int itemCount = FortuneCalculation.getItemsCount(player.getAttributeValue(UnshatteredAttributeValues.FORAGING_FORTUNE.holder), 1);
+        int itemCount = FortuneCalculation.getItemsCount(player.getAttributeValue(UnshatteredAttributeValues.FORAGING_FORTUNE.holder), dropAmount);
         AbilityUtils.finishPassiveAbility(player, null, passiveAbilityItem);
         return itemCount;
     }
@@ -100,19 +102,27 @@ public class TreeSweepHandler {
         BlockState startBlock = level.getBlockState(startPos);
 
         // removing the initial block (as the vanilla block break is cancelled)
-        level.removeBlock(startPos, false);
+        ServerLevel serverLevel = (ServerLevel) level;
+        serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID).destroyRegeneratingBlock(startPos, serverLevel);
 
         int sweep = (int) player.getAttributeValue(UnshatteredAttributeValues.SWEEP.holder);
         if (sweep <= 0) {
             skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, 6.0f, player);
             player.syncData(PLAYER_SKILLS);
-            CollectionUtil.givePlayerHarvestedItemStack(player, new ItemStack(startBlock.getBlock(), calculateLogs(player)));
+            giveHarvestedLogs(player, startBlock.getBlock());
             return;
         }
 
         Queue<BreakTask> result = breakConnectedLogs(level, startPos, player, sweep);
         result.add(new BreakTask(level, startPos, player, startBlock));
         ACTIVE_BREAKS.add(new TreeBreakInstance(new ArrayList<>(result)));
+    }
+
+    private static void giveHarvestedLogs(Player player, Block brokenBlock) {
+        ItemRange itemRange = brokenBlock.defaultBlockState().getData(UnshatteredDataMaps.BREAKABLE_DROPS_DATA);
+        if (itemRange == null) return;
+
+        CollectionUtil.givePlayerHarvestedItemStack(player, new ItemStack(itemRange.item(), calculateLogs(player, itemRange.getDropAmount(player.getRandom()))));
     }
 
     private static Queue<BreakTask> breakConnectedLogs(Level level, BlockPos startPos, Player player, int sweep) {

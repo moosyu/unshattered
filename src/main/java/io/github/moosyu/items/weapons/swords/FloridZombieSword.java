@@ -10,7 +10,7 @@ import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.util.CheckItemRequirement;
 import io.github.moosyu.packets.ZombieSwordEffectsPacket;
-import io.github.moosyu.rarities.RarityTypes;
+import io.github.moosyu.rarities.UnshatteredRarities;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -35,19 +35,19 @@ import static io.github.moosyu.Unshattered.MODID;
 @EventBusSubscriber(modid = MODID)
 public class FloridZombieSword extends UnshatteredSword {
     private static final Identifier ABILITY_IDENTIFIER = Identifier.fromNamespaceAndPath(MODID, "florid_zombie_sword_instant_heal");
-    private static final ItemAbility INSTANT_HEAL_ABILITY = new ItemAbility(ABILITY_IDENTIFIER,70, 10, 0, false);
+    private static final ItemAbility INSTANT_HEAL_ABILITY = new ItemAbility(ABILITY_IDENTIFIER,40, 10, 0, false);
 
     public FloridZombieSword(Properties properties) {
         super(properties
                 .component(UnshatteredDataComponents.ABILITY.get(), INSTANT_HEAL_ABILITY)
-                .component(UnshatteredDataComponents.RARITY.get(), RarityTypes.LEGENDARY)
+                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.LEGENDARY)
                 .component(UnshatteredDataComponents.CHARGES.get(), new ItemCharges(5, 5, 300))
                 .component(UnshatteredDataComponents.SELL_VALUE.get(), 2000000)
                 .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
                 .attributes(ItemAttributeModifiers.builder()
-                        .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "florid_zombie_sword_damage"), 150, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                        .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "florid_zombie_sword_strength"), 80, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                        .add(UnshatteredAttributeValues.MANA.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "florid_zombie_sword_mana"), 100, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                        .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "florid_zombie_sword_damage"), 42, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                        .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "florid_zombie_sword_strength"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                        .add(UnshatteredAttributeValues.MANA.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "florid_zombie_sword_mana"), 30, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                         .add(Attributes.ATTACK_SPEED, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "florid_zombie_sword_attack_speed"), -2.4f, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                         .build()
                 )

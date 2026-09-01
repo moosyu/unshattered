@@ -19,5 +19,6 @@ public class RegisterClientPayloadHandler {
         event.register(DamageNumberPacket.TYPE, DamageNumberHandler::handleData);
         event.register(OpenDialoguePacket.TYPE, OpenDialogueHandler::handleData);
         event.register(FerocityEffectPacket.TYPE, FerocityEffectHandler::handleData);
+        event.register(BlockBreakSyncPacket.TYPE, BlockBreakSyncHandler::handleData);
     }
 }

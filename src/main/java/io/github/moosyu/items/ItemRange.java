@@ -3,6 +3,8 @@ package io.github.moosyu.items;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 
 /**
@@ -27,4 +29,10 @@ public record ItemRange(Item item, int minAmount, int maxAmount) {
                     Codec.INT.fieldOf("max_amount").forGetter(ItemRange::maxAmount)
             ).apply(instance, ItemRange::new)
     );
+
+    public int getDropAmount(RandomSource randomSource) {
+        return maxAmount() == minAmount()
+                ? maxAmount()
+                : randomSource.nextIntBetweenInclusive(minAmount(), maxAmount());
+    }
 }

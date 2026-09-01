@@ -1,6 +1,6 @@
 package io.github.moosyu.gui.layers;
 
-import io.github.moosyu.rarities.RarityTypes;
+import io.github.moosyu.rarities.UnshatteredRarities;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -58,8 +58,8 @@ public class SelectedItemLayer implements GuiLayer {
     private void displaySelectedText(Item heldItem, GuiGraphicsExtractor graphics, Minecraft minecraft, float opacity) {
         ItemStack heldItemStack = heldItem.getDefaultInstance();
         Component itemName = heldItem.getName(heldItemStack);
-        RarityTypes rarity = heldItem.components().get(UnshatteredDataComponents.RARITY);
-        int itemColor = rarity != null ? rarity.getColour(opacity) : RarityTypes.COMMON.getColour(1.0f);
+        UnshatteredRarities rarity = heldItem.components().get(UnshatteredDataComponents.RARITY);
+        int itemColor = rarity != null ? rarity.getColour(opacity) : UnshatteredRarities.COMMON.getColour(1.0f);
         graphics.text(Minecraft.getInstance().font, itemName, (graphics.guiWidth() / 2) - (minecraft.font.width(itemName) / 2), graphics.guiHeight() - 50, itemColor, true);
     }
 }

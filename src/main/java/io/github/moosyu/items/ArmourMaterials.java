@@ -1,4 +1,4 @@
-package io.github.moosyu.materials;
+package io.github.moosyu.items;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -9,19 +9,18 @@ import net.minecraft.util.Util;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.equipment.EquipmentAsset;
-import net.minecraft.world.item.equipment.EquipmentAssets;
 import net.neoforged.neoforge.common.Tags;
 
 import java.util.EnumMap;
 
 import static io.github.moosyu.Unshattered.MODID;
 
-public class ArmorMaterials {
+public class ArmourMaterials {
     private static final ResourceKey<? extends Registry<EquipmentAsset>> ROOT_ID = ResourceKey.createRegistryKey(Identifier.withDefaultNamespace("equipment_asset"));
     public static ResourceKey<EquipmentAsset> LEAFLET_KEY = ResourceKey.create(ROOT_ID, Identifier.fromNamespaceAndPath(MODID, "leaflet"));
     public static ResourceKey<EquipmentAsset> GLOW_SQUID_BOOTS_KEY = ResourceKey.create(ROOT_ID, Identifier.fromNamespaceAndPath(MODID, "glow_squid_boots"));
 
-    public static final ArmorMaterial LEAFLET_ARMOR_MATERIAL = new ArmorMaterial(
+    public static final ArmorMaterial LEAFLET_ARMOUR_MATERIAL = new ArmorMaterial(
 1,
         // Determines the defense value of this armor material, depending on what armor piece it is.
         Util.make(new EnumMap<>(ArmorType.class), map -> {

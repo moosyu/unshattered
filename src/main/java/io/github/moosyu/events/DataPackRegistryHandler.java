@@ -47,6 +47,7 @@ public class DataPackRegistryHandler {
 
         event.dataPackRegistry(
                 REGEN_PATH_REGISTRY_KEY,
+                RegenPath.CODEC,
                 RegenPath.CODEC
         );
     }

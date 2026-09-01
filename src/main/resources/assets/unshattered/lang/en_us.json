@@ -95,7 +95,7 @@
   "item.ability.unshattered.treecapitator_park_enthusiast": "Park Enthusiast",
   "item.ability.unshattered.spruce_axe_park_enthusiast": "Park Enthusiast",
 
-  "item.ability.description.unshattered.rogue_sword_speed_boost": "Grants [colour=0xFFFFFFFF]+50✦ Speed[/colour] for [colour=0xFF55FF55]30s[/colour].",
+  "item.ability.description.unshattered.rogue_sword_speed_boost": "Grants [colour=0xFFFFFFFF]+0.5✦ Speed[/colour] for [colour=0xFF55FF55]30s[/colour].",
   "item.ability.description.unshattered.mind_blowing": "Deals [colour=0xFF55FF55]+100%[/colour] damage to undead mobs.",
   "item.ability.description.unshattered.ignition": "Ignites enemies for [colour=0xFF55FF55]3s[/colour].",
   "item.ability.description.unshattered.zombie_sword_instant_heal": "Heal for [colour=0xFFFF5555]120[/colour] + [colour=0xFFFF5555]5%❤[/colour].",
@@ -107,8 +107,8 @@
   "item.ability.description.unshattered.hyper_cleaver_cleave": "When hitting an entity, monsters in a [colour=0xFF55FF55]4[/colour] block range will be hit for [colour=0xFFFF5555]40%[/colour] of that damage.",
   "item.ability.description.unshattered.giant_cleaver_cleave": "When hitting an entity, monsters in a [colour=0xFF55FF55]5[/colour] block range will be hit for [colour=0xFFFF5555]50%[/colour] of that damage.",
   "item.ability.description.unshattered.fish_out_of_water": "You can only damage [colour=0xFF5555FF]aquatic[/colour] enemies with this fishing rod!",
-  "item.ability.description.unshattered.treecapitator_park_enthusiast": "Gain [colour=0xFFFFAA00]+100\uD83E\uDE93[/colour] while in hand in the [colour=0xFF55FF55]The Plains[/colour]!",
-  "item.ability.description.unshattered.spruce_axe_park_enthusiast": "Gain [colour=0xFFFFAA00]+50\uD83E\uDE93[/colour] while in hand in the [colour=0xFF55FF55]The Plains[/colour]!",
+  "item.ability.description.unshattered.treecapitator_park_enthusiast": "Gain [colour=0xFFFFAA00]+50\uD83E\uDE93[/colour] while in the [colour=0xFF55FF55]The Plains[/colour]!",
+  "item.ability.description.unshattered.spruce_axe_park_enthusiast": "Gain [colour=0xFFFFAA00]+25\uD83E\uDE93[/colour] while in the [colour=0xFF55FF55]The Plains[/colour]!",
 
   "block.unshattered.fig_log": "Fig Log",
   "block.unshattered.breakable_fig_log": "Breakable Fig Log",
@@ -184,6 +184,7 @@
   "item.description.unshattered.challenging_rod": "Sea creatures can't help but stare.",
   "item.description.unshattered.fishing_rod": "Ol' reliable.",
   "item.description.unshattered.bat_talisman": "I'm all ears!",
+  "item.description.unshattered.iron_dagger": "Seems unbalanced",
 
   "attribute.name.unshattered.sweep": "Sweep",
   "attribute.name.unshattered.foraging_fortune": "Foraging Fortune",

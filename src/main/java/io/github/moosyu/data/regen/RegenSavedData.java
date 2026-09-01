@@ -5,24 +5,31 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.moosyu.Unshattered;
 import io.github.moosyu.events.DataPackRegistryHandler;
+import io.github.moosyu.packets.BlockBreakSyncPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.SavedDataType;
+import net.minecraft.world.phys.AABB;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.data.regen.RegenPaths.REGEN_IDENTIFIER_BY_BLOCK;
 import static io.github.moosyu.data.regen.RegenPaths.RegenPath;
 
-public class RegenSavedData extends SavedData {
+public final class RegenSavedData extends SavedData {
     public static final class RegenState {
         private final ResourceKey<RegenPath> regenPathIdentifier;
         private final int regenPathIndex;
@@ -97,6 +104,7 @@ public class RegenSavedData extends SavedData {
                 level.setBlockAndUpdate(globalPos.pos(), regenPath.path().get(newRegenPathIndex));
                 regenQueue.put(globalPos, new RegenState(state.regenPathIdentifier(), newRegenPathIndex, regenPath.regenTicks()));
                 this.setDirty();
+                PacketDistributor.sendToPlayersTrackingChunk(level, ChunkPos.containing(blockPos), new BlockBreakSyncPacket(blockPos, state.regenPathIdentifier, newRegenPathIndex));
             }
         } else {
             BlockState blockState = level.getBlockState(globalPos.pos());
@@ -107,40 +115,45 @@ public class RegenSavedData extends SavedData {
                 if (regenPath == null) {
                     Unshattered.LOGGER.error("missing regen path for {}", regenPathKey.identifier().getPath());
                     return;
-                };
+                }
 
                 level.setBlockAndUpdate(globalPos.pos(), regenPath.path().get(regenPath.stagesIncremented()));
                 regenQueue.put(globalPos, new RegenState(regenPathKey, regenPath.stagesIncremented(), regenPath.regenTicks()));
                 this.setDirty();
+                PacketDistributor.sendToPlayersTrackingChunk(level, ChunkPos.containing(blockPos), new BlockBreakSyncPacket(blockPos, regenPathKey, regenPath.stagesIncremented()));
             }
         }
     }
 
     /**
      * regenerates a block in the regen queue
-     * @param blockPos the position of the block being regenerated
+     * @param globalPos the global position of the block being regenerated
      * @param level server level
      */
-    public void regenerateBlock(GlobalPos blockPos, ServerLevel level) {
-        if (regenQueue.containsKey(blockPos)) {
-            RegenState state = regenQueue.get(blockPos);
+    public void regenerateBlock(GlobalPos globalPos, ServerLevel level) {
+        if (regenQueue.containsKey(globalPos)) {
+            BlockPos blockPos = globalPos.pos();
+            RegenState state = regenQueue.get(globalPos);
             int newRegenPathIndex = state.regenPathIndex - 1;
+            RegenPath regenPath = regenPathRegistry(level).getValue(state.regenPathIdentifier());
 
-            Registry<RegenPath> registry = regenPathRegistry(level);
-            RegenPath regenPath = registry.getValue(state.regenPathIdentifier());
-            if (regenPath == null) return;
+            if (regenPath != null && level.getEntitiesOfClass(Player.class, new AABB(blockPos)).isEmpty()) {
+                level.setBlockAndUpdate(blockPos, regenPath.path().get(newRegenPathIndex));
+                if (newRegenPathIndex == 0) {
+                    regenQueue.remove(globalPos);
+                    PacketDistributor.sendToPlayersTrackingChunk(level,
+                            ChunkPos.containing(blockPos),
+                            new BlockBreakSyncPacket(blockPos, state.regenPathIdentifier(), 0)
+                    );
+                } else {
+                    regenQueue.put(globalPos, new RegenState(state.regenPathIdentifier(), newRegenPathIndex, regenPath.regenTicks()));
+                    PacketDistributor.sendToPlayersTrackingChunk(level,
+                            ChunkPos.containing(blockPos),
+                            new BlockBreakSyncPacket(blockPos, state.regenPathIdentifier(), newRegenPathIndex));
+                }
 
-            BlockState newBlockstate = regenPath.path().get(newRegenPathIndex);
-
-            level.setBlockAndUpdate(blockPos.pos(), newBlockstate);
-
-            if (newRegenPathIndex == 0) {
-                regenQueue.remove(blockPos);
-            } else {
-                regenQueue.put(blockPos, new RegenState(state.regenPathIdentifier(), newRegenPathIndex, regenPath.regenTicks()));
+                this.setDirty();
             }
-
-            this.setDirty();
         }
     }
 

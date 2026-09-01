@@ -88,7 +88,7 @@ public class PlayerTickHandler {
 
         // incremental for every 2 seconds
         if (player.tickCount % 40 == 0) {
-            double healthGained = (MAX_HEALTH_VALUE / 20) * (HEALTH_REGEN_VALUE / 100);
+            double healthGained = (MAX_HEALTH_VALUE / 30) * (HEALTH_REGEN_VALUE / 100);
             double manaGained = (MAX_MANA_VALUE * 0.04) * (MANA_REGEN_VALUE / 100);
 
             state.addCurrentStat(PlayerStateAttachment.Stat.HEALTH, healthGained, MAX_HEALTH_VALUE);
@@ -99,8 +99,8 @@ public class PlayerTickHandler {
             // update health if attribute changed. itll already be updated on the healing tick though
             if (MAX_HEALTH_VALUE < state.getCurrentStat(PlayerStateAttachment.Stat.HEALTH)) {
                 state.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, MAX_HEALTH_VALUE);
+                player.syncData(PLAYER_STATE);
             }
-            player.syncData(PLAYER_STATE);
         }
 
         int ferocityCooldown = player.getData(UnshatteredAttachments.PLAYER_FEROCITY_COOLDOWN);

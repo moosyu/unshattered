@@ -156,6 +156,14 @@ public class DatagenHandler {
                                     Blocks.BEDROCK),
                             240
                     );
+                    createRegenPathWithBlocks(bootstrap, "fig_wood", List.of(UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK.get(),
+                            Blocks.AIR),
+                            200
+                    );
+                    createRegenPathWithBlocks(bootstrap, "oak_leaf", List.of(Blocks.OAK_LEAVES,
+                                    Blocks.AIR),
+                            200
+                    );
                 })
         );
     }
