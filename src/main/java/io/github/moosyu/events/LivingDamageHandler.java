@@ -1,7 +1,9 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.util.damage.TriggerPlayerDamage;
+import io.github.moosyu.util.damage.DamageUtil;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -22,34 +24,36 @@ public class LivingDamageHandler {
         Level level = event.getEntity().level();
         if (level.isClientSide()) return;
         if (event.getEntity() instanceof Player player) {
+            ServerLevel serverLevel = (ServerLevel) level;
             event.setNewDamage(0.0f);
             Entity attacker = event.getSource().getEntity();
             double playerDefenseValue = player.getAttributeValue(UnshatteredAttributeValues.DEFENSE.holder);
+            String playerName = player.getName().getString();
             if (attacker instanceof LivingEntity entity) {
                 AttributeInstance damageAttributeInstance = entity.getAttribute(UnshatteredAttributeValues.DAMAGE.holder);
                 // in case the damage attribute was never defined
                 if (damageAttributeInstance == null) {
                     LOGGER.error("A damage attribute wasn't defined for entity: {}", entity.getName().getString());
                     return;
-                };
+                }
                 double damageDealt = damageAttributeInstance.getValue() * (1 - (playerDefenseValue / (playerDefenseValue + 100)));
-                TriggerPlayerDamage.damagePlayer(player, damageDealt, level, "☠ " + player.getName().getString() + " was slain by a " + entity.getName().getString() + "!");
+                DamageUtil.damagePlayer(player, damageDealt, serverLevel, Component.literal("☠ " + playerName + " was slain by a " + entity.getName().getString() + "!"));
             } else if (event.getSource().is(DamageTypeTags.IS_FALL)) {
                 int blocksFallen = (int) (event.getOriginalDamage() + 3);
                 // https://old.reddit.com/r/HypixelSkyblock/comments/fvozn7/fall_damage_calculator/
-                double damageDealt = (((blocksFallen - 6.5) * 200 / 33) / ((playerDefenseValue / 100) + 1));
-                TriggerPlayerDamage.damagePlayer(player, damageDealt, level, "☠ " +player.getName().getString() + " fell to their death!");
+                double damageDealt = ((blocksFallen - 6.5) * 200 / 33) / ((playerDefenseValue / 100) + 1);
+                DamageUtil.damagePlayer(player, damageDealt, serverLevel, Component.literal("☠ " + playerName + " fell to their death!"));
             } else if (event.getSource().is(DamageTypeTags.IS_DROWNING)) {
                 double damageDealt = (event.getOriginalDamage() * 200 / 33) / ((playerDefenseValue / 100) + 1);
-                TriggerPlayerDamage.damagePlayer(player, damageDealt, level, "☠ " +player.getName().getString() + " drowned!");
+                DamageUtil.damagePlayer(player, damageDealt, serverLevel, Component.literal("☠ " + playerName + " drowned!"));
             } else if (event.getSource().is(DamageTypeTags.IS_FIRE)) {
                 // this should eventually factor in true defense irc
                 double damageDealt = (double) (2 * 200) / 33;
-                TriggerPlayerDamage.damagePlayer(player, damageDealt, level, "☠ " +player.getName().getString() + " burnt to death!");
+                DamageUtil.damagePlayer(player, damageDealt, serverLevel, Component.literal("☠ " + playerName + " burnt to death!"));
             } else if (event.getSource().is(DamageTypeTags.IS_FREEZING)) {
-                // something something freezing damage idgaf
+                // something something freezing damage idk
             } else {
-                LOGGER.error("A damage attribute wasn't defined for: {}", event.getSource().getMsgId());
+                LOGGER.error("a damage attribute wasn't defined for: {}", event.getSource().getMsgId());
             }
         } else {
             if (event.getSource().is(DamageTypeTags.IS_FIRE)) {

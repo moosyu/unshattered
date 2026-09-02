@@ -1,14 +1,21 @@
-package io.github.moosyu.util;
+package io.github.moosyu.util.damage;
 
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.data.attachments.PlayerCurrencyAttachment;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
+import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.SkillRequirement;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemTypes;
 import io.github.moosyu.items.UnshatteredInstantPassiveAbilityItem;
 import io.github.moosyu.packets.DamageNumberPacket;
+import io.github.moosyu.packets.DeathSoundEffectPacket;
 import io.github.moosyu.packets.FerocityEffectPacket;
+import io.github.moosyu.packets.WeakHitSoundEffectPacket;
+import io.github.moosyu.util.AbilityUtils;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -18,6 +25,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import javax.annotation.Nullable;
@@ -25,28 +33,39 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_CURRENCY;
+import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_STATE;
+
 public final class DamageUtil {
     public static final List<FerocityHit> SCHEDULED_FEROCITY_ATTACKS = new ArrayList<>();
     public static final int FEROCITY_COOLDOWN = 4;
 
     /**
-     * runs damage code that factors in unshattered damage attributes and checks skill requirements
+     * runs damage code for a player attacking an entity that factors in unshattered damage attributes and checks skill requirements.
+     * make sure it isn't clientside before triggering.
      * @param player player dealing damage
      * @param target target attempting to be damaged
      */
-    public static void dealDamage(Player player, LivingEntity target, @Nullable UnshatteredInstantPassiveAbilityItem item, ItemTypes itemType) {
+    public static void playerDealDamage(Player player, LivingEntity target, @Nullable UnshatteredInstantPassiveAbilityItem item, ItemTypes itemType) {
         if (!player.isCreative() && target.is(EntityType.ARMOR_STAND)) return;
 
         SkillRequirement skillRequirement = player.getItemInHand(InteractionHand.MAIN_HAND).get(UnshatteredDataComponents.SKILL_REQUIREMENT);
         PlayerSkillsAttachment playerSkill = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
         float attackStrength = player.getAttackStrengthScale(0.0f);
+        double critDamage = 0.0d;
 
         if (skillRequirement != null && skillRequirement.level() > playerSkill.getLevel(playerSkill.getExp(skillRequirement.skill()))) {
             player.sendSystemMessage(Component.literal(Component.translatable(skillRequirement.skill().getTranslationKey()).getString() + " level " + skillRequirement.level() + " is required to use this weapon!").withColor(0xFFFF5555));
             return;
         }
 
-        double critDamage = player.getAttributeValue(UnshatteredAttributeValues.CRITICAL_CHANCE.holder) >= (Math.random() * 101) && attackStrength > 0.9f ? player.getAttributeValue(UnshatteredAttributeValues.CRITICAL_DAMAGE.holder) : 0.0d;
+        if (attackStrength >= 0.9f) {
+            critDamage = player.getAttributeValue(UnshatteredAttributeValues.CRITICAL_CHANCE.holder) >= (player.getRandom().nextIntBetweenInclusive(0, 101))
+                    ? player.getAttributeValue(UnshatteredAttributeValues.CRITICAL_DAMAGE.holder)
+                    : 0.0d;
+        } else {
+            PacketDistributor.sendToPlayer((ServerPlayer) player, new WeakHitSoundEffectPacket());
+        }
 
         double damage = (5 + player.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder))
                 * (1 + (player.getAttributeValue(UnshatteredAttributeValues.STRENGTH.holder) / 100))
@@ -142,5 +161,40 @@ public final class DamageUtil {
 
             return false;
         }
+    }
+
+    /**
+     * deal damage to a player
+     * @param player player being damaged
+     * @param damageDealt damage being dealt to the player
+     * @param level server level
+     * @param deathMessage death message if the damage kills the player
+     */
+    public static void damagePlayer(Player player, double damageDealt, ServerLevel level, Component deathMessage) {
+        PlayerStateAttachment states = player.getData(PLAYER_STATE.get());
+        double playerHealth = states.getCurrentStat(PlayerStateAttachment.Stat.HEALTH);
+
+        if (states.isInvulnerable()) return;
+
+        if (playerHealth - damageDealt > 0.0d) {
+            states.removeCurrentStat(PlayerStateAttachment.Stat.HEALTH, damageDealt, player);
+            states.setInvulnerableTime(20);
+        } else {
+            PlayerCurrencyAttachment currency = player.getData(PLAYER_CURRENCY.get());
+            BlockPos spawnPos = level.getRespawnData().pos();
+
+            player.teleportTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5);
+            player.sendSystemMessage(deathMessage.copy()
+                    .withStyle(ChatFormatting.RED)
+                    .append(Component.literal(" You lost " + (currency.getCoins() / 2) + " coins."))
+            );
+            states.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, player.getAttributeValue(UnshatteredAttributeValues.HEALTH.holder), player);
+            states.setCurrentStat(PlayerStateAttachment.Stat.MANA, player.getAttributeValue(UnshatteredAttributeValues.MANA.holder), player);
+            currency.removeCoins(currency.getCoins() / 2);
+            player.syncData(PLAYER_CURRENCY.get());
+            PacketDistributor.sendToPlayer((ServerPlayer) player, new DeathSoundEffectPacket());
+            states.setCancelledKnockback(true);
+        }
+        player.invulnerableTime = 0;
     }
 }

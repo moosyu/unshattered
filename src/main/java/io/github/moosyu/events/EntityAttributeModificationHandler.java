@@ -39,22 +39,22 @@ public class EntityAttributeModificationHandler {
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.BREAKING_POWER.holder);
 
         event.add(EntityType.ZOMBIE, UnshatteredAttributeValues.HEALTH.holder, 20.0);
-        event.add(EntityType.ZOMBIE, UnshatteredAttributeValues.DAMAGE.holder, 3.0d);
+        event.add(EntityType.ZOMBIE, UnshatteredAttributeValues.DAMAGE.holder, 5.0d);
 
         event.add(EntityType.SKELETON, UnshatteredAttributeValues.HEALTH.holder, 20.0d);
-        event.add(EntityType.SKELETON, UnshatteredAttributeValues.DAMAGE.holder, 3.0);
+        event.add(EntityType.SKELETON, UnshatteredAttributeValues.DAMAGE.holder, 5.0);
 
         event.add(EntityType.SPIDER, UnshatteredAttributeValues.HEALTH.holder, 16.0d);
-        event.add(EntityType.SPIDER, UnshatteredAttributeValues.DAMAGE.holder, 2.0d);
+        event.add(EntityType.SPIDER, UnshatteredAttributeValues.DAMAGE.holder, 3.0d);
 
         event.add(EntityType.CAVE_SPIDER, UnshatteredAttributeValues.HEALTH.holder, 12.0d);
-        event.add(EntityType.CAVE_SPIDER, UnshatteredAttributeValues.DAMAGE.holder, 2.0d);
+        event.add(EntityType.CAVE_SPIDER, UnshatteredAttributeValues.DAMAGE.holder, 4.0d);
 
         event.add(EntityType.WITCH, UnshatteredAttributeValues.HEALTH.holder, 26.0d);
-        event.add(EntityType.WITCH, UnshatteredAttributeValues.DAMAGE.holder, 6.0d);
+        event.add(EntityType.WITCH, UnshatteredAttributeValues.DAMAGE.holder, 7.0d);
 
         event.add(EntityType.ENDERMAN, UnshatteredAttributeValues.HEALTH.holder, 40.0d);
-        event.add(EntityType.ENDERMAN, UnshatteredAttributeValues.DAMAGE.holder, 7.5d);
+        event.add(EntityType.ENDERMAN, UnshatteredAttributeValues.DAMAGE.holder, 8.5d);
 
         event.add(EntityType.CREEPER, UnshatteredAttributeValues.HEALTH.holder, 20.0d);
         event.add(EntityType.CREEPER, UnshatteredAttributeValues.DAMAGE.holder, 20.0d);
@@ -94,5 +94,8 @@ public class EntityAttributeModificationHandler {
         event.add(EntityType.PIG, UnshatteredAttributeValues.HEALTH.holder, 10.0d);
 
         event.add(EntityType.ARMOR_STAND, UnshatteredAttributeValues.HEALTH.holder, 0.1d);
+
+        event.add(EntityType.ENDERMITE, UnshatteredAttributeValues.HEALTH.holder, 50.0d);
+        event.add(EntityType.ENDERMITE, UnshatteredAttributeValues.DAMAGE.holder, 7.0);
     }
 }

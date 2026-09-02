@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
+// lowkey shouldve done this with a data attachment but hindsight is 2020
 public class RegenClientCache {
     private static final Map<BlockPos, State> CACHE = new HashMap<>();
     public record State(ResourceKey<RegenPaths.RegenPath> pathIdentifier, int index) {}

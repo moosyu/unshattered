@@ -10,7 +10,7 @@ import org.jspecify.annotations.NonNull;
 import static io.github.moosyu.Unshattered.MODID;
 
 public record UpdateDialogueStatePacket(boolean opened) implements CustomPacketPayload {
-    public static final Type<UpdateDialogueStatePacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(MODID, "close_dialogue_packet"));
+    public static final Type<UpdateDialogueStatePacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(MODID, "update_dialogue_state"));
     public static final StreamCodec<ByteBuf, UpdateDialogueStatePacket> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.BOOL, UpdateDialogueStatePacket::opened,
             UpdateDialogueStatePacket::new

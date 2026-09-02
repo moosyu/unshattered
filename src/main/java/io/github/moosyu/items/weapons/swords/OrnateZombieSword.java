@@ -80,12 +80,10 @@ public class OrnateZombieSword extends UnshatteredSword {
                 if (!abilities.hasActiveEffect(ABILITY_IDENTIFIER)) {
                     abilities.addActiveEffect(ABILITY_IDENTIFIER, itemCharges.rechargeTime(), level, p -> onRecharge(p, itemStack), player.getItemBySlot(hand.asEquipmentSlot()));
                 }
-                playerState.removeCurrentStat(PlayerStateAttachment.Stat.MANA, INSTANT_HEAL_ABILITY.manaCost());
-                player.syncData(UnshatteredAttachments.PLAYER_STATE.get());
+                playerState.removeCurrentStat(PlayerStateAttachment.Stat.MANA, INSTANT_HEAL_ABILITY.manaCost(), player);
             }
 
-            playerState.addCurrentStat(PlayerStateAttachment.Stat.HEALTH, 144 + (maxHealthAttribute.getValue() * 0.05), maxHealthAttribute.getValue());
-            player.syncData(UnshatteredAttachments.PLAYER_STATE.get());
+            playerState.addCurrentStat(PlayerStateAttachment.Stat.HEALTH, 144 + (maxHealthAttribute.getValue() * 0.05), maxHealthAttribute.getValue(), player);
         }
 
         PacketDistributor.sendToPlayer((ServerPlayer) player, new ZombieSwordEffectsPacket());

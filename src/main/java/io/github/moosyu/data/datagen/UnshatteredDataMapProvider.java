@@ -217,6 +217,12 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         0,
                         PlayerSkillsAttachment.Skill.FARMING,
                         5.0f
+                ), false)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.ENDERMITE), new MobRewardData(
+                        List.of(new MobItemDropData(Items.END_STONE, 1.0f, false, 1, 2)),
+                        10,
+                        PlayerSkillsAttachment.Skill.COMBAT,
+                        20.0f
                 ), false);
         this.builder(BLOCK_BREAKING_POWER_DATA)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get()), 1, false)

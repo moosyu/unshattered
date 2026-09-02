@@ -91,15 +91,12 @@ public class PlayerTickHandler {
             double healthGained = (MAX_HEALTH_VALUE / 30) * (HEALTH_REGEN_VALUE / 100);
             double manaGained = (MAX_MANA_VALUE * 0.04) * (MANA_REGEN_VALUE / 100);
 
-            state.addCurrentStat(PlayerStateAttachment.Stat.HEALTH, healthGained, MAX_HEALTH_VALUE);
-            player.syncData(PLAYER_STATE);
-            state.addCurrentStat(PlayerStateAttachment.Stat.MANA, manaGained, MAX_MANA_VALUE);
-            player.syncData(PLAYER_STATE);
+            state.addCurrentStat(PlayerStateAttachment.Stat.HEALTH, healthGained, MAX_HEALTH_VALUE, player);
+            state.addCurrentStat(PlayerStateAttachment.Stat.MANA, manaGained, MAX_MANA_VALUE, player);
         } else {
             // update health if attribute changed. itll already be updated on the healing tick though
             if (MAX_HEALTH_VALUE < state.getCurrentStat(PlayerStateAttachment.Stat.HEALTH)) {
-                state.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, MAX_HEALTH_VALUE);
-                player.syncData(PLAYER_STATE);
+                state.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, MAX_HEALTH_VALUE, player);
             }
         }
 

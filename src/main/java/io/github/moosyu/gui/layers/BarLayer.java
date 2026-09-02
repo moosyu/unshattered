@@ -6,6 +6,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameType;
 import net.neoforged.neoforge.client.gui.GuiLayer;
@@ -56,7 +57,7 @@ public class BarLayer implements GuiLayer {
      * @param textColour the colour of the bar's text
      * @param posXOffset the x offset of the bar and text
      * @param postYOffset the y offset of the bar and text
-     * @param getCurrentValue the current value of whatever information is being displayed by the info bar
+     * @param getCurrentValue the current value of whatever information is being displayed by the info bar (which is converted to an int at the end)
      * @param getMaxValue the current value of whatever information is being displayed by the info bar to find percentage of the bar required to be filled
      */
     public BarLayer(int barColour, int textColour, int posXOffset, int postYOffset, ToDoubleFunction<Player> getCurrentValue, ToDoubleFunction<Player> getMaxValue) {
@@ -86,7 +87,7 @@ public class BarLayer implements GuiLayer {
         ) return;
 
         Font font = Minecraft.getInstance().font;
-        String currentText = String.valueOf((int) getCurrentValue.applyAsDouble(player));
+        String currentText = String.valueOf(Mth.ceil(getCurrentValue.applyAsDouble(player)));
         double currentPercentage = getCurrentPercentage.applyAsDouble(player);
         graphics.blit(RenderPipelines.GUI_TEXTURED, SMALL_BAR, POS_X_BAR, POS_Y_BAR, 0, BAR_HEIGHT - 1, SPRITE_WIDTH, BAR_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT, barColour);
         graphics.blit(RenderPipelines.GUI_TEXTURED, SMALL_BAR, POS_X_BAR, POS_Y_BAR, 0, 0, (int) (SPRITE_WIDTH * currentPercentage), BAR_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT, barColour);

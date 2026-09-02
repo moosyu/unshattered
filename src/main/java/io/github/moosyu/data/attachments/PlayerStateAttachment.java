@@ -1,6 +1,7 @@
 package io.github.moosyu.data.attachments;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.Nullable;
 
 public final class PlayerStateAttachment {
@@ -27,23 +28,45 @@ public final class PlayerStateAttachment {
 
     public double getCurrentStat(Stat currentStat) {return stats[currentStat.ordinal()];}
 
-    public void setCurrentStat(Stat currentStat, double value) {
+    /**
+     * set stat to value
+     * @param currentStat the stat to modify
+     * @param amount the amount to set it to
+     * @param player the player having the stat modified
+     */
+    public void setCurrentStat(Stat currentStat, double amount, Player player) {
         int index = currentStat.ordinal();
-        stats[index] = value;
+        stats[index] = amount;
         lastUpdatedStat = index;
+        player.syncData(UnshatteredAttachments.PLAYER_STATE);
     }
 
-    public void removeCurrentStat(Stat currentStat, double amount) {
-        int index = currentStat.ordinal();
-        stats[index] -= amount;
-        lastUpdatedStat = index;
-    }
-
-    public void addCurrentStat(Stat currentStat, double amount, double maxAmount) {
+    /**
+     * add amount from a stat and syncs it
+     * @param currentStat the stat to modify
+     * @param amount the amount to remove
+     * @param maxAmount the max amount the stat could be to make sure it doesnt surpass it
+     * @param player the player having the stat modified
+     */
+    public void addCurrentStat(Stat currentStat, double amount, double maxAmount, Player player) {
         int index = currentStat.ordinal();
         // the Math.min should return the smaller of the two (so the value doesnt overflow max). very smart but very dangerous.
         stats[index] = (float) Math.min(stats[index] + amount, maxAmount);
         lastUpdatedStat = index;
+        player.syncData(UnshatteredAttachments.PLAYER_STATE);
+    }
+
+    /**
+     * removes amount from a stat and syncs it
+     * @param currentStat the stat to modify
+     * @param amount the amount to remove
+     * @param player the player having the stat modified
+     */
+    public void removeCurrentStat(Stat currentStat, double amount, Player player) {
+        int index = currentStat.ordinal();
+        stats[index] -= amount;
+        lastUpdatedStat = index;
+        player.syncData(UnshatteredAttachments.PLAYER_STATE);
     }
 
     public void setCurrentStatByIndex(int index, double value) {stats[index] = value;}

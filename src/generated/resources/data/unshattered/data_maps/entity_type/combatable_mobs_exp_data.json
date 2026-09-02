@@ -126,6 +126,21 @@
       "min_coins": 2,
       "skill": "combat"
     },
+    "minecraft:endermite": {
+      "drops": [
+        {
+          "base_drop_chance": 1.0,
+          "combat_fortune_boosted": false,
+          "item": "minecraft:end_stone",
+          "max": 2,
+          "min": 1
+        }
+      ],
+      "experience": 20.0,
+      "max_coins": 10,
+      "min_coins": 10,
+      "skill": "combat"
+    },
     "minecraft:glow_squid": {
       "drops": [
         {

@@ -23,8 +23,8 @@ public class ScreenEventHandler {
 
         // override inventory
         if (event.getNewScreen() instanceof InventoryScreen && !player.isCreative()) {
-            event.setCanceled(true);
-            ClientPacketDistributor.sendToServer(new OpenProfilePayload());
+            // event.setCanceled(true);
+            // ClientPacketDistributor.sendToServer(new OpenProfilePayload());
         } else if (event.getScreen() instanceof DialogueScreen) {
             ClientPacketDistributor.sendToServer(new UpdateDialogueStatePacket(true));
         }

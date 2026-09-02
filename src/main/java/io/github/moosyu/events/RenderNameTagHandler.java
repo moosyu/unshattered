@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.util.Mth;
 import net.minecraft.util.TriState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -35,7 +36,7 @@ public class RenderNameTagHandler {
         Player player = minecraft.player;
         Entity entity = event.getEntity();
 
-        if (player == null || entity.distanceToSqr(player) > 512 || entity == player) {
+        if (player == null || entity.distanceToSqr(player) > 512 || entity instanceof Player) {
             event.setCanRender(TriState.FALSE);
             return;
         }
@@ -45,17 +46,16 @@ public class RenderNameTagHandler {
             AttributeInstance healthAttribute = livingEntity.getAttribute(UnshatteredAttributeValues.HEALTH.holder);
             if (healthAttribute == null) {
                 event.setContent(Component.literal("SOMETHING WENT WRONG!! (NO HEALTH ASSIGNED)").withColor(0xFFFF5555));
-                return;
+            } else {
+                Optional<AttributeSupplier> supplier = getDefaultSupplier(livingEntity);
+                double baseHealth = supplier.map(s -> s.getBaseValue(UnshatteredAttributeValues.HEALTH.holder)).orElse(0.0);
+                event.setContent(Component.literal(livingEntity.getPlainTextName()).withColor(0xFFFF5555)
+                        .append(Component.literal(" " + Mth.ceil(healthAttribute.getValue())).withColor(healthAttribute.getValue() / baseHealth <= 0.5 ? 0xFFFFFF55 : 0xFF55FF55))
+                        .append(Component.literal("/").withColor(0xFFFFFFFF))
+                        .append(Component.literal(String.valueOf((int) (baseHealth))).withColor(0xFF55FF55))
+                        .append(Component.literal("❤").withColor(0xFFFF5555))
+                );
             }
-
-            Optional<AttributeSupplier> supplier = getDefaultSupplier(livingEntity);
-            double baseHealth = supplier.map(s -> s.getBaseValue(UnshatteredAttributeValues.HEALTH.holder)).orElse(0.0);
-            event.setContent(Component.literal(livingEntity.getPlainTextName()).withColor(0xFFFF5555)
-                    .append(Component.literal(" " + (int) (healthAttribute.getValue())).withColor((healthAttribute.getValue() / baseHealth) <= 0.5 ? 0xFFFFFF55 : 0xFF55FF55))
-                    .append(Component.literal("/").withColor(0xFFFFFFFF))
-                    .append(Component.literal(String.valueOf((int) (baseHealth))).withColor(0xFF55FF55))
-                    .append(Component.literal("❤").withColor(0xFFFF5555))
-            );
         }
     }
 

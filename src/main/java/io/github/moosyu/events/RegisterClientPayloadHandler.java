@@ -20,5 +20,6 @@ public class RegisterClientPayloadHandler {
         event.register(OpenDialoguePacket.TYPE, OpenDialogueHandler::handleData);
         event.register(FerocityEffectPacket.TYPE, FerocityEffectHandler::handleData);
         event.register(BlockBreakSyncPacket.TYPE, BlockBreakSyncHandler::handleData);
+        event.register(WeakHitSoundEffectPacket.TYPE, WeakHitSoundEffectHandler::handleData);
     }
 }

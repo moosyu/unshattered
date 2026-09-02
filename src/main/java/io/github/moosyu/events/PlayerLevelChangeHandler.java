@@ -25,10 +25,8 @@ public class PlayerLevelChangeHandler {
             final AttributeInstance healthAttribute = player.getAttribute(UnshatteredAttributeValues.HEALTH.holder);
             final AttributeInstance manaAttribute = player.getAttribute(UnshatteredAttributeValues.MANA.holder);
             if (healthAttribute == null || manaAttribute == null) return;
-            stats.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, healthAttribute.getValue());
-            player.syncData(PLAYER_STATE);
-            stats.setCurrentStat(PlayerStateAttachment.Stat.MANA, manaAttribute.getValue());
-            player.syncData(PLAYER_STATE);
+            stats.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, healthAttribute.getValue(), player);
+            stats.setCurrentStat(PlayerStateAttachment.Stat.MANA, manaAttribute.getValue(), player);
         }
     }
 
