@@ -89,6 +89,11 @@ public class UnshatteredCreativeTabs {
         .displayItems((_, output) -> {
             output.accept(ENCHANTED_FIG_LOG.get());
             output.accept(ENCHANTED_ROTTEN_FLESH);
+            output.accept(ZOMBIE_HEART);
+            output.accept(GOLDEN_POWDER);
+            output.accept(ENCHANTED_GOLD_BLOCK);
+            output.accept(ENCHANTED_GOLD_INGOT);
+            output.accept(HEALING_TISSUE);
         }).build()
     );
 

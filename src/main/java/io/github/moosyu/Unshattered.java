@@ -8,6 +8,7 @@ import io.github.moosyu.data.regions.BoundaryCoordinates;
 import io.github.moosyu.data.regions.RegionAreas;
 import io.github.moosyu.data.regions.UnshatteredRegions;
 import io.github.moosyu.gui.screens.ProfileScreen;
+import io.github.moosyu.recipes.UnshatteredRecipes;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.Identifier;
@@ -73,6 +74,8 @@ public class Unshattered {
         DATA_COMPONENTS.register(modEventBus);
         ENTITY_TYPES.register(modEventBus);
         SOUND_EVENTS.register(modEventBus);
+        UnshatteredRecipes.RECIPE_SERIALIZERS.register(modEventBus);
+        UnshatteredRecipes.RECIPE_TYPES.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (unshattered) to respond directly to events.

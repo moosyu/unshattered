@@ -77,9 +77,14 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.ZOOP_THE_FISH.get(), Items.SALMON, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.CAKE_SOUL.get(), Items.PINK_DYE, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_ROTTEN_FLESH.get(), Items.ROTTEN_FLESH, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ZOMBIE_HEART.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.GOLDEN_POWDER.get(), Items.GLOWSTONE_DUST, ModelTemplates.FLAT_ITEM);
+        itemModels.itemModelOutput.accept(UnshatteredItems.ENCHANTED_GOLD_BLOCK.get(), ItemModelUtils.plainModel(ModelTemplates.CUBE_ALL.create(Identifier.fromNamespaceAndPath(MODID, "block/enchanted_gold_block"), TextureMapping.cube(Blocks.GOLD_BLOCK), blockModels.modelOutput)));
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_GOLD_INGOT.get(), Items.GOLD_INGOT, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.HEALING_TISSUE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFishingRod(UnshatteredItems.CHALLENGING_ROD.get());
-        itemModels.itemModelOutput.accept(UnshatteredItems.ENCHANTED_FIG_LOG.get(), ItemModelUtils.plainModel(ModelTemplates.CUBE_COLUMN.create(Identifier.fromNamespaceAndPath("unshattered", "block/enchanted_fig_log"), TextureMapping.column(UnshatteredBlocks.FIG_LOG_BLOCK.get()), blockModels.modelOutput)));
-        itemModels.itemModelOutput.accept(UnshatteredItems.BEDROCK.get(), ItemModelUtils.plainModel(ModelTemplates.CUBE_ALL.create(Identifier.fromNamespaceAndPath("unshattered", "block/bedrock"), TextureMapping.cube(Blocks.BEDROCK), blockModels.modelOutput)));
+        itemModels.itemModelOutput.accept(UnshatteredItems.ENCHANTED_FIG_LOG.get(), ItemModelUtils.plainModel(ModelTemplates.CUBE_COLUMN.create(Identifier.fromNamespaceAndPath(MODID, "block/enchanted_fig_log"), TextureMapping.column(UnshatteredBlocks.FIG_LOG_BLOCK.get()), blockModels.modelOutput)));
+        itemModels.itemModelOutput.accept(UnshatteredItems.BEDROCK.get(), ItemModelUtils.plainModel(ModelTemplates.CUBE_ALL.create(Identifier.fromNamespaceAndPath(MODID, "block/bedrock"), TextureMapping.cube(Blocks.BEDROCK), blockModels.modelOutput)));
         itemModels.itemModelOutput.accept(UnshatteredItems.FISHING_ROD.get(), ItemModelUtils.conditional(new FishingRodCast(), ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(Items.FISHING_ROD, "_cast")), ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(Items.FISHING_ROD))));
 
         blockModels.createRotatedPillarWithHorizontalVariant(UnshatteredBlocks.FIG_LOG_BLOCK.get(), TexturedModel.COLUMN, TexturedModel.COLUMN_HORIZONTAL);

@@ -149,165 +149,165 @@ public class UnshatteredItems {
             )
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> BAT_THE_FISH = ITEMS.registerItem("bat_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> BAT_THE_FISH = ITEMS.registerItem("bat_the_fish", props -> new EnchantedItem(props
             .stacksTo(1)
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> CENTURY_THE_FISH = ITEMS.registerItem("century_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> CENTURY_THE_FISH = ITEMS.registerItem("century_the_fish", props -> new EnchantedItem(props
             .stacksTo(1)
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> CHILL_THE_FISH = ITEMS.registerItem("chill_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> CHILL_THE_FISH = ITEMS.registerItem("chill_the_fish", props -> new EnchantedItem(props
             .stacksTo(1).component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> CLUNK_THE_FISH = ITEMS.registerItem("clunk_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> CLUNK_THE_FISH = ITEMS.registerItem("clunk_the_fish", props -> new EnchantedItem(props
             .stacksTo(1).component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL).component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> DIAMOND_THE_FISH = ITEMS.registerItem("diamond_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> DIAMOND_THE_FISH = ITEMS.registerItem("diamond_the_fish", props -> new EnchantedItem(props
             .stacksTo(1)
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL).component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> DUST_THE_FISH = ITEMS.registerItem("dust_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> DUST_THE_FISH = ITEMS.registerItem("dust_the_fish", props -> new EnchantedItem(props
             .stacksTo(1)
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> EGG_THE_FISH = ITEMS.registerItem("egg_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> EGG_THE_FISH = ITEMS.registerItem("egg_the_fish", props -> new EnchantedItem(props
             .stacksTo(1).component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> EON_THE_FISH = ITEMS.registerItem("eon_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> EON_THE_FISH = ITEMS.registerItem("eon_the_fish", props -> new EnchantedItem(props
             .stacksTo(1)
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> FLAKE_THE_FISH = ITEMS.registerItem("flake_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> FLAKE_THE_FISH = ITEMS.registerItem("flake_the_fish", props -> new EnchantedItem(props
             .stacksTo(1)
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH).component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> EXPERIMENT_THE_FISH = ITEMS.registerItem("experiment_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> EXPERIMENT_THE_FISH = ITEMS.registerItem("experiment_the_fish", props -> new EnchantedItem(props
             .stacksTo(1)
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH).component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> FOSSIL_THE_FISH = ITEMS.registerItem("fossil_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> FOSSIL_THE_FISH = ITEMS.registerItem("fossil_the_fish", props -> new EnchantedItem(props
             .stacksTo(1)
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH).component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> GABAGOOL_THE_FISH = ITEMS.registerItem("gabagool_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> GABAGOOL_THE_FISH = ITEMS.registerItem("gabagool_the_fish", props -> new EnchantedItem(props
             .stacksTo(1)
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> GIFT_THE_FISH = ITEMS.registerItem("gift_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> GIFT_THE_FISH = ITEMS.registerItem("gift_the_fish", props -> new EnchantedItem(props
             .stacksTo(1)
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> HERRING_THE_FISH = ITEMS.registerItem("herring_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> HERRING_THE_FISH = ITEMS.registerItem("herring_the_fish", props -> new EnchantedItem(props
             .stacksTo(1)
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> NOPE_THE_FISH = ITEMS.registerItem("nope_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> NOPE_THE_FISH = ITEMS.registerItem("nope_the_fish", props -> new EnchantedItem(props
             .stacksTo(1)
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> OOPS_THE_FISH = ITEMS.registerItem("oops_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> OOPS_THE_FISH = ITEMS.registerItem("oops_the_fish", props -> new EnchantedItem(props
             .stacksTo(1)
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> PARTY_THE_FISH = ITEMS.registerItem("party_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> PARTY_THE_FISH = ITEMS.registerItem("party_the_fish", props -> new EnchantedItem(props
             .stacksTo(1)
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> ROCK_THE_FISH = ITEMS.registerItem("rock_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> ROCK_THE_FISH = ITEMS.registerItem("rock_the_fish", props -> new EnchantedItem(props
             .stacksTo(1)
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> SHRIMP_THE_FISH = ITEMS.registerItem("shrimp_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> SHRIMP_THE_FISH = ITEMS.registerItem("shrimp_the_fish", props -> new EnchantedItem(props
             .stacksTo(1)
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> SKELETON_THE_FISH = ITEMS.registerItem("skeleton_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> SKELETON_THE_FISH = ITEMS.registerItem("skeleton_the_fish", props -> new EnchantedItem(props
             .stacksTo(1)
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> SPOOK_THE_FISH = ITEMS.registerItem("spook_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> SPOOK_THE_FISH = ITEMS.registerItem("spook_the_fish", props -> new EnchantedItem(props
             .stacksTo(1)
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> STEW_THE_FISH = ITEMS.registerItem("stew_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> STEW_THE_FISH = ITEMS.registerItem("stew_the_fish", props -> new EnchantedItem(props
             .stacksTo(1).component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> SWAMP_THE_FISH = ITEMS.registerItem("swamp_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> SWAMP_THE_FISH = ITEMS.registerItem("swamp_the_fish", props -> new EnchantedItem(props
             .stacksTo(1).component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> ZOOP_THE_FISH = ITEMS.registerItem("zoop_the_fish", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> ZOOP_THE_FISH = ITEMS.registerItem("zoop_the_fish", props -> new EnchantedItem(props
             .stacksTo(1)
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.SPECIAL)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.FISH)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> ENCHANTED_FIG_LOG = ITEMS.registerItem("enchanted_fig_log", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> ENCHANTED_FIG_LOG = ITEMS.registerItem("enchanted_fig_log", props -> new EnchantedItem(props
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.RARE)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.LOG)
     ));
@@ -358,8 +358,34 @@ public class UnshatteredItems {
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
     ));
 
-    public static final DeferredItem<UnshatteredEnchantedItem> ENCHANTED_ROTTEN_FLESH = ITEMS.registerItem("enchanted_rotten_flesh", props -> new UnshatteredEnchantedItem(props
+    public static final DeferredItem<EnchantedItem> ENCHANTED_ROTTEN_FLESH = ITEMS.registerItem("enchanted_rotten_flesh", props -> new EnchantedItem(props
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON)
+            .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
+    ));
+
+    public static final DeferredItem<Item> ZOMBIE_HEART = ITEMS.registerItem("zombie_heart", props -> new Item(props
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.RARE)
+            .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
+            .stacksTo(1)
+    ));
+
+    public static final DeferredItem<EnchantedItem> GOLDEN_POWDER = ITEMS.registerItem("golden_powder", props -> new EnchantedItem(props
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.EPIC)
+            .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
+    ));
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_GOLD_BLOCK = ITEMS.registerItem("enchanted_gold_block", props -> new EnchantedItem(props
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.RARE)
+            .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
+    ));
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_GOLD_INGOT = ITEMS.registerItem("enchanted_gold_ingot", props -> new EnchantedItem(props
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON)
+            .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
+    ));
+
+    public static final DeferredItem<Item> HEALING_TISSUE = ITEMS.registerItem("healing_tissue", props -> new Item(props
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.RARE)
             .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
     ));
 

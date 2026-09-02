@@ -1,6 +1,7 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.gui.screens.DialogueScreen;
+import io.github.moosyu.packets.ResetFlagQueuePacket;
 import io.github.moosyu.packets.UpdateDialogueStatePacket;
 import io.github.moosyu.packets.OpenProfilePayload;
 import net.minecraft.client.Minecraft;

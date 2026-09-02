@@ -8,6 +8,7 @@ import io.github.moosyu.data.quests.QuestTypes;
 import io.github.moosyu.data.regen.RegenPaths.*;
 import io.github.moosyu.data.regions.*;
 import io.github.moosyu.data.datagen.*;
+import io.github.moosyu.recipes.UnshatteredRecipes;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
@@ -15,6 +16,8 @@ import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -40,7 +43,7 @@ import static io.github.moosyu.Unshattered.MODID;
 @EventBusSubscriber(modid = MODID)
 public class DatagenHandler {
     @SubscribeEvent
-    public static void onGatherData(GatherDataEvent.Client event) {
+    public static void onGatherDataClient(GatherDataEvent.Client event) {
         DataGenerator generator = event.getGenerator();
         PackOutput packOutput = generator.getPackOutput();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
@@ -52,6 +55,7 @@ public class DatagenHandler {
         generator.addProvider(true, new UnshatteredEntityTagsProvider(packOutput, lookupProvider));
         generator.addProvider(true, new UnshatteredDataMapProvider(packOutput, lookupProvider));
         generator.addProvider(true, new UnshatteredSoundDefinitionsProvider(packOutput));
+        event.createProvider(UnshatteredRecipeProvider.Runner::new);
 
         event.createDatapackRegistryObjects(
                 new RegistrySetBuilder().add(DataPackRegistryHandler.REGION_REGISTRY_KEY, bootstrap -> {

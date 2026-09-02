@@ -1,0 +1,28 @@
+{
+  "type": "unshattered:sized_recipe",
+  "ingredients": [
+    {
+      "count": 32,
+      "ingredient": "minecraft:gold_ingot"
+    },
+    {
+      "count": 32,
+      "ingredient": "minecraft:gold_ingot"
+    },
+    {
+      "count": 32,
+      "ingredient": "minecraft:gold_ingot"
+    },
+    {
+      "count": 32,
+      "ingredient": "minecraft:gold_ingot"
+    },
+    {
+      "count": 32,
+      "ingredient": "minecraft:gold_ingot"
+    }
+  ],
+  "result": {
+    "id": "unshattered:enchanted_gold_ingot"
+  }
+}

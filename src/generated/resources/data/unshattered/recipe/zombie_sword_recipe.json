@@ -1,0 +1,20 @@
+{
+  "type": "unshattered:sized_recipe",
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": "unshattered:zombie_heart"
+    },
+    {
+      "count": 1,
+      "ingredient": "unshattered:zombie_heart"
+    },
+    {
+      "count": 1,
+      "ingredient": "minecraft:stick"
+    }
+  ],
+  "result": {
+    "id": "unshattered:zombie_sword"
+  }
+}
