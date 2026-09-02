@@ -12,6 +12,8 @@ public final class PlayerStateAttachment {
     private boolean dialogueOpen = false;
     // unsynced
     private int invulnerableTime = 0;
+    // unsynced
+    private double lastHitAmount = 0.0d;
     private int lastUpdatedStat = -1;
 
     public enum Stat {
@@ -75,7 +77,7 @@ public final class PlayerStateAttachment {
 
     public void setCancelledKnockback(boolean cancelKnockback) {this.cancelKnockback = cancelKnockback;}
 
-    public boolean isInvulnerable() {return invulnerableTime > 0;}
+    public int getInvulnerableTime() {return invulnerableTime;}
 
     public void decrementInvulnerableTime() {invulnerableTime = Math.max(0, invulnerableTime - 1);}
 
@@ -95,6 +97,14 @@ public final class PlayerStateAttachment {
 
     public void setDialogueOpen(boolean dialogueOpen) {
         this.dialogueOpen = dialogueOpen;
+    }
+
+    public double getLastHitAmount() {
+        return lastHitAmount;
+    }
+
+    public void setLastHitAmount(double lastHitAmount) {
+        this.lastHitAmount = lastHitAmount;
     }
 
     public void writeSync(RegistryFriendlyByteBuf buf, boolean initialSync) {

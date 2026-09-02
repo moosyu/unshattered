@@ -25,7 +25,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import javax.annotation.Nullable;
@@ -39,6 +38,7 @@ import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_ST
 public final class DamageUtil {
     public static final List<FerocityHit> SCHEDULED_FEROCITY_ATTACKS = new ArrayList<>();
     public static final int FEROCITY_COOLDOWN = 4;
+    public static final int INVULNERABILITY_TIME_MAX = 20;
 
     /**
      * runs damage code for a player attacking an entity that factors in unshattered damage attributes and checks skill requirements.
@@ -73,7 +73,7 @@ public final class DamageUtil {
                 * player.getAttributeValue(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder)
                 * attackStrength;
         AttributeInstance targetHealth = target.getAttribute(UnshatteredAttributeValues.HEALTH.holder);
-        if (target.invulnerableTime <= 0 && targetHealth != null) {
+        if (targetHealth != null) {
             if (critDamage > 0.0d) {
                 player.crit(target);
                 target.playSound(SoundEvents.PLAYER_ATTACK_CRIT, 1.0F, 1.0F);
@@ -173,12 +173,18 @@ public final class DamageUtil {
     public static void damagePlayer(Player player, double damageDealt, ServerLevel level, Component deathMessage) {
         PlayerStateAttachment states = player.getData(PLAYER_STATE.get());
         double playerHealth = states.getCurrentStat(PlayerStateAttachment.Stat.HEALTH);
+        double originalDamage = damageDealt;
 
-        if (states.isInvulnerable()) return;
+        if (states.getInvulnerableTime() > INVULNERABILITY_TIME_MAX / 2) {
+            if (damageDealt <= states.getLastHitAmount()) return;
+            damageDealt -= states.getLastHitAmount();
+        }
+
+        states.setLastHitAmount(originalDamage);
+        states.setInvulnerableTime(INVULNERABILITY_TIME_MAX);
 
         if (playerHealth - damageDealt > 0.0d) {
             states.removeCurrentStat(PlayerStateAttachment.Stat.HEALTH, damageDealt, player);
-            states.setInvulnerableTime(20);
         } else {
             PlayerCurrencyAttachment currency = player.getData(PLAYER_CURRENCY.get());
             BlockPos spawnPos = level.getRespawnData().pos();
