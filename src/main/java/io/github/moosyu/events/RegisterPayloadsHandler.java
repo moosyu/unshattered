@@ -22,6 +22,7 @@ public class RegisterPayloadsHandler {
         registrar.playToClient(FerocityEffectPacket.TYPE, FerocityEffectPacket.STREAM_CODEC);
         registrar.playToClient(BlockBreakSyncPacket.TYPE, BlockBreakSyncPacket.STREAM_CODEC);
         registrar.playToClient(WeakHitSoundEffectPacket.TYPE, WeakHitSoundEffectPacket.STREAM_CODEC);
+        registrar.playToServer(OpenTalismanBagPacket.TYPE, OpenTalismanBagPacket.STREAM_CODEC, OpenTalismanBagHandler::handleData);
         registrar.playToServer(OpenProfilePayload.TYPE, OpenProfilePayload.STREAM_CODEC, OpenProfileHandler::handleData);
         registrar.playToServer(ResetFlagQueuePacket.TYPE, ResetFlagQueuePacket.STREAM_CODEC, ResetFlagQueueHandler::handleData);
         registrar.playToServer(QueueNewFlagsPacket.TYPE, QueueNewFlagsPacket.STREAM_CODEC, QueueNewFlagsHandler::handleData);

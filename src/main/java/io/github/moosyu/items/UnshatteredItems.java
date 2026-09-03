@@ -5,7 +5,7 @@ import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.components.SkillRequirement;
 import io.github.moosyu.data.regions.UnshatteredRegions;
-import io.github.moosyu.items.accessories.BatTalisman;
+import io.github.moosyu.items.talismans.BatTalisman;
 import io.github.moosyu.items.tools.axes.RegionLockedFortuneAxe;
 import io.github.moosyu.items.tools.axes.UnshatteredAxeTool;
 import io.github.moosyu.items.tools.rods.UnshatteredRod;

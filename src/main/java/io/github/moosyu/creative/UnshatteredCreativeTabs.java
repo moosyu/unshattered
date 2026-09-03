@@ -150,9 +150,9 @@ public class UnshatteredCreativeTabs {
         }).build()
     );
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_ACCESSORIES_TAB = CREATIVE_MODE_TABS.register("unshattered_accessories_tab",
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_TALISMANS_TAB = CREATIVE_MODE_TABS.register("unshattered_talismans_tab",
             () -> CreativeModeTab.builder()
-                .title(Component.translatable("item_group.unshattered.accessories"))
+                .title(Component.translatable("item_group.unshattered.talismans"))
                 .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
                 .icon(() -> BAT_TALISMAN.get().getDefaultInstance())
                 .displayItems((_, output) -> {

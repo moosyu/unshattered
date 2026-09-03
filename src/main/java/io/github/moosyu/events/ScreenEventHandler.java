@@ -1,11 +1,16 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.gui.menus.UnshatteredMenus;
 import io.github.moosyu.gui.screens.DialogueScreen;
-import io.github.moosyu.packets.ResetFlagQueuePacket;
+import io.github.moosyu.packets.OpenTalismanBagPacket;
 import io.github.moosyu.packets.UpdateDialogueStatePacket;
-import io.github.moosyu.packets.OpenProfilePayload;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -24,8 +29,8 @@ public class ScreenEventHandler {
 
         // override inventory
         if (event.getNewScreen() instanceof InventoryScreen && !player.isCreative()) {
-            // event.setCanceled(true);
-            // ClientPacketDistributor.sendToServer(new OpenProfilePayload());
+//            event.setCanceled(true);
+//            ClientPacketDistributor.sendToServer(new OpenTalismanBagPacket());
         } else if (event.getScreen() instanceof DialogueScreen) {
             ClientPacketDistributor.sendToServer(new UpdateDialogueStatePacket(true));
         }
@@ -40,4 +45,13 @@ public class ScreenEventHandler {
         }
     }
 
+    @SubscribeEvent
+    public static void onScreenInit(ScreenEvent.Init.Post event) {
+        if ((event.getScreen() instanceof InventoryScreen screen)) {
+            screen.children().stream()
+                    .filter(widget -> widget instanceof ImageButton)
+                    .findFirst()
+                    .ifPresent(screen::removeWidget);
+        }
+    }
 }

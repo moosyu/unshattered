@@ -43,6 +43,7 @@ import static io.github.moosyu.creative.UnshatteredCreativeTabs.CREATIVE_MODE_TA
 import static io.github.moosyu.data.components.UnshatteredDataComponents.DATA_COMPONENTS;
 import static io.github.moosyu.entities.UnshatteredEntities.ENTITY_TYPES;
 import static io.github.moosyu.events.DataPackRegistryHandler.*;
+import static io.github.moosyu.gui.menus.UnshatteredMenus.MENUS;
 import static io.github.moosyu.gui.screens.ProfileScreen.PROFILE_UI_ID;
 import static io.github.moosyu.items.UnshatteredItems.*;
 import static io.github.moosyu.sounds.UnshatteredSounds.SOUND_EVENTS;
@@ -76,6 +77,7 @@ public class Unshattered {
         SOUND_EVENTS.register(modEventBus);
         UnshatteredRecipes.RECIPE_SERIALIZERS.register(modEventBus);
         UnshatteredRecipes.RECIPE_TYPES.register(modEventBus);
+        MENUS.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (unshattered) to respond directly to events.

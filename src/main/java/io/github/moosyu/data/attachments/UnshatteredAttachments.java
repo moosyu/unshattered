@@ -2,6 +2,8 @@ package io.github.moosyu.data.attachments;
 
 import com.mojang.serialization.Codec;
 import io.github.moosyu.data.regions.UnshatteredRegions;
+import io.github.moosyu.storage.StorageContainer;
+import io.github.moosyu.storage.TalismanContainer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.neoforged.neoforge.attachment.AttachmentType;
@@ -84,4 +86,8 @@ public final class UnshatteredAttachments {
     );
 
     public static final Supplier<AttachmentType<Integer>> PLAYER_FEROCITY_COOLDOWN = ATTACHMENT_TYPES.register("player_ferocity_cooldown", () -> AttachmentType.builder(() -> 0).build());
+
+    public static final Supplier<AttachmentType<StorageContainer>> PLAYER_BANK_STORAGE = ATTACHMENT_TYPES.register("player_bank_storage", () -> AttachmentType.serializable(StorageContainer::new).build());
+
+    public static final Supplier<AttachmentType<TalismanContainer>> PLAYER_TALISMAN_STORAGE = ATTACHMENT_TYPES.register("player_talisman_storage", () -> AttachmentType.serializable(TalismanContainer::new).build());
 }

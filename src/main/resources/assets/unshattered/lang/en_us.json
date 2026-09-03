@@ -6,7 +6,7 @@
   "item_group.unshattered.decorative_blocks": "Skyblock: Unshattered - Decorative Blocks",
   "item_group.unshattered.breakable_blocks": "Skyblock: Unshattered - Breakable Blocks",
   "item_group.unshattered.unshattered_resources": "Skyblock: Unshattered - Resources",
-  "item_group.unshattered.accessories": "Skyblock: Unshattered - Accessories",
+  "item_group.unshattered.talismans": "Skyblock: Unshattered - Talismans",
 
   "misc.unshattered.coins": "Coins",
 
@@ -250,7 +250,7 @@
   "item_type.unshattered.leggings": "Leggings",
   "item_type.unshattered.boots": "Boots",
   "item_type.unshattered.wand": "Wand",
-  "item_type.unshattered.accessory": "Accessory",
+  "item_type.unshattered.talisman": "Talisman",
   "item_type.unshattered.staff": "Staff",
   "item_type.unshattered.fish": "Fish",
   "item_type.unshattered.log": "Log",
@@ -313,5 +313,7 @@
   "quest.name.unshattered.rocks_quest": "Rock's Quest",
   "quest.title.unshattered.quest_started": "Quest Started",
 
-  "sound.unshattered.ferocity_trigger": "Ferocity Slash"
+  "sound.unshattered.ferocity_trigger": "Ferocity Slash",
+
+  "container.unshattered.talisman_bag": "Talisman Bag"
 }
