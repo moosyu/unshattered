@@ -13,8 +13,11 @@ public class OpenTalismanBagHandler {
         context.enqueueWork(() -> {
             if (context.player() instanceof ServerPlayer serverPlayer) {
                 serverPlayer.openMenu(new SimpleMenuProvider(
-                        (containerId, inventory, _) -> new TalismansMenu(
-                                containerId, inventory, serverPlayer.getData(UnshatteredAttachments.PLAYER_TALISMAN_STORAGE)
+                        (containerId,
+                         inventory,
+                         _) -> new TalismansMenu(containerId,
+                                inventory,
+                                serverPlayer.getData(UnshatteredAttachments.PLAYER_TALISMAN_STORAGE)
                         ),
                         Component.translatable("container.unshattered.talisman_bag")
                 ));

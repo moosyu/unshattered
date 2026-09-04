@@ -5,6 +5,7 @@ import io.github.moosyu.packets.OpenTalismanBagPacket;
 import io.github.moosyu.util.GenericUtils;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -38,24 +39,32 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
                 20,
                 18,
                 new WidgetSprites(GenericUtils.getUnshatteredIdentifier("inventory_buttons/crafting")),
-                _ -> {})
-        );
+                _ -> {}
+        )).setTooltip(Tooltip.create(Component.translatable("container.unshattered.crafting")));
 
         this.addRenderableWidget(new ImageButton(this.leftPos + 76,
                 this.topPos + 25,
                 20,
                 18,
                 new WidgetSprites(GenericUtils.getUnshatteredIdentifier("inventory_buttons/storage")),
-                _ -> ClientPacketDistributor.sendToServer(new OpenStoragePacket()))
-        );
+                _ -> ClientPacketDistributor.sendToServer(new OpenStoragePacket())
+        )).setTooltip(Tooltip.create(Component.translatable("container.unshattered.storage")));
 
         this.addRenderableWidget(new ImageButton(this.leftPos + 76,
                 this.topPos + 43,
                 20,
                 18,
-                new WidgetSprites(GenericUtils.getUnshatteredIdentifier("inventory_buttons/accessory_bag")),
-                _ -> ClientPacketDistributor.sendToServer(new OpenTalismanBagPacket()))
-        );
+                new WidgetSprites(GenericUtils.getUnshatteredIdentifier("inventory_buttons/talisman_bag")),
+                _ -> ClientPacketDistributor.sendToServer(new OpenTalismanBagPacket())
+        )).setTooltip(Tooltip.create(Component.translatable("container.unshattered.talisman_bag")));
+
+        this.addRenderableWidget(new ImageButton(this.leftPos + 96,
+                this.topPos + 7,
+                20,
+                18,
+                new WidgetSprites(GenericUtils.getUnshatteredIdentifier("inventory_buttons/skills")),
+                _ -> {}
+        )).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.skills")));
     }
 
 
