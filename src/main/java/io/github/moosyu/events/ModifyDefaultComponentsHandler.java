@@ -102,20 +102,21 @@ public class ModifyDefaultComponentsHandler {
         );
 
         event.modify(Items.WOODEN_AXE, (components, _, _) -> modifyVanillaAxeComponents(components, UnshatteredRarities.COMMON, 1));
-
         event.modify(Items.STONE_AXE, (components, _, _) -> modifyVanillaAxeComponents(components, UnshatteredRarities.COMMON, 2));
-
         event.modify(Items.IRON_AXE, (components, _, _) -> modifyVanillaAxeComponents(components, UnshatteredRarities.COMMON, 4));
-
         event.modify(Items.GOLDEN_AXE, (components, _, _) -> modifyVanillaAxeComponents(components, UnshatteredRarities.COMMON, 6));
-
         event.modify(Items.DIAMOND_AXE, (components, _, _) -> modifyVanillaAxeComponents(components, UnshatteredRarities.UNCOMMON, 12));
-
         modifyVanillaItem(event, Items.END_STONE, ItemTypes.MATERIAL, 2, true);
-
         modifyVanillaItem(event, Items.DIAMOND, ItemTypes.MATERIAL, 8, false);
-
         modifyVanillaItem(event, Items.COBBLESTONE, ItemTypes.MATERIAL, 1, false);
+        modifyVanillaItem(event, Items.IRON_HELMET, ItemTypes.HELMET, 2, false);
+        modifyVanillaItem(event, Items.IRON_CHESTPLATE, ItemTypes.CHESTPLATE, 3, false);
+        modifyVanillaItem(event, Items.IRON_LEGGINGS, ItemTypes.LEGGINGS, 3, false);
+        modifyVanillaItem(event, Items.IRON_BOOTS, ItemTypes.BOOTS, 2, false);
+        modifyVanillaItem(event, Items.DIAMOND_HELMET, ItemTypes.HELMET, UnshatteredRarities.UNCOMMON, 3, false);
+        modifyVanillaItem(event, Items.DIAMOND_CHESTPLATE, ItemTypes.CHESTPLATE, UnshatteredRarities.UNCOMMON, 5, false);
+        modifyVanillaItem(event, Items.DIAMOND_LEGGINGS, ItemTypes.LEGGINGS, UnshatteredRarities.UNCOMMON, 4, false);
+        modifyVanillaItem(event, Items.DIAMOND_BOOTS, ItemTypes.BOOTS, UnshatteredRarities.UNCOMMON, 3, false);
     }
 
     /**

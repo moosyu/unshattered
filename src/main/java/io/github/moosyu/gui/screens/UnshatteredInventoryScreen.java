@@ -1,6 +1,11 @@
 package io.github.moosyu.gui.screens;
 
+import io.github.moosyu.packets.OpenStoragePacket;
+import io.github.moosyu.packets.OpenTalismanBagPacket;
+import io.github.moosyu.util.GenericUtils;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -8,6 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jspecify.annotations.NonNull;
 
 import static io.github.moosyu.Unshattered.MODID;
@@ -23,6 +29,34 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
         super(menu, inventory, title);
     }
 
+    @Override
+    protected void init() {
+        super.init();
+
+        this.addRenderableWidget(new ImageButton(this.leftPos + 76,
+                this.topPos + 7,
+                20,
+                18,
+                new WidgetSprites(GenericUtils.getUnshatteredIdentifier("inventory_buttons/crafting")),
+                _ -> {})
+        );
+
+        this.addRenderableWidget(new ImageButton(this.leftPos + 76,
+                this.topPos + 25,
+                20,
+                18,
+                new WidgetSprites(GenericUtils.getUnshatteredIdentifier("inventory_buttons/storage")),
+                _ -> ClientPacketDistributor.sendToServer(new OpenStoragePacket()))
+        );
+
+        this.addRenderableWidget(new ImageButton(this.leftPos + 76,
+                this.topPos + 43,
+                20,
+                18,
+                new WidgetSprites(GenericUtils.getUnshatteredIdentifier("inventory_buttons/accessory_bag")),
+                _ -> ClientPacketDistributor.sendToServer(new OpenTalismanBagPacket()))
+        );
+    }
 
 
     @Override
@@ -42,8 +76,7 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
     }
 
     @Override
-    protected void extractLabels(@NonNull GuiGraphicsExtractor graphics, int xm, int ym) {
-    }
+    protected void extractLabels(@NonNull GuiGraphicsExtractor graphics, int xm, int ym) {}
 
     @Override
     public void extractRenderState(@NonNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {

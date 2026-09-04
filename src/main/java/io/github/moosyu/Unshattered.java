@@ -1,21 +1,15 @@
 package io.github.moosyu;
 
-import com.lowdragmc.lowdraglib2.gui.factory.PlayerUIMenuType;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.data.regen.RegenPaths;
 import io.github.moosyu.data.regions.BoundaryCoordinates;
 import io.github.moosyu.data.regions.RegionAreas;
 import io.github.moosyu.data.regions.UnshatteredRegions;
-import io.github.moosyu.gui.screens.ProfileScreen;
 import io.github.moosyu.recipes.UnshatteredRecipes;
-import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.fml.startup.Server;
 import org.joml.Vector2i;
 import org.slf4j.Logger;
 
@@ -32,8 +26,6 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
-import java.util.Arrays;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static io.github.moosyu.data.attachments.UnshatteredAttachments.ATTACHMENT_TYPES;
@@ -44,7 +36,6 @@ import static io.github.moosyu.data.components.UnshatteredDataComponents.DATA_CO
 import static io.github.moosyu.entities.UnshatteredEntities.ENTITY_TYPES;
 import static io.github.moosyu.events.DataPackRegistryHandler.*;
 import static io.github.moosyu.gui.menus.UnshatteredMenus.MENUS;
-import static io.github.moosyu.gui.screens.ProfileScreen.PROFILE_UI_ID;
 import static io.github.moosyu.items.UnshatteredItems.*;
 import static io.github.moosyu.sounds.UnshatteredSounds.SOUND_EVENTS;
 import static net.minecraft.world.level.Level.OVERWORLD;
@@ -95,9 +86,6 @@ public class Unshattered {
         if (Config.LOG_DIRT_BLOCK.getAsBoolean()) {
             LOGGER.info("DIRT BLOCK >> {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
         }
-
-        // required to be registered for openUI to be run
-        PlayerUIMenuType.register(PROFILE_UI_ID, _ -> ProfileScreen::createProfileScreen);
 
         LOGGER.info("{}{}", Config.MAGIC_NUMBER_INTRODUCTION.get(), Config.MAGIC_NUMBER.getAsInt());
 

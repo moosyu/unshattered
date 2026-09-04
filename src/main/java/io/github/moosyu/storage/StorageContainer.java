@@ -8,8 +8,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.util.ValueIOSerializable;
 
 public class StorageContainer extends SimpleContainer implements ValueIOSerializable {
-    private static final int STORAGE_SLOTS = 396;
-    private final NonNullList<ItemStack> items = NonNullList.withSize(STORAGE_SLOTS, ItemStack.EMPTY);
+    public static final int STORAGE_SLOTS = 360;
 
     public StorageContainer() {
         super(STORAGE_SLOTS);
@@ -17,15 +16,15 @@ public class StorageContainer extends SimpleContainer implements ValueIOSerializ
 
     @Override
     public void serialize(ValueOutput output) {
-        output.store("items", NonNullList.codecOf(ItemStack.OPTIONAL_CODEC), this.items);
+        output.store("items", NonNullList.codecOf(ItemStack.OPTIONAL_CODEC), this.getItems());
     }
 
     @Override
     public void deserialize(ValueInput input) {
         input.read("items", NonNullList.codecOf(ItemStack.OPTIONAL_CODEC)).ifPresent(items -> {
-            // hopefully items never gets bigger than 396 but you never know i guess.
-            for (int i = 0; i < Math.min(items.size(), this.items.size()); i++) {
-                this.items.set(i, items.get(i));
+            // hopefully items never gets bigger than STORAGE_SLOTS, but you never know i guess.
+            for (int i = 0; i < Math.min(items.size(), this.getItems().size()); i++) {
+                this.getItems().set(i, items.get(i));
             }
         });
     }

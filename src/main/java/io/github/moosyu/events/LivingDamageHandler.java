@@ -36,7 +36,7 @@ public class LivingDamageHandler {
                     LOGGER.error("A damage attribute wasn't defined for entity: {}", entity.getName().getString());
                     return;
                 }
-                double damageDealt = damageAttributeInstance.getValue() * (1 - (playerDefenseValue / (playerDefenseValue + 100)));
+                double damageDealt = damageAttributeInstance.getValue() * (1 - (playerDefenseValue / (playerDefenseValue + 50)));
                 DamageUtil.damagePlayer(player, damageDealt, serverLevel, Component.literal("☠ " + playerName + " was slain by a " + entity.getName().getString() + "!"));
             } else if (event.getSource().is(DamageTypeTags.IS_FALL)) {
                 int blocksFallen = (int) (event.getOriginalDamage() + 3);

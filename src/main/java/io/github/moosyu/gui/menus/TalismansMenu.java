@@ -16,12 +16,12 @@ public class TalismansMenu extends AbstractContainerMenu {
     final Inventory playerInventory;
     final Container container;
 
-    // clientside
+    // client side
     public TalismansMenu(int containerId, Inventory playerInventory) {
         this(containerId, playerInventory, new SimpleContainer(TalismanContainer.TALISMAN_SLOTS_MAX));
     }
 
-    // serverside (also now used by client, with a dummy container)
+    // server side (also now used by client, with a dummy container)
     public TalismansMenu(int containerId, Inventory playerInventory, Container container) {
         super(UnshatteredMenus.TALISMAN_MENU_TYPE.get(), containerId);
 

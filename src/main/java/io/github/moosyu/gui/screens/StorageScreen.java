@@ -1,6 +1,7 @@
 package io.github.moosyu.gui.screens;
 
-import io.github.moosyu.gui.menus.TalismansMenu;
+import io.github.moosyu.gui.menus.StorageMenu;
+import io.github.moosyu.util.GenericUtils;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -9,15 +10,14 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import org.jspecify.annotations.NonNull;
 
-public class TalismansScreen extends AbstractContainerScreen<TalismansMenu> {
-    private static final Identifier TEXTURE = Identifier.withDefaultNamespace("textures/gui/container/generic_54.png");
+public class StorageScreen extends AbstractContainerScreen<StorageMenu> {
+    private static final Identifier TEXTURE = GenericUtils.getUnshatteredIdentifier("textures/gui/storage.png");
     public final int IMAGE_WIDTH = 176;
-    public final int IMAGE_HEIGHT = 168;
-    public final int Y_OFFSET = 71;
+    public final int IMAGE_HEIGHT = 222;
+    public final int Y_OFFSET = 0;
 
-    public TalismansScreen(TalismansMenu menu, Inventory inventory, Component title) {
+    public StorageScreen(StorageMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
-        this.inventoryLabelY = IMAGE_HEIGHT - 94;
     }
 
     @Override
@@ -26,7 +26,6 @@ public class TalismansScreen extends AbstractContainerScreen<TalismansMenu> {
 
         int x = (this.width - IMAGE_WIDTH) / 2;
         int y = (this.height - IMAGE_HEIGHT) / 2;
-        graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0, 0, IMAGE_WIDTH, Y_OFFSET, 256, 256);
-        graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y + Y_OFFSET, 0, 125, IMAGE_WIDTH, 96, 256, 256);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y + Y_OFFSET, 0, 125, IMAGE_WIDTH, 98, 256, 256);
     }
 }

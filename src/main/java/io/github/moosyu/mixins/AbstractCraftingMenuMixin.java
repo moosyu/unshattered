@@ -8,20 +8,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 // removes the little crafting table in the inventory
+// this breaks the creative menu but i genuinely dont know how to fix that so i just wont for now. if someone knows please tell me.
 @Mixin(AbstractCraftingMenu.class)
 public abstract class AbstractCraftingMenuMixin {
     @Inject(method = "addCraftingGridSlots", at = @At("HEAD"), cancellable = true)
     private void skipAddingCraftingGridSlots(CallbackInfo ci) {
-        // i know intellij says Condition '(Object) this instanceof InventoryMenu' is always 'false' but its wrong...
-        if ((Object) this instanceof InventoryMenu) {
-            ci.cancel();
-        }
+        if ((Object) this instanceof InventoryMenu) ci.cancel();
     }
 
     @Inject(method = "addResultSlot", at = @At("HEAD"), cancellable = true)
     private void skipAddingResultSlot(CallbackInfoReturnable<Slot> cir) {
-        if ((Object) this instanceof InventoryMenu) {
-            cir.setReturnValue(null);
-        }
+        if ((Object) this instanceof InventoryMenu) cir.setReturnValue(null);
     }
 }

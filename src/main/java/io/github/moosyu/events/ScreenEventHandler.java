@@ -47,14 +47,4 @@ public class ScreenEventHandler {
             ClientPacketDistributor.sendToServer(new UpdateDialogueStatePacket(false));
         }
     }
-
-    @SubscribeEvent
-    public static void onScreenInit(ScreenEvent.Init.Post event) {
-        if ((event.getScreen() instanceof InventoryScreen screen)) {
-            screen.children().stream()
-                    .filter(widget -> widget instanceof ImageButton)
-                    .findFirst()
-                    .ifPresent(screen::removeWidget);
-        }
-    }
 }

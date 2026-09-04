@@ -15,4 +15,8 @@ public class UnshatteredMenus {
     public static final Supplier<MenuType<TalismansMenu>> TALISMAN_MENU_TYPE = MENUS.register("talisman_menu_type", () ->
             new MenuType<>(TalismansMenu::new, FeatureFlags.DEFAULT_FLAGS)
     );
+
+    public static final Supplier<MenuType<StorageMenu>> STORAGE_MENU_TYPE = MENUS.register("storage_menu_type", () ->
+            new MenuType<>(StorageMenu::new, FeatureFlags.DEFAULT_FLAGS)
+    );
 }
