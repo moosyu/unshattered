@@ -13,6 +13,7 @@ import static io.github.moosyu.Unshattered.MODID;
 public class RegisterMenuScreensHandler {
     @SubscribeEvent
     public static void registerMenuScreens(RegisterMenuScreensEvent event) {
-        event.register(UnshatteredMenus.TALISMAN_MENU.get(), TalismansScreen::new);
+        event.register(UnshatteredMenus.TALISMAN_MENU_TYPE.get(), TalismansScreen::new);
+        // event.register(UnshatteredMenus.INVENTORY_MENU.get(), UnshatteredInventoryScreen::new);
     }
 }

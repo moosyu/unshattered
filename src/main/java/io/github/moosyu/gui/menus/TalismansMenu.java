@@ -23,12 +23,11 @@ public class TalismansMenu extends AbstractContainerMenu {
 
     // serverside (also now used by client, with a dummy container)
     public TalismansMenu(int containerId, Inventory playerInventory, Container container) {
-        super(UnshatteredMenus.TALISMAN_MENU.get(), containerId);
+        super(UnshatteredMenus.TALISMAN_MENU_TYPE.get(), containerId);
 
         checkContainerSize(container, container.getContainerSize());
         this.container = container;
         this.playerInventory = playerInventory;
-        container.startOpen(playerInventory.player);
 
         // talisman bag slots
         for (int row = 0; row < 3; row++) {
@@ -42,17 +41,8 @@ public class TalismansMenu extends AbstractContainerMenu {
             }
         }
 
-        // inventory
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 9; col++) {
-                this.addSlot(new Slot(playerInventory, col + row * 9 + 9, 8 + col * 18, 84 + row * 18));
-            }
-        }
-
-        // hotbar
-        for (int col = 0; col < 9; col++) {
-            this.addSlot(new Slot(playerInventory, col, 8 + col * 18, 142));
-        }
+        this.addStandardInventorySlots(playerInventory, 8, 84);
+        this.addInventoryHotbarSlots(playerInventory, 8, 142);
     }
 
     @Override

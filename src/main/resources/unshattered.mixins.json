@@ -10,6 +10,7 @@
     "ItemStackMixin",
     "FishingHookMixin",
     "CustomSpawnersMixin",
-    "BlocksAttacksMixin"
+    "BlocksAttacksMixin",
+    "AbstractCraftingMenuMixin"
   ]
 }
