@@ -52,13 +52,13 @@ public final class PlayerSkillsAttachment {
 
         }),
         MINING("mining", (player, level) -> {
-            double defenseAmount;
+            double defenceAmount;
             if (level < 15) {
-                defenseAmount = 1.0d;
+                defenceAmount = 1.0d;
             } else {
-                defenseAmount = 2.0d;
+                defenceAmount = 2.0d;
             }
-            addPlayerAttributeReward(player, UnshatteredAttributeValues.DEFENSE, defenseAmount);
+            addPlayerAttributeReward(player, UnshatteredAttributeValues.DEFENCE, defenceAmount);
             addPlayerAttributeReward(player, UnshatteredAttributeValues.MINING_FORTUNE, 2.0d);
 
         }),

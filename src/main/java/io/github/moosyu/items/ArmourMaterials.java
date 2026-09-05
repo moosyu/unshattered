@@ -22,7 +22,7 @@ public class ArmourMaterials {
 
     public static final ArmorMaterial LEAFLET_ARMOUR_MATERIAL = new ArmorMaterial(
 1,
-        // Determines the defense value of this armor material, depending on what armor piece it is.
+        // Determines the defence value of this armor material, depending on what armor piece it is.
         Util.make(new EnumMap<>(ArmorType.class), map -> {
             map.put(ArmorType.BOOTS, 0);
             map.put(ArmorType.LEGGINGS, 0);
@@ -44,7 +44,7 @@ public class ArmourMaterials {
 
     public static final ArmorMaterial GLOW_SQUID_BOOTS_MATERIAL = new ArmorMaterial(
             1,
-            // Determines the defense value of this armor material, depending on what armor piece it is.
+            // Determines the defence value of this armor material, depending on what armor piece it is.
             Util.make(new EnumMap<>(ArmorType.class), map -> {
                 map.put(ArmorType.BOOTS, 0);
             }),

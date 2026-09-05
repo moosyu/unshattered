@@ -15,14 +15,14 @@ public class EntityAttributeModificationHandler {
     @SubscribeEvent
     public static void onModifyAttributesCalled(EntityAttributeModificationEvent event) {
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.HEALTH.holder);
-        event.add(EntityType.PLAYER, UnshatteredAttributeValues.DEFENSE.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributeValues.DEFENCE.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.STRENGTH.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.CRITICAL_DAMAGE.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.CRITICAL_CHANCE.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.MANA.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.MANA_REGEN.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.HEALTH_REGEN.holder);
-        event.add(EntityType.PLAYER, UnshatteredAttributeValues.TRUE_DEFENSE.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributeValues.TRUE_DEFENCE.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.FEROCITY.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.DAMAGE.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.MINING_SPEED.holder);

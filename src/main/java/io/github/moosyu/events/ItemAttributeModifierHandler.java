@@ -59,21 +59,21 @@ public class ItemAttributeModifierHandler {
         } else if (itemStack.is(Items.DIAMOND_AXE)) {
             event.addModifier(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_axe_damage"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
         } else if (itemStack.is(Items.IRON_HELMET)) {
-            event.addModifier(UnshatteredAttributeValues.DEFENSE.holder, new AttributeModifier(getUnshatteredIdentifier("iron_helmet_defense"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("iron_helmet_defence"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
         } else if (itemStack.is(Items.IRON_CHESTPLATE)) {
-            event.addModifier(UnshatteredAttributeValues.DEFENSE.holder, new AttributeModifier(getUnshatteredIdentifier("iron_chestplate_defense"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("iron_chestplate_defence"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
         } else if (itemStack.is(Items.IRON_LEGGINGS)) {
-            event.addModifier(UnshatteredAttributeValues.DEFENSE.holder, new AttributeModifier(getUnshatteredIdentifier("iron_leggings_defense"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("iron_leggings_defence"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
         } else if (itemStack.is(Items.IRON_BOOTS)) {
-            event.addModifier(UnshatteredAttributeValues.DEFENSE.holder, new AttributeModifier(getUnshatteredIdentifier("iron_boots_defense"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("iron_boots_defence"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
         } else if (itemStack.is(Items.DIAMOND_HELMET)) {
-            event.addModifier(UnshatteredAttributeValues.DEFENSE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_helmet_defense"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_helmet_defence"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
         } else if (itemStack.is(Items.DIAMOND_CHESTPLATE)) {
-            event.addModifier(UnshatteredAttributeValues.DEFENSE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_chestplate_defense"), 8, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_chestplate_defence"), 8, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
         } else if (itemStack.is(Items.DIAMOND_LEGGINGS)) {
-            event.addModifier(UnshatteredAttributeValues.DEFENSE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_leggings_defense"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_leggings_defence"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
         } else if (itemStack.is(Items.DIAMOND_BOOTS)) {
-            event.addModifier(UnshatteredAttributeValues.DEFENSE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_boots_defense"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_boots_defence"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
         }
     }
 }

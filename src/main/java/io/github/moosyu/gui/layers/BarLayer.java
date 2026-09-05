@@ -19,16 +19,16 @@ import java.util.function.ToDoubleFunction;
 import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_STATE;
 
 public class BarLayer implements GuiLayer {
-    final int SPRITE_WIDTH = 73;
-    final int SPRITE_HEIGHT = 15;
-    final int BAR_HEIGHT = 8;
-    final Identifier SMALL_BAR = Identifier.fromNamespaceAndPath("unshattered", "textures/gui/small_bar.png");
+    final static int SPRITE_WIDTH = 73;
+    final static int SPRITE_HEIGHT = 15;
+    final static int BAR_HEIGHT = 8;
     final int barColour;
     final int textColour;
-    final ToDoubleFunction<Player> getCurrentValue;
-    final ToDoubleFunction<Player> getCurrentPercentage;
     final int posXOffset;
     final int posYOffset;
+    final Identifier SMALL_BAR = Identifier.fromNamespaceAndPath("unshattered", "textures/gui/small_bar.png");
+    final ToDoubleFunction<Player> getCurrentValue;
+    final ToDoubleFunction<Player> getCurrentPercentage;
     final Predicate<Player> visibilityConditions;
 
     /**

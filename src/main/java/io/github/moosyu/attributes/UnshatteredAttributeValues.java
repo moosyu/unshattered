@@ -13,8 +13,8 @@ import static io.github.moosyu.Unshattered.LOGGER;
 public enum UnshatteredAttributeValues {
     HEALTH("health", "❤", 20.0, 0.0, 2147483647.0, 0xFFFC3A3A, true, false, false),
     HEALTH_REGEN("health_regen", "❣", 100.0, 0.0, 2048.0, 0xFFFC3A3A, true, false, true),
-    DEFENSE("defense", "❈", 0.0, 0.0, 131072.0, 0xFF55FF55, true, false, false),
-    TRUE_DEFENSE("true_defense", "❂", 0.0, 0.0, 1024.0, 0xFFFFFFFF, true, false, false),
+    DEFENCE("defence", "❈", 0.0, 0.0, 131072.0, 0xFF55FF55, true, false, false),
+    TRUE_DEFENCE("true_defence", "❂", 0.0, 0.0, 1024.0, 0xFFFFFFFF, true, false, false),
     STRENGTH("strength", "❁", 0.0, 0.0, 4096.0, 0xFFFC3A3A, true, true, false),
     CRITICAL_CHANCE("critical_chance", "☣", 0.0, 0.0, 400.0, 0xFF672CD7, true, false, true),
     CRITICAL_DAMAGE("critical_damage", "☠", 0.0, 0.0, 4096.0, 0xFF672CD7, true, true, true),
@@ -34,7 +34,6 @@ public enum UnshatteredAttributeValues {
     DAMAGE("damage", 0.0, 0.0, 2147483647.0),
     FINAL_DAMAGE_MODIFIER("final_damage_modifier", 1, 0, 10.0),
     BREAKING_POWER("breaking_power", "Ⓟ", 0, 0, 20, 0xFF00AA00, true, false, false);
-
     private static final Map<Attribute, UnshatteredAttributeValues> ATTRIBUTE_MAP = new HashMap<>();
     public final String id;
     public final String symbol;

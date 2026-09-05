@@ -22,18 +22,16 @@ import static io.github.moosyu.events.DataPackRegistryHandler.REGION_REGISTRY_KE
 
 @EventBusSubscriber(modid = MODID)
 public class PlayerTickHandler {
-    static boolean fishApproaching = false;
-    static boolean fishNibbling = false;
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         Player player = event.getEntity();
         Level level = player.level();
         if (player.level().isClientSide()) return;
         PlayerStateAttachment state = player.getData(PLAYER_STATE.get());
-        final double MAX_HEALTH_VALUE = player.getAttributeValue(UnshatteredAttributeValues.HEALTH.holder);
-        final double HEALTH_REGEN_VALUE = player.getAttributeValue(UnshatteredAttributeValues.HEALTH_REGEN.holder);
-        final double MAX_MANA_VALUE = player.getAttributeValue(UnshatteredAttributeValues.MANA.holder);
-        final double MANA_REGEN_VALUE = player.getAttributeValue(UnshatteredAttributeValues.MANA_REGEN.holder);
+        double maxHealthValue = player.getAttributeValue(UnshatteredAttributeValues.HEALTH.holder);
+        double healthRegenValue = player.getAttributeValue(UnshatteredAttributeValues.HEALTH_REGEN.holder);
+        double maxManaValue = player.getAttributeValue(UnshatteredAttributeValues.MANA.holder);
+        double manaRegenValue = player.getAttributeValue(UnshatteredAttributeValues.MANA_REGEN.holder);
 
         // disable hunger effects
         player.getFoodData().setFoodLevel(20);
@@ -77,9 +75,13 @@ public class PlayerTickHandler {
             int required = player.getTicksRequiredToFreeze();
             player.setTicksFrozen(Math.max(player.getTicksFrozen(),
                     Mth.clamp(Mth.floor(Mth.map(currentTemperature,
-                                    0f, TemperatureTypes.MIN_TEMP.getValue(),
-                                    0f, required)),
-                            0, required
+                                    0f,
+                                    TemperatureTypes.MIN_TEMP.getValue(),
+                                    0f,
+                                    required)
+                            ),
+                            0,
+                            required
                     )
             ));
         } else {
@@ -88,17 +90,18 @@ public class PlayerTickHandler {
 
         // incremental for every 2 seconds
         if (player.tickCount % 40 == 0) {
-            double healthGained = (MAX_HEALTH_VALUE / 30) * (HEALTH_REGEN_VALUE / 100);
-            double manaGained = (MAX_MANA_VALUE * 0.04) * (MANA_REGEN_VALUE / 100);
+            double healthGained = (maxHealthValue / 30) * (healthRegenValue / 100);
+            double manaGained = (maxManaValue * 0.04) * (manaRegenValue / 100);
 
-            state.addCurrentStat(PlayerStateAttachment.Stat.HEALTH, healthGained, MAX_HEALTH_VALUE, player);
-            state.addCurrentStat(PlayerStateAttachment.Stat.MANA, manaGained, MAX_MANA_VALUE, player);
+            state.addCurrentStat(PlayerStateAttachment.Stat.HEALTH, healthGained, maxHealthValue, player);
+            state.addCurrentStat(PlayerStateAttachment.Stat.MANA, manaGained, maxManaValue, player);
         } else {
-            // update health if attribute changed. itll already be updated on the healing tick though
-            if (MAX_HEALTH_VALUE < state.getCurrentStat(PlayerStateAttachment.Stat.HEALTH)) {
-                state.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, MAX_HEALTH_VALUE, player);
-            }
+            state.setCurrentStat(PlayerStateAttachment.Stat.HEALTH, Math.min(maxHealthValue, state.getCurrentStat(PlayerStateAttachment.Stat.HEALTH)), player);
+            state.setCurrentStat(PlayerStateAttachment.Stat.MANA, Math.min(maxManaValue, state.getCurrentStat(PlayerStateAttachment.Stat.MANA)), player);
         }
+
+        state.setMaxStat(PlayerStateAttachment.Stat.HEALTH, maxHealthValue, player);
+        state.setMaxStat(PlayerStateAttachment.Stat.MANA, maxManaValue, player);
 
         int ferocityCooldown = player.getData(UnshatteredAttachments.PLAYER_FEROCITY_COOLDOWN);
         if (ferocityCooldown > 0) {

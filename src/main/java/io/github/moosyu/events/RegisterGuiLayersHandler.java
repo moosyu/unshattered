@@ -1,10 +1,8 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.gui.layers.*;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.Entity;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -23,7 +21,7 @@ public class RegisterGuiLayersHandler {
                 -54,
                 -18,
                 player -> player.getData(PLAYER_STATE.get()).getCurrentStat(PlayerStateAttachment.Stat.HEALTH),
-                player -> player.getAttributeValue(UnshatteredAttributeValues.HEALTH.holder))
+                player -> player.getData(PLAYER_STATE.get()).getMaxStat(PlayerStateAttachment.Stat.HEALTH))
         );
 
         event.replaceLayer(VanillaGuiLayers.FOOD_LEVEL, new BarLayer(0xFF00A6FF,
@@ -31,7 +29,7 @@ public class RegisterGuiLayersHandler {
                 54,
                 -18,
                 player -> player.getData(PLAYER_STATE.get()).getCurrentStat(PlayerStateAttachment.Stat.MANA),
-                player -> player.getAttributeValue(UnshatteredAttributeValues.MANA.holder))
+                player -> player.getData(PLAYER_STATE.get()).getMaxStat(PlayerStateAttachment.Stat.MANA))
         );
 
         event.replaceLayer(VanillaGuiLayers.SELECTED_ITEM_NAME, new SelectedItemLayer());

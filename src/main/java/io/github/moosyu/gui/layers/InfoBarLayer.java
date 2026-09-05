@@ -73,7 +73,7 @@ public class InfoBarLayer implements GuiLayer {
 
             lastText = Component.empty().append(Component.translatable("gui.text.unshattered.purse"))
                     .append(": ")
-                    .append(Component.literal(displayNewCoinsTicks > 0 ? String.format("%,d", coins) + " +(" + String.format("%,d", coinChange) + ")" : String.format("%,d", coins)).withColor(0xFFF9A604))
+                    .append(Component.literal(displayNewCoinsTicks > 0 ? String.format("%,d", coins) + " (" + (coinChange < 0 ? "-" : "+") + String.format("%,d", coinChange) + ")" : String.format("%,d", coins)).withColor(0xFFF9A604))
                     .append("  ⏣ ")
                     .append(Component.translatable(Region.getRegionTranslationKey(regionKey)).withColor(region.colour()))
                     .append("  ")
