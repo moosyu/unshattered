@@ -14,8 +14,7 @@ import static io.github.moosyu.Unshattered.MODID;
 
 public class GiantCleaver extends UnshatteredCleaver {
     public GiantCleaver(Properties properties) {
-        super(properties
-                        .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.LEGENDARY)
+        super(properties.component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.LEGENDARY)
                         .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(Identifier.fromNamespaceAndPath(MODID, "giant_cleaver_cleave"), 0, 0, 0, true))
                         .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
                         .component(UnshatteredDataComponents.SELL_VALUE.get(), 200000)

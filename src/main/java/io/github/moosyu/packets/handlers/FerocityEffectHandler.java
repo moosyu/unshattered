@@ -1,9 +1,8 @@
 package io.github.moosyu.packets.handlers;
 
 import io.github.moosyu.packets.FerocityEffectPacket;
-import io.github.moosyu.particles.RedSlashParticle;
 import io.github.moosyu.sounds.UnshatteredSounds;
-import io.github.moosyu.util.PlayClientsideSound;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundSource;
@@ -17,7 +16,7 @@ public class FerocityEffectHandler {
             Level level = context.player().level();
 
             if (data.playSound()) {
-                PlayClientsideSound.playClientsideSound(context.player(), UnshatteredSounds.FEROCITY_TRIGGER_SOUND.value(), SoundSource.PLAYERS, 0.6f);
+                UnshatteredUtils.playClientsideSound(context.player(), UnshatteredSounds.FEROCITY_TRIGGER_SOUND.value(), SoundSource.PLAYERS, 0.6f);
             }
 
             Minecraft minecraft = Minecraft.getInstance();

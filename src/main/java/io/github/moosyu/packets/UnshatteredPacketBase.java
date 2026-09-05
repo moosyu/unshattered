@@ -1,6 +1,6 @@
 package io.github.moosyu.packets;
 
-import io.github.moosyu.util.GenericUtils;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import org.jspecify.annotations.NonNull;
 
@@ -10,7 +10,7 @@ public interface UnshatteredPacketBase extends CustomPacketPayload {
     String typeIdentifierPath();
 
     static <T extends CustomPacketPayload> Type<T> type(String path) {
-        return new Type<>(GenericUtils.getUnshatteredIdentifier(path));
+        return new Type<>(UnshatteredUtils.getUnshatteredIdentifier(path));
     }
 
     @Override

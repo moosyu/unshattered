@@ -14,7 +14,7 @@ import io.github.moosyu.data.attachments.PlayerRegionAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.regions.Region;
 import io.github.moosyu.data.regions.TemperatureTypes;
-import io.github.moosyu.util.TextUtils;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
@@ -81,7 +81,7 @@ public class InfoBarLayer implements ModularHudLayer {
                 temperatureTypes = TemperatureTypes.BASE_TEMP;
             }
             return Component.literal(temperatureTypes.getSymbol() + " ")
-                    .append(Component.literal(TextUtils.oneDecimalFormat.format(playerTemperature))).withColor(temperatureTypes.getColour());
+                    .append(Component.literal(UnshatteredUtils.oneDecimalFormat.format(playerTemperature))).withColor(temperatureTypes.getColour());
         }));
 
         sidebarBox.addChildren(purseLabel, regionLabel, temperatureLabel);

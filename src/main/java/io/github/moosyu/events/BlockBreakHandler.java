@@ -89,7 +89,7 @@ public class BlockBreakHandler {
 
             level.levelEvent(player, LevelEvent.PARTICLES_DESTROY_BLOCK, blockPos, Block.getId(blockState));
             level.setBlockAndUpdate(blockPos, Objects.requireNonNullElseGet(predictedBlockstate, Blocks.BEDROCK::defaultBlockState));
-            PlayClientsideSound.playClientsideSound(player, blockState.getSoundType(level, blockPos, player).getBreakSound(), SoundSource.BLOCKS, 1.5f);
+            UnshatteredUtils.playClientsideSound(player, blockState.getSoundType(level, blockPos, player).getBreakSound(), SoundSource.BLOCKS, 1.5f);
             return;
         }
 
@@ -98,7 +98,7 @@ public class BlockBreakHandler {
         if (blockState.is(UnshatteredBlockTagsProvider.COLLECTABLE_MINING_BLOCKS)) {
             ItemStack blockDrops = getBlockDrop(block, player, UnshatteredAttributeValues.MINING_FORTUNE);
 
-            CollectionUtil.givePlayerHarvestedItemStack(player, blockDrops);
+            UnshatteredUtils.givePlayerHarvestedItemStack(player, blockDrops);
 
             if (experienceReward > 0.0f) {
                 skills.addExp(PlayerSkillsAttachment.Skill.MINING, experienceReward, player);
@@ -109,7 +109,7 @@ public class BlockBreakHandler {
             serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID).destroyRegeneratingBlock(blockPos, serverLevel);
         } else if (blockState.is(UnshatteredBlockTagsProvider.COLLECTABLE_FARMING_BLOCKS)) {
             ItemStack blockDrops = getBlockDrop(block, player, UnshatteredAttributeValues.FARMING_FORTUNE);
-            CollectionUtil.givePlayerHarvestedItemStack(player, blockDrops);
+            UnshatteredUtils.givePlayerHarvestedItemStack(player, blockDrops);
             // todo: make braking cactus' both add their drops to inventory but count broken cactus parts for exp
 
             if (experienceReward > 0.0f) {
@@ -150,7 +150,7 @@ public class BlockBreakHandler {
                         .containsKey(key))
                 .orElse(false)
                 || !hasBreakingPowerRequirement(player, level.getBlockState(blockPos.get()).typeHolder())
-                || !CheckItemRequirement.passesSkillCheck(player, player.getMainHandItem())
+                || !UnshatteredUtils.passesSkillCheck(player, player.getMainHandItem())
         ) {
             event.setNewSpeed(0.0f);
             return;
@@ -174,7 +174,7 @@ public class BlockBreakHandler {
             return ItemStack.EMPTY;
         }
 
-        return new ItemStack(drop.item(), FortuneCalculation.getItemsCount(player.getAttributeValue(fortuneType.holder), drop.getDropAmount(player.getRandom())));
+        return new ItemStack(drop.item(), UnshatteredUtils.getItemsCount(player.getAttributeValue(fortuneType.holder), drop.getDropAmount(player.getRandom())));
     }
 
     /**

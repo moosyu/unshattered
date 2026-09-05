@@ -13,7 +13,7 @@ import io.github.moosyu.packets.DamageNumberPacket;
 import io.github.moosyu.packets.DeathSoundEffectPacket;
 import io.github.moosyu.packets.FerocityEffectPacket;
 import io.github.moosyu.packets.WeakHitSoundEffectPacket;
-import io.github.moosyu.util.AbilityUtils;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -112,7 +112,7 @@ public final class DamageUtil {
         }
 
         if (item != null) {
-            AbilityUtils.finishPassiveAbility(player, target, item);
+            UnshatteredUtils.finishPassiveAbility(player, target, item);
         }
 
         player.resetAttackStrengthTicker();

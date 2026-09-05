@@ -7,9 +7,7 @@ import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.regen.RegenSavedData;
 import io.github.moosyu.items.ItemRange;
 import io.github.moosyu.items.UnshatteredInstantPassiveAbilityItem;
-import io.github.moosyu.util.AbilityUtils;
-import io.github.moosyu.util.CollectionUtil;
-import io.github.moosyu.util.FortuneCalculation;
+import io.github.moosyu.util.UnshatteredUtils;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -91,9 +89,9 @@ public class TreeSweepHandler {
     }
 
     private static int calculateLogs(Player player, int dropAmount) {
-        UnshatteredInstantPassiveAbilityItem passiveAbilityItem = AbilityUtils.triggerPassiveAbility(player, null, player.getItemInHand(InteractionHand.MAIN_HAND).getItem());
-        int itemCount = FortuneCalculation.getItemsCount(player.getAttributeValue(UnshatteredAttributeValues.FORAGING_FORTUNE.holder), dropAmount);
-        AbilityUtils.finishPassiveAbility(player, null, passiveAbilityItem);
+        UnshatteredInstantPassiveAbilityItem passiveAbilityItem = UnshatteredUtils.triggerPassiveAbility(player, null, player.getItemInHand(InteractionHand.MAIN_HAND).getItem());
+        int itemCount = UnshatteredUtils.getItemsCount(player.getAttributeValue(UnshatteredAttributeValues.FORAGING_FORTUNE.holder), dropAmount);
+        UnshatteredUtils.finishPassiveAbility(player, null, passiveAbilityItem);
         return itemCount;
     }
 
@@ -122,7 +120,7 @@ public class TreeSweepHandler {
         ItemRange itemRange = brokenBlock.defaultBlockState().getData(UnshatteredDataMaps.BREAKABLE_DROPS_DATA);
         if (itemRange == null) return;
 
-        CollectionUtil.givePlayerHarvestedItemStack(player, new ItemStack(itemRange.item(), calculateLogs(player, itemRange.getDropAmount(player.getRandom()))));
+        UnshatteredUtils.givePlayerHarvestedItemStack(player, new ItemStack(itemRange.item(), calculateLogs(player, itemRange.getDropAmount(player.getRandom()))));
     }
 
     private static Queue<BreakTask> breakConnectedLogs(Level level, BlockPos startPos, Player player, int sweep) {

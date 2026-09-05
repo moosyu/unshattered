@@ -2,7 +2,6 @@ package io.github.moosyu.events;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.util.TextUtils;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;

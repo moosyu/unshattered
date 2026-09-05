@@ -2,7 +2,7 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemTypes;
-import io.github.moosyu.util.AbilityUtils;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -29,7 +29,7 @@ public class AttackEntityHandler {
         ItemStack item = player.getItemInHand(InteractionHand.MAIN_HAND);
         playerDealDamage(player,
                 target,
-                AbilityUtils.triggerPassiveAbility(player,
+                UnshatteredUtils.triggerPassiveAbility(player,
                         target,
                         item.getItem()
                 ),

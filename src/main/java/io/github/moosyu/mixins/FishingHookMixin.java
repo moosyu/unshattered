@@ -2,7 +2,7 @@ package io.github.moosyu.mixins;
 
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.items.ItemTypes;
-import io.github.moosyu.util.AbilityUtils;
+import io.github.moosyu.util.UnshatteredUtils;
 import io.github.moosyu.util.damage.DamageUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -59,7 +59,7 @@ public abstract class FishingHookMixin extends Projectile {
                 if (entity instanceof LivingEntity livingEntity && !player.level().isClientSide()) {
                     DamageUtil.playerDealDamage(player,
                             livingEntity,
-                            AbilityUtils.triggerPassiveAbility(player,
+                            UnshatteredUtils.triggerPassiveAbility(player,
                                     livingEntity,
                                     player.getItemInHand(InteractionHand.MAIN_HAND).getItem()
                             ),

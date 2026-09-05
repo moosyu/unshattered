@@ -1,7 +1,7 @@
 package io.github.moosyu.packets.handlers;
 
 import io.github.moosyu.packets.ExpSoundEffectPacket;
-import io.github.moosyu.util.PlayClientsideSound;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
@@ -14,7 +14,7 @@ public class ExpSoundEffectPayloadHandler {
         context.enqueueWork(() -> {
             Player player = context.player();
             Random rand = new Random();
-            PlayClientsideSound.playClientsideSound(player, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.5f, 2.0f - rand.nextFloat(0.3f));
+            UnshatteredUtils.playClientsideSound(player, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.5f, 2.0f - rand.nextFloat(0.3f));
         });
     }
 }

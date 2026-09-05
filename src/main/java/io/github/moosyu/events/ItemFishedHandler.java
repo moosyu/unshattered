@@ -8,8 +8,7 @@ import io.github.moosyu.fishing.FishingMiscEntry;
 import io.github.moosyu.fishing.FishingMobEntry;
 import io.github.moosyu.fishing.tables.WaterEntries;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
-import io.github.moosyu.util.CollectionUtil;
-import io.github.moosyu.util.FortuneCalculation;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -66,9 +65,9 @@ public class ItemFishedHandler {
                 if (currentWeight <= 0) {
                     Item selectedItem = entry.getKey().item();
                     float expReward = Objects.requireNonNullElse(BuiltInRegistries.ITEM.wrapAsHolder(selectedItem).getData(UnshatteredDataMaps.FISHABLE_ITEMS_EXP_DATA), 0.0f);
-                    ItemStack itemRewards = new ItemStack(selectedItem, FortuneCalculation.getItemsCount(FISHING_FORTUNE, 1));
+                    ItemStack itemRewards = new ItemStack(selectedItem, UnshatteredUtils.getItemsCount(FISHING_FORTUNE, 1));
 
-                    CollectionUtil.givePlayerHarvestedItemStack(player, itemRewards);
+                    UnshatteredUtils.givePlayerHarvestedItemStack(player, itemRewards);
 
                     if (expReward > 0.0f) {
                         skills.addExp(PlayerSkillsAttachment.Skill.FISHING, expReward, player);

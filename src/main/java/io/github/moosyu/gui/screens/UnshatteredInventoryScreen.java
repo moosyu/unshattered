@@ -2,7 +2,7 @@ package io.github.moosyu.gui.screens;
 
 import io.github.moosyu.packets.OpenStoragePacket;
 import io.github.moosyu.packets.OpenTalismanBagPacket;
-import io.github.moosyu.util.GenericUtils;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
@@ -38,7 +38,7 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
                 this.topPos + 7,
                 20,
                 18,
-                new WidgetSprites(GenericUtils.getUnshatteredIdentifier("inventory_buttons/crafting")),
+                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/crafting")),
                 _ -> {}
         )).setTooltip(Tooltip.create(Component.translatable("container.unshattered.crafting")));
 
@@ -46,7 +46,7 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
                 this.topPos + 25,
                 20,
                 18,
-                new WidgetSprites(GenericUtils.getUnshatteredIdentifier("inventory_buttons/storage")),
+                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/storage")),
                 _ -> ClientPacketDistributor.sendToServer(new OpenStoragePacket())
         )).setTooltip(Tooltip.create(Component.translatable("container.unshattered.storage")));
 
@@ -54,7 +54,7 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
                 this.topPos + 43,
                 20,
                 18,
-                new WidgetSprites(GenericUtils.getUnshatteredIdentifier("inventory_buttons/talisman_bag")),
+                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/talisman_bag")),
                 _ -> ClientPacketDistributor.sendToServer(new OpenTalismanBagPacket())
         )).setTooltip(Tooltip.create(Component.translatable("container.unshattered.talisman_bag")));
 
@@ -62,7 +62,7 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
                 this.topPos + 7,
                 20,
                 18,
-                new WidgetSprites(GenericUtils.getUnshatteredIdentifier("inventory_buttons/skills")),
+                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/skills")),
                 _ -> {}
         )).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.skills")));
     }

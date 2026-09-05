@@ -10,7 +10,7 @@ import io.github.moosyu.data.drops.MobRewardData;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.rarities.UnshatteredRarities;
-import io.github.moosyu.util.CollectionUtil;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
@@ -87,7 +87,7 @@ public class EntityDeathHandler {
                         itemDrop.minItemAmount() :
                         ThreadLocalRandom.current().nextInt(itemDrop.minItemAmount(), itemDrop.maxItemAmount() + 1);
 
-                CollectionUtil.givePlayerHarvestedItemStack(player, new ItemStack(itemDrop.item(), dropAmount));
+                UnshatteredUtils.givePlayerHarvestedItemStack(player, new ItemStack(itemDrop.item(), dropAmount));
             }
 
             if (mobLoot.experience() > 0.0f) {

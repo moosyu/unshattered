@@ -10,7 +10,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.util.GenericUtils.getUnshatteredIdentifier;
+import static io.github.moosyu.util.UnshatteredUtils.getUnshatteredIdentifier;
 
 @EventBusSubscriber(modid = MODID)
 public class ItemAttributeModifierHandler {

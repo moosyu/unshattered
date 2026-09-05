@@ -6,7 +6,7 @@ import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemTypes;
 import io.github.moosyu.items.UnshatteredInstantPassiveAbilityItem;
-import io.github.moosyu.util.AbilityUtils;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -46,7 +46,7 @@ public class UnshatteredCleaver extends Item implements UnshatteredInstantPassiv
         );
         for (Entity entity : level.getEntities(null, boundingBox)) {
             if (entity instanceof LivingEntity && !(entity instanceof Player) && !(entity == target)) {
-                AbilityUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder).ifPresent(attribute -> attribute.addTransientModifier(new AttributeModifier(ABILITY_IDENTIFIER, -(attribute.getValue() - (1 - cleaveDamageFraction)), AttributeModifier.Operation.ADD_VALUE)));
+                UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder).ifPresent(attribute -> attribute.addTransientModifier(new AttributeModifier(ABILITY_IDENTIFIER, -(attribute.getValue() - (1 - cleaveDamageFraction)), AttributeModifier.Operation.ADD_VALUE)));
                 player.attack(entity);
             }
         }
@@ -56,7 +56,7 @@ public class UnshatteredCleaver extends Item implements UnshatteredInstantPassiv
     public void onAbilityFinished(Player player, LivingEntity target) {
         PlayerAbilityEffectsAttachment abilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES);
         abilities.removeActiveEffect(ABILITY_IDENTIFIER, player);
-        AbilityUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder).ifPresent(attribute -> attribute.removeModifier(ABILITY_IDENTIFIER));
+        UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder).ifPresent(attribute -> attribute.removeModifier(ABILITY_IDENTIFIER));
     }
 
     @Override

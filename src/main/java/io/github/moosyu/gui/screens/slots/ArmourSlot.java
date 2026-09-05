@@ -1,7 +1,7 @@
 package io.github.moosyu.gui.screens.slots;
 
 import com.lowdragmc.lowdraglib2.gui.ui.UIElement;
-import io.github.moosyu.util.PlayClientsideSound;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -67,7 +67,7 @@ public class ArmourSlot extends Slot {
         System.out.println(owner.getName().getString());
         if (owner instanceof Player player) {
             Equippable equipable = itemStack.get(DataComponents.EQUIPPABLE);
-            PlayClientsideSound.playClientsideSound(player, equipable == null ? SoundEvents.ARMOR_EQUIP_GENERIC.value() : equipable.equipSound().value(), SoundSource.UI, 1.0f);
+            UnshatteredUtils.playClientsideSound(player, equipable == null ? SoundEvents.ARMOR_EQUIP_GENERIC.value() : equipable.equipSound().value(), SoundSource.UI, 1.0f);
         }
     }
 }

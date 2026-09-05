@@ -6,7 +6,7 @@ import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.data.regions.Region;
 import io.github.moosyu.items.UnshatteredInstantPassiveAbilityItem;
-import io.github.moosyu.util.AbilityUtils;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -40,14 +40,14 @@ public class RegionLockedFortuneAxe extends UnshatteredAxeTool implements Unshat
 
     @Override
     public void onAbilityTriggered(Player player, LivingEntity target) {
-        AbilityUtils.getAttributeInstance(player, UnshatteredAttributeValues.FORAGING_FORTUNE.holder).ifPresent(attribute ->
+        UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValues.FORAGING_FORTUNE.holder).ifPresent(attribute ->
                 attribute.addTransientModifier(new AttributeModifier(abilityIdentifier, foragingFortuneAmount, AttributeModifier.Operation.ADD_VALUE))
         );
     }
 
     @Override
     public void onAbilityFinished(Player player, LivingEntity target) {
-        AbilityUtils.getAttributeInstance(player, UnshatteredAttributeValues.FORAGING_FORTUNE.holder).ifPresent(attribute ->
+        UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValues.FORAGING_FORTUNE.holder).ifPresent(attribute ->
                 attribute.removeModifier(abilityIdentifier)
         );
     }

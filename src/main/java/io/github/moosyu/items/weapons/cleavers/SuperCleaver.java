@@ -14,8 +14,7 @@ import static io.github.moosyu.Unshattered.MODID;
 
 public class SuperCleaver extends UnshatteredCleaver {
     public SuperCleaver(Properties properties) {
-        super(properties
-                        .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.RARE)
+        super(properties.component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.RARE)
                         .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(Identifier.fromNamespaceAndPath(MODID, "super_cleaver_cleave"), 0, 0, 0, true))
                         .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
                         .component(UnshatteredDataComponents.SELL_VALUE.get(), 20000)

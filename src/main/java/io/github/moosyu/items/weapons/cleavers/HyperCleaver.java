@@ -14,8 +14,7 @@ import static io.github.moosyu.Unshattered.MODID;
 
 public class HyperCleaver extends UnshatteredCleaver {
     public HyperCleaver(Properties properties) {
-        super(properties
-                        .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.EPIC)
+        super(properties.component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.EPIC)
                         .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(Identifier.fromNamespaceAndPath(MODID, "hyper_cleaver_cleave"), 0, 0, 0, true))
                         .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
                         .component(UnshatteredDataComponents.SELL_VALUE.get(), 200000)

@@ -1,6 +1,7 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.gui.screens.DialogueScreen;
+import io.github.moosyu.gui.screens.StatsScreen;
 import io.github.moosyu.gui.screens.UnshatteredInventoryScreen;
 import io.github.moosyu.packets.UpdateDialogueStatePacket;
 import net.minecraft.client.Minecraft;
@@ -21,19 +22,18 @@ import static io.github.moosyu.Unshattered.MODID;
 public class ScreenEventHandler {
     @SubscribeEvent
     public static void onScreenEventOpen(ScreenEvent.Opening event) {
-        Player player = Minecraft.getInstance().player;
+        Minecraft minecraft = Minecraft.getInstance();
+        Player player = minecraft.player;
         if (player == null) return;
 
         // override inventory
         if (event.getNewScreen() instanceof InventoryScreen && !player.isCreative()) {
             event.setCanceled(true);
-            Minecraft.getInstance().setScreen(
-                    new UnshatteredInventoryScreen(
-                            player.inventoryMenu,
-                            player.getInventory(),
-                            Component.translatable("container.inventory")
-                    )
+            minecraft.setScreen(new UnshatteredInventoryScreen(player.inventoryMenu,
+                    player.getInventory(),
+                    Component.translatable("container.inventory"))
             );
+            minecraft.setScreen(new StatsScreen(Component.literal("stats")));
         } else if (event.getScreen() instanceof DialogueScreen) {
             ClientPacketDistributor.sendToServer(new UpdateDialogueStatePacket(true));
         }

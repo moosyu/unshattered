@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.packets.ExpSoundEffectPacket;
-import io.github.moosyu.util.TextUtils;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -148,15 +148,15 @@ public final class PlayerSkillsAttachment {
                     // component.empty because i couldnt reset the chat formatting for some reason
                     Component.empty().append(Component.literal(" SKILL LEVEL UP ").withStyle(ChatFormatting.BOLD).withColor(0xFF00FFFF))
                     .append(Component.literal(Component.translatable(skill.getTranslationKey()).getString() + " ").withColor(0xFF00ADAB))
-                    .append(Component.literal(TextUtils.convertTextToRomanNumeral(currentLevel)).withColor(0xFF555555))
+                    .append(Component.literal(UnshatteredUtils.convertTextToRomanNumeral(currentLevel)).withColor(0xFF555555))
                     .append(Component.literal("\uD83E\uDC46").withColor(0xFF555555))
-                    .append(Component.literal(TextUtils.convertTextToRomanNumeral(currentLevel + 1)).withColor(0xFF00ADAB))
+                    .append(Component.literal(UnshatteredUtils.convertTextToRomanNumeral(currentLevel + 1)).withColor(0xFF00ADAB))
                 );
             } else {
                 player.sendSystemMessage(
                     Component.empty().append(Component.literal(" SKILL LEVEL UP ").withStyle(ChatFormatting.BOLD).withColor(0xFF00FFFF))
                     .append(Component.literal(Component.translatable(skill.getTranslationKey()).getString() + " ").withColor(0xFF00ADAB))
-                    .append(Component.literal(TextUtils.convertTextToRomanNumeral(1)).withColor(0xFF00ADAB))
+                    .append(Component.literal(UnshatteredUtils.convertTextToRomanNumeral(1)).withColor(0xFF00ADAB))
                 );
             }
             player.sendSystemMessage(Component.literal(""));

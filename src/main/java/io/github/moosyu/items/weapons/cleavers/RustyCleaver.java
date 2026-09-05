@@ -14,8 +14,7 @@ import static io.github.moosyu.Unshattered.MODID;
 
 public class RustyCleaver extends UnshatteredCleaver {
     public RustyCleaver(Properties properties) {
-        super(properties
-                        .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.COMMON)
+        super(properties.component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.COMMON)
                         .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(Identifier.fromNamespaceAndPath(MODID, "rusty_cleaver_cleave"), 0, 0, 0, true))
                         .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
                         .component(UnshatteredDataComponents.SELL_VALUE.get(), 8)

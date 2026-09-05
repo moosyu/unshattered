@@ -3,7 +3,7 @@ package io.github.moosyu.events;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.dialogue.DialogueInteractable;
-import io.github.moosyu.util.CheckItemRequirement;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
@@ -77,7 +77,7 @@ public class PlayerClickHandler {
     @SubscribeEvent
     public static void onPlayerRightClickItem(PlayerInteractEvent.RightClickItem event) {
         if (event.getLevel().isClientSide()) return;
-        if (!CheckItemRequirement.passesSkillCheck(event.getEntity(), event.getItemStack())) event.setCanceled(true);
+        if (!UnshatteredUtils.passesSkillCheck(event.getEntity(), event.getItemStack())) event.setCanceled(true);
     }
 
     @SubscribeEvent

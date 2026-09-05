@@ -4,7 +4,7 @@ import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.UnshatteredInstantPassiveAbilityItem;
-import io.github.moosyu.util.AbilityUtils;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,14 +23,14 @@ public class UnshatteredRod extends FishingRodItem implements UnshatteredInstant
 
     @Override
     public void onAbilityTriggered(Player player, LivingEntity target) {
-        AbilityUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder).ifPresent(finalDamageModifierAttribute -> {
+        UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder).ifPresent(finalDamageModifierAttribute -> {
             finalDamageModifierAttribute.addTransientModifier(new AttributeModifier(ABILITY_IDENTIFIER, -finalDamageModifierAttribute.getValue(), AttributeModifier.Operation.ADD_VALUE));
         });
     }
 
     @Override
     public void onAbilityFinished(Player player, LivingEntity target) {
-        AbilityUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder).ifPresent(finalDamageModifierAttribute -> {
+        UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder).ifPresent(finalDamageModifierAttribute -> {
             finalDamageModifierAttribute.removeModifier(ABILITY_IDENTIFIER);
         });
     }

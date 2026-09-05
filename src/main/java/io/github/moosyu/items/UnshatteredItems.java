@@ -3,6 +3,8 @@ package io.github.moosyu.items;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.blocks.UnshatteredBlocks;
+import io.github.moosyu.data.components.ItemAbility;
+import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.data.components.SkillRequirement;
 import io.github.moosyu.data.regions.UnshatteredRegions;
 import io.github.moosyu.items.talismans.BatTalisman;
@@ -420,9 +422,52 @@ public class UnshatteredItems {
     ));
 
     public static final DeferredItem<Item> UNDEAD_SWORD = ITEMS.registerItem("undead_sword", UndeadSword::new);
-    public static final DeferredItem<Item> ZOMBIE_SWORD = ITEMS.registerItem("zombie_sword", ZombieSword::new);
-    public static final DeferredItem<Item> ORNATE_ZOMBIE_SWORD = ITEMS.registerItem("ornate_zombie_sword", OrnateZombieSword::new);
-    public static final DeferredItem<Item> FLORID_ZOMBIE_SWORD = ITEMS.registerItem("florid_zombie_sword", FloridZombieSword::new);
+
+    public static final DeferredItem<UnshatteredZombieSwordBase> ZOMBIE_SWORD = ITEMS.registerItem("zombie_sword",
+            props -> new UnshatteredZombieSwordBase(props.component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.RARE)
+                    .component(UnshatteredDataComponents.CHARGES.get(), new ItemCharges(4, 300))
+                    .component(UnshatteredDataComponents.SELL_VALUE.get(), 300000)
+                    .component(UnshatteredDataComponents.DESCRIPTION.get(), true),
+                    "zombie_sword",
+                    28,
+                    12,
+                    20,
+                    40,
+                    24,
+                    10
+            )
+    );
+
+    public static final DeferredItem<UnshatteredZombieSwordBase> ORNATE_ZOMBIE_SWORD = ITEMS.registerItem("ornate_zombie_sword",
+            props -> new UnshatteredZombieSwordBase(props.component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.EPIC)
+                    .component(UnshatteredDataComponents.CHARGES.get(), new ItemCharges(5, 300))
+                    .component(UnshatteredDataComponents.SELL_VALUE.get(), 600000)
+                    .component(UnshatteredDataComponents.DESCRIPTION.get(), true),
+                    "ornate_zombie_sword",
+                    35,
+                    15,
+                    25,
+                    50,
+                    30,
+                    10
+            )
+    );
+
+    public static final DeferredItem<UnshatteredZombieSwordBase> FLORID_ZOMBIE_SWORD = ITEMS.registerItem("florid_zombie_sword",
+            props -> new UnshatteredZombieSwordBase(props.component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.LEGENDARY)
+                    .component(UnshatteredDataComponents.CHARGES.get(), new ItemCharges(5, 300))
+                    .component(UnshatteredDataComponents.SELL_VALUE.get(), 2000000)
+                    .component(UnshatteredDataComponents.DESCRIPTION.get(), true),
+                    "florid_zombie_sword",
+                    42,
+                    20,
+                    30,
+                    60,
+                    36,
+                    10
+            )
+    );
+
     public static final DeferredItem<Item> RUSTY_CLEAVER = ITEMS.registerItem("rusty_cleaver", RustyCleaver::new);
     public static final DeferredItem<Item> GOLDEN_CLEAVER = ITEMS.registerItem("golden_cleaver", GoldenCleaver::new);
     public static final DeferredItem<Item> SUPER_CLEAVER = ITEMS.registerItem("super_cleaver", SuperCleaver::new);

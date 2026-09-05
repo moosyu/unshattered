@@ -14,8 +14,7 @@ import static io.github.moosyu.Unshattered.MODID;
 
 public class GoldenCleaver extends UnshatteredCleaver {
     public GoldenCleaver(Properties properties) {
-        super(properties
-                        .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON)
+        super(properties.component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON)
                         .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(Identifier.fromNamespaceAndPath(MODID, "golden_cleaver_cleave"), 0, 0, 0, true))
                         .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
                         .component(UnshatteredDataComponents.SELL_VALUE.get(), 80)

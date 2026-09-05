@@ -4,7 +4,7 @@ import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.items.UnshatteredInstantPassiveAbilityItem;
-import io.github.moosyu.util.AbilityUtils;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -32,12 +32,12 @@ public class UndeadSword extends UnshatteredSword implements UnshatteredInstantP
     }
 
     public void onAbilityTriggered(Player player, LivingEntity target) {
-        AbilityUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder).ifPresent(attribute -> attribute.addTransientModifier(new AttributeModifier(ABILITY_IDENTIFIER, 1.0, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)));
+        UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder).ifPresent(attribute -> attribute.addTransientModifier(new AttributeModifier(ABILITY_IDENTIFIER, 1.0, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)));
     }
 
     @Override
     public void onAbilityFinished(Player player, LivingEntity target) {
-        AbilityUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder).ifPresent(attribute -> attribute.removeModifier(ABILITY_IDENTIFIER));
+        UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder).ifPresent(attribute -> attribute.removeModifier(ABILITY_IDENTIFIER));
     }
 
     public boolean abilityConditionsMet(Player player, LivingEntity target) {
