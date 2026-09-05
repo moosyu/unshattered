@@ -38,7 +38,7 @@ public final class UnshatteredAttachments {
     );
 
     public static final Supplier<AttachmentType<PlayerCurrencyAttachment>> PLAYER_CURRENCY = ATTACHMENT_TYPES.register("player_currency", () ->
-            AttachmentType.builder(() -> new PlayerCurrencyAttachment(0, 0))
+            AttachmentType.builder(() -> new PlayerCurrencyAttachment(0, 0, 0))
                     .serialize(PlayerCurrencyAttachment.CODEC.fieldOf("currency"))
                     .sync(PlayerCurrencyAttachment.STREAM_CODEC)
                     .copyOnDeath()

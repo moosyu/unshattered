@@ -5,6 +5,7 @@ import io.github.moosyu.data.dialogue.DialogueNode;
 import io.github.moosyu.packets.QueueNewFlagsPacket;
 import io.github.moosyu.packets.ResetFlagQueuePacket;
 import io.github.moosyu.packets.TriggerEventPacket;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -21,9 +22,9 @@ public class DialogueScreen extends Screen {
     Component talkableName;
     Player player;
     DialogueNode selectedDialogueNode;
-    private static final int DIALOGUE_TEXTBOX_WIDTH = 100;
-    private static final int DIALOGUE_TEXTBOX_HEIGHT = 50;
-    private static final int BOTTOM_Y_OFFSET = 30;
+    private static final int DIALOGUE_TEXTBOX_WIDTH = 300;
+    private static final int DIALOGUE_TEXTBOX_HEIGHT = 80;
+    private static final int BOTTOM_Y_OFFSET = 35;
 
     public DialogueScreen(Component talkableName, DialogueNode selectedDialogueNode, Player player) {
         super(Component.translatable("screen.unshattered.dialogue"));
@@ -40,7 +41,7 @@ public class DialogueScreen extends Screen {
                 graphics.guiHeight() - DIALOGUE_TEXTBOX_HEIGHT - BOTTOM_Y_OFFSET,
                 centerXPos + (DIALOGUE_TEXTBOX_WIDTH / 2),
                 graphics.guiHeight() - BOTTOM_Y_OFFSET,
-                0x8C2F2F31
+                UnshatteredUtils.getOpacityColor(0x1F1F21, 0.55f)
         );
     }
 
@@ -54,11 +55,16 @@ public class DialogueScreen extends Screen {
         Font font = Minecraft.getInstance().font;
         graphics.text(font,
                 talkableName,
-                (graphics.guiWidth() / 2) + (DIALOGUE_TEXTBOX_WIDTH / 2),
+                (graphics.guiWidth() / 2) - (DIALOGUE_TEXTBOX_WIDTH / 2),
                 graphics.guiHeight() - DIALOGUE_TEXTBOX_HEIGHT - BOTTOM_Y_OFFSET - font.lineHeight,
                 0xFFFFFFFF
         );
         super.extractRenderState(graphics, mouseX, mouseY, partialTick);
+    }
+
+    @Override
+    public boolean isPauseScreen() {
+        return false;
     }
 
     private void selectChoice(DialogueChoice choice, Player player) {

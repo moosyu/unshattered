@@ -23,8 +23,7 @@ import static io.github.moosyu.Unshattered.MODID;
 
 public class TalkingRockBlock extends HorizontalDirectionalBlock implements DialogueInteractable {
     private static final VoxelShape COLLISION_SHAPE = Block.box(5, 0, 5, 11, 9, 11);
-    private static final Component NAME = Component.translatable("interactable.name.unshattered.rock").withStyle(ChatFormatting.BOLD);
-    public static final Identifier ROCK_DIALOGUE_TREE = UnshatteredUtils.createDialogueTreeIdentifier(NAME.getString().toLowerCase());
+    public static final Identifier ROCK_DIALOGUE_TREE = UnshatteredUtils.createDialogueTreeIdentifier("rock");
     public static final Identifier HI_MESSAGE_IDENTIFIER = UnshatteredUtils.createDialogueNodeIdentifier(ROCK_DIALOGUE_TREE, "hi");
     public static final Identifier HI2_MESSAGE_IDENTIFIER = UnshatteredUtils.createDialogueNodeIdentifier(ROCK_DIALOGUE_TREE, "hi_2");
     public static final Identifier ROCKS_QUEST = Identifier.fromNamespaceAndPath(MODID, "rocks_quest");
@@ -45,7 +44,7 @@ public class TalkingRockBlock extends HorizontalDirectionalBlock implements Dial
 
     @Override
     public Component getInteractableName() {
-        return NAME;
+        return Component.translatable("interactable.name.unshattered.rock").withStyle(ChatFormatting.BOLD);
     }
 
     @Override

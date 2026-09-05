@@ -5,6 +5,7 @@ import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.dialogue.DialogueInteractable;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.TriState;
@@ -66,11 +67,15 @@ public class PlayerClickHandler {
             event.setUseItem(TriState.FALSE);
         }
 
-        if (interactedBlock.getBlock() instanceof DialogueInteractable dialogueBlock) {
+        // i *think* this was firing on both hands for some reason so i added the event#getHand gate
+        if (interactedBlock.getBlock() instanceof DialogueInteractable dialogueBlock && event.getHand() == InteractionHand.MAIN_HAND) {
             PlayerAbilityEffectsAttachment playerAbilityEffectsAttachment = player.getData(UnshatteredAttachments.PLAYER_ABILITIES);
-            if (playerAbilityEffectsAttachment.hasActiveEffect(ACTIVE_RIGHT_CLICK)) return;
+            if (playerAbilityEffectsAttachment.hasActiveEffect(ACTIVE_RIGHT_CLICK) && !event.getLevel().isClientSide()) {
+                player.sendSystemMessage(Component.translatable("misc.messages.unshattered.interact_cooldown").withColor(UnshatteredUtils.ERROR_COLOR));
+                return;
+            }
             dialogueBlock.onDialogueTriggered(player);
-            playerAbilityEffectsAttachment.addActiveEffect(ACTIVE_RIGHT_CLICK, 20, player.level(), null);
+            playerAbilityEffectsAttachment.addActiveEffect(ACTIVE_RIGHT_CLICK, 5, player.level(), null);
         }
     }
 

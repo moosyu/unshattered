@@ -27,8 +27,6 @@ public interface DialogueInteractable {
      * @param player the player triggering the dialogue
      */
     default void onDialogueTriggered(Player player) {
-        player.swing(InteractionHand.MAIN_HAND);
-
         if (!player.level().isClientSide()) {
             PlayerDialogueFlagsAttachment playerDialogueFlagsAttachment = player.getData(UnshatteredAttachments.PLAYER_DIALOGUE_FLAGS);
             DialogueTree dialogueTree = getDialogueTree(player.registryAccess());
@@ -49,6 +47,8 @@ public interface DialogueInteractable {
 
             playerDialogueFlagsAttachment.addFlagsToQueue(chosenOrigin.setFlags());
             PacketDistributor.sendToPlayer((ServerPlayer) player, new OpenDialoguePacket(getInteractableName(), chosenOrigin.dialogueNode()));
+        } else {
+            player.swing(InteractionHand.MAIN_HAND);
         }
     }
 }

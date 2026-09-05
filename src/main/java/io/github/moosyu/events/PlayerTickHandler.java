@@ -47,7 +47,17 @@ public class PlayerTickHandler {
             Region region = player.level().registryAccess().lookupOrThrow(REGION_REGISTRY_KEY).getValue(regionAttachment.regionKey());
             if (region == null) return;
 
-            if (region.temperatureType() == RegionTemperatureTypes.COMFORTABLE || player.isCreative()) {
+            float extraTemperatureChange = 0.0f;
+
+            if (player.isOnFire()) {
+                extraTemperatureChange += 1.0f;
+            } else if (player.isInWater()) {
+                extraTemperatureChange -= 0.1f;
+            } else if (player.isInRain()) {
+                extraTemperatureChange -= 0.01f;
+            }
+
+            if ((region.temperatureType() == RegionTemperatureTypes.COMFORTABLE && extraTemperatureChange == 0.0f) || player.isCreative()) {
                 float temperatureChange = RegionTemperatureTypes.COMFORTABLE.getRegionTemperatureChange();
 
                 // if the amount is close to the base (37) then just set to the base
@@ -59,7 +69,7 @@ public class PlayerTickHandler {
                 }
                 player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(), currentTemperature);
             } else {
-                currentTemperature += region.temperatureType().getRegionTemperatureChange();
+                currentTemperature += region.temperatureType().getRegionTemperatureChange() + extraTemperatureChange;
                 if (currentTemperature < TemperatureTypes.HIGH_TEMP.getValue()
                         && currentTemperature > TemperatureTypes.LOW_TEMP.getValue()
                         || (!region.temperatureType().isRegionSafe()

@@ -9,10 +9,12 @@ import net.minecraft.network.codec.StreamCodec;
 public final class PlayerCurrencyAttachment {
     public int coins;
     public int motes;
+    public int bankedCoins;
 
-    PlayerCurrencyAttachment(int coins, int motes) {
+    PlayerCurrencyAttachment(int coins, int motes, int bankedCoins) {
         this.coins = coins;
         this.motes = motes;
+        this.bankedCoins = bankedCoins;
     }
 
     public int getCoins() {
@@ -31,6 +33,22 @@ public final class PlayerCurrencyAttachment {
         coins -= amount;
     }
 
+    public int getBankedCoins() {
+        return coins;
+    }
+
+    public void setBankedCoins(int coins) {
+        this.coins = coins;
+    }
+
+    public void addBankedCoins(int amount) {
+        coins += amount;
+    }
+
+    public void removeBankedCoins(int amount) {
+        coins -= amount;
+    }
+
     public int getMotes() {
         return motes;
     }
@@ -42,13 +60,15 @@ public final class PlayerCurrencyAttachment {
     public static final Codec<PlayerCurrencyAttachment> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     Codec.INT.fieldOf("coins").forGetter(PlayerCurrencyAttachment::getCoins),
-                    Codec.INT.fieldOf("motes").forGetter(PlayerCurrencyAttachment::getMotes)
+                    Codec.INT.fieldOf("motes").forGetter(PlayerCurrencyAttachment::getMotes),
+                    Codec.INT.fieldOf("banked_coins").forGetter(PlayerCurrencyAttachment::getBankedCoins)
             ).apply(instance, PlayerCurrencyAttachment::new)
     );
 
     public static final StreamCodec<ByteBuf, PlayerCurrencyAttachment> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.INT, PlayerCurrencyAttachment::getCoins,
             ByteBufCodecs.INT, PlayerCurrencyAttachment::getMotes,
+            ByteBufCodecs.INT, PlayerCurrencyAttachment::getBankedCoins,
             PlayerCurrencyAttachment::new
     );
 }

@@ -18,13 +18,13 @@
       },
       "priority": 0,
       "set_flags": [
-        "unshattered:interactable.name.unshattered.rock/rock_dialogue_tree/interactable.name.unshattered.rock_hi"
+        "unshattered:rock/dialogue_tree/hi"
       ]
     },
     {
       "dialogue_flag_requirements": {
         "required_flags": [
-          "unshattered:interactable.name.unshattered.rock/rock_dialogue_tree/interactable.name.unshattered.rock_hi"
+          "unshattered:rock/dialogue_tree/hi"
         ]
       },
       "dialogue_node": {
@@ -42,7 +42,7 @@
       },
       "priority": 1,
       "set_flags": [
-        "unshattered:interactable.name.unshattered.rock/rock_dialogue_tree/interactable.name.unshattered.rock_hi_2"
+        "unshattered:rock/dialogue_tree/hi_2"
       ]
     },
     {
@@ -51,7 +51,7 @@
           "unshattered:rocks_quest"
         ],
         "required_flags": [
-          "unshattered:interactable.name.unshattered.rock/rock_dialogue_tree/interactable.name.unshattered.rock_hi_2"
+          "unshattered:rock/dialogue_tree/hi_2"
         ]
       },
       "dialogue_node": {

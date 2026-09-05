@@ -8,8 +8,6 @@
   "item_group.unshattered.unshattered_resources": "Skyblock: Unshattered - Resources",
   "item_group.unshattered.talismans": "Skyblock: Unshattered - Talismans",
 
-  "misc.unshattered.coins": "Coins",
-
   "item.unshattered.treecapitator": "Treecapitator",
   "item.unshattered.spruce_axe": "Spruce Axe",
   "item.unshattered.seriously_damaged_axe": "Seriously Damaged Axe",
@@ -283,8 +281,10 @@
   "fishing.messages.entity.minecraft.squid": "A Squid appeared.",
   "fishing.messages.entity.minecraft.glow_squid": "Pitch darkness reveals a Glow Squid.",
 
+  "misc.unshattered.coins": "Coins",
   "misc.messages.unshattered.wizardman_request": "Help Wizardman",
   "misc.messages.unshattered.wizardman_response_overworld": "You feel the slightest vibration from across time and space.",
+  "misc.messages.unshattered.interact_cooldown": "You're interacting too fast! (This is on a 0.25s cooldown by the way, how did you pull this off)?",
 
   "gui.title.unshattered.inventory": "Inventory",
   "gui.title.unshattered.crafting": "Crafting",
