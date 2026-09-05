@@ -291,6 +291,7 @@
   "gui.title.unshattered.stats": "Stats",
   "gui.title.unshattered.skills": "Skills",
   "gui.title.unshattered.collections": "Collections",
+  "gui.text.unshattered.purse": "Purse",
 
   "drop_type.message.unshattered.common": "Common Drop!",
   "drop_type.message.unshattered.occasional": "Uncommon Drop!",
@@ -318,6 +319,9 @@
   "container.unshattered.talisman_bag": "Talisman Bag",
   "container.unshattered.storage": "Storage",
   "container.unshattered.crafting": "Crafting",
+
   "screen.unshattered.stats": "Stats",
+  "screen.unshattered.dialogue": "Dialogue",
+
   "widget.unshattered.narration.scroller": "Scroller Widget"
 }

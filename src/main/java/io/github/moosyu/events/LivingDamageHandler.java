@@ -41,7 +41,7 @@ public class LivingDamageHandler {
             } else if (event.getSource().is(DamageTypeTags.IS_FALL)) {
                 int blocksFallen = (int) (event.getOriginalDamage() + 3);
                 // https://old.reddit.com/r/HypixelSkyblock/comments/fvozn7/fall_damage_calculator/
-                double damageDealt = ((blocksFallen - 6.5) * 200 / 33) / ((playerDefenseValue / 100) + 1);
+                double damageDealt = ((double) ((blocksFallen - 3) * 50) / 33) / (1 + (playerDefenseValue / 100));
                 DamageUtil.damagePlayer(player, damageDealt, serverLevel, Component.literal("☠ " + playerName + " fell to their death!"));
             } else if (event.getSource().is(DamageTypeTags.IS_DROWNING)) {
                 double damageDealt = (event.getOriginalDamage() * 200 / 33) / ((playerDefenseValue / 100) + 1);

@@ -79,7 +79,6 @@ public class BarLayer implements GuiLayer {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
         if (player == null
-                || !player.level().isClientSide()
                 || minecraft.options.hideGui
                 || player.gameMode() != GameType.SURVIVAL
                 || player.getData(PLAYER_STATE.get()).isDialogueOpen()

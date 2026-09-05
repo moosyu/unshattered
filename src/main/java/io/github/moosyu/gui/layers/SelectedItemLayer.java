@@ -26,8 +26,6 @@ public class SelectedItemLayer implements GuiLayer {
 
     @Override
     public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
-        final int DISPLAYED_TICK_COUNT = 80;
-        final int FADING_TICK_COUNT = 20;
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
         if (player == null || !player.level().isClientSide() || minecraft.options.hideGui) return;
@@ -45,13 +43,13 @@ public class SelectedItemLayer implements GuiLayer {
         // for when a new item has been selected. _ -> true just makes data components not affect it, probably is a better way but idc
         if (!ItemStack.matchesIgnoringComponents(currentItemStack, lastSelected, _ -> true)) {
             lastSelected = currentItemStack.copy();
-            displayUntilTick = level.getGameTime() + DISPLAYED_TICK_COUNT;
+            displayUntilTick = level.getGameTime() + 80;
             displaySelectedText(heldItem, graphics, minecraft, 1.0f);
             return;
         }
         // for current selected texts
         if (level.getGameTime() < displayUntilTick) {
-            displaySelectedText(heldItem, graphics, minecraft, displayUntilTick - FADING_TICK_COUNT >= level.getGameTime() ? 1.0f : (float) (displayUntilTick - level.getGameTime()) / FADING_TICK_COUNT);
+            displaySelectedText(heldItem, graphics, minecraft, displayUntilTick - 20 >= level.getGameTime() ? 1.0f : (float) (displayUntilTick - level.getGameTime()) / 20);
         }
     }
 
