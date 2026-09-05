@@ -1,8 +1,10 @@
 package io.github.moosyu.gui.screens;
 
+import io.github.moosyu.packets.OpenCraftingPacket;
 import io.github.moosyu.packets.OpenStoragePacket;
 import io.github.moosyu.packets.OpenTalismanBagPacket;
 import io.github.moosyu.util.UnshatteredUtils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
@@ -39,7 +41,7 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
                 20,
                 18,
                 new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/crafting")),
-                _ -> {}
+                _ -> ClientPacketDistributor.sendToServer(new OpenCraftingPacket())
         )).setTooltip(Tooltip.create(Component.translatable("container.unshattered.crafting")));
 
         this.addRenderableWidget(new ImageButton(this.leftPos + 76,
@@ -62,9 +64,9 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
                 this.topPos + 7,
                 20,
                 18,
-                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/skills")),
-                _ -> {}
-        )).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.skills")));
+                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/stats")),
+                _ -> Minecraft.getInstance().setScreen(new StatsScreen(Component.translatable("screen.unshattered.stats")))
+        )).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.stats")));
     }
 
 

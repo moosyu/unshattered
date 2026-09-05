@@ -23,6 +23,7 @@ public class RegisterPayloadsHandler {
         registrar.playToClient(BlockBreakSyncPacket.TYPE, BlockBreakSyncPacket.STREAM_CODEC);
         registrar.playToClient(WeakHitSoundEffectPacket.TYPE, WeakHitSoundEffectPacket.STREAM_CODEC);
         registrar.playToServer(OpenTalismanBagPacket.TYPE, OpenTalismanBagPacket.STREAM_CODEC, OpenTalismanBagHandler::handleData);
+        registrar.playToServer(OpenCraftingPacket.TYPE, OpenCraftingPacket.STREAM_CODEC, OpenCraftingHandler::handleData);
         registrar.playToServer(OpenStoragePacket.TYPE, OpenStoragePacket.STREAM_CODEC, OpenStorageHandler::handleData);
         registrar.playToServer(ResetFlagQueuePacket.TYPE, ResetFlagQueuePacket.STREAM_CODEC, ResetFlagQueueHandler::handleData);
         registrar.playToServer(QueueNewFlagsPacket.TYPE, QueueNewFlagsPacket.STREAM_CODEC, QueueNewFlagsHandler::handleData);

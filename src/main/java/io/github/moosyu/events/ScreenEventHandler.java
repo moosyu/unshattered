@@ -29,11 +29,13 @@ public class ScreenEventHandler {
         // override inventory
         if (event.getNewScreen() instanceof InventoryScreen && !player.isCreative()) {
             event.setCanceled(true);
-            minecraft.setScreen(new UnshatteredInventoryScreen(player.inventoryMenu,
-                    player.getInventory(),
-                    Component.translatable("container.inventory"))
+            Minecraft.getInstance().setScreen(
+                    new UnshatteredInventoryScreen(
+                            player.inventoryMenu,
+                            player.getInventory(),
+                            Component.translatable("container.inventory")
+                    )
             );
-            minecraft.setScreen(new StatsScreen(Component.literal("stats")));
         } else if (event.getScreen() instanceof DialogueScreen) {
             ClientPacketDistributor.sendToServer(new UpdateDialogueStatePacket(true));
         }

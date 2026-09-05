@@ -27,6 +27,6 @@ public class TalismansScreen extends AbstractContainerScreen<TalismansMenu> {
         int x = (this.width - IMAGE_WIDTH) / 2;
         int y = (this.height - IMAGE_HEIGHT) / 2;
         graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0, 0, IMAGE_WIDTH, Y_OFFSET, 256, 256);
-        graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y + Y_OFFSET, 0, 125, IMAGE_WIDTH, 96, 256, 256);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y + Y_OFFSET, 0, 126, IMAGE_WIDTH, 96, 256, 256);
     }
 }

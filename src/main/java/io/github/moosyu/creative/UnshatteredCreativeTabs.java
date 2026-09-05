@@ -97,9 +97,9 @@ public class UnshatteredCreativeTabs {
         }).build()
     );
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_ARMOR_TAB = CREATIVE_MODE_TABS.register("unshattered_armor_tab",
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_ARMOUR_TAB = CREATIVE_MODE_TABS.register("unshattered_armour_tab",
         () -> CreativeModeTab.builder()
-        .title(Component.translatable("item_group.unshattered.armor"))
+        .title(Component.translatable("item_group.unshattered.armour"))
         .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
         .icon(() -> LEAFLET_CHESTPLATE.get().getDefaultInstance())
         .displayItems((_, output) -> {
