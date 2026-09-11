@@ -26,7 +26,8 @@ public class BrokenMithrilPickaxe extends Item implements PassiveAbilityItem {
     private static final Identifier ABILITY_IDENTIFIER = Identifier.fromNamespaceAndPath(MODID, "mithril_speed");
 
     public BrokenMithrilPickaxe(Properties properties) {
-        super(properties.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.PICKAXE)
+        super(properties.stacksTo(1)
+                .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.PICKAXE)
                 .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON)
                 .component(UnshatteredDataComponents.SELL_VALUE.get(), 500)
                 .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(ABILITY_IDENTIFIER, 0, 0, 0, true))

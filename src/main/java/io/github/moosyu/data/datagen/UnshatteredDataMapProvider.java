@@ -270,9 +270,8 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 List.of(new BlockDropData(new ItemRange(UnshatteredItems.MITHRIL.get())), new BlockDropData(new ItemRange(Items.COBBLESTONE, 1, 3))),
                 false
         );
-        createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_SOFT_MITHRIL_BLOCK, new ItemRange(UnshatteredItems.MITHRIL.get()));
-        createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_HARD_MITHRIL_BLOCK, new ItemRange(UnshatteredItems.MITHRIL.get(), 1, 2));
-        createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_HARD_MITHRIL_BLOCK, new ItemRange(UnshatteredItems.MITHRIL.get(), 3, 5));
+        createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_SOFT_MITHRIL_BLOCK, new ItemRange(UnshatteredItems.MITHRIL.get(), 2, 4));
+        createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_HARD_MITHRIL_BLOCK, new ItemRange(UnshatteredItems.MITHRIL.get(), 3, 6));
     }
 
     private void createSingleBlockDropData(DataMapProvider.Builder<List<BlockDropData>, Block> builder, DeferredBlock<Block> block, ItemRange itemRange) {

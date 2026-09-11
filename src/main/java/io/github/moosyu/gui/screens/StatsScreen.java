@@ -22,7 +22,7 @@ public class StatsScreen extends SimpleScreen {
     private ScrollerWidget scroller;
 
     public StatsScreen(Component title) {
-        super(title, 176, 166, "textures/gui/stats.png");
+        super(title, 176, 166, "textures/gui/generic_scrollable.png");
         this.viewportHeight = imageHeight - 24;
     }
 
