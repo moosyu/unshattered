@@ -40,7 +40,7 @@
         }
       },
       {
-        "drop_chance": 0.0,
+        "drop_chance": 1.0,
         "item_range": {
           "item": "minecraft:cobblestone",
           "max_amount": 3,

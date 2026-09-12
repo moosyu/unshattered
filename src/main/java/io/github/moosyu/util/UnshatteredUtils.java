@@ -17,9 +17,11 @@ import io.github.moosyu.rarities.UnshatteredRarities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -33,6 +35,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -437,5 +441,11 @@ public final class UnshatteredUtils {
         @SuppressWarnings("unchecked")
         EntityType<T> type = (EntityType<T>) entity.getType();
         return Optional.of(DefaultAttributes.getSupplier(type));
+    }
+
+    // enchantments
+
+    public static int getEnchantmentLevel(ItemStack itemStack, Level level, ResourceKey<Enchantment> enchantment) {
+        return itemStack.getEnchantmentLevel(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(enchantment));
     }
 }

@@ -8,11 +8,14 @@ import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.datagen.UnshatteredBlockTagsProvider;
+import io.github.moosyu.enchantments.UnshatteredEnchantmentEffects;
 import io.github.moosyu.util.*;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -24,6 +27,8 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -127,15 +132,16 @@ public class BlockBreakHandler {
     @SubscribeEvent
     public static void modifyBreakSpeed(PlayerEvent.BreakSpeed event) {
         Player player = event.getEntity();
-        Optional<BlockPos> blockPos = event.getPosition();
         Level level = player.level();
+        Optional<BlockPos> blockPos = event.getPosition();
 
         if (blockPos.isEmpty()) {
             event.setNewSpeed(0.0f);
             return;
         }
 
-        Holder<Block> block = level.getBlockState(blockPos.get()).typeHolder();
+        BlockState blockState = level.getBlockState(blockPos.get());
+        Holder<Block> block = blockState.typeHolder();
 
         if (!block.unwrapKey()
                 .map(key -> level.registryAccess()
@@ -143,15 +149,29 @@ public class BlockBreakHandler {
                         .getDataMap(UnshatteredDataMaps.BREAKABLE_DROPS_DATA)
                         .containsKey(key))
                 .orElse(false)
-                || !hasBreakingPowerRequirement(player, level.getBlockState(blockPos.get()).typeHolder())
+                || !hasBreakingPowerRequirement(player, blockState.typeHolder())
         ) {
             event.setNewSpeed(0.0f);
             return;
         }
 
-        if (block.is(UnshatteredBlockTagsProvider.COLLECTABLE_MINING_BLOCKS) && player.getMainHandItem().is(ItemTags.PICKAXES)) {
-            event.setNewSpeed((float) player.getAttributeValue(UnshatteredAttributeValues.MINING_SPEED.holder));
-        } else if (block.is(UnshatteredBlockTagsProvider.COLLECTABLE_FORAGING_BLOCKS) && player.getMainHandItem().is(ItemTags.AXES) || player.getMainHandItem() == ItemStack.EMPTY) {
+        ItemStack itemStack = player.getMainHandItem();
+        if (block.is(UnshatteredBlockTagsProvider.COLLECTABLE_MINING_BLOCKS) && itemStack.is(ItemTags.PICKAXES)) {
+            ItemEnchantments enchantments = itemStack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY);
+            double bonus = 0.0f;
+
+            for (Object2IntMap.Entry<Holder<Enchantment>> entry : enchantments.entrySet()) {
+                Optional<ResourceKey<Enchantment>> key = entry.getKey().unwrapKey();
+                if (key.isEmpty()) continue;
+
+                UnshatteredEnchantmentEffects.MiningSpeedEffect effect = UnshatteredEnchantmentEffects.MINING_SPEED_EFFECTS.get(key.get());
+                if (effect != null) {
+                    bonus += effect.getMiningSpeedBonus(player, blockState, entry.getIntValue());
+                }
+            }
+
+            event.setNewSpeed((float) (player.getAttributeValue(UnshatteredAttributeValues.MINING_SPEED.holder) + bonus));
+        } else if (block.is(UnshatteredBlockTagsProvider.COLLECTABLE_FORAGING_BLOCKS) && itemStack.is(ItemTags.AXES) || itemStack == ItemStack.EMPTY) {
             event.setNewSpeed((float) ((1 + (127 * player.getAttributeValue(UnshatteredAttributeValues.SWEEP.holder))/119) - (Math.pow(player.getAttributeValue(UnshatteredAttributeValues.SWEEP.holder), 2)/3570)));
         } else {
             event.setNewSpeed(0.0f);

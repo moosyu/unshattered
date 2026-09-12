@@ -280,8 +280,7 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
 
         breakableDropsBuilder.add(UnshatteredBlocks.BREAKABLE_COBBLED_MITHRIL_BLOCK,
                 List.of(new DropData(new ItemRange(UnshatteredItems.MITHRIL.get())),
-                        new DropData(new ItemRange(Items.COBBLESTONE, 1, 3),
-                                0.0f)
+                        new DropData(new ItemRange(Items.COBBLESTONE, 1, 3))
                 ),
                 false
         );

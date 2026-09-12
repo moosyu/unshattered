@@ -2,18 +2,22 @@ package io.github.moosyu.util.damage;
 
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.attachments.PlayerCurrencyAttachment;
-import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.items.ItemTypes;
+import io.github.moosyu.enchantments.UnshatteredEnchantmentEffects;
 import io.github.moosyu.packets.DamageNumberPacket;
 import io.github.moosyu.packets.DeathSoundEffectPacket;
 import io.github.moosyu.packets.FerocityEffectPacket;
 import io.github.moosyu.packets.WeakHitSoundEffectPacket;
 import io.github.moosyu.util.UnshatteredUtils;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -21,11 +25,14 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_CURRENCY;
@@ -49,6 +56,18 @@ public final class DamageUtil {
         float attackStrength = player.getAttackStrengthScale(0.0f);
         double critDamage = 0.0d;
         boolean weakAttack = attackStrength < 0.9f;
+        double damageBonus = 0.0f;
+        ItemEnchantments enchantments = player.getMainHandItem().getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY);
+
+        for (Object2IntMap.Entry<Holder<Enchantment>> entry : enchantments.entrySet()) {
+            Optional<ResourceKey<Enchantment>> key = entry.getKey().unwrapKey();
+            if (key.isEmpty()) continue;
+
+            UnshatteredEnchantmentEffects.DamageEffect effect = UnshatteredEnchantmentEffects.DAMAGE_EFFECTS.get(key.get());
+            if (effect != null) {
+                damageBonus += effect.getFinalDamageModifierBonus(player, target, entry.getIntValue());
+            }
+        }
 
         if (weakAttack) {
             PacketDistributor.sendToPlayer((ServerPlayer) player, new WeakHitSoundEffectPacket());
@@ -63,7 +82,7 @@ public final class DamageUtil {
         double damage = (5 + player.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder))
                 * (1 + (player.getAttributeValue(UnshatteredAttributeValues.STRENGTH.holder) / 100))
                 * (1 + (critDamage / 100))
-                * player.getAttributeValue(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder)
+                * (player.getAttributeValue(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder) + damageBonus)
                 * attackStrength;
         AttributeInstance targetHealth = target.getAttribute(UnshatteredAttributeValues.HEALTH.holder);
         if (targetHealth != null) {
