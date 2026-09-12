@@ -199,8 +199,12 @@ public final class PlayerSkillsAttachment {
             return (exp - prevLevelXP) / (SKILL_LEVEL_TABLE[index] - prevLevelXP);
         } else {
             // if the player is max level
-            return 1;
+            return 1.0f;
         }
+    }
+
+    public float getNextLevelExpRequirement(int currentLevel) {
+        return currentLevel < SKILL_LEVEL_TABLE.length ? SKILL_LEVEL_TABLE[currentLevel] : SKILL_LEVEL_TABLE[SKILL_LEVEL_TABLE.length - 1];
     }
 
     private static Component attributeGainMessage(UnshatteredAttributeValues attribute, double amount) {
