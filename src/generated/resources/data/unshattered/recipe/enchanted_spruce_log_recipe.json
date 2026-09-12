@@ -3,7 +3,7 @@
   "key": {
     "A": {
       "count": 32,
-      "ingredient": "unshattered:mithril"
+      "ingredient": "minecraft:spruce_log"
     }
   },
   "pattern": [
@@ -11,6 +11,6 @@
     "AA "
   ],
   "result": {
-    "id": "unshattered:enchanted_mithril"
+    "id": "unshattered:enchanted_spruce_log"
   }
 }

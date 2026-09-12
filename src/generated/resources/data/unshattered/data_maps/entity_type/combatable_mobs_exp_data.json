@@ -3,11 +3,15 @@
     "minecraft:bat": {
       "drops": [
         {
-          "base_drop_chance": 0.01,
           "combat_fortune_boosted": true,
-          "item": "unshattered:bat_talisman",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 0.01,
+            "item_range": {
+              "item": "unshattered:bat_talisman",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         }
       ],
       "experience": 33.0,
@@ -18,11 +22,15 @@
     "minecraft:blaze": {
       "drops": [
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:blaze_rod",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:blaze_rod",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         }
       ],
       "experience": 10.0,
@@ -33,18 +41,26 @@
     "minecraft:cave_spider": {
       "drops": [
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:string",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:string",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         },
         {
-          "base_drop_chance": 0.5,
           "combat_fortune_boosted": false,
-          "item": "minecraft:spider_eye",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 0.5,
+            "item_range": {
+              "item": "minecraft:spider_eye",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         }
       ],
       "experience": 8.0,
@@ -55,18 +71,26 @@
     "minecraft:chicken": {
       "drops": [
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:feather",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:feather",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         },
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:chicken",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:chicken",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         }
       ],
       "experience": 2.0,
@@ -77,18 +101,26 @@
     "minecraft:cow": {
       "drops": [
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:beef",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:beef",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         },
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:leather",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:leather",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         }
       ],
       "experience": 3.0,
@@ -99,11 +131,15 @@
     "minecraft:creeper": {
       "drops": [
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:gunpowder",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:gunpowder",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         }
       ],
       "experience": 8.0,
@@ -114,11 +150,15 @@
     "minecraft:enderman": {
       "drops": [
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:ender_pearl",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:ender_pearl",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         }
       ],
       "experience": 15.0,
@@ -129,11 +169,15 @@
     "minecraft:endermite": {
       "drops": [
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:end_stone",
-          "max": 2,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:end_stone",
+              "max_amount": 2,
+              "min_amount": 1
+            }
+          }
         }
       ],
       "experience": 20.0,
@@ -144,25 +188,37 @@
     "minecraft:glow_squid": {
       "drops": [
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:ink_sac",
-          "max": 6,
-          "min": 3
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:ink_sac",
+              "max_amount": 6,
+              "min_amount": 3
+            }
+          }
         },
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:lily_pad",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:lily_pad",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         },
         {
-          "base_drop_chance": 0.08,
           "combat_fortune_boosted": true,
-          "item": "unshattered:glow_squid_boots",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 0.08,
+            "item_range": {
+              "item": "unshattered:glow_squid_boots",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         }
       ],
       "experience": 36.0,
@@ -173,25 +229,37 @@
     "minecraft:mooshroom": {
       "drops": [
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:beef",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:beef",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         },
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:red_mushroom",
-          "max": 4,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:red_mushroom",
+              "max_amount": 4,
+              "min_amount": 1
+            }
+          }
         },
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:leather",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:leather",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         }
       ],
       "experience": 5.0,
@@ -202,11 +270,15 @@
     "minecraft:pig": {
       "drops": [
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:porkchop",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:porkchop",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         }
       ],
       "experience": 3.0,
@@ -217,25 +289,37 @@
     "minecraft:rabbit": {
       "drops": [
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:rabbit",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:rabbit",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         },
         {
-          "base_drop_chance": 0.7,
           "combat_fortune_boosted": false,
-          "item": "minecraft:rabbit_hide",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 0.7,
+            "item_range": {
+              "item": "minecraft:rabbit_hide",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         },
         {
-          "base_drop_chance": 0.7,
           "combat_fortune_boosted": false,
-          "item": "minecraft:rabbit_foot",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 0.7,
+            "item_range": {
+              "item": "minecraft:rabbit_foot",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         }
       ],
       "experience": 5.0,
@@ -246,18 +330,26 @@
     "minecraft:sheep": {
       "drops": [
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:mutton",
-          "max": 2,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:mutton",
+              "max_amount": 2,
+              "min_amount": 1
+            }
+          }
         },
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:white_wool",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:white_wool",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         }
       ],
       "experience": 3.0,
@@ -268,11 +360,15 @@
     "minecraft:skeleton": {
       "drops": [
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:bone",
-          "max": 2,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:bone",
+              "max_amount": 2,
+              "min_amount": 1
+            }
+          }
         }
       ],
       "experience": 6.0,
@@ -283,11 +379,15 @@
     "minecraft:slime": {
       "drops": [
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:slime_ball",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:slime_ball",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         }
       ],
       "experience": 6.0,
@@ -298,18 +398,26 @@
     "minecraft:spider": {
       "drops": [
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:string",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:string",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         },
         {
-          "base_drop_chance": 0.5,
           "combat_fortune_boosted": false,
-          "item": "minecraft:spider_eye",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 0.5,
+            "item_range": {
+              "item": "minecraft:spider_eye",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         }
       ],
       "experience": 8.0,
@@ -320,18 +428,26 @@
     "minecraft:squid": {
       "drops": [
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:ink_sac",
-          "max": 2,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:ink_sac",
+              "max_amount": 2,
+              "min_amount": 1
+            }
+          }
         },
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:lily_pad",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:lily_pad",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         }
       ],
       "experience": 75.0,
@@ -342,25 +458,37 @@
     "minecraft:witch": {
       "drops": [
         {
-          "base_drop_chance": 0.5,
           "combat_fortune_boosted": false,
-          "item": "minecraft:gunpowder",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 0.5,
+            "item_range": {
+              "item": "minecraft:gunpowder",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         },
         {
-          "base_drop_chance": 0.5,
           "combat_fortune_boosted": false,
-          "item": "minecraft:glowstone_dust",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 0.5,
+            "item_range": {
+              "item": "minecraft:glowstone_dust",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         },
         {
-          "base_drop_chance": 0.2,
           "combat_fortune_boosted": false,
-          "item": "minecraft:glass_bottle",
-          "max": 2,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 0.2,
+            "item_range": {
+              "item": "minecraft:glass_bottle",
+              "max_amount": 2,
+              "min_amount": 1
+            }
+          }
         }
       ],
       "experience": 15.0,
@@ -371,32 +499,48 @@
     "minecraft:zombie": {
       "drops": [
         {
-          "base_drop_chance": 1.0,
           "combat_fortune_boosted": false,
-          "item": "minecraft:rotten_flesh",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:rotten_flesh",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         },
         {
-          "base_drop_chance": 0.02,
           "combat_fortune_boosted": true,
-          "item": "minecraft:poisonous_potato",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 0.02,
+            "item_range": {
+              "item": "minecraft:poisonous_potato",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         },
         {
-          "base_drop_chance": 0.01,
           "combat_fortune_boosted": true,
-          "item": "minecraft:potato",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 0.01,
+            "item_range": {
+              "item": "minecraft:potato",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         },
         {
-          "base_drop_chance": 0.01,
           "combat_fortune_boosted": true,
-          "item": "minecraft:carrot",
-          "max": 1,
-          "min": 1
+          "drop_data": {
+            "drop_chance": 0.01,
+            "item_range": {
+              "item": "minecraft:carrot",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         }
       ],
       "experience": 6.0,

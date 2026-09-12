@@ -1,7 +1,5 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.Unshattered;
-import io.github.moosyu.blocks.BlockDropData;
 import io.github.moosyu.data.regen.RegenClientCache;
 import io.github.moosyu.data.regen.RegenPaths;
 import io.github.moosyu.data.regen.RegenSavedData;
@@ -10,13 +8,11 @@ import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.datagen.UnshatteredBlockTagsProvider;
-import io.github.moosyu.items.ItemRange;
 import io.github.moosyu.util.*;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -24,6 +20,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -53,7 +50,6 @@ public class BlockBreakHandler {
         BlockState blockState = event.getState();
         Holder<Block> blockHolder = blockState.typeHolder();
         float experienceReward = Objects.requireNonNullElse(blockHolder.getData(UnshatteredDataMaps.HARVESTABLE_BLOCKS_EXP_DATA), 0.0f);
-        Block block = blockState.getBlock();
         BlockPos blockPos = event.getPos();
 
         // so you can still break stuff normally in creative
@@ -75,18 +71,19 @@ public class BlockBreakHandler {
                         predictedBlockstate = regenPath.path().get(newIndex);
                     }
                 }
-            }
-
-            Identifier regenId = REGEN_IDENTIFIER_BY_BLOCK.get(blockState);
-            if (regenId != null) {
-                ResourceKey<RegenPaths.RegenPath> regenPathResourceKey = ResourceKey.create(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY, regenId);
-                RegenPaths.RegenPath regenPath = registry.getValue(regenPathResourceKey);
-                if (regenPath != null) {
-                    int index = regenPath.stagesIncremented();
-                    RegenClientCache.put(blockPos, regenPathResourceKey, index);
-                    predictedBlockstate = index < regenPath.path().size() ? regenPath.path().get(index) : null;
+            } else {
+                Identifier regenIdentifier = REGEN_IDENTIFIER_BY_BLOCK.get(blockState);
+                if (regenIdentifier != null) {
+                    ResourceKey<RegenPaths.RegenPath> regenPathResourceKey = ResourceKey.create(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY, regenIdentifier);
+                    RegenPaths.RegenPath regenPath = registry.getValue(regenPathResourceKey);
+                    if (regenPath != null) {
+                        int index = regenPath.stagesIncremented();
+                        RegenClientCache.put(blockPos, regenPathResourceKey, index);
+                        predictedBlockstate = index < regenPath.path().size() ? regenPath.path().get(index) : null;
+                    }
                 }
             }
+
 
             level.levelEvent(player, LevelEvent.PARTICLES_DESTROY_BLOCK, blockPos, Block.getId(blockState));
             level.setBlockAndUpdate(blockPos, Objects.requireNonNullElseGet(predictedBlockstate, Blocks.BEDROCK::defaultBlockState));
@@ -152,8 +149,12 @@ public class BlockBreakHandler {
             return;
         }
 
-        if (block.is(UnshatteredBlockTagsProvider.COLLECTABLE_MINING_BLOCKS)) {
+        if (block.is(UnshatteredBlockTagsProvider.COLLECTABLE_MINING_BLOCKS) && player.getMainHandItem().is(ItemTags.PICKAXES)) {
             event.setNewSpeed((float) player.getAttributeValue(UnshatteredAttributeValues.MINING_SPEED.holder));
+        } else if (block.is(UnshatteredBlockTagsProvider.COLLECTABLE_FORAGING_BLOCKS) && player.getMainHandItem().is(ItemTags.AXES) || player.getMainHandItem() == ItemStack.EMPTY) {
+            event.setNewSpeed((float) ((1 + (127 * player.getAttributeValue(UnshatteredAttributeValues.SWEEP.holder))/119) - (Math.pow(player.getAttributeValue(UnshatteredAttributeValues.SWEEP.holder), 2)/3570)));
+        } else {
+            event.setNewSpeed(0.0f);
         }
     }
 

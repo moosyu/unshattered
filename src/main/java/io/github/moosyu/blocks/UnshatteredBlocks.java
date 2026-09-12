@@ -121,4 +121,52 @@ public final class UnshatteredBlocks {
                     .sound(SoundType.STONE)
             )
     );
+
+    public static final DeferredBlock<Block> BREAKABLE_OAK_LOG_BLOCK = BLOCKS.register("breakable_oak_log",
+            identifier -> new RotatedPillarBlock(BlockBehaviour.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, identifier))
+                    .destroyTime(2.0f)
+                    .sound(SoundType.WOOD)
+            )
+    );
+
+    public static final DeferredBlock<Block> BREAKABLE_BIRCH_LOG_BLOCK = BLOCKS.register("breakable_birch_log",
+            identifier -> new RotatedPillarBlock(BlockBehaviour.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, identifier))
+                    .destroyTime(2.0f)
+                    .sound(SoundType.WOOD)
+            )
+    );
+
+    public static final DeferredBlock<Block> BREAKABLE_SPRUCE_LOG_BLOCK = BLOCKS.register("breakable_spruce_log",
+            identifier -> new RotatedPillarBlock(BlockBehaviour.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, identifier))
+                    .destroyTime(2.0f)
+                    .sound(SoundType.WOOD)
+            )
+    );
+
+    public static final DeferredBlock<Block> BREAKABLE_JUNGLE_LOG_BLOCK = BLOCKS.register("breakable_jungle_log",
+            identifier -> new RotatedPillarBlock(BlockBehaviour.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, identifier))
+                    .destroyTime(2.0f)
+                    .sound(SoundType.WOOD)
+            )
+    );
+
+    public static final DeferredBlock<Block> BREAKABLE_ACACIA_LOG_BLOCK = BLOCKS.register("breakable_acacia_log",
+            identifier -> new RotatedPillarBlock(BlockBehaviour.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, identifier))
+                    .destroyTime(2.0f)
+                    .sound(SoundType.WOOD)
+            )
+    );
+
+    public static final DeferredBlock<Block> BREAKABLE_DARK_OAK_LOG_BLOCK = BLOCKS.register("breakable_dark_oak_log",
+            identifier -> new RotatedPillarBlock(BlockBehaviour.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, identifier))
+                    .destroyTime(2.0f)
+                    .sound(SoundType.WOOD)
+            )
+    );
 }

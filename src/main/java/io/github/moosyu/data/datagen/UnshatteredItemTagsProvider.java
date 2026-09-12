@@ -1,5 +1,6 @@
 package io.github.moosyu.data.datagen;
 
+import io.github.moosyu.items.UnshatteredItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.ItemTags;
@@ -30,5 +31,12 @@ public class UnshatteredItemTagsProvider extends ItemTagsProvider {
         tag(ItemTags.AXES).remove(Items.IRON_AXE);
         tag(ItemTags.AXES).remove(Items.DIAMOND_AXE);
         tag(ItemTags.AXES).remove(Items.NETHERITE_AXE);
+        tag(ItemTags.AXES).add(TREECAPITATOR.get());
+        tag(ItemTags.AXES).add(SPRUCE_AXE.get());
+        tag(ItemTags.AXES).add(SERIOUSLY_DAMAGED_AXE.get());
+        tag(ItemTags.AXES).add(DECENT_AXE.get());
+        tag(ItemTags.AXES).add(FIG_HEW.get());
+        tag(ItemTags.AXES).add(FIGSTONE_SPLITTER.get());
+        tag(ItemTags.PICKAXES).add(BROKEN_MITHRIL_PICKAXE.get());
     }
 }

@@ -1,0 +1,16 @@
+{
+  "type": "unshattered:sized_recipe",
+  "key": {
+    "A": {
+      "count": 32,
+      "ingredient": "minecraft:dark_oak_log"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "AA "
+  ],
+  "result": {
+    "id": "unshattered:enchanted_dark_oak_log"
+  }
+}

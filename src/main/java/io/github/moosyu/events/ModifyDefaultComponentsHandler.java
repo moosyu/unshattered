@@ -131,6 +131,12 @@ public class ModifyDefaultComponentsHandler {
         modifyVanillaItem(event, Items.LAPIS_BLOCK, ItemTypes.MATERIAL, 9);
         modifyVanillaItem(event, Items.REDSTONE, ItemTypes.MATERIAL, 1);
         modifyVanillaItem(event, Items.REDSTONE_BLOCK, ItemTypes.MATERIAL, 9);
+        modifyVanillaItem(event, Items.OAK_LOG, ItemTypes.MATERIAL, 2);
+        modifyVanillaItem(event, Items.BIRCH_LOG, ItemTypes.MATERIAL, 2);
+        modifyVanillaItem(event, Items.SPRUCE_LOG, ItemTypes.MATERIAL, 2);
+        modifyVanillaItem(event, Items.JUNGLE_LOG, ItemTypes.MATERIAL, 2);
+        modifyVanillaItem(event, Items.ACACIA_LOG, ItemTypes.MATERIAL, 2);
+        modifyVanillaItem(event, Items.DARK_OAK_LOG, ItemTypes.MATERIAL, 2);
     }
 
     /**

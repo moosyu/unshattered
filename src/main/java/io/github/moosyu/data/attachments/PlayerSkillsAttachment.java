@@ -73,12 +73,12 @@ public final class PlayerSkillsAttachment {
             addPlayerAttributeReward(player, UnshatteredAttributeValues.FARMING_FORTUNE, 2.0d);
 
         }),
-        MAGECRAFT("magecraft", (player, level) -> {
+        MAGECRAFT("magecraft", (player, _) -> {
             addPlayerAttributeReward(player, UnshatteredAttributeValues.MANA, 2.0d);
             addPlayerAttributeReward(player, UnshatteredAttributeValues.MANA_REGEN, 1.5d);
 
         }),
-        CARPENTRY("carpentry", (player, level) -> {
+        CARPENTRY("carpentry", (player, _) -> {
             addPlayerAttributeReward(player, UnshatteredAttributeValues.HEALTH, 1.0d);
         });
 
@@ -135,6 +135,8 @@ public final class PlayerSkillsAttachment {
     }
 
     public void addExp(Skill skill, float amount, Player player) {
+        if (amount == 0.0f) return;
+
         int currentLevel = getLevel(getExp(skill));
         skillExp[skill.ordinal()] += amount;
         int levelDifference = getLevel(getExp(skill)) - currentLevel;

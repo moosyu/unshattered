@@ -8,5 +8,12 @@
     "minecraft:diamond_axe",
     "minecraft:netherite_axe"
   ],
-  "values": []
+  "values": [
+    "unshattered:treecapitator",
+    "unshattered:spruce_axe",
+    "unshattered:seriously_damaged_axe",
+    "unshattered:decent_axe",
+    "unshattered:fig_hew",
+    "unshattered:figstone_splitter"
+  ]
 }

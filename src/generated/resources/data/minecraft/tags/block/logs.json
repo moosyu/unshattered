@@ -1,6 +1,11 @@
 {
   "values": [
     "unshattered:fig_log",
-    "unshattered:breakable_fig_log"
+    "unshattered:breakable_fig_log",
+    "unshattered:breakable_oak_log",
+    "unshattered:breakable_birch_log",
+    "unshattered:breakable_spruce_log",
+    "unshattered:breakable_jungle_log",
+    "unshattered:breakable_acacia_log"
   ]
 }

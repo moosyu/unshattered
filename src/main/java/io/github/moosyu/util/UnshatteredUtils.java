@@ -2,16 +2,18 @@ package io.github.moosyu.util;
 
 import io.github.moosyu.Unshattered;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.blocks.BlockDropData;
 import io.github.moosyu.collectables.CollectableEntries;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.attachments.PlayerCollectionsAttachment;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.ItemCharges;
+import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.data.dialogue.DialogueTree;
+import io.github.moosyu.data.drops.DropData;
+import io.github.moosyu.data.drops.DropTypes;
 import io.github.moosyu.events.DataPackRegistryHandler;
-import io.github.moosyu.items.ItemRange;
+import io.github.moosyu.rarities.UnshatteredRarities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
@@ -22,6 +24,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -48,6 +51,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static io.github.moosyu.Unshattered.MODID;
+import static io.github.moosyu.data.drops.DropTypes.getDropType;
 
 // generic utilities i use in multiple places
 public final class UnshatteredUtils {
@@ -265,35 +269,78 @@ public final class UnshatteredUtils {
         player.syncData(UnshatteredAttachments.PLAYER_COLLECTIONS);
     }
 
-    /**
-     * @param blockDropData the data of the block being broken
-     * @param player the player getting the drop (and having their fortune checked)
-     * @param fortuneType the type of fortune to be used to calculate the drop amount
-     * @return item stack (with fortune calculation) applied to count
-     */
-    public static ItemStack getBlockDrop(BlockDropData blockDropData, Player player, UnshatteredAttributeValues fortuneType) {
-        int brokenBlockCount = UnshatteredUtils.getItemsCount(player.getAttributeValue(fortuneType.holder), blockDropData.itemRange().getDropAmount(player.getRandom()));
-
-        if (brokenBlockCount == 0) {
-            return ItemStack.EMPTY;
-        }
-
-        return new ItemStack(blockDropData.itemRange().item(), UnshatteredUtils.getItemsCount(player.getAttributeValue(fortuneType.holder), brokenBlockCount));
-    }
-
     public static void addBlockBrokenResultToInventory(Holder<Block> blockHolder, Player player, UnshatteredAttributeValues fortuneType) {
-        List<BlockDropData> blockDropDataList = blockHolder.getData(UnshatteredDataMaps.BREAKABLE_DROPS_DATA);
+        List<DropData> blockDropDataList = blockHolder.getData(UnshatteredDataMaps.BREAKABLE_DROPS_DATA);
+        boolean rolledAboveOccasional = false;
+
         if (blockDropDataList == null) {
             Unshattered.LOGGER.error("block broken ({}) without defined drop data.", blockHolder.getRegisteredName());
             return;
         }
 
-        for (BlockDropData blockDropData : blockDropDataList) {
-            ItemStack blockDrops = UnshatteredUtils.getBlockDrop(blockDropData, player, fortuneType);
-            UnshatteredUtils.givePlayerHarvestedItemStack(player, blockDrops);
+        for (DropData blockDropData : blockDropDataList) {
+            rolledAboveOccasional = UnshatteredUtils.getNonGuaranteedDrop(blockDropData,
+                    true,
+                    rolledAboveOccasional,
+                    player,
+                    UnshatteredAttributeValues.MINING_FORTUNE
+            );
         }
     }
 
+    public static boolean getNonGuaranteedDrop(DropData dropData, boolean fortuneBoosted, boolean rolledAboveOccasional, Player player, @Nullable UnshatteredAttributeValues fortuneType) {
+        double modifiedDropChance;
+        double fortuneValue = 0.0d;
+        RandomSource randomSource = player.getRandom();
+
+        if (fortuneType != null && fortuneBoosted) {
+            fortuneValue = player.getAttributeValue(fortuneType.holder);
+            modifiedDropChance = dropData.dropChance() * (1 + (fortuneValue / 100));
+        } else {
+            modifiedDropChance = dropData.dropChance();
+        }
+
+        if (dropData.dropChance() < 1.0) {
+            DropTypes type = getDropType(dropData.dropChance());
+            // so the player cant roll a bunch of super rare drops in a single go ever if they're really lucky
+            if (dropData.dropChance() < DropTypes.OCCASIONAL.minRate) {
+                if (rolledAboveOccasional) {
+                    return true;
+                }
+                rolledAboveOccasional = true;
+            }
+
+            if (randomSource.nextFloat() <= modifiedDropChance) {
+                if (fortuneBoosted) {
+                    UnshatteredRarities itemRarity = dropData.itemRange().item().components().getOrDefault(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.COMMON);
+                    player.sendSystemMessage(Component.empty()
+                            .append(Component.literal(Component.translatable("drop_type.message.unshattered." + type.key).getString().toUpperCase())
+                                    .withStyle(style -> style.withColor(type.colour).withBold(true)))
+                            .append(Component.literal(" "))
+                            .append(Component.translatable(dropData.itemRange().item().getDescriptionId())
+                                    .withStyle(style -> style.withColor(itemRarity.getColour(1.0f)).withBold(false)))
+                            .append(fortuneValue > 0 ?
+                                    Component.literal(" (+" + Math.round(fortuneValue) + fortuneType.symbol + " ")
+                                            .append(Component.translatable(fortuneType.getTranslationKey()))
+                                            .append(Component.literal(")"))
+                                            .withStyle(style -> style.withColor(fortuneType.color).withBold(false)) : Component.empty()
+                            ));
+                }
+                // for if you didnt get the drop (gives them another chance to get other rare drop)
+            } else {
+                return false;
+            }
+        }
+
+        UnshatteredUtils.givePlayerHarvestedItemStack(player,
+                new ItemStack(dropData.itemRange().item(), dropData.itemRange().minAmount() == dropData.itemRange().maxAmount()
+                        ? dropData.itemRange().minAmount()
+                        : randomSource.nextIntBetweenInclusive(dropData.itemRange().minAmount(), dropData.itemRange().maxAmount())
+                )
+        );
+
+        return rolledAboveOccasional;
+    }
 
     // item requirements
 

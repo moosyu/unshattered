@@ -34,17 +34,6 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildRecipes() {
-        new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.ZOMBIE_HEART.get()))
-                .pattern("AAA", "A A", "AAA")
-                .define('A', SizedIngredient.of(UnshatteredItems.ENCHANTED_ROTTEN_FLESH, 32))
-                .save(output);
-
-        new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.ZOMBIE_SWORD.get()))
-                .pattern("A", "A", "C")
-                .define('A', singleSizedIngredient(UnshatteredItems.ZOMBIE_HEART))
-                .define('C', singleSizedIngredient(Items.STICK))
-                .save(output);
-
         createEnchantedItemWithBlocksRecipe(output, Items.GOLD_INGOT, Items.GOLD_BLOCK, UnshatteredItems.ENCHANTED_GOLD_INGOT.get());
         createEnchantedItemRecipe(output, UnshatteredItems.ENCHANTED_GOLD_INGOT, UnshatteredItems.ENCHANTED_GOLD_BLOCK.get());
         createEnchantedItemWithBlocksRecipe(output, Items.DIAMOND, Items.DIAMOND_BLOCK, UnshatteredItems.ENCHANTED_DIAMOND.get());
@@ -59,7 +48,23 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
         createEnchantedItemRecipe(output, UnshatteredItems.ENCHANTED_LAPIS, UnshatteredItems.ENCHANTED_LAPIS_BLOCK.get());
         createEnchantedItemWithBlocksRecipe(output, Items.REDSTONE, Items.REDSTONE_BLOCK, UnshatteredItems.ENCHANTED_REDSTONE.get());
         createEnchantedItemRecipe(output, UnshatteredItems.ENCHANTED_REDSTONE, UnshatteredItems.ENCHANTED_REDSTONE_BLOCK.get());
-        createEnchantedItemRecipe(output, UnshatteredItems.MITHRIL, UnshatteredItems.ENCHANTED_MITHRIL.get());
+        createEnchantedItemRecipe(output, Items.OAK_LOG, UnshatteredItems.ENCHANTED_OAK_LOG.get());
+        createEnchantedItemRecipe(output, Items.BIRCH_LOG, UnshatteredItems.ENCHANTED_BIRCH_LOG.get());
+        createEnchantedItemRecipe(output, Items.SPRUCE_LOG, UnshatteredItems.ENCHANTED_SPRUCE_LOG.get());
+        createEnchantedItemRecipe(output, Items.JUNGLE_LOG, UnshatteredItems.ENCHANTED_JUNGLE_LOG.get());
+        createEnchantedItemRecipe(output, Items.ACACIA_LOG, UnshatteredItems.ENCHANTED_ACACIA_LOG.get());
+        createEnchantedItemRecipe(output, Items.DARK_OAK_LOG, UnshatteredItems.ENCHANTED_DARK_OAK_LOG.get());
+
+        new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.ZOMBIE_HEART.get()))
+                .pattern("AAA", "A A", "AAA")
+                .define('A', SizedIngredient.of(UnshatteredItems.ENCHANTED_ROTTEN_FLESH, 32))
+                .save(output);
+
+        new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.ZOMBIE_SWORD.get()))
+                .pattern("A", "A", "C")
+                .define('A', singleSizedIngredient(UnshatteredItems.ZOMBIE_HEART))
+                .define('C', singleSizedIngredient(Items.STICK))
+                .save(output);
 
         new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.ORNATE_ZOMBIE_SWORD.get()))
                 .pattern("A", "B", "C")

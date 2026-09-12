@@ -1,8 +1,8 @@
 package io.github.moosyu.data.datagen;
 
-import io.github.moosyu.blocks.BlockDropData;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.blocks.UnshatteredBlocks;
+import io.github.moosyu.data.drops.DropData;
 import io.github.moosyu.data.drops.MobItemDropData;
 import io.github.moosyu.data.drops.MobRewardData;
 import io.github.moosyu.items.ItemRange;
@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.DataMapProvider;
 import net.neoforged.neoforge.registries.DeferredBlock;
-import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import org.jspecify.annotations.NonNull;
 
 import java.util.List;
@@ -32,7 +31,7 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
 
     @Override
     protected void gather(HolderLookup.@NonNull Provider provider) {
-        Builder<List<BlockDropData>, Block> breakableDropsBuilder = this.builder(BREAKABLE_DROPS_DATA);
+        Builder<List<DropData>, Block> breakableDropsBuilder = this.builder(BREAKABLE_DROPS_DATA);
 
         this.builder(HARVESTABLE_BLOCKS_EXP_DATA)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK.get()), 15.0f, false)
@@ -70,6 +69,12 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_COBBLED_MITHRIL_BLOCK.get()), 25.0f, false)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_SOFT_MITHRIL_BLOCK.get()), 35.0f, false)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_HARD_MITHRIL_BLOCK.get()), 45.0f, false)
+                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_OAK_LOG_BLOCK.get()), 6.0f, false)
+                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_BIRCH_LOG_BLOCK.get()), 6.0f, false)
+                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_SPRUCE_LOG_BLOCK.get()), 6.0f, false)
+                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_JUNGLE_LOG_BLOCK.get()), 6.0f, false)
+                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_ACACIA_LOG_BLOCK.get()), 6.0f, false)
+                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_DARK_OAK_LOG_BLOCK.get()), 6.0f, false)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(Blocks.NETHER_WART), 4.0f, false);
 
         this.builder(FISHABLE_ITEMS_EXP_DATA)
@@ -88,10 +93,10 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
 
         this.builder(COMBATABLE_MOBS_LOOT_DATA)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.ZOMBIE), new MobRewardData(
-                        List.of(new MobItemDropData(Items.ROTTEN_FLESH, 1.0f, false, 1),
-                                new MobItemDropData(Items.POISONOUS_POTATO, 0.02f, true, 1),
-                                new MobItemDropData(Items.POTATO, 0.01f, true, 1),
-                                new MobItemDropData(Items.CARROT, 0.01f, true, 1)
+                        List.of(new MobItemDropData(Items.ROTTEN_FLESH, false),
+                                new MobItemDropData(Items.POISONOUS_POTATO, 0.02f, true),
+                                new MobItemDropData(Items.POTATO, 0.01f, true),
+                                new MobItemDropData(Items.CARROT, 0.01f, true)
                         ),
                         1,
                         8,
@@ -99,22 +104,22 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         6.0f
                 ), false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SKELETON), new MobRewardData(
-                        List.of(new MobItemDropData(Items.BONE, 1.0f, false, 1, 2)),
+                        List.of(new MobItemDropData(Items.BONE, 1, 2, 1.0f, false)),
                         1,
                         8,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         6.0f
                 ), false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SLIME), new MobRewardData(
-                        List.of(new MobItemDropData(Items.SLIME_BALL, 1.0f, false, 1)),
+                        List.of(new MobItemDropData(Items.SLIME_BALL, false)),
                         1,
                         8,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         6.0f
                 ), false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SPIDER), new MobRewardData(
-                        List.of(new MobItemDropData(Items.STRING, 1.0f, false, 1),
-                                new MobItemDropData(Items.SPIDER_EYE, 0.5f, false, 1)
+                        List.of(new MobItemDropData(Items.STRING, false),
+                                new MobItemDropData(Items.SPIDER_EYE, 0.5f, false)
                         ),
                         1,
                         8,
@@ -122,8 +127,8 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         8.0f
                 ), false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.CAVE_SPIDER), new MobRewardData(
-                        List.of(new MobItemDropData(Items.STRING, 1.0f, false, 1),
-                                new MobItemDropData(Items.SPIDER_EYE, 0.5f, false, 1)
+                        List.of(new MobItemDropData(Items.STRING, false),
+                                new MobItemDropData(Items.SPIDER_EYE, 0.5f, false)
                         ),
                         1,
                         8,
@@ -131,107 +136,106 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         8.0f
                 ), false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.WITCH), new MobRewardData(
-                        List.of(new MobItemDropData(Items.GUNPOWDER, 0.5f, false, 1),
-                                new MobItemDropData(Items.GLOWSTONE_DUST, 0.5f, false, 1),
-                                new MobItemDropData(Items.GLASS_BOTTLE, 0.2f, false, 1, 2)
+                        List.of(new MobItemDropData(Items.GUNPOWDER, 0.5f, false),
+                                new MobItemDropData(Items.GLOWSTONE_DUST, 0.5f, false),
+                                new MobItemDropData(Items.GLASS_BOTTLE, 1, 2, 0.2f, false)
                         ),
                         1,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         15.0f
                 ), false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.ENDERMAN), new MobRewardData(
-                        List.of(new MobItemDropData(Items.ENDER_PEARL, 1.0f, false, 1)),
+                        List.of(new MobItemDropData(Items.ENDER_PEARL, false)),
                         2,
                         12,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         15.0f
                 ), false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.BAT), new MobRewardData(
-                        List.of(new MobItemDropData(UnshatteredItems.BAT_TALISMAN.get(), 0.01f, true, 1)),
+                        List.of(new MobItemDropData(UnshatteredItems.BAT_TALISMAN.get(), 0.01f, true)),
                         100,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         33.0f
                 ), false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.CREEPER), new MobRewardData(
-                        List.of(new MobItemDropData(Items.GUNPOWDER, 1.0f, false, 1)),
+                        List.of(new MobItemDropData(Items.GUNPOWDER, false)),
                         2,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         8.0f
                 ), false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.BLAZE), new MobRewardData(
-                        List.of(new MobItemDropData(Items.BLAZE_ROD, 1.0f, false, 1)),
+                        List.of(new MobItemDropData(Items.BLAZE_ROD, false)),
                         3,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         10.0f
                 ), false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SQUID), new MobRewardData(
-                        List.of(new MobItemDropData(Items.INK_SAC, 1.0f, false, 1, 2),
-                                new MobItemDropData(Items.LILY_PAD, 1.0f, false, 1)
+                        List.of(new MobItemDropData(Items.INK_SAC, 1, 2, 1.0f, false),
+                                new MobItemDropData(Items.LILY_PAD, false)
                         ),
                         5,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         75.0f
                 ), false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.GLOW_SQUID), new MobRewardData(
-                        List.of(new MobItemDropData(Items.INK_SAC, 1.0f, false, 3, 6),
-                                new MobItemDropData(Items.LILY_PAD, 1.0f, false, 1),
-                                new MobItemDropData(UnshatteredItems.GLOW_SQUID_BOOTS.get(), 0.08f, true, 1)
+                        List.of(new MobItemDropData(Items.INK_SAC, 3, 6, 1.0f, false),
+                                new MobItemDropData(Items.LILY_PAD, false),
+                                new MobItemDropData(UnshatteredItems.GLOW_SQUID_BOOTS.get(),  0.08f, true)
                         ),
                         5,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         36.0f
                 ), false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SHEEP), new MobRewardData(
-                        List.of(new MobItemDropData(Items.MUTTON, 1.0f, false, 1, 2),
-                                new MobItemDropData(Items.WHITE_WOOL, 1.0f, false, 1)
+                        List.of(new MobItemDropData(Items.MUTTON, 1, 2, 1.0f, false),
+                                new MobItemDropData(Items.WHITE_WOOL, false)
                         ),
                         0,
                         PlayerSkillsAttachment.Skill.FARMING,
                         3.0f
                 ), false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.COW), new MobRewardData(
-                        List.of(new MobItemDropData(Items.BEEF, 1.0f, false, 1),
-                                new MobItemDropData(Items.LEATHER, 1.0f, false, 1)
+                        List.of(new MobItemDropData(Items.BEEF, false),
+                                new MobItemDropData(Items.LEATHER, false)
                         ),
                         0,
                         PlayerSkillsAttachment.Skill.FARMING,
                         3.0f
                 ), false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.CHICKEN), new MobRewardData(
-                        List.of(new MobItemDropData(Items.FEATHER, 1.0f, false, 1),
-                                new MobItemDropData(Items.CHICKEN, 1.0f, false, 1)
+                        List.of(new MobItemDropData(Items.FEATHER, false),
+                                new MobItemDropData(Items.CHICKEN, false)
                         ),
                         0,
                         PlayerSkillsAttachment.Skill.FARMING,
                         2.0f
                 ), false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.RABBIT), new MobRewardData(
-                        List.of(new MobItemDropData(Items.RABBIT, 1.0f, false, 1),
-                                new MobItemDropData(Items.RABBIT_HIDE, 0.7f, false, 1),
-                                new MobItemDropData(Items.RABBIT_FOOT, 0.7f, false, 1)
+                        List.of(new MobItemDropData(Items.RABBIT, false),
+                                new MobItemDropData(Items.RABBIT_HIDE, 0.7f, false),
+                                new MobItemDropData(Items.RABBIT_FOOT, 0.7f, false)
                         ),
                         0,
                         PlayerSkillsAttachment.Skill.FARMING,
                         5.0f
                 ), false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.PIG), new MobRewardData(
-                        List.of(new MobItemDropData(Items.PORKCHOP, 1.0f, false, 1)
-                        ),
+                        List.of(new MobItemDropData(Items.PORKCHOP, false)),
                         0,
                         PlayerSkillsAttachment.Skill.FARMING,
                         3.0f
                 ), false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.MOOSHROOM), new MobRewardData(
-                        List.of(new MobItemDropData(Items.BEEF, 1.0f, false, 1),
-                                new MobItemDropData(Items.RED_MUSHROOM, 1.0f, false, 1, 4),
-                                new MobItemDropData(Items.LEATHER, 1.0f, false, 1)
+                        List.of(new MobItemDropData(Items.BEEF, false),
+                                new MobItemDropData(Items.RED_MUSHROOM, 1, 4, 1.0f, false),
+                                new MobItemDropData(Items.LEATHER, false)
                         ),
                         0,
                         PlayerSkillsAttachment.Skill.FARMING,
                         5.0f
                 ), false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.ENDERMITE), new MobRewardData(
-                        List.of(new MobItemDropData(Items.END_STONE, 1.0f, false, 1, 2)),
+                        List.of(new MobItemDropData(Items.END_STONE, 1, 2, 1.0f, false)),
                         10,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         20.0f
@@ -251,7 +255,8 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_OBSIDIAN_BLOCK.get()), 4, false)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_COBBLED_MITHRIL_BLOCK.get()), 3, false)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_SOFT_MITHRIL_BLOCK.get()), 4, false)
-                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_HARD_MITHRIL_BLOCK.get()), 4, false);
+                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_HARD_MITHRIL_BLOCK.get()), 4, false)
+                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK.get()), 2, false);
 
         createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK, new ItemRange(UnshatteredItems.FIG_LOG.get()));
         createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_STONE_BLOCK, new ItemRange(Items.COBBLESTONE));
@@ -266,15 +271,42 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK, new ItemRange(Items.WHEAT));
         createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.PURE_DIAMOND_BLOCK, new ItemRange(Items.COBBLESTONE));
         createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_OBSIDIAN_BLOCK, new ItemRange(Items.OBSIDIAN));
+        createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_OAK_LOG_BLOCK, new ItemRange(Items.OAK_LOG));
+        createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_BIRCH_LOG_BLOCK, new ItemRange(Items.BIRCH_LOG));
+        createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_SPRUCE_LOG_BLOCK, new ItemRange(Items.SPRUCE_LOG));
+        createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_JUNGLE_LOG_BLOCK, new ItemRange(Items.JUNGLE_LOG));
+        createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_ACACIA_LOG_BLOCK, new ItemRange(Items.ACACIA_LOG));
+        createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_DARK_OAK_LOG_BLOCK, new ItemRange(Items.DARK_OAK_LOG));
+
         breakableDropsBuilder.add(UnshatteredBlocks.BREAKABLE_COBBLED_MITHRIL_BLOCK,
-                List.of(new BlockDropData(new ItemRange(UnshatteredItems.MITHRIL.get())), new BlockDropData(new ItemRange(Items.COBBLESTONE, 1, 3))),
+                List.of(new DropData(new ItemRange(UnshatteredItems.MITHRIL.get())),
+                        new DropData(new ItemRange(Items.COBBLESTONE, 1, 3),
+                                0.0f)
+                ),
                 false
         );
-        createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_SOFT_MITHRIL_BLOCK, new ItemRange(UnshatteredItems.MITHRIL.get(), 2, 4));
-        createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_HARD_MITHRIL_BLOCK, new ItemRange(UnshatteredItems.MITHRIL.get(), 3, 6));
+
+        createSingleBlockDropData(breakableDropsBuilder,
+                UnshatteredBlocks.BREAKABLE_SOFT_MITHRIL_BLOCK,
+                new ItemRange(UnshatteredItems.MITHRIL.get(),
+                        2,
+                        4)
+        );
+
+        breakableDropsBuilder.add(UnshatteredBlocks.BREAKABLE_HARD_MITHRIL_BLOCK,
+                List.of(new DropData(new ItemRange(UnshatteredItems.MITHRIL.get(), 2, 5)),
+                        new DropData(new ItemRange(UnshatteredItems.ENCHANTED_MITHRIL.get()), 0.01f)
+                ),
+                false
+        );
     }
 
-    private void createSingleBlockDropData(DataMapProvider.Builder<List<BlockDropData>, Block> builder, DeferredBlock<Block> block, ItemRange itemRange) {
-        builder.add(block, List.of(new BlockDropData(itemRange, 1.0f)), false);
+    private void createSingleBlockDropData(DataMapProvider.Builder<List<DropData>, Block> builder, DeferredBlock<Block> block, ItemRange itemRange) {
+        builder.add(block, List.of(new DropData(itemRange, 1.0f)), false);
     }
+
+    private void createSingleBlockDropData(DataMapProvider.Builder<List<DropData>, Block> builder, DeferredBlock<Block> block, ItemRange itemRange, float dropChance) {
+        builder.add(block, List.of(new DropData(itemRange, dropChance)), false);
+    }
+
 }

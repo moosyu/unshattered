@@ -4,29 +4,20 @@ import io.github.moosyu.Unshattered;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.data.drops.DropTypes;
 import io.github.moosyu.data.drops.MobItemDropData;
 import io.github.moosyu.data.drops.MobRewardData;
 import io.github.moosyu.data.UnshatteredDataMaps;
-import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.rarities.UnshatteredRarities;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_SKILLS;
-import static io.github.moosyu.data.drops.DropTypes.getDropType;
 
 @EventBusSubscriber(modid = MODID)
 public class EntityDeathHandler {
@@ -46,48 +37,10 @@ public class EntityDeathHandler {
                 return;
             }
 
-            AttributeInstance combatFortune = player.getAttribute(UnshatteredAttributeValues.COMBAT_FORTUNE.holder);
-            if (combatFortune == null) {
-                Unshattered.LOGGER.error("combat fortune is null! drops not rolled!");
-                return;
-            }
-
             boolean rolledAboveOccasional = false;
             // may end up doing it weighted instead of rolling them all at once, we'll see though
             for (MobItemDropData itemDrop : mobLoot.drops()) {
-                double modifiedDropChance = (itemDrop.combatFortuneBoosted() ? itemDrop.baseDropChance() * (1 + (combatFortune.getValue() / 100)) : itemDrop.baseDropChance());
-                if (itemDrop.baseDropChance() < 1.0) {
-                    DropTypes type = getDropType(itemDrop.baseDropChance());
-                    // so the player cant roll a bunch of super rare drops in a single go ever if they're really lucky
-                    if (itemDrop.baseDropChance() < DropTypes.OCCASIONAL.minRate && !rolledAboveOccasional) {
-                        rolledAboveOccasional = true;
-                    } else continue;
-
-                    if (ThreadLocalRandom.current().nextFloat(1.0f) < modifiedDropChance) {
-                        if (itemDrop.combatFortuneBoosted()) {
-                            UnshatteredRarities itemRarity = itemDrop.item().components().getOrDefault(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.COMMON);
-                            player.sendSystemMessage(Component.empty()
-                                    .append(Component.literal(Component.translatable("drop_type.message.unshattered." + type.key).getString().toUpperCase())
-                                            .withStyle(style -> style.withColor(type.colour).withBold(true)))
-                                    .append(Component.literal(" "))
-                                    .append(Component.translatable(itemDrop.item().getDescriptionId())
-                                            .withStyle(style -> style.withColor(itemRarity.getColour(1.0f)).withBold(false)))
-                                    .append(combatFortune.getValue() > 0 ?
-                                            Component.literal(" (+" + Math.round(combatFortune.getValue()) + UnshatteredAttributeValues.COMBAT_FORTUNE.symbol + " ")
-                                            .append(Component.translatable(UnshatteredAttributeValues.COMBAT_FORTUNE.getTranslationKey()))
-                                            .append(Component.literal(")"))
-                                            .withStyle(style -> style.withColor(UnshatteredAttributeValues.COMBAT_FORTUNE.color).withBold(false)) : Component.empty()
-                                    ));
-                        }
-                    // for if you didnt get the drop
-                    } else continue;
-                }
-
-                int dropAmount = itemDrop.minItemAmount() == itemDrop.maxItemAmount() ?
-                        itemDrop.minItemAmount() :
-                        ThreadLocalRandom.current().nextInt(itemDrop.minItemAmount(), itemDrop.maxItemAmount() + 1);
-
-                UnshatteredUtils.givePlayerHarvestedItemStack(player, new ItemStack(itemDrop.item(), dropAmount));
+                rolledAboveOccasional = UnshatteredUtils.getNonGuaranteedDrop(itemDrop.dropData(), itemDrop.combatFortuneBoosted(), rolledAboveOccasional, player, UnshatteredAttributeValues.COMBAT_FORTUNE);
             }
 
             if (mobLoot.experience() > 0.0f) {

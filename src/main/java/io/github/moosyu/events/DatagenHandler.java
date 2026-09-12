@@ -175,6 +175,36 @@ public class DatagenHandler {
                             200
                     );
 
+                    createRegenPathWithBlocks(bootstrap, "oak_wood", List.of(UnshatteredBlocks.BREAKABLE_OAK_LOG_BLOCK.get(),
+                                    Blocks.AIR),
+                            200
+                    );
+
+                    createRegenPathWithBlocks(bootstrap, "birch_wood", List.of(UnshatteredBlocks.BREAKABLE_BIRCH_LOG_BLOCK.get(),
+                                    Blocks.AIR),
+                            200
+                    );
+
+                    createRegenPathWithBlocks(bootstrap, "spruce_wood", List.of(UnshatteredBlocks.BREAKABLE_SPRUCE_LOG_BLOCK.get(),
+                                    Blocks.AIR),
+                            200
+                    );
+
+                    createRegenPathWithBlocks(bootstrap, "jungle_wood", List.of(UnshatteredBlocks.BREAKABLE_JUNGLE_LOG_BLOCK.get(),
+                                    Blocks.AIR),
+                            200
+                    );
+
+                    createRegenPathWithBlocks(bootstrap, "acacia_wood", List.of(UnshatteredBlocks.BREAKABLE_ACACIA_LOG_BLOCK.get(),
+                                    Blocks.AIR),
+                            200
+                    );
+
+                    createRegenPathWithBlocks(bootstrap, "dark_oak_wood", List.of(UnshatteredBlocks.BREAKABLE_DARK_OAK_LOG_BLOCK.get(),
+                                    Blocks.AIR),
+                            200
+                    );
+
                     createRegenPathWithBlocks(bootstrap, "oak_leaf", List.of(Blocks.OAK_LEAVES,
                                     Blocks.AIR),
                             200

@@ -52,6 +52,7 @@ public class BrokenMithrilPickaxe extends Item implements PassiveAbilityItem {
     @Override
     public void onAbilityTriggered(ServerPlayer player, @Nullable LivingEntity target) {
         AttributeInstance miningSpeed = player.getAttribute(UnshatteredAttributeValues.MINING_SPEED.holder);
+
         if (miningSpeed != null) {
             miningSpeed.addTransientModifier(new AttributeModifier(ABILITY_IDENTIFIER, 20, AttributeModifier.Operation.ADD_VALUE));
         }

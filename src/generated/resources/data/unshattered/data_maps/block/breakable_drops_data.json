@@ -1,5 +1,25 @@
 {
   "values": {
+    "unshattered:breakable_acacia_log": [
+      {
+        "drop_chance": 1.0,
+        "item_range": {
+          "item": "minecraft:acacia_log",
+          "max_amount": 1,
+          "min_amount": 1
+        }
+      }
+    ],
+    "unshattered:breakable_birch_log": [
+      {
+        "drop_chance": 1.0,
+        "item_range": {
+          "item": "minecraft:birch_log",
+          "max_amount": 1,
+          "min_amount": 1
+        }
+      }
+    ],
     "unshattered:breakable_coal_ore_block": [
       {
         "drop_chance": 1.0,
@@ -20,7 +40,7 @@
         }
       },
       {
-        "drop_chance": 1.0,
+        "drop_chance": 0.0,
         "item_range": {
           "item": "minecraft:cobblestone",
           "max_amount": 3,
@@ -43,6 +63,16 @@
         "drop_chance": 1.0,
         "item_range": {
           "item": "minecraft:copper_ingot",
+          "max_amount": 1,
+          "min_amount": 1
+        }
+      }
+    ],
+    "unshattered:breakable_dark_oak_log": [
+      {
+        "drop_chance": 1.0,
+        "item_range": {
+          "item": "minecraft:dark_oak_log",
           "max_amount": 1,
           "min_amount": 1
         }
@@ -93,8 +123,16 @@
         "drop_chance": 1.0,
         "item_range": {
           "item": "unshattered:mithril",
-          "max_amount": 6,
-          "min_amount": 3
+          "max_amount": 5,
+          "min_amount": 2
+        }
+      },
+      {
+        "drop_chance": 0.01,
+        "item_range": {
+          "item": "unshattered:enchanted_mithril",
+          "max_amount": 1,
+          "min_amount": 1
         }
       }
     ],
@@ -103,6 +141,26 @@
         "drop_chance": 1.0,
         "item_range": {
           "item": "minecraft:iron_ingot",
+          "max_amount": 1,
+          "min_amount": 1
+        }
+      }
+    ],
+    "unshattered:breakable_jungle_log": [
+      {
+        "drop_chance": 1.0,
+        "item_range": {
+          "item": "minecraft:jungle_log",
+          "max_amount": 1,
+          "min_amount": 1
+        }
+      }
+    ],
+    "unshattered:breakable_oak_log": [
+      {
+        "drop_chance": 1.0,
+        "item_range": {
+          "item": "minecraft:oak_log",
           "max_amount": 1,
           "min_amount": 1
         }
@@ -135,6 +193,16 @@
           "item": "unshattered:mithril",
           "max_amount": 4,
           "min_amount": 2
+        }
+      }
+    ],
+    "unshattered:breakable_spruce_log": [
+      {
+        "drop_chance": 1.0,
+        "item_range": {
+          "item": "minecraft:spruce_log",
+          "max_amount": 1,
+          "min_amount": 1
         }
       }
     ],

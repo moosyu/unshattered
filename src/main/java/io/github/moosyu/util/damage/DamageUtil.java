@@ -21,6 +21,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.ArrayList;
@@ -45,16 +46,18 @@ public final class DamageUtil {
     public static void playerDealDamage(Player player, LivingEntity target, ItemTypes itemType) {
         if (!player.isCreative() && target.is(EntityType.ARMOR_STAND)) return;
 
-        PlayerSkillsAttachment playerSkill = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
         float attackStrength = player.getAttackStrengthScale(0.0f);
         double critDamage = 0.0d;
+        boolean weakAttack = attackStrength < 0.9f;
 
-        if (attackStrength >= 0.9f) {
+        if (weakAttack) {
+            PacketDistributor.sendToPlayer((ServerPlayer) player, new WeakHitSoundEffectPacket());
+            // just to further disincentivise spam clicking on weapons where you aren't meant to be
+            attackStrength /= 2;
+        } else {
             critDamage = player.getAttributeValue(UnshatteredAttributeValues.CRITICAL_CHANCE.holder) >= (player.getRandom().nextIntBetweenInclusive(0, 101))
                     ? player.getAttributeValue(UnshatteredAttributeValues.CRITICAL_DAMAGE.holder)
                     : 0.0d;
-        } else {
-            PacketDistributor.sendToPlayer((ServerPlayer) player, new WeakHitSoundEffectPacket());
         }
 
         double damage = (5 + player.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder))
@@ -71,8 +74,14 @@ public final class DamageUtil {
 
             if ((targetHealth.getBaseValue() - damage) > 0) {
                 targetHealth.setBaseValue(targetHealth.getBaseValue() - damage);
+                Vec3 preHitVelocity = target.getDeltaMovement();
                 // fake hit to trigger some of the effects which i cant be bothered replicating
                 target.hurtServer((ServerLevel) target.level(), target.damageSources().playerAttack(player), 0.0f);
+
+                if (weakAttack) {
+                    target.setDeltaMovement(preHitVelocity);
+                    target.hurtMarked = true;
+                }
 
                 double ferocityAmount = player.getAttributeValue(UnshatteredAttributeValues.FEROCITY.holder);
                 if (ferocityAmount > 0 && player.getData(UnshatteredAttachments.PLAYER_FEROCITY_COOLDOWN) <= 0) {

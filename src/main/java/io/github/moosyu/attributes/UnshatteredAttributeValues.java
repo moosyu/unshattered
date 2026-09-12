@@ -22,7 +22,7 @@ public enum UnshatteredAttributeValues {
     MANA("mana", "✎", 20.0, 0.0, 131072.0, 0xFF55D5FF, true, false, false),
     MANA_REGEN("mana_regen", "✎", 100.0, 0.0, 2048.0, 0xFF55D5FF, true, false, true),
     MINING_SPEED("mining_speed", "⸕", 0.0, 0.0, 128.0, 0xFFFFAA00, true, false, false),
-    MINING_FORTUNE("mining_fortune", "☘", 0.0, 0.0, 2048.0, 0xFFFFAA00, true, false, false),
+    MINING_FORTUNE("mining_fortune", "\uD83D\uDC8E", 0.0, 0.0, 2048.0, 0xFFFFAA00, true, false, false),
     MINING_SPREAD("mining_spread", "▚", 0.0, 0.0, 1024.0, 0xFFFFFF55, true, false, false),
     PRISTINE("pristine", "✧", 0.0, 0.0, 32.0, 0xFFAA00AA, true, false, false),
     FARMING_FORTUNE("farming_fortune", "☘", 0.0, 0.0, 2048.0, 0xFFFFAA00, true, false, false),

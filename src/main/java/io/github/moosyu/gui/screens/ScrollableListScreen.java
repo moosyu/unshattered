@@ -58,10 +58,10 @@ public abstract class ScrollableListScreen extends SimpleScreen {
 
         int itemCount = getItemCount();
 
-        int scissorTop = this.backgroundTopLeft.y + 6;
-        int scissorBottom = this.viewportHeight + (scissorTop + 8);
+        int scissorTop = backgroundTopLeft.y + 6;
+        int scissorBottom = viewportHeight + (scissorTop + 8);
 
-        graphics.enableScissor(this.backgroundTopLeft.x, scissorTop, this.backgroundTopLeft.x + imageWidth, scissorBottom);
+        graphics.enableScissor(backgroundTopLeft.x, scissorTop, backgroundTopLeft.x + imageWidth, scissorBottom);
 
         for (int index = 0; index < itemCount; index++) {
             int lineY = computeLineY(index);
@@ -72,7 +72,7 @@ public abstract class ScrollableListScreen extends SimpleScreen {
 
         int extraLines = renderExtraLines(graphics, itemCount, scissorTop, scissorBottom);
 
-        this.contentHeight = (itemCount + extraLines) * lineHeight;
+        contentHeight = (itemCount + extraLines) * lineHeight;
 
         graphics.disableScissor();
     }
@@ -82,7 +82,7 @@ public abstract class ScrollableListScreen extends SimpleScreen {
      * @return y position of a line
      */
     protected int computeLineY(int visibleIndex) {
-        return this.backgroundTopLeft.y + lineHeight + (visibleIndex * lineHeight) - (int) scrollOffset;
+        return backgroundTopLeft.y + lineHeight + (visibleIndex * lineHeight) - (int) scrollOffset;
     }
 
     /**
@@ -101,14 +101,18 @@ public abstract class ScrollableListScreen extends SimpleScreen {
 
         int trackTop = backgroundTopLeft.y() + 6;
         int trackHeight = imageHeight - 12 - ScrollerWidget.SCROLLER_HEIGHT;
+        int maxScroll = Math.max(0, contentHeight - viewportHeight);
 
-        this.scroller = new ScrollerWidget(
+        scroller = new ScrollerWidget(
                 backgroundTopLeft.x() + 156,
                 trackTop,
                 trackHeight,
-                progress -> this.scrollOffset = progress * Math.max(0, contentHeight - viewportHeight)
+                progress -> scrollOffset = progress * Math.max(0, contentHeight - viewportHeight)
         );
-        this.addRenderableWidget(this.scroller);
+
+        addRenderableWidget(scroller);
+
+        scroller.setScrollProgress(maxScroll == 0 ? 0.0 : Mth.clamp(scrollOffset, 0, maxScroll) / maxScroll);
     }
 
     @Override

@@ -17,13 +17,13 @@ public class StatsScreen extends SimpleScreen {
     private static final int LINE_HEIGHT = 12;
     private final int viewportHeight;
     private double scrollOffset = 0;
-    private final int VANILLA_ATTRIBUTE_ADDITIONS = 1;
     private int contentHeight = 0;
     private ScrollerWidget scroller;
 
     public StatsScreen(Component title) {
         super(title, 176, 166, "textures/gui/generic_scrollable.png");
-        this.viewportHeight = imageHeight - 24;
+
+        viewportHeight = imageHeight - 24;
     }
 
     @Override
@@ -41,11 +41,11 @@ public class StatsScreen extends SimpleScreen {
             }
         }
 
-        this.contentHeight = (visibleCount + VANILLA_ATTRIBUTE_ADDITIONS) * LINE_HEIGHT;
-        int scissorTop = this.backgroundTopLeft.y + 6;
-        int scissorBottom =  this.viewportHeight + (scissorTop + 8);
+        contentHeight = (visibleCount + 1) * LINE_HEIGHT;
+        int scissorTop = backgroundTopLeft.y + 6;
+        int scissorBottom =  viewportHeight + (scissorTop + 8);
 
-        graphics.enableScissor(this.backgroundTopLeft.x, scissorTop, this.backgroundTopLeft.x + imageWidth, scissorBottom);
+        graphics.enableScissor(backgroundTopLeft.x, scissorTop, backgroundTopLeft.x + imageWidth, scissorBottom);
 
         int visibleIndex = 0;
         for (UnshatteredAttributeValues currentAttribute : attributeValues) {
@@ -78,7 +78,6 @@ public class StatsScreen extends SimpleScreen {
                 0xFFFFFFFF,
                 10
         );
-        visibleIndex++;
 
         graphics.disableScissor();
     }
@@ -109,7 +108,7 @@ public class StatsScreen extends SimpleScreen {
                                     int attributeColour,
                                     int attributeModifier
     ) {
-        int lineY = this.backgroundTopLeft.y + LINE_HEIGHT + (visibleIndex * LINE_HEIGHT) - (int) scrollOffset;
+        int lineY = backgroundTopLeft.y + LINE_HEIGHT + (visibleIndex * LINE_HEIGHT) - (int) scrollOffset;
 
         if (lineY + LINE_HEIGHT >= scissorTop && lineY <= scissorBottom) {
             double attributeBaseValue = player.getAttributeBaseValue(attributeHolder) * attributeModifier;
@@ -123,7 +122,7 @@ public class StatsScreen extends SimpleScreen {
                             + ": "
                             + (attributeValue == attributeBaseValue ? attributeBaseValueFormatted : attributeBaseValueFormatted + " (+" + UnshatteredUtils.oneDecimalFormat.format(attributeValue) + ")")
                             + (isPercentage ? "%" : ""),
-                    this.backgroundTopLeft.x + 9,
+                    backgroundTopLeft.x + 9,
                     lineY,
                     attributeColour
             );
@@ -134,11 +133,11 @@ public class StatsScreen extends SimpleScreen {
     protected void init() {
         super.init();
 
-        int trackTop = backgroundTopLeft.y() + 6;
-        int trackHeight = imageHeight - 12 - ScrollerWidget.SCROLLER_HEIGHT;
+        int maxScroll = Math.max(0, contentHeight - viewportHeight);
+        scroller = new ScrollerWidget(backgroundTopLeft.x() + 156, backgroundTopLeft.y() + 6, imageHeight - 12 - ScrollerWidget.SCROLLER_HEIGHT, progress -> scrollOffset = progress * Math.max(0, contentHeight - viewportHeight));
+        addRenderableWidget(scroller);
 
-        this.scroller = new ScrollerWidget(backgroundTopLeft.x() + 156, trackTop, trackHeight, progress -> this.scrollOffset = progress * Math.max(0, contentHeight - viewportHeight));
-        this.addRenderableWidget(this.scroller);
+        scroller.setScrollProgress(maxScroll == 0 ? 0.0 : Mth.clamp(scrollOffset, 0, maxScroll) / maxScroll);
     }
 
     @Override

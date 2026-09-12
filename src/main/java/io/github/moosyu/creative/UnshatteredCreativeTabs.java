@@ -81,6 +81,12 @@ public class UnshatteredCreativeTabs {
             output.accept(BREAKABLE_SOFT_MITHRIL_BLOCK.get());
             output.accept(BREAKABLE_HARD_MITHRIL_BLOCK.get());
             output.accept(BREAKABLE_COBBLED_MITHRIL_BLOCK.get());
+            output.accept(BREAKABLE_OAK_LOG.get());
+            output.accept(BREAKABLE_BIRCH_LOG.get());
+            output.accept(BREAKABLE_SPRUCE_LOG.get());
+            output.accept(BREAKABLE_JUNGLE_LOG.get());
+            output.accept(BREAKABLE_ACACIA_LOG.get());
+            output.accept(BREAKABLE_DARK_OAK_LOG.get());
         }).build()
     );
 
@@ -111,6 +117,12 @@ public class UnshatteredCreativeTabs {
             output.accept(ENCHANTED_REDSTONE_BLOCK);
             output.accept(MITHRIL);
             output.accept(ENCHANTED_MITHRIL);
+            output.accept(ENCHANTED_OAK_LOG);
+            output.accept(ENCHANTED_BIRCH_LOG);
+            output.accept(ENCHANTED_SPRUCE_LOG);
+            output.accept(ENCHANTED_JUNGLE_LOG);
+            output.accept(ENCHANTED_ACACIA_LOG);
+            output.accept(ENCHANTED_DARK_OAK_LOG);
         }).build()
     );
 

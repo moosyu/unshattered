@@ -3,7 +3,6 @@ package io.github.moosyu.data.datagen;
 import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.items.UnshatteredItems;
 import io.github.moosyu.util.UnshatteredUtils;
-import net.minecraft.client.color.item.Constant;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
@@ -11,21 +10,16 @@ import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.*;
 import net.minecraft.client.renderer.block.dispatch.Variant;
-import net.minecraft.client.renderer.item.CuboidItemModelWrapper;
 import net.minecraft.client.renderer.item.properties.conditional.FishingRodCast;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jspecify.annotations.NonNull;
-
-import java.util.List;
-import java.util.Optional;
 
 import static io.github.moosyu.Unshattered.MODID;
 
@@ -110,17 +104,15 @@ public class UnshatteredModelProvider extends ModelProvider {
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_LAPIS_BLOCK.get(), Blocks.LAPIS_BLOCK);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_REDSTONE_BLOCK.get(), Blocks.REDSTONE_BLOCK);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.BEDROCK.get(), Blocks.BEDROCK);
-
         itemModels.generateFlatItem(UnshatteredItems.HEALING_TISSUE.get(), ModelTemplates.FLAT_ITEM);
-
         itemModels.generateFishingRod(UnshatteredItems.CHALLENGING_ROD.get());
-
-        itemModels.itemModelOutput.accept(UnshatteredItems.ENCHANTED_FIG_LOG.get(),
-                ItemModelUtils.plainModel(ModelTemplates.CUBE_COLUMN.create(UnshatteredUtils.getUnshatteredIdentifier("block/enchanted_fig_log"),
-                        TextureMapping.column(UnshatteredBlocks.FIG_LOG_BLOCK.get()),
-                        blockModels.modelOutput)
-                )
-        );
+        createColumnBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_FIG_LOG.get(), UnshatteredBlocks.FIG_LOG_BLOCK.get());
+        createColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_OAK_LOG.get(), Blocks.OAK_LOG);
+        createColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_BIRCH_LOG.get(), Blocks.BIRCH_LOG);
+        createColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_SPRUCE_LOG.get(), Blocks.SPRUCE_LOG);
+        createColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_JUNGLE_LOG.get(), Blocks.JUNGLE_LOG);
+        createColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_ACACIA_LOG.get(), Blocks.ACACIA_LOG);
+        createColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_DARK_OAK_LOG.get(), Blocks.DARK_OAK_LOG);
 
         itemModels.itemModelOutput.accept(UnshatteredItems.FISHING_ROD.get(),
                 ItemModelUtils.conditional(new FishingRodCast(),
@@ -134,6 +126,48 @@ public class UnshatteredModelProvider extends ModelProvider {
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK.get(),
                 BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK.get(),
                         TextureMapping.column(UnshatteredBlocks.FIG_LOG_BLOCK.get()),
+                        blockModels.modelOutput)
+                ))
+        );
+
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_OAK_LOG_BLOCK.get(),
+                BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(UnshatteredBlocks.BREAKABLE_OAK_LOG_BLOCK.get(),
+                        createColumnNoSideSuffix(Blocks.OAK_LOG),
+                        blockModels.modelOutput)
+                ))
+        );
+
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_BIRCH_LOG_BLOCK.get(),
+                BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(UnshatteredBlocks.BREAKABLE_BIRCH_LOG_BLOCK.get(),
+                        createColumnNoSideSuffix(Blocks.BIRCH_LOG),
+                        blockModels.modelOutput)
+                ))
+        );
+
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_SPRUCE_LOG_BLOCK.get(),
+                BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(UnshatteredBlocks.BREAKABLE_SPRUCE_LOG_BLOCK.get(),
+                        createColumnNoSideSuffix(Blocks.SPRUCE_LOG),
+                        blockModels.modelOutput)
+                ))
+        );
+
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_JUNGLE_LOG_BLOCK.get(),
+                BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(UnshatteredBlocks.BREAKABLE_JUNGLE_LOG_BLOCK.get(),
+                        createColumnNoSideSuffix(Blocks.JUNGLE_LOG),
+                        blockModels.modelOutput)
+                ))
+        );
+
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_ACACIA_LOG_BLOCK.get(),
+                BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(UnshatteredBlocks.BREAKABLE_ACACIA_LOG_BLOCK.get(),
+                        createColumnNoSideSuffix(Blocks.ACACIA_LOG),
+                        blockModels.modelOutput)
+                ))
+        );
+
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_DARK_OAK_LOG_BLOCK.get(),
+                BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(UnshatteredBlocks.BREAKABLE_DARK_OAK_LOG_BLOCK.get(),
+                        createColumnNoSideSuffix(Blocks.DARK_OAK_LOG),
                         blockModels.modelOutput)
                 ))
         );
@@ -157,17 +191,17 @@ public class UnshatteredModelProvider extends ModelProvider {
                 ))
         ));
 
-        generateVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get(), Blocks.STONE);
-        generateVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(), Blocks.COBBLESTONE);
-        generateVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_COAL_ORE_BLOCK.get(), Blocks.COAL_ORE);
-        generateVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_IRON_ORE_BLOCK.get(), Blocks.IRON_ORE);
-        generateVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_COPPER_ORE_BLOCK.get(), Blocks.COPPER_ORE);
-        generateVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_GOLD_ORE_BLOCK.get(), Blocks.GOLD_ORE);
-        generateVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_REDSTONE_ORE_BLOCK.get(), Blocks.REDSTONE_ORE);
-        generateVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_EMERALD_ORE_BLOCK.get(), Blocks.EMERALD_ORE);
-        generateVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_DIAMOND_ORE_BLOCK.get(), Blocks.DIAMOND_ORE);
-        generateVanillaCubeBlock(blockModels, UnshatteredBlocks.PURE_DIAMOND_BLOCK.get(), Blocks.DIAMOND_BLOCK);
-        generateVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_OBSIDIAN_BLOCK.get(), Blocks.OBSIDIAN);
+        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get(), Blocks.STONE);
+        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(), Blocks.COBBLESTONE);
+        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_COAL_ORE_BLOCK.get(), Blocks.COAL_ORE);
+        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_IRON_ORE_BLOCK.get(), Blocks.IRON_ORE);
+        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_COPPER_ORE_BLOCK.get(), Blocks.COPPER_ORE);
+        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_GOLD_ORE_BLOCK.get(), Blocks.GOLD_ORE);
+        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_REDSTONE_ORE_BLOCK.get(), Blocks.REDSTONE_ORE);
+        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_EMERALD_ORE_BLOCK.get(), Blocks.EMERALD_ORE);
+        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_DIAMOND_ORE_BLOCK.get(), Blocks.DIAMOND_ORE);
+        createVanillaCubeBlock(blockModels, UnshatteredBlocks.PURE_DIAMOND_BLOCK.get(), Blocks.DIAMOND_BLOCK);
+        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_OBSIDIAN_BLOCK.get(), Blocks.OBSIDIAN);
 
         blockModels.createTrivialCube(UnshatteredBlocks.BREAKABLE_COBBLED_MITHRIL_BLOCK.get());
         blockModels.createTrivialCube(UnshatteredBlocks.BREAKABLE_SOFT_MITHRIL_BLOCK.get());
@@ -180,7 +214,7 @@ public class UnshatteredModelProvider extends ModelProvider {
      * @param breakableBlock the breakable block
      * @param blockTexture the block being used for the texture
      */
-    private void generateVanillaCubeBlock(BlockModelGenerators blockModels, Block breakableBlock, Block blockTexture) {
+    private void createVanillaCubeBlock(BlockModelGenerators blockModels, Block breakableBlock, Block blockTexture) {
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(breakableBlock,
                 BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(breakableBlock,
                         TextureMapping.cube(blockTexture),
@@ -203,5 +237,42 @@ public class UnshatteredModelProvider extends ModelProvider {
                         blockModels.modelOutput
                 ))
         );
+    }
+
+    /**
+     * give an item a texture of a column block (different sides and top) without actually having a block variant of it
+     * @param itemModels item models
+     * @param blockModels block models
+     * @param blockItem the item being textured
+     * @param blockTexture the block to be used for the texture
+     */
+    private void createColumnBlockItemModel(ItemModelGenerators itemModels, BlockModelGenerators blockModels, Item blockItem, Block blockTexture) {
+        itemModels.itemModelOutput.accept(blockItem,
+                ItemModelUtils.plainModel(ModelTemplates.CUBE_COLUMN.create(UnshatteredUtils.getUnshatteredIdentifier("block/" + BuiltInRegistries.ITEM.getKey(blockItem).getPath()),
+                        TextureMapping.column(blockTexture),
+                        blockModels.modelOutput)
+                )
+        );
+    }
+
+    /**
+     * give an item a texture of a column block (different sides and top) without actually having a block variant of it.
+     * specifically for vanilla logs because for some reason their textures dont have the _side suffix.
+     * @param itemModels item models
+     * @param blockModels block models
+     * @param blockItem the item being textured
+     * @param blockTexture the block to be used for the texture
+     */
+    private void createColumnBlockItemModelNoSideSuffix(ItemModelGenerators itemModels, BlockModelGenerators blockModels, Item blockItem, Block blockTexture) {
+        itemModels.itemModelOutput.accept(blockItem,
+                ItemModelUtils.plainModel(ModelTemplates.CUBE_COLUMN.create(UnshatteredUtils.getUnshatteredIdentifier("block/" + BuiltInRegistries.ITEM.getKey(blockItem).getPath()),
+                        createColumnNoSideSuffix(blockTexture),
+                        blockModels.modelOutput)
+                )
+        );
+    }
+
+    private TextureMapping createColumnNoSideSuffix(Block blockTexture) {
+        return new TextureMapping().put(TextureSlot.SIDE, TextureMapping.getBlockTexture(blockTexture)).put(TextureSlot.END, TextureMapping.getBlockTexture(blockTexture, "_top"));
     }
 }
