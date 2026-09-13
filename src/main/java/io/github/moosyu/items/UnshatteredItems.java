@@ -4,6 +4,7 @@ import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.data.regions.UnshatteredRegions;
+import io.github.moosyu.items.armours.SkeletonHat;
 import io.github.moosyu.items.talismans.BatTalisman;
 import io.github.moosyu.items.talismans.CoinTalisman;
 import io.github.moosyu.items.talismans.TalismanItem;
@@ -645,4 +646,21 @@ public class UnshatteredItems {
             .component(UnshatteredDataComponents.SELL_VALUE.get(), 320)
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON))
     );
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_POISONOUS_POTATO = ITEMS.registerItem("enchanted_poisonous_potato", props -> new EnchantedItem(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 1600)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON))
+    );
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_BONE = ITEMS.registerItem("enchanted_bone", props -> new EnchantedItem(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 320)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON))
+    );
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_BONE_BLOCK = ITEMS.registerItem("enchanted_bone_block", props -> new EnchantedItem(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 51200)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.RARE))
+    );
+
+    public static final DeferredItem<Item> SKELETON_HAT = ITEMS.registerItem("skeleton_hat", SkeletonHat::new);
 }

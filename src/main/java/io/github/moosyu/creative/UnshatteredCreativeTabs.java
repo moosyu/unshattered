@@ -123,6 +123,10 @@ public class UnshatteredCreativeTabs {
             output.accept(ENCHANTED_JUNGLE_LOG);
             output.accept(ENCHANTED_ACACIA_LOG);
             output.accept(ENCHANTED_DARK_OAK_LOG);
+            output.accept(ENCHANTED_POISONOUS_POTATO);
+            output.accept(ENCHANTED_BONE);
+            output.accept(ENCHANTED_BONE_BLOCK);
+            output.accept(SKELETON_HAT);
         }).build()
     );
 

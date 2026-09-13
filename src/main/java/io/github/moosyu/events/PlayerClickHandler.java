@@ -59,6 +59,7 @@ public class PlayerClickHandler {
 
         if (interactedBlock.is(Blocks.ANVIL)) {
             event.setCanceled(true);
+            player.swing(InteractionHand.MAIN_HAND);
             ClientPacketDistributor.sendToServer(new OpenReforgeAnvilPacket());
         }
 

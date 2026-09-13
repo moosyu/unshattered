@@ -21,6 +21,8 @@ public class ReforgeAnvilScreen extends AbstractContainerScreen<ReforgeAnvilMenu
 
     @Override
     public void extractBackground(@NonNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+        super.extractBackground(graphics, mouseX, mouseY, partialTick);
+
         graphics.blit(RenderPipelines.GUI_TEXTURED, UnshatteredUtils.getUnshatteredIdentifier("textures/gui/anvil.png"), this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
     }
 }

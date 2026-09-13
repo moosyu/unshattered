@@ -1,6 +1,6 @@
 package io.github.moosyu.packets.handlers;
 
-import io.github.moosyu.gui.menus.StorageMenu;
+import io.github.moosyu.gui.menus.ReforgeAnvilMenu;
 import io.github.moosyu.packets.OpenReforgeAnvilPacket;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -15,7 +15,7 @@ public class OpenReforgeAnvilHandler {
                 serverPlayer.openMenu(new SimpleMenuProvider(
                         (containerId,
                          inventory,
-                         _) -> new StorageMenu(containerId,
+                         _) -> new ReforgeAnvilMenu(containerId,
                                 inventory,
                                 new SimpleContainer(3)
                         ),

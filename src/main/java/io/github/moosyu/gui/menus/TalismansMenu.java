@@ -42,7 +42,7 @@ public class TalismansMenu extends AbstractContainerMenu {
 
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {
-                this.addSlot(new Slot(container, col + row * 9, 8 + col * 18, 17 + row * 18) {
+                addSlot(new Slot(container, col + row * 9, 8 + col * 18, 17 + row * 18) {
                     @Override
                     public boolean mayPlace(@NonNull ItemStack itemStack) {
                         if (itemStack.getComponents().get(UnshatteredDataComponents.ITEM_TYPE) == ItemTypes.TALISMAN) {
@@ -58,8 +58,8 @@ public class TalismansMenu extends AbstractContainerMenu {
             }
         }
 
-        this.addStandardInventorySlots(playerInventory, 8, 84);
-        this.addInventoryHotbarSlots(playerInventory, 8, 142);
+        addStandardInventorySlots(playerInventory, 8, 84);
+        addInventoryHotbarSlots(playerInventory, 8, 142);
     }
 
     @Override
@@ -93,16 +93,16 @@ public class TalismansMenu extends AbstractContainerMenu {
     public @NonNull ItemStack quickMoveStack(@NonNull Player player, int slotIndex) {
         // taken from ChestMenu
         ItemStack clicked = ItemStack.EMPTY;
-        Slot slot = this.slots.get(slotIndex);
+        Slot slot = slots.get(slotIndex);
 
         if (slot.hasItem()) {
             ItemStack stack = slot.getItem();
             clicked = stack.copy();
             if (slotIndex < ROWS * COLUMNS) {
-                if (!this.moveItemStackTo(stack, ROWS * COLUMNS, this.slots.size(), true)) {
+                if (!moveItemStackTo(stack, ROWS * COLUMNS, slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(stack, 0, ROWS * COLUMNS, false)) {
+            } else if (!moveItemStackTo(stack, 0, ROWS * COLUMNS, false)) {
                 return ItemStack.EMPTY;
             }
 

@@ -10,9 +10,6 @@ import net.minecraft.world.item.ItemStack;
 import org.jspecify.annotations.NonNull;
 
 public class ReforgeAnvilMenu extends AbstractContainerMenu {
-    private final Container container;
-    private final Inventory inventory;
-
     public ReforgeAnvilMenu(int containerId, Inventory inventory) {
         this(containerId, inventory, new SimpleContainer(3));
     }
@@ -20,19 +17,43 @@ public class ReforgeAnvilMenu extends AbstractContainerMenu {
     public ReforgeAnvilMenu(int containerId, Inventory inventory, Container container) {
         super(UnshatteredMenus.REFORGE_ANVIL_MENU_TYPE.get(), containerId);
 
-        this.container = container;
-        this.inventory = inventory;
+        this.addSlot(new Slot(container, 1, 27, 36));
+        this.addSlot(new Slot(container, 2, 76, 36));
+        this.addSlot(new Slot(container, 0, 134, 36) {
+            @Override
+            public boolean mayPlace(@NonNull ItemStack stack) {
+                return false;
+            }
 
-        for (int i = 0; i < 3; i++) {
-            this.addSlot(new Slot(container, i, 40 + (i * 10), 40));
-        }
+            @Override
+            public void onTake(@NonNull Player player, @NonNull ItemStack stack) {
+                container.getItem(0).shrink(1);
+                container.getItem(1).shrink(1);
+                container.setChanged();
+
+                super.onTake(player, stack);
+            }
+        });
+
         this.addStandardInventorySlots(inventory, 8, 84);
         this.addInventoryHotbarSlots(inventory, 8, 142);
     }
 
     @Override
     public @NonNull ItemStack quickMoveStack(@NonNull Player player, int slotIndex) {
-        return ItemStack.EMPTY;
+        ItemStack clicked = ItemStack.EMPTY;
+        Slot slot = slots.get(slotIndex);
+
+        if (slot.hasItem()) {
+            ItemStack stack = slot.getItem();
+            clicked = stack.copy();
+
+            if (!moveItemStackTo(stack, slotIndex, 0, true)) {
+                return ItemStack.EMPTY;
+            }
+        }
+
+        return clicked;
     }
 
     @Override

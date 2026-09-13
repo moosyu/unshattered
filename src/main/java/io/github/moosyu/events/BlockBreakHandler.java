@@ -1,5 +1,6 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.data.regen.RegenClientCache;
 import io.github.moosyu.data.regen.RegenPaths;
 import io.github.moosyu.data.regen.RegenSavedData;
@@ -25,8 +26,10 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
@@ -156,6 +159,7 @@ public class BlockBreakHandler {
         }
 
         ItemStack itemStack = player.getMainHandItem();
+        ItemAttributeModifiers itemAttributeModifiers = itemStack.get(DataComponents.ATTRIBUTE_MODIFIERS);
         if (block.is(UnshatteredBlockTagsProvider.COLLECTABLE_MINING_BLOCKS) && itemStack.is(ItemTags.PICKAXES)) {
             ItemEnchantments enchantments = itemStack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY);
             double bonus = 0.0d;
@@ -175,7 +179,11 @@ public class BlockBreakHandler {
             }
 
             event.setNewSpeed((float) (player.getAttributeValue(UnshatteredAttributeValues.MINING_SPEED.holder) + bonus));
-        } else if (block.is(UnshatteredBlockTagsProvider.COLLECTABLE_FORAGING_BLOCKS) && itemStack.is(ItemTags.AXES) || itemStack == ItemStack.EMPTY) {
+        } else if (block.is(UnshatteredBlockTagsProvider.COLLECTABLE_FORAGING_BLOCKS)
+                && itemStack.is(ItemTags.AXES)
+                || !itemStack.is(ItemTags.AXES)
+                && (itemAttributeModifiers == null || itemAttributeModifiers.modifiers().stream().noneMatch(entry -> entry.attribute().equals(UnshatteredAttributeValues.BREAKING_POWER.holder)))
+        ) {
             event.setNewSpeed((float) ((1 + (127 * player.getAttributeValue(UnshatteredAttributeValues.SWEEP.holder))/119) - (Math.pow(player.getAttributeValue(UnshatteredAttributeValues.SWEEP.holder), 2)/3570)));
         } else {
             event.setNewSpeed(0.0f);

@@ -105,6 +105,10 @@
   "item.unshattered.enchanted_jungle_log": "Enchanted Jungle Log",
   "item.unshattered.enchanted_acacia_log": "Enchanted Acacia Log",
   "item.unshattered.enchanted_dark_oak_log": "Enchanted Dark Oak Log",
+  "item.unshattered.enchanted_poisonous_potato": "Enchanted Poisonous Potato",
+  "item.unshattered.enchanted_bone": "Enchanted Bone",
+  "item.unshattered.enchanted_bone_block": "Enchanted Bone Block",
+  "item.unshattered.skeleton_hat": "Skeleton Hat",
 
   "item.ability.unshattered.rogue_sword_speed_boost": "Speed Boost",
   "item.ability.unshattered.mind_blowing": "Mind Blowing",
@@ -124,6 +128,7 @@
   "item.ability.unshattered.mithril_speed": "Mithril Miner",
   "item.ability.unshattered.bat_talisman_leech": "Leech",
   "item.ability.unshattered.coin_talisman_accrual": "Accrual",
+  "item.ability.unshattered.skeleton_hat_explosive_arrows": "Explosive Arrows",
 
   "item.ability.description.unshattered.rogue_sword_speed_boost": "Grants [colour=0xFFFFFFFF]+1.5✦ Speed[/colour] for [colour=0xFF55FF55]30s[/colour].",
   "item.ability.description.unshattered.mind_blowing": "Deals [colour=0xFF55FF55]+100%[/colour] damage to undead mobs.",
@@ -143,6 +148,7 @@
   "item.ability.description.unshattered.mithril_speed": "Gain [colour=0xFFFFAA00]+20⸕[/colour] while mining mithril.",
   "item.ability.description.unshattered.bat_talisman_leech": "Gain [colour=0xFFFC3A3A]2%[/colour] of enemy's maximum [colour=0xFFFC3A3A]health[/colour] on kill.",
   "item.ability.description.unshattered.coin_talisman_accrual": "Gain a small chance to get some [colour=0xFFFFAA00]coins[/colour] every second.",
+  "item.ability.description.unshattered.skeleton_hat_explosive_arrows": "Your arrows have a [colour=0xFF55FF55]20%[/colour] chance to explode on impact, dealing [colour=0xFF55FF55]50%[/colour] of the initial shot to enemies within [colour=0xFF55FF55]8[/colour] blocks.",
 
   "block.unshattered.fig_log": "Fig Log",
   "block.unshattered.breakable_fig_log": "Breakable Fig Log",

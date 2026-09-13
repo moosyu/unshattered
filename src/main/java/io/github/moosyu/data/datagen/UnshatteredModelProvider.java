@@ -91,6 +91,8 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_COAL.get(), Items.COAL, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_LAPIS.get(), Items.LAPIS_LAZULI, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_REDSTONE.get(), Items.REDSTONE, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_POISONOUS_POTATO.get(), Items.POISONOUS_POTATO, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_BONE.get(), Items.BONE, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.COINS_TALISMAN.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.BROKEN_MITHRIL_PICKAXE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.MITHRIL.get(), ModelTemplates.FLAT_ITEM);
@@ -103,6 +105,7 @@ public class UnshatteredModelProvider extends ModelProvider {
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_COAL_BLOCK.get(), Blocks.COAL_BLOCK);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_LAPIS_BLOCK.get(), Blocks.LAPIS_BLOCK);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_REDSTONE_BLOCK.get(), Blocks.REDSTONE_BLOCK);
+        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_BONE_BLOCK.get(), Blocks.BONE_BLOCK);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.BEDROCK.get(), Blocks.BEDROCK);
         itemModels.generateFlatItem(UnshatteredItems.HEALING_TISSUE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFishingRod(UnshatteredItems.CHALLENGING_ROD.get());
