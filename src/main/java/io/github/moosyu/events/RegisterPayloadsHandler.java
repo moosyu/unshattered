@@ -25,6 +25,7 @@ public class RegisterPayloadsHandler {
         registrar.playToServer(OpenTalismanBagPacket.TYPE, OpenTalismanBagPacket.STREAM_CODEC, OpenTalismanBagHandler::handleData);
         registrar.playToServer(OpenCraftingPacket.TYPE, OpenCraftingPacket.STREAM_CODEC, OpenCraftingHandler::handleData);
         registrar.playToServer(OpenStoragePacket.TYPE, OpenStoragePacket.STREAM_CODEC, OpenStorageHandler::handleData);
+        registrar.playToServer(OpenReforgeAnvilPacket.TYPE, OpenReforgeAnvilPacket.STREAM_CODEC, OpenReforgeAnvilHandler::handleData);
         registrar.playToServer(ResetFlagQueuePacket.TYPE, ResetFlagQueuePacket.STREAM_CODEC, ResetFlagQueueHandler::handleData);
         registrar.playToServer(QueueNewFlagsPacket.TYPE, QueueNewFlagsPacket.STREAM_CODEC, QueueNewFlagsHandler::handleData);
         registrar.playToServer(TriggerEventPacket.TYPE, TriggerEventPacket.STREAM_CODEC, TriggerEventHandler::handleData);

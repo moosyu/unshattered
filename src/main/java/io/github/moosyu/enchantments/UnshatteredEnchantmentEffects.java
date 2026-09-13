@@ -13,76 +13,36 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.BiFunction;
+import java.util.function.IntToDoubleFunction;
+import java.util.function.Predicate;
 
 public interface UnshatteredEnchantmentEffects {
-    interface DamageEffect extends UnshatteredEffect {
-        boolean checkPassesEffectRequirement(Player player, LivingEntity target);
-    }
-
-    interface MiningSpeedEffect extends UnshatteredEffect {
-        boolean checkPassesEffectRequirement(Player player, BlockState state);
-    }
-
-    interface UnshatteredEffect {
+    interface UnshatteredEffect<T> {
+        boolean checkPassesEffectRequirement(Player player, T context);
         double getEffectBonus(int level);
         Component getEffectDescription(int level);
     }
 
-    Map<ResourceKey<Enchantment>, DamageEffect> DAMAGE_EFFECTS = Map.ofEntries(
-            Map.entry(Enchantments.BANE_OF_ARTHROPODS, new DamageEffect() {
-                @Override
-                public boolean checkPassesEffectRequirement(Player player, LivingEntity target) {
-                    return target.is(EntityTypeTags.SENSITIVE_TO_BANE_OF_ARTHROPODS);
-                }
+    interface DamageEffect extends UnshatteredEffect<LivingEntity> {}
+    interface MiningSpeedEffect extends UnshatteredEffect<BlockState> {}
 
-                @Override
-                public double getEffectBonus(int level) {
-                    return level * 0.15;
-                }
-
-                @Override
-                public Component getEffectDescription(int level) {
-                    return Component.literal("Increases damage to arthropods by: ").withColor(0xFF555555)
-                            .append(Component.literal((getEffectBonus(level) * 100) + "%")).withColor(0xFF65EC66);
-                }
-            }),
-            Map.entry(Enchantments.SHARPNESS, new DamageEffect() {
-                @Override
-                public boolean checkPassesEffectRequirement(Player player, LivingEntity target) {
-                    return true;
-                }
-
-                @Override
-                public double getEffectBonus(int level) {
-                    return level * 0.05;
-                }
-
-                @Override
-                public Component getEffectDescription(int level) {
-                    return Component.literal("Increases damage dealt by: ").withColor(0xFF555555)
-                            .append(Component.literal((getEffectBonus(level) * 100) + "%")).withColor(0xFF65EC66);
-                }
-            }),
-            Map.entry(Enchantments.SMITE, new DamageEffect() {
-                @Override
-                public boolean checkPassesEffectRequirement(Player player, LivingEntity target) {
-                    return target.is(EntityTypeTags.SENSITIVE_TO_SMITE);
-                }
-
-                @Override
-                public double getEffectBonus(int level) {
-                    return level * 0.1;
-                }
-
-                @Override
-                public Component getEffectDescription(int level) {
-                    return Component.literal("Increases damage dealt to undead mobs by: ")
-                            .append(Component.literal((getEffectBonus(level) * 100) + "%")).withColor(0xFF65EC66);
-                }
-            })
-    );
-
-    Map<ResourceKey<Enchantment>, MiningSpeedEffect> MINING_SPEED_EFFECTS = Map.ofEntries(
+    Map<ResourceKey<Enchantment>, UnshatteredEffect<?>> EFFECTS = Map.ofEntries(
+            Map.entry(Enchantments.BANE_OF_ARTHROPODS, damageEffect(
+                    target -> target.is(EntityTypeTags.SENSITIVE_TO_BANE_OF_ARTHROPODS),
+                    level -> level * 0.15,
+                    (_, _) -> "Increases damage to arthropods by: "
+            )),
+            Map.entry(Enchantments.SHARPNESS, damageEffect(
+                    _ -> true,
+                    level -> level * 0.05,
+                    (_, _) -> "Increases damage dealt by: "
+            )),
+            Map.entry(Enchantments.SMITE, damageEffect(
+                    target -> target.is(EntityTypeTags.SENSITIVE_TO_SMITE),
+                    level -> level * 0.1,
+                    (_, _) -> "Increases damage dealt to undead mobs by: "
+            )),
             Map.entry(Enchantments.EFFICIENCY, new MiningSpeedEffect() {
                 @Override
                 public boolean checkPassesEffectRequirement(Player player, BlockState state) {
@@ -96,29 +56,34 @@ public interface UnshatteredEnchantmentEffects {
 
                 @Override
                 public Component getEffectDescription(int level) {
-                    return Component.literal("Grants "
-                            + getEffectBonus(level)
-                            + " "
-                            + UnshatteredAttributeValues.MINING_SPEED.symbol
-                            + " ")
-                            .append(Component.translatable("attribute.name.unshattered." + UnshatteredAttributeValues.MINING_SPEED.id));
+                    return Component.literal("Grants ").withColor(0xFFAAAAAA)
+                            .append(Component.literal("+" + (int) getEffectBonus(level) + UnshatteredAttributeValues.MINING_SPEED.symbol + ".").withColor(UnshatteredAttributeValues.MINING_SPEED.color));
                 }
             })
     );
 
-    static Optional<UnshatteredEffect> getEffect(ResourceKey<Enchantment> key) {
-        UnshatteredEnchantmentEffects.DamageEffect damageEffect = UnshatteredEnchantmentEffects.DAMAGE_EFFECTS.get(key);
+    static Optional<UnshatteredEffect<?>> getEffect(ResourceKey<Enchantment> key) {
+        return Optional.ofNullable(EFFECTS.get(key));
+    }
 
-        if (damageEffect != null) {
-            return Optional.of(damageEffect);
-        }
+    private static DamageEffect damageEffect(Predicate<LivingEntity> requirement, IntToDoubleFunction bonus, BiFunction<Integer, Double, String> prefix) {
+        return new DamageEffect() {
+            @Override
+            public boolean checkPassesEffectRequirement(Player player, LivingEntity target) {
+                return requirement.test(target);
+            }
 
-        UnshatteredEnchantmentEffects.MiningSpeedEffect miningEffect = UnshatteredEnchantmentEffects.MINING_SPEED_EFFECTS.get(key);
+            @Override
+            public double getEffectBonus(int level) {
+                return bonus.applyAsDouble(level);
+            }
 
-        if (miningEffect != null) {
-            return Optional.of(miningEffect);
-        }
-
-        return Optional.empty();
+            @Override
+            public Component getEffectDescription(int level) {
+                double bonus = getEffectBonus(level);
+                return Component.literal(prefix.apply(level, bonus)).withColor(0xFFAAAAAA)
+                        .append(Component.literal(Math.round(bonus * 100) + "%").withColor(0xFF65EC66));
+            }
+        };
     }
 }

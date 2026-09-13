@@ -137,6 +137,7 @@ public class ModifyDefaultComponentsHandler {
         modifyVanillaItem(event, Items.JUNGLE_LOG, ItemTypes.MATERIAL, 2);
         modifyVanillaItem(event, Items.ACACIA_LOG, ItemTypes.MATERIAL, 2);
         modifyVanillaItem(event, Items.DARK_OAK_LOG, ItemTypes.MATERIAL, 2);
+        modifyVanillaItem(event, Items.ENCHANTED_BOOK, ItemTypes.ENCHANTED_BOOK, UnshatteredRarities.RARE, 1, false);
     }
 
     /**

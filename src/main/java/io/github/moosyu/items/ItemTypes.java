@@ -28,7 +28,8 @@ public enum ItemTypes implements StringRepresentable {
     FISHING_ROD("fishing_rod", true),
     MATERIAL("material", false),
     CLEAVER("cleaver", true),
-    PICKAXE("pickaxe", true);
+    PICKAXE("pickaxe", true),
+    ENCHANTED_BOOK("enchanted_book", true);
 
     private final String serializedName;
     private final boolean reforgeable;

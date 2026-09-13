@@ -54,6 +54,7 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
         createEnchantedItemRecipe(output, Items.JUNGLE_LOG, UnshatteredItems.ENCHANTED_JUNGLE_LOG.get());
         createEnchantedItemRecipe(output, Items.ACACIA_LOG, UnshatteredItems.ENCHANTED_ACACIA_LOG.get());
         createEnchantedItemRecipe(output, Items.DARK_OAK_LOG, UnshatteredItems.ENCHANTED_DARK_OAK_LOG.get());
+        createEnchantedItemRecipe(output, UnshatteredItems.MITHRIL, UnshatteredItems.ENCHANTED_MITHRIL.get());
 
         new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.ZOMBIE_HEART.get()))
                 .pattern("AAA", "A A", "AAA")

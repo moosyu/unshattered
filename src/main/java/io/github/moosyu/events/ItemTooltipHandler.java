@@ -14,7 +14,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.component.TypedDataComponent;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
@@ -34,6 +33,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static io.github.moosyu.Unshattered.MODID;
@@ -56,6 +56,7 @@ public class ItemTooltipHandler {
         ItemCharges itemCharges = stack.get(UnshatteredDataComponents.CHARGES);
         int sellPrice = stack.getOrDefault(UnshatteredDataComponents.SELL_VALUE, 0) * stack.count();
         ItemAttributeModifiers modifiers = stack.getAttributeModifiers();
+        ItemEnchantments itemEnchantments = stack.get(DataComponents.STORED_ENCHANTMENTS);
 
         event.getToolTip().clear();
         tooltipComponents.add(Component.translatable(stack.getItemName().getString()).withColor(itemRarity.getColour(1.0f)));
@@ -78,17 +79,32 @@ public class ItemTooltipHandler {
             addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.description.unshattered." + BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath()).getString(), 0xFFAAAAAA), MAX_WIDTH);
         }
 
-        tooltipComponents.add(Component.empty());
+        // for enchanted books
+        if (itemEnchantments != null) {
+            for (Map.Entry<Holder<Enchantment>, Integer> entry : itemEnchantments.entrySet()) {
+                Optional<ResourceKey<Enchantment>> key = entry.getKey().unwrapKey();
+                if (key.isEmpty()) continue;
+
+                Optional<UnshatteredEnchantmentEffects.UnshatteredEffect<?>> effect = UnshatteredEnchantmentEffects.getEffect(key.get());
+                if (effect.isEmpty()) continue;
+
+                int level = entry.getValue();
+
+                tooltipComponents.add(entry.getKey().value().description().copy().withColor(0xFF459BFF).append(Component.literal(" " + UnshatteredUtils.convertTextToRomanNumeral(level))));
+                tooltipComponents.add(effect.get().getEffectDescription(level));
+            }
+        }
 
         for (Object2IntMap.Entry<Holder<Enchantment>> enchantmentHolder : stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY).entrySet()) {
             Optional<ResourceKey<Enchantment>> key = enchantmentHolder.getKey().unwrapKey();
             if (key.isEmpty()) continue;
 
-            Optional<UnshatteredEnchantmentEffects.UnshatteredEffect> effect = UnshatteredEnchantmentEffects.getEffect(key.get());
+            Optional<UnshatteredEnchantmentEffects.UnshatteredEffect<?>> effect = UnshatteredEnchantmentEffects.getEffect(key.get());
             if (effect.isEmpty()) continue;
 
             int level = enchantmentHolder.getIntValue();
 
+            tooltipComponents.add(Component.empty());
             tooltipComponents.add(enchantmentHolder.getKey().value().description().copy().withColor(0xFF459BFF).append(Component.literal(" " + UnshatteredUtils.convertTextToRomanNumeral(level))));
             tooltipComponents.add(effect.get().getEffectDescription(level));
         }

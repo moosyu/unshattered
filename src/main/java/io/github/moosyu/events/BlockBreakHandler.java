@@ -158,15 +158,19 @@ public class BlockBreakHandler {
         ItemStack itemStack = player.getMainHandItem();
         if (block.is(UnshatteredBlockTagsProvider.COLLECTABLE_MINING_BLOCKS) && itemStack.is(ItemTags.PICKAXES)) {
             ItemEnchantments enchantments = itemStack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY);
-            double bonus = 0.0f;
+            double bonus = 0.0d;
 
             for (Object2IntMap.Entry<Holder<Enchantment>> entry : enchantments.entrySet()) {
                 Optional<ResourceKey<Enchantment>> key = entry.getKey().unwrapKey();
                 if (key.isEmpty()) continue;
 
-                UnshatteredEnchantmentEffects.MiningSpeedEffect effect = UnshatteredEnchantmentEffects.MINING_SPEED_EFFECTS.get(key.get());
-                if (effect != null && effect.checkPassesEffectRequirement(player, blockState)) {
-                    bonus += effect.getEffectBonus(entry.getIntValue());
+                Optional<UnshatteredEnchantmentEffects.UnshatteredEffect<?>> effect = UnshatteredEnchantmentEffects.getEffect(key.get());
+
+                if (effect.isPresent()
+                        && effect.get() instanceof UnshatteredEnchantmentEffects.MiningSpeedEffect miningEffect
+                        && miningEffect.checkPassesEffectRequirement(player, blockState)
+                ) {
+                    bonus += miningEffect.getEffectBonus(entry.getIntValue());
                 }
             }
 

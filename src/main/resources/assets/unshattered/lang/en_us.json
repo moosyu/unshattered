@@ -304,6 +304,7 @@
   "item_type.unshattered.cleaver": "Cleaver",
   "item_type.unshattered.pickaxe": "Pickaxe",
   "item_type.unshattered.dagger": "Dagger",
+  "item_type.unshattered.enchanted_book": "Enchanted Book",
 
   "unshattered.configuration.title": "unshattered Configs",
   "unshattered.configuration.section.unshattered.common.toml": "unshattered Configs",
@@ -362,6 +363,7 @@
   "container.unshattered.talisman_bag": "Talisman Bag",
   "container.unshattered.storage": "Storage",
   "container.unshattered.crafting": "Crafting",
+  "container.unshattered.reforge_anvil": "Reforge Anvil",
 
   "screen.unshattered.stats": "Stats",
   "screen.unshattered.dialogue": "Dialogue",

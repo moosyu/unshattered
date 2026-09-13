@@ -1,6 +1,8 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.gui.menus.ReforgeAnvilMenu;
 import io.github.moosyu.gui.menus.UnshatteredMenus;
+import io.github.moosyu.gui.screens.ReforgeAnvilScreen;
 import io.github.moosyu.gui.screens.StorageScreen;
 import io.github.moosyu.gui.screens.TalismansScreen;
 import net.neoforged.api.distmarker.Dist;
@@ -17,5 +19,6 @@ public class RegisterMenuScreensHandler {
         event.register(UnshatteredMenus.TALISMAN_MENU_TYPE.get(), TalismansScreen::new);
         // event.register(UnshatteredMenus.INVENTORY_MENU.get(), UnshatteredInventoryScreen::new);
         event.register(UnshatteredMenus.STORAGE_MENU_TYPE.get(), StorageScreen::new);
+        event.register(UnshatteredMenus.REFORGE_ANVIL_MENU_TYPE.get(), ReforgeAnvilScreen::new);
     }
 }

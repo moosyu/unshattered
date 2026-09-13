@@ -1,30 +1,12 @@
 {
   "values": {
-    "minecraft:rotten_flesh": {
-      "category": "combat",
-      "item": "minecraft:rotten_flesh",
-      "levels": [
-        {
-          "collectable_rewards": [
-            {
-              "type": "experience",
-              "amount": 250.0,
-              "experience_type": "combat"
-            }
-          ],
-          "item_requirement": 50
-        },
-        {
-          "collectable_rewards": [
-            {
-              "type": "item",
-              "amount": 1,
-              "item": "unshattered:enchanted_rotten_flesh"
-            }
-          ],
-          "item_requirement": 100
-        }
-      ]
-    }
+    "minecraft:clay_ball": 0.1,
+    "minecraft:cod": 0.5,
+    "minecraft:prismarine_crystals": 0.5,
+    "minecraft:prismarine_shard": 0.5,
+    "minecraft:pufferfish": 1.0,
+    "minecraft:salmon": 0.7,
+    "minecraft:sponge": 4.0,
+    "minecraft:tropical_fish": 2.0
   }
 }

@@ -3,6 +3,7 @@ package io.github.moosyu.events;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.dialogue.DialogueInteractable;
+import io.github.moosyu.packets.OpenReforgeAnvilPacket;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -18,6 +19,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import static io.github.moosyu.Unshattered.MODID;
 
@@ -55,11 +57,10 @@ public class PlayerClickHandler {
                 || interactedBlock.is(Blocks.ENCHANTING_TABLE)
         ) event.setCanceled(true);
 
-          // anvils and crafting tables will have custom logic
-//        if (interactedBlock.is(Blocks.CRAFTING_TABLE) || interactedBlock.is(Blocks.ANVIL)) {
-//            event.setCanceled(true);
-//            player.swing(InteractionHand.MAIN_HAND);
-//        }
+        if (interactedBlock.is(Blocks.ANVIL)) {
+            event.setCanceled(true);
+            ClientPacketDistributor.sendToServer(new OpenReforgeAnvilPacket());
+        }
 
         // disables block placement
         if (event.getItemStack().getItem() instanceof BlockItem && !player.isCreative()) {

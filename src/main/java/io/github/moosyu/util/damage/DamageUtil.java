@@ -63,9 +63,12 @@ public final class DamageUtil {
             Optional<ResourceKey<Enchantment>> key = entry.getKey().unwrapKey();
             if (key.isEmpty()) continue;
 
-            UnshatteredEnchantmentEffects.DamageEffect effect = UnshatteredEnchantmentEffects.DAMAGE_EFFECTS.get(key.get());
-            if (effect != null && effect.checkPassesEffectRequirement(player, target)) {
-                damageBonus += effect.getEffectBonus(entry.getIntValue());
+            Optional<UnshatteredEnchantmentEffects.UnshatteredEffect<?>> effect = UnshatteredEnchantmentEffects.getEffect(key.get());
+            if (effect.isPresent()
+                    && effect.get() instanceof UnshatteredEnchantmentEffects.DamageEffect damageEffect
+                    && damageEffect.checkPassesEffectRequirement(player, target)
+            ) {
+                damageBonus += damageEffect.getEffectBonus(entry.getIntValue());
             }
         }
 

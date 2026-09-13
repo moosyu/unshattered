@@ -36,7 +36,6 @@ import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -287,22 +286,23 @@ public final class UnshatteredUtils {
                     true,
                     rolledAboveOccasional,
                     player,
-                    UnshatteredAttributeValues.MINING_FORTUNE
+                    fortuneType
             );
         }
     }
 
     public static boolean getNonGuaranteedDrop(DropData dropData, boolean fortuneBoosted, boolean rolledAboveOccasional, Player player, @Nullable UnshatteredAttributeValues fortuneType) {
         double modifiedDropChance;
-        double fortuneValue = 0.0d;
+        double fortuneValue;
         RandomSource randomSource = player.getRandom();
 
-        if (fortuneType != null && fortuneBoosted) {
-            fortuneValue = player.getAttributeValue(fortuneType.holder);
-            modifiedDropChance = dropData.dropChance() * (1 + (fortuneValue / 100));
-        } else {
-            modifiedDropChance = dropData.dropChance();
-        }
+        if (fortuneType == null) return rolledAboveOccasional;
+
+        ItemStack dropStack = new ItemStack(dropData.itemRange().item(), dropData.itemRange().minAmount() == dropData.itemRange().maxAmount()
+                ? dropData.itemRange().minAmount()
+                : randomSource.nextIntBetweenInclusive(dropData.itemRange().minAmount(), dropData.itemRange().maxAmount())
+        );
+        fortuneValue = player.getAttributeValue(fortuneType.holder);
 
         if (dropData.dropChance() < 1.0) {
             DropTypes type = getDropType(dropData.dropChance());
@@ -312,6 +312,12 @@ public final class UnshatteredUtils {
                     return true;
                 }
                 rolledAboveOccasional = true;
+            }
+
+            if (fortuneBoosted) {
+                modifiedDropChance = dropData.dropChance() * (1 + (fortuneValue / 100));
+            } else {
+                modifiedDropChance = dropData.dropChance();
             }
 
             if (randomSource.nextFloat() <= modifiedDropChance) {
@@ -334,14 +340,11 @@ public final class UnshatteredUtils {
             } else {
                 return false;
             }
+        } else {
+            dropStack = new ItemStack(dropStack.getItem(), UnshatteredUtils.getItemsCount(fortuneValue, dropStack.count()));
         }
 
-        UnshatteredUtils.givePlayerHarvestedItemStack(player,
-                new ItemStack(dropData.itemRange().item(), dropData.itemRange().minAmount() == dropData.itemRange().maxAmount()
-                        ? dropData.itemRange().minAmount()
-                        : randomSource.nextIntBetweenInclusive(dropData.itemRange().minAmount(), dropData.itemRange().maxAmount())
-                )
-        );
+        UnshatteredUtils.givePlayerHarvestedItemStack(player, dropStack);
 
         return rolledAboveOccasional;
     }
