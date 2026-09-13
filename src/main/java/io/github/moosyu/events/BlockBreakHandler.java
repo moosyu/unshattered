@@ -165,8 +165,8 @@ public class BlockBreakHandler {
                 if (key.isEmpty()) continue;
 
                 UnshatteredEnchantmentEffects.MiningSpeedEffect effect = UnshatteredEnchantmentEffects.MINING_SPEED_EFFECTS.get(key.get());
-                if (effect != null) {
-                    bonus += effect.getMiningSpeedBonus(player, blockState, entry.getIntValue());
+                if (effect != null && effect.checkPassesEffectRequirement(player, blockState)) {
+                    bonus += effect.getEffectBonus(entry.getIntValue());
                 }
             }
 

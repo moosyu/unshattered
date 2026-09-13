@@ -1,5 +1,10 @@
 package io.github.moosyu.data.datagen;
 
+import io.github.moosyu.collectables.CollectableCategories;
+import io.github.moosyu.collectables.CollectableItemEntry;
+import io.github.moosyu.collectables.CollectableLevel;
+import io.github.moosyu.collectables.rewards.ExperienceCollectableReward;
+import io.github.moosyu.collectables.rewards.ItemCollectableReward;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.drops.DropData;
@@ -298,6 +303,15 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 ),
                 false
         );
+
+        this.builder(COLLECTABLE_DATA)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.ROTTEN_FLESH), new CollectableItemEntry(CollectableCategories.COMBAT, Items.ROTTEN_FLESH,
+                        List.of(new CollectableLevel(50,
+                                        List.of(new ExperienceCollectableReward(250, PlayerSkillsAttachment.Skill.COMBAT))
+                                ), new CollectableLevel(100,
+                                        List.of(new ItemCollectableReward(UnshatteredItems.ENCHANTED_ROTTEN_FLESH.get(), 1)))
+                        )
+                ), false);
     }
 
     private void createSingleBlockDropData(DataMapProvider.Builder<List<DropData>, Block> builder, DeferredBlock<Block> block, ItemRange itemRange) {

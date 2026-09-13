@@ -59,6 +59,6 @@ public enum ItemTypes implements StringRepresentable {
         return invulnerability;
     }
 
-    public static final Codec<ItemTypes> CODEC = Codec.STRING.xmap(ItemTypes::valueOf, ItemTypes::name);
+    public static final Codec<ItemTypes> CODEC = StringRepresentable.fromEnum(ItemTypes::values);
 
 }

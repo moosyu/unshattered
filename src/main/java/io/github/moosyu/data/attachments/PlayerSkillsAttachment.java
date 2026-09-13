@@ -1,7 +1,6 @@
 package io.github.moosyu.data.attachments;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.packets.ExpSoundEffectPacket;
 import io.github.moosyu.util.UnshatteredUtils;
@@ -10,22 +9,21 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.PacketDistributor;
+import org.jspecify.annotations.NonNull;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.BiConsumer;
-import java.util.stream.Collectors;
 
 public final class PlayerSkillsAttachment {
     private static final int[] SKILL_LEVEL_TABLE = {50, 175, 375, 675, 1175, 1925, 2925, 4425, 6425, 9925};
     private static final int[] COINS_LEVEL_TABLE = {100, 250, 500, 750, 1000, 2000, 3000, 4000, 5000, 7500, 10000, 15000, 20000, 25000, 30000, 40000, 50000, 65000, 80000, 100000, 125000, 150000, 175000, 200000, 225000, 250000, 275000, 300000, 325000, 350000, 375000, 400000, 425000, 450000, 475000, 500000, 550000, 600000, 650000, 700000, 750000, 800000, 850000, 900000, 1000000, 1000000, 1000000, 1000000, 1000000, 1000000};
     private final float[] skillExp = new float[Skill.values().length];
 
-    public enum Skill {
+    public enum Skill implements StringRepresentable {
         COMBAT("combat", (player, _) -> {
             // i know normal sb gives you a flat damage multiplier but i feel like thats a little strange so ill give people an actual stat
             addPlayerAttributeReward(player, UnshatteredAttributeValues.CRITICAL_DAMAGE, 10.0d);
@@ -78,9 +76,7 @@ public final class PlayerSkillsAttachment {
             addPlayerAttributeReward(player, UnshatteredAttributeValues.MANA_REGEN, 1.5d);
 
         }),
-        CARPENTRY("carpentry", (player, _) -> {
-            addPlayerAttributeReward(player, UnshatteredAttributeValues.HEALTH, 1.0d);
-        });
+        CARPENTRY("carpentry", (player, _) -> addPlayerAttributeReward(player, UnshatteredAttributeValues.HEALTH, 1.0d));
 
         private final String id;
         /**
@@ -112,13 +108,12 @@ public final class PlayerSkillsAttachment {
             return id;
         }
 
-        private static final Map<String, Skill> BY_ID = Arrays.stream(values()).collect(Collectors.toMap(Skill::getId, s -> s));
-
-        public static Optional<Skill> byId(String id) {
-            return Optional.ofNullable(BY_ID.get(id));
+        @Override
+        public @NonNull String getSerializedName() {
+            return id;
         }
 
-        public static final Codec<Skill> CODEC = Codec.STRING.comapFlatMap(id -> byId(id).map(DataResult::success).orElseGet(() -> DataResult.error(() -> "broken id: " + id)), Skill::getId);
+        public static Codec<Skill> CODEC = StringRepresentable.fromEnum(Skill::values);
     }
 
     public PlayerSkillsAttachment(float combatExp, float farmingExp, float fishingExp, float miningExp, float foragingExp, float magecraftExp) {
@@ -204,7 +199,16 @@ public final class PlayerSkillsAttachment {
     }
 
     public float getNextLevelExpRequirement(int currentLevel) {
-        return currentLevel < SKILL_LEVEL_TABLE.length ? SKILL_LEVEL_TABLE[currentLevel] : SKILL_LEVEL_TABLE[SKILL_LEVEL_TABLE.length - 1];
+        if (currentLevel == 0) {
+            return SKILL_LEVEL_TABLE[0];
+        } else {
+            return currentLevel < SKILL_LEVEL_TABLE.length ? SKILL_LEVEL_TABLE[currentLevel] - SKILL_LEVEL_TABLE[currentLevel - 1] : SKILL_LEVEL_TABLE[SKILL_LEVEL_TABLE.length - 1];
+        }
+    }
+
+    public float getCurrentLevelExp(Skill skill, int currentLevel) {
+        float previousThreshold = currentLevel == 0 ? 0 : SKILL_LEVEL_TABLE[currentLevel - 1];
+        return getExp(skill) - previousThreshold;
     }
 
     private static Component attributeGainMessage(UnshatteredAttributeValues attribute, double amount) {
