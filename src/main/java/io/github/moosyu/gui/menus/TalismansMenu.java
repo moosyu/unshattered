@@ -42,7 +42,7 @@ public class TalismansMenu extends AbstractContainerMenu {
 
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {
-                addSlot(new Slot(container, col + row * 9, 8 + col * 18, 17 + row * 18) {
+                addSlot(new Slot(container, col + row * 9, 8 + col * 18, 18 + row * 18) {
                     @Override
                     public boolean mayPlace(@NonNull ItemStack itemStack) {
                         if (itemStack.getComponents().get(UnshatteredDataComponents.ITEM_TYPE) == ItemTypes.TALISMAN) {

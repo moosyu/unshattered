@@ -110,8 +110,10 @@ public class ReforgeAnvilMenu extends ItemCombinerMenu {
 
                     if (itemLevel == bookLevel) {
                         resultLevel = Math.min(itemLevel + 1, bookEnchant.value().getMaxLevel());
+                    } else if (itemLevel < bookLevel) {
+                        resultLevel = bookLevel;
                     } else {
-                        resultLevel = Math.max(itemLevel, bookLevel);
+                        return;
                     }
 
                     ItemStack result = item.copy();

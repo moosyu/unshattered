@@ -2,12 +2,19 @@ package io.github.moosyu.gui.screens;
 
 import io.github.moosyu.gui.menus.StorageMenu;
 import io.github.moosyu.util.UnshatteredUtils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ServerboundContainerClosePacket;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jspecify.annotations.NonNull;
 
 public class StorageScreen extends AbstractContainerScreen<StorageMenu> {
@@ -27,5 +34,20 @@ public class StorageScreen extends AbstractContainerScreen<StorageMenu> {
         int x = (this.width - IMAGE_WIDTH) / 2;
         int y = (this.height - IMAGE_HEIGHT) / 2;
         graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y + Y_OFFSET, 0, 125, IMAGE_WIDTH, 98, 256, 256);
+    }
+
+    @Override
+    public boolean keyPressed(@NonNull KeyEvent event) {
+        Minecraft minecraft = Minecraft.getInstance();
+        LocalPlayer player = minecraft.player;
+
+        if (minecraft.options.keyInventory.matches(event) && player != null) {
+            // to skip this.minecraft.setScreen((Screen) null) which resets mouse position
+            player.connection.send(new ServerboundContainerClosePacket(menu.containerId));
+            minecraft.setScreen(new UnshatteredInventoryScreen(player.inventoryMenu, player.getInventory(), Component.translatable("container.inventory")));
+            return true;
+        }
+
+        return super.keyPressed(event);
     }
 }

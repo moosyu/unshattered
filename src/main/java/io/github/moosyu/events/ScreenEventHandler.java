@@ -1,15 +1,15 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.gui.screens.DialogueScreen;
-import io.github.moosyu.gui.screens.StatsScreen;
 import io.github.moosyu.gui.screens.UnshatteredInventoryScreen;
 import io.github.moosyu.packets.UpdateDialogueStatePacket;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.gui.screens.inventory.CraftingScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ServerboundContainerClosePacket;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -47,6 +47,21 @@ public class ScreenEventHandler {
 
         if (event.getScreen() instanceof DialogueScreen) {
             ClientPacketDistributor.sendToServer(new UpdateDialogueStatePacket(false));
+        }
+    }
+
+    @SubscribeEvent
+    public static void onScreenKeyPressed(ScreenEvent.KeyPressed.Pre event) {
+        Minecraft minecraft = Minecraft.getInstance();
+        LocalPlayer player = minecraft.player;
+        if (Minecraft.getInstance().player == null) return;
+
+        if (event.getScreen() instanceof CraftingScreen craftingScreen) {
+            if (minecraft.options.keyInventory.matches(event.getKeyEvent())) {
+                event.setCanceled(true);
+                player.connection.send(new ServerboundContainerClosePacket(craftingScreen.getMenu().containerId));
+                minecraft.setScreen(new UnshatteredInventoryScreen(player.inventoryMenu, player.getInventory(), Component.translatable("container.inventory")));
+            }
         }
     }
 }

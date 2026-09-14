@@ -8,6 +8,7 @@ import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.player.Player;
 import org.joml.Vector2i;
 import org.jspecify.annotations.NonNull;
 
@@ -45,8 +46,11 @@ public class SimpleScreen extends Screen {
 
     @Override
     public boolean keyPressed(@NonNull KeyEvent event) {
-        if (Minecraft.getInstance().options.keyInventory.matches(event)) {
-            this.onClose();
+        Minecraft minecraft = Minecraft.getInstance();
+        Player player = minecraft.player;
+
+        if (minecraft.options.keyInventory.matches(event) && player != null) {
+            minecraft.setScreen(new UnshatteredInventoryScreen(player.inventoryMenu, player.getInventory(), Component.translatable("container.inventory")));
             return true;
         }
 
