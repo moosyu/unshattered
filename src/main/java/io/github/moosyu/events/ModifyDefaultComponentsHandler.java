@@ -140,6 +140,8 @@ public class ModifyDefaultComponentsHandler {
         modifyVanillaItem(event, Items.ENCHANTED_BOOK, ItemTypes.ENCHANTED_BOOK, UnshatteredRarities.RARE, 1, false);
         modifyVanillaItem(event, Items.POISONOUS_POTATO, ItemTypes.MATERIAL, 10);
         modifyVanillaItem(event, Items.BONE, ItemTypes.MATERIAL, 2);
+        modifyVanillaItem(event, Items.FLINT, ItemTypes.MATERIAL, 4);
+        modifyVanillaItem(event, Items.STRING, ItemTypes.MATERIAL, 3);
     }
 
     /**

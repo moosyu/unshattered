@@ -97,6 +97,9 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.BROKEN_MITHRIL_PICKAXE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.MITHRIL.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_MITHRIL.get(), ModelTemplates.createItem(UnshatteredItems.MITHRIL.getRegisteredName()));
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_FLINT.get(), Items.FLINT, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_STRING.get(), Items.STRING, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.SKELETON_HAT.get(), Items.SKELETON_SKULL, ModelTemplates.FLAT_ITEM);
 
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_GOLD_BLOCK.get(), Blocks.GOLD_BLOCK);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_DIAMOND_BLOCK.get(), Blocks.DIAMOND_BLOCK);
@@ -105,7 +108,7 @@ public class UnshatteredModelProvider extends ModelProvider {
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_COAL_BLOCK.get(), Blocks.COAL_BLOCK);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_LAPIS_BLOCK.get(), Blocks.LAPIS_BLOCK);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_REDSTONE_BLOCK.get(), Blocks.REDSTONE_BLOCK);
-        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_BONE_BLOCK.get(), Blocks.BONE_BLOCK);
+        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_COBBLESTONE.get(), Blocks.COBBLESTONE);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.BEDROCK.get(), Blocks.BEDROCK);
         itemModels.generateFlatItem(UnshatteredItems.HEALING_TISSUE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFishingRod(UnshatteredItems.CHALLENGING_ROD.get());
@@ -116,6 +119,7 @@ public class UnshatteredModelProvider extends ModelProvider {
         createColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_JUNGLE_LOG.get(), Blocks.JUNGLE_LOG);
         createColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_ACACIA_LOG.get(), Blocks.ACACIA_LOG);
         createColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_DARK_OAK_LOG.get(), Blocks.DARK_OAK_LOG);
+        createColumnBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_BONE_BLOCK.get(), Blocks.BONE_BLOCK);
 
         itemModels.itemModelOutput.accept(UnshatteredItems.FISHING_ROD.get(),
                 ItemModelUtils.conditional(new FishingRodCast(),

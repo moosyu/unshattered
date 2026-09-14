@@ -45,7 +45,7 @@ public class DatagenHandler {
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
         generator.addProvider(true, new UnshatteredModelProvider(packOutput));
-        generator.addProvider(true, new EquipmentAssets(packOutput));
+        generator.addProvider(true, new UnshatteredEquipmentAssetProvider(packOutput));
         generator.addProvider(true, new UnshatteredBlockTagsProvider(packOutput, lookupProvider));
         generator.addProvider(true, new UnshatteredItemTagsProvider(packOutput, lookupProvider));
         generator.addProvider(true, new UnshatteredEntityTagsProvider(packOutput, lookupProvider));

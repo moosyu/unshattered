@@ -1,6 +1,7 @@
 package io.github.moosyu.gui.screens;
 
 import io.github.moosyu.packets.OpenCraftingPacket;
+import io.github.moosyu.packets.OpenReforgeAnvilPacket;
 import io.github.moosyu.packets.OpenStoragePacket;
 import io.github.moosyu.packets.OpenTalismanBagPacket;
 import io.github.moosyu.util.UnshatteredUtils;
@@ -48,9 +49,9 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
                 this.topPos + 25,
                 20,
                 18,
-                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/storage")),
-                _ -> ClientPacketDistributor.sendToServer(new OpenStoragePacket())
-        )).setTooltip(Tooltip.create(Component.translatable("container.unshattered.storage")));
+                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/anvil")),
+                _ -> ClientPacketDistributor.sendToServer(new OpenReforgeAnvilPacket())
+        )).setTooltip(Tooltip.create(Component.translatable("container.unshattered.reforge_anvil")));
 
         this.addRenderableWidget(new ImageButton(this.leftPos + 76,
                 this.topPos + 43,
@@ -75,6 +76,14 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
                 new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/skills")),
                 _ -> Minecraft.getInstance().setScreen(new SkillsScreen(Component.translatable("screen.unshattered.skills")))
         )).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.skills")));
+
+        this.addRenderableWidget(new ImageButton(this.leftPos + 136,
+                this.topPos + 61,
+                20,
+                18,
+                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/storage")),
+                _ -> ClientPacketDistributor.sendToServer(new OpenStoragePacket())
+        )).setTooltip(Tooltip.create(Component.translatable("container.unshattered.storage")));
     }
 
 

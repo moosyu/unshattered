@@ -211,6 +211,10 @@ public final class PlayerSkillsAttachment {
         return getExp(skill) - previousThreshold;
     }
 
+    public boolean isMaxLevel(int level) {
+        return level >= SKILL_LEVEL_TABLE.length;
+    }
+
     private static Component attributeGainMessage(UnshatteredAttributeValues attribute, double amount) {
         return Component.literal("    " + ((amount == Math.floor(amount)) ? String.valueOf((long) amount) : String.valueOf(amount)) + (attribute.percentage ? "%" : "")).withColor(0xFF00FF24)
                 .append(Component.literal(" " + attribute.symbol + " ").withColor(attribute.color)

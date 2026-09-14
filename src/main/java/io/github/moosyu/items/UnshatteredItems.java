@@ -20,7 +20,6 @@ import io.github.moosyu.items.weapons.swords.*;
 import io.github.moosyu.rarities.UnshatteredRarities;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.util.UnshatteredUtils;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -663,4 +662,19 @@ public class UnshatteredItems {
     );
 
     public static final DeferredItem<Item> SKELETON_HAT = ITEMS.registerItem("skeleton_hat", SkeletonHat::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_COBBLESTONE = ITEMS.registerItem("enchanted_cobblestone", props -> new EnchantedItem(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 160)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON))
+    );
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_FLINT = ITEMS.registerItem("enchanted_flint", props -> new EnchantedItem(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 640)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON))
+    );
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_STRING = ITEMS.registerItem("enchanted_string", props -> new EnchantedItem(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 576)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON))
+    );
 }

@@ -109,6 +109,9 @@
   "item.unshattered.enchanted_bone": "Enchanted Bone",
   "item.unshattered.enchanted_bone_block": "Enchanted Bone Block",
   "item.unshattered.skeleton_hat": "Skeleton Hat",
+  "item.unshattered.enchanted_cobblestone": "Enchanted Cobblestone",
+  "item.unshattered.enchanted_flint": "Enchanted Flint",
+  "item.unshattered.enchanted_string": "Enchanted String",
 
   "item.ability.unshattered.rogue_sword_speed_boost": "Speed Boost",
   "item.ability.unshattered.mind_blowing": "Mind Blowing",
@@ -369,7 +372,7 @@
   "container.unshattered.talisman_bag": "Talisman Bag",
   "container.unshattered.storage": "Storage",
   "container.unshattered.crafting": "Crafting",
-  "container.unshattered.reforge_anvil": "Reforge Anvil",
+  "container.unshattered.reforge_anvil": "Anvil",
 
   "screen.unshattered.stats": "Stats",
   "screen.unshattered.dialogue": "Dialogue",

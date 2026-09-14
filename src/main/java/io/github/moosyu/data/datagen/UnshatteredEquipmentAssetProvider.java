@@ -20,10 +20,10 @@ import static io.github.moosyu.items.UnshatteredArmourMaterials.LEAFLET_KEY;
 
 // thanks for the code pookie
 // https://github.com/Tutorials-By-Kaupenjoe/NeoForge-Course-26.X/blob/22-armor/src/main/java/net/kaupenjoe/mccourse/datagen/ModEquipmentAsset.java
-public class EquipmentAssets implements DataProvider {
+public class UnshatteredEquipmentAssetProvider implements DataProvider {
     private final PackOutput.PathProvider pathProvider;
 
-    public EquipmentAssets(PackOutput output) {
+    public UnshatteredEquipmentAssetProvider(PackOutput output) {
         this.pathProvider = output.createPathProvider(PackOutput.Target.RESOURCE_PACK, "equipment");
     }
 

@@ -32,14 +32,19 @@ public class SkillsScreen extends SimpleScreen {
         for (int i = 0; i < SKILLS.length; i++) {
             PlayerSkillsAttachment.Skill currentSkill = SKILLS[i];
             int currentLevel = skills.getLevel(skills.getExp(currentSkill));
+            String skillExpText = "";
+
+            if (skills.isMaxLevel(currentLevel)) {
+                skillExpText = String.valueOf((int) skills.getExp(currentSkill));
+            } else {
+                skillExpText = (int) skills.getCurrentLevelExp(currentSkill, currentLevel) + "/" + (int) skills.getNextLevelExpRequirement(currentLevel);
+            }
 
             graphics.text(font,
                     Component.translatable("skills.name.unshattered."
                             + currentSkill.getId()).append(" " + UnshatteredUtils.convertTextToRomanNumeral(currentLevel)
                             + " ("
-                            + (int) skills.getCurrentLevelExp(currentSkill, currentLevel)
-                            + "/"
-                            + (int) skills.getNextLevelExpRequirement(currentLevel)
+                            + skillExpText
                             + ")"
                     ),
                     backgroundTopLeft.x + X_OFFSET,

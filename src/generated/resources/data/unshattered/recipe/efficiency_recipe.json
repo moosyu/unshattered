@@ -1,0 +1,24 @@
+{
+  "type": "unshattered:sized_recipe",
+  "key": {
+    "A": {
+      "count": 1,
+      "ingredient": "minecraft:book"
+    },
+    "B": {
+      "count": 64,
+      "ingredient": "unshattered:enchanted_cobblestone"
+    }
+  },
+  "pattern": [
+    "AB"
+  ],
+  "result": {
+    "components": {
+      "minecraft:stored_enchantments": {
+        "minecraft:efficiency": 1
+      }
+    },
+    "id": "minecraft:enchanted_book"
+  }
+}

@@ -22,6 +22,15 @@ public interface UnshatteredEnchantmentEffects {
         boolean checkPassesEffectRequirement(Player player, T context);
         double getEffectBonus(int level);
         Component getEffectDescription(int level);
+
+        /**
+         * @return carpentry experience for the enchantment at level 1
+         */
+        float initialCarpentryExperience();
+
+        default float getCarpentryExperience(int level) {
+            return (float) Math.pow(2, level - 1) * initialCarpentryExperience();
+        }
     }
 
     interface DamageEffect extends UnshatteredEffect<LivingEntity> {}
@@ -31,17 +40,20 @@ public interface UnshatteredEnchantmentEffects {
             Map.entry(Enchantments.BANE_OF_ARTHROPODS, damageEffect(
                     target -> target.is(EntityTypeTags.SENSITIVE_TO_BANE_OF_ARTHROPODS),
                     level -> level * 0.15,
-                    (_, _) -> "Increases damage to arthropods by: "
+                    (_, _) -> "Increases damage to arthropods by: ",
+                    1843.2f
             )),
             Map.entry(Enchantments.SHARPNESS, damageEffect(
                     _ -> true,
                     level -> level * 0.05,
-                    (_, _) -> "Increases damage dealt by: "
+                    (_, _) -> "Increases damage dealt by: ",
+                    4096.0f
             )),
             Map.entry(Enchantments.SMITE, damageEffect(
                     target -> target.is(EntityTypeTags.SENSITIVE_TO_SMITE),
                     level -> level * 0.1,
-                    (_, _) -> "Increases damage dealt to undead mobs by: "
+                    (_, _) -> "Increases damage dealt to undead mobs by: ",
+                    1024.0f
             )),
             Map.entry(Enchantments.EFFICIENCY, new MiningSpeedEffect() {
                 @Override
@@ -59,6 +71,11 @@ public interface UnshatteredEnchantmentEffects {
                     return Component.literal("Grants ").withColor(0xFFAAAAAA)
                             .append(Component.literal("+" + (int) getEffectBonus(level) + UnshatteredAttributeValues.MINING_SPEED.symbol + ".").withColor(UnshatteredAttributeValues.MINING_SPEED.color));
                 }
+
+                @Override
+                public float initialCarpentryExperience() {
+                    return 1024.0f;
+                }
             })
     );
 
@@ -66,7 +83,7 @@ public interface UnshatteredEnchantmentEffects {
         return Optional.ofNullable(EFFECTS.get(key));
     }
 
-    private static DamageEffect damageEffect(Predicate<LivingEntity> requirement, IntToDoubleFunction bonus, BiFunction<Integer, Double, String> prefix) {
+    private static DamageEffect damageEffect(Predicate<LivingEntity> requirement, IntToDoubleFunction bonus, BiFunction<Integer, Double, String> prefix, float carpentryExperience) {
         return new DamageEffect() {
             @Override
             public boolean checkPassesEffectRequirement(Player player, LivingEntity target) {
@@ -83,6 +100,11 @@ public interface UnshatteredEnchantmentEffects {
                 double bonus = getEffectBonus(level);
                 return Component.literal(prefix.apply(level, bonus)).withColor(0xFFAAAAAA)
                         .append(Component.literal(Math.round(bonus * 100) + "%").withColor(0xFF65EC66));
+            }
+
+            @Override
+            public float initialCarpentryExperience() {
+                return carpentryExperience;
             }
         };
     }

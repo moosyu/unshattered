@@ -3,14 +3,15 @@
   "key": {
     "A": {
       "count": 32,
-      "ingredient": "minecraft:coal_block"
+      "ingredient": "minecraft:flint"
     }
   },
   "pattern": [
+    " A ",
     "AAA",
-    "AA "
+    " A "
   ],
   "result": {
-    "id": "unshattered:enchanted_coal"
+    "id": "unshattered:enchanted_flint"
   }
 }

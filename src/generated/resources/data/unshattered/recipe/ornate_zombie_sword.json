@@ -1,18 +1,10 @@
 {
-  "type": "unshattered:sized_recipe",
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
   "key": {
-    "A": {
-      "count": 1,
-      "ingredient": "unshattered:enchanted_gold_block"
-    },
-    "B": {
-      "count": 1,
-      "ingredient": "unshattered:golden_powder"
-    },
-    "C": {
-      "count": 1,
-      "ingredient": "minecraft:stick"
-    }
+    "A": "unshattered:enchanted_gold_block",
+    "B": "unshattered:golden_powder",
+    "C": "minecraft:stick"
   },
   "pattern": [
     "A",

@@ -4,18 +4,21 @@ import io.github.moosyu.items.UnshatteredItems;
 import io.github.moosyu.data.recipes.SizedItemRecipeBuilder;
 import io.github.moosyu.data.recipes.SizedShapedRecipePattern;
 import io.github.moosyu.util.UnshatteredUtils;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentPatch;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.enchantment.*;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import org.jspecify.annotations.NonNull;
@@ -28,12 +31,17 @@ import java.util.concurrent.CompletableFuture;
 import static io.github.moosyu.Unshattered.MODID;
 
 public class UnshatteredRecipeProvider extends RecipeProvider {
+    final HolderLookup.Provider provider;
     protected UnshatteredRecipeProvider(HolderLookup.Provider provider, RecipeOutput output) {
         super(provider, output);
+
+        this.provider = provider;
     }
 
     @Override
     protected void buildRecipes() {
+        HolderGetter<Item> items = registries.lookupOrThrow(Registries.ITEM);
+
         createEnchantedItemWithBlocksRecipe(output, Items.GOLD_INGOT, Items.GOLD_BLOCK, UnshatteredItems.ENCHANTED_GOLD_INGOT.get());
         createEnchantedItemRecipe(output, UnshatteredItems.ENCHANTED_GOLD_INGOT, UnshatteredItems.ENCHANTED_GOLD_BLOCK.get());
         createEnchantedItemWithBlocksRecipe(output, Items.DIAMOND, Items.DIAMOND_BLOCK, UnshatteredItems.ENCHANTED_DIAMOND.get());
@@ -58,23 +66,32 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
         createEnchantedItemRecipe(output, Items.POISONOUS_POTATO, UnshatteredItems.ENCHANTED_POISONOUS_POTATO.get());
         createEnchantedItemRecipe(output, Items.BONE, UnshatteredItems.ENCHANTED_BONE.get());
         createEnchantedItemRecipe(output, UnshatteredItems.ENCHANTED_BONE, UnshatteredItems.ENCHANTED_BONE_BLOCK.get());
+        createEnchantedItemRecipe(output, Items.STRING, UnshatteredItems.ENCHANTED_STRING.get());
+        createEnchantedItemRecipe(output, Items.FLINT, UnshatteredItems.ENCHANTED_FLINT.get());
+        createEnchantedItemRecipe(output, Items.COBBLESTONE, UnshatteredItems.ENCHANTED_COBBLESTONE.get());
 
         new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.ZOMBIE_HEART.get()))
                 .pattern("AAA", "A A", "AAA")
                 .define('A', SizedIngredient.of(UnshatteredItems.ENCHANTED_ROTTEN_FLESH, 32))
                 .save(output);
 
-        new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.ZOMBIE_SWORD.get()))
-                .pattern("A", "A", "C")
-                .define('A', singleSizedIngredient(UnshatteredItems.ZOMBIE_HEART))
-                .define('C', singleSizedIngredient(Items.STICK))
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.COMBAT, UnshatteredItems.ZOMBIE_SWORD)
+                .pattern("A")
+                .pattern("A")
+                .pattern("B")
+                .define('A', UnshatteredItems.ZOMBIE_HEART)
+                .define('B', Items.STICK)
+                .unlockedBy(getHasName(UnshatteredItems.ZOMBIE_HEART), has(UnshatteredItems.ZOMBIE_HEART))
                 .save(output);
 
-        new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.ORNATE_ZOMBIE_SWORD.get()))
-                .pattern("A", "B", "C")
-                .define('A', singleSizedIngredient(UnshatteredItems.ENCHANTED_GOLD_BLOCK))
-                .define('B', singleSizedIngredient(UnshatteredItems.GOLDEN_POWDER))
-                .define('C', singleSizedIngredient(Items.STICK))
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.COMBAT, UnshatteredItems.ORNATE_ZOMBIE_SWORD)
+                .pattern("A")
+                .pattern("B")
+                .pattern("C")
+                .define('A', UnshatteredItems.ENCHANTED_GOLD_BLOCK)
+                .define('B', UnshatteredItems.GOLDEN_POWDER)
+                .define('C', Items.STICK)
+                .unlockedBy(getHasName(UnshatteredItems.GOLDEN_POWDER), has(UnshatteredItems.GOLDEN_POWDER))
                 .save(output);
 
         new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.FLORID_ZOMBIE_SWORD.get()))
@@ -88,6 +105,19 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
                 .define('A', SizedIngredient.of(Items.EMERALD, 5))
                 .define('B', SizedIngredient.of(Items.GOLD_INGOT, 5))
                 .save(output);
+
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.COMBAT, UnshatteredItems.SKELETON_HAT)
+                .pattern("BBB")
+                .pattern("B B")
+                .pattern("BBB")
+                .define('B', Items.BONE)
+                .unlockedBy(getHasName(Items.BONE), has(Items.BONE))
+                .save(output);
+
+        createSimpleEnchantedBook(Enchantments.EFFICIENCY, 1, UnshatteredItems.ENCHANTED_COBBLESTONE, 64);
+        createSimpleEnchantedBook(Enchantments.SMITE, 1, UnshatteredItems.ENCHANTED_ROTTEN_FLESH, 32);
+        createSimpleEnchantedBook(Enchantments.SHARPNESS, 1, UnshatteredItems.ENCHANTED_FLINT, 64);
+        createSimpleEnchantedBook(Enchantments.BANE_OF_ARTHROPODS, 1, UnshatteredItems.ENCHANTED_STRING, 32);
     }
 
     public static class Runner extends RecipeProvider.Runner {
@@ -108,39 +138,25 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
 
     /**
      * creates a simple recipe with a shape across and then down (sorry im bad at describing things)
-     * @param output output
      * @param result the item  to be crafted
      * @param ingredients sized ingredients required to create the result
      */
-    private void createRecipe(RecipeOutput output, Item result, SizedIngredient... ingredients) {
-        createRecipe(output, result, 1, createRecipeResourceKey(result), ingredients);
+    private void createRecipe(Item result, SizedIngredient... ingredients) {
+        createRecipe(new ItemStackTemplate(result), 1, createRecipeResourceKey(result), ingredients);
     }
 
     /**
      * creates a simple recipe with a shape across and then down (sorry im bad at describing things)
-     * @param output output
-     * @param result the item  to be crafted
-     * @param amount amount of item crafted
-     * @param ingredients sized ingredients required to create the result
-     */
-    private void createRecipe(RecipeOutput output, Item result, int amount, SizedIngredient... ingredients) {
-        createRecipe(output, result, amount, createRecipeResourceKey(result), ingredients);
-    }
-
-    /**
-     * creates a simple recipe with a shape across and then down (sorry im bad at describing things)
-     * @param output output
-     * @param result the item crafted
      * @param amount amount of item crafted
      * @param key recipe identifier key
      * @param ingredients sized ingredients required to create the item
      */
-    private void createRecipe(RecipeOutput output, Item result, int amount, ResourceKey<Recipe<?>> key, SizedIngredient... ingredients) {
+    private void createRecipe(ItemStackTemplate itemStackTemplate, int amount, ResourceKey<Recipe<?>> key, SizedIngredient... ingredients) {
         if (ingredients.length == 0 || ingredients.length > 9) {
             throw new IllegalArgumentException("count must be between 1 and 9");
         }
 
-        SizedItemRecipeBuilder builder = new SizedItemRecipeBuilder(new ItemStackTemplate(result, amount));
+        SizedItemRecipeBuilder builder = new SizedItemRecipeBuilder(itemStackTemplate);
         int width = Math.min(ingredients.length, 3);
         int height = (int) Math.ceil(ingredients.length / (double) width);
         char[] symbols = "ABCDEFGHI".toCharArray();
@@ -189,7 +205,7 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
     private void createEnchantedItemRecipe(RecipeOutput output, ItemLike ingredient, Item result) {
         SizedIngredient[] ingredients = new SizedIngredient[5];
         Arrays.fill(ingredients, SizedIngredient.of(ingredient, 32));
-        createRecipe(output, result, ingredients);
+        createRecipe(result, ingredients);
 
         SizedItemRecipeBuilder builder = new SizedItemRecipeBuilder(new ItemStackTemplate(result));
         builder.pattern(" A ", "AAA", " A ")
@@ -207,7 +223,7 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
     private void createEnchantedItemWithBlocksRecipe(RecipeOutput output, ItemLike itemIngredient, ItemLike blockIngredient, Item result) {
         SizedIngredient[] ingredients = new SizedIngredient[5];
         Arrays.fill(ingredients, SizedIngredient.of(itemIngredient, 32));
-        createRecipe(output, result, ingredients);
+        createRecipe(result, ingredients);
 
         SizedItemRecipeBuilder builderItem = new SizedItemRecipeBuilder(new ItemStackTemplate(result));
         builderItem.pattern(" A ", "AAA", " A ")
@@ -215,8 +231,7 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
                 .save(output, createRecipeResourceKey(result, "_2"));
 
         Arrays.fill(ingredients, SizedIngredient.of(blockIngredient, 32));
-        createRecipe(output,
-                result,
+        createRecipe(new ItemStackTemplate(result),
                 9,
                 createRecipeResourceKey(result, "_3"),
                 ingredients
@@ -226,6 +241,19 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
         builderBlock.pattern(" A ", "AAA", " A ")
                 .define('A', SizedIngredient.of(blockIngredient, 32))
                 .save(output, createRecipeResourceKey(result, "_4"));
+    }
+
+    private void createSimpleEnchantedBook(ResourceKey<Enchantment> enchantment, int level, ItemLike ingredient, int amount) {
+        ItemEnchantments.Mutable mutable = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
+        mutable.set(provider.holderOrThrow(enchantment), level);
+        ItemEnchantments enchantments = mutable.toImmutable();
+
+        createRecipe(new ItemStackTemplate(BuiltInRegistries.ITEM.wrapAsHolder(Items.ENCHANTED_BOOK), 1, DataComponentPatch.builder().set(DataComponents.STORED_ENCHANTMENTS, enchantments).build()),
+                1,
+                ResourceKey.create(Registries.RECIPE, UnshatteredUtils.getUnshatteredIdentifier(enchantments.keySet().iterator().next().value().description().getString() + "_recipe")),
+                singleSizedIngredient(Items.BOOK),
+                SizedIngredient.of(ingredient, amount)
+        );
     }
 
     private SizedIngredient singleSizedIngredient(ItemLike item) {

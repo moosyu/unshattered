@@ -3,7 +3,7 @@
   "key": {
     "A": {
       "count": 32,
-      "ingredient": "minecraft:coal_block"
+      "ingredient": "minecraft:string"
     }
   },
   "pattern": [
@@ -11,6 +11,6 @@
     "AA "
   ],
   "result": {
-    "id": "unshattered:enchanted_coal"
+    "id": "unshattered:enchanted_string"
   }
 }

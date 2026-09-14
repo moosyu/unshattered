@@ -4,8 +4,8 @@ import io.github.moosyu.gui.menus.ReforgeAnvilMenu;
 import io.github.moosyu.packets.OpenReforgeAnvilPacket;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class OpenReforgeAnvilHandler {
@@ -17,7 +17,7 @@ public class OpenReforgeAnvilHandler {
                          inventory,
                          _) -> new ReforgeAnvilMenu(containerId,
                                 inventory,
-                                new SimpleContainer(3)
+                                ContainerLevelAccess.create(serverPlayer.level(), serverPlayer.blockPosition())
                         ),
                         Component.translatable("container.unshattered.reforge_anvil")
                 ));
