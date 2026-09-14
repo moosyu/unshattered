@@ -393,7 +393,9 @@
 
   "screen.unshattered.stats": "Stats",
   "screen.unshattered.dialogue": "Dialogue",
-  "screen.unshattered.skills":  "Skills",
+  "screen.unshattered.skills": "Skills",
+  "screen.unshattered.collections": "Collections",
+  "screen.unshattered.pets": "Pets",
 
   "widget.unshattered.narration.scroller": "Scroller Widget"
 }

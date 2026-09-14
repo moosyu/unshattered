@@ -1,5 +1,6 @@
 package io.github.moosyu.gui.screens;
 
+import io.github.moosyu.gui.widgets.SoundlessImageButton;
 import io.github.moosyu.packets.OpenCraftingPacket;
 import io.github.moosyu.packets.OpenReforgeAnvilPacket;
 import io.github.moosyu.packets.OpenStoragePacket;
@@ -13,14 +14,14 @@ import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jspecify.annotations.NonNull;
-
-import static io.github.moosyu.Unshattered.MODID;
 
 public class UnshatteredInventoryScreen extends AbstractContainerScreen<InventoryMenu> {
     private static final Identifier TEXTURE = Identifier.withDefaultNamespace("textures/gui/container/inventory.png");
@@ -28,6 +29,7 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
     public final int IMAGE_HEIGHT = 166;
     private float xMouse;
     private float yMouse;
+    private final RandomSource randomSource = RandomSource.create();
 
     public UnshatteredInventoryScreen(InventoryMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
@@ -37,53 +39,59 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
     protected void init() {
         super.init();
 
-        addRenderableWidget(new ImageButton(leftPos + 76,
+        addRenderableWidget(new SoundlessImageButton(leftPos + 76,
                 topPos + 7,
                 20,
                 18,
                 new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/crafting")),
-                _ -> ClientPacketDistributor.sendToServer(new OpenCraftingPacket())
-        )).setTooltip(Tooltip.create(Component.translatable("container.unshattered.crafting")));
+                _ -> ClientPacketDistributor.sendToServer(new OpenCraftingPacket()))
+        ).setTooltip(Tooltip.create(Component.translatable("container.unshattered.crafting")));
 
-        addRenderableWidget(new ImageButton(leftPos + 76,
+        addRenderableWidget(new SoundlessImageButton(leftPos + 76,
                 topPos + 25,
                 20,
                 18,
-                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/anvil")),
-                _ -> ClientPacketDistributor.sendToServer(new OpenReforgeAnvilPacket())
-        )).setTooltip(Tooltip.create(Component.translatable("container.unshattered.reforge_anvil")));
+                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/collections")),
+                _ -> {})).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.collections")));
 
-        addRenderableWidget(new ImageButton(leftPos + 76,
+        addRenderableWidget(new SoundlessImageButton(leftPos + 76,
                 topPos + 43,
                 20,
                 18,
                 new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/talisman_bag")),
-                _ -> ClientPacketDistributor.sendToServer(new OpenTalismanBagPacket())
-        )).setTooltip(Tooltip.create(Component.translatable("container.unshattered.talisman_bag")));
+                _ -> ClientPacketDistributor.sendToServer(new OpenTalismanBagPacket()))
+        ).setTooltip(Tooltip.create(Component.translatable("container.unshattered.talisman_bag")));
 
-        addRenderableWidget(new ImageButton(leftPos + 97,
+        addRenderableWidget(new SoundlessImageButton(leftPos + 97,
                 topPos + 60,
                 20,
                 18,
                 new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/stats")),
-                _ -> Minecraft.getInstance().setScreen(new StatsScreen(Component.translatable("screen.unshattered.stats")))
-        )).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.stats")));
+                _ -> Minecraft.getInstance().setScreen(new StatsScreen(Component.translatable("screen.unshattered.stats"))))
+        ).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.stats")));
 
-        addRenderableWidget(new ImageButton(leftPos + 114,
+        addRenderableWidget(new SoundlessImageButton(leftPos + 114,
                 topPos + 61,
                 20,
                 18,
                 new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/skills")),
-                _ -> Minecraft.getInstance().setScreen(new SkillsScreen(Component.translatable("screen.unshattered.skills")))
-        )).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.skills")));
+                _ -> Minecraft.getInstance().setScreen(new SkillsScreen(Component.translatable("screen.unshattered.skills"))))
+        ).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.skills")));
 
-        addRenderableWidget(new ImageButton(leftPos + 131,
+        addRenderableWidget(new SoundlessImageButton(leftPos + 131,
                 topPos + 61,
                 20,
                 18,
                 new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/storage")),
-                _ -> ClientPacketDistributor.sendToServer(new OpenStoragePacket())
-        )).setTooltip(Tooltip.create(Component.translatable("container.unshattered.storage")));
+                _ -> ClientPacketDistributor.sendToServer(new OpenStoragePacket()))
+        ).setTooltip(Tooltip.create(Component.translatable("container.unshattered.storage")));
+
+        addRenderableWidget(new SoundlessImageButton(leftPos + 150,
+                topPos + 61,
+                20,
+                18,
+                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/pets")),
+                _ -> {})).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.pets")));
     }
 
 
