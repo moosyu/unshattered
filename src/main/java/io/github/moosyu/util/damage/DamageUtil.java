@@ -83,8 +83,8 @@ public final class DamageUtil {
         }
 
         double damage = (5 + player.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder))
-                * (1 + (player.getAttributeValue(UnshatteredAttributeValues.STRENGTH.holder) / 100))
-                * (1 + (critDamage / 100))
+                * (1 + (player.getAttributeValue(UnshatteredAttributeValues.STRENGTH.holder) / 20))
+                * (1 + (critDamage / 20))
                 * (player.getAttributeValue(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder) + damageBonus)
                 * attackStrength;
         AttributeInstance targetHealth = target.getAttribute(UnshatteredAttributeValues.HEALTH.holder);

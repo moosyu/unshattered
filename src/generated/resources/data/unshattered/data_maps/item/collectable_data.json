@@ -1,8 +1,97 @@
 {
   "values": {
+    "minecraft:cobblestone": {
+      "category": "mining",
+      "levels": [
+        {
+          "collectable_rewards": [
+            {
+              "type": "experience",
+              "amount": 250.0,
+              "experience_type": "mining"
+            }
+          ],
+          "item_requirement": 50
+        }
+      ]
+    },
+    "minecraft:diamond": {
+      "category": "mining",
+      "levels": [
+        {
+          "collectable_rewards": [
+            {
+              "type": "experience",
+              "amount": 250.0,
+              "experience_type": "mining"
+            }
+          ],
+          "item_requirement": 50
+        }
+      ]
+    },
+    "minecraft:emerald": {
+      "category": "mining",
+      "levels": [
+        {
+          "collectable_rewards": [
+            {
+              "type": "experience",
+              "amount": 250.0,
+              "experience_type": "mining"
+            }
+          ],
+          "item_requirement": 50
+        }
+      ]
+    },
+    "minecraft:gold_ingot": {
+      "category": "mining",
+      "levels": [
+        {
+          "collectable_rewards": [
+            {
+              "type": "experience",
+              "amount": 250.0,
+              "experience_type": "mining"
+            }
+          ],
+          "item_requirement": 50
+        }
+      ]
+    },
+    "minecraft:iron_ingot": {
+      "category": "mining",
+      "levels": [
+        {
+          "collectable_rewards": [
+            {
+              "type": "experience",
+              "amount": 250.0,
+              "experience_type": "mining"
+            }
+          ],
+          "item_requirement": 50
+        }
+      ]
+    },
+    "minecraft:redstone": {
+      "category": "mining",
+      "levels": [
+        {
+          "collectable_rewards": [
+            {
+              "type": "experience",
+              "amount": 250.0,
+              "experience_type": "mining"
+            }
+          ],
+          "item_requirement": 100
+        }
+      ]
+    },
     "minecraft:rotten_flesh": {
       "category": "combat",
-      "item": "minecraft:rotten_flesh",
       "levels": [
         {
           "collectable_rewards": [
@@ -23,6 +112,21 @@
             }
           ],
           "item_requirement": 100
+        }
+      ]
+    },
+    "unshattered:mithril": {
+      "category": "mining",
+      "levels": [
+        {
+          "collectable_rewards": [
+            {
+              "type": "experience",
+              "amount": 250.0,
+              "experience_type": "mining"
+            }
+          ],
+          "item_requirement": 50
         }
       ]
     }

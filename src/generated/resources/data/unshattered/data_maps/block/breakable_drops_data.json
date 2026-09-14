@@ -63,8 +63,8 @@
         "drop_chance": 1.0,
         "item_range": {
           "item": "minecraft:copper_ingot",
-          "max_amount": 1,
-          "min_amount": 1
+          "max_amount": 5,
+          "min_amount": 2
         }
       }
     ],
@@ -181,8 +181,8 @@
         "drop_chance": 1.0,
         "item_range": {
           "item": "minecraft:redstone",
-          "max_amount": 1,
-          "min_amount": 1
+          "max_amount": 5,
+          "min_amount": 4
         }
       }
     ],
@@ -221,7 +221,7 @@
         "drop_chance": 1.0,
         "item_range": {
           "item": "minecraft:wheat",
-          "max_amount": 1,
+          "max_amount": 2,
           "min_amount": 1
         }
       }

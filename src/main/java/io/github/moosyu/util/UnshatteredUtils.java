@@ -2,7 +2,6 @@ package io.github.moosyu.util;
 
 import io.github.moosyu.Unshattered;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.collectables.CollectableEntries;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.attachments.PlayerCollectionsAttachment;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
@@ -247,7 +246,7 @@ public final class UnshatteredUtils {
      */    public static void addItemToCollection(Player player, ItemStack itemStack) {
         if (itemStack.isEmpty()
                 || itemStack.count() < 1
-                || CollectableEntries.getCollectableEntry(itemStack.typeHolder()) == null
+                || itemStack.typeHolder().getData(UnshatteredDataMaps.COLLECTABLE_DATA) == null
         ) return;
 
         PlayerCollectionsAttachment collections = player.getData(UnshatteredAttachments.PLAYER_COLLECTIONS.get());

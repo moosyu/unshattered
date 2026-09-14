@@ -42,7 +42,8 @@ public class UnshatteredItems {
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("mercenary_axe_damage"), 8, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("mercenary_axe_strength"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("mercenary_axe_strength"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(Attributes.ATTACK_SPEED, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("mercenary_axe_attack_speed"), -3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
             )
     ));

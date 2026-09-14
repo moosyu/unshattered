@@ -41,7 +41,7 @@ public class RenderNameTagHandler {
             return;
         }
 
-        if (entity instanceof LivingEntity livingEntity && !livingEntity.is(EntityType.ARMOR_STAND)) {
+        if (entity instanceof LivingEntity livingEntity && !livingEntity.is(EntityType.ARMOR_STAND) && livingEntity.getPassengers().isEmpty()) {
             event.setCanRender(TriState.TRUE);
             AttributeInstance healthAttribute = livingEntity.getAttribute(UnshatteredAttributeValues.HEALTH.holder);
             if (healthAttribute == null) {

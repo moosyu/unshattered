@@ -268,12 +268,12 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK, new ItemRange(Items.COBBLESTONE));
         createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_COAL_ORE_BLOCK, new ItemRange(Items.COAL));
         createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_IRON_ORE_BLOCK, new ItemRange(Items.IRON_INGOT));
-        createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_COPPER_ORE_BLOCK, new ItemRange(Items.COPPER_INGOT));
+        createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_COPPER_ORE_BLOCK, new ItemRange(Items.COPPER_INGOT, 2, 5));
         createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_GOLD_ORE_BLOCK, new ItemRange(Items.GOLD_INGOT));
-        createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_REDSTONE_ORE_BLOCK, new ItemRange(Items.REDSTONE));
+        createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_REDSTONE_ORE_BLOCK, new ItemRange(Items.REDSTONE, 4, 5));
         createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_EMERALD_ORE_BLOCK, new ItemRange(Items.EMERALD));
         createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_DIAMOND_ORE_BLOCK, new ItemRange(Items.DIAMOND));
-        createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK, new ItemRange(Items.WHEAT));
+        createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK, new ItemRange(Items.WHEAT, 1, 2));
         createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.PURE_DIAMOND_BLOCK, new ItemRange(Items.COBBLESTONE));
         createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_OBSIDIAN_BLOCK, new ItemRange(Items.OBSIDIAN));
         createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_OAK_LOG_BLOCK, new ItemRange(Items.OAK_LOG));
@@ -305,12 +305,31 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         );
 
         this.builder(COLLECTABLE_DATA)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.ROTTEN_FLESH), new CollectableItemEntry(CollectableCategories.COMBAT, Items.ROTTEN_FLESH,
-                        List.of(new CollectableLevel(50,
-                                        List.of(new ExperienceCollectableReward(250, PlayerSkillsAttachment.Skill.COMBAT))
-                                ), new CollectableLevel(100,
-                                        List.of(new ItemCollectableReward(UnshatteredItems.ENCHANTED_ROTTEN_FLESH.get(), 1)))
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.ROTTEN_FLESH), new CollectableItemEntry(CollectableCategories.COMBAT,
+                        List.of(new CollectableLevel(50, List.of(new ExperienceCollectableReward(250, PlayerSkillsAttachment.Skill.COMBAT))),
+                                new CollectableLevel(100, List.of(new ItemCollectableReward(UnshatteredItems.ENCHANTED_ROTTEN_FLESH.get(), 1)))
                         )
+                ), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.COBBLESTONE), new CollectableItemEntry(CollectableCategories.MINING,
+                        List.of(new CollectableLevel(50, List.of(new ExperienceCollectableReward(250, PlayerSkillsAttachment.Skill.MINING))))
+                ), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.GOLD_INGOT), new CollectableItemEntry(CollectableCategories.MINING,
+                        List.of(new CollectableLevel(50, List.of(new ExperienceCollectableReward(250, PlayerSkillsAttachment.Skill.MINING))))
+                ), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.DIAMOND), new CollectableItemEntry(CollectableCategories.MINING,
+                        List.of(new CollectableLevel(50, List.of(new ExperienceCollectableReward(250, PlayerSkillsAttachment.Skill.MINING))))
+                ), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.EMERALD), new CollectableItemEntry(CollectableCategories.MINING,
+                        List.of(new CollectableLevel(50, List.of(new ExperienceCollectableReward(250, PlayerSkillsAttachment.Skill.MINING))))
+                ), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.IRON_INGOT), new CollectableItemEntry(CollectableCategories.MINING,
+                        List.of(new CollectableLevel(50, List.of(new ExperienceCollectableReward(250, PlayerSkillsAttachment.Skill.MINING))))
+                ), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.REDSTONE), new CollectableItemEntry(CollectableCategories.MINING,
+                        List.of(new CollectableLevel(100, List.of(new ExperienceCollectableReward(250, PlayerSkillsAttachment.Skill.MINING))))
+                ), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.MITHRIL.get()), new CollectableItemEntry(CollectableCategories.MINING,
+                        List.of(new CollectableLevel(50, List.of(new ExperienceCollectableReward(250, PlayerSkillsAttachment.Skill.MINING))))
                 ), false);
     }
 

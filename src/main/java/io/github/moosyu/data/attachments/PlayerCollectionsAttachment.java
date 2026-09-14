@@ -1,10 +1,12 @@
 package io.github.moosyu.data.attachments;
 
 import com.mojang.serialization.Codec;
-import io.github.moosyu.collectables.CollectableEntries;
+import io.github.moosyu.Unshattered;
 import io.github.moosyu.collectables.CollectableItemEntry;
 import io.github.moosyu.collectables.CollectableLevel;
 import io.github.moosyu.collectables.rewards.CollectableReward;
+import io.github.moosyu.data.UnshatteredDataMaps;
+import io.github.moosyu.data.datagen.UnshatteredDataMapProvider;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -30,18 +32,18 @@ public record PlayerCollectionsAttachment(Map<Holder<Item>, Integer> collectedIt
 
     public void addPickedUpItem(ItemStack itemStack, Player player) {
         Holder<Item> itemHolder = itemStack.typeHolder();
-        CollectableItemEntry collectableItemEntry = CollectableEntries.getCollectableEntry(itemHolder);
+        CollectableItemEntry collectableData = itemHolder.getData(UnshatteredDataMaps.COLLECTABLE_DATA);
 
-        if (collectableItemEntry == null) return;
+        if (collectableData == null) return;
 
-        int currentLevel = getLevel(player, collectableItemEntry);
+        int currentLevel = getLevel(player, itemHolder);
 
-        this.collectedItems.put(itemHolder, this.collectedItems.getOrDefault(itemHolder, 0) + itemStack.count());
+        collectedItems.put(itemHolder, collectedItems.getOrDefault(itemHolder, 0) + itemStack.count());
 
-        int newLevel = getLevel(player, collectableItemEntry);
+        int newLevel = getLevel(player, itemHolder);
         if (newLevel > currentLevel) {
             for (int i = 0; i < newLevel - currentLevel; i++) {
-                for (CollectableReward collectableReward : collectableItemEntry.levels().get(currentLevel + i).rewards()) {
+                for (CollectableReward collectableReward : collectableData.levels().get(currentLevel + i).rewards()) {
                     collectableReward.reward(player);
                 }
             }
@@ -49,22 +51,29 @@ public record PlayerCollectionsAttachment(Map<Holder<Item>, Integer> collectedIt
     }
 
     public int getCount(Holder<Item> item) {
-        return this.collectedItems.getOrDefault(item, 0);
+        return collectedItems.getOrDefault(item, 0);
     }
 
     public Map<Holder<Item>, Integer> getMap() {
-        return this.collectedItems;
+        return collectedItems;
     }
 
     /**
      * @param player player having their level checked
-     * @param entry collectable item being checked
+     * @param itemHolder collectable item being checked
      * @return the level the player is currently at for the specified collectable item
      */
-    public int getLevel(Player player, CollectableItemEntry entry) {
+    public int getLevel(Player player, Holder<Item> itemHolder) {
         PlayerCollectionsAttachment collections = player.getData(UnshatteredAttachments.PLAYER_COLLECTIONS.get());
-        int itemCount = collections.getCount(BuiltInRegistries.ITEM.wrapAsHolder(entry.item()));
-        List<CollectableLevel> levels = entry.levels();
+        CollectableItemEntry itemEntry = itemHolder.getData(UnshatteredDataMaps.COLLECTABLE_DATA);
+        int itemCount = collections.getCount(itemHolder);
+
+        if (itemEntry == null) {
+            Unshattered.LOGGER.error("missing item entry for {}! returned 0.", itemHolder.getRegisteredName());
+            return 0;
+        }
+
+        List<CollectableLevel> levels = itemEntry.levels();
 
         int currentLevel = 0;
         float totalItemsRequiredForNextLevel = 0;

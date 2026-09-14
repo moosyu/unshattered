@@ -61,15 +61,15 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
                 _ -> ClientPacketDistributor.sendToServer(new OpenTalismanBagPacket())
         )).setTooltip(Tooltip.create(Component.translatable("container.unshattered.talisman_bag")));
 
-        addRenderableWidget(new ImageButton(leftPos + 96,
-                topPos + 61,
+        addRenderableWidget(new ImageButton(leftPos + 97,
+                topPos + 60,
                 20,
                 18,
                 new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/stats")),
                 _ -> Minecraft.getInstance().setScreen(new StatsScreen(Component.translatable("screen.unshattered.stats")))
         )).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.stats")));
 
-        addRenderableWidget(new ImageButton(leftPos + 116,
+        addRenderableWidget(new ImageButton(leftPos + 114,
                 topPos + 61,
                 20,
                 18,
@@ -77,7 +77,7 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
                 _ -> Minecraft.getInstance().setScreen(new SkillsScreen(Component.translatable("screen.unshattered.skills")))
         )).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.skills")));
 
-        addRenderableWidget(new ImageButton(leftPos + 136,
+        addRenderableWidget(new ImageButton(leftPos + 131,
                 topPos + 61,
                 20,
                 18,
