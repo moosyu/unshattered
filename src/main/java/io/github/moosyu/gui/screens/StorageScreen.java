@@ -21,7 +21,7 @@ public class StorageScreen extends AbstractContainerScreen<StorageMenu> {
     private static final Identifier TEXTURE = UnshatteredUtils.getUnshatteredIdentifier("textures/gui/storage.png");
     public final int IMAGE_WIDTH = 176;
     public final int IMAGE_HEIGHT = 222;
-    public final int Y_OFFSET = 0;
+    public final int Y_OFFSET = 28;
 
     public StorageScreen(StorageMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
@@ -33,7 +33,7 @@ public class StorageScreen extends AbstractContainerScreen<StorageMenu> {
 
         int x = (this.width - IMAGE_WIDTH) / 2;
         int y = (this.height - IMAGE_HEIGHT) / 2;
-        graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y + Y_OFFSET, 0, 125, IMAGE_WIDTH, 98, 256, 256);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y - Y_OFFSET, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, 256, 256);
     }
 
     @Override
@@ -49,5 +49,11 @@ public class StorageScreen extends AbstractContainerScreen<StorageMenu> {
         }
 
         return super.keyPressed(event);
+    }
+
+    @Override
+    protected void extractLabels(@NonNull GuiGraphicsExtractor graphics, int xm, int ym) {
+        graphics.text(this.font, this.title, this.titleLabelX, this.titleLabelY - 56, 0xFF404040, false);
+        graphics.text(this.font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, 0xFF404040, false);
     }
 }

@@ -1,4 +1,4 @@
-package io.github.moosyu.gui.menus.storage;
+package io.github.moosyu.gui.menus.containers;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.SimpleContainer;

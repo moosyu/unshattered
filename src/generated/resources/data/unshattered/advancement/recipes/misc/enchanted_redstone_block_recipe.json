@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_enchanted_redstone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "unshattered:enchanted_redstone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "unshattered:enchanted_redstone_block_recipe"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_enchanted_redstone"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "unshattered:enchanted_redstone_block_recipe"
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "unshattered:sized_recipe",
+  "key": {
+    "O": {
+      "count": 8,
+      "ingredient": "unshattered:enchanted_obsidian"
+    },
+    "S": {
+      "count": 1,
+      "ingredient": "unshattered:spruce_axe"
+    }
+  },
+  "pattern": [
+    "OOO",
+    "OSO",
+    "OOO"
+  ],
+  "result": {
+    "id": "unshattered:treecapitator"
+  }
+}

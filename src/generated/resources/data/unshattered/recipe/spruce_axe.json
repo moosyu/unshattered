@@ -1,0 +1,21 @@
+{
+  "type": "unshattered:sized_recipe",
+  "key": {
+    "S": {
+      "count": 1,
+      "ingredient": "minecraft:stick"
+    },
+    "W": {
+      "count": 32,
+      "ingredient": "minecraft:spruce_log"
+    }
+  },
+  "pattern": [
+    " WW",
+    " SW",
+    " S "
+  ],
+  "result": {
+    "id": "unshattered:spruce_axe"
+  }
+}

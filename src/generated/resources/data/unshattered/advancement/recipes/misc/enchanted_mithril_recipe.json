@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_mithril": {
+      "conditions": {
+        "items": [
+          {
+            "items": "unshattered:mithril"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "unshattered:enchanted_mithril_recipe"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_mithril"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "unshattered:enchanted_mithril_recipe"
+    ]
+  }
+}

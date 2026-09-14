@@ -129,6 +129,7 @@ public class UnshatteredCreativeTabs {
                 output.accept(ENCHANTED_COBBLESTONE);
                 output.accept(ENCHANTED_FLINT);
                 output.accept(ENCHANTED_STRING);
+                output.accept(ENCHANTED_OBSIDIAN);
         }).build()
     );
 

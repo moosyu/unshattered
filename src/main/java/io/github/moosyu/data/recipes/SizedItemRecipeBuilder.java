@@ -3,7 +3,9 @@ package io.github.moosyu.data.recipes;
 import io.github.moosyu.data.datagen.UnshatteredRecipeProvider;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeUnlockAdvancementBuilder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Recipe;
@@ -20,9 +22,13 @@ public class SizedItemRecipeBuilder implements RecipeBuilder {
     private final ItemStackTemplate result;
     private final Map<Character, SizedIngredient> key = new LinkedHashMap<>();
     private final List<String> pattern = new ArrayList<>();
+    private final RecipeUnlockAdvancementBuilder advancementBuilder;
+    private final RecipeCategory category;
 
-    public SizedItemRecipeBuilder(ItemStackTemplate result) {
+    public SizedItemRecipeBuilder(ItemStackTemplate result, RecipeCategory category) {
         this.result = result;
+        this.advancementBuilder = new RecipeUnlockAdvancementBuilder();
+        this.category = category;
     }
 
     public SizedItemRecipeBuilder pattern(String... rows) {
@@ -45,6 +51,7 @@ public class SizedItemRecipeBuilder implements RecipeBuilder {
 
     @Override
     public @NonNull RecipeBuilder unlockedBy(@NonNull String name, @NonNull Criterion<?> criterion) {
+        this.advancementBuilder.unlockedBy(name, criterion);
         return this;
     }
 
@@ -60,6 +67,6 @@ public class SizedItemRecipeBuilder implements RecipeBuilder {
 
     @Override
     public void save(RecipeOutput output, @NonNull ResourceKey<Recipe<?>> key) {
-        output.accept(key, new SizedItemRecipe(this.result, SizedShapedRecipePattern.of(this.key, this.pattern)), null);
+        output.accept(key, new SizedItemRecipe(this.result, SizedShapedRecipePattern.of(this.key, this.pattern)), advancementBuilder.build(output, key, category));
     }
 }

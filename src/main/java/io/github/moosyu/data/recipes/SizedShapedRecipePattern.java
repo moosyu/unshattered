@@ -34,8 +34,8 @@ public final class SizedShapedRecipePattern {
                     SizedShapedRecipePattern::createFromNetwork
             );
 
-    private final int width;
-    private final int height;
+    public final int width;
+    public final int height;
     private final List<Optional<SizedIngredient>> ingredients;
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     private final Optional<Data> data;

@@ -28,6 +28,9 @@ public class ReforgeAnvilScreen extends AbstractContainerScreen<ReforgeAnvilMenu
     }
 
     @Override
+    protected void extractLabels(@NonNull GuiGraphicsExtractor graphics, int xm, int ym) {}
+
+    @Override
     public boolean keyPressed(@NonNull KeyEvent event) {
         Minecraft minecraft = Minecraft.getInstance();
         LocalPlayer player = minecraft.player;

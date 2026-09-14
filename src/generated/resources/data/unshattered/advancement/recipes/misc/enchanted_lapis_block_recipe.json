@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_enchanted_lapis": {
+      "conditions": {
+        "items": [
+          {
+            "items": "unshattered:enchanted_lapis"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "unshattered:enchanted_lapis_block_recipe"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_enchanted_lapis"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "unshattered:enchanted_lapis_block_recipe"
+    ]
+  }
+}

@@ -3,7 +3,7 @@ package io.github.moosyu.gui.menus;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemTypes;
-import io.github.moosyu.gui.menus.storage.TalismanContainer;
+import io.github.moosyu.gui.menus.containers.TalismanContainer;
 import io.github.moosyu.items.PassiveAbilityItem;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;

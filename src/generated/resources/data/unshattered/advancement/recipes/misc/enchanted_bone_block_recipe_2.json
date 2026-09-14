@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_enchanted_bone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "unshattered:enchanted_bone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "unshattered:enchanted_bone_block_recipe_2"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_enchanted_bone"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "unshattered:enchanted_bone_block_recipe_2"
+    ]
+  }
+}

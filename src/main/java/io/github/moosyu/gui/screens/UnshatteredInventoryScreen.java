@@ -37,48 +37,48 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
     protected void init() {
         super.init();
 
-        this.addRenderableWidget(new ImageButton(this.leftPos + 76,
-                this.topPos + 7,
+        addRenderableWidget(new ImageButton(leftPos + 76,
+                topPos + 7,
                 20,
                 18,
                 new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/crafting")),
                 _ -> ClientPacketDistributor.sendToServer(new OpenCraftingPacket())
         )).setTooltip(Tooltip.create(Component.translatable("container.unshattered.crafting")));
 
-        this.addRenderableWidget(new ImageButton(this.leftPos + 76,
-                this.topPos + 25,
+        addRenderableWidget(new ImageButton(leftPos + 76,
+                topPos + 25,
                 20,
                 18,
                 new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/anvil")),
                 _ -> ClientPacketDistributor.sendToServer(new OpenReforgeAnvilPacket())
         )).setTooltip(Tooltip.create(Component.translatable("container.unshattered.reforge_anvil")));
 
-        this.addRenderableWidget(new ImageButton(this.leftPos + 76,
-                this.topPos + 43,
+        addRenderableWidget(new ImageButton(leftPos + 76,
+                topPos + 43,
                 20,
                 18,
                 new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/talisman_bag")),
                 _ -> ClientPacketDistributor.sendToServer(new OpenTalismanBagPacket())
         )).setTooltip(Tooltip.create(Component.translatable("container.unshattered.talisman_bag")));
 
-        this.addRenderableWidget(new ImageButton(this.leftPos + 96,
-                this.topPos + 61,
+        addRenderableWidget(new ImageButton(leftPos + 96,
+                topPos + 61,
                 20,
                 18,
                 new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/stats")),
                 _ -> Minecraft.getInstance().setScreen(new StatsScreen(Component.translatable("screen.unshattered.stats")))
         )).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.stats")));
 
-        this.addRenderableWidget(new ImageButton(this.leftPos + 116,
-                this.topPos + 61,
+        addRenderableWidget(new ImageButton(leftPos + 116,
+                topPos + 61,
                 20,
                 18,
                 new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/skills")),
                 _ -> Minecraft.getInstance().setScreen(new SkillsScreen(Component.translatable("screen.unshattered.skills")))
         )).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.skills")));
 
-        this.addRenderableWidget(new ImageButton(this.leftPos + 136,
-                this.topPos + 61,
+        addRenderableWidget(new ImageButton(leftPos + 136,
+                topPos + 61,
                 20,
                 18,
                 new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/storage")),
@@ -89,15 +89,15 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
 
     @Override
     public void extractBackground(@NonNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-        int x = (this.width - IMAGE_WIDTH) / 2;
-        int y = (this.height - IMAGE_HEIGHT) / 2;
+        int x = (width - IMAGE_WIDTH) / 2;
+        int y = (height - IMAGE_HEIGHT) / 2;
 
         super.extractBackground(graphics, mouseX, mouseY, a);
 
         graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, 256, 256);
 
-        if (this.minecraft.player != null) {
-            InventoryScreen.extractEntityInInventoryFollowsMouse(graphics, this.leftPos + 26, this.topPos + 8, this.leftPos + 75, this.topPos + 78, 30, 0.0625F, this.xMouse, this.yMouse, this.minecraft.player);
+        if (minecraft.player != null) {
+            InventoryScreen.extractEntityInInventoryFollowsMouse(graphics, leftPos + 26, topPos + 8, leftPos + 75, topPos + 78, 30, 0.0625F, xMouse, yMouse, minecraft.player);
         }
     }
 

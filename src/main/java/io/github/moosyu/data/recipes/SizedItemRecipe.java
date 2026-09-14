@@ -6,10 +6,17 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
+import net.minecraft.world.item.crafting.display.ShapedCraftingRecipeDisplay;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import org.jspecify.annotations.NonNull;
+
+import java.util.List;
+import java.util.Optional;
 
 public record SizedItemRecipe(ItemStackTemplate result, SizedShapedRecipePattern pattern) implements CraftingRecipe {
     public static final MapCodec<SizedItemRecipe> CODEC = RecordCodecBuilder.mapCodec(instance ->
@@ -27,7 +34,7 @@ public record SizedItemRecipe(ItemStackTemplate result, SizedShapedRecipePattern
 
     @Override
     public boolean showNotification() {
-        return false;
+        return true;
     }
 
     @Override
@@ -42,7 +49,7 @@ public record SizedItemRecipe(ItemStackTemplate result, SizedShapedRecipePattern
 
     @Override
     public boolean isSpecial() {
-        return true;
+        return false;
     }
 
     @Override
@@ -66,10 +73,26 @@ public record SizedItemRecipe(ItemStackTemplate result, SizedShapedRecipePattern
     }
 
     @Override
+    public @NonNull List<RecipeDisplay> display() {
+        List<SlotDisplay> ingredientDisplays = pattern.ingredients().stream()
+                .map(optSized -> optSized.map(SizedIngredient::ingredient))
+                .map(Ingredient::optionalIngredientToDisplay)
+                .toList();
+
+        return List.of(new ShapedCraftingRecipeDisplay(
+                pattern.width,
+                pattern.height,
+                ingredientDisplays,
+                new SlotDisplay.ItemStackSlotDisplay(result),
+                new SlotDisplay.ItemSlotDisplay(Items.CRAFTING_TABLE)
+        ));
+    }
+
+    @Override
     public @NonNull PlacementInfo placementInfo() {
-        return PlacementInfo.create(pattern.ingredients().stream()
-                .map(sizedIngredient -> sizedIngredient.map(SizedIngredient::ingredient).orElse(Ingredient.of()))
-                .toList());
+        List<Optional<Ingredient>> ingredients = pattern.ingredients().stream().map(optSized -> optSized.map(SizedIngredient::ingredient)).toList();
+
+        return PlacementInfo.createFromOptionals(ingredients);
     }
 
     @Override
