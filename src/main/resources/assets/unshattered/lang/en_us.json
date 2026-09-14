@@ -133,7 +133,7 @@
   "item.ability.unshattered.coin_talisman_accrual": "Accrual",
   "item.ability.unshattered.skeleton_hat_explosive_arrows": "Explosive Arrows",
 
-  "item.ability.description.unshattered.rogue_sword_speed_boost": "Grants [colour=0xFFFFFFFF]+1.5✦ Speed[/colour] for [colour=0xFF55FF55]30s[/colour].",
+  "item.ability.description.unshattered.rogue_sword_speed_boost": "Grants [colour=0xFFFFFFFF]+0.5✦ Speed[/colour] for [colour=0xFF55FF55]30s[/colour].",
   "item.ability.description.unshattered.mind_blowing": "Deals [colour=0xFF55FF55]+100%[/colour] damage to undead mobs.",
   "item.ability.description.unshattered.ignition": "Ignites enemies for [colour=0xFF55FF55]3s[/colour].",
   "item.ability.description.unshattered.zombie_sword_instant_heal": "Heal for [colour=0xFFFF5555]120[/colour] + [colour=0xFFFF5555]5%❤[/colour].",
@@ -264,6 +264,7 @@
   "attribute.name.unshattered.fishing_speed": "Fishing Speed",
   "attribute.name.unshattered.fishing_fortune": "Fishing Fortune",
   "attribute.name.unshattered.breaking_power": "Breaking Power",
+  "attribute.name.unshattered.movement_speed": "Speed",
 
   "skills.name.unshattered.combat": "Combat",
   "skills.name.unshattered.farming": "Farming",

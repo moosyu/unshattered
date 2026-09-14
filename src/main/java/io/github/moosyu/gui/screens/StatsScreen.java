@@ -120,7 +120,7 @@ public class StatsScreen extends SimpleScreen {
                             + " "
                             + Component.translatable("attribute.name.unshattered." + currentAttributeId).getString()
                             + ": "
-                            + (attributeValue == attributeBaseValue ? attributeBaseValueFormatted : attributeBaseValueFormatted + " (+" + UnshatteredUtils.oneDecimalFormat.format(attributeValue) + ")")
+                            + (attributeValue == attributeBaseValue ? attributeBaseValueFormatted : attributeBaseValueFormatted + " (+" + UnshatteredUtils.oneDecimalFormat.format(attributeValue - attributeBaseValue) + ")")
                             + (isPercentage ? "%" : ""),
                     backgroundTopLeft.x + 9,
                     lineY,

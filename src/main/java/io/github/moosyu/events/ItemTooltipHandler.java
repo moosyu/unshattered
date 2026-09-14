@@ -21,11 +21,11 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -50,7 +50,7 @@ public class ItemTooltipHandler {
         List<Component> tooltipComponents = event.getToolTip();
         UnshatteredRarities itemRarity = stack.getOrDefault(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.COMMON);
         ItemTypes itemType = stack.getOrDefault(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.ITEM);
-        boolean hasModifiers = false;
+        boolean hasAttributes = false;
         boolean itemDescription = Boolean.TRUE.equals(stack.get(UnshatteredDataComponents.DESCRIPTION.get()));
         ItemAbility itemAbility = stack.get(UnshatteredDataComponents.ABILITY);
         ItemCharges itemCharges = stack.get(UnshatteredDataComponents.CHARGES);
@@ -63,19 +63,25 @@ public class ItemTooltipHandler {
 
         for (ItemAttributeModifiers.Entry entry : modifiers.modifiers()) {
             Holder<Attribute> attributeHolder = entry.attribute();
-            AttributeModifier modifier = entry.modifier();
+            double amount = entry.modifier().amount();
             UnshatteredAttributeValues itemAttribute = UnshatteredAttributeValues.fromAttribute(attributeHolder.value());
-            if (itemAttribute == null) continue;
-            hasModifiers = true;
-            tooltipComponents.add(Component.translatable(attributeHolder.value().getDescriptionId())
-                    .append(Component.literal(": ")).withStyle(ChatFormatting.GRAY)
-                    .append(Component.literal("+" + (int) modifier.amount() + (itemAttribute.percentage ? "%" : ""))
-                            .withStyle((itemAttribute.offensive) ? ChatFormatting.RED : ChatFormatting.GREEN))
-            );
+            if (itemAttribute == null) {
+                // ill make something less ugly if i end up using more vanilla attributes but for now this is fine
+                if (attributeHolder == Attributes.MOVEMENT_SPEED) {
+                    hasAttributes = true;
+                    addAttributeToTooltip(tooltipComponents, attributeHolder, amount * 10, false, false, false);
+                } else if (attributeHolder == Attributes.ENTITY_INTERACTION_RANGE) {
+                    hasAttributes = true;
+                    addAttributeToTooltip(tooltipComponents, attributeHolder, amount, false, false, true);
+                }
+            } else {
+                hasAttributes = true;
+                addAttributeToTooltip(tooltipComponents, attributeHolder, amount, itemAttribute.percentage, itemAttribute.offensive, true);
+            }
         }
 
         if (itemDescription) {
-            if (hasModifiers) tooltipComponents.add(Component.empty());
+            if (hasAttributes) tooltipComponents.add(Component.empty());
             addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.description.unshattered." + BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath()).getString(), 0xFFAAAAAA), MAX_WIDTH);
         }
 
@@ -158,5 +164,13 @@ public class ItemTooltipHandler {
 
             tooltip.add(lineComponent);
         }
+    }
+
+    private static void addAttributeToTooltip(List<Component> tooltipComponents, Holder<Attribute> attributeHolder, double amount, boolean percentage, boolean offensive, boolean truncate) {
+        tooltipComponents.add(Component.translatable(attributeHolder.value().getDescriptionId())
+                .append(Component.literal(": ")).withStyle(ChatFormatting.GRAY)
+                .append(Component.literal("+" + (truncate ? (int) amount : UnshatteredUtils.oneDecimalFormat.format(amount)) + (percentage ? "%" : ""))
+                        .withStyle((offensive) ? ChatFormatting.RED : ChatFormatting.GREEN))
+        );
     }
 }

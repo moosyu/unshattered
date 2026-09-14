@@ -32,7 +32,7 @@ public class SkillsScreen extends SimpleScreen {
         for (int i = 0; i < SKILLS.length; i++) {
             PlayerSkillsAttachment.Skill currentSkill = SKILLS[i];
             int currentLevel = skills.getLevel(skills.getExp(currentSkill));
-            String skillExpText = "";
+            String skillExpText;
 
             if (skills.isMaxLevel(currentLevel)) {
                 skillExpText = String.valueOf((int) skills.getExp(currentSkill));
