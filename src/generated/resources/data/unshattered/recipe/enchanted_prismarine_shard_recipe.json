@@ -1,0 +1,16 @@
+{
+  "type": "unshattered:sized_recipe",
+  "key": {
+    "A": {
+      "count": 32,
+      "ingredient": "minecraft:prismarine_shard"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "AA "
+  ],
+  "result": {
+    "id": "unshattered:enchanted_prismarine_shard"
+  }
+}

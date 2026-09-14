@@ -75,6 +75,21 @@
         }
       ]
     },
+    "minecraft:lapis_lazuli": {
+      "category": "mining",
+      "levels": [
+        {
+          "collectable_rewards": [
+            {
+              "type": "experience",
+              "amount": 250.0,
+              "experience_type": "mining"
+            }
+          ],
+          "item_requirement": 50
+        }
+      ]
+    },
     "minecraft:redstone": {
       "category": "mining",
       "levels": [

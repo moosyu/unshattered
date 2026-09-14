@@ -148,6 +148,11 @@ public class DatagenHandler {
                             150
                     );
 
+                    createRegenPathWithBlocks(bootstrap, "lapis", List.of(UnshatteredBlocks.BREAKABLE_LAPIS_ORE_BLOCK.get(),
+                                    UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(), Blocks.BEDROCK),
+                            150
+                    );
+
                     createRegenPath(bootstrap, "wheat", List.of(UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK.get().defaultBlockState(),
                             Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, 6),
                             Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, 5),

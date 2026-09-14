@@ -142,6 +142,16 @@ public class ModifyDefaultComponentsHandler {
         modifyVanillaItem(event, Items.BONE, ItemTypes.MATERIAL, 2);
         modifyVanillaItem(event, Items.FLINT, ItemTypes.MATERIAL, 4);
         modifyVanillaItem(event, Items.STRING, ItemTypes.MATERIAL, 3);
+        modifyVanillaItem(event, Items.CLAY_BALL, ItemTypes.MATERIAL, 3);
+        modifyVanillaItem(event, Items.INK_SAC, ItemTypes.MATERIAL, 2);
+        modifyVanillaItem(event, Items.LILY_PAD, ItemTypes.MATERIAL, 10);
+        modifyVanillaItem(event, Items.PRISMARINE_SHARD, ItemTypes.MATERIAL, 5);
+        modifyVanillaItem(event, Items.PRISMARINE_CRYSTALS, ItemTypes.MATERIAL, 5);
+        modifyVanillaItem(event, Items.PUFFERFISH, ItemTypes.MATERIAL, 15);
+        modifyVanillaItem(event, Items.COD, ItemTypes.MATERIAL, 6);
+        modifyVanillaItem(event, Items.SALMON, ItemTypes.MATERIAL, 10);
+        modifyVanillaItem(event, Items.SPONGE, ItemTypes.MATERIAL, 50);
+        modifyVanillaItem(event, Items.TROPICAL_FISH, ItemTypes.MATERIAL, 20);
     }
 
     /**

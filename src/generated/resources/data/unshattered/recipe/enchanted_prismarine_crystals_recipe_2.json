@@ -1,0 +1,17 @@
+{
+  "type": "unshattered:sized_recipe",
+  "key": {
+    "A": {
+      "count": 16,
+      "ingredient": "minecraft:prismarine_crystals"
+    }
+  },
+  "pattern": [
+    " A ",
+    "AAA",
+    " A "
+  ],
+  "result": {
+    "id": "unshattered:enchanted_prismarine_crystals"
+  }
+}

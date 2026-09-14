@@ -80,6 +80,7 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_JUNGLE_LOG_BLOCK.get()), 6.0f, false)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_ACACIA_LOG_BLOCK.get()), 6.0f, false)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_DARK_OAK_LOG_BLOCK.get()), 6.0f, false)
+                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_LAPIS_ORE_BLOCK.get()), 7.0f, false)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(Blocks.NETHER_WART), 4.0f, false);
 
         this.builder(FISHABLE_ITEMS_EXP_DATA)
@@ -282,6 +283,7 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_JUNGLE_LOG_BLOCK, new ItemRange(Items.JUNGLE_LOG));
         createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_ACACIA_LOG_BLOCK, new ItemRange(Items.ACACIA_LOG));
         createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_DARK_OAK_LOG_BLOCK, new ItemRange(Items.DARK_OAK_LOG));
+        createSingleBlockDropData(breakableDropsBuilder, UnshatteredBlocks.BREAKABLE_LAPIS_ORE_BLOCK, new ItemRange(Items.LAPIS_LAZULI, 4, 9));
 
         breakableDropsBuilder.add(UnshatteredBlocks.BREAKABLE_COBBLED_MITHRIL_BLOCK,
                 List.of(new DropData(new ItemRange(UnshatteredItems.MITHRIL.get())),
@@ -329,6 +331,9 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         List.of(new CollectableLevel(100, List.of(new ExperienceCollectableReward(250, PlayerSkillsAttachment.Skill.MINING))))
                 ), false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.MITHRIL.get()), new CollectableItemEntry(CollectableCategories.MINING,
+                        List.of(new CollectableLevel(50, List.of(new ExperienceCollectableReward(250, PlayerSkillsAttachment.Skill.MINING))))
+                ), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.LAPIS_LAZULI), new CollectableItemEntry(CollectableCategories.MINING,
                         List.of(new CollectableLevel(50, List.of(new ExperienceCollectableReward(250, PlayerSkillsAttachment.Skill.MINING))))
                 ), false);
     }

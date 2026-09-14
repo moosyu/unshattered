@@ -156,6 +156,16 @@
         }
       }
     ],
+    "unshattered:breakable_lapis_ore_block": [
+      {
+        "drop_chance": 1.0,
+        "item_range": {
+          "item": "minecraft:lapis_lazuli",
+          "max_amount": 9,
+          "min_amount": 4
+        }
+      }
+    ],
     "unshattered:breakable_oak_log": [
       {
         "drop_chance": 1.0,

@@ -1,0 +1,17 @@
+{
+  "type": "unshattered:sized_recipe",
+  "key": {
+    "A": {
+      "count": 32,
+      "ingredient": "minecraft:clay"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "AA "
+  ],
+  "result": {
+    "count": 4,
+    "id": "unshattered:enchanted_clay_ball"
+  }
+}

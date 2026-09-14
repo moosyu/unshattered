@@ -1,0 +1,17 @@
+{
+  "type": "unshattered:sized_recipe",
+  "key": {
+    "A": {
+      "count": 8,
+      "ingredient": "unshattered:enchanted_sponge"
+    }
+  },
+  "pattern": [
+    " A ",
+    "AAA",
+    " A "
+  ],
+  "result": {
+    "id": "unshattered:enchanted_wet_sponge"
+  }
+}

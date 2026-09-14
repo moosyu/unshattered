@@ -1,0 +1,16 @@
+{
+  "type": "unshattered:sized_recipe",
+  "key": {
+    "A": {
+      "count": 32,
+      "ingredient": "minecraft:tropical_fish"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "AA "
+  ],
+  "result": {
+    "id": "unshattered:enchanted_tropical_fish"
+  }
+}

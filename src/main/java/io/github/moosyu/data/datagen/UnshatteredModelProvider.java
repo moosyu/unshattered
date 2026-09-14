@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.item.properties.conditional.FishingRodCast;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -100,6 +101,22 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_FLINT.get(), Items.FLINT, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_STRING.get(), Items.STRING, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.SKELETON_HAT.get(), Items.SKELETON_SKULL, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_CLAY_BALL.get(), Items.CLAY_BALL, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_INK_SAC.get(), Items.INK_SAC, ModelTemplates.FLAT_ITEM);
+        itemModels.itemModelOutput.accept(UnshatteredItems.ENCHANTED_LILY_PAD.get(),
+                ItemModelUtils.tintedModel(
+                        Identifier.withDefaultNamespace("item/lily_pad"),
+                        ItemModelUtils.constantTint(0xFF71CC9C)
+                )
+        );
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_PRISMARINE_SHARD.get(), Items.PRISMARINE_SHARD, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_PRISMARINE_CRYSTALS.get(), Items.PRISMARINE_CRYSTALS, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_PUFFERFISH.get(), Items.PUFFERFISH, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_COD.get(), Items.COD, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_COOKED_COD.get(), Items.COOKED_COD, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_SALMON.get(), Items.SALMON, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_COOKED_SALMON.get(), Items.COOKED_SALMON, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_TROPICAL_FISH.get(), Items.TROPICAL_FISH, ModelTemplates.FLAT_ITEM);
 
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_GOLD_BLOCK.get(), Blocks.GOLD_BLOCK);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_DIAMOND_BLOCK.get(), Blocks.DIAMOND_BLOCK);
@@ -110,6 +127,9 @@ public class UnshatteredModelProvider extends ModelProvider {
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_REDSTONE_BLOCK.get(), Blocks.REDSTONE_BLOCK);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_COBBLESTONE.get(), Blocks.COBBLESTONE);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_OBSIDIAN.get(), Blocks.OBSIDIAN);
+        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_CLAY_BLOCK.get(), Blocks.CLAY);
+        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_SPONGE.get(), Blocks.SPONGE);
+        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_WET_SPONGE.get(), Blocks.WET_SPONGE);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.BEDROCK.get(), Blocks.BEDROCK);
         itemModels.generateFlatItem(UnshatteredItems.HEALING_TISSUE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFishingRod(UnshatteredItems.CHALLENGING_ROD.get());
@@ -210,6 +230,7 @@ public class UnshatteredModelProvider extends ModelProvider {
         createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_DIAMOND_ORE_BLOCK.get(), Blocks.DIAMOND_ORE);
         createVanillaCubeBlock(blockModels, UnshatteredBlocks.PURE_DIAMOND_BLOCK.get(), Blocks.DIAMOND_BLOCK);
         createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_OBSIDIAN_BLOCK.get(), Blocks.OBSIDIAN);
+        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_LAPIS_ORE_BLOCK.get(), Blocks.LAPIS_ORE);
 
         blockModels.createTrivialCube(UnshatteredBlocks.BREAKABLE_COBBLED_MITHRIL_BLOCK.get());
         blockModels.createTrivialCube(UnshatteredBlocks.BREAKABLE_SOFT_MITHRIL_BLOCK.get());

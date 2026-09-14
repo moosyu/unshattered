@@ -56,48 +56,56 @@ public final class UnshatteredBlocks {
     public static final DeferredBlock<Block> BREAKABLE_IRON_ORE_BLOCK = BLOCKS.registerBlock("breakable_iron_ore_block",
             props -> new Block(props
                     .destroyTime(3.0f)
+                    .sound(SoundType.STONE)
             )
     );
 
     public static final DeferredBlock<Block> BREAKABLE_COPPER_ORE_BLOCK = BLOCKS.registerBlock("breakable_copper_ore_block",
             props -> new Block(props
                     .destroyTime(3.0f)
+                    .sound(SoundType.STONE)
             )
     );
 
     public static final DeferredBlock<Block> BREAKABLE_GOLD_ORE_BLOCK = BLOCKS.registerBlock("breakable_gold_ore_block",
             props -> new Block(props
                     .destroyTime(3.0f)
+                    .sound(SoundType.STONE)
             )
     );
 
     public static final DeferredBlock<Block> BREAKABLE_REDSTONE_ORE_BLOCK = BLOCKS.registerBlock("breakable_redstone_ore_block",
             props -> new Block(props
                     .destroyTime(3.0f)
+                    .sound(SoundType.STONE)
             )
     );
 
     public static final DeferredBlock<Block> BREAKABLE_EMERALD_ORE_BLOCK = BLOCKS.registerBlock("breakable_emerald_ore_block",
             props -> new Block(props
                     .destroyTime(3.0f)
+                    .sound(SoundType.STONE)
             )
     );
 
     public static final DeferredBlock<Block> BREAKABLE_DIAMOND_ORE_BLOCK = BLOCKS.registerBlock("breakable_diamond_ore_block",
             props -> new Block(props
                     .destroyTime(3.0f)
+                    .sound(SoundType.STONE)
             )
     );
 
     public static final DeferredBlock<Block> PURE_DIAMOND_BLOCK = BLOCKS.registerBlock("pure_diamond_block",
             props -> new Block(props
                     .destroyTime(15.0f)
+                    .sound(SoundType.STONE)
             )
     );
 
     public static final DeferredBlock<Block> BREAKABLE_OBSIDIAN_BLOCK = BLOCKS.registerBlock("breakable_obsidian_block",
             props -> new Block(props
                     .destroyTime(50.0f)
+                    .sound(SoundType.STONE)
             )
     );
 
@@ -167,6 +175,13 @@ public final class UnshatteredBlocks {
                     .setId(ResourceKey.create(Registries.BLOCK, identifier))
                     .destroyTime(2.0f)
                     .sound(SoundType.WOOD)
+            )
+    );
+
+    public static final DeferredBlock<Block> BREAKABLE_LAPIS_ORE_BLOCK = BLOCKS.registerBlock("breakable_lapis_ore_block",
+            props -> new Block(props
+                    .destroyTime(3.0f)
+                    .sound(SoundType.STONE)
             )
     );
 }
