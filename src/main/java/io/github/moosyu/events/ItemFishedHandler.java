@@ -12,19 +12,23 @@ import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
@@ -34,8 +38,8 @@ import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_SK
 
 @EventBusSubscriber(modid = MODID)
 public class ItemFishedHandler {
-    private static final double ENTITY_FISHED_STRENGTH = 0.12d;
-    private static final double ENTITY_FISHED_VERTICAL_STRENGTH = 0.18d;
+    public record LaunchData(Vec3 start, Vec3 target, double peakY, long startTick, int durationTicks) {}
+    public static final Map<Entity, LaunchData> ACTIVE_LAUNCHES = new HashMap<>();
 
     @SubscribeEvent
     public static void onItemFished(ItemFishedEvent event) {
@@ -88,23 +92,30 @@ public class ItemFishedHandler {
                     EntityType<?> entityType = entry.getKey().entity();
                     Entity entity = entityType.create(level, EntitySpawnReason.TRIGGERED);
                     if (entity != null) {
-                        // https://github.com/ExpensiveKoala/Fishing-Real/blob/master/common/src/main/java/koala/fishingreal/FishingReal.java#L85
-                        FishingHook hook = event.getHookEntity();
-                        double dX = player.getX() - hook.getX();
-                        double dY = player.getY() - hook.getY();
-                        double dZ = player.getZ() - hook.getZ();
-                        float expReward = Objects.requireNonNullElse(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entityType).getData(UnshatteredDataMaps.FISHABLE_MOBS_EXP_DATA), 0.0f);
+                        Vec3 startPos = event.getHookEntity().position();
+                        Vec3 targetPos = player.position();
+                        double horizontalDist = Math.sqrt(startPos.distanceToSqr(targetPos.x, startPos.y, targetPos.z));
 
-                        entity.getSelfAndPassengers().forEach(e -> e.setPos(hook.getX(), hook.getY(), hook.getZ()));
-                        entity.setDeltaMovement(dX * ENTITY_FISHED_STRENGTH, dY * ENTITY_FISHED_STRENGTH + Math.sqrt(Math.sqrt(dX * dX + dY * dY + dZ * dZ)) * ENTITY_FISHED_VERTICAL_STRENGTH, dZ * ENTITY_FISHED_STRENGTH);
+                        // needs to be self and passengers so i can add the hog rider fucker later down the line
+                        entity.getSelfAndPassengers().forEach(e -> e.setPos(startPos.x, startPos.y, startPos.z));
+
+                        if (entity instanceof Mob mob) {
+                            // some mobs get weird and it messes with the movement
+                            mob.setNoAi(true);
+                        }
+
+                        ACTIVE_LAUNCHES.put(entity, new LaunchData(startPos, targetPos, Math.max(startPos.y, targetPos.y) + Math.max(1.0, horizontalDist * 0.3), level.getGameTime(), Mth.clamp((int) (horizontalDist / 2), 12, 100)));
+
                         player.sendSystemMessage(Component.translatable("fishing.messages." + entityType.getDescriptionId()).withColor(0xFF55FF55));
 
                         if (level instanceof ServerLevel serverLevel) {
                             serverLevel.tryAddFreshEntityWithPassengers(entity);
                         }
 
-                        skills.addExp(PlayerSkillsAttachment.Skill.FISHING, expReward, player);
+                        skills.addExp(PlayerSkillsAttachment.Skill.FISHING, Objects.requireNonNullElse(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entityType).getData(UnshatteredDataMaps.FISHABLE_MOBS_EXP_DATA), 0.0f), player);
                     }
+
+                    break;
                 }
             }
         } else {
