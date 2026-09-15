@@ -33,10 +33,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static io.github.moosyu.Unshattered.MODID;
 
@@ -102,30 +99,30 @@ public class ItemTooltipHandler {
                 tooltipComponents.add(effect.get().getEffectDescription(level));
             }
         } else {
-            List<Component> enchantmentComponents = new ArrayList<>();
+            Iterator<Object2IntMap.Entry<Holder<Enchantment>>> iterator = stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY).entrySet().iterator();
 
-            for (Object2IntMap.Entry<Holder<Enchantment>> enchantmentHolder : stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY).entrySet()) {
-                Optional<ResourceKey<Enchantment>> key = enchantmentHolder.getKey().unwrapKey();
-                if (key.isEmpty()) continue;
-                Optional<UnshatteredEnchantmentEffects.UnshatteredEffect<?>> effect = UnshatteredEnchantmentEffects.getEffect(key.get());
-                if (effect.isEmpty()) continue;
-
-                int level = enchantmentHolder.getIntValue();
-                enchantmentComponents.add(enchantmentHolder.getKey().value().description().copy().withColor((enchantmentHolder.getKey().value().getMaxLevel() == level ? 0xFFE6B605 : 0xFF459BFF)).append(Component.literal(" " + UnshatteredUtils.convertTextToRomanNumeral(level))));
-            }
-
-            MutableComponent enchantments = Component.empty();
-            for (int i = 0; i < enchantmentComponents.size(); i++) {
-                enchantments.append(enchantmentComponents.get(i));
-                if (i < enchantmentComponents.size() - 1) {
-                    enchantments.append(Component.literal(", ").withColor(0xFF459BFF));
-                }
-            }
-
-            if (!enchantmentComponents.isEmpty()) {
+            if ((iterator.hasNext())) {
+                MutableComponent enchantmentComponent = Component.empty();
                 tooltipComponents.add(Component.empty());
-                tooltipComponents.add(enchantments);
+
+                while (iterator.hasNext()) {
+                    Object2IntMap.Entry<Holder<Enchantment>> enchantmentHolder = iterator.next();
+                    Optional<ResourceKey<Enchantment>> key = enchantmentHolder.getKey().unwrapKey();
+                    if (key.isEmpty()) continue;
+                    Optional<UnshatteredEnchantmentEffects.UnshatteredEffect<?>> effect = UnshatteredEnchantmentEffects.getEffect(key.get());
+                    if (effect.isEmpty()) continue;
+
+                    int level = enchantmentHolder.getIntValue();
+                    enchantmentComponent.append(enchantmentHolder.getKey().value().description().copy().withColor((enchantmentHolder.getKey().value().getMaxLevel() == level ? 0xFFE6B605 : 0xFF459BFF)).append(Component.literal(" " + UnshatteredUtils.convertTextToRomanNumeral(level))));
+
+                    if (iterator.hasNext()) {
+                        enchantmentComponent.append(Component.literal(", ").withColor(0xFF459BFF));
+                    }
+                }
+
+                tooltipComponents.add(enchantmentComponent);
             }
+
         }
 
         if (itemAbility != null) {
