@@ -12,7 +12,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 import java.util.Random;
 
-public class ZombieSwordEffectsPayloadHandler {
+public class ZombieSwordEffectsHandler {
     public static void handleData(final ZombieSwordEffectsPacket data, final IPayloadContext context) {
         context.enqueueWork(() -> {
             Player player = context.player();

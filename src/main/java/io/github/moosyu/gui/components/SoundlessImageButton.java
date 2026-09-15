@@ -1,4 +1,4 @@
-package io.github.moosyu.gui.widgets;
+package io.github.moosyu.gui.components;
 
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.WidgetSprites;

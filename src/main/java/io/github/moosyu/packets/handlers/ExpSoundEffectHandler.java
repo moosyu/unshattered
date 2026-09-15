@@ -9,7 +9,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 import java.util.Random;
 
-public class ExpSoundEffectPayloadHandler {
+public class ExpSoundEffectHandler {
     public static void handleData(final ExpSoundEffectPacket data, final IPayloadContext context) {
         context.enqueueWork(() -> {
             Player player = context.player();

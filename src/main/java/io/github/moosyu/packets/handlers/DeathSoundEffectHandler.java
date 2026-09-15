@@ -7,7 +7,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class DeathSoundEffectPayloadHandler {
+public class DeathSoundEffectHandler {
     public static void handleData(final DeathSoundEffectPacket data, final IPayloadContext context) {
         context.enqueueWork(() -> {
             Player player = context.player();

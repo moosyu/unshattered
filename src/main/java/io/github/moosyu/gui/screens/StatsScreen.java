@@ -1,7 +1,7 @@
 package io.github.moosyu.gui.screens;
 
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.gui.widgets.ScrollerWidget;
+import io.github.moosyu.gui.components.ScrollerWidget;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;

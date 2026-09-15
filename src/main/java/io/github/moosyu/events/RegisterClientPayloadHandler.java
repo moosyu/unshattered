@@ -13,9 +13,9 @@ import static io.github.moosyu.Unshattered.MODID;
 public class RegisterClientPayloadHandler {
     @SubscribeEvent
     public static void registerClientPayloads(RegisterClientPayloadHandlersEvent event) {
-        event.register(ZombieSwordEffectsPacket.TYPE, ZombieSwordEffectsPayloadHandler::handleData);
-        event.register(ExpSoundEffectPacket.TYPE, ExpSoundEffectPayloadHandler::handleData);
-        event.register(DeathSoundEffectPacket.TYPE, DeathSoundEffectPayloadHandler::handleData);
+        event.register(ZombieSwordEffectsPacket.TYPE, ZombieSwordEffectsHandler::handleData);
+        event.register(ExpSoundEffectPacket.TYPE, ExpSoundEffectHandler::handleData);
+        event.register(DeathSoundEffectPacket.TYPE, DeathSoundEffectHandler::handleData);
         event.register(DamageNumberPacket.TYPE, DamageNumberHandler::handleData);
         event.register(OpenDialoguePacket.TYPE, OpenDialogueHandler::handleData);
         event.register(FerocityEffectPacket.TYPE, FerocityEffectHandler::handleData);

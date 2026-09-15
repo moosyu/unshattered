@@ -1,4 +1,4 @@
-package io.github.moosyu.gui.widgets;
+package io.github.moosyu.gui.components;
 
 import com.mojang.blaze3d.platform.cursor.CursorTypes;
 import io.github.moosyu.util.UnshatteredUtils;
@@ -77,7 +77,6 @@ public class ScrollerWidget extends AbstractWidget {
 
     @Override
     public void onRelease(MouseButtonEvent event) {
-        // 0 is left click
         if (event.button() == MouseButton.LEFT.button) {
             scrolling = false;
         }
