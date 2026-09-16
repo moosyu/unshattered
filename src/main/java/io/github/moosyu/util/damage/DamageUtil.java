@@ -4,6 +4,7 @@ import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.attachments.PlayerCurrencyAttachment;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.regions.TemperatureTypes;
 import io.github.moosyu.items.ItemTypes;
 import io.github.moosyu.enchantments.UnshatteredEnchantmentEffects;
 import io.github.moosyu.packets.DamageNumberPacket;
@@ -205,6 +206,7 @@ public final class DamageUtil {
         if (playerHealth - damageDealt > 0.0d) {
             states.decreaseStatValue(PlayerStateAttachment.Stat.HEALTH, damageDealt, player);
         } else {
+            // "death"
             PlayerCurrencyAttachment currency = player.getData(PLAYER_CURRENCY.get());
             BlockPos spawnPos = level.getRespawnData().pos();
 
@@ -213,11 +215,17 @@ public final class DamageUtil {
                     .withStyle(ChatFormatting.RED)
                     .append(Component.literal(" You lost " + (currency.getCoins() / 2) + " coins."))
             );
+
             states.setStatValue(PlayerStateAttachment.Stat.HEALTH, player.getAttributeValue(UnshatteredAttributeValues.HEALTH.holder), player);
             states.setStatValue(PlayerStateAttachment.Stat.MANA, player.getAttributeValue(UnshatteredAttributeValues.MANA.holder), player);
+
+            player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(), TemperatureTypes.BASE_TEMP.getValue());
+
             currency.removeCoins(currency.getCoins() / 2);
             player.syncData(PLAYER_CURRENCY.get());
+
             PacketDistributor.sendToPlayer((ServerPlayer) player, new DeathSoundEffectPacket());
+
             states.setCancelledKnockback(true);
         }
         player.invulnerableTime = 0;

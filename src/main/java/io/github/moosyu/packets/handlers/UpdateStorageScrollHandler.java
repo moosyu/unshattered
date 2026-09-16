@@ -8,7 +8,7 @@ public class UpdateStorageScrollHandler {
     public static void handleData(final UpdateStorageScrollPacket data, final IPayloadContext context) {
         context.enqueueWork(() -> {
             if (context.player().containerMenu instanceof StorageMenu storageMenu) {
-                storageMenu.handleScroll(data.scrolledDown());
+                storageMenu.setScrollRows(data.row());
             }
         });
     }

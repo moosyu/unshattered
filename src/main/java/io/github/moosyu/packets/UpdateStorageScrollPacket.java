@@ -7,10 +7,10 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import org.jspecify.annotations.NonNull;
 
-public record UpdateStorageScrollPacket(boolean scrolledDown) implements CustomPacketPayload {
+public record UpdateStorageScrollPacket(int row) implements CustomPacketPayload {
     public static final Type<UpdateStorageScrollPacket> TYPE = new Type<>(UnshatteredUtils.getUnshatteredIdentifier("storage_scroll_fired"));
     public static final StreamCodec<RegistryFriendlyByteBuf, UpdateStorageScrollPacket> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.BOOL, UpdateStorageScrollPacket::scrolledDown,
+            ByteBufCodecs.INT, UpdateStorageScrollPacket::row,
             UpdateStorageScrollPacket::new
     );
 

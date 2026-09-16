@@ -27,6 +27,8 @@ public class StorageScreen extends AbstractContainerScreen<StorageMenu> {
     public static final int STORAGE_SLOTS_AREA_HEIGHT = 108;
     private ScrollerWidget scroller;
     private Vector2i backgroundTopLeft;
+    private EditBox searchBox;
+    private String previousInput;
 
     public StorageScreen(StorageMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
@@ -36,11 +38,33 @@ public class StorageScreen extends AbstractContainerScreen<StorageMenu> {
     protected void init() {
         super.init();
 
-        this.backgroundTopLeft = new Vector2i((width - IMAGE_WIDTH) / 2, ((height - IMAGE_HEIGHT) / 2) - 28);
+        backgroundTopLeft = new Vector2i((width - IMAGE_WIDTH) / 2, ((height - IMAGE_HEIGHT) / 2) - 28);
 
-        scroller = new ScrollerWidget(backgroundTopLeft.x + 156, backgroundTopLeft.y + 18, 91, _ -> {});
+        scroller = new ScrollerWidget(backgroundTopLeft.x + 156, backgroundTopLeft.y + 18, 91, progress -> {
+            int targetRow = (int) Math.round(progress * menu.getMaxScrollRows());
+
+            menu.setScrollRows(targetRow);
+            ClientPacketDistributor.sendToServer(new UpdateStorageScrollPacket(targetRow));
+        });
+        searchBox = new EditBox(font, backgroundTopLeft.x + 63, backgroundTopLeft.y + 6, 88, 12, Component.translatable("screen.narration.unshattered.storage.search"));
+        searchBox.setMaxLength(20);
+        searchBox.setBordered(false);
+        searchBox.setTextColor(0xFFFFFFFF);
+        searchBox.setInvertHighlightedTextColor(false);
+        searchBox.setResponder(responder -> {
+            if (responder.length() > previousInput.length()) {
+
+            } else {
+
+            }
+
+            previousInput = responder;
+        });
+
         addRenderableWidget(scroller);
-        addRenderableWidget(new EditBox(font, backgroundTopLeft.x + 61, backgroundTopLeft.y + 4, 90, 12, Component.translatable("screen.narration.unshattered.storage.search")));
+        addRenderableWidget(searchBox);
+
+        updateScrollerPosition();
     }
 
     @Override
@@ -76,7 +100,17 @@ public class StorageScreen extends AbstractContainerScreen<StorageMenu> {
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
-        ClientPacketDistributor.sendToServer(new UpdateStorageScrollPacket(scrollY < 0));
+        menu.handleScroll(scrollY < 0);
+        ClientPacketDistributor.sendToServer(new UpdateStorageScrollPacket(menu.scrollRows));
+        updateScrollerPosition();
+
         return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
+    }
+
+    private void updateScrollerPosition() {
+        int max = menu.getMaxScrollRows();
+        double progress = max == 0 ? 0.0 : (double) menu.scrollRows / max;
+
+        scroller.setScrollProgress(progress);
     }
 }

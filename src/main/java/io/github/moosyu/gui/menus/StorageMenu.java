@@ -17,9 +17,9 @@ public class StorageMenu extends AbstractContainerMenu {
     final Container fullStorage;
     private static final int COLUMNS = 8;
     private static final int VISIBLE_ROWS = StorageScreen.STORAGE_SLOTS_AREA_HEIGHT / 18;
-    private final int totalRows = StorageContainer.STORAGE_SLOTS / COLUMNS;
+    private final int TOTAL_ROWS = StorageContainer.STORAGE_SLOTS / COLUMNS;
     private final WindowContainer window = new WindowContainer(VISIBLE_ROWS * COLUMNS);
-    private int scrollRows = 0;
+    public int scrollRows = 0;
 
     public StorageMenu(int containerId, Inventory inventory) {
         this(containerId, inventory, new SimpleContainer(StorageContainer.STORAGE_SLOTS));
@@ -38,29 +38,32 @@ public class StorageMenu extends AbstractContainerMenu {
 
         refreshWindow();
 
-        this.addStandardInventorySlots(inventory, 8, 84);
-        this.addInventoryHotbarSlots(inventory, 8, 142);
-    }
-
-    private int toBackingIndex(int windowIndex) {
-        int col = windowIndex % COLUMNS;
-        int row = windowIndex / COLUMNS;
-        return col + (row + scrollRows) * COLUMNS;
+        addStandardInventorySlots(inventory, 8, 84);
+        addInventoryHotbarSlots(inventory, 8, 142);
     }
 
     private void refreshWindow() {
         for (int i = 0; i < window.getContainerSize(); i++) {
-            int backing = toBackingIndex(i);
+            int backing = window.toBackingIndex(i);
             ItemStack stack = (backing >= 0 && backing < fullStorage.getContainerSize()) ? fullStorage.getItem(backing) : ItemStack.EMPTY;
             window.setItemDirect(i, stack);
         }
     }
 
     public void handleScroll(boolean scrolledDown) {
-        int maxScroll = Math.max(0, totalRows - VISIBLE_ROWS);
-        int next = Mth.clamp(scrollRows + (scrolledDown ? 1 : -1), 0, maxScroll);
-        if (next == scrollRows) return;
-        scrollRows = next;
+        setScrollRows(scrollRows + (scrolledDown ? 1 : -1));
+    }
+
+
+
+    public int getMaxScrollRows() {
+        return Math.max(0, TOTAL_ROWS - VISIBLE_ROWS);
+    }
+
+    public void setScrollRows(int row) {
+        int clamped = Mth.clamp(row, 0, getMaxScrollRows());
+        if (clamped == scrollRows) return;
+        scrollRows = clamped;
         refreshWindow();
     }
 
@@ -92,6 +95,7 @@ public class StorageMenu extends AbstractContainerMenu {
         return true;
     }
 
+    // contains the visible fraction of items in fullStorage
     private class WindowContainer extends SimpleContainer {
         WindowContainer(int size) {
             super(size);
@@ -108,6 +112,10 @@ public class StorageMenu extends AbstractContainerMenu {
 
         void setItemDirect(int windowIndex, ItemStack stack) {
             super.setItem(windowIndex, stack);
+        }
+
+        private int toBackingIndex(int windowIndex) {
+            return windowIndex % COLUMNS + (windowIndex / COLUMNS + scrollRows) * COLUMNS;
         }
     }
 }
