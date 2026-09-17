@@ -1,6 +1,7 @@
 package io.github.moosyu.data.attachments;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import io.github.moosyu.data.regions.UnshatteredRegions;
 import io.github.moosyu.gui.menus.containers.StorageContainer;
 import io.github.moosyu.gui.menus.containers.TalismanContainer;
@@ -90,4 +91,15 @@ public final class UnshatteredAttachments {
     public static final Supplier<AttachmentType<StorageContainer>> PLAYER_BANK_STORAGE = ATTACHMENT_TYPES.register("player_bank_storage", () -> AttachmentType.serializable(StorageContainer::new).build());
 
     public static final Supplier<AttachmentType<TalismanContainer>> PLAYER_TALISMAN_STORAGE = ATTACHMENT_TYPES.register("player_talisman_storage", () -> AttachmentType.serializable(TalismanContainer::new).build());
+
+    public static final Supplier<AttachmentType<Integer>> PLAYER_BANK_PAGES = ATTACHMENT_TYPES.register("player_bank_pages", () -> AttachmentType.builder(() -> 1)
+            .serialize(Codec.INT.flatXmap(
+                    pageCount -> (pageCount <= StorageContainer.MAX_STORAGE_PAGES && pageCount > 0)
+                            ? DataResult.success(pageCount)
+                            : DataResult.error(() -> "player bank page count too big or too small!!"),
+                    DataResult::success
+            ).fieldOf("player_bank_pages"))
+            .sync(ByteBufCodecs.INT)
+            .build()
+    );
 }

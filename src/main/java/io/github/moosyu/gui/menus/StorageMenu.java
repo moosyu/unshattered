@@ -1,5 +1,6 @@
 package io.github.moosyu.gui.menus;
 
+import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.gui.menus.containers.StorageContainer;
 import io.github.moosyu.gui.screens.StorageScreen;
 import net.minecraft.util.Mth;
@@ -12,14 +13,21 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import org.jspecify.annotations.NonNull;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 public class StorageMenu extends AbstractContainerMenu {
-    final Inventory inventory;
-    final Container fullStorage;
-    private static final int COLUMNS = 8;
+    private static final int COLUMNS = 9;
     private static final int VISIBLE_ROWS = StorageScreen.STORAGE_SLOTS_AREA_HEIGHT / 18;
-    private final int TOTAL_ROWS = StorageContainer.STORAGE_SLOTS / COLUMNS;
-    private final WindowContainer window = new WindowContainer(VISIBLE_ROWS * COLUMNS);
-    public int scrollRows = 0;
+    private final WindowContainer WINDOW = new WindowContainer(VISIBLE_ROWS * COLUMNS);
+    private final Container fullStorage;
+    // supposedly indices is the plural of index, who knew
+    private final List<Integer> displayedIndices = new ArrayList<>();
+    private String previousSearchInput = "";
+    private boolean isSearching = false;
+    public int currentPageIndex = 0;
+    private final Player player;
 
     public StorageMenu(int containerId, Inventory inventory) {
         this(containerId, inventory, new SimpleContainer(StorageContainer.STORAGE_SLOTS));
@@ -27,12 +35,24 @@ public class StorageMenu extends AbstractContainerMenu {
 
     public StorageMenu(int containerId, Inventory inventory, Container fullStorage) {
         super(UnshatteredMenus.STORAGE_MENU_TYPE.get(), containerId);
+
+        player = inventory.player;
         this.fullStorage = fullStorage;
-        this.inventory = inventory;
+
+        for (int i = 0; i < fullStorage.getContainerSize(); i++) {
+            displayedIndices.add(i);
+        }
 
         for (int row = 0; row < VISIBLE_ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {
-                addSlot(new Slot(window, col + row * COLUMNS, (col * 18) + 8, (row * 18) - 38));
+                addSlot(new Slot(WINDOW, col + row * COLUMNS, (col * 18) + 8, (row * 18) - 38) {
+                    @Override
+                    public boolean mayPlace(@NonNull ItemStack stack) {
+                        if (!isSearching) return true;
+
+                        return !WINDOW.getItem(getSlotIndex()).isEmpty();
+                    }
+                });
             }
         }
 
@@ -43,35 +63,70 @@ public class StorageMenu extends AbstractContainerMenu {
     }
 
     private void refreshWindow() {
-        for (int i = 0; i < window.getContainerSize(); i++) {
-            int backing = window.toBackingIndex(i);
-            ItemStack stack = (backing >= 0 && backing < fullStorage.getContainerSize()) ? fullStorage.getItem(backing) : ItemStack.EMPTY;
-            window.setItemDirect(i, stack);
+        for (int i = 0; i < WINDOW.getContainerSize(); i++) {
+            int backing = WINDOW.getDisplayIndex(i);
+            ItemStack stack = (backing >= 0 && backing < fullStorage.getContainerSize())
+                    ? fullStorage.getItem(backing) : ItemStack.EMPTY;
+            WINDOW.setItemDirect(i, stack);
         }
     }
 
-    public void handleScroll(boolean scrolledDown) {
-        setScrollRows(scrollRows + (scrolledDown ? 1 : -1));
+    public void updatePage(boolean increment) {
+        int totalPages = getTotalPages();
+        if (increment && (currentPageIndex + 1) < totalPages) {
+            currentPageIndex++;
+        } else if (!increment && (currentPageIndex - 1) >= 0) {
+            currentPageIndex--;
+        } else {
+            return;
+        }
+
+        // the client's fullStorage is empty at the moment so without this guard everything just looks empty
+        if (!player.level().isClientSide()) {
+            refreshWindow();
+        }
     }
 
-
-
-    public int getMaxScrollRows() {
-        return Math.max(0, TOTAL_ROWS - VISIBLE_ROWS);
+    public int getTotalPages() {
+        if (isSearching) {
+            return Math.max(1, Mth.ceil(displayedIndices.size() / (double) WINDOW.getContainerSize()));
+        } else {
+            return player.getData(UnshatteredAttachments.PLAYER_BANK_PAGES);
+        }
     }
 
-    public void setScrollRows(int row) {
-        int clamped = Mth.clamp(row, 0, getMaxScrollRows());
-        if (clamped == scrollRows) return;
-        scrollRows = clamped;
+    public void handleSearch(String input) {
+        if (input.equals(previousSearchInput)) return;
+        previousSearchInput = input;
+        isSearching = !input.isEmpty();
+
+        displayedIndices.clear();
+        if (!isSearching) {
+            for (int i = 0; i < fullStorage.getContainerSize(); i++) {
+                displayedIndices.add(i);
+            }
+        } else {
+            for (int i = 0; i < fullStorage.getContainerSize(); i++) {
+                ItemStack stack = fullStorage.getItem(i);
+                if (!stack.isEmpty() && stack.getHoverName().getString().toLowerCase(Locale.ROOT).contains(input.toLowerCase(Locale.ROOT))) {
+                    displayedIndices.add(i);
+                }
+            }
+        }
+
+        currentPageIndex = 0;
         refreshWindow();
+    }
+
+    private int getTotalRows() {
+        return Mth.ceil(displayedIndices.size() / (double) COLUMNS);
     }
 
     @Override
     public @NonNull ItemStack quickMoveStack(@NonNull Player player, int slotIndex) {
         ItemStack clicked = ItemStack.EMPTY;
         Slot slot = slots.get(slotIndex);
-        final int windowSlotCount = window.getContainerSize();
+        final int windowSlotCount = WINDOW.getContainerSize();
 
         if (slot.hasItem()) {
             ItemStack stack = slot.getItem();
@@ -95,7 +150,7 @@ public class StorageMenu extends AbstractContainerMenu {
         return true;
     }
 
-    // contains the visible fraction of items in fullStorage
+    // contains the currently visible slice of fullStorage (or the filtered view)
     private class WindowContainer extends SimpleContainer {
         WindowContainer(int size) {
             super(size);
@@ -103,10 +158,19 @@ public class StorageMenu extends AbstractContainerMenu {
 
         @Override
         public void setItem(int windowIndex, @NonNull ItemStack stack) {
+            int backing = getDisplayIndex(windowIndex);
             super.setItem(windowIndex, stack);
-            int backing = toBackingIndex(windowIndex);
-            if (backing >= 0 && backing < fullStorage.getContainerSize()) {
-                fullStorage.setItem(backing, stack);
+
+            if (backing < 0 || backing >= fullStorage.getContainerSize()) return;
+            fullStorage.setItem(backing, stack);
+
+            // remove fully withdrawn stacks from view
+            if (isSearching && stack.isEmpty()) {
+                int index = displayedIndices.indexOf(backing);
+                if (index >= 0) {
+                    displayedIndices.remove(index);
+                    refreshWindow();
+                }
             }
         }
 
@@ -114,8 +178,10 @@ public class StorageMenu extends AbstractContainerMenu {
             super.setItem(windowIndex, stack);
         }
 
-        private int toBackingIndex(int windowIndex) {
-            return windowIndex % COLUMNS + (windowIndex / COLUMNS + scrollRows) * COLUMNS;
+        private int getDisplayIndex(int windowIndex) {
+            int displayIndex = windowIndex + currentPageIndex * getContainerSize();
+            if (displayIndex < 0 || displayIndex >= displayedIndices.size()) return -1;
+            return displayedIndices.get(displayIndex);
         }
     }
 }

@@ -8,7 +8,8 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.util.ValueIOSerializable;
 
 public class StorageContainer extends SimpleContainer implements ValueIOSerializable {
-    public static final int STORAGE_SLOTS = 360;
+    public static final int MAX_STORAGE_PAGES = 7;
+    public static final int STORAGE_SLOTS = MAX_STORAGE_PAGES * 54;
 
     public StorageContainer() {
         super(STORAGE_SLOTS);

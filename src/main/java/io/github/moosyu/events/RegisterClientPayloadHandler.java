@@ -3,7 +3,6 @@ package io.github.moosyu.events;
 import io.github.moosyu.data.regen.RegenClientCache;
 import io.github.moosyu.gui.screens.DialogueScreen;
 import io.github.moosyu.packets.*;
-import io.github.moosyu.packets.handlers.*;
 import io.github.moosyu.sounds.UnshatteredSounds;
 import io.github.moosyu.util.UnshatteredUtils;
 import io.github.moosyu.util.damage.DamageNumber;

@@ -6,7 +6,6 @@ import io.github.moosyu.gui.menus.ReforgeAnvilMenu;
 import io.github.moosyu.gui.menus.StorageMenu;
 import io.github.moosyu.gui.menus.TalismansMenu;
 import io.github.moosyu.packets.*;
-import io.github.moosyu.packets.handlers.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.SimpleMenuProvider;
@@ -142,23 +141,20 @@ public class RegisterPayloadsHandler {
                 })
         );
 
-        registrar.playToServer(UpdateStorageScrollPacket.TYPE,
-                UpdateStorageScrollPacket.STREAM_CODEC,
+        registrar.playToServer(UpdateStorageSearchResultsPacket.TYPE,
+                UpdateStorageSearchResultsPacket.STREAM_CODEC,
                 (data, context) -> context.enqueueWork(() -> {
                     if (context.player().containerMenu instanceof StorageMenu storageMenu) {
-                        storageMenu.setScrollRows(data.row());
+                        storageMenu.handleSearch(data.input());
                     }
                 })
         );
 
-        registrar.playToServer(UpdateStorageSearchResultsPacket.TYPE,
-                UpdateStorageSearchResultsPacket.STREAM_CODEC, (data, context) -> context.enqueueWork(() -> {
+        registrar.playToServer(UpdateStoragePagePacket.TYPE,
+                UpdateStoragePagePacket.STREAM_CODEC,
+                (data, context) -> context.enqueueWork(() -> {
                     if (context.player().containerMenu instanceof StorageMenu storageMenu) {
-                        if (data.newInput().length() > data.oldInput().length()) {
-
-                        } else if (data.newInput().length() < data.oldInput().length()) {
-
-                        }
+                        storageMenu.updatePage(data.increment());
                     }
                 })
         );
