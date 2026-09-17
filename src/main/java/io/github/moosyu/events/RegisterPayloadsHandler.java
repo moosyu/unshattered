@@ -1,6 +1,6 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.data.attachments.PlayerDialogueFlagsAttachment;
+import io.github.moosyu.data.attachments.PlayerFlagsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.gui.menus.ReforgeAnvilMenu;
 import io.github.moosyu.gui.menus.StorageMenu;
@@ -103,12 +103,12 @@ public class RegisterPayloadsHandler {
                 ResetFlagQueuePacket.STREAM_CODEC,
                 (data, context) -> context.enqueueWork(() -> {
                     if (context.player() instanceof ServerPlayer serverPlayer) {
-                        PlayerDialogueFlagsAttachment playerDialogueFlagsAttachment = serverPlayer.getData(UnshatteredAttachments.PLAYER_DIALOGUE_FLAGS);
+                        PlayerFlagsAttachment playerFlagsAttachment = serverPlayer.getData(UnshatteredAttachments.PLAYER_FLAGS);
                         if (data.addToPlayerFlags()) {
-                            playerDialogueFlagsAttachment.addQueuedFlags();
-                            serverPlayer.syncData(UnshatteredAttachments.PLAYER_DIALOGUE_FLAGS);
+                            playerFlagsAttachment.addQueuedFlags();
+                            serverPlayer.syncData(UnshatteredAttachments.PLAYER_FLAGS);
                         } else {
-                            playerDialogueFlagsAttachment.clearFlagQueue();
+                            playerFlagsAttachment.clearFlagQueue();
                         }
                     }
                 })
@@ -118,7 +118,7 @@ public class RegisterPayloadsHandler {
                 QueueNewFlagsPacket.STREAM_CODEC,
                 (data, context) -> context.enqueueWork(() -> {
                     if (context.player() instanceof ServerPlayer serverPlayer) {
-                        serverPlayer.getData(UnshatteredAttachments.PLAYER_DIALOGUE_FLAGS.get()).addFlagsToQueue(data.flags());
+                        serverPlayer.getData(UnshatteredAttachments.PLAYER_FLAGS.get()).addFlagsToQueue(data.flags());
                     }
                 })
         );

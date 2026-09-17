@@ -64,9 +64,9 @@ public final class DamageUtil {
             Optional<ResourceKey<Enchantment>> key = entry.getKey().unwrapKey();
             if (key.isEmpty()) continue;
 
-            Optional<UnshatteredEnchantmentEffects.UnshatteredEffect<?>> effect = UnshatteredEnchantmentEffects.getEffect(key.get());
+            Optional<UnshatteredEnchantmentEffects.UnshatteredSimpleEffect> effect = UnshatteredEnchantmentEffects.getEffect(key.get());
             if (effect.isPresent()
-                    && effect.get() instanceof UnshatteredEnchantmentEffects.DamageEffect damageEffect
+                    && effect.get() instanceof UnshatteredEnchantmentEffects.DamageComplexEffect damageEffect
                     && damageEffect.checkPassesEffectRequirement(player, target)
             ) {
                 damageBonus += damageEffect.getEffectBonus(entry.getIntValue());
@@ -83,7 +83,7 @@ public final class DamageUtil {
                     : 0.0d;
         }
 
-        double damage = (5 + player.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder))
+        double damage = (1 + player.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder))
                 * (1 + (player.getAttributeValue(UnshatteredAttributeValues.STRENGTH.holder) / 20))
                 * (1 + (critDamage / 20))
                 * (player.getAttributeValue(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder) + damageBonus)

@@ -9,7 +9,7 @@ import net.minecraft.world.entity.player.Player;
 
 import java.util.*;
 
-public final class PlayerDialogueFlagsAttachment {
+public final class PlayerFlagsAttachment {
     private final Set<Identifier> flags = new HashSet<>();
     private final Set<Identifier> flagQueue = new HashSet<>();
 
@@ -27,6 +27,14 @@ public final class PlayerDialogueFlagsAttachment {
 
     public Set<Identifier> getQueuedFlags() {
         return flagQueue;
+    }
+
+    /**
+     * adds a single flag instantly (no queue), generally should be used for non-dialogue tracking
+     * @param flag flag being added
+     */
+    public void addFlag(Identifier flag) {
+        flags.add(flag);
     }
 
     public void addFlags(Collection<Identifier> allFlags) {
@@ -61,19 +69,19 @@ public final class PlayerDialogueFlagsAttachment {
     }
 
     public void resetFlags(Player player) {
-        player.setData(UnshatteredAttachments.PLAYER_DIALOGUE_FLAGS, new PlayerDialogueFlagsAttachment());
+        player.setData(UnshatteredAttachments.PLAYER_FLAGS, new PlayerFlagsAttachment());
     }
 
-    public static final Codec<PlayerDialogueFlagsAttachment> CODEC = Identifier.CODEC.listOf().xmap(list -> {
-        PlayerDialogueFlagsAttachment data = new PlayerDialogueFlagsAttachment();
+    public static final Codec<PlayerFlagsAttachment> CODEC = Identifier.CODEC.listOf().xmap(list -> {
+        PlayerFlagsAttachment data = new PlayerFlagsAttachment();
         data.addFlags(list);
         return data;
     },
     data -> new ArrayList<>(data.flags));
 
-    public static final StreamCodec<ByteBuf, PlayerDialogueFlagsAttachment> STREAM_CODEC = Identifier.STREAM_CODEC.apply(ByteBufCodecs.collection(HashSet::new))
+    public static final StreamCodec<ByteBuf, PlayerFlagsAttachment> STREAM_CODEC = Identifier.STREAM_CODEC.apply(ByteBufCodecs.collection(HashSet::new))
             .map(set -> {
-                PlayerDialogueFlagsAttachment data = new PlayerDialogueFlagsAttachment();
+                PlayerFlagsAttachment data = new PlayerFlagsAttachment();
                 data.addFlags(set);
                 return data;
                 },

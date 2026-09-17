@@ -19,7 +19,7 @@ import org.jspecify.annotations.NonNull;
 import javax.annotation.Nullable;
 
 public class ReforgeAnvilMenu extends ItemCombinerMenu {
-    private record CurrentEnchantment(UnshatteredEnchantmentEffects.UnshatteredEffect<?> currentEnchantment, int level) {}
+    private record CurrentEnchantment(UnshatteredEnchantmentEffects.UnshatteredSimpleEffect currentEnchantment, int level) {}
 
     private @Nullable CurrentEnchantment currentEnchantment;
 

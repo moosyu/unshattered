@@ -153,6 +153,7 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
         createSimpleEnchantedBook(Enchantments.SMITE, 1, getHasName(UnshatteredItems.ENCHANTED_ROTTEN_FLESH), has(UnshatteredItems.ENCHANTED_ROTTEN_FLESH), UnshatteredItems.ENCHANTED_ROTTEN_FLESH, 32);
         createSimpleEnchantedBook(Enchantments.SHARPNESS, 1, getHasName(UnshatteredItems.ENCHANTED_FLINT), has(UnshatteredItems.ENCHANTED_FLINT), UnshatteredItems.ENCHANTED_FLINT, 64);
         createSimpleEnchantedBook(Enchantments.BANE_OF_ARTHROPODS, 1, getHasName(UnshatteredItems.ENCHANTED_STRING), has(UnshatteredItems.ENCHANTED_STRING), UnshatteredItems.ENCHANTED_STRING, 32);
+        createSimpleEnchantedBook(Enchantments.PROTECTION, 1, getHasName(UnshatteredItems.ENCHANTED_IRON_BLOCK), has(UnshatteredItems.ENCHANTED_IRON_BLOCK), UnshatteredItems.ENCHANTED_IRON_BLOCK, 1);
     }
 
     public static class Runner extends RecipeProvider.Runner {

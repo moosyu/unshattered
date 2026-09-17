@@ -297,10 +297,7 @@ public final class UnshatteredUtils {
 
         if (fortuneType == null) return rolledAboveOccasional;
 
-        ItemStack dropStack = new ItemStack(dropData.itemRange().item(), dropData.itemRange().minAmount() == dropData.itemRange().maxAmount()
-                ? dropData.itemRange().minAmount()
-                : randomSource.nextIntBetweenInclusive(dropData.itemRange().minAmount(), dropData.itemRange().maxAmount())
-        );
+        ItemStack dropStack = new ItemStack(dropData.itemRange().item(), dropData.itemRange().getDropAmount(randomSource));
         fortuneValue = player.getAttributeValue(fortuneType.holder);
 
         if (dropData.dropChance() < 1.0) {

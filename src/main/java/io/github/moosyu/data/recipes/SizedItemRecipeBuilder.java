@@ -1,6 +1,5 @@
 package io.github.moosyu.data.recipes;
 
-import io.github.moosyu.data.datagen.UnshatteredRecipeProvider;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;

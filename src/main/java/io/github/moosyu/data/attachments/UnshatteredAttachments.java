@@ -70,10 +70,10 @@ public final class UnshatteredAttachments {
                     .build()
     );
 
-    public static final Supplier<AttachmentType<PlayerDialogueFlagsAttachment>> PLAYER_DIALOGUE_FLAGS = ATTACHMENT_TYPES.register("player_dialogue_flags", () ->
-            AttachmentType.builder(PlayerDialogueFlagsAttachment::new)
-                    .serialize(PlayerDialogueFlagsAttachment.CODEC.fieldOf("flags"))
-                    .sync(PlayerDialogueFlagsAttachment.STREAM_CODEC)
+    public static final Supplier<AttachmentType<PlayerFlagsAttachment>> PLAYER_FLAGS = ATTACHMENT_TYPES.register("player_flags_flags", () ->
+            AttachmentType.builder(PlayerFlagsAttachment::new)
+                    .serialize(PlayerFlagsAttachment.CODEC.fieldOf("flags"))
+                    .sync(PlayerFlagsAttachment.STREAM_CODEC)
                     .copyOnDeath()
                     .build()
     );

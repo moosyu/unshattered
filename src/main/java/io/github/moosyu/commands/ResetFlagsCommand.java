@@ -1,7 +1,7 @@
 package io.github.moosyu.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
-import io.github.moosyu.data.attachments.PlayerDialogueFlagsAttachment;
+import io.github.moosyu.data.attachments.PlayerFlagsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -15,7 +15,7 @@ public class ResetFlagsCommand {
             if (player == null) {
                 return 0;
             }
-            PlayerDialogueFlagsAttachment dialogueFlagsAttachment = player.getData(UnshatteredAttachments.PLAYER_DIALOGUE_FLAGS.get());
+            PlayerFlagsAttachment dialogueFlagsAttachment = player.getData(UnshatteredAttachments.PLAYER_FLAGS.get());
             dialogueFlagsAttachment.resetFlags(player);
             context.getSource().sendSuccess(() ->
                             Component.literal("reset dialogue flags!"),

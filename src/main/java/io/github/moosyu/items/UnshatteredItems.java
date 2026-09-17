@@ -7,6 +7,7 @@ import io.github.moosyu.data.regions.UnshatteredRegions;
 import io.github.moosyu.items.armours.SkeletonHat;
 import io.github.moosyu.items.talismans.BatTalisman;
 import io.github.moosyu.items.talismans.CoinTalisman;
+import io.github.moosyu.items.talismans.RainbowYarnTalismanItem;
 import io.github.moosyu.items.talismans.TalismanItem;
 import io.github.moosyu.items.tools.axes.RegionLockedFortuneAxe;
 import io.github.moosyu.items.tools.axes.UnshatteredAxeTool;
@@ -754,4 +755,6 @@ public class UnshatteredItems {
             .component(UnshatteredDataComponents.SELL_VALUE.get(), 3200)
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON))
     );
+
+    public static final DeferredItem<Item> RAINBOW_YARN_TALISMAN = ITEMS.registerItem("rainbow_yarn_talisman", RainbowYarnTalismanItem::new);
 }

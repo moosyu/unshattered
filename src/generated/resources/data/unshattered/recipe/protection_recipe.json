@@ -1,0 +1,24 @@
+{
+  "type": "unshattered:sized_recipe",
+  "key": {
+    "A": {
+      "count": 1,
+      "ingredient": "minecraft:book"
+    },
+    "B": {
+      "count": 1,
+      "ingredient": "unshattered:enchanted_iron_block"
+    }
+  },
+  "pattern": [
+    "AB"
+  ],
+  "result": {
+    "components": {
+      "minecraft:stored_enchantments": {
+        "minecraft:protection": 1
+      }
+    },
+    "id": "minecraft:enchanted_book"
+  }
+}

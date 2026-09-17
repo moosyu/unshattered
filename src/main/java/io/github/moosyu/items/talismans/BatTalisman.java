@@ -29,12 +29,10 @@ public class BatTalisman extends TalismanItem implements PassiveAbilityItem {
     public void onAbilityFinished(ServerPlayer player, @Nullable LivingEntity target) {
         // the target could only be dying at this point not when triggered
         if (target != null && target.isDeadOrDying()) {
-            System.out.println(player.getData(UnshatteredAttachments.PLAYER_STATE).getStatValue(PlayerStateAttachment.Stat.HEALTH));
             player.getData(UnshatteredAttachments.PLAYER_STATE).increaseStatValue(PlayerStateAttachment.Stat.HEALTH,
                     UnshatteredUtils.getDefaultAttributes(target).map(supplier -> supplier.getBaseValue(UnshatteredAttributeValues.HEALTH.holder)).orElse(0.0) * 0.02,
                     player
             );
-            System.out.println(player.getData(UnshatteredAttachments.PLAYER_STATE).getStatValue(PlayerStateAttachment.Stat.HEALTH));
         }
     }
 

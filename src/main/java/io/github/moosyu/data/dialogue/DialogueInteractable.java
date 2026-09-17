@@ -1,7 +1,7 @@
 package io.github.moosyu.data.dialogue;
 
 import io.github.moosyu.Unshattered;
-import io.github.moosyu.data.attachments.PlayerDialogueFlagsAttachment;
+import io.github.moosyu.data.attachments.PlayerFlagsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.packets.OpenDialoguePacket;
 import net.minecraft.core.RegistryAccess;
@@ -28,12 +28,12 @@ public interface DialogueInteractable {
      */
     default void onDialogueTriggered(Player player) {
         if (!player.level().isClientSide()) {
-            PlayerDialogueFlagsAttachment playerDialogueFlagsAttachment = player.getData(UnshatteredAttachments.PLAYER_DIALOGUE_FLAGS);
+            PlayerFlagsAttachment playerFlagsAttachment = player.getData(UnshatteredAttachments.PLAYER_FLAGS);
             DialogueTree dialogueTree = getDialogueTree(player.registryAccess());
             DialogueTreeOrigin chosenOrigin = null;
             for (DialogueTreeOrigin dialogueTreeOrigin : dialogueTree.dialogueTreeOrigins()) {
                 if ((dialogueTreeOrigin.dialogueFlagRequirements().isEmpty()
-                        || dialogueTreeOrigin.dialogueFlagRequirements().get().isSatisfied(playerDialogueFlagsAttachment))
+                        || dialogueTreeOrigin.dialogueFlagRequirements().get().isSatisfied(playerFlagsAttachment))
                         && (chosenOrigin == null || dialogueTreeOrigin.priority() > chosenOrigin.priority())
                 ) {
                     chosenOrigin = dialogueTreeOrigin;
@@ -45,7 +45,7 @@ public interface DialogueInteractable {
                 return;
             }
 
-            playerDialogueFlagsAttachment.addFlagsToQueue(chosenOrigin.setFlags());
+            playerFlagsAttachment.addFlagsToQueue(chosenOrigin.setFlags());
             PacketDistributor.sendToPlayer((ServerPlayer) player, new OpenDialoguePacket(getInteractableName(), chosenOrigin.dialogueNode()));
         } else {
             player.swing(InteractionHand.MAIN_HAND);

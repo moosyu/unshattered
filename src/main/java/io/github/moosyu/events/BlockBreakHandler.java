@@ -1,6 +1,5 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.data.regen.RegenClientCache;
 import io.github.moosyu.data.regen.RegenPaths;
 import io.github.moosyu.data.regen.RegenSavedData;
@@ -26,7 +25,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
@@ -161,24 +159,8 @@ public class BlockBreakHandler {
         ItemStack itemStack = player.getMainHandItem();
         ItemAttributeModifiers itemAttributeModifiers = itemStack.get(DataComponents.ATTRIBUTE_MODIFIERS);
         if (block.is(UnshatteredBlockTagsProvider.COLLECTABLE_MINING_BLOCKS) && itemStack.is(ItemTags.PICKAXES)) {
-            ItemEnchantments enchantments = itemStack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY);
-            double bonus = 0.0d;
 
-            for (Object2IntMap.Entry<Holder<Enchantment>> entry : enchantments.entrySet()) {
-                Optional<ResourceKey<Enchantment>> key = entry.getKey().unwrapKey();
-                if (key.isEmpty()) continue;
-
-                Optional<UnshatteredEnchantmentEffects.UnshatteredEffect<?>> effect = UnshatteredEnchantmentEffects.getEffect(key.get());
-
-                if (effect.isPresent()
-                        && effect.get() instanceof UnshatteredEnchantmentEffects.MiningSpeedEffect miningEffect
-                        && miningEffect.checkPassesEffectRequirement(player, blockState)
-                ) {
-                    bonus += miningEffect.getEffectBonus(entry.getIntValue());
-                }
-            }
-
-            event.setNewSpeed((float) (player.getAttributeValue(UnshatteredAttributeValues.MINING_SPEED.holder) + bonus));
+            event.setNewSpeed((float) (player.getAttributeValue(UnshatteredAttributeValues.MINING_SPEED.holder)));
         } else if (block.is(UnshatteredBlockTagsProvider.COLLECTABLE_FORAGING_BLOCKS)
                 && itemStack.is(ItemTags.AXES)
                 || !itemStack.is(ItemTags.AXES)

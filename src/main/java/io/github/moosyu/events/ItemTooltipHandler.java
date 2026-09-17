@@ -58,22 +58,40 @@ public class ItemTooltipHandler {
         event.getToolTip().clear();
         tooltipComponents.add(Component.translatable(stack.getItemName().getString()).withColor(itemRarity.getColour(1.0f)));
 
-        for (ItemAttributeModifiers.Entry entry : modifiers.modifiers()) {
-            Holder<Attribute> attributeHolder = entry.attribute();
-            double amount = entry.modifier().amount();
-            UnshatteredAttributeValues itemAttribute = UnshatteredAttributeValues.fromAttribute(attributeHolder.value());
-            if (itemAttribute == null) {
-                // ill make something less ugly if i end up using more vanilla attributes but for now this is fine
+        if (!modifiers.modifiers().isEmpty()) {
+            Map<Holder<Attribute>, double[]> mergedAmounts = new LinkedHashMap<>();
+
+            for (ItemAttributeModifiers.Entry entry : modifiers.modifiers()) {
+                Holder<Attribute> attributeHolder = entry.attribute();
+                double amount = entry.modifier().amount();
+
                 if (attributeHolder == Attributes.MOVEMENT_SPEED) {
-                    hasAttributes = true;
-                    addAttributeToTooltip(tooltipComponents, attributeHolder, amount * 10, false, false, false);
-                } else if (attributeHolder == Attributes.ENTITY_INTERACTION_RANGE) {
-                    hasAttributes = true;
-                    addAttributeToTooltip(tooltipComponents, attributeHolder, amount, false, false, true);
+                    amount *= 10;
                 }
-            } else {
+
+                mergedAmounts.computeIfAbsent(attributeHolder, _ -> new double[1])[0] += amount;
+            }
+
+            for (Map.Entry<Holder<Attribute>, double[]> entry : mergedAmounts.entrySet()) {
+                Holder<Attribute> attributeHolder = entry.getKey();
+                double amount = entry.getValue()[0];
+
+                if (amount == 0.0) continue;
+
+                UnshatteredAttributeValues itemAttribute = UnshatteredAttributeValues.fromAttribute(attributeHolder.value());
+
                 hasAttributes = true;
-                addAttributeToTooltip(tooltipComponents, attributeHolder, amount, itemAttribute.percentage, itemAttribute.offensive, true);
+                if (itemAttribute == null) {
+                    boolean isSpeed = attributeHolder == Attributes.MOVEMENT_SPEED;
+                    boolean isRange = attributeHolder == Attributes.ENTITY_INTERACTION_RANGE;
+
+                    // this might be the most brilliant line of code in my career, feeling real smart right now
+                    if (isSpeed || isRange) {
+                        addAttributeToTooltip(tooltipComponents, attributeHolder, amount, false, false, isRange);
+                    }
+                } else {
+                    addAttributeToTooltip(tooltipComponents, attributeHolder, amount, itemAttribute.percentage, itemAttribute.offensive, true);
+                }
             }
         }
 
@@ -88,7 +106,7 @@ public class ItemTooltipHandler {
                 Optional<ResourceKey<Enchantment>> key = entry.getKey().unwrapKey();
                 if (key.isEmpty()) continue;
 
-                Optional<UnshatteredEnchantmentEffects.UnshatteredEffect<?>> effect = UnshatteredEnchantmentEffects.getEffect(key.get());
+                Optional<UnshatteredEnchantmentEffects.UnshatteredSimpleEffect> effect = UnshatteredEnchantmentEffects.getEffect(key.get());
                 if (effect.isEmpty()) continue;
 
                 int level = entry.getValue();
@@ -101,17 +119,20 @@ public class ItemTooltipHandler {
 
             if ((iterator.hasNext())) {
                 MutableComponent enchantmentComponent = Component.empty();
-                tooltipComponents.add(Component.empty());
+                if (hasAttributes) {
+                    tooltipComponents.add(Component.empty());
+                }
 
                 while (iterator.hasNext()) {
                     Object2IntMap.Entry<Holder<Enchantment>> enchantmentHolder = iterator.next();
                     Optional<ResourceKey<Enchantment>> key = enchantmentHolder.getKey().unwrapKey();
                     if (key.isEmpty()) continue;
-                    Optional<UnshatteredEnchantmentEffects.UnshatteredEffect<?>> effect = UnshatteredEnchantmentEffects.getEffect(key.get());
+                    Optional<UnshatteredEnchantmentEffects.UnshatteredSimpleEffect> effect = UnshatteredEnchantmentEffects.getEffect(key.get());
                     if (effect.isEmpty()) continue;
 
                     int level = enchantmentHolder.getIntValue();
-                    enchantmentComponent.append(enchantmentHolder.getKey().value().description().copy().withColor((enchantmentHolder.getKey().value().getMaxLevel() == level ? 0xFFE6B605 : 0xFF459BFF)).append(Component.literal(" " + UnshatteredUtils.convertTextToRomanNumeral(level))));
+                    int maxLevel = enchantmentHolder.getKey().value().getMaxLevel();
+                    enchantmentComponent.append(enchantmentHolder.getKey().value().description().copy().withColor((maxLevel == level ? 0xFFE6B605 : 0xFF459BFF)).append(Component.literal((maxLevel > 1 ? " " + UnshatteredUtils.convertTextToRomanNumeral(level) : ""))));
 
                     if (iterator.hasNext()) {
                         enchantmentComponent.append(Component.literal(", ").withColor(0xFF459BFF));

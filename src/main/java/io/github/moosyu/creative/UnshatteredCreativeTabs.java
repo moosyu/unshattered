@@ -212,6 +212,7 @@ public class UnshatteredCreativeTabs {
                 .displayItems((_, output) -> {
                     output.accept(BAT_TALISMAN.get());
                     output.accept(COINS_TALISMAN.get());
+                    output.accept(RAINBOW_YARN_TALISMAN.get());
                 }).build()
     );
 }

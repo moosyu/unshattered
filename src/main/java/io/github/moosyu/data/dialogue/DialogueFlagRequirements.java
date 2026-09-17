@@ -2,7 +2,7 @@ package io.github.moosyu.data.dialogue;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.github.moosyu.data.attachments.PlayerDialogueFlagsAttachment;
+import io.github.moosyu.data.attachments.PlayerFlagsAttachment;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -24,7 +24,7 @@ public record DialogueFlagRequirements(List<Identifier> requiredFlags, List<Iden
             DialogueFlagRequirements::new
     );
 
-    public boolean isSatisfied(PlayerDialogueFlagsAttachment flagsAttachment) {
+    public boolean isSatisfied(PlayerFlagsAttachment flagsAttachment) {
         return flagsAttachment.hasAllFlags(requiredFlags()) && excludedFlags().stream().noneMatch(flagsAttachment.getFlags()::contains);
     }
 }

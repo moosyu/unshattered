@@ -12,8 +12,6 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
-import net.minecraft.network.chat.Style;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
@@ -58,7 +56,7 @@ public class DialogueScreen extends Screen {
         super.init();
 
         List<DialogueChoice> availableDialogueChoices = selectedDialogueNode.dialogueChoices().stream().filter(dialogueChoice -> dialogueChoice.dialogueFlagRequirements().isPresent()
-                && dialogueChoice.dialogueFlagRequirements().get().isSatisfied(player.getData(UnshatteredAttachments.PLAYER_DIALOGUE_FLAGS))
+                && dialogueChoice.dialogueFlagRequirements().get().isSatisfied(player.getData(UnshatteredAttachments.PLAYER_FLAGS))
                 || dialogueChoice.dialogueFlagRequirements().isEmpty()).toList();
         int dialogueChoiceCount = availableDialogueChoices.size();
 

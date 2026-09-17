@@ -1,13 +1,22 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.enchantments.UnshatteredEnchantmentEffects;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
+
+import java.util.Optional;
 
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.util.UnshatteredUtils.getUnshatteredIdentifier;
@@ -15,7 +24,7 @@ import static io.github.moosyu.util.UnshatteredUtils.getUnshatteredIdentifier;
 @EventBusSubscriber(modid = MODID)
 public class ItemAttributeModifierHandler {
     @SubscribeEvent
-    public static void modifyAttributeModifier(ItemAttributeModifierEvent event) {
+    public static void onItemStackAttributesQueried(ItemAttributeModifierEvent event) {
         ItemStack itemStack = event.getItemStack();
 
         if (itemStack.is(Items.WOODEN_PICKAXE)) {
@@ -59,21 +68,36 @@ public class ItemAttributeModifierHandler {
         } else if (itemStack.is(Items.DIAMOND_AXE)) {
             event.addModifier(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_axe_damage"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
         } else if (itemStack.is(Items.IRON_HELMET)) {
-            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("iron_helmet_defence"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("iron_helmet_defence"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.HEAD);
         } else if (itemStack.is(Items.IRON_CHESTPLATE)) {
-            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("iron_chestplate_defence"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("iron_chestplate_defence"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.CHEST);
         } else if (itemStack.is(Items.IRON_LEGGINGS)) {
-            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("iron_leggings_defence"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("iron_leggings_defence"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.LEGS);
         } else if (itemStack.is(Items.IRON_BOOTS)) {
-            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("iron_boots_defence"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("iron_boots_defence"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET);
         } else if (itemStack.is(Items.DIAMOND_HELMET)) {
-            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_helmet_defence"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_helmet_defence"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.HEAD);
         } else if (itemStack.is(Items.DIAMOND_CHESTPLATE)) {
-            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_chestplate_defence"), 8, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_chestplate_defence"), 8, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.CHEST);
         } else if (itemStack.is(Items.DIAMOND_LEGGINGS)) {
-            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_leggings_defence"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_leggings_defence"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.LEGS);
         } else if (itemStack.is(Items.DIAMOND_BOOTS)) {
-            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_boots_defence"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_boots_defence"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET);
+        }
+
+
+        for (Object2IntMap.Entry<Holder<Enchantment>> entry : itemStack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY).entrySet()) {
+            Optional<ResourceKey<Enchantment>> key = entry.getKey().unwrapKey();
+            if (key.isEmpty()) continue;
+
+            Optional<UnshatteredEnchantmentEffects.UnshatteredSimpleEffect> effect = UnshatteredEnchantmentEffects.getEffect(key.get());
+
+            if (effect.isPresent() && effect.get() instanceof UnshatteredEnchantmentEffects.AttributeModificationComplexEffect<?> attributeModificationEffect) {
+                event.addModifier(attributeModificationEffect.getAttributeHolder(),
+                        attributeModificationEffect.getAttributeModifier(entry.getIntValue()),
+                        attributeModificationEffect.getEquipmentSlotGroup()
+                );
+            }
         }
     }
 }
