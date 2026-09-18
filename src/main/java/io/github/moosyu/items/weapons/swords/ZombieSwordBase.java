@@ -1,6 +1,7 @@
 package io.github.moosyu.items.weapons.swords;
 
 import io.github.moosyu.Unshattered;
+import io.github.moosyu.abilities.AbilityContextKey;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
@@ -11,12 +12,9 @@ import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.packets.ZombieSwordEffectsPacket;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.resources.Identifier;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -42,10 +40,10 @@ public class ZombieSwordBase extends UnshatteredSword {
 
         super(properties.component(UnshatteredDataComponents.ABILITY.get(), ability)
                 .attributes(ItemAttributeModifiers.builder()
-                        .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(snakeCaseIdentifier + "_damage", false), damage, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                        .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(snakeCaseIdentifier + "_strength", false), strength, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                        .add(UnshatteredAttributeValues.MANA.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(snakeCaseIdentifier + "_mana", false), mana, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                        .add(Attributes.ATTACK_SPEED, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(snakeCaseIdentifier + "_attack_speed", false), -2.4f, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                        .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(snakeCaseIdentifier + "_damage"), damage, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                        .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(snakeCaseIdentifier + "_strength"), strength, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                        .add(UnshatteredAttributeValues.MANA.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(snakeCaseIdentifier + "_mana"), mana, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                        .add(Attributes.ATTACK_SPEED, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(snakeCaseIdentifier + "_attack_speed"), -2.4f, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                         .build()
                 )
         );
@@ -82,7 +80,13 @@ public class ZombieSwordBase extends UnshatteredSword {
                 player.getCooldowns().addCooldown(itemStack, instantHealAbility.cooldown());
 
                 if (!abilities.hasActiveEffect(abilityIdentifier)) {
-                    abilities.addActiveEffect(abilityIdentifier, itemCharges.rechargeTime(), level, p -> onRecharge(p, itemStack), player.getItemBySlot(hand.asEquipmentSlot()));
+                    abilities.addActiveEffect(abilityIdentifier,
+                            itemCharges.rechargeTime(),
+                            level,
+                            context -> context.get(AbilityContextKey.PLAYER).ifPresent(serverPlayer -> {
+                                onRecharge(serverPlayer, itemStack);
+                            })
+                    );
                 }
                 playerState.decreaseStatValue(PlayerStateAttachment.Stat.MANA, instantHealAbility.manaCost(), player);
             }
@@ -108,18 +112,5 @@ public class ZombieSwordBase extends UnshatteredSword {
     @Override
     public boolean shouldCauseReequipAnimation(@NonNull ItemStack oldStack, @NonNull ItemStack newStack, boolean slotChanged) {
         return slotChanged || oldStack.getItem() != newStack.getItem();
-    }
-
-    @Override
-    public void inventoryTick(@NonNull ItemStack itemStack, @NonNull ServerLevel level, @NonNull Entity owner, EquipmentSlot slot) {
-        if (owner instanceof Player player) {
-            PlayerAbilityEffectsAttachment abilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES.get());
-            ItemCharges itemCharges = itemStack.get(UnshatteredDataComponents.CHARGES.get());
-            if (itemCharges == null) return;
-
-            if (itemCharges.currentCharges() < itemCharges.maxCharges() && !abilities.hasActiveEffect(abilityIdentifier)) {
-                abilities.addActiveEffect(abilityIdentifier, itemCharges.rechargeTime(), level, p -> onRecharge(p, itemStack), player.getItemBySlot(slot));
-            }
-        }
     }
 }

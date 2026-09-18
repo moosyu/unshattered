@@ -118,5 +118,8 @@ public class RegisterClientPayloadHandler {
                         UnshatteredUtils.playClientsideSound(context.player(), SoundEvents.PLAYER_ATTACK_WEAK, SoundSource.PLAYERS, 1.0f)
                 )
         );
+
+        event.register(ClientsidePlayerSoundEffectPacket.TYPE, (data, context) -> context.enqueueWork(() ->
+                UnshatteredUtils.playClientsideSound(context.player(), data.soundEvent().value(), SoundSource.PLAYERS, data.volume())));
     }
 }

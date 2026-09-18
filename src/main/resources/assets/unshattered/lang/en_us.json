@@ -94,7 +94,7 @@
   "item.unshattered.enchanted_redstone": "Enchanted Redstone Dust",
   "item.unshattered.enchanted_redstone_block": "Enchanted Redstone Block",
   "item.unshattered.healing_tissue": "Healing Tissue",
-  "item.unshattered.coins_talisman": "Coins Talisman",
+  "item.unshattered.coins_talisman": "Talisman of Coins",
   "item.unshattered.emerald_dagger": "Emerald Dagger",
   "item.unshattered.broken_mithril_pickaxe": "Broken Mithril Pickaxe",
   "item.unshattered.mithril": "Mithril",
@@ -127,7 +127,8 @@
   "item.unshattered.enchanted_sponge": "Enchanted Sponge",
   "item.unshattered.enchanted_wet_sponge": "Enchanted Wet Sponge",
   "item.unshattered.enchanted_tropical_fish": "Enchanted Tropical Fish",
-  "item.unshattered.rainbow_yarn_talisman": "Rainbow Yarn Talisman",
+  "item.unshattered.rainbow_yarn_talisman": "Rainbow Yarn Ball",
+  "item.unshattered.dwarf_turtle_shell": "Dwarf Turtle Sheet",
 
   "item.ability.unshattered.rogue_sword_speed_boost": "Speed Boost",
   "item.ability.unshattered.mind_blowing": "Mind Blowing",
@@ -149,6 +150,7 @@
   "item.ability.unshattered.coin_talisman_accrual": "Accrual",
   "item.ability.unshattered.skeleton_hat_explosive_arrows": "Explosive Arrows",
   "item.ability.unshattered.woolen_barrier": "Woolen Barrier",
+  "item.ability.unshattered.turtle_stability": "Turtle's Stability",
 
   "item.ability.description.unshattered.rogue_sword_speed_boost": "Grants [colour=0xFFFFFFFF]+0.5✦ Speed[/colour] for [colour=0xFF55FF55]30s[/colour].",
   "item.ability.description.unshattered.mind_blowing": "Deals [colour=0xFF55FF55]+100%[/colour] damage to undead mobs.",
@@ -169,7 +171,8 @@
   "item.ability.description.unshattered.bat_talisman_leech": "Gain [colour=0xFFFC3A3A]2%[/colour] of enemy's maximum [colour=0xFFFC3A3A]health[/colour] on kill.",
   "item.ability.description.unshattered.coin_talisman_accrual": "Gain a small chance to get some [colour=0xFFFFAA00]coins[/colour] every second.",
   "item.ability.description.unshattered.skeleton_hat_explosive_arrows": "Your arrows have a [colour=0xFF55FF55]20%[/colour] chance to explode on impact, dealing [colour=0xFF55FF55]50%[/colour] of the initial shot to enemies within [colour=0xFF55FF55]8[/colour] blocks.",
-  "item.ability.description.unshattered.woolen_barrier": "Provides a recharging barrier that blocks [colour=0xFF55FF55]100%[/colour] of an incoming hit!",
+  "item.ability.description.unshattered.woolen_barrier": "Provides a small chance for incoming attacks to be completely cancelled!",
+  "item.ability.description.unshattered.turtle_stability": "Grants complete [colour=0xFF55FF55]immunity[/colour] to knockback.",
 
   "block.unshattered.fig_log": "Fig Log",
   "block.unshattered.breakable_fig_log": "Breakable Fig Log",
@@ -259,7 +262,7 @@
   "item.description.unshattered.end_stone": "It's lived a hard life.",
   "item.description.unshattered.coins_talisman": "Best investment you'll ever make.",
   "item.description.unshattered.emerald_dagger": "A powerful blade made from pure [colour=0xFF00AA00]emeralds[/colour].",
-  "item.description.unshattered.rainbow_yarn_talimsan": "Perfect for getting to the bottom of grand conspiracies.",
+  "item.description.unshattered.rainbow_yarn_talisman": "Perfect for getting to the bottom of grand conspiracies.",
 
   "attribute.name.unshattered.sweep": "Sweep",
   "attribute.name.unshattered.foraging_fortune": "Foraging Fortune",

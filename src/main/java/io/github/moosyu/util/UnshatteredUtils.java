@@ -1,6 +1,10 @@
 package io.github.moosyu.util;
 
 import io.github.moosyu.Unshattered;
+import io.github.moosyu.abilities.AbilityContext;
+import io.github.moosyu.abilities.AbilityTriggerResult;
+import io.github.moosyu.abilities.AbilityTriggerType;
+import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.attachments.PlayerCollectionsAttachment;
@@ -45,10 +49,7 @@ import org.jspecify.annotations.NonNull;
 
 import javax.annotation.Nullable;
 import java.text.DecimalFormat;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -179,19 +180,10 @@ public final class UnshatteredUtils {
 
     /**
      * @param path identifier path
-     * @param convertToSnakeCase whether to convert the path to snakecase (for when it's already snakecase)
-     * @return an identifier with unshattered's modid as the namespace (like withDefaultNamespace)
-     */
-    public static Identifier getUnshatteredIdentifier(String path, boolean convertToSnakeCase) {
-        return Identifier.fromNamespaceAndPath(MODID, convertToSnakeCase ? convertToSnakeCase(path) : path);
-    }
-
-    /**
-     * @param path identifier path
      * @return an identifier with unshattered's modid as the namespace (like withDefaultNamespace)
      */
     public static Identifier getUnshatteredIdentifier(String path) {
-        return Identifier.fromNamespaceAndPath(MODID, convertToSnakeCase(path));
+        return Identifier.fromNamespaceAndPath(MODID, path);
     }
 
     /**
@@ -380,29 +372,19 @@ public final class UnshatteredUtils {
     // abilities
 
     /**
-     * triggers all non ticked passive item's abilities if their conditions are met
-     * @param player player having the ability triggered
-     * @param target the (optional) target of the ability, obviously if its something like increasing foraging fortune the target is null and the abilities should be created accordingly
+     * triggers all non-ongoing passive item abilities if their conditions are met and they have the correct trigger type. doesnt interact with {@link PassiveAbilityItem#triggerResult()}.
+     * @return a list of items that had their abilities triggered. REMEMBER TO USE THIS LIST TO CLEAN UP!!
      */
-    public static void triggerInstantPassiveAbilities(ServerPlayer player, @Nullable LivingEntity target) {
-        player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredPassiveNonTickedItems().forEach(item -> {
-            if (item.abilityConditionsMet(player, target) && !item.isOngoing()) {
-                item.onAbilityTriggered(player, target);
-            }
-        });
-    }
+    public static List<PassiveAbilityItem> triggerInstantPassiveAbilities(Player player, AbilityTriggerType triggerType, AbilityContext context) {
+        List<PassiveAbilityItem> triggered = new ArrayList<>();
 
-    /**
-     * finishes all instant passive abilities. doesnt check whether they were actually triggered however so only cleanup should be put here without the assumption that anything was changed.
-     * @param player player having the ability finished
-     * @param target the (optional) target of the ability, obviously if its something like increasing foraging fortune the target is null
-     */
-    public static void finishInstantPassiveAbilities(ServerPlayer player, @Nullable LivingEntity target) {
-        player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredPassiveNonTickedItems().forEach(item -> {
-            if (!item.isOngoing()) {
-                item.onAbilityFinished(player, target);
+        for (PassiveAbilityItem item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredPassiveNonOngoingItems()) {
+            if (item.triggerTypes().contains(triggerType) && item.abilityConditionsMet(context)) {
+                item.onAbilityTriggered(context);
+                triggered.add(item);
             }
-        });
+        }
+        return triggered;
     }
 
     /**

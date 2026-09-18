@@ -1,10 +1,13 @@
 package io.github.moosyu.gui.menus;
 
+import io.github.moosyu.abilities.AbilityContext;
+import io.github.moosyu.abilities.AbilityContextKey;
+import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemTypes;
 import io.github.moosyu.gui.menus.containers.TalismanContainer;
-import io.github.moosyu.items.PassiveAbilityItem;
+import io.github.moosyu.abilities.PassiveAbilityItem;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -74,13 +77,16 @@ public class TalismansMenu extends AbstractContainerMenu {
             ItemStack previous = lastKnownStacks[i];
 
             if (!ItemStack.isSameItemSameComponents(previous, current)) {
-                if (!current.isEmpty() && current.getItem() instanceof PassiveAbilityItem newAbility) {
-                    player.getData(UnshatteredAttachments.PLAYER_ABILITIES).addPassiveItem(newAbility, serverPlayer);
+                // at this point talismans only need the player context for being added and removed
+                AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, serverPlayer);
+
+                if (!current.isEmpty() && current.getItem() instanceof PassiveAbilityItem newAbilityItem) {
+                    player.getData(UnshatteredAttachments.PLAYER_ABILITIES).addPassiveItem(newAbilityItem, context);
                     System.out.println("stored passive item added");
                 }
 
-                if (!previous.isEmpty() && previous.getItem() instanceof PassiveAbilityItem oldAbility) {
-                    player.getData(UnshatteredAttachments.PLAYER_ABILITIES).removePassiveItem(oldAbility, serverPlayer);
+                if (!previous.isEmpty() && previous.getItem() instanceof PassiveAbilityItem oldAbilityItem) {
+                    player.getData(UnshatteredAttachments.PLAYER_ABILITIES).removePassiveItem(oldAbilityItem, context);
                     System.out.println("stored passive item removed");
                 }
 

@@ -1,5 +1,7 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.abilities.AbilityContext;
+import io.github.moosyu.abilities.AbilityContextKey;
 import io.github.moosyu.data.attachments.PlayerRegionAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
@@ -120,6 +122,7 @@ public class PlayerTickHandler {
 
         state.decrementInvulnerableTime();
 
-        player.getData(UnshatteredAttachments.PLAYER_ABILITIES.get()).updateEffects((ServerPlayer) player);
+        // TODO: ENSURE THIS WILL BE FINE
+        player.getData(UnshatteredAttachments.PLAYER_ABILITIES.get()).updateEffects(new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player), level);
     }
 }

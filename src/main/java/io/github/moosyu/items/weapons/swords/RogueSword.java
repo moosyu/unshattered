@@ -1,5 +1,7 @@
 package io.github.moosyu.items.weapons.swords;
 
+import io.github.moosyu.abilities.AbilityContext;
+import io.github.moosyu.abilities.AbilityContextKey;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
@@ -48,9 +50,9 @@ public class RogueSword extends UnshatteredSword {
         PlayerAbilityEffectsAttachment playerAbilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES.get());
         if (player.getCooldowns().isOnCooldown(this.getDefaultInstance()) || !UnshatteredUtils.passesManaCheck(player, SPEED_BOOST_ABILITY.manaCost()) || movementSpeedAttribute == null) return InteractionResult.FAIL;
         if (playerAbilities.hasActiveEffect(ABILITY_IDENTIFIER)) {
-            playerAbilities.addActiveEffect(ABILITY_IDENTIFIER, SPEED_BOOST_ABILITY.duration(), level, this::onSpeedBoostExpire, player.getItemBySlot(hand.asEquipmentSlot()));
+            playerAbilities.addActiveEffect(ABILITY_IDENTIFIER, SPEED_BOOST_ABILITY.duration(), level, this::onSpeedBoostExpire);
         } else {
-            playerAbilities.addActiveEffect(ABILITY_IDENTIFIER, SPEED_BOOST_ABILITY.duration(), level, this::onSpeedBoostExpire, player.getItemBySlot(hand.asEquipmentSlot()));
+            playerAbilities.addActiveEffect(ABILITY_IDENTIFIER, SPEED_BOOST_ABILITY.duration(), level, this::onSpeedBoostExpire);
             movementSpeedAttribute.addTransientModifier(new AttributeModifier(ABILITY_IDENTIFIER, 0.05, AttributeModifier.Operation.ADD_VALUE));
         }
         if (!player.isCreative()) {
@@ -61,9 +63,12 @@ public class RogueSword extends UnshatteredSword {
         return InteractionResult.PASS;
     }
 
-    private void onSpeedBoostExpire(Player player) {
-        if (player.level().isClientSide()) return;
-        AttributeInstance movementSpeedAttribute = player.getAttribute(Attributes.MOVEMENT_SPEED);
-        if (movementSpeedAttribute != null) movementSpeedAttribute.removeModifier(ABILITY_IDENTIFIER);
+    private void onSpeedBoostExpire(AbilityContext context) {
+        context.get(AbilityContextKey.PLAYER).ifPresent(player -> {
+            if (player.level().isClientSide()) return;
+
+            AttributeInstance movementSpeedAttribute = player.getAttribute(Attributes.MOVEMENT_SPEED);
+            if (movementSpeedAttribute != null) movementSpeedAttribute.removeModifier(ABILITY_IDENTIFIER);
+        });
     }
 }

@@ -6,5 +6,5 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 public class UnshatteredEnchantments {
-    public static ResourceKey<Enchantment> RAINBOW = ResourceKey.create(Registries.ENCHANTMENT, UnshatteredUtils.getUnshatteredIdentifier("rainbow", false));
+    public static ResourceKey<Enchantment> RAINBOW = ResourceKey.create(Registries.ENCHANTMENT, UnshatteredUtils.getUnshatteredIdentifier("rainbow"));
 }

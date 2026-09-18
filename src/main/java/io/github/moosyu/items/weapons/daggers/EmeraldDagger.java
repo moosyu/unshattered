@@ -1,21 +1,22 @@
 package io.github.moosyu.items.weapons.daggers;
 
+import io.github.moosyu.abilities.AbilityContext;
+import io.github.moosyu.abilities.AbilityContextKey;
+import io.github.moosyu.abilities.AbilityTriggerType;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.items.PassiveAbilityItem;
+import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.rarities.UnshatteredRarities;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.resources.Identifier;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlotGroup;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
-import org.jspecify.annotations.Nullable;
+
+import java.util.Set;
 
 import static io.github.moosyu.Unshattered.MODID;
 
@@ -36,28 +37,32 @@ public class EmeraldDagger extends DaggerItem implements PassiveAbilityItem {
     }
 
     @Override
-    public void onAbilityTriggered(ServerPlayer player, @Nullable LivingEntity target) {
-        UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder)
-                .ifPresent(attribute -> attribute
-                        .addTransientModifier(new AttributeModifier(ABILITY_IDENTIFIER,
-                                0.5 * Math.pow(player.getData(UnshatteredAttachments.PLAYER_CURRENCY).getCoins(), 0.25),
-                                AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
-                        )
-                );
+    public void onAbilityTriggered(AbilityContext context) {
+        context.get(AbilityContextKey.PLAYER).ifPresent(player -> {
+            UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder)
+                    .ifPresent(attribute -> attribute
+                            .addTransientModifier(new AttributeModifier(ABILITY_IDENTIFIER,
+                                    0.5 * Math.pow(player.getData(UnshatteredAttachments.PLAYER_CURRENCY).getCoins(), 0.25),
+                                    AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
+                            )
+                    );
+        });
     }
 
     @Override
-    public void onAbilityFinished(ServerPlayer player, @Nullable LivingEntity target) {
-        UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder).ifPresent(attribute -> attribute.removeModifier(ABILITY_IDENTIFIER));
+    public void onAbilityFinished(AbilityContext context) {
+        context.get(AbilityContextKey.PLAYER).flatMap(player -> UnshatteredUtils.getAttributeInstance(player,
+                UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder)
+        ).ifPresent(attribute -> attribute.removeModifier(ABILITY_IDENTIFIER));
     }
 
     @Override
-    public boolean abilityConditionsMet(ServerPlayer player, @Nullable LivingEntity target) {
-        return target != null;
+    public boolean abilityConditionsMet(AbilityContext context) {
+        return true;
     }
 
     @Override
-    public boolean isOngoing() {
-        return false;
+    public Set<AbilityTriggerType> triggerTypes() {
+        return Set.of(AbilityTriggerType.PLAYER_DEAL_DAMAGE);
     }
 }

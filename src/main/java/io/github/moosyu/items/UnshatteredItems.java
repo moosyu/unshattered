@@ -5,10 +5,7 @@ import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.data.regions.UnshatteredRegions;
 import io.github.moosyu.items.armours.SkeletonHat;
-import io.github.moosyu.items.talismans.BatTalisman;
-import io.github.moosyu.items.talismans.CoinTalisman;
-import io.github.moosyu.items.talismans.RainbowYarnTalismanItem;
-import io.github.moosyu.items.talismans.TalismanItem;
+import io.github.moosyu.items.talismans.*;
 import io.github.moosyu.items.tools.axes.RegionLockedFortuneAxe;
 import io.github.moosyu.items.tools.axes.UnshatteredAxeTool;
 import io.github.moosyu.items.tools.pickaxes.BrokenMithrilPickaxe;
@@ -756,5 +753,7 @@ public class UnshatteredItems {
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON))
     );
 
-    public static final DeferredItem<Item> RAINBOW_YARN_TALISMAN = ITEMS.registerItem("rainbow_yarn_talisman", RainbowYarnTalismanItem::new);
+    public static final DeferredItem<Item> RAINBOW_YARN_TALISMAN = ITEMS.registerItem("rainbow_yarn_talisman", RainbowYarnTalisman::new);
+
+    public static final DeferredItem<Item> DWARF_TURTLE_SHELL = ITEMS.registerItem("dwarf_turtle_shell", DwarfTurtleTalisman::new);
 }

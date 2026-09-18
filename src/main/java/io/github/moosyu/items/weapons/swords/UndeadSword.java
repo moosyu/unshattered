@@ -1,19 +1,21 @@
 package io.github.moosyu.items.weapons.swords;
 
+import io.github.moosyu.abilities.AbilityContext;
+import io.github.moosyu.abilities.AbilityContextKey;
+import io.github.moosyu.abilities.AbilityTriggerType;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.data.components.ItemAbility;
-import io.github.moosyu.items.PassiveAbilityItem;
+import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.resources.Identifier;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.EquipmentSlotGroup;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+
+import java.util.Set;
 
 import static io.github.moosyu.Unshattered.MODID;
 
@@ -32,21 +34,31 @@ public class UndeadSword extends UnshatteredSword implements PassiveAbilityItem 
         );
     }
 
-    public void onAbilityTriggered(ServerPlayer player, LivingEntity target) {
-        UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder).ifPresent(attribute -> attribute.addTransientModifier(new AttributeModifier(ABILITY_IDENTIFIER, 1.0, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)));
+    @Override
+    public void onAbilityTriggered(AbilityContext context) {
+        context.get(AbilityContextKey.PLAYER).flatMap(player -> UnshatteredUtils.getAttributeInstance(player,
+                UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder)
+        ).ifPresent(attribute -> attribute.addTransientModifier(new AttributeModifier(ABILITY_IDENTIFIER,
+                1.0,
+                AttributeModifier.Operation.ADD_MULTIPLIED_BASE))
+        );
     }
 
     @Override
-    public void onAbilityFinished(ServerPlayer player, LivingEntity target) {
-        UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder).ifPresent(attribute -> attribute.removeModifier(ABILITY_IDENTIFIER));
-    }
+    public void onAbilityFinished(AbilityContext context) {
+        context.get(AbilityContextKey.PLAYER).flatMap(player -> UnshatteredUtils.getAttributeInstance(player,
+                UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder)
+        ).ifPresent(attribute -> attribute.removeModifier(ABILITY_IDENTIFIER));
 
-    public boolean abilityConditionsMet(ServerPlayer player, LivingEntity target) {
-        return target != null  && target.is(EntityTypeTags.UNDEAD);
     }
 
     @Override
-    public boolean isOngoing() {
-        return false;
+    public boolean abilityConditionsMet(AbilityContext context) {
+        return context.get(AbilityContextKey.TARGET).map(target -> target.is(EntityTypeTags.UNDEAD)).orElse(false);
+    }
+
+    @Override
+    public Set<AbilityTriggerType> triggerTypes() {
+        return Set.of(AbilityTriggerType.PLAYER_DEAL_DAMAGE);
     }
 }

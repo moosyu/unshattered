@@ -2,6 +2,16 @@ package io.github.moosyu.data.components;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.github.moosyu.data.dialogue.DialogueChoice;
+import io.github.moosyu.data.dialogue.DialogueEventTypes;
+import io.github.moosyu.data.dialogue.DialogueFlagRequirements;
+import io.github.moosyu.data.dialogue.DialogueNode;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.chat.ComponentSerialization;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
+import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
 
 /**
  * @param currentCharges charges the item gets initially
@@ -23,6 +33,13 @@ public record ItemCharges(int currentCharges, int maxCharges, int rechargeTime) 
             Codec.INT.fieldOf("max_charges").forGetter(ItemCharges::maxCharges),
             Codec.INT.fieldOf("recharge_time").forGetter(ItemCharges::rechargeTime)
         ).apply(itemChargesInstance, ItemCharges::new)
+    );
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, ItemCharges> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.INT, ItemCharges::currentCharges,
+            ByteBufCodecs.INT, ItemCharges::maxCharges,
+            ByteBufCodecs.INT, ItemCharges::rechargeTime,
+            ItemCharges::new
     );
 
     public ItemCharges incrementCharges() {

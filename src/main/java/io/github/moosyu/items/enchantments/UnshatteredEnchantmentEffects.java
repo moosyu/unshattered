@@ -1,10 +1,8 @@
-package io.github.moosyu.enchantments;
+package io.github.moosyu.items.enchantments;
 
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.items.enchantments.UnshatteredEnchantments;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.EntityTypeTags;
@@ -84,7 +82,7 @@ public interface UnshatteredEnchantmentEffects {
 
                 @Override
                 public AttributeModifier getAttributeModifier(int level) {
-                    return new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("efficiency_mining_speed", false), getEffectBonus(level), AttributeModifier.Operation.ADD_VALUE);
+                    return new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("efficiency_mining_speed"), getEffectBonus(level), AttributeModifier.Operation.ADD_VALUE);
                 }
 
                 @Override

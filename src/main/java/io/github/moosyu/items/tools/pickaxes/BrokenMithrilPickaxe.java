@@ -1,12 +1,14 @@
 package io.github.moosyu.items.tools.pickaxes;
 
+import io.github.moosyu.abilities.AbilityContext;
+import io.github.moosyu.abilities.AbilityContextKey;
+import io.github.moosyu.abilities.AbilityTriggerType;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.data.datagen.UnshatteredBlockTagsProvider;
 import io.github.moosyu.items.ItemTypes;
-import io.github.moosyu.items.PassiveAbilityItem;
+import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.rarities.UnshatteredRarities;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.resources.Identifier;
@@ -16,9 +18,13 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import org.jspecify.annotations.Nullable;
+
+import java.util.Optional;
+import java.util.Set;
 
 import static io.github.moosyu.Unshattered.MODID;
 
@@ -50,31 +56,35 @@ public class BrokenMithrilPickaxe extends Item implements PassiveAbilityItem {
     }
 
     @Override
-    public void onAbilityTriggered(ServerPlayer player, @Nullable LivingEntity target) {
-        AttributeInstance miningSpeed = player.getAttribute(UnshatteredAttributeValues.MINING_SPEED.holder);
-
-        if (miningSpeed != null) {
-            miningSpeed.addTransientModifier(new AttributeModifier(ABILITY_IDENTIFIER, 20, AttributeModifier.Operation.ADD_VALUE));
-        }
+    public void onAbilityTriggered(AbilityContext context) {
+        context.get(AbilityContextKey.PLAYER).ifPresent(player -> {
+            AttributeInstance miningSpeed = player.getAttribute(UnshatteredAttributeValues.MINING_SPEED.holder);
+            if (miningSpeed != null) {
+                miningSpeed.addTransientModifier(new AttributeModifier(ABILITY_IDENTIFIER, 20, AttributeModifier.Operation.ADD_VALUE));
+            }
+        });
     }
 
     @Override
-    public void onAbilityFinished(ServerPlayer player, @Nullable LivingEntity target) {
-        AttributeInstance miningSpeed = player.getAttribute(UnshatteredAttributeValues.MINING_SPEED.holder);
-        if (miningSpeed != null) {
-            miningSpeed.removeModifier(ABILITY_IDENTIFIER);
-        }
+    public void onAbilityFinished(AbilityContext context) {
+        context.get(AbilityContextKey.PLAYER).ifPresent(player -> {
+            AttributeInstance miningSpeed = player.getAttribute(UnshatteredAttributeValues.MINING_SPEED.holder);
+            if (miningSpeed != null) {
+                miningSpeed.removeModifier(ABILITY_IDENTIFIER);
+            }
+        });
     }
 
     @Override
-    public boolean abilityConditionsMet(ServerPlayer player, @Nullable LivingEntity target) {
-        return UnshatteredUtils.getLookedAtBlock(player, player.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE))
-                .map(blockHitResult -> player.level().getBlockState(blockHitResult.getBlockPos()).is(UnshatteredBlockTagsProvider.MITHRIL_BLOCKS))
-                .orElse(false);
+    public boolean abilityConditionsMet(AbilityContext context) {
+        Optional<ServerPlayer> player = context.get(AbilityContextKey.PLAYER);
+        return player.map(serverPlayer -> UnshatteredUtils.getLookedAtBlock(serverPlayer, serverPlayer.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE))
+                .map(blockHitResult -> serverPlayer.level().getBlockState(blockHitResult.getBlockPos()).is(UnshatteredBlockTagsProvider.MITHRIL_BLOCKS))
+                .orElse(false)).orElse(false);
     }
 
     @Override
-    public boolean isOngoing() {
-        return true;
+    public Set<AbilityTriggerType> triggerTypes() {
+        return Set.of(AbilityTriggerType.ONGOING);
     }
 }

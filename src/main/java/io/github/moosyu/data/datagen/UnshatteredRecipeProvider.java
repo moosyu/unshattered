@@ -292,7 +292,7 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
 
         createRecipe(new ItemStackTemplate(BuiltInRegistries.ITEM.wrapAsHolder(Items.ENCHANTED_BOOK), 1, DataComponentPatch.builder().set(DataComponents.STORED_ENCHANTMENTS, enchantments).build()),
                 1,
-                ResourceKey.create(Registries.RECIPE, UnshatteredUtils.getUnshatteredIdentifier(enchantments.keySet().iterator().next().value().description().getString() + "_recipe")),
+                ResourceKey.create(Registries.RECIPE, UnshatteredUtils.getUnshatteredIdentifier(UnshatteredUtils.convertToSnakeCase(enchantments.keySet().iterator().next().value().description().getString() + "_recipe"))),
                 RecipeCategory.MISC,
                 unlockedById,
                 criterion,

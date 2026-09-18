@@ -1,17 +1,18 @@
 package io.github.moosyu.util.damage;
 
+import io.github.moosyu.abilities.*;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.PlayerCurrencyAttachment;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.regions.TemperatureTypes;
 import io.github.moosyu.items.ItemTypes;
-import io.github.moosyu.enchantments.UnshatteredEnchantmentEffects;
+import io.github.moosyu.items.enchantments.UnshatteredEnchantmentEffects;
 import io.github.moosyu.packets.DamageNumberPacket;
 import io.github.moosyu.packets.DeathSoundEffectPacket;
 import io.github.moosyu.packets.FerocityEffectPacket;
 import io.github.moosyu.packets.WeakHitSoundEffectPacket;
-import io.github.moosyu.util.UnshatteredUtils;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -46,15 +47,32 @@ public final class DamageUtil {
 
     /**
      * runs damage code for a player attacking an entity that factors in unshattered damage attributes and checks skill requirements.
-     * make sure it isn't clientside before triggering.
      * @param player player dealing damage
      * @param target target attempting to be damaged
      * @param itemType the item type used for attack cooldown
      */
     public static void playerDealDamage(Player player, LivingEntity target, ItemTypes itemType) {
-        if (!player.isCreative() && target.is(EntityType.ARMOR_STAND)) return;
+        if (!player.isCreative() && target.is(EntityType.ARMOR_STAND) || player.level().isClientSide()) return;
 
-        float attackStrength = player.getAttackStrengthScale(0.0f);
+        PlayerAbilityEffectsAttachment abilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES);
+        boolean isTopLevelHit = !abilities.hasLockedAttackStrength();
+
+        List<PassiveAbilityItem> triggeredItems = new ArrayList<>();
+        AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player).add(AbilityContextKey.TARGET, target).add(AbilityContextKey.ITEM_TYPE, itemType);
+
+        for (PassiveAbilityItem item : abilities.getStoredPassiveNonOngoingItems()) {
+            if (item.triggerTypes().contains(AbilityTriggerType.PLAYER_DEAL_DAMAGE) && item.abilityConditionsMet(context)) {
+                item.onAbilityTriggered(context);
+                triggeredItems.add(item);
+                if (item.triggerResult().isPresent() && item.triggerResult().get() == AbilityTriggerResult.CANCEL_EVENT) {
+                    triggeredItems.forEach(triggeredItem -> triggeredItem.onAbilityFinished(context));
+                    if (isTopLevelHit) abilities.resetLockedStrength();
+                    return;
+                }
+            }
+        }
+
+        float attackStrength = abilities.lockAttackStrength(player);
         double critDamage = 0.0d;
         boolean weakAttack = attackStrength < 0.9f;
         double damageBonus = 0.0f;
@@ -89,6 +107,7 @@ public final class DamageUtil {
                 * (player.getAttributeValue(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder) + damageBonus)
                 * attackStrength;
         AttributeInstance targetHealth = target.getAttribute(UnshatteredAttributeValues.HEALTH.holder);
+
         if (targetHealth != null) {
             if (critDamage > 0.0d) {
                 player.crit(target);
@@ -133,10 +152,18 @@ public final class DamageUtil {
             PacketDistributor.sendToPlayer((ServerPlayer) player, new DamageNumberPacket((int) damage, target.position()));
         }
 
-        UnshatteredUtils.finishInstantPassiveAbilities((ServerPlayer) player, target);
-
         player.resetAttackStrengthTicker();
-        if (player.isSprinting()) player.setSprinting(true);
+
+        if (isTopLevelHit) {
+            player.resetAttackStrengthTicker();
+            abilities.resetLockedStrength();
+        }
+
+        if (player.isSprinting()) {
+            player.setSprinting(true);
+        }
+
+        triggeredItems.forEach(item -> item.onAbilityFinished(context));
     }
 
     public static class FerocityHit {
@@ -191,6 +218,20 @@ public final class DamageUtil {
      * @param deathMessage death message if the damage kills the player
      */
     public static void damagePlayer(Player player, double damageDealt, ServerLevel level, Component deathMessage) {
+        List<PassiveAbilityItem> triggeredItems = new ArrayList<>();
+        AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player).add(AbilityContextKey.DAMAGE_AMOUNT, damageDealt);
+
+        for (PassiveAbilityItem item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredPassiveNonOngoingItems()) {
+            if (item.triggerTypes().contains(AbilityTriggerType.PLAYER_TAKE_DAMAGE) && item.abilityConditionsMet(context)) {
+                item.onAbilityTriggered(context);
+                triggeredItems.add(item);
+                if (item.triggerResult().isPresent() && item.triggerResult().get() == AbilityTriggerResult.CANCEL_EVENT) {
+                    triggeredItems.forEach(triggeredItem -> triggeredItem.onAbilityFinished(context));
+                    return;
+                }
+            }
+        }
+
         PlayerStateAttachment states = player.getData(PLAYER_STATE.get());
         double playerHealth = states.getStatValue(PlayerStateAttachment.Stat.HEALTH);
         double originalDamage = damageDealt;
@@ -228,6 +269,9 @@ public final class DamageUtil {
 
             states.setCancelledKnockback(true);
         }
+
         player.invulnerableTime = 0;
+
+        triggeredItems.forEach(item -> item.onAbilityFinished(context));
     }
 }

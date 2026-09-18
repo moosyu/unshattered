@@ -33,6 +33,7 @@ public class RegisterPayloadsHandler {
         registrar.playToClient(FerocityEffectPacket.TYPE, FerocityEffectPacket.STREAM_CODEC);
         registrar.playToClient(BlockBreakSyncPacket.TYPE, BlockBreakSyncPacket.STREAM_CODEC);
         registrar.playToClient(WeakHitSoundEffectPacket.TYPE, WeakHitSoundEffectPacket.STREAM_CODEC);
+        registrar.playToClient(ClientsidePlayerSoundEffectPacket.TYPE, ClientsidePlayerSoundEffectPacket.STREAM_CODEC);
 
         registrar.playToServer(OpenTalismanBagPacket.TYPE,
                 OpenTalismanBagPacket.STREAM_CODEC,

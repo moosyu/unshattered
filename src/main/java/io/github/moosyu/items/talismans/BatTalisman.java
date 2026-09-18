@@ -1,17 +1,21 @@
 package io.github.moosyu.items.talismans;
 
+import io.github.moosyu.abilities.AbilityContext;
+import io.github.moosyu.abilities.AbilityContextKey;
+import io.github.moosyu.abilities.AbilityTriggerType;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.items.PassiveAbilityItem;
+import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.rarities.UnshatteredRarities;
 import io.github.moosyu.util.UnshatteredUtils;
-import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
-import org.jspecify.annotations.Nullable;
+
+import java.util.Optional;
+import java.util.Set;
 
 public class BatTalisman extends TalismanItem implements PassiveAbilityItem {
     public BatTalisman(Properties properties) {
@@ -23,26 +27,29 @@ public class BatTalisman extends TalismanItem implements PassiveAbilityItem {
     }
 
     @Override
-    public void onAbilityTriggered(ServerPlayer player, @Nullable LivingEntity target) {}
+    public void onAbilityTriggered(AbilityContext context) {}
 
     @Override
-    public void onAbilityFinished(ServerPlayer player, @Nullable LivingEntity target) {
+    public void onAbilityFinished(AbilityContext context) {
+        Optional<LivingEntity> target = context.get(AbilityContextKey.TARGET);
+        Optional<ServerPlayer> player = context.get(AbilityContextKey.PLAYER);
+
         // the target could only be dying at this point not when triggered
-        if (target != null && target.isDeadOrDying()) {
-            player.getData(UnshatteredAttachments.PLAYER_STATE).increaseStatValue(PlayerStateAttachment.Stat.HEALTH,
-                    UnshatteredUtils.getDefaultAttributes(target).map(supplier -> supplier.getBaseValue(UnshatteredAttributeValues.HEALTH.holder)).orElse(0.0) * 0.02,
-                    player
+        if (target.isPresent() && target.get().isDeadOrDying() && player.isPresent()) {
+            player.get().getData(UnshatteredAttachments.PLAYER_STATE).increaseStatValue(PlayerStateAttachment.Stat.HEALTH,
+                    UnshatteredUtils.getDefaultAttributes(target.get()).map(supplier -> supplier.getBaseValue(UnshatteredAttributeValues.HEALTH.holder)).orElse(0.0) * 0.05,
+                    player.get()
             );
         }
     }
 
     @Override
-    public boolean abilityConditionsMet(ServerPlayer player, @Nullable LivingEntity target) {
+    public boolean abilityConditionsMet(AbilityContext context) {
         return true;
     }
 
     @Override
-    public boolean isOngoing() {
-        return false;
+    public Set<AbilityTriggerType> triggerTypes() {
+        return Set.of(AbilityTriggerType.ENTITY_DEATH);
     }
 }

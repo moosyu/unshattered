@@ -3,7 +3,7 @@ package io.github.moosyu.events;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.data.components.ItemAbility;
-import io.github.moosyu.enchantments.UnshatteredEnchantmentEffects;
+import io.github.moosyu.items.enchantments.UnshatteredEnchantmentEffects;
 import io.github.moosyu.items.ItemTypes;
 import io.github.moosyu.rarities.UnshatteredRarities;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
@@ -97,6 +97,7 @@ public class ItemTooltipHandler {
 
         if (itemDescription) {
             if (hasAttributes) tooltipComponents.add(Component.empty());
+
             addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.description.unshattered." + BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath()).getString(), 0xFFAAAAAA), MAX_WIDTH);
         }
 
