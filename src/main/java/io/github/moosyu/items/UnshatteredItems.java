@@ -753,7 +753,15 @@ public class UnshatteredItems {
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON))
     );
 
+    public static final DeferredItem<EnchantedItem> ENCHANTED_RAW_PORK_CHOP = ITEMS.registerItem("enchanted_raw_pork_chop", props -> new EnchantedItem(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 800)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON))
+    );
+
+
     public static final DeferredItem<Item> RAINBOW_YARN_TALISMAN = ITEMS.registerItem("rainbow_yarn_talisman", RainbowYarnTalisman::new);
 
     public static final DeferredItem<Item> DWARF_TURTLE_SHELL = ITEMS.registerItem("dwarf_turtle_shell", DwarfTurtleTalisman::new);
+
+    public static final DeferredItem<Item> PIGGY_BANK_TALISMAN = ITEMS.registerItem("piggy_bank", PiggyBankTalisman::new);
 }

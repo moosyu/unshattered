@@ -129,6 +129,8 @@
   "item.unshattered.enchanted_tropical_fish": "Enchanted Tropical Fish",
   "item.unshattered.rainbow_yarn_talisman": "Rainbow Yarn Ball",
   "item.unshattered.dwarf_turtle_shell": "Dwarf Turtle Sheet",
+  "item.unshattered.piggy_bank": "Piggy Bank",
+  "item.unshattered.enchanted_raw_pork_chop": "Enchanted Porkchop",
 
   "item.ability.unshattered.rogue_sword_speed_boost": "Speed Boost",
   "item.ability.unshattered.mind_blowing": "Mind Blowing",
@@ -151,6 +153,7 @@
   "item.ability.unshattered.skeleton_hat_explosive_arrows": "Explosive Arrows",
   "item.ability.unshattered.woolen_barrier": "Woolen Barrier",
   "item.ability.unshattered.turtle_stability": "Turtle's Stability",
+  "item.ability.unshattered.piggy_bank_saving_grace": "Saving Grace",
 
   "item.ability.description.unshattered.rogue_sword_speed_boost": "Grants [colour=0xFFFFFFFF]+0.5✦ Speed[/colour] for [colour=0xFF55FF55]30s[/colour].",
   "item.ability.description.unshattered.mind_blowing": "Deals [colour=0xFF55FF55]+100%[/colour] damage to undead mobs.",
@@ -173,6 +176,7 @@
   "item.ability.description.unshattered.skeleton_hat_explosive_arrows": "Your arrows have a [colour=0xFF55FF55]20%[/colour] chance to explode on impact, dealing [colour=0xFF55FF55]50%[/colour] of the initial shot to enemies within [colour=0xFF55FF55]8[/colour] blocks.",
   "item.ability.description.unshattered.woolen_barrier": "Provides a small chance for incoming attacks to be completely cancelled!",
   "item.ability.description.unshattered.turtle_stability": "Grants complete [colour=0xFF55FF55]immunity[/colour] to knockback.",
+  "item.ability.description.unshattered.piggy_bank_saving_grace": "Saves your [colour=0xFFFFAA00]coins[/colour] on death.",
 
   "block.unshattered.fig_log": "Fig Log",
   "block.unshattered.breakable_fig_log": "Breakable Fig Log",

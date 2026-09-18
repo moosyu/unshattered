@@ -1,0 +1,21 @@
+{
+  "type": "unshattered:sized_recipe",
+  "key": {
+    "C": {
+      "count": 1,
+      "ingredient": "minecraft:chest"
+    },
+    "P": {
+      "count": 20,
+      "ingredient": "unshattered:enchanted_raw_pork_chop"
+    }
+  },
+  "pattern": [
+    "PPP",
+    "PCP",
+    "PPP"
+  ],
+  "result": {
+    "id": "unshattered:piggy_bank"
+  }
+}

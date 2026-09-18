@@ -79,6 +79,7 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
         createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_CLAY_BALL, UnshatteredItems.ENCHANTED_CLAY_BLOCK.get(), getHasName(Items.CLAY), has(Items.CLAY));
         createEnchantedItemRecipe(Items.SPONGE, 8, UnshatteredItems.ENCHANTED_SPONGE.get(), getHasName(Items.SPONGE), has(Items.SPONGE));
         createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_SPONGE.get(), 8, UnshatteredItems.ENCHANTED_WET_SPONGE.get(), getHasName(Items.SPONGE), has(Items.SPONGE));
+        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_RAW_PORK_CHOP.get(), Items.PORKCHOP, getHasName(Items.PORKCHOP), has(Items.PORKCHOP));
 
         new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.ZOMBIE_HEART.get()), RecipeCategory.COMBAT)
                 .pattern("AAA", "A A", "AAA")
@@ -147,6 +148,13 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
                 .define('O', SizedIngredient.of(UnshatteredItems.ENCHANTED_OBSIDIAN, 8))
                 .define('S', singleSizedIngredient(UnshatteredItems.SPRUCE_AXE))
                 .unlockedBy(getHasName(UnshatteredItems.ENCHANTED_OBSIDIAN), has(UnshatteredItems.ENCHANTED_OBSIDIAN))
+                .save(output);
+
+        new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.PIGGY_BANK_TALISMAN.get()), RecipeCategory.MISC)
+                .pattern("PPP", "PCP", "PPP")
+                .define('P', SizedIngredient.of(UnshatteredItems.ENCHANTED_RAW_PORK_CHOP, 20))
+                .define('C', singleSizedIngredient(Items.CHEST))
+                .unlockedBy(getHasName(Items.PORKCHOP), has(Items.PORKCHOP))
                 .save(output);
 
         createSimpleEnchantedBook(Enchantments.EFFICIENCY, 1, getHasName(UnshatteredItems.ENCHANTED_COBBLESTONE), has(UnshatteredItems.ENCHANTED_COBBLESTONE), UnshatteredItems.ENCHANTED_COBBLESTONE, 64);

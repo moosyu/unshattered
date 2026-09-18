@@ -220,14 +220,19 @@ public final class DamageUtil {
     public static void damagePlayer(Player player, double damageDealt, ServerLevel level, Component deathMessage) {
         List<PassiveAbilityItem> triggeredItems = new ArrayList<>();
         AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player).add(AbilityContextKey.DAMAGE_AMOUNT, damageDealt);
+        boolean coinLoss = true;
 
         for (PassiveAbilityItem item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredPassiveNonOngoingItems()) {
             if (item.triggerTypes().contains(AbilityTriggerType.PLAYER_TAKE_DAMAGE) && item.abilityConditionsMet(context)) {
                 item.onAbilityTriggered(context);
                 triggeredItems.add(item);
-                if (item.triggerResult().isPresent() && item.triggerResult().get() == AbilityTriggerResult.CANCEL_EVENT) {
+                if (item.triggerResult().isEmpty()) continue;
+
+                if (item.triggerResult().get() == AbilityTriggerResult.CANCEL_EVENT) {
                     triggeredItems.forEach(triggeredItem -> triggeredItem.onAbilityFinished(context));
                     return;
+                } else if (item.triggerResult().get() == AbilityTriggerResult.DISABLE_COIN_LOSS) {
+                    coinLoss = false;
                 }
             }
         }
@@ -254,7 +259,7 @@ public final class DamageUtil {
             player.teleportTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5);
             player.sendSystemMessage(deathMessage.copy()
                     .withStyle(ChatFormatting.RED)
-                    .append(Component.literal(" You lost " + (currency.getCoins() / 2) + " coins."))
+                    .append(coinLoss ? Component.literal(" You lost " + (currency.getCoins() / 2) + " coins.") : Component.empty())
             );
 
             states.setStatValue(PlayerStateAttachment.Stat.HEALTH, player.getAttributeValue(UnshatteredAttributeValues.HEALTH.holder), player);
@@ -262,8 +267,10 @@ public final class DamageUtil {
 
             player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(), TemperatureTypes.BASE_TEMP.getValue());
 
-            currency.removeCoins(currency.getCoins() / 2);
-            player.syncData(PLAYER_CURRENCY.get());
+            if (coinLoss) {
+                currency.removeCoins(currency.getCoins() / 2);
+                player.syncData(PLAYER_CURRENCY.get());
+            }
 
             PacketDistributor.sendToPlayer((ServerPlayer) player, new DeathSoundEffectPacket());
 

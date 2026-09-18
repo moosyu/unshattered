@@ -214,6 +214,7 @@ public class UnshatteredCreativeTabs {
                     output.accept(COINS_TALISMAN.get());
                     output.accept(RAINBOW_YARN_TALISMAN.get());
                         output.accept(DWARF_TURTLE_SHELL.get());
+                        output.accept(PIGGY_BANK_TALISMAN.get());
                 }).build()
     );
 }
