@@ -6,14 +6,15 @@ import io.github.moosyu.abilities.AbilityTriggerType;
 import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
-import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.packets.ClientsidePlayerSoundEffectPacket;
 import io.github.moosyu.rarities.UnshatteredRarities;
 import io.github.moosyu.util.UnshatteredUtils;
+import io.github.moosyu.util.damage.DamageUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -62,8 +63,10 @@ public class BloodChalice extends TalismanItem implements PassiveAbilityItem {
                     _ -> context.get(AbilityContextKey.PLAYER).ifPresent(_ -> ferocity.removeModifier(ABILITY_IDENTIFIER))
             );
 
-            PlayerStateAttachment state = player.getData(UnshatteredAttachments.PLAYER_STATE);
-            state.setStatValue(PlayerStateAttachment.Stat.HEALTH, state.getStatValue(PlayerStateAttachment.Stat.HEALTH) - (health.getValue() * 0.1), player);
+            if (DamageUtils.damagePlayer(player, (health.getValue() * 0.3), player.level(), Component.literal("☠ " + player.getName().getString() + " had their soul consumed by the blood chalice!"), true)) {
+                ferocity.removeModifier(ABILITY_IDENTIFIER);
+                abilities.removeActiveEffect(ABILITY_IDENTIFIER, player);
+            }
         });
     }
 

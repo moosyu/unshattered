@@ -252,7 +252,7 @@
   "item.ability.description.unshattered.piggy_bank_saving_grace": "Saves your [colour=0xFFFFAA00]coins[/colour] on death.",
   "item.ability.description.unshattered.apian_aegis": "Taking damage releases a swarm of [colour=0xFFF3B315]bees[/colour] to damage your attacker.",
   "item.ability.description.unshattered.heavy_strike": "Every [colour=0xFFFC3A3A]20❁[/colour] provides a bonus [colour=0xFFFFAA00]+4⸕[/colour].",
-  "item.ability.description.unshattered.pain_to_power": "Sneaking trades 10% of maximum [colour=0xFFFC3A3A]❤[/colour] for [colour=0xFFFF5555]+20%⫽[/colour]. This effect lasts for [colour=0xFF55FF55]30s[/colour] and stacks.",
+  "item.ability.description.unshattered.pain_to_power": "Sneaking trades 30% of maximum [colour=0xFFFC3A3A]❤[/colour] for [colour=0xFFFF5555]+20%⫽[/colour]. This effect lasts for [colour=0xFF55FF55]30s[/colour] and stacks.",
 
   "block.unshattered.fig_log": "Fig Log",
   "block.unshattered.breakable_fig_log": "Breakable Fig Log",

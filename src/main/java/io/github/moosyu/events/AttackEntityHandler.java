@@ -2,19 +2,16 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemTypes;
-import io.github.moosyu.util.UnshatteredUtils;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.util.damage.DamageUtil.*;
+import static io.github.moosyu.util.damage.DamageUtils.*;
 
 @EventBusSubscriber(modid = MODID)
 public class AttackEntityHandler {

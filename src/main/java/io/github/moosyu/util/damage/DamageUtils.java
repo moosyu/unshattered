@@ -40,7 +40,7 @@ import java.util.Random;
 import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_CURRENCY;
 import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_STATE;
 
-public final class DamageUtil {
+public final class DamageUtils {
     public static final List<FerocityHit> SCHEDULED_FEROCITY_ATTACKS = new ArrayList<>();
     public static final int FEROCITY_COOLDOWN = 4;
     public static final int INVULNERABILITY_TIME_MAX = 20;
@@ -208,8 +208,9 @@ public final class DamageUtil {
      * @param damageDealt damage being dealt to the player
      * @param level server level
      * @param deathMessage death message if the damage kills the player
+     * @return whether the damage killed the player
      */
-    public static void damagePlayer(Player player, double damageDealt, ServerLevel level, Component deathMessage) {
+    public static boolean damagePlayer(Player player, double damageDealt, ServerLevel level, Component deathMessage, boolean overrideInvulnerability) {
         List<PassiveAbilityItem> triggeredItems = new ArrayList<>();
         AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player).add(AbilityContextKey.DAMAGE_AMOUNT, damageDealt);
         boolean coinLoss = true;
@@ -222,7 +223,7 @@ public final class DamageUtil {
 
                 if (item.triggerResult().get() == AbilityTriggerResult.CANCEL_EVENT) {
                     triggeredItems.forEach(triggeredItem -> triggeredItem.onAbilityFinished(context));
-                    return;
+                    return false;
                 } else if (item.triggerResult().get() == AbilityTriggerResult.DISABLE_COIN_LOSS) {
                     coinLoss = false;
                 }
@@ -233,13 +234,17 @@ public final class DamageUtil {
         double playerHealth = states.getStatValue(PlayerStateAttachment.Stat.HEALTH);
         double originalDamage = damageDealt;
 
-        if (states.getInvulnerableTime() > INVULNERABILITY_TIME_MAX / 2) {
-            if (damageDealt <= states.getLastHitAmount()) return;
-            damageDealt -= states.getLastHitAmount();
+        if (!overrideInvulnerability) {
+            if (states.getInvulnerableTime() > INVULNERABILITY_TIME_MAX / 2) {
+                if (damageDealt <= states.getLastHitAmount()) return false;
+                damageDealt -= states.getLastHitAmount();
+            }
+
+            states.setLastHitAmount(originalDamage);
+            states.setInvulnerableTime(INVULNERABILITY_TIME_MAX);
         }
 
-        states.setLastHitAmount(originalDamage);
-        states.setInvulnerableTime(INVULNERABILITY_TIME_MAX);
+        boolean killed = false;
 
         if (playerHealth - damageDealt > 0.0d) {
             states.decreaseStatValue(PlayerStateAttachment.Stat.HEALTH, damageDealt, player);
@@ -267,10 +272,12 @@ public final class DamageUtil {
             PacketDistributor.sendToPlayer((ServerPlayer) player, new DeathSoundEffectPacket());
 
             states.setCancelledKnockback(true);
+            killed = true;
         }
 
         player.invulnerableTime = 0;
 
         triggeredItems.forEach(item -> item.onAbilityFinished(context));
+        return killed;
     }
 }

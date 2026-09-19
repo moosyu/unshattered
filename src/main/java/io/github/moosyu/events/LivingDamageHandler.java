@@ -1,7 +1,7 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.util.damage.DamageUtil;
+import io.github.moosyu.util.damage.DamageUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.DamageTypeTags;
@@ -37,19 +37,19 @@ public class LivingDamageHandler {
                     return;
                 }
                 double damageDealt = damageAttributeInstance.getValue() * (1 - (playerDefenceValue / (playerDefenceValue + 50)));
-                DamageUtil.damagePlayer(player, damageDealt, serverLevel, Component.literal("☠ " + playerName + " was slain by a " + entity.getName().getString() + "!"));
+                DamageUtils.damagePlayer(player, damageDealt, serverLevel, Component.literal("☠ " + playerName + " was slain by a " + entity.getName().getString() + "!"), false);
             } else if (event.getSource().is(DamageTypeTags.IS_FALL)) {
                 int blocksFallen = (int) (event.getOriginalDamage() + 3);
                 // https://old.reddit.com/r/HypixelSkyblock/comments/fvozn7/fall_damage_calculator/
                 double damageDealt = ((double) ((blocksFallen - 3) * 50) / 33) / (1 + (playerDefenceValue / 100));
-                DamageUtil.damagePlayer(player, damageDealt, serverLevel, Component.literal("☠ " + playerName + " fell to their death!"));
+                DamageUtils.damagePlayer(player, damageDealt, serverLevel, Component.literal("☠ " + playerName + " fell to their death!"), false);
             } else if (event.getSource().is(DamageTypeTags.IS_DROWNING)) {
                 double damageDealt = (event.getOriginalDamage() * 200 / 33) / ((playerDefenceValue / 100) + 1);
-                DamageUtil.damagePlayer(player, damageDealt, serverLevel, Component.literal("☠ " + playerName + " drowned!"));
+                DamageUtils.damagePlayer(player, damageDealt, serverLevel, Component.literal("☠ " + playerName + " drowned!"), false);
             } else if (event.getSource().is(DamageTypeTags.IS_FIRE)) {
                 double trueDefence = player.getAttributeBaseValue(UnshatteredAttributeValues.TRUE_DEFENCE.holder);
                 double damageDealt = (double) (100 / 33) * (1 - (trueDefence / (trueDefence + 100)));
-                DamageUtil.damagePlayer(player, damageDealt, serverLevel, Component.literal("☠ " + playerName + " burnt to death!"));
+                DamageUtils.damagePlayer(player, damageDealt, serverLevel, Component.literal("☠ " + playerName + " burnt to death!"), false);
             } else if (event.getSource().is(DamageTypeTags.IS_FREEZING)) {
                 // something something freezing damage idk
             } else {
