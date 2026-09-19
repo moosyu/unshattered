@@ -5,6 +5,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.client.event.MovementInputUpdateEvent;
 
 public enum AbilityTriggerType {
     /**
@@ -34,5 +35,9 @@ public enum AbilityTriggerType {
     /**
      * runs in {@link io.github.moosyu.events.LivingIncomingDamageHandler} if the damage is being taken by a player. onAbilityTriggered runs at the start and the event can be cancelled.
      */
-    PLAYER_INCOMING_DAMAGE
-}
+    PLAYER_INCOMING_DAMAGE,
+    /**
+     * runs in {@link io.github.moosyu.events.ClientInputUpdateHandler#onInputUpdate(MovementInputUpdateEvent)}. cannot be used to cancel sneaking and onAbilityTriggered and onAbilityFinished fire at the same time
+     */
+    PLAYER_STARTED_SNEAKING
+    }

@@ -55,8 +55,6 @@ public final class DamageUtil {
         if (!player.isCreative() && target.is(EntityType.ARMOR_STAND) || player.level().isClientSide()) return;
 
         PlayerAbilityEffectsAttachment abilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES);
-        boolean isTopLevelHit = !abilities.hasLockedAttackStrength();
-
         List<PassiveAbilityItem> triggeredItems = new ArrayList<>();
         AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player).add(AbilityContextKey.TARGET, target).add(AbilityContextKey.ITEM_TYPE, itemType);
 
@@ -66,13 +64,12 @@ public final class DamageUtil {
                 triggeredItems.add(item);
                 if (item.triggerResult().isPresent() && item.triggerResult().get() == AbilityTriggerResult.CANCEL_EVENT) {
                     triggeredItems.forEach(triggeredItem -> triggeredItem.onAbilityFinished(context));
-                    if (isTopLevelHit) abilities.resetLockedStrength();
                     return;
                 }
             }
         }
 
-        float attackStrength = abilities.lockAttackStrength(player);
+        float attackStrength = player.getAttackStrengthScale(0.0f);
         double critDamage = 0.0d;
         boolean weakAttack = attackStrength < 0.9f;
         double damageBonus = 0.0f;
@@ -153,11 +150,6 @@ public final class DamageUtil {
         }
 
         player.resetAttackStrengthTicker();
-
-        if (isTopLevelHit) {
-            player.resetAttackStrengthTicker();
-            abilities.resetLockedStrength();
-        }
 
         if (player.isSprinting()) {
             player.setSprinting(true);

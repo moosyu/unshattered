@@ -157,6 +157,12 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(Items.PORKCHOP), has(Items.PORKCHOP))
                 .save(output);
 
+        new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.HASTE_RING.get()), RecipeCategory.MISC)
+                .pattern("CCC", "C C", "CCC")
+                .define('C', SizedIngredient.of(UnshatteredItems.ENCHANTED_COBBLESTONE, 64))
+                .unlockedBy(getHasName(UnshatteredItems.ENCHANTED_COBBLESTONE), has(UnshatteredItems.ENCHANTED_COBBLESTONE))
+                .save(output);
+
         createSimpleEnchantedBook(Enchantments.EFFICIENCY, 1, getHasName(UnshatteredItems.ENCHANTED_COBBLESTONE), has(UnshatteredItems.ENCHANTED_COBBLESTONE), UnshatteredItems.ENCHANTED_COBBLESTONE, 64);
         createSimpleEnchantedBook(Enchantments.SMITE, 1, getHasName(UnshatteredItems.ENCHANTED_ROTTEN_FLESH), has(UnshatteredItems.ENCHANTED_ROTTEN_FLESH), UnshatteredItems.ENCHANTED_ROTTEN_FLESH, 32);
         createSimpleEnchantedBook(Enchantments.SHARPNESS, 1, getHasName(UnshatteredItems.ENCHANTED_FLINT), has(UnshatteredItems.ENCHANTED_FLINT), UnshatteredItems.ENCHANTED_FLINT, 64);

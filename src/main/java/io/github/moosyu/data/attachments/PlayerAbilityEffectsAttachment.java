@@ -9,8 +9,6 @@ import io.github.moosyu.abilities.PassiveAbilityItem;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
@@ -23,7 +21,6 @@ public final class PlayerAbilityEffectsAttachment {
     private record ActiveEffectEntry(long expiryTime, @Nullable Consumer<AbilityContext> onExpire) {}
     private final Map<PassiveAbilityItem, Boolean> storedPassiveOngoingItems = new HashMap<>();
     private final Set<PassiveAbilityItem> storedPassiveNonOngoingItems = new HashSet<>();
-    private Float lockedAttackStrength = null;
 
     /**
      * @param abilityIdentifier identifier for the ability
@@ -70,7 +67,7 @@ public final class PlayerAbilityEffectsAttachment {
     /**
      * @param abilityIdentifier ability identifier
      * @param level level for game time
-     * @return whether or not an active effect has been finished
+     * @return whether an active effect has been finished
      */
     public boolean activeEffectFinished(Identifier abilityIdentifier, Level level) {
         if (!hasActiveEffect(abilityIdentifier)) return false;
@@ -226,23 +223,5 @@ public final class PlayerAbilityEffectsAttachment {
                 }
             }
         });
-    }
-
-    /**
-     * for things like cleave where the attack strengh cannot be updated until multiple hits have occurred
-     */
-    public float lockAttackStrength(Player player) {
-        if (lockedAttackStrength == null) {
-            lockedAttackStrength = player.getAttackStrengthScale(0.0f);
-        }
-        return lockedAttackStrength;
-    }
-
-    public boolean hasLockedAttackStrength() {
-        return lockedAttackStrength != null;
-    }
-
-    public void resetLockedStrength() {
-        lockedAttackStrength = null;
     }
 }

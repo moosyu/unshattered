@@ -1,0 +1,17 @@
+{
+  "type": "unshattered:sized_recipe",
+  "key": {
+    "C": {
+      "count": 64,
+      "ingredient": "unshattered:enchanted_cobblestone"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "C C",
+    "CCC"
+  ],
+  "result": {
+    "id": "unshattered:haste_ring"
+  }
+}

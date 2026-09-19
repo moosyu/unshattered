@@ -53,7 +53,7 @@ public final class PlayerStateAttachment {
         setStat(newAmount, player, maxIndex(stat));
     }
 
-    public void setStat(double newAmount, Player player, int index) {
+    private void setStat(double newAmount, Player player, int index) {
         if (stats[index] != newAmount) {
             stats[index] = newAmount;
             lastUpdatedStat = index;

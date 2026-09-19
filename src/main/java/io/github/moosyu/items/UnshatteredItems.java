@@ -764,4 +764,10 @@ public class UnshatteredItems {
     public static final DeferredItem<Item> DWARF_TURTLE_SHELL = ITEMS.registerItem("dwarf_turtle_shell", DwarfTurtleTalisman::new);
 
     public static final DeferredItem<Item> PIGGY_BANK_TALISMAN = ITEMS.registerItem("piggy_bank", PiggyBankTalisman::new);
+
+    public static final DeferredItem<Item> HONEYCOMB_RING = ITEMS.registerItem("honeycomb_ring", HoneycombRing::new);
+
+    public static final DeferredItem<Item> HASTE_RING = ITEMS.registerItem("haste_ring", HasteRing::new);
+
+    public static final DeferredItem<Item> BLOOD_CHALICE = ITEMS.registerItem("blood_chalice", BloodChalice::new);
 }

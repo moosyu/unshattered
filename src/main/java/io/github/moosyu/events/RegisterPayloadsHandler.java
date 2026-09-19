@@ -1,5 +1,7 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.abilities.*;
+import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.PlayerFlagsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.gui.menus.ReforgeAnvilMenu;
@@ -17,6 +19,9 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.jspecify.annotations.NonNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static io.github.moosyu.Unshattered.MODID;
 
@@ -159,5 +164,19 @@ public class RegisterPayloadsHandler {
                     }
                 })
         );
+
+        registrar.playToServer(PlayerStartedSneakingPacket.TYPE,
+                PlayerStartedSneakingPacket.STREAM_CODEC,
+                (_, context) -> context.enqueueWork(() -> {
+                    PlayerAbilityEffectsAttachment abilities = context.player().getData(UnshatteredAttachments.PLAYER_ABILITIES);
+                    AbilityContext abilityContext = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) context.player());
+
+                    for (PassiveAbilityItem item : abilities.getStoredPassiveNonOngoingItems()) {
+                        if (item.triggerTypes().contains(AbilityTriggerType.PLAYER_STARTED_SNEAKING) && item.abilityConditionsMet(abilityContext)) {
+                            item.onAbilityTriggered(abilityContext);
+                            item.onAbilityFinished(abilityContext);
+                        }
+                    }
+                }));
     }
 }
