@@ -42,9 +42,7 @@ public class BloodChalice extends TalismanItem implements PassiveAbilityItem {
             AttributeInstance ferocity = player.getAttribute(UnshatteredAttributeValues.FEROCITY.holder);
             AttributeInstance health = player.getAttribute(UnshatteredAttributeValues.HEALTH.holder);
 
-            if (ferocity == null || health == null) {
-                return;
-            }
+            if (ferocity == null || health == null) return;
 
             if (abilities.hasActiveEffect(ABILITY_IDENTIFIER)) {
                 AttributeModifier prevModifier = ferocity.getModifier(ABILITY_IDENTIFIER);
@@ -60,7 +58,8 @@ public class BloodChalice extends TalismanItem implements PassiveAbilityItem {
             player.getData(UnshatteredAttachments.PLAYER_ABILITIES.get()).addActiveEffect(ABILITY_IDENTIFIER,
                     600,
                     player.level(),
-                    _ -> context.get(AbilityContextKey.PLAYER).ifPresent(_ -> ferocity.removeModifier(ABILITY_IDENTIFIER))
+                    _ -> context.get(AbilityContextKey.PLAYER)
+                            .ifPresent(_ -> ferocity.removeModifier(ABILITY_IDENTIFIER))
             );
 
             if (DamageUtils.damagePlayer(player, (health.getValue() * 0.3), player.level(), Component.literal("☠ " + player.getName().getString() + " had their soul consumed by the blood chalice!"), true)) {

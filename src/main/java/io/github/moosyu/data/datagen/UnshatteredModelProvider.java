@@ -123,6 +123,7 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_RAW_PORK_CHOP.get(), Items.PORKCHOP, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.HONEYCOMB_RING.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.HASTE_RING.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.BLOOD_CHALICE.get(), ModelTemplates.FLAT_ITEM);
 
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_GOLD_BLOCK.get(), Blocks.GOLD_BLOCK);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_DIAMOND_BLOCK.get(), Blocks.DIAMOND_BLOCK);

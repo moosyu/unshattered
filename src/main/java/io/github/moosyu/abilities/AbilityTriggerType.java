@@ -30,7 +30,7 @@ public enum AbilityTriggerType {
      */
     PLAYER_DEAL_DAMAGE,
     /**
-     * runs in {@link DamageUtils#damagePlayer(Player, double, ServerLevel, Component)} (when the player is about to/has received damage). onAbilityTriggered runs at the start and can cancel the event.
+     * runs in {@link DamageUtils#damagePlayer(Player, double, ServerLevel, Component, boolean)} (when the player is about to/has received damage). onAbilityTriggered runs at the start and can cancel the event.
      */
     PLAYER_TAKE_DAMAGE,
     /**
