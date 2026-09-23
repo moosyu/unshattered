@@ -4,15 +4,10 @@ import io.github.moosyu.abilities.*;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.packets.ClientsidePlayerSoundEffectPacket;
-import io.github.moosyu.rarities.UnshatteredRarities;
+import io.github.moosyu.items.UnshatteredRarities;
 import io.github.moosyu.util.UnshatteredUtils;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
-import net.minecraft.sounds.SoundEvents;
-import net.neoforged.neoforge.network.PacketDistributor;
 
-import java.util.Optional;
 import java.util.Set;
 
 public class DwarfTurtleTalisman extends TalismanItem implements PassiveAbilityItem {

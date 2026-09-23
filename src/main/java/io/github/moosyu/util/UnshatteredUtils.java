@@ -2,7 +2,6 @@ package io.github.moosyu.util;
 
 import io.github.moosyu.Unshattered;
 import io.github.moosyu.abilities.AbilityContext;
-import io.github.moosyu.abilities.AbilityTriggerResult;
 import io.github.moosyu.abilities.AbilityTriggerType;
 import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
@@ -16,7 +15,7 @@ import io.github.moosyu.data.dialogue.DialogueTree;
 import io.github.moosyu.data.drops.DropData;
 import io.github.moosyu.data.drops.DropTypes;
 import io.github.moosyu.events.DataPackRegistryHandler;
-import io.github.moosyu.rarities.UnshatteredRarities;
+import io.github.moosyu.items.UnshatteredRarities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;

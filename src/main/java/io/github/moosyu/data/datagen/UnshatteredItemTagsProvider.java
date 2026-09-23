@@ -46,5 +46,19 @@ public class UnshatteredItemTagsProvider extends ItemTagsProvider {
         tag(ItemTags.SWORDS).add(FLORID_ZOMBIE_SWORD.get());
         tag(ItemTags.SWORDS).add(BROKEN_MITHRIL_PICKAXE.get());
         tag(ItemTags.SWORDS).add(BROKEN_MITHRIL_PICKAXE.get());
+        tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(IRON_DAGGER.get());
+        tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(EMERALD_DAGGER.get());
+        tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(RUSTY_CLEAVER.get());
+        tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(GOLDEN_CLEAVER.get());
+        tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(SUPER_CLEAVER.get());
+        tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(HYPER_CLEAVER.get());
+        tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(GIANT_CLEAVER.get());
+        tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(ZOMBIE_SWORD.get());
+        tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(ORNATE_ZOMBIE_SWORD.get());
+        tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(FLORID_ZOMBIE_SWORD.get());
+        tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(ROGUE_SWORD.get());
+        tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(SQUIRE_SWORD.get());
+        tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(MERCENARY_AXE.get());
+
     }
 }

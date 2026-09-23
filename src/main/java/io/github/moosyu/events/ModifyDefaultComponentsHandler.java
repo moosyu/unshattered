@@ -2,7 +2,7 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemTypes;
-import io.github.moosyu.rarities.UnshatteredRarities;
+import io.github.moosyu.items.UnshatteredRarities;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.Item;
@@ -137,7 +137,7 @@ public class ModifyDefaultComponentsHandler {
         modifyVanillaItem(event, Items.JUNGLE_LOG, ItemTypes.MATERIAL, 2);
         modifyVanillaItem(event, Items.ACACIA_LOG, ItemTypes.MATERIAL, 2);
         modifyVanillaItem(event, Items.DARK_OAK_LOG, ItemTypes.MATERIAL, 2);
-        modifyVanillaItem(event, Items.ENCHANTED_BOOK, ItemTypes.ENCHANTED_BOOK, UnshatteredRarities.RARE, 1, false);
+        modifyVanillaItem(event, Items.ENCHANTED_BOOK, ItemTypes.ENCHANTED_BOOK, UnshatteredRarities.RARE, 0, false);
         modifyVanillaItem(event, Items.POISONOUS_POTATO, ItemTypes.MATERIAL, 10);
         modifyVanillaItem(event, Items.BONE, ItemTypes.MATERIAL, 2);
         modifyVanillaItem(event, Items.FLINT, ItemTypes.MATERIAL, 4);

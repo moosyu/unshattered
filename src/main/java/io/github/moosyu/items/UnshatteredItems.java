@@ -15,7 +15,6 @@ import io.github.moosyu.items.weapons.cleavers.*;
 import io.github.moosyu.items.weapons.daggers.DaggerItem;
 import io.github.moosyu.items.weapons.daggers.EmeraldDagger;
 import io.github.moosyu.items.weapons.swords.*;
-import io.github.moosyu.rarities.UnshatteredRarities;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.world.entity.EquipmentSlotGroup;

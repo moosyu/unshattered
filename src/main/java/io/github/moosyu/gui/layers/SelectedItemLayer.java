@@ -1,6 +1,6 @@
 package io.github.moosyu.gui.layers;
 
-import io.github.moosyu.rarities.UnshatteredRarities;
+import io.github.moosyu.items.UnshatteredRarities;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;

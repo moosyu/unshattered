@@ -201,6 +201,7 @@
   "item.description.unshattered.honeycomb_ring": "Sticks to your finger.",
   "item.description.unshattered.haste_ring": "So dense that dropping it makes a crater. It's a wonder the ancient dwarves could wear such a thing with such ease.",
   "item.description.unshattered.blood_chalice": "Never seems to run low no matter how much is poured out.",
+  "item.description.unshattered.piggy_bank": "Never seems to run low no matter how much is poured out.",
 
   "item.ability.unshattered.rogue_sword_speed_boost": "Speed Boost",
   "item.ability.unshattered.mind_blowing": "Mind Blowing",
@@ -242,7 +243,7 @@
   "item.ability.description.unshattered.fish_out_of_water": "You can only damage [colour=0xFF5555FF]aquatic[/colour] enemies with this fishing rod!",
   "item.ability.description.unshattered.treecapitator_park_enthusiast": "Gain [colour=0xFFFFAA00]+50\uD83E\uDE93[/colour] while in the [colour=0xFF55FF55]The Plains[/colour]!",
   "item.ability.description.unshattered.spruce_axe_park_enthusiast": "Gain [colour=0xFFFFAA00]+25\uD83E\uDE93[/colour] while in the [colour=0xFF55FF55]The Plains[/colour]!",
-  "item.ability.description.unshattered.emerald_dagger_greed": "The emerald dagger grows stronger the more [colour=0xFFFFAA00]coins[/colour] stored in your purse.",
+  "item.ability.description.unshattered.emerald_dagger_greed": "The emerald dagger grows stronger the more [colour=0xFFFFAA00]coins[/colour] stored in your purse, however on death you lose all held [colour=0xFFFFAA00]coins[/colour].",
   "item.ability.description.unshattered.mithril_speed": "Gain [colour=0xFFFFAA00]+20⸕[/colour] while mining mithril.",
   "item.ability.description.unshattered.bat_talisman_leech": "Gain [colour=0xFFFC3A3A]2%[/colour] of enemy's maximum [colour=0xFFFC3A3A]health[/colour] on kill.",
   "item.ability.description.unshattered.coin_talisman_accrual": "Gain a small chance to get some [colour=0xFFFFAA00]coins[/colour] every second.",
@@ -369,6 +370,8 @@
   "tooltip.unshattered.reforgable": "This item can be reforged!",
   "tooltip.unshattered.breaking_power": "Breaking Power ",
   "tooltip.unshattered.sell_price": "Sell Price:",
+  "tooltip.unshattered.applicable": "Applicable on: ",
+  "tooltip.unshattered.combinable": "Combinable in Anvil",
 
   "combat.messages.unshattered.failed": "You tried to attack... but nothing happened.",
   "fishing.messages.entity.minecraft.squid": "A Squid appeared.",
@@ -424,5 +427,8 @@
 
   "widget.unshattered.narration.scroller": "Scroller Widget",
 
-  "enchantment.unshattered.rainbow": "Rainbow"
+  "enchantment.unshattered.rainbow": "Rainbow",
+
+  "minecraft.enchantable/sharp_weapon": "Swords, Longswords, Daggers and Battleaxes",
+  "minecraft.enchantable/mining": "Pickaxes and Drills"
 }

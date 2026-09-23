@@ -3,7 +3,7 @@ package io.github.moosyu.items.weapons.cleavers;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.data.components.ItemAbility;
-import io.github.moosyu.rarities.UnshatteredRarities;
+import io.github.moosyu.items.UnshatteredRarities;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;

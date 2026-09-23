@@ -1,4 +1,4 @@
-package io.github.moosyu.rarities;
+package io.github.moosyu.items;
 
 import com.mojang.serialization.Codec;
 import io.github.moosyu.util.UnshatteredUtils;

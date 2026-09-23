@@ -9,6 +9,7 @@ import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.regions.TemperatureTypes;
 import io.github.moosyu.items.ItemTypes;
 import io.github.moosyu.items.enchantments.UnshatteredEnchantmentEffects;
+import io.github.moosyu.items.weapons.daggers.EmeraldDagger;
 import io.github.moosyu.packets.DamageNumberPacket;
 import io.github.moosyu.packets.DeathSoundEffectPacket;
 import io.github.moosyu.packets.FerocityEffectPacket;
@@ -216,67 +217,79 @@ public final class DamageUtils {
         boolean coinLoss = true;
 
         for (PassiveAbilityItem item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredPassiveNonOngoingItems()) {
-            if (item.triggerTypes().contains(AbilityTriggerType.PLAYER_TAKE_DAMAGE) && item.abilityConditionsMet(context)) {
-                item.onAbilityTriggered(context);
-                triggeredItems.add(item);
-                if (item.triggerResult().isEmpty()) continue;
+            if (!item.triggerTypes().contains(AbilityTriggerType.PLAYER_TAKE_DAMAGE) || !item.abilityConditionsMet(context)) continue;
 
-                if (item.triggerResult().get() == AbilityTriggerResult.CANCEL_EVENT) {
-                    triggeredItems.forEach(triggeredItem -> triggeredItem.onAbilityFinished(context));
-                    return false;
-                } else if (item.triggerResult().get() == AbilityTriggerResult.DISABLE_COIN_LOSS) {
-                    coinLoss = false;
+            item.onAbilityTriggered(context);
+            triggeredItems.add(item);
+
+            AbilityTriggerResult result = item.triggerResult().map(trigger -> {
+                if (trigger instanceof AbilityTriggerResult abilityTrigger) {
+                    return abilityTrigger;
                 }
+                return null;
+            }).orElse(null);
+
+            if (result == AbilityTriggerResult.CANCEL_EVENT) {
+                triggeredItems.forEach(triggeredItem -> triggeredItem.onAbilityFinished(context));
+                return false;
+            } else if (result == AbilityTriggerResult.DISABLE_COIN_LOSS) {
+                coinLoss = false;
             }
         }
 
         PlayerStateAttachment states = player.getData(PLAYER_STATE.get());
         double playerHealth = states.getStatValue(PlayerStateAttachment.Stat.HEALTH);
-        double originalDamage = damageDealt;
+        double effectiveDamage = damageDealt;
 
         if (!overrideInvulnerability) {
             if (states.getInvulnerableTime() > INVULNERABILITY_TIME_MAX / 2) {
                 if (damageDealt <= states.getLastHitAmount()) return false;
-                damageDealt -= states.getLastHitAmount();
+                effectiveDamage = damageDealt - states.getLastHitAmount();
             }
-
-            states.setLastHitAmount(originalDamage);
+            states.setLastHitAmount(damageDealt);
             states.setInvulnerableTime(INVULNERABILITY_TIME_MAX);
         }
 
-        boolean killed = false;
+        boolean killed = playerHealth - effectiveDamage <= 0.0d;
 
-        if (playerHealth - damageDealt > 0.0d) {
-            states.decreaseStatValue(PlayerStateAttachment.Stat.HEALTH, damageDealt, player);
+        if (!killed) {
+            states.decreaseStatValue(PlayerStateAttachment.Stat.HEALTH, effectiveDamage, player);
         } else {
-            // "death"
+            int coinsLost;
+
             PlayerCurrencyAttachment currency = player.getData(PLAYER_CURRENCY.get());
             BlockPos spawnPos = level.getRespawnData().pos();
+
+            // greed makes you lose all your coins
+            if (player.getData(UnshatteredAttachments.PLAYER_ABILITIES).hasActiveEffect(EmeraldDagger.ABILITY_IDENTIFIER)) {
+                coinsLost = currency.getCoins();
+            } else if (coinLoss) {
+                coinsLost = currency.getCoins() / 2;
+            } else {
+                coinsLost = 0;
+            }
 
             player.teleportTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5);
             player.sendSystemMessage(deathMessage.copy()
                     .withStyle(ChatFormatting.RED)
-                    .append(coinLoss ? Component.literal(" You lost " + (currency.getCoins() / 2) + " coins.") : Component.empty())
+                    .append(coinsLost > 0 ? Component.literal(" You lost " + coinsLost + " coins.") : Component.empty())
             );
 
             states.setStatValue(PlayerStateAttachment.Stat.HEALTH, player.getAttributeValue(UnshatteredAttributeValues.HEALTH.holder), player);
             states.setStatValue(PlayerStateAttachment.Stat.MANA, player.getAttributeValue(UnshatteredAttributeValues.MANA.holder), player);
-
             player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(), TemperatureTypes.BASE_TEMP.getValue());
 
-            if (coinLoss) {
-                currency.removeCoins(currency.getCoins() / 2);
+
+            if (coinsLost > 0) {
+                currency.removeCoins(coinsLost);
                 player.syncData(PLAYER_CURRENCY.get());
             }
 
             PacketDistributor.sendToPlayer((ServerPlayer) player, new DeathSoundEffectPacket());
-
             states.setCancelledKnockback(true);
-            killed = true;
         }
 
         player.invulnerableTime = 0;
-
         triggeredItems.forEach(item -> item.onAbilityFinished(context));
         return killed;
     }

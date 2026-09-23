@@ -2,7 +2,7 @@ package io.github.moosyu.data.components;
 
 import com.mojang.serialization.Codec;
 import io.github.moosyu.items.ItemTypes;
-import io.github.moosyu.rarities.UnshatteredRarities;
+import io.github.moosyu.items.UnshatteredRarities;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.neoforged.neoforge.registries.DeferredRegister;

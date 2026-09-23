@@ -1,20 +1,13 @@
 package io.github.moosyu.items.talismans;
 
 import io.github.moosyu.abilities.AbilityContext;
-import io.github.moosyu.abilities.AbilityContextKey;
 import io.github.moosyu.abilities.AbilityTriggerType;
 import io.github.moosyu.abilities.PassiveAbilityItem;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.data.attachments.PlayerStateAttachment;
-import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.rarities.UnshatteredRarities;
+import io.github.moosyu.items.UnshatteredRarities;
 import io.github.moosyu.util.UnshatteredUtils;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.LivingEntity;
 
-import java.util.Optional;
 import java.util.Set;
 
 public class HoneycombRing extends TalismanItem implements PassiveAbilityItem {

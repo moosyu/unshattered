@@ -29,7 +29,7 @@ public enum ItemTypes implements StringRepresentable {
     MATERIAL("material", false),
     CLEAVER("cleaver", true),
     PICKAXE("pickaxe", true),
-    ENCHANTED_BOOK("enchanted_book", true);
+    ENCHANTED_BOOK("enchanted_book", false);
 
     private final String serializedName;
     private final boolean reforgeable;
