@@ -335,6 +335,9 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 ), false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.LAPIS_LAZULI), new CollectableItemEntry(CollectableCategories.MINING,
                         List.of(new CollectableLevel(50, List.of(new ExperienceCollectableReward(250, PlayerSkillsAttachment.Skill.MINING))))
+                ), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.HONEYCOMB), new CollectableItemEntry(CollectableCategories.MINING,
+                        List.of(new CollectableLevel(50, List.of(new ExperienceCollectableReward(250, PlayerSkillsAttachment.Skill.MINING))))
                 ), false);
     }
 

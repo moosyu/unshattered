@@ -1,7 +1,7 @@
 package io.github.moosyu.abilities;
 
 import io.github.moosyu.items.ItemTypes;
-import io.github.moosyu.util.damage.DamageUtils;
+import io.github.moosyu.damage.DamageUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
@@ -26,7 +26,7 @@ public enum AbilityTriggerType {
      */
     TREE_BREAK_INSTANCE_FINISH,
     /**
-     * runs in {@link DamageUtils#playerDealDamage(Player, LivingEntity, ItemTypes)} (when the player has dealt damage to a target) with onAbilityTriggered at the start (before damage calculations) and runs onAbilityFinished at the end, or if CANCEL_EVENT is a result, before the event is returned
+     * runs in {@link DamageUtils#playerDealDamage(Player, LivingEntity, ItemTypes, double, boolean)} (when the player has dealt damage to a target) with onAbilityTriggered at the start (before damage calculations) and runs onAbilityFinished at the end, or if CANCEL_EVENT is a result, before the event is returned
      */
     PLAYER_DEAL_DAMAGE,
     /**

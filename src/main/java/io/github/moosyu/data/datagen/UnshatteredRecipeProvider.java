@@ -80,6 +80,7 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
         createEnchantedItemRecipe(Items.SPONGE, 8, UnshatteredItems.ENCHANTED_SPONGE.get(), getHasName(Items.SPONGE), has(Items.SPONGE));
         createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_SPONGE.get(), 8, UnshatteredItems.ENCHANTED_WET_SPONGE.get(), getHasName(Items.SPONGE), has(Items.SPONGE));
         createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_RAW_PORK_CHOP.get(), Items.PORKCHOP, getHasName(Items.PORKCHOP), has(Items.PORKCHOP));
+        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_HONEYCOMB.get(), Items.HONEYCOMB, getHasName(Items.HONEYCOMB), has(Items.HONEYCOMB));
 
         new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.ZOMBIE_HEART.get()), RecipeCategory.COMBAT)
                 .pattern("AAA", "A A", "AAA")
@@ -163,6 +164,12 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(UnshatteredItems.ENCHANTED_COBBLESTONE), has(UnshatteredItems.ENCHANTED_COBBLESTONE))
                 .save(output);
 
+        new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.HONEYCOMB_RING.get()), RecipeCategory.MISC)
+                .pattern("CCC", "CCC", "CCC")
+                .define('C', singleSizedIngredient(UnshatteredItems.ENCHANTED_HONEYCOMB))
+                .unlockedBy(getHasName(UnshatteredItems.ENCHANTED_HONEYCOMB), has(UnshatteredItems.ENCHANTED_HONEYCOMB))
+                .save(output);
+        
         createSimpleEnchantedBook(Enchantments.EFFICIENCY, 1, getHasName(UnshatteredItems.ENCHANTED_COBBLESTONE), has(UnshatteredItems.ENCHANTED_COBBLESTONE), UnshatteredItems.ENCHANTED_COBBLESTONE, 64);
         createSimpleEnchantedBook(Enchantments.SMITE, 1, getHasName(UnshatteredItems.ENCHANTED_ROTTEN_FLESH), has(UnshatteredItems.ENCHANTED_ROTTEN_FLESH), UnshatteredItems.ENCHANTED_ROTTEN_FLESH, 32);
         createSimpleEnchantedBook(Enchantments.SHARPNESS, 1, getHasName(UnshatteredItems.ENCHANTED_FLINT), has(UnshatteredItems.ENCHANTED_FLINT), UnshatteredItems.ENCHANTED_FLINT, 64);

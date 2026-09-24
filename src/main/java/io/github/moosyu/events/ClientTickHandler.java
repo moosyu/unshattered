@@ -1,6 +1,6 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.util.damage.DamageNumberManager;
+import io.github.moosyu.damage.DamageNumberManager;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;

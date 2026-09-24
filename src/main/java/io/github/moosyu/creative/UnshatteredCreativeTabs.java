@@ -145,6 +145,7 @@ public class UnshatteredCreativeTabs {
             output.accept(ENCHANTED_SPONGE);
             output.accept(ENCHANTED_WET_SPONGE);
             output.accept(ENCHANTED_TROPICAL_FISH);
+            output.accept(ENCHANTED_HONEYCOMB);
         }).build()
     );
 

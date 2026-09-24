@@ -1,5 +1,6 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemTypes;
 import net.minecraft.world.InteractionHand;
@@ -11,7 +12,7 @@ import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.util.damage.DamageUtils.*;
+import static io.github.moosyu.damage.DamageUtils.*;
 
 @EventBusSubscriber(modid = MODID)
 public class AttackEntityHandler {
@@ -24,7 +25,12 @@ public class AttackEntityHandler {
         ) return;
         event.setCanceled(true);
 
-        playerDealDamage(player, target, player.getItemInHand(InteractionHand.MAIN_HAND).getOrDefault(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.ITEM));
+        playerDealDamage(player,
+                target,
+                player.getItemInHand(InteractionHand.MAIN_HAND).getOrDefault(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.ITEM),
+                player.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder) + BASE_DAMAGE,
+                false
+        );
     }
 
     @SubscribeEvent

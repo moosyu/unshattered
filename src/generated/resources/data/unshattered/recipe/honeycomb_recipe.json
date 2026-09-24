@@ -1,0 +1,16 @@
+{
+  "type": "unshattered:sized_recipe",
+  "key": {
+    "A": {
+      "count": 32,
+      "ingredient": "unshattered:enchanted_honeycomb"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "AA "
+  ],
+  "result": {
+    "id": "minecraft:honeycomb"
+  }
+}

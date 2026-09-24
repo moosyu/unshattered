@@ -1,4 +1,4 @@
-package io.github.moosyu.util.damage;
+package io.github.moosyu.damage;
 
 import java.util.ArrayList;
 import java.util.List;

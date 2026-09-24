@@ -1,8 +1,13 @@
 package io.github.moosyu.entities;
 
+import io.github.moosyu.entities.projectiles.HomingBee;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -40,7 +45,20 @@ public class UnshatteredEntities {
                     // Build the entity type using a resource key. The second parameter should be the same as the entity id.
                     .build(ResourceKey.create(
                             Registries.ENTITY_TYPE,
-                            Identifier.fromNamespaceAndPath(MODID, "graveyard_zombie_villager")
-                    ))
+                            UnshatteredUtils.getUnshatteredIdentifier("graveyard_zombie_villager"))
+                    )
+    );
+
+    public static final Supplier<EntityType<HomingBee>> HOMING_BEE = ENTITY_TYPES.register(
+            "homing_bee",
+            () -> EntityType.Builder.<HomingBee>of(HomingBee::new, MobCategory.MISC)
+                    .sized(0.7f, 0.6f)
+                    .eyeHeight(0.3f)
+                    .updateInterval(1)
+                    .noSave()
+                    .build(ResourceKey.create(
+                            Registries.ENTITY_TYPE,
+                            UnshatteredUtils.getUnshatteredIdentifier("homing_bee"))
+                    )
     );
 }

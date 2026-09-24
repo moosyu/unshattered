@@ -12,11 +12,15 @@ import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.packets.ClientsidePlayerSoundEffectPacket;
 import io.github.moosyu.items.UnshatteredRarities;
 import io.github.moosyu.util.UnshatteredUtils;
-import io.github.moosyu.util.damage.DamageUtils;
+import io.github.moosyu.damage.DamageUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -62,7 +66,15 @@ public class BloodChalice extends TalismanItem implements PassiveAbilityItem {
                             .ifPresent(_ -> ferocity.removeModifier(ABILITY_IDENTIFIER))
             );
 
-            if (DamageUtils.damagePlayer(player, (health.getValue() * 0.3), player.level(), Component.literal("☠ " + player.getName().getString() + " had their soul consumed by the blood chalice!"), true)) {
+            if (DamageUtils.damagePlayer(player,
+                    (health.getValue() * 0.3),
+                    player.level(), Component.literal("☠ " + player.getName().getString() + " had their soul consumed by the blood chalice!"),
+                    true,
+                    new DamageSource(player.registryAccess()
+                            .lookupOrThrow(Registries.DAMAGE_TYPE)
+                            .getOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, UnshatteredUtils.getUnshatteredIdentifier("blood_chalice")))
+                    )
+            )) {
                 ferocity.removeModifier(ABILITY_IDENTIFIER);
                 abilities.removeActiveEffect(ABILITY_IDENTIFIER, player);
             }

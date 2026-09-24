@@ -1,4 +1,4 @@
-package io.github.moosyu.util.damage;
+package io.github.moosyu.damage;
 
 import io.github.moosyu.abilities.*;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
@@ -24,6 +24,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -45,6 +46,8 @@ public final class DamageUtils {
     public static final List<FerocityHit> SCHEDULED_FEROCITY_ATTACKS = new ArrayList<>();
     public static final int FEROCITY_COOLDOWN = 4;
     public static final int INVULNERABILITY_TIME_MAX = 20;
+    // eg a player with no stats does 1 when hitting with fists
+    public static final int BASE_DAMAGE = 1;
 
     /**
      * runs damage code for a player attacking an entity that factors in unshattered damage attributes and checks skill requirements.
@@ -52,7 +55,7 @@ public final class DamageUtils {
      * @param target target attempting to be damaged
      * @param itemType the item type used for attack cooldown
      */
-    public static void playerDealDamage(Player player, LivingEntity target, ItemTypes itemType) {
+    public static void playerDealDamage(Player player, LivingEntity target, ItemTypes itemType, double damage, boolean useAttackStrength) {
         if (!player.isCreative() && target.is(EntityType.ARMOR_STAND) || player.level().isClientSide()) return;
 
         PlayerAbilityEffectsAttachment abilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES);
@@ -74,9 +77,8 @@ public final class DamageUtils {
         double critDamage = 0.0d;
         boolean weakAttack = attackStrength < 0.9f;
         double damageBonus = 0.0f;
-        ItemEnchantments enchantments = player.getMainHandItem().getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY);
 
-        for (Object2IntMap.Entry<Holder<Enchantment>> entry : enchantments.entrySet()) {
+        for (Object2IntMap.Entry<Holder<Enchantment>> entry : player.getMainHandItem().getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY).entrySet()) {
             Optional<ResourceKey<Enchantment>> key = entry.getKey().unwrapKey();
             if (key.isEmpty()) continue;
 
@@ -89,7 +91,7 @@ public final class DamageUtils {
             }
         }
 
-        if (weakAttack) {
+        if (useAttackStrength && weakAttack) {
             PacketDistributor.sendToPlayer((ServerPlayer) player, new WeakHitSoundEffectPacket());
             // just to further disincentivise spam clicking on weapons where you aren't meant to be
             attackStrength /= 2;
@@ -99,11 +101,16 @@ public final class DamageUtils {
                     : 0.0d;
         }
 
-        double damage = (1 + player.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder))
-                * (1 + (player.getAttributeValue(UnshatteredAttributeValues.STRENGTH.holder) / 20))
-                * (1 + (critDamage / 20))
-                * (player.getAttributeValue(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder) + damageBonus)
-                * attackStrength;
+        // trying out doing this instead of long things of multiplying and adding, i think it's more readable but idk about it just yet
+        damage += damageBonus;
+        damage *= (1 + (player.getAttributeValue(UnshatteredAttributeValues.STRENGTH.holder) / 20));
+        damage *= (1 + (critDamage / 20));
+        damage *= (player.getAttributeValue(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder) + damageBonus);
+
+        if (useAttackStrength) {
+            damage *= attackStrength;
+        }
+
         AttributeInstance targetHealth = target.getAttribute(UnshatteredAttributeValues.HEALTH.holder);
 
         if (targetHealth != null) {
@@ -211,9 +218,11 @@ public final class DamageUtils {
      * @param deathMessage death message if the damage kills the player
      * @return whether the damage killed the player
      */
-    public static boolean damagePlayer(Player player, double damageDealt, ServerLevel level, Component deathMessage, boolean overrideInvulnerability) {
+    public static boolean damagePlayer(Player player, double damageDealt, ServerLevel level, Component deathMessage, boolean overrideInvulnerability, DamageSource damageSource) {
         List<PassiveAbilityItem> triggeredItems = new ArrayList<>();
-        AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player).add(AbilityContextKey.DAMAGE_AMOUNT, damageDealt);
+        AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player)
+                .add(AbilityContextKey.DAMAGE_AMOUNT, damageDealt)
+                .add(AbilityContextKey.DAMAGE_SOURCE, damageSource);
         boolean coinLoss = true;
 
         for (PassiveAbilityItem item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredPassiveNonOngoingItems()) {

@@ -757,6 +757,10 @@ public class UnshatteredItems {
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON))
     );
 
+    public static final DeferredItem<EnchantedItem> ENCHANTED_HONEYCOMB = ITEMS.registerItem("enchanted_honeycomb", props -> new EnchantedItem(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 16000)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON))
+    );
 
     public static final DeferredItem<Item> RAINBOW_YARN_TALISMAN = ITEMS.registerItem("rainbow_yarn_talisman", RainbowYarnTalisman::new);
 

@@ -152,6 +152,7 @@ public class ModifyDefaultComponentsHandler {
         modifyVanillaItem(event, Items.SALMON, ItemTypes.MATERIAL, 10);
         modifyVanillaItem(event, Items.SPONGE, ItemTypes.MATERIAL, 50);
         modifyVanillaItem(event, Items.TROPICAL_FISH, ItemTypes.MATERIAL, 20);
+        modifyVanillaItem(event, Items.HONEYCOMB, ItemTypes.MATERIAL, 100);
     }
 
     /**

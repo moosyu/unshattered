@@ -60,6 +60,21 @@
         }
       ]
     },
+    "minecraft:honeycomb": {
+      "category": "mining",
+      "levels": [
+        {
+          "collectable_rewards": [
+            {
+              "type": "experience",
+              "amount": 250.0,
+              "experience_type": "mining"
+            }
+          ],
+          "item_requirement": 50
+        }
+      ]
+    },
     "minecraft:iron_ingot": {
       "category": "mining",
       "levels": [

@@ -1,4 +1,4 @@
-package io.github.moosyu.util.damage;
+package io.github.moosyu.damage;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.Vec3;

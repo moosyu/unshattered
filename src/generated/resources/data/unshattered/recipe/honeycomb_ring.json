@@ -1,0 +1,17 @@
+{
+  "type": "unshattered:sized_recipe",
+  "key": {
+    "C": {
+      "count": 1,
+      "ingredient": "unshattered:enchanted_honeycomb"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "CCC",
+    "CCC"
+  ],
+  "result": {
+    "id": "unshattered:honeycomb_ring"
+  }
+}
