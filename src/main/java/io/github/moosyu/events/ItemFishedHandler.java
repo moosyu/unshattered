@@ -1,17 +1,18 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.Unshattered;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.UnshatteredDataMaps;
-import io.github.moosyu.data.fishing.FishingItemEntry;
-import io.github.moosyu.data.fishing.FishingMiscEntry;
-import io.github.moosyu.data.fishing.FishingMobEntry;
-import io.github.moosyu.data.fishing.tables.WaterEntries;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.fishing.FishingWeightEntry;
+import io.github.moosyu.data.fishing.TriggerMiscReward;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -28,9 +29,9 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ThreadLocalRandom;
 
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_SKILLS;
@@ -55,23 +56,26 @@ public class ItemFishedHandler {
             return;
         }
 
-        final int SELECTED_TABLE_RANGE = ThreadLocalRandom.current().nextInt(200);
+        final int SELECTED_TABLE_RANGE = level.getRandom().nextInt(200);
         final double FISHING_FORTUNE = fishingFortuneAttribute.getValue();
 
         if (SELECTED_TABLE_RANGE < 160) {
-            Map<FishingItemEntry, Double> selectedMap = WaterEntries.filterEntries(WaterEntries.WATER_ITEM_WEIGHTS, player);
-            totalWeight = WaterEntries.calculateTableWeight(selectedMap);
-            double currentWeight = ThreadLocalRandom.current().nextDouble(0.0d, totalWeight);
+            Map<ResourceKey<Item>, FishingWeightEntry> selectedMap = UnshatteredUtils.filterFishingEntries(BuiltInRegistries.ITEM.getDataMap(UnshatteredDataMaps.FISHING_ITEM_WEIGHT_DATA), (ServerPlayer) player);
+            totalWeight = UnshatteredUtils.calculateTableWeight(selectedMap);
+            double currentWeight = level.getRandom().nextDouble() * totalWeight;
 
-            for (Map.Entry<FishingItemEntry, Double> entry : selectedMap.entrySet()) {
-                currentWeight -= calculateAdjustedWeight(entry.getValue(), FISHING_FORTUNE);
+            for (Map.Entry<ResourceKey<Item>, FishingWeightEntry> entry : selectedMap.entrySet()) {
+                currentWeight -= calculateAdjustedWeight(entry.getValue().weight(), FISHING_FORTUNE);
                 if (currentWeight <= 0) {
-                    Item selectedItem = entry.getKey().item();
+                    Item selectedItem = BuiltInRegistries.ITEM.getValue(entry.getKey());
+                    if (selectedItem == null) {
+                        Unshattered.LOGGER.error("{} is null!!", entry.getKey().toString());
+                        break;
+                    }
+
+                    UnshatteredUtils.givePlayerHarvestedItemStack(player, new ItemStack(selectedItem, UnshatteredUtils.getItemsCount(FISHING_FORTUNE, 1)));
+
                     float expReward = Objects.requireNonNullElse(BuiltInRegistries.ITEM.wrapAsHolder(selectedItem).getData(UnshatteredDataMaps.FISHABLE_ITEMS_EXP_DATA), 0.0f);
-                    ItemStack itemRewards = new ItemStack(selectedItem, UnshatteredUtils.getItemsCount(FISHING_FORTUNE, 1));
-
-                    UnshatteredUtils.givePlayerHarvestedItemStack(player, itemRewards);
-
                     if (expReward > 0.0f) {
                         skills.addExp(PlayerSkillsAttachment.Skill.FISHING, expReward, player);
                         player.syncData(PLAYER_SKILLS);
@@ -81,14 +85,19 @@ public class ItemFishedHandler {
                 }
             }
         } else if (SELECTED_TABLE_RANGE < 194) {
-            Map<FishingMobEntry, Double> selectedMap = WaterEntries.filterEntries(WaterEntries.WATER_MOB_WEIGHTS, player);
-            totalWeight = WaterEntries.calculateTableWeight(selectedMap);
-            double currentWeight = ThreadLocalRandom.current().nextDouble(0.0d, totalWeight);
+            Map<ResourceKey<EntityType<?>>, FishingWeightEntry> selectedMap = UnshatteredUtils.filterFishingEntries(BuiltInRegistries.ENTITY_TYPE.getDataMap(UnshatteredDataMaps.FISHING_MOB_WEIGHT_DATA), (ServerPlayer) player);
+            totalWeight = UnshatteredUtils.calculateTableWeight(selectedMap);
+            double currentWeight = level.getRandom().nextDouble() * totalWeight;
 
-            for (Map.Entry<FishingMobEntry, Double> entry : selectedMap.entrySet()) {
-                currentWeight -= calculateAdjustedWeight(entry.getValue(), FISHING_FORTUNE);
+            for (Map.Entry<ResourceKey<EntityType<?>>, FishingWeightEntry> entry : selectedMap.entrySet()) {
+                currentWeight -= calculateAdjustedWeight(entry.getValue().weight(), FISHING_FORTUNE);
                 if (currentWeight <= 0) {
-                    EntityType<?> entityType = entry.getKey().entity();
+                    EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.getValue(entry.getKey());
+                    if (entityType == null) {
+                        Unshattered.LOGGER.error("{} is null", entry.getKey().toString());
+                        break;
+                    }
+
                     Entity entity = entityType.create(level, EntitySpawnReason.TRIGGERED);
                     if (entity != null) {
                         Vec3 startPos = event.getHookEntity().position();
@@ -118,15 +127,19 @@ public class ItemFishedHandler {
                 }
             }
         } else {
-            Map<FishingMiscEntry, Double> selectedMap = WaterEntries.filterEntries(WaterEntries.WATER_MISC_WEIGHTS, player);
-            totalWeight = WaterEntries.calculateTableWeight(selectedMap);
-            double currentWeight = ThreadLocalRandom.current().nextDouble(0.0d, totalWeight);
+            List<TriggerMiscReward> selectedEntries = level.registryAccess()
+                    .lookupOrThrow(DataPackRegistryHandler.FISHING_MISC_REWARD_KEY)
+                    .stream()
+                    .filter(reward -> UnshatteredUtils.fishingRequirementsMet(reward, (ServerPlayer) player))
+                    .toList();
+            totalWeight = selectedEntries.stream().mapToDouble(TriggerMiscReward::weight).sum();
+            double currentWeight = level.getRandom().nextDouble() * totalWeight;
 
-            for (Map.Entry<FishingMiscEntry, Double> entry : selectedMap.entrySet()) {
-                currentWeight -= calculateAdjustedWeight(entry.getValue(), FISHING_FORTUNE);
+            for (TriggerMiscReward entry : selectedEntries) {
+                currentWeight -= calculateAdjustedWeight(entry.weight(), FISHING_FORTUNE);
                 if (currentWeight <= 0) {
                     // this (should) deal with exp and stuff itself
-                    entry.getKey().reward().accept(player);
+                    entry.trigger((ServerPlayer) player);
                     break;
                 }
             }

@@ -5,11 +5,15 @@ import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.dialogue.*;
 import io.github.moosyu.data.dialogue.events.GiveItemDialogueEvent;
 import io.github.moosyu.data.dialogue.events.StartQuestDialogueEvent;
+import io.github.moosyu.data.fishing.FishingConditions;
+import io.github.moosyu.data.fishing.TriggerMiscReward;
+import io.github.moosyu.data.fishing.rewards.CoinReward;
 import io.github.moosyu.data.quests.Quest;
 import io.github.moosyu.data.quests.QuestTypes;
 import io.github.moosyu.data.regen.RegenPaths.*;
 import io.github.moosyu.data.regions.*;
 import io.github.moosyu.data.datagen.*;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
@@ -222,6 +226,36 @@ public class DatagenHandler {
                     createRegenPathWithBlocks(bootstrap, "hard_mithril", List.of(UnshatteredBlocks.BREAKABLE_HARD_MITHRIL_BLOCK.get(), Blocks.BEDROCK), 220);
 
                     createRegenPathWithBlocks(bootstrap, "cobbled_mithril", List.of(UnshatteredBlocks.BREAKABLE_COBBLED_MITHRIL_BLOCK.get(), Blocks.BEDROCK), 220);
+                }).add(DataPackRegistryHandler.FISHING_MISC_REWARD_KEY, bootstrap -> {
+                    bootstrap.register(createMiscRewardResourceKey("good_catch"), new CoinReward(25000,
+                            5000,
+                            "good_catch",
+                            0xFF810AF3,
+                            100.0f,
+                            Optional.of(FishingConditions.NONE),
+                            20.0d,
+                            Optional.of(1))
+                    );
+
+                    bootstrap.register(createMiscRewardResourceKey("great_catch"), new CoinReward(100000,
+                            250000,
+                            "great_catch",
+                            0xFFFFAA00,
+                            1000.0f,
+                            Optional.of(FishingConditions.NONE),
+                            5.0d,
+                            Optional.of(5))
+                    );
+
+                    bootstrap.register(createMiscRewardResourceKey("outstanding_catch"), new CoinReward(500000,
+                            1000000,
+                            "outstanding_catch",
+                            0xFFFF55FF,
+                            10000.0f,
+                            Optional.of(FishingConditions.NONE),
+                            1.0d,
+                            Optional.of(10))
+                    );
                 })
         );
     }
@@ -230,7 +264,7 @@ public class DatagenHandler {
         Holder<Region> regionHolder = regions.getOrThrow(region);
 
         bootstrap.register(
-                ResourceKey.create(DataPackRegistryHandler.REGION_BOUNDARY_REGISTRY_KEY, Identifier.fromNamespaceAndPath(MODID, region.identifier().getPath() + "_bounds")),
+                ResourceKey.create(DataPackRegistryHandler.REGION_BOUNDARY_REGISTRY_KEY, UnshatteredUtils.getUnshatteredIdentifier(region.identifier().getPath() + "_bounds")),
                 new RegionBoundary(regionHolder, boundaryCoordinates)
         );
     }
@@ -238,7 +272,6 @@ public class DatagenHandler {
     private static void registerDialogueTree(BootstrapContext<DialogueTree> bootstrap, Identifier dialogueTreeIdentifier, DialogueTree dialogueTree) {
         bootstrap.register(ResourceKey.create(DataPackRegistryHandler.DIALOGUE_TREE_REGISTRY_KEY, dialogueTreeIdentifier), dialogueTree);
     }
-
 
     private static DialogueTreeOrigin createDialogueOrigin(int priority, DialogueNode dialogueNode, List<Identifier> requiredFlags, List<Identifier> excludedFlags) {
         return new DialogueTreeOrigin(priority, dialogueNode, Optional.of(new DialogueFlagRequirements(requiredFlags, excludedFlags)), List.of());
@@ -271,17 +304,21 @@ public class DatagenHandler {
     }
 
     private static void createRegenPathWithBlocks(BootstrapContext<RegenPath> bootstrap, String identifier, List<Block> blocks, int regenTicks) {
-        bootstrap.register(ResourceKey.create(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY, Identifier.fromNamespaceAndPath(MODID, identifier)),
+        bootstrap.register(ResourceKey.create(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY, UnshatteredUtils.getUnshatteredIdentifier(identifier)),
                 new RegenPath(blocks.stream().map(Block::defaultBlockState).toList(), regenTicks));
     }
 
     private static void createRegenPath(BootstrapContext<RegenPath> bootstrap, String identifier, List<BlockState> blocks, int regenTicks, int stagesIncremented) {
-        bootstrap.register(ResourceKey.create(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY, Identifier.fromNamespaceAndPath(MODID, identifier)),
+        bootstrap.register(ResourceKey.create(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY, UnshatteredUtils.getUnshatteredIdentifier(identifier)),
                 new RegenPath(blocks, regenTicks, stagesIncremented));
     }
 
     private static void createRegenPath(BootstrapContext<RegenPath> bootstrap, String identifier, List<BlockState> blocks, int regenTicks) {
-        bootstrap.register(ResourceKey.create(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY, Identifier.fromNamespaceAndPath(MODID, identifier)),
+        bootstrap.register(ResourceKey.create(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY, UnshatteredUtils.getUnshatteredIdentifier(identifier)),
                 new RegenPath(blocks, regenTicks));
+    }
+
+    private static ResourceKey<TriggerMiscReward> createMiscRewardResourceKey(String path) {
+        return ResourceKey.create(DataPackRegistryHandler.FISHING_MISC_REWARD_KEY, UnshatteredUtils.getUnshatteredIdentifier(path));
     }
 }

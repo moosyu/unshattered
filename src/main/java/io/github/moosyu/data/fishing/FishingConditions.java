@@ -19,6 +19,10 @@ public enum FishingConditions implements StringRepresentable {
 
     public static Codec<FishingConditions> CODEC = StringRepresentable.fromEnum(FishingConditions::values);
 
+    public boolean test(ServerPlayer player) {
+        return condition.test(player);
+    }
+
     @Override
     public @NonNull String getSerializedName() {
         return name().toLowerCase(Locale.ROOT);

@@ -1,10 +1,9 @@
 package io.github.moosyu.data.fishing;
 
-import net.minecraft.world.entity.player.Player;
-
-import java.util.function.Predicate;
+import java.util.Optional;
 
 public interface FishingEntry {
-    FishingRewardTypes type();
-    Predicate<Player> condition();
+    Optional<FishingConditions> condition();
+    double weight();
+    Optional<Integer> fishingLevelRequirement();
 }

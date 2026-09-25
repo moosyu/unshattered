@@ -7,6 +7,7 @@ import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.attachments.PlayerCollectionsAttachment;
+import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.ItemCharges;
@@ -14,6 +15,8 @@ import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.data.dialogue.DialogueTree;
 import io.github.moosyu.data.drops.DropData;
 import io.github.moosyu.data.drops.DropTypes;
+import io.github.moosyu.data.fishing.FishingEntry;
+import io.github.moosyu.data.fishing.FishingWeightEntry;
 import io.github.moosyu.events.DataPackRegistryHandler;
 import io.github.moosyu.items.UnshatteredRarities;
 import net.minecraft.ChatFormatting;
@@ -51,6 +54,7 @@ import java.text.DecimalFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.data.drops.DropTypes.getDropType;
@@ -427,5 +431,34 @@ public final class UnshatteredUtils {
 
     public static int getEnchantmentLevel(ItemStack itemStack, Level level, ResourceKey<Enchantment> enchantment) {
         return itemStack.getEnchantmentLevel(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(enchantment));
+    }
+
+    // fishing
+
+    public static double calculateTableWeight(Map<?, FishingWeightEntry> selectedMap) {
+        return selectedMap.values().stream().mapToDouble(FishingWeightEntry::weight).sum();
+    }
+
+    public static <T> Map<T, FishingWeightEntry> filterFishingEntries(Map<T, FishingWeightEntry> entries, ServerPlayer player) {
+        return entries.entrySet().stream()
+                .filter(entry -> fishingRequirementsMet(entry.getValue(), player))
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue
+                ));
+    }
+
+    public static boolean fishingRequirementsMet(FishingEntry entry, ServerPlayer player) {
+        boolean metCondition = entry.condition().map(condition -> condition.test(player)).orElse(true);
+        boolean metLevelRequirement;
+
+        if (entry.fishingLevelRequirement().isPresent()) {
+            PlayerSkillsAttachment playerSkillsAttachment = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
+            metLevelRequirement = playerSkillsAttachment.getLevel(playerSkillsAttachment.getExp(PlayerSkillsAttachment.Skill.FISHING)) >= entry.fishingLevelRequirement().get();
+        } else {
+            metLevelRequirement = true;
+        }
+
+        return metCondition && metLevelRequirement;
     }
 }

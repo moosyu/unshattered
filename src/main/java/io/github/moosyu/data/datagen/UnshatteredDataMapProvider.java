@@ -11,7 +11,6 @@ import io.github.moosyu.data.drops.DropData;
 import io.github.moosyu.data.drops.MobItemDropData;
 import io.github.moosyu.data.drops.MobRewardData;
 import io.github.moosyu.data.fishing.FishingConditions;
-import io.github.moosyu.data.fishing.FishingTypes;
 import io.github.moosyu.data.fishing.FishingWeightEntry;
 import io.github.moosyu.items.ItemRange;
 import io.github.moosyu.items.UnshatteredItems;
@@ -306,16 +305,12 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         breakableDropsBuilder.add(UnshatteredBlocks.BREAKABLE_HARD_MITHRIL_BLOCK,
                 List.of(new DropData(new ItemRange(UnshatteredItems.MITHRIL.get(), 2, 5)),
                         new DropData(new ItemRange(UnshatteredItems.ENCHANTED_MITHRIL.get()), 0.01f)
-                ),
-                false
-        );
+                ), false);
 
-        this.builder(COLLECTABLE_DATA)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.ROTTEN_FLESH), new CollectableItemEntry(CollectableCategories.COMBAT,
+        builder(COLLECTABLE_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(Items.ROTTEN_FLESH), new CollectableItemEntry(CollectableCategories.COMBAT,
                         List.of(new CollectableLevel(50, List.of(new ExperienceCollectableReward(250, PlayerSkillsAttachment.Skill.COMBAT))),
                                 new CollectableLevel(100, List.of(new ItemCollectableReward(UnshatteredItems.ENCHANTED_ROTTEN_FLESH.get(), 1)))
-                        )
-                ), false)
+                        )), false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.COBBLESTONE), new CollectableItemEntry(CollectableCategories.MINING,
                         List.of(new CollectableLevel(50, List.of(new ExperienceCollectableReward(250, PlayerSkillsAttachment.Skill.MINING))))
                 ), false)
@@ -344,17 +339,21 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         List.of(new CollectableLevel(50, List.of(new ExperienceCollectableReward(250, PlayerSkillsAttachment.Skill.MINING))))
                 ), false);
 
-        this.builder(FISHING_ITEM_WEIGHT_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(Items.COD), new FishingWeightEntry(100000.0d, FishingTypes.WATER), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.SALMON), new FishingWeightEntry(75000.0d, FishingTypes.WATER), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.PUFFERFISH), new FishingWeightEntry(60000.0d, FishingTypes.WATER), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.TROPICAL_FISH), new FishingWeightEntry(55000.0d, FishingTypes.WATER), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.PRISMARINE_SHARD), new FishingWeightEntry(45000.0d, FishingTypes.WATER), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.PRISMARINE_CRYSTALS), new FishingWeightEntry(45000.0d, FishingTypes.WATER), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.CLAY_BALL), new FishingWeightEntry(45000.0d, FishingTypes.WATER), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.SPONGE), new FishingWeightEntry(35000.0d, FishingTypes.WATER), false);
+        builder(FISHING_ITEM_WEIGHT_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(Items.COD), new FishingWeightEntry(100000.0d), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.SALMON), new FishingWeightEntry(75000.0d), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.PUFFERFISH), new FishingWeightEntry(60000.0d), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.TROPICAL_FISH), new FishingWeightEntry(55000.0d), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.PRISMARINE_SHARD), new FishingWeightEntry(45000.0d), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.PRISMARINE_CRYSTALS), new FishingWeightEntry(45000.0d), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.CLAY_BALL), new FishingWeightEntry(45000.0d), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.SPONGE), new FishingWeightEntry(35000.0d), false);
 
-        this.builder(FISHING_MOB_WEIGHT_DATA).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SQUID), new FishingWeightEntry(1200.0d, FishingTypes.WATER), false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.GLOW_SQUID), new FishingWeightEntry(Optional.of(FishingConditions.NIGHT), 1100.0d, FishingTypes.WATER, Optional.of(1)), false);
+        builder(FISHING_MOB_WEIGHT_DATA).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SQUID), new FishingWeightEntry(1200.0d), false)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.GLOW_SQUID),
+                        new FishingWeightEntry(Optional.of(FishingConditions.NIGHT),
+                                1100.0d,
+                                Optional.of(1)
+                        ), false);
     }
 
     private void createSingleBlockDropData(DataMapProvider.Builder<List<DropData>, Block> builder, DeferredBlock<Block> block, ItemRange itemRange) {

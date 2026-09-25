@@ -1,0 +1,11 @@
+{
+  "type": "unshattered:give_coins",
+  "color": -22016,
+  "condition": "none",
+  "exp_amount": 1000.0,
+  "level_requirement": 5,
+  "max": 250000,
+  "message_key": "great_catch",
+  "min": 100000,
+  "weight": 5.0
+}
