@@ -4,17 +4,15 @@ import com.mojang.serialization.Codec;
 import io.github.moosyu.collectables.CollectableItemEntry;
 import io.github.moosyu.data.drops.DropData;
 import io.github.moosyu.data.drops.MobRewardData;
+import io.github.moosyu.data.fishing.FishingWeightEntry;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
 
 import java.util.List;
-
-import static io.github.moosyu.Unshattered.MODID;
 
 public final class UnshatteredDataMaps {
     public static final DataMapType<Block, Float> HARVESTABLE_BLOCKS_EXP_DATA = DataMapType.builder(
@@ -58,4 +56,17 @@ public final class UnshatteredDataMaps {
             Registries.ITEM,
             CollectableItemEntry.CODEC
     ).build();
+
+    public static final DataMapType<Item, FishingWeightEntry> FISHING_ITEM_WEIGHT_DATA = DataMapType.builder(
+            UnshatteredUtils.getUnshatteredIdentifier("fishing_item_weight_data"),
+            Registries.ITEM,
+            FishingWeightEntry.CODEC
+    ).build();
+
+    public static final DataMapType<EntityType<?>, FishingWeightEntry> FISHING_MOB_WEIGHT_DATA = DataMapType.builder(
+            UnshatteredUtils.getUnshatteredIdentifier("fishing_mob_weight_data"),
+            Registries.ENTITY_TYPE,
+            FishingWeightEntry.CODEC
+    ).build();
+
 }

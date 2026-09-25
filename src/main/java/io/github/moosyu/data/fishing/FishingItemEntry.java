@@ -1,5 +1,6 @@
-package io.github.moosyu.fishing;
+package io.github.moosyu.data.fishing;
 
+import io.github.moosyu.data.regions.RegionTemperatureTypes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 
@@ -9,6 +10,8 @@ public record FishingItemEntry(Item item, Predicate<Player> condition) implement
     public FishingItemEntry(Item item) {
         this(item, _ -> true);
     }
+
+
     @Override
     public FishingRewardTypes type() {
         return FishingRewardTypes.MOB;

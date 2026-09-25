@@ -1,4 +1,4 @@
-package io.github.moosyu.fishing;
+package io.github.moosyu.data.fishing;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;

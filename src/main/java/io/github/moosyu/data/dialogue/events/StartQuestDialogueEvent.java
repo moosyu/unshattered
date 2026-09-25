@@ -1,8 +1,9 @@
-package io.github.moosyu.data.dialogue;
+package io.github.moosyu.data.dialogue.events;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.dialogue.DialogueTriggeredEvent;
 import io.github.moosyu.data.quests.Quest;
 import io.github.moosyu.events.DataPackRegistryHandler;
 import net.minecraft.network.RegistryFriendlyByteBuf;

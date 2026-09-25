@@ -1,9 +1,9 @@
-package io.github.moosyu.fishing.tables;
+package io.github.moosyu.data.fishing.tables;
 
-import io.github.moosyu.fishing.FishingEntry;
-import io.github.moosyu.fishing.FishingItemEntry;
-import io.github.moosyu.fishing.FishingMiscEntry;
-import io.github.moosyu.fishing.FishingMobEntry;
+import io.github.moosyu.data.fishing.FishingEntry;
+import io.github.moosyu.data.fishing.FishingItemEntry;
+import io.github.moosyu.data.fishing.FishingMiscEntry;
+import io.github.moosyu.data.fishing.FishingMobEntry;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
@@ -11,7 +11,7 @@ import net.minecraft.world.item.Items;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static io.github.moosyu.fishing.FishingMiscEntry.createCoinReward;
+import static io.github.moosyu.data.fishing.FishingMiscEntry.createCoinReward;
 
 public class WaterEntries {
     public static final Map<FishingItemEntry, Double> WATER_ITEM_WEIGHTS = Map.ofEntries(

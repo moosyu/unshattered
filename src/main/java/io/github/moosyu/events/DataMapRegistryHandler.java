@@ -18,5 +18,7 @@ public class DataMapRegistryHandler {
         event.register(BLOCK_BREAKING_POWER_DATA);
         event.register(BREAKABLE_DROPS_DATA);
         event.register(COLLECTABLE_DATA);
+        event.register(FISHING_ITEM_WEIGHT_DATA);
+        event.register(FISHING_MOB_WEIGHT_DATA);
     }
 }

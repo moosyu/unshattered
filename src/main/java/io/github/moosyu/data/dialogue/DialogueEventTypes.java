@@ -3,6 +3,8 @@ package io.github.moosyu.data.dialogue;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
+import io.github.moosyu.data.dialogue.events.GiveItemDialogueEvent;
+import io.github.moosyu.data.dialogue.events.StartQuestDialogueEvent;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;

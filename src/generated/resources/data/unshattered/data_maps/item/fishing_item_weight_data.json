@@ -1,0 +1,36 @@
+{
+  "values": {
+    "minecraft:clay_ball": {
+      "type": "water",
+      "weight": 45000.0
+    },
+    "minecraft:cod": {
+      "type": "water",
+      "weight": 100000.0
+    },
+    "minecraft:prismarine_crystals": {
+      "type": "water",
+      "weight": 45000.0
+    },
+    "minecraft:prismarine_shard": {
+      "type": "water",
+      "weight": 45000.0
+    },
+    "minecraft:pufferfish": {
+      "type": "water",
+      "weight": 60000.0
+    },
+    "minecraft:salmon": {
+      "type": "water",
+      "weight": 75000.0
+    },
+    "minecraft:sponge": {
+      "type": "water",
+      "weight": 35000.0
+    },
+    "minecraft:tropical_fish": {
+      "type": "water",
+      "weight": 55000.0
+    }
+  }
+}

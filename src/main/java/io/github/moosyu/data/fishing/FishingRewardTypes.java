@@ -1,4 +1,4 @@
-package io.github.moosyu.fishing;
+package io.github.moosyu.data.fishing;
 
 public enum FishingRewardTypes {
     ITEM,

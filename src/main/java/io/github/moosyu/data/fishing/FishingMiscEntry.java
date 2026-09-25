@@ -1,4 +1,4 @@
-package io.github.moosyu.fishing;
+package io.github.moosyu.data.fishing;
 
 import io.github.moosyu.data.attachments.PlayerCurrencyAttachment;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;

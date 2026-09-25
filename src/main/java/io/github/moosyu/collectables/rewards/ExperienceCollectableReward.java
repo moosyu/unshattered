@@ -5,9 +5,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
-import io.github.moosyu.data.dialogue.GiveItemDialogueEvent;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 
 public record ExperienceCollectableReward(float amount, PlayerSkillsAttachment.Skill experienceType) implements CollectableReward {
     @Override

@@ -3,6 +3,8 @@ package io.github.moosyu.events;
 import io.github.moosyu.blocks.TalkingRockBlock;
 import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.dialogue.*;
+import io.github.moosyu.data.dialogue.events.GiveItemDialogueEvent;
+import io.github.moosyu.data.dialogue.events.StartQuestDialogueEvent;
 import io.github.moosyu.data.quests.Quest;
 import io.github.moosyu.data.quests.QuestTypes;
 import io.github.moosyu.data.regen.RegenPaths.*;
