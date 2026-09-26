@@ -45,13 +45,6 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
         ).setTooltip(Tooltip.create(Component.translatable("container.unshattered.crafting")));
 
         addRenderableWidget(new SoundlessImageButton(leftPos + 76,
-                topPos + 25,
-                20,
-                18,
-                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/collections")),
-                _ -> {})).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.collections")));
-
-        addRenderableWidget(new SoundlessImageButton(leftPos + 76,
                 topPos + 43,
                 20,
                 18,

@@ -1,7 +1,7 @@
 package io.github.moosyu.data;
 
 import com.mojang.serialization.Codec;
-import io.github.moosyu.collectables.CollectableItemEntry;
+import io.github.moosyu.data.drops.BlockBreakData;
 import io.github.moosyu.data.drops.DropData;
 import io.github.moosyu.data.drops.MobRewardData;
 import io.github.moosyu.data.fishing.FishingWeightEntry;
@@ -15,10 +15,10 @@ import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import java.util.List;
 
 public final class UnshatteredDataMaps {
-    public static final DataMapType<Block, Float> HARVESTABLE_BLOCKS_EXP_DATA = DataMapType.builder(
-            UnshatteredUtils.getUnshatteredIdentifier("harvestable_blocks_exp_data"),
+    public static final DataMapType<Block, BlockBreakData> BLOCK_BREAK_DATA = DataMapType.builder(
+            UnshatteredUtils.getUnshatteredIdentifier("block_break_data"),
             Registries.BLOCK,
-            Codec.FLOAT
+            BlockBreakData.CODEC
     ).build();
 
     public static final DataMapType<Item, Float> FISHABLE_ITEMS_EXP_DATA = DataMapType.builder(
@@ -43,18 +43,6 @@ public final class UnshatteredDataMaps {
             UnshatteredUtils.getUnshatteredIdentifier("block_breaking_power_data"),
             Registries.BLOCK,
             Codec.INT
-    ).build();
-
-    public static final DataMapType<Block, List<DropData>> BREAKABLE_DROPS_DATA = DataMapType.builder(
-            UnshatteredUtils.getUnshatteredIdentifier("breakable_drops_data"),
-            Registries.BLOCK,
-            DropData.CODEC.listOf()
-    ).build();
-
-    public static final DataMapType<Item, CollectableItemEntry> COLLECTABLE_DATA = DataMapType.builder(
-            UnshatteredUtils.getUnshatteredIdentifier("collectable_data"),
-            Registries.ITEM,
-            CollectableItemEntry.CODEC
     ).build();
 
     public static final DataMapType<Item, FishingWeightEntry> FISHING_ITEM_WEIGHT_DATA = DataMapType.builder(

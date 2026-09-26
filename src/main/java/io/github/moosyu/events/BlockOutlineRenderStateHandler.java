@@ -18,7 +18,7 @@ public class BlockOutlineRenderStateHandler {
         if (player == null) return;
 
         if (!player.isCreative()) {
-            event.setCanceled(event.getBlockState().getData(UnshatteredDataMaps.BREAKABLE_DROPS_DATA) == null);
+            event.setCanceled(event.getBlockState().getData(UnshatteredDataMaps.BLOCK_BREAK_DATA) == null);
         }
     }
 }

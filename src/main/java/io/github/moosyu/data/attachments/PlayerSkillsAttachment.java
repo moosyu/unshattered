@@ -223,7 +223,7 @@ public final class PlayerSkillsAttachment {
 
     // both codecs are pretty weird because i found them in different places online
     // at some point ill figure out how to make them myself so they seem more normal
-    public static final Codec<PlayerSkillsAttachment> RECORD_CODEC = Codec.unboundedMap(Codec.STRING, Codec.FLOAT).xmap(map -> {
+    public static final Codec<PlayerSkillsAttachment> CODEC = Codec.unboundedMap(Codec.STRING, Codec.FLOAT).xmap(map -> {
         PlayerSkillsAttachment obj = new PlayerSkillsAttachment(0, 0, 0, 0, 0, 0);
         for (var entry : map.entrySet()) {
             Skill skill = Skill.valueOf(entry.getKey());

@@ -95,7 +95,7 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_POISONOUS_POTATO.get(), Items.POISONOUS_POTATO, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_BONE.get(), Items.BONE, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.COINS_TALISMAN.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(UnshatteredItems.BROKEN_MITHRIL_PICKAXE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.BROKEN_MITHRIL_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.MITHRIL.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_MITHRIL.get(), ModelTemplates.createItem(UnshatteredItems.MITHRIL.getRegisteredName()));
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_FLINT.get(), Items.FLINT, ModelTemplates.FLAT_ITEM);
@@ -139,6 +139,8 @@ public class UnshatteredModelProvider extends ModelProvider {
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_SPONGE.get(), Blocks.SPONGE);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_WET_SPONGE.get(), Blocks.WET_SPONGE);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.BEDROCK.get(), Blocks.BEDROCK);
+        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_ICE.get(), Blocks.ICE);
+        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_PACKED_ICE.get(), Blocks.PACKED_ICE);
         itemModels.generateFlatItem(UnshatteredItems.HEALING_TISSUE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFishingRod(UnshatteredItems.CHALLENGING_ROD.get());
         createColumnBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_FIG_LOG.get(), UnshatteredBlocks.FIG_LOG_BLOCK.get());
@@ -239,6 +241,7 @@ public class UnshatteredModelProvider extends ModelProvider {
         createVanillaCubeBlock(blockModels, UnshatteredBlocks.PURE_DIAMOND_BLOCK.get(), Blocks.DIAMOND_BLOCK);
         createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_OBSIDIAN_BLOCK.get(), Blocks.OBSIDIAN);
         createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_LAPIS_ORE_BLOCK.get(), Blocks.LAPIS_ORE);
+        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_ICE_BLOCK.get(), Blocks.ICE);
 
         blockModels.createTrivialCube(UnshatteredBlocks.BREAKABLE_COBBLED_MITHRIL_BLOCK.get());
         blockModels.createTrivialCube(UnshatteredBlocks.BREAKABLE_SOFT_MITHRIL_BLOCK.get());

@@ -6,13 +6,13 @@ import io.github.moosyu.abilities.AbilityTriggerType;
 import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.UnshatteredDataMaps;
-import io.github.moosyu.data.attachments.PlayerCollectionsAttachment;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.data.dialogue.DialogueTree;
+import io.github.moosyu.data.drops.BlockBreakData;
 import io.github.moosyu.data.drops.DropData;
 import io.github.moosyu.data.drops.DropTypes;
 import io.github.moosyu.data.fishing.FishingEntry;
@@ -30,6 +30,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
@@ -234,21 +235,6 @@ public final class UnshatteredUtils {
         return Objects.requireNonNull(registryAccess.lookupOrThrow(DataPackRegistryHandler.DIALOGUE_TREE_REGISTRY_KEY).getValue(dialogueTreeIdentifier));
     }
 
-    /**
-     * adds items to collection while checking to make sure the item isn't empty or missing the collectable data component
-     * @param player player getting the item
-     * @param itemStack the item being acquired
-     */    public static void addItemToCollection(Player player, ItemStack itemStack) {
-        if (itemStack.isEmpty()
-                || itemStack.count() < 1
-                || itemStack.typeHolder().getData(UnshatteredDataMaps.COLLECTABLE_DATA) == null
-        ) return;
-
-        PlayerCollectionsAttachment collections = player.getData(UnshatteredAttachments.PLAYER_COLLECTIONS.get());
-
-        collections.addPickedUpItem(itemStack, player);
-    }
-
     // block drop methods
 
     /**
@@ -259,23 +245,24 @@ public final class UnshatteredUtils {
     public static void givePlayerHarvestedItemStack(Player player, ItemStack itemStack) {
         if (itemStack.isEmpty()) return;
 
-        addItemToCollection(player, itemStack);
+        ((ServerPlayer) player).getStats().increment(player, Stats.ITEM_PICKED_UP.get(itemStack.getItem()), itemStack.count());
+
         if (!player.getInventory().add(itemStack)) {
             player.drop(itemStack, false);
         }
-        player.syncData(UnshatteredAttachments.PLAYER_COLLECTIONS);
     }
 
     public static void addBlockBrokenResultToInventory(Holder<Block> blockHolder, Player player, UnshatteredAttributeValues fortuneType) {
-        List<DropData> blockDropDataList = blockHolder.getData(UnshatteredDataMaps.BREAKABLE_DROPS_DATA);
-        boolean rolledAboveOccasional = false;
+        BlockBreakData blockBreakData = blockHolder.getData(UnshatteredDataMaps.BLOCK_BREAK_DATA);
 
-        if (blockDropDataList == null) {
+        if (blockBreakData == null) {
             Unshattered.LOGGER.error("block broken ({}) without defined drop data.", blockHolder.getRegisteredName());
             return;
         }
 
-        for (DropData blockDropData : blockDropDataList) {
+        boolean rolledAboveOccasional = false;
+
+        for (DropData blockDropData : blockBreakData.dropData()) {
             rolledAboveOccasional = UnshatteredUtils.getNonGuaranteedDrop(blockDropData,
                     true,
                     rolledAboveOccasional,

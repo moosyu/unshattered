@@ -12,6 +12,7 @@
     "CustomSpawnersMixin",
     "BlocksAttacksMixin",
     "ResultSlotMixin",
-    "SheepMixin"
+    "SheepMixin",
+    "StatsScreenMixin"
   ]
 }

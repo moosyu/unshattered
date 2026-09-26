@@ -24,6 +24,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -61,6 +62,7 @@ public final class DamageUtils {
         PlayerAbilityEffectsAttachment abilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES);
         List<PassiveAbilityItem> triggeredItems = new ArrayList<>();
         AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player).add(AbilityContextKey.TARGET, target).add(AbilityContextKey.ITEM_TYPE, itemType);
+        ServerPlayer serverPlayer = (ServerPlayer) player;
 
         for (PassiveAbilityItem item : abilities.getStoredPassiveNonOngoingItems()) {
             if (item.triggerTypes().contains(AbilityTriggerType.PLAYER_DEAL_DAMAGE) && item.abilityConditionsMet(context)) {
@@ -118,6 +120,9 @@ public final class DamageUtils {
                 player.crit(target);
                 target.playSound(SoundEvents.PLAYER_ATTACK_CRIT, 1.0F, 1.0F);
             }
+
+            // divided by 10 when displayed so multiplied here
+            serverPlayer.awardStat(Stats.DAMAGE_DEALT, (int) damage * 10);
 
             if ((targetHealth.getBaseValue() - damage) > 0) {
                 targetHealth.setBaseValue(targetHealth.getBaseValue() - damage);
@@ -219,11 +224,14 @@ public final class DamageUtils {
      * @return whether the damage killed the player
      */
     public static boolean damagePlayer(Player player, double damageDealt, ServerLevel level, Component deathMessage, boolean overrideInvulnerability, DamageSource damageSource) {
+        if (player.level().isClientSide()) return false;
+
         List<PassiveAbilityItem> triggeredItems = new ArrayList<>();
         AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player)
                 .add(AbilityContextKey.DAMAGE_AMOUNT, damageDealt)
                 .add(AbilityContextKey.DAMAGE_SOURCE, damageSource);
         boolean coinLoss = true;
+        ServerPlayer serverPlayer = (ServerPlayer) player;
 
         for (PassiveAbilityItem item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredPassiveNonOngoingItems()) {
             if (!item.triggerTypes().contains(AbilityTriggerType.PLAYER_TAKE_DAMAGE) || !item.abilityConditionsMet(context)) continue;
@@ -261,6 +269,8 @@ public final class DamageUtils {
 
         boolean killed = playerHealth - effectiveDamage <= 0.0d;
 
+        // it's divided by 10 when displayed so this is just kind of a work-around
+        serverPlayer.awardStat(Stats.DAMAGE_TAKEN, (int) effectiveDamage * 10);
         if (!killed) {
             states.decreaseStatValue(PlayerStateAttachment.Stat.HEALTH, effectiveDamage, player);
         } else {
@@ -294,8 +304,14 @@ public final class DamageUtils {
                 player.syncData(PLAYER_CURRENCY.get());
             }
 
-            PacketDistributor.sendToPlayer((ServerPlayer) player, new DeathSoundEffectPacket());
+            PacketDistributor.sendToPlayer(serverPlayer, new DeathSoundEffectPacket());
             states.setCancelledKnockback(true);
+
+            serverPlayer.getStats().setValue(player, Stats.CUSTOM.get(Stats.TIME_SINCE_DEATH), 0);
+            if (damageSource.getEntity() != null) {
+                serverPlayer.getStats().increment(player, Stats.ENTITY_KILLED_BY.get(damageSource.getEntity().getType()), 1);
+            }
+            serverPlayer.getStats().increment(player, Stats.CUSTOM.get(Stats.DEATHS), 1);
         }
 
         player.invulnerableTime = 0;

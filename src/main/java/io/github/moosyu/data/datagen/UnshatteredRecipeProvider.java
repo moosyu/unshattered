@@ -81,6 +81,8 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
         createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_SPONGE.get(), 8, UnshatteredItems.ENCHANTED_WET_SPONGE.get(), getHasName(Items.SPONGE), has(Items.SPONGE));
         createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_RAW_PORK_CHOP.get(), Items.PORKCHOP, getHasName(Items.PORKCHOP), has(Items.PORKCHOP));
         createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_HONEYCOMB.get(), Items.HONEYCOMB, getHasName(Items.HONEYCOMB), has(Items.HONEYCOMB));
+        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_ICE.get(), Items.ICE, getHasName(Items.ICE), has(Items.ICE));
+        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_PACKED_ICE.get(), UnshatteredItems.ENCHANTED_ICE.get(), getHasName(UnshatteredItems.ENCHANTED_ICE.get()), has(UnshatteredItems.ENCHANTED_ICE.get()));
 
         new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.ZOMBIE_HEART.get()), RecipeCategory.COMBAT)
                 .pattern("AAA", "A A", "AAA")

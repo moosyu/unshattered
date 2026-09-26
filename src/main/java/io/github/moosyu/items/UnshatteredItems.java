@@ -488,6 +488,7 @@ public class UnshatteredItems {
     public static final DeferredItem<BlockItem> PURE_DIAMOND = ITEMS.registerSimpleBlockItem(PURE_DIAMOND_BLOCK.getDelegate());
     public static final DeferredItem<BlockItem> BREAKABLE_OBSIDIAN = ITEMS.registerSimpleBlockItem(BREAKABLE_OBSIDIAN_BLOCK.getDelegate());
     public static final DeferredItem<BlockItem> BREAKABLE_LAPIS_ORE = ITEMS.registerSimpleBlockItem(BREAKABLE_LAPIS_ORE_BLOCK.getDelegate());
+    public static final DeferredItem<BlockItem> BREAKABLE_ICE = ITEMS.registerSimpleBlockItem(BREAKABLE_ICE_BLOCK.getDelegate());
 
     public static final DeferredItem<Item> ROGUE_SWORD = ITEMS.registerItem("rogue_sword", RogueSword::new);
 
@@ -760,6 +761,16 @@ public class UnshatteredItems {
     public static final DeferredItem<EnchantedItem> ENCHANTED_HONEYCOMB = ITEMS.registerItem("enchanted_honeycomb", props -> new EnchantedItem(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
             .component(UnshatteredDataComponents.SELL_VALUE.get(), 16000)
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON))
+    );
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_ICE = ITEMS.registerItem("enchanted_ice", props -> new EnchantedItem(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 80)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON))
+    );
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_PACKED_ICE = ITEMS.registerItem("enchanted_packed_ice", props -> new EnchantedItem(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 12800)
+            .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.RARE))
     );
 
     public static final DeferredItem<Item> RAINBOW_YARN_TALISMAN = ITEMS.registerItem("rainbow_yarn_talisman", RainbowYarnTalisman::new);

@@ -2,6 +2,7 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.Unshattered;
 import io.github.moosyu.abilities.*;
+import io.github.moosyu.data.attachments.PlayerCurrencyAttachment;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
@@ -56,6 +57,9 @@ public class EntityDeathHandler {
                 skills.addExp(mobLoot.skill(), mobLoot.experience(), player);
                 player.syncData(PLAYER_SKILLS);
             }
+
+            player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get()).addCoins(player.getRandom().nextIntBetweenInclusive(mobLoot.minCoins(), mobLoot.maxCoins()));
+            player.syncData(UnshatteredAttachments.PLAYER_CURRENCY.get());
 
             relevantPassiveItems.forEach(item -> item.onAbilityFinished(context));
         }

@@ -5,6 +5,7 @@ import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.UnshatteredDataMaps;
+import io.github.moosyu.data.drops.BlockBreakData;
 import io.github.moosyu.data.regen.RegenSavedData;
 import io.github.moosyu.util.UnshatteredUtils;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
@@ -79,7 +80,11 @@ public class TreeSweepHandler {
 
             for (BreakTask current : tasks) {
                 UnshatteredUtils.addBlockBrokenResultToInventory(current.state().typeHolder(), player, UnshatteredAttributeValues.FORAGING_FORTUNE);
-                expReward += Objects.requireNonNullElse(current.state.getData(UnshatteredDataMaps.HARVESTABLE_BLOCKS_EXP_DATA), 0.0f);
+
+                BlockBreakData blockBreakData = current.state.getData(UnshatteredDataMaps.BLOCK_BREAK_DATA);
+                if (blockBreakData != null) {
+                    expReward += blockBreakData.expAmount();
+                }
             }
 
             skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, expReward, player);
@@ -99,10 +104,10 @@ public class TreeSweepHandler {
 
         int sweep = (int) player.getAttributeValue(UnshatteredAttributeValues.SWEEP.holder);
         if (sweep <= 0) {
-            float expAmount = Objects.requireNonNullElse(startBlock.getData(UnshatteredDataMaps.HARVESTABLE_BLOCKS_EXP_DATA), 0.0f);
+            BlockBreakData blockBreakData = startBlock.getData(UnshatteredDataMaps.BLOCK_BREAK_DATA);
 
-            if (expAmount > 0.0f) {
-                skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, expAmount, player);
+            if (blockBreakData != null && blockBreakData.expAmount() > 0.0f) {
+                skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, blockBreakData.expAmount(), player);
                 player.syncData(PLAYER_SKILLS);
             }
 

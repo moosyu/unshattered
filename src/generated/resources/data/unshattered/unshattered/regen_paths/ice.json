@@ -1,0 +1,12 @@
+{
+  "path": [
+    {
+      "Name": "unshattered:breakable_ice_block"
+    },
+    {
+      "Name": "minecraft:air"
+    }
+  ],
+  "regen_ticks": 220,
+  "stages_incremented": 1
+}

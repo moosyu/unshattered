@@ -177,6 +177,7 @@ public class RegisterPayloadsHandler {
                             item.onAbilityFinished(abilityContext);
                         }
                     }
-                }));
+                })
+        );
     }
 }

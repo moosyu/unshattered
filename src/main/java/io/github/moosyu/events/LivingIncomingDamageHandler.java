@@ -47,10 +47,11 @@ public class LivingIncomingDamageHandler {
 
             triggeredItems.forEach(triggeredItem -> triggeredItem.onAbilityFinished(context));
         } else {
-            if (source.is(DamageTypeTags.IS_FALL)) {
+            if (!source.is(DamageTypeTags.IS_PLAYER_ATTACK)) {
                 event.setCanceled(true);
-            } else if (source.getEntity() instanceof Player player && player.getAttributeValue(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder) == 0.0d) {
-                event.setCanceled(true);
+            }
+
+             if (source.getEntity() instanceof Player player && player.getAttributeValue(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder) == 0.0d) {
                 player.sendSystemMessage(Component.translatable("combat.messages.unshattered.failed").withColor(UnshatteredUtils.ERROR_COLOR));
             }
         }

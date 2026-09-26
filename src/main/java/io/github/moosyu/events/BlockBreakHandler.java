@@ -1,5 +1,6 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.data.drops.BlockBreakData;
 import io.github.moosyu.data.regen.RegenClientCache;
 import io.github.moosyu.data.regen.RegenPaths;
 import io.github.moosyu.data.regen.RegenSavedData;
@@ -19,7 +20,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
@@ -51,11 +54,11 @@ public class BlockBreakHandler {
         Level level = player.level();
         BlockState blockState = event.getState();
         Holder<Block> blockHolder = blockState.typeHolder();
-        float experienceReward = Objects.requireNonNullElse(blockHolder.getData(UnshatteredDataMaps.HARVESTABLE_BLOCKS_EXP_DATA), 0.0f);
+        BlockBreakData blockBreakData = blockHolder.getData(UnshatteredDataMaps.BLOCK_BREAK_DATA);
         BlockPos blockPos = event.getPos();
 
         // so you can still break stuff normally in creative
-        if (player.isCreative()) return;
+        if (player.isCreative() || blockBreakData == null) return;
         event.setCanceled(true);
 
         // so the block doesnt flash in and out of existence when broken before the server says what's up
@@ -95,34 +98,36 @@ public class BlockBreakHandler {
 
         PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
 
-        if (blockState.is(UnshatteredBlockTagsProvider.COLLECTABLE_MINING_BLOCKS)) {
+        if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.MINING) {
             UnshatteredUtils.addBlockBrokenResultToInventory(blockHolder, player, UnshatteredAttributeValues.MINING_FORTUNE);
 
-            if (experienceReward > 0.0f) {
-                skills.addExp(PlayerSkillsAttachment.Skill.MINING, experienceReward, player);
+            if (blockBreakData.expAmount() > 0.0f) {
+                skills.addExp(PlayerSkillsAttachment.Skill.MINING, blockBreakData.expAmount(), player);
                 player.syncData(PLAYER_SKILLS);
             }
 
             ServerLevel serverLevel = (ServerLevel) level;
             serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID).destroyRegeneratingBlock(blockPos, serverLevel);
-        } else if (blockState.is(UnshatteredBlockTagsProvider.COLLECTABLE_FARMING_BLOCKS)) {
+        } else if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.FARMING) {
             UnshatteredUtils.addBlockBrokenResultToInventory(blockHolder, player, UnshatteredAttributeValues.FARMING_FORTUNE);
 
-            if (experienceReward > 0.0f) {
-                skills.addExp(PlayerSkillsAttachment.Skill.FARMING, experienceReward, player);
+            if (blockBreakData.expAmount() > 0.0f) {
+                skills.addExp(PlayerSkillsAttachment.Skill.FARMING, blockBreakData.expAmount(), player);
                 player.syncData(PLAYER_SKILLS);
             }
 
             ServerLevel serverLevel = (ServerLevel) level;
             serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID).destroyRegeneratingBlock(blockPos, serverLevel);
-        } else if (blockState.is(UnshatteredBlockTagsProvider.COLLECTABLE_FORAGING_BLOCKS)) {
+        } else if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.FORAGING) {
             if (blockState.is(BlockTags.FLOWERS)) {
-                skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, experienceReward, player);
+                skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, blockBreakData.expAmount(), player);
                 player.syncData(PLAYER_SKILLS);
             } else {
                 TreeSweepHandler.trySweep(player.level(), blockPos, player);
             }
         }
+
+        ((ServerPlayer) player).getStats().increment(player, Stats.BLOCK_MINED.get(blockHolder.value()), 1);
     }
 
     // to stop players from attempting to break blocks
@@ -139,24 +144,18 @@ public class BlockBreakHandler {
 
         BlockState blockState = level.getBlockState(blockPos.get());
         Holder<Block> block = blockState.typeHolder();
+        BlockBreakData blockBreakData = block.getData(UnshatteredDataMaps.BLOCK_BREAK_DATA);
 
-        if (!block.unwrapKey()
-                .map(key -> level.registryAccess()
-                        .lookupOrThrow(Registries.BLOCK)
-                        .getDataMap(UnshatteredDataMaps.BREAKABLE_DROPS_DATA)
-                        .containsKey(key))
-                .orElse(false)
-                || !hasBreakingPowerRequirement(player, blockState.typeHolder())
-        ) {
+        if (blockBreakData == null || !hasBreakingPowerRequirement(player, blockState.typeHolder())) {
             event.setNewSpeed(0.0f);
             return;
         }
 
         ItemStack itemStack = player.getMainHandItem();
         ItemAttributeModifiers itemAttributeModifiers = itemStack.get(DataComponents.ATTRIBUTE_MODIFIERS);
-        if (block.is(UnshatteredBlockTagsProvider.COLLECTABLE_MINING_BLOCKS) && itemStack.is(ItemTags.PICKAXES)) {
+        if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.MINING && itemStack.is(ItemTags.PICKAXES)) {
             event.setNewSpeed((float) (player.getAttributeValue(UnshatteredAttributeValues.MINING_SPEED.holder)));
-        } else if (block.is(UnshatteredBlockTagsProvider.COLLECTABLE_FORAGING_BLOCKS)
+        } else if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.FORAGING
                 && itemStack.is(ItemTags.AXES)
                 || !itemStack.is(ItemTags.AXES)
                 && (itemAttributeModifiers == null || itemAttributeModifiers.modifiers().stream().noneMatch(entry -> entry.attribute().equals(UnshatteredAttributeValues.BREAKING_POWER.holder)))

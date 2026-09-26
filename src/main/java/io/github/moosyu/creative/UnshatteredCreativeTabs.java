@@ -88,6 +88,7 @@ public class UnshatteredCreativeTabs {
             output.accept(BREAKABLE_JUNGLE_LOG.get());
             output.accept(BREAKABLE_ACACIA_LOG.get());
             output.accept(BREAKABLE_DARK_OAK_LOG.get());
+            output.accept(BREAKABLE_ICE.get());
         }).build()
     );
 
@@ -146,6 +147,8 @@ public class UnshatteredCreativeTabs {
             output.accept(ENCHANTED_WET_SPONGE);
             output.accept(ENCHANTED_TROPICAL_FISH);
             output.accept(ENCHANTED_HONEYCOMB);
+            output.accept(ENCHANTED_ICE);
+            output.accept(ENCHANTED_PACKED_ICE);
         }).build()
     );
 

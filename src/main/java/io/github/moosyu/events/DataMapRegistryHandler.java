@@ -11,13 +11,11 @@ import static io.github.moosyu.data.UnshatteredDataMaps.*;
 public class DataMapRegistryHandler {
     @SubscribeEvent
     public static void registerDataMapTypes(RegisterDataMapTypesEvent event) {
-        event.register(HARVESTABLE_BLOCKS_EXP_DATA);
+        event.register(BLOCK_BREAK_DATA);
         event.register(FISHABLE_ITEMS_EXP_DATA);
         event.register(FISHABLE_MOBS_EXP_DATA);
         event.register(COMBATABLE_MOBS_LOOT_DATA);
         event.register(BLOCK_BREAKING_POWER_DATA);
-        event.register(BREAKABLE_DROPS_DATA);
-        event.register(COLLECTABLE_DATA);
         event.register(FISHING_ITEM_WEIGHT_DATA);
         event.register(FISHING_MOB_WEIGHT_DATA);
     }

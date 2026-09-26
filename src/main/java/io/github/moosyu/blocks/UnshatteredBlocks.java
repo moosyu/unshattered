@@ -179,9 +179,14 @@ public final class UnshatteredBlocks {
     );
 
     public static final DeferredBlock<Block> BREAKABLE_LAPIS_ORE_BLOCK = BLOCKS.registerBlock("breakable_lapis_ore_block",
-            props -> new Block(props
-                    .destroyTime(3.0f)
+            props -> new Block(props.destroyTime(3.0f)
                     .sound(SoundType.STONE)
+            )
+    );
+
+    public static final DeferredBlock<Block> BREAKABLE_ICE_BLOCK = BLOCKS.registerBlock("breakable_ice_block",
+            props -> new Block(props.destroyTime(0.5f)
+                    .sound(SoundType.GLASS)
             )
     );
 }

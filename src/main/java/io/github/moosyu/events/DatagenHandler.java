@@ -226,6 +226,9 @@ public class DatagenHandler {
                     createRegenPathWithBlocks(bootstrap, "hard_mithril", List.of(UnshatteredBlocks.BREAKABLE_HARD_MITHRIL_BLOCK.get(), Blocks.BEDROCK), 220);
 
                     createRegenPathWithBlocks(bootstrap, "cobbled_mithril", List.of(UnshatteredBlocks.BREAKABLE_COBBLED_MITHRIL_BLOCK.get(), Blocks.BEDROCK), 220);
+
+                    createRegenPathWithBlocks(bootstrap, "ice", List.of(UnshatteredBlocks.BREAKABLE_ICE_BLOCK.get(), Blocks.AIR), 220);
+
                 }).add(DataPackRegistryHandler.FISHING_MISC_REWARD_KEY, bootstrap -> {
                     bootstrap.register(createMiscRewardResourceKey("good_catch"), new CoinReward(25000,
                             5000,

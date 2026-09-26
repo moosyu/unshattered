@@ -387,7 +387,6 @@
   "gui.title.unshattered.crafting": "Crafting",
   "gui.title.unshattered.stats": "Stats",
   "gui.title.unshattered.skills": "Skills",
-  "gui.title.unshattered.collections": "Collections",
   "gui.text.unshattered.purse": "Purse",
 
   "drop_type.message.unshattered.common": "Common Drop!",
@@ -421,7 +420,6 @@
   "screen.unshattered.stats": "Stats",
   "screen.unshattered.dialogue": "Dialogue",
   "screen.unshattered.skills": "Skills",
-  "screen.unshattered.collections": "Collections",
   "screen.unshattered.pets": "Pets",
   "screen.unshattered.storage.page": "Page",
   "screen.narration.unshattered.storage.search": "Search",

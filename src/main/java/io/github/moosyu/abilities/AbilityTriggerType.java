@@ -4,6 +4,7 @@ import io.github.moosyu.items.ItemTypes;
 import io.github.moosyu.damage.DamageUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.client.event.MovementInputUpdateEvent;
@@ -30,7 +31,7 @@ public enum AbilityTriggerType {
      */
     PLAYER_DEAL_DAMAGE,
     /**
-     * runs in {@link DamageUtils#damagePlayer(Player, double, ServerLevel, Component, boolean)} (when the player is about to/has received damage). onAbilityTriggered runs at the start and can cancel the event.
+     * runs in {@link DamageUtils#damagePlayer(Player, double, ServerLevel, Component, boolean, DamageSource)} (when the player is about to/has received damage). onAbilityTriggered runs at the start and can cancel the event.
      */
     PLAYER_TAKE_DAMAGE,
     /**
