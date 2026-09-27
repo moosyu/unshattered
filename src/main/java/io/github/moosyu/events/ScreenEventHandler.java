@@ -2,7 +2,6 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.gui.screens.DialogueScreen;
 import io.github.moosyu.gui.screens.UnshatteredInventoryScreen;
-import io.github.moosyu.packets.UpdateDialogueStatePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.CraftingScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -36,17 +35,6 @@ public class ScreenEventHandler {
                             Component.translatable("container.inventory")
                     )
             );
-        } else if (event.getScreen() instanceof DialogueScreen) {
-            ClientPacketDistributor.sendToServer(new UpdateDialogueStatePacket(true));
-        }
-    }
-
-    @SubscribeEvent
-    public static void onScreenEventClose(ScreenEvent.Closing event) {
-        if (Minecraft.getInstance().player == null) return;
-
-        if (event.getScreen() instanceof DialogueScreen) {
-            ClientPacketDistributor.sendToServer(new UpdateDialogueStatePacket(false));
         }
     }
 

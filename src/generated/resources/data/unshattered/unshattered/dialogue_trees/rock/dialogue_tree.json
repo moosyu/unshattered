@@ -5,7 +5,7 @@
         "dialogue_choices": [
           {
             "target_node": {
-              "dialogue_choices": [],
+              "interacted_speaking": true,
               "text": "im glad you think so :)"
             },
             "text": "interesting"
@@ -14,6 +14,7 @@
             "text": "..."
           }
         ],
+        "interacted_speaking": true,
         "text": "hi, im a rock"
       },
       "priority": 0,
@@ -30,14 +31,24 @@
       "dialogue_node": {
         "dialogue_choices": [
           {
-            "text": "i know right",
-            "triggered_event": {
-              "type": "unshattered:give_item",
-              "count": 1,
-              "item": "minecraft:diamond"
-            }
+            "target_node": {
+              "dialogue_choices": [
+                {
+                  "text": "...",
+                  "triggered_event": {
+                    "type": "unshattered:give_item",
+                    "count": 1,
+                    "item": "minecraft:diamond"
+                  }
+                }
+              ],
+              "interacted_speaking": false,
+              "text": "does seem that way"
+            },
+            "text": "i know right"
           }
         ],
+        "interacted_speaking": true,
         "text": "you've already spoken to me"
       },
       "priority": 1,
@@ -68,12 +79,13 @@
           },
           {
             "target_node": {
-              "dialogue_choices": [],
+              "interacted_speaking": true,
               "text": "yeah ok i see how it is between us now"
             },
             "text": "no thanks"
           }
         ],
+        "interacted_speaking": true,
         "text": "find my pages"
       },
       "priority": 2

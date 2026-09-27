@@ -10,7 +10,6 @@ public final class PlayerStateAttachment {
     // unsynced
     private boolean cancelKnockback = false;
     private boolean failedMessageFired = false;
-    private boolean dialogueOpen = false;
     // unsynced
     private int invulnerableTime = 0;
     // unsynced
@@ -130,13 +129,6 @@ public final class PlayerStateAttachment {
         this.failedMessageFired = failedMessageFired;
     }
 
-    public boolean isDialogueOpen() {
-        return dialogueOpen;
-    }
-
-    public void setDialogueOpen(boolean dialogueOpen) {
-        this.dialogueOpen = dialogueOpen;
-    }
 
     public double getLastHitAmount() {
         return lastHitAmount;
@@ -160,7 +152,6 @@ public final class PlayerStateAttachment {
         }
         // cant be bothered optimising this (pretty sure its like 2 bytes anyways)
         buf.writeBoolean(failedMessageFired);
-        buf.writeBoolean(dialogueOpen);
     }
 
     public static PlayerStateAttachment readSync(RegistryFriendlyByteBuf buf, @Nullable PlayerStateAttachment existing) {
@@ -181,7 +172,6 @@ public final class PlayerStateAttachment {
             attachment.setStatValueByIndex(statIndex, value);
         }
         attachment.setFailedMessageFired(buf.readBoolean());
-        attachment.setDialogueOpen(buf.readBoolean());
         return attachment;
     }
 }

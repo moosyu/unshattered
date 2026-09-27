@@ -80,16 +80,24 @@ public class DatagenHandler {
                                     createDialogueOriginWithSelfFlag(
                                     0,
                                     new DialogueNode(Component.literal("hi, im a rock"),
-                                            List.of(new DialogueChoice(Component.literal("interesting"),
-                                                    new DialogueNode(Component.literal("im glad you think so :)"))),
-                                                    new DialogueChoice(Component.literal("..."))
-                                            )
+                                            true,
+                                            new DialogueChoice(Component.literal("interesting"),
+                                                    new DialogueNode(Component.literal("im glad you think so :)"))
+                                            ),
+                                            new DialogueChoice(Component.literal("..."))
                                     ),
                                     TalkingRockBlock.HI_MESSAGE_IDENTIFIER),
                                     createDialogueOriginWithSelfFlag(1,
                                             new DialogueNode(Component.literal("you've already spoken to me"),
-                                                    List.of(new DialogueChoice(Component.literal("i know right"),
-                                                            new GiveItemDialogueEvent(BuiltInRegistries.ITEM.wrapAsHolder(Items.DIAMOND),1))
+                                                    true,
+                                                    new DialogueChoice(Component.literal("i know right"),
+                                                            new DialogueNode(Component.literal("does seem that way"),
+                                                                    false,
+                                                                    new DialogueChoice(Component.literal("..."),
+                                                                            new GiveItemDialogueEvent(BuiltInRegistries.ITEM
+                                                                                    .wrapAsHolder(Items.DIAMOND), 1)
+                                                                    )
+                                                            )
                                                     )
                                             ),
                                             List.of(TalkingRockBlock.HI_MESSAGE_IDENTIFIER),
@@ -99,11 +107,14 @@ public class DatagenHandler {
                                     ),
                                     createDialogueOrigin(2,
                                             new DialogueNode(Component.literal("find my pages"),
-                                                    List.of(new DialogueChoice(Component.literal("i guess"), List.of(TalkingRockBlock.ROCKS_QUEST), new StartQuestDialogueEvent(TalkingRockBlock.ROCKS_QUEST)),
-                                                            new DialogueChoice(Component.literal("no thanks"),
-                                                                    new DialogueNode(Component.literal("yeah ok i see how it is between us now"))
-                                                            )
+                                                    true,
+                                                    new DialogueChoice(Component.literal("i guess"),
+                                                            List.of(TalkingRockBlock.ROCKS_QUEST),
+                                                            new StartQuestDialogueEvent(TalkingRockBlock.ROCKS_QUEST)),
+                                                    new DialogueChoice(Component.literal("no thanks"),
+                                                            new DialogueNode(Component.literal("yeah ok i see how it is between us now"))
                                                     )
+
                                             ),
                                             List.of(TalkingRockBlock.HI2_MESSAGE_IDENTIFIER),
                                             List.of(TalkingRockBlock.ROCKS_QUEST)

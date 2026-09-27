@@ -14,8 +14,10 @@ import static io.github.moosyu.Unshattered.MODID;
 public class RenderGuiLayerHandler {
     @SubscribeEvent
     public static void onRenderGuiPre(RenderGuiLayerEvent.Pre event) {
-        if (Minecraft.getInstance().screen instanceof DialogueScreen && event.getName() == VanillaGuiLayers.HOTBAR) {
-            event.setCanceled(true);
+        if (Minecraft.getInstance().screen instanceof DialogueScreen) {
+            if (event.getName() == VanillaGuiLayers.HOTBAR || event.getName() == VanillaGuiLayers.PLAYER_HEALTH || event.getName() == VanillaGuiLayers.FOOD_LEVEL) {
+                event.setCanceled(true);
+            }
         }
     }
 }

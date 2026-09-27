@@ -1,5 +1,6 @@
 package io.github.moosyu.gui.layers;
 
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -26,7 +27,7 @@ public class BarLayer implements GuiLayer {
     final int textColour;
     final int posXOffset;
     final int posYOffset;
-    final Identifier SMALL_BAR = Identifier.fromNamespaceAndPath("unshattered", "textures/gui/small_bar.png");
+    final Identifier SMALL_BAR = UnshatteredUtils.getUnshatteredIdentifier("textures/gui/small_bar.png");
     final ToDoubleFunction<Player> getCurrentValue;
     final ToDoubleFunction<Player> getCurrentPercentage;
     final Predicate<Player> visibilityConditions;
@@ -81,7 +82,6 @@ public class BarLayer implements GuiLayer {
         if (player == null
                 || minecraft.options.hideGui
                 || player.gameMode() != GameType.SURVIVAL
-                || player.getData(PLAYER_STATE.get()).isDialogueOpen()
                 || !visibilityConditions.test(player)
         ) return;
 

@@ -138,15 +138,6 @@ public class RegisterPayloadsHandler {
                 })
         );
 
-        registrar.playToServer(UpdateDialogueStatePacket.TYPE,
-                UpdateDialogueStatePacket.STREAM_CODEC,
-                (data, context) -> context.enqueueWork(() -> {
-                    Player player = context.player();
-                    player.getData(UnshatteredAttachments.PLAYER_STATE).setDialogueOpen(data.opened());
-                    player.syncData(UnshatteredAttachments.PLAYER_STATE);
-                })
-        );
-
         registrar.playToServer(UpdateStorageSearchResultsPacket.TYPE,
                 UpdateStorageSearchResultsPacket.STREAM_CODEC,
                 (data, context) -> context.enqueueWork(() -> {

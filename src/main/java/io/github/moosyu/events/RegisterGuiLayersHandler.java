@@ -2,6 +2,7 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.gui.layers.*;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -45,7 +46,7 @@ public class RegisterGuiLayersHandler {
 
         event.replaceLayer(VanillaGuiLayers.SCOREBOARD_SIDEBAR, new InfoBarLayer());
 
-        event.registerAbove(VanillaGuiLayers.PLAYER_HEALTH, Identifier.fromNamespaceAndPath(MODID, "charges_layer"), new ChargesLayer());
+        event.registerAbove(VanillaGuiLayers.PLAYER_HEALTH, UnshatteredUtils.getUnshatteredIdentifier("charges_layer"), new ChargesLayer());
 
         // hiding some vanilla bits
         event.replaceLayer(VanillaGuiLayers.CONTEXTUAL_INFO_BAR, (_, _) -> {});

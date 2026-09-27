@@ -267,7 +267,9 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         new FishingWeightEntry(Optional.of(FishingConditions.NIGHT),
                                 1100.0d,
                                 Optional.of(1)
-                        ), false);
+                        ),
+                        false
+                );
     }
 
     private void createSimpleBlockDropData(DataMapProvider.Builder<BlockBreakData, Block> builder, DeferredBlock<Block> block, ItemRange itemRange, PlayerSkillsAttachment.Skill skill, float expAmount) {

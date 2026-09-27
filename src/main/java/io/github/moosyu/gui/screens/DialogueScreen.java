@@ -55,9 +55,23 @@ public class DialogueScreen extends Screen {
     protected void init() {
         super.init();
 
-        List<DialogueChoice> availableDialogueChoices = selectedDialogueNode.dialogueChoices().stream().filter(dialogueChoice -> dialogueChoice.dialogueFlagRequirements().isPresent()
-                && dialogueChoice.dialogueFlagRequirements().get().isSatisfied(player.getData(UnshatteredAttachments.PLAYER_FLAGS))
-                || dialogueChoice.dialogueFlagRequirements().isEmpty()).toList();
+        List<DialogueChoice> availableDialogueChoices;
+
+        if (selectedDialogueNode.dialogueChoices().isPresent()) {
+            availableDialogueChoices = selectedDialogueNode.dialogueChoices()
+                    .get()
+                    .stream()
+                    .filter(dialogueChoice -> dialogueChoice.dialogueFlagRequirements()
+                            .isPresent()
+                            && dialogueChoice.dialogueFlagRequirements()
+                            .get()
+                            .isSatisfied(player.getData(UnshatteredAttachments.PLAYER_FLAGS)) || dialogueChoice.dialogueFlagRequirements()
+                            .isEmpty()
+                    ).toList();
+        } else {
+            availableDialogueChoices = List.of();
+        }
+
         int dialogueChoiceCount = availableDialogueChoices.size();
 
         if (dialogueChoiceCount > 0) {
@@ -120,7 +134,7 @@ public class DialogueScreen extends Screen {
     @Override
     public void extractRenderState(@NonNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         graphics.text(font,
-                talkableName,
+                selectedDialogueNode.interactedSpeaking() ? talkableName : player.getName(),
                 (graphics.guiWidth() / 2) - (DIALOGUE_TEXTBOX_WIDTH / 2),
                 graphics.guiHeight() - DIALOGUE_TEXTBOX_HEIGHT - BOTTOM_Y_OFFSET - font.lineHeight,
                 0xFFFFFFFF
