@@ -1,5 +1,6 @@
 package io.github.moosyu.data.datagen;
 
+import com.mojang.math.Transformation;
 import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.items.UnshatteredItems;
 import io.github.moosyu.util.UnshatteredUtils;
@@ -10,7 +11,9 @@ import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.*;
 import net.minecraft.client.renderer.block.dispatch.Variant;
+import net.minecraft.client.renderer.item.SpecialModelWrapper;
 import net.minecraft.client.renderer.item.properties.conditional.FishingRodCast;
+import net.minecraft.client.renderer.special.SkullSpecialRenderer;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -19,8 +22,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SkullBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 import org.jspecify.annotations.NonNull;
+
+import java.util.Optional;
 
 import static io.github.moosyu.Unshattered.MODID;
 
@@ -100,7 +108,19 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_MITHRIL.get(), ModelTemplates.createItem(UnshatteredItems.MITHRIL.getRegisteredName()));
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_FLINT.get(), Items.FLINT, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_STRING.get(), Items.STRING, ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(UnshatteredItems.SKELETON_HAT.get(), Items.SKELETON_SKULL, ModelTemplates.FLAT_ITEM);
+        itemModels.itemModelOutput.accept(UnshatteredItems.SKELETON_HAT.get(), new SpecialModelWrapper.Unbaked(
+                Identifier.withDefaultNamespace("item/template_skull"),
+                Optional.of(new Transformation(new Vector3f(0.5f, 0.0f, 0.5f),
+                        new Quaternionf(1.0f, 0.0f, 0.0f, -0.0f),
+                        new Vector3f(1.0f, 1.0f, 1.0f),
+                        new Quaternionf(0.0f, 0.0f, 0.0f, 1.0f)
+                )),
+                new SkullSpecialRenderer.Unbaked(
+                        SkullBlock.Types.SKELETON,
+                        Optional.empty(),
+                        0.0f
+                )
+        ));
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_CLAY_BALL.get(), Items.CLAY_BALL, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_INK_SAC.get(), Items.INK_SAC, ModelTemplates.FLAT_ITEM);
         itemModels.itemModelOutput.accept(UnshatteredItems.ENCHANTED_LILY_PAD.get(),

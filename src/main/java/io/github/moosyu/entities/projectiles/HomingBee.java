@@ -120,7 +120,7 @@ public class HomingBee extends Projectile {
 
     private void hitEntity(LivingEntity victim) {
         if (player != null) {
-            DamageUtils.playerDealDamage(player, victim, damage, false, ItemStack.EMPTY);
+            DamageUtils.playerDealDamage(player, victim, damage, false, ItemStack.EMPTY, true);
         }
         burst();
     }
@@ -147,7 +147,9 @@ public class HomingBee extends Projectile {
 
     private void burst() {
         if (!isRemoved() && level() instanceof ServerLevel server) {
-            double x = getX(), y = getY() + 0.2, z = getZ();
+            double x = getX();
+            double y = getY() + 0.2;
+            double z = getZ();
 
             server.sendParticles(ParticleTypes.WAX_ON, x, y, z, 14, 0.15, 0.15, 0.15, 0.25);
             server.sendParticles(ParticleTypes.FALLING_NECTAR, x, y, z, 5, 0.25, 0.1, 0.25, 0.0);

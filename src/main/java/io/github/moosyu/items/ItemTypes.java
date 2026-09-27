@@ -14,6 +14,7 @@ public enum ItemTypes implements StringRepresentable {
     BATTLE_AXE("battle_axe", true),
     BOW("bow", true),
     SHORTBOW("shortbow", true),
+    CROSSBOW("crossbow", true),
     HELMET("helmet", true),
     CHESTPLATE("chestplate", true),
     LEGGINGS("leggings", true),

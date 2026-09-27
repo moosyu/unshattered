@@ -71,7 +71,8 @@ public abstract class FishingHookMixin extends Projectile {
                             livingEntity,
                             player.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder) + 1,
                             false,
-                            player.getItemInHand(hand)
+                            player.getItemInHand(hand),
+                            true
                     );
                 }
             }

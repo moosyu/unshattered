@@ -2,6 +2,7 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.items.enchantments.UnshatteredEnchantmentEffects;
+import io.github.moosyu.util.UnshatteredUtils;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
@@ -83,6 +84,10 @@ public class ItemAttributeModifierHandler {
             event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_leggings_defence"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.LEGS);
         } else if (itemStack.is(Items.DIAMOND_BOOTS)) {
             event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_boots_defence"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET);
+        } else if (itemStack.is(Items.BOW)) {
+            event.addModifier(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("bow_damage"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+        } else if (itemStack.is(Items.CROSSBOW)) {
+            event.addModifier(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("crossbow_damage"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
         }
 
 

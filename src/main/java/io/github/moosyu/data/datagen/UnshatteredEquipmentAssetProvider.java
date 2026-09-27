@@ -1,5 +1,7 @@
 package io.github.moosyu.data.datagen;
 
+import io.github.moosyu.items.armours.SkeletonHat;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
@@ -28,8 +30,9 @@ public class UnshatteredEquipmentAssetProvider implements DataProvider {
     }
 
     private static void bootstrap(BiConsumer<ResourceKey<EquipmentAsset>, EquipmentClientInfo> output) {
-        output.accept(LEAFLET_KEY, EquipmentClientInfo.builder().addHumanoidLayers(Identifier.fromNamespaceAndPath(MODID, "leaflet"), false).build());
-        output.accept(GLOW_SQUID_BOOTS_KEY, EquipmentClientInfo.builder().addHumanoidLayers(Identifier.fromNamespaceAndPath(MODID, "glow_squid_boots"), false).build());
+        output.accept(LEAFLET_KEY, EquipmentClientInfo.builder().addHumanoidLayers(UnshatteredUtils.getUnshatteredIdentifier("leaflet")).build());
+        output.accept(GLOW_SQUID_BOOTS_KEY, EquipmentClientInfo.builder().addHumanoidLayers(UnshatteredUtils.getUnshatteredIdentifier("glow_squid_boots")).build());
+        output.accept(SkeletonHat.SKELETON_HAT_KEY, EquipmentClientInfo.builder().addHumanoidLayers(UnshatteredUtils.getUnshatteredIdentifier("skeleton_hat")).build());
     }
 
     @Override

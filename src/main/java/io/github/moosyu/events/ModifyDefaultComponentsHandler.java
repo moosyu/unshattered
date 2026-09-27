@@ -101,6 +101,16 @@ public class ModifyDefaultComponentsHandler {
                 .set(UnshatteredDataComponents.SELL_VALUE.get(), 8))
         );
 
+        event.modify(Items.BOW, ((components, _, _) -> components
+                .set(UnshatteredDataComponents.ITEM_TYPE, ItemTypes.BOW)
+                .set(UnshatteredDataComponents.SELL_VALUE.get(), 3))
+        );
+
+        event.modify(Items.CROSSBOW, ((components, _, _) -> components
+                .set(UnshatteredDataComponents.ITEM_TYPE, ItemTypes.CROSSBOW)
+                .set(UnshatteredDataComponents.SELL_VALUE.get(), 7))
+        );
+
         event.modify(Items.WOODEN_AXE, (components, _, _) -> modifyVanillaAxeComponents(components, UnshatteredRarities.COMMON, 1));
         event.modify(Items.STONE_AXE, (components, _, _) -> modifyVanillaAxeComponents(components, UnshatteredRarities.COMMON, 2));
         event.modify(Items.IRON_AXE, (components, _, _) -> modifyVanillaAxeComponents(components, UnshatteredRarities.COMMON, 4));

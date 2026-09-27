@@ -29,7 +29,8 @@ public class AttackEntityHandler {
                 target,
                 player.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder) + BASE_DAMAGE,
                 false,
-                player.getItemInHand(InteractionHand.MAIN_HAND)
+                player.getItemInHand(InteractionHand.MAIN_HAND),
+                true
         );
     }
 

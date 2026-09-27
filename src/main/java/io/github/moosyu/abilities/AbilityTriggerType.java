@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.event.MovementInputUpdateEvent;
 
 public enum AbilityTriggerType {
@@ -27,11 +28,11 @@ public enum AbilityTriggerType {
      */
     TREE_BREAK_INSTANCE_FINISH,
     /**
-     * runs in {@link DamageUtils#playerDealDamage(Player, LivingEntity, ItemTypes, double, boolean)} (when the player has dealt damage to a target) with onAbilityTriggered at the start (before damage calculations) and runs onAbilityFinished at the end, or if CANCEL_EVENT is a result, before the event is returned
+     * runs in {@link DamageUtils#playerDealDamage(Player, LivingEntity, double, boolean, ItemStack, boolean)} (when the player has dealt damage to a target) with onAbilityTriggered at the start (before damage calculations) and runs onAbilityFinished at the end, or if CANCEL_EVENT is a result, before the event is returned
      */
     PLAYER_DEAL_DAMAGE,
     /**
-     * runs in {@link DamageUtils#damagePlayer(Player, double, ServerLevel, Component, boolean, DamageSource)} (when the player is about to/has received damage). onAbilityTriggered runs at the start and can cancel the event.
+     * runs in {@link DamageUtils#damagePlayer(Player, double, Component, boolean, DamageSource)} (Player, double, ServerLevel, Component, boolean, DamageSource)} (when the player is about to/has received damage). onAbilityTriggered runs at the start and can cancel the event.
      */
     PLAYER_TAKE_DAMAGE,
     /**

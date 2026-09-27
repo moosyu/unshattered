@@ -56,8 +56,9 @@ public final class DamageUtils {
      * @param damage base damage prior to modification by stats
      * @param useAttackStrength whether attack strength should be applied on this attack
      * @param weapon the weapon (or random itemstack) used to attack
+     * @param triggerAbilities whether the attack should trigger abilities. should be true for most normal attacks, only really to stop cascades of an ability triggering itself
      */
-    public static void playerDealDamage(Player player, LivingEntity target, double damage, boolean useAttackStrength, ItemStack weapon) {
+    public static void playerDealDamage(Player player, LivingEntity target, double damage, boolean useAttackStrength, ItemStack weapon, boolean triggerAbilities) {
         if (!player.isCreative() && target.is(EntityType.ARMOR_STAND)) return;
 
         if (player.level().isClientSide()) {
@@ -66,16 +67,20 @@ public final class DamageUtils {
             PlayerAbilityEffectsAttachment abilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES);
             List<PassiveAbilityItem> triggeredItems = new ArrayList<>();
             ItemTypes itemType = Objects.requireNonNullElse(weapon.get(UnshatteredDataComponents.ITEM_TYPE.get()), ItemTypes.ITEM);
-            AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player).add(AbilityContextKey.TARGET, target).add(AbilityContextKey.ITEM_TYPE, itemType);
+            AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player)
+                    .add(AbilityContextKey.TARGET, target)
+                    .add(AbilityContextKey.ITEM_TYPE, itemType);
             ServerPlayer serverPlayer = (ServerPlayer) player;
 
-            for (PassiveAbilityItem item : abilities.getStoredPassiveNonOngoingItems()) {
-                if (item.triggerTypes().contains(AbilityTriggerType.PLAYER_DEAL_DAMAGE) && item.abilityConditionsMet(context)) {
-                    item.onAbilityTriggered(context);
-                    triggeredItems.add(item);
-                    if (item.triggerResult().isPresent() && item.triggerResult().get() == AbilityTriggerResult.CANCEL_EVENT) {
-                        triggeredItems.forEach(triggeredItem -> triggeredItem.onAbilityFinished(context));
-                        return;
+            if (triggerAbilities) {
+                for (PassiveAbilityItem item : abilities.getStoredPassiveNonOngoingItems()) {
+                    if (item.triggerTypes().contains(AbilityTriggerType.PLAYER_DEAL_DAMAGE) && item.abilityConditionsMet(context)) {
+                        item.onAbilityTriggered(context);
+                        triggeredItems.add(item);
+                        if (item.triggerResult().isPresent() && item.triggerResult().get() == AbilityTriggerResult.CANCEL_EVENT) {
+                            triggeredItems.forEach(triggeredItem -> triggeredItem.onAbilityFinished(context));
+                            return;
+                        }
                     }
                 }
             }
@@ -173,7 +178,9 @@ public final class DamageUtils {
                 player.setSprinting(true);
             }
 
-            triggeredItems.forEach(item -> item.onAbilityFinished(context));
+            if (triggerAbilities) {
+                triggeredItems.forEach(item -> item.onAbilityFinished(context));
+            }
         }
     }
 

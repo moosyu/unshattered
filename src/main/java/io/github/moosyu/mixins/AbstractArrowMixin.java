@@ -13,7 +13,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -23,7 +22,6 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileDeflection;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -65,15 +63,9 @@ public abstract class AbstractArrowMixin extends Projectile {
 
         Entity target = hitResult.getEntity();
         AbstractArrow arrow = (AbstractArrow) (Object)this;
-        float pow = (float) getDeltaMovement().length();
-        double arrowDamage = baseDamage;
         Entity currentOwner = getOwner();
         DamageSource damageSource = arrow.damageSources().arrow(arrow, (currentOwner != null ? currentOwner : arrow));
-        if (getWeaponItem() != null && level() instanceof ServerLevel serverLevel) {
-            arrowDamage = EnchantmentHelper.modifyDamage(serverLevel, getWeaponItem(), target, damageSource, (float)arrowDamage);
-        }
 
-        int damage = Mth.ceil(Mth.clamp((double)pow * arrowDamage, 0.0f, Integer.MAX_VALUE));
         if (arrow.getPierceLevel() > 0) {
             if (piercingIgnoreEntityIds == null) {
                 piercingIgnoreEntityIds = new IntOpenHashSet(5);
@@ -91,11 +83,6 @@ public abstract class AbstractArrowMixin extends Projectile {
             piercingIgnoreEntityIds.add(target.getId());
         }
 
-        if (arrow.isCritArrow()) {
-            long dmgIncrease = random.nextInt(damage / 2 + 2);
-            damage = (int) Math.min(dmgIncrease + (long) damage, Integer.MAX_VALUE);
-        }
-
         if (currentOwner instanceof LivingEntity livingOwner) {
             livingOwner.setLastHurtMob(target);
         }
@@ -111,7 +98,13 @@ public abstract class AbstractArrowMixin extends Projectile {
         if (target instanceof LivingEntity mob) {
             if (currentOwner instanceof Player player) {
                 if (getWeaponItem() != null) {
-                    DamageUtils.playerDealDamage(player, mob, damage, false, getWeaponItem());
+                    DamageUtils.playerDealDamage(player,
+                            mob,
+                            getDeltaMovement().length() * player.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder),
+                            false,
+                            getWeaponItem(),
+                            true
+                    );
                 }
 
                 if (!level().isClientSide() && arrow.getPierceLevel() <= 0) {
