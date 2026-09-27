@@ -205,6 +205,7 @@ public class UnshatteredCreativeTabs {
             output.accept(GIANT_CLEAVER.get());
             output.accept(IRON_DAGGER.get());
             output.accept(EMERALD_DAGGER.get());
+            output.accept(ARTISANAL_SHORTBOW.get());
         }).build()
     );
 
@@ -222,6 +223,7 @@ public class UnshatteredCreativeTabs {
                         output.accept(HASTE_RING.get());
                         output.accept(HONEYCOMB_RING.get());
                     output.accept(BLOOD_CHALICE.get());
+                    output.accept(INFINITE_QUIVER.get());
                 }).build()
     );
 }

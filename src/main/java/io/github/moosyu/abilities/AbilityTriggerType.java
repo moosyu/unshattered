@@ -9,6 +9,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.event.MovementInputUpdateEvent;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 public enum AbilityTriggerType {
     /**
@@ -42,5 +43,9 @@ public enum AbilityTriggerType {
     /**
      * runs in {@link io.github.moosyu.events.ClientInputUpdateHandler#onInputUpdate(MovementInputUpdateEvent)}. cannot be used to cancel sneaking and onAbilityTriggered and onAbilityFinished fire at the same time
      */
-    PLAYER_STARTED_SNEAKING
-    }
+    PLAYER_STARTED_SNEAKING,
+    /**
+     * runs in {@link io.github.moosyu.mixins.ProjectileWeaponItemMixin#useAmmo(ItemStack, ItemStack, LivingEntity, boolean, CallbackInfoReturnable)}. can be used to cancel.
+     */
+    PLAYER_USE_PROJECTILE_WEAPON_AMMO
+}

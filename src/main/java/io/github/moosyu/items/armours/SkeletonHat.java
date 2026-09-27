@@ -120,7 +120,7 @@ public class SkeletonHat extends Item implements PassiveAbilityItem {
                     validEntities++;
                 }
             }
-            
+
             if (validEntities > 0) {
                 player.get().level().playSound(null,
                         target.get().blockPosition(),

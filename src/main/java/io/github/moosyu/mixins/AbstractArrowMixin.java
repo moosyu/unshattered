@@ -166,7 +166,7 @@ public abstract class AbstractArrowMixin extends Projectile {
             Level level = arrow.level();
             if (level instanceof ServerLevel serverLevel) {
                 if (getDeltaMovement().lengthSqr() < 1.0E-7) {
-                    if (arrow.pickup == AbstractArrow.Pickup.ALLOWED) {
+                    if (arrow.pickup == AbstractArrow.Pickup.DISALLOWED) {
                         spawnAtLocation(serverLevel, getPickupItem(), 0.1f);
                     }
 
@@ -174,5 +174,12 @@ public abstract class AbstractArrowMixin extends Projectile {
                 }
             }
         }
+    }
+
+    // disables picking up arrows entirely. infinite arrows should be an early game goal
+    // and crafting them will be really easy anyways so hopefully this shouldnt cause issues
+    @Inject(method = "playerTouch", at = @At("HEAD"), cancellable = true)
+    public void onPlayerTouch(Player player, CallbackInfo ci) {
+        ci.cancel();
     }
 }

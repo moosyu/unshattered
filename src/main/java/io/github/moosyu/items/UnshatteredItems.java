@@ -10,10 +10,11 @@ import io.github.moosyu.items.tools.axes.RegionLockedFortuneAxe;
 import io.github.moosyu.items.tools.axes.UnshatteredAxeTool;
 import io.github.moosyu.items.tools.pickaxes.BrokenMithrilPickaxe;
 import io.github.moosyu.items.tools.rods.UnshatteredRod;
-import io.github.moosyu.items.weapons.axes.UnshatteredAxeWeapon;
+import io.github.moosyu.items.weapons.axes.AxeWeapon;
 import io.github.moosyu.items.weapons.cleavers.*;
 import io.github.moosyu.items.weapons.daggers.DaggerItem;
 import io.github.moosyu.items.weapons.daggers.EmeraldDagger;
+import io.github.moosyu.items.weapons.shortbows.ArtisanalShortbow;
 import io.github.moosyu.items.weapons.swords.*;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.util.UnshatteredUtils;
@@ -34,7 +35,7 @@ import static io.github.moosyu.blocks.UnshatteredBlocks.*;
 public class UnshatteredItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
 
-    public static final DeferredItem<UnshatteredAxeWeapon> MERCENARY_AXE = ITEMS.registerItem("mercenary_axe", props -> new UnshatteredAxeWeapon(props
+    public static final DeferredItem<AxeWeapon> MERCENARY_AXE = ITEMS.registerItem("mercenary_axe", props -> new AxeWeapon(props
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.RARE)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
             .attributes(ItemAttributeModifiers.builder()
@@ -784,4 +785,8 @@ public class UnshatteredItems {
     public static final DeferredItem<Item> HASTE_RING = ITEMS.registerItem("haste_ring", HasteRing::new);
 
     public static final DeferredItem<Item> BLOOD_CHALICE = ITEMS.registerItem("blood_chalice", BloodChalice::new);
+
+    public static final DeferredItem<Item> INFINITE_QUIVER = ITEMS.registerItem("infinite_quiver", InfiniteQuiver::new);
+
+    public static final DeferredItem<Item> ARTISANAL_SHORTBOW = ITEMS.registerItem("artisanal_shortbow", ArtisanalShortbow::new);
 }

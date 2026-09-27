@@ -28,7 +28,8 @@ public class LivingIncomingDamageHandler {
             if (player.level().isClientSide()) return;
 
             List<PassiveAbilityItem> triggeredItems = new ArrayList<>();
-            AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player).add(AbilityContextKey.DAMAGE_AMOUNT, (double) event.getAmount());
+            AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player)
+                    .add(AbilityContextKey.DAMAGE_AMOUNT, (double) event.getAmount());
 
             for (PassiveAbilityItem item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredPassiveNonOngoingItems()) {
                 if (item.triggerTypes().contains(AbilityTriggerType.PLAYER_INCOMING_DAMAGE) && item.abilityConditionsMet(context)) {

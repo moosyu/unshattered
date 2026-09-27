@@ -19,6 +19,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -144,7 +145,27 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.HONEYCOMB_RING.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.HASTE_RING.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.BLOOD_CHALICE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.INFINITE_QUIVER.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_HONEYCOMB.get(), Items.HONEYCOMB, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ARTISANAL_SHORTBOW.get(), ModelTemplates.FLAT_ITEM.extend()
+                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, builder -> builder
+                        .rotation(-80, 260, -40)
+                        .translation(-1, -2, 2.5f)
+                        .scale(0.9f, 0.9f, 0.9f))
+                .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND, builder -> builder
+                        .rotation(-80, -280, 40)
+                        .translation(-1, -2, 2.5f)
+                        .scale(0.9f, 0.9f, 0.9f))
+                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND, builder -> builder
+                        .rotation(0, -90, 25)
+                        .translation(1.13f, 3.2f, 1.13f)
+                        .scale(0.68f, 0.68f, 0.68f))
+                .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND, builder -> builder
+                        .rotation(0, 90, -25)
+                        .translation(1.13f, 3.2f, 1.13f)
+                        .scale(0.68f, 0.68f, 0.68f))
+                .build()
+        );
 
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_GOLD_BLOCK.get(), Blocks.GOLD_BLOCK);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_DIAMOND_BLOCK.get(), Blocks.DIAMOND_BLOCK);
