@@ -68,7 +68,7 @@ public class BloodChalice extends TalismanItem implements PassiveAbilityItem {
 
             if (DamageUtils.damagePlayer(player,
                     (health.getValue() * 0.3),
-                    player.level(), Component.literal("☠ " + player.getName().getString() + " had their soul consumed by the blood chalice!"),
+                    Component.literal("☠ " + player.getName().getString() + " had their soul consumed by the blood chalice!"),
                     true,
                     new DamageSource(player.registryAccess()
                             .lookupOrThrow(Registries.DAMAGE_TYPE)

@@ -14,7 +14,7 @@ import java.util.Set;
 @Mixin(StatsScreen.GeneralStatisticsList.class)
 public abstract class StatsScreenMixin {
     // values to leave over
-    private static final Set<Identifier> acceptedVanillaValues = Set.of(Stats.DAMAGE_BLOCKED_BY_SHIELD,
+    private static final Set<Identifier> acceptedValues = Set.of(Stats.DAMAGE_BLOCKED_BY_SHIELD,
             Stats.DAMAGE_DEALT,
             Stats.DAMAGE_TAKEN,
             Stats.CLIMB_ONE_CM,
@@ -41,7 +41,7 @@ public abstract class StatsScreenMixin {
 
     @ModifyVariable(method = "<init>", at = @At(value = "STORE", ordinal = 0))
     private ObjectArrayList<Stat<Identifier>> filterStats(ObjectArrayList<Stat<Identifier>> stats) {
-        stats.removeIf(stat -> !acceptedVanillaValues.contains(stat.getValue()));
+        stats.removeIf(stat -> !acceptedValues.contains(stat.getValue()));
         return stats;
     }
 }

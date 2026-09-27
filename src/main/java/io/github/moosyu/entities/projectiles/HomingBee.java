@@ -14,6 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -119,7 +120,7 @@ public class HomingBee extends Projectile {
 
     private void hitEntity(LivingEntity victim) {
         if (player != null) {
-            DamageUtils.playerDealDamage(player, victim, ItemTypes.TALISMAN, damage, false);
+            DamageUtils.playerDealDamage(player, victim, damage, false, ItemStack.EMPTY);
         }
         burst();
     }

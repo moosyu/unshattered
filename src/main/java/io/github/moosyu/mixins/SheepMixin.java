@@ -100,6 +100,5 @@ public class SheepMixin {
             UnshatteredUtils.givePlayerHarvestedItemStack(shearer, new ItemStack(drops.item(), drops.getDropAmount(level.getRandom())));
             shearer = null;
         }
-
     }
 }

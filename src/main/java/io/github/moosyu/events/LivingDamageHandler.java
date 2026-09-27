@@ -39,19 +39,19 @@ public class LivingDamageHandler {
                     return;
                 }
                 double damageDealt = damageAttributeInstance.getValue() * (1 - (playerDefenceValue / (playerDefenceValue + 50)));
-                DamageUtils.damagePlayer(player, damageDealt, serverLevel, Component.literal("☠ " + playerName + " was slain by a " + entity.getName().getString() + "!"), false, damageSource);
+                DamageUtils.damagePlayer(player, damageDealt, Component.literal("☠ " + playerName + " was slain by a " + entity.getName().getString() + "!"), false, damageSource);
             } else if (event.getSource().is(DamageTypeTags.IS_FALL)) {
                 int blocksFallen = (int) (event.getOriginalDamage() + 3);
                 // https://old.reddit.com/r/HypixelSkyblock/comments/fvozn7/fall_damage_calculator/
                 double damageDealt = ((double) ((blocksFallen - 3) * 50) / 33) / (1 + (playerDefenceValue / 100));
-                DamageUtils.damagePlayer(player, damageDealt, serverLevel, Component.literal("☠ " + playerName + " fell to their death!"), false, damageSource);
+                DamageUtils.damagePlayer(player, damageDealt, Component.literal("☠ " + playerName + " fell to their death!"), false, damageSource);
             } else if (event.getSource().is(DamageTypeTags.IS_DROWNING)) {
                 double damageDealt = (event.getOriginalDamage() * 200 / 33) / ((playerDefenceValue / 100) + 1);
-                DamageUtils.damagePlayer(player, damageDealt, serverLevel, Component.literal("☠ " + playerName + " drowned!"), false, damageSource);
+                DamageUtils.damagePlayer(player, damageDealt, Component.literal("☠ " + playerName + " drowned!"), false, damageSource);
             } else if (event.getSource().is(DamageTypeTags.IS_FIRE)) {
                 double trueDefence = player.getAttributeBaseValue(UnshatteredAttributeValues.TRUE_DEFENCE.holder);
                 double damageDealt = (double) (100 / 33) * (1 - (trueDefence / (trueDefence + 100)));
-                DamageUtils.damagePlayer(player, damageDealt, serverLevel, Component.literal("☠ " + playerName + " burnt to death!"), false, damageSource);
+                DamageUtils.damagePlayer(player, damageDealt, Component.literal("☠ " + playerName + " burnt to death!"), false, damageSource);
             } else if (event.getSource().is(DamageTypeTags.IS_FREEZING)) {
                 // something something freezing damage idk
             } else {

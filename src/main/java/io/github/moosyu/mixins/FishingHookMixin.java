@@ -1,6 +1,7 @@
 package io.github.moosyu.mixins;
 
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemTypes;
 import io.github.moosyu.damage.DamageUtils;
 import net.minecraft.core.BlockPos;
@@ -10,6 +11,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -54,12 +56,22 @@ public abstract class FishingHookMixin extends Projectile {
             if (entity.is(EntityType.ARMOR_STAND) && !player.isCreative()) {
                 ci.cancel();
             } else {
+                InteractionHand hand;
+                if (player.getItemInHand(InteractionHand.MAIN_HAND).get(UnshatteredDataComponents.ITEM_TYPE.get()) == ItemTypes.FISHING_ROD) {
+                    hand = InteractionHand.MAIN_HAND;
+                } else if (player.getItemInHand(InteractionHand.OFF_HAND).get(UnshatteredDataComponents.ITEM_TYPE.get()) == ItemTypes.FISHING_ROD) {
+                    hand = InteractionHand.OFF_HAND;
+                } else {
+                    ci.cancel();
+                    return;
+                }
+
                 if (entity instanceof LivingEntity livingEntity && !player.level().isClientSide()) {
                     DamageUtils.playerDealDamage(player,
                             livingEntity,
-                            ItemTypes.FISHING_ROD,
                             player.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder) + 1,
-                            false
+                            false,
+                            player.getItemInHand(hand)
                     );
                 }
             }
