@@ -3,14 +3,15 @@
   "key": {
     "A": {
       "count": 32,
-      "ingredient": "unshattered:enchanted_honeycomb"
+      "ingredient": "unshattered:titanium"
     }
   },
   "pattern": [
+    " A ",
     "AAA",
-    "AA "
+    " A "
   ],
   "result": {
-    "id": "minecraft:honeycomb"
+    "id": "unshattered:enchanted_titanium"
   }
 }

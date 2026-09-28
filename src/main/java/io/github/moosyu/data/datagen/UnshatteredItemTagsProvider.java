@@ -38,6 +38,7 @@ public class UnshatteredItemTagsProvider extends ItemTagsProvider {
         tag(ItemTags.AXES).add(FIG_HEW.get());
         tag(ItemTags.AXES).add(FIGSTONE_SPLITTER.get());
         tag(ItemTags.PICKAXES).add(BROKEN_MITHRIL_PICKAXE.get());
+        tag(ItemTags.PICKAXES).add(RUSTED_TITANIUM_PICKAXE.get());
         tag(ItemTags.SWORDS).add(ROGUE_SWORD.get());
         tag(ItemTags.SWORDS).add(UNDEAD_SWORD.get());
         tag(ItemTags.SWORDS).add(SQUIRE_SWORD.get());
@@ -59,6 +60,5 @@ public class UnshatteredItemTagsProvider extends ItemTagsProvider {
         tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(ROGUE_SWORD.get());
         tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(SQUIRE_SWORD.get());
         tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(MERCENARY_AXE.get());
-
     }
 }

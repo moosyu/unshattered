@@ -41,11 +41,15 @@ public enum AbilityTriggerType {
      */
     PLAYER_INCOMING_DAMAGE,
     /**
-     * runs in {@link io.github.moosyu.events.ClientInputUpdateHandler#onInputUpdate(MovementInputUpdateEvent)}. cannot be used to cancel sneaking and onAbilityTriggered and onAbilityFinished fire at the same time
+     * runs in {@link io.github.moosyu.events.ClientInputUpdateHandler#onInputUpdate(MovementInputUpdateEvent)}. cannot be used to cancel sneaking. onAbilityTriggered and onAbilityFinished fire at the same time.
      */
     PLAYER_STARTED_SNEAKING,
     /**
      * runs in {@link io.github.moosyu.mixins.ProjectileWeaponItemMixin#useAmmo(ItemStack, ItemStack, LivingEntity, boolean, CallbackInfoReturnable)}. can be used to cancel.
      */
-    PLAYER_USE_PROJECTILE_WEAPON_AMMO
+    PLAYER_USE_PROJECTILE_WEAPON_AMMO,
+    /**
+     * runs in {@link io.github.moosyu.events.BlockBreakHandler} inside the mining branch, cannot be used to cancel.
+     */
+    PLAYER_BREAK_MINING_BLOCK
 }

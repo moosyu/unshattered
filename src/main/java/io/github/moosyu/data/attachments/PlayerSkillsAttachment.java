@@ -28,7 +28,6 @@ public final class PlayerSkillsAttachment {
             // i know normal sb gives you a flat damage multiplier but i feel like thats a little strange so ill give people an actual stat
             addPlayerAttributeReward(player, UnshatteredAttributeValues.CRITICAL_DAMAGE, 10.0d);
             addPlayerAttributeReward(player, UnshatteredAttributeValues.CRITICAL_CHANCE, 1.0d);
-
         }),
         FARMING("farming", (player, level) -> {
             double healthAmount;
@@ -58,7 +57,6 @@ public final class PlayerSkillsAttachment {
             }
             addPlayerAttributeReward(player, UnshatteredAttributeValues.DEFENCE, defenceAmount);
             addPlayerAttributeReward(player, UnshatteredAttributeValues.MINING_FORTUNE, 2.0d);
-
         }),
         FORAGING("foraging", (player, level) -> {
             double strengthAmount;
@@ -69,12 +67,10 @@ public final class PlayerSkillsAttachment {
             }
             addPlayerAttributeReward(player, UnshatteredAttributeValues.STRENGTH, strengthAmount);
             addPlayerAttributeReward(player, UnshatteredAttributeValues.FARMING_FORTUNE, 2.0d);
-
         }),
         MAGECRAFT("magecraft", (player, _) -> {
             addPlayerAttributeReward(player, UnshatteredAttributeValues.MANA, 2.0d);
             addPlayerAttributeReward(player, UnshatteredAttributeValues.MANA_REGEN, 1.5d);
-
         }),
         CARPENTRY("carpentry", (player, _) -> addPlayerAttributeReward(player, UnshatteredAttributeValues.HEALTH, 1.0d));
 

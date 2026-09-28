@@ -1,32 +1,32 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ice": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "unshattered:enchanted_titanium_recipe"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_titanium": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:ice"
+            "items": "unshattered:titanium"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
-    },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "unshattered:enchanted_ice_recipe_2"
-      },
-      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
       "has_the_recipe",
-      "has_ice"
+      "has_titanium"
     ]
   ],
   "rewards": {
     "recipes": [
-      "unshattered:enchanted_ice_recipe_2"
+      "unshattered:enchanted_titanium_recipe"
     ]
   }
 }

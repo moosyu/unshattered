@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ice": {
+    "has_porkchop": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:ice"
+            "items": "minecraft:porkchop"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "unshattered:ice_recipe_2"
+        "recipe": "unshattered:enchanted_raw_pork_chop_recipe_2"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_ice"
+      "has_porkchop"
     ]
   ],
   "rewards": {
     "recipes": [
-      "unshattered:ice_recipe_2"
+      "unshattered:enchanted_raw_pork_chop_recipe_2"
     ]
   }
 }

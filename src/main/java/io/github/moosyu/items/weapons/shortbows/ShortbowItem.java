@@ -3,6 +3,8 @@ package io.github.moosyu.items.weapons.shortbows;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -31,11 +33,9 @@ public class ShortbowItem extends ProjectileWeaponItem {
             return InteractionResult.FAIL;
         }
 
-        ItemStack ammo = getHeldProjectile(player, getAllSupportedProjectiles());
-        boolean infinite = player.hasInfiniteMaterials();
-
+        ItemStack ammo = player.getProjectile(weapon);
         if (ammo.isEmpty()) {
-            if (!infinite) {
+            if (!player.hasInfiniteMaterials()) {
                 return InteractionResult.FAIL;
             }
             ammo = new ItemStack(Items.ARROW);
@@ -48,7 +48,8 @@ public class ShortbowItem extends ProjectileWeaponItem {
 
         if (level instanceof ServerLevel serverLevel) {
             shoot(serverLevel, player, hand, weapon, projectiles, 3.0f, 1.0f, false, null);
-            player.getCooldowns().addCooldown(weapon, 2);
+            level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS, 1.0f, 1.0f / (level.getRandom().nextFloat() * 0.4f + 1.2f) + 0.5f);
+            player.getCooldowns().addCooldown(weapon, 5);
         }
 
         player.awardStat(Stats.ITEM_USED.get(this));

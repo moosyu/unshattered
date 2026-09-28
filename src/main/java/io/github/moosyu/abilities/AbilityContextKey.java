@@ -11,7 +11,6 @@ import net.minecraft.world.level.block.state.BlockState;
 public record AbilityContextKey<T>(Class<T> type) {
     public static final AbilityContextKey<ServerPlayer> PLAYER = new AbilityContextKey<>(ServerPlayer.class);
     public static final AbilityContextKey<LivingEntity> TARGET = new AbilityContextKey<>(LivingEntity.class);
-    public static final AbilityContextKey<BlockPos> POSITION = new AbilityContextKey<>(BlockPos.class);
     public static final AbilityContextKey<ItemStack> ITEM_STACK = new AbilityContextKey<>(ItemStack.class);
     public static final AbilityContextKey<Double> DAMAGE_AMOUNT = new AbilityContextKey<>(Double.class);
     public static final AbilityContextKey<BlockState> BLOCKSTATE = new AbilityContextKey<>(BlockState.class);

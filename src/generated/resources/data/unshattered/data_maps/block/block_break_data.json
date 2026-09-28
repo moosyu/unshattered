@@ -324,6 +324,20 @@
       "exp_amount": 1.0,
       "skill": "mining"
     },
+    "unshattered:breakable_titanium_block": {
+      "drop_data": [
+        {
+          "drop_chance": 1.0,
+          "item_range": {
+            "item": "unshattered:titanium",
+            "max_amount": 2,
+            "min_amount": 2
+          }
+        }
+      ],
+      "exp_amount": 100.0,
+      "skill": "mining"
+    },
     "unshattered:breakable_wheat_block": {
       "drop_data": [
         {

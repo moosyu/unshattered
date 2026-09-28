@@ -1,32 +1,32 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_honeycomb": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "unshattered:enchanted_titanium_recipe_2"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_titanium": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:honeycomb"
+            "items": "unshattered:titanium"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
-    },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "unshattered:honeycomb_recipe_2"
-      },
-      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
       "has_the_recipe",
-      "has_honeycomb"
+      "has_titanium"
     ]
   ],
   "rewards": {
     "recipes": [
-      "unshattered:honeycomb_recipe_2"
+      "unshattered:enchanted_titanium_recipe_2"
     ]
   }
 }

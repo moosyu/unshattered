@@ -9,6 +9,7 @@ import io.github.moosyu.items.talismans.*;
 import io.github.moosyu.items.tools.axes.RegionLockedFortuneAxe;
 import io.github.moosyu.items.tools.axes.UnshatteredAxeTool;
 import io.github.moosyu.items.tools.pickaxes.BrokenMithrilPickaxe;
+import io.github.moosyu.items.tools.pickaxes.RustedTitaniumPickaxe;
 import io.github.moosyu.items.tools.rods.UnshatteredRod;
 import io.github.moosyu.items.weapons.axes.AxeWeapon;
 import io.github.moosyu.items.weapons.cleavers.*;
@@ -596,6 +597,8 @@ public class UnshatteredItems {
 
     public static final DeferredItem<BlockItem> BREAKABLE_COBBLED_MITHRIL_BLOCK = ITEMS.registerSimpleBlockItem(UnshatteredBlocks.BREAKABLE_COBBLED_MITHRIL_BLOCK.getDelegate());
 
+    public static final DeferredItem<BlockItem> BREAKABLE_TITANIUM = ITEMS.registerSimpleBlockItem(UnshatteredBlocks.BREAKABLE_TITANIUM_BLOCK.getDelegate());
+
     public static final DeferredItem<Item> MITHRIL = ITEMS.registerItem("mithril", props -> new Item(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
             .component(UnshatteredDataComponents.SELL_VALUE.get(), 9))
     );
@@ -774,6 +777,17 @@ public class UnshatteredItems {
             .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.RARE))
     );
 
+    public static final DeferredItem<Item> TITANIUM = ITEMS.registerItem("titanium", props -> new Item(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 20)
+            .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
+            .component(UnshatteredDataComponents.RARITY, UnshatteredRarities.RARE))
+    );
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_TITANIUM = ITEMS.registerItem("enchanted_titanium", props -> new EnchantedItem(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 3200)
+            .component(UnshatteredDataComponents.RARITY, UnshatteredRarities.EPIC))
+    );
+
     public static final DeferredItem<Item> RAINBOW_YARN_TALISMAN = ITEMS.registerItem("rainbow_yarn_talisman", RainbowYarnTalisman::new);
 
     public static final DeferredItem<Item> DWARF_TURTLE_SHELL = ITEMS.registerItem("dwarf_turtle_shell", DwarfTurtleTalisman::new);
@@ -789,4 +803,7 @@ public class UnshatteredItems {
     public static final DeferredItem<Item> INFINITE_QUIVER = ITEMS.registerItem("infinite_quiver", InfiniteQuiver::new);
 
     public static final DeferredItem<Item> ARTISANAL_SHORTBOW = ITEMS.registerItem("artisanal_shortbow", ArtisanalShortbow::new);
+
+    public static final DeferredItem<Item> RUSTED_TITANIUM_PICKAXE = ITEMS.registerItem("rusted_titanium_pickaxe", RustedTitaniumPickaxe::new);
+
 }

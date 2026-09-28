@@ -3,15 +3,14 @@
   "key": {
     "A": {
       "count": 32,
-      "ingredient": "minecraft:ice"
+      "ingredient": "unshattered:titanium"
     }
   },
   "pattern": [
-    " A ",
     "AAA",
-    " A "
+    "AA "
   ],
   "result": {
-    "id": "unshattered:enchanted_ice"
+    "id": "unshattered:enchanted_titanium"
   }
 }

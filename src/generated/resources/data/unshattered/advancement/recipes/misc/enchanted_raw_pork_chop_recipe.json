@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "unshattered:porkchop_recipe"
+        "recipe": "unshattered:enchanted_raw_pork_chop_recipe"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "unshattered:porkchop_recipe"
+      "unshattered:enchanted_raw_pork_chop_recipe"
     ]
   }
 }

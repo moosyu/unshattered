@@ -14,6 +14,7 @@
     "unshattered:breakable_redstone_ore_block": 3,
     "unshattered:breakable_soft_mithril_block": 4,
     "unshattered:breakable_stone_block": 1,
+    "unshattered:breakable_titanium_block": 5,
     "unshattered:pure_diamond_block": 3
   }
 }

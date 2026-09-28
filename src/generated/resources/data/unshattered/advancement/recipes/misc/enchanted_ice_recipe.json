@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_enchanted_ice": {
+    "has_ice": {
       "conditions": {
         "items": [
           {
-            "items": "unshattered:enchanted_ice"
+            "items": "minecraft:ice"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_enchanted_ice"
+      "has_ice"
     ]
   ],
   "rewards": {

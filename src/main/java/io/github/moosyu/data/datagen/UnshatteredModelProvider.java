@@ -166,6 +166,9 @@ public class UnshatteredModelProvider extends ModelProvider {
                         .scale(0.68f, 0.68f, 0.68f))
                 .build()
         );
+        itemModels.generateFlatItem(UnshatteredItems.TITANIUM.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_TITANIUM.get(), UnshatteredItems.TITANIUM.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.RUSTED_TITANIUM_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_GOLD_BLOCK.get(), Blocks.GOLD_BLOCK);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_DIAMOND_BLOCK.get(), Blocks.DIAMOND_BLOCK);
@@ -287,6 +290,7 @@ public class UnshatteredModelProvider extends ModelProvider {
         blockModels.createTrivialCube(UnshatteredBlocks.BREAKABLE_COBBLED_MITHRIL_BLOCK.get());
         blockModels.createTrivialCube(UnshatteredBlocks.BREAKABLE_SOFT_MITHRIL_BLOCK.get());
         blockModels.createTrivialCube(UnshatteredBlocks.BREAKABLE_HARD_MITHRIL_BLOCK.get());
+        blockModels.createTrivialCube(UnshatteredBlocks.BREAKABLE_TITANIUM_BLOCK.get());
     }
 
     /**

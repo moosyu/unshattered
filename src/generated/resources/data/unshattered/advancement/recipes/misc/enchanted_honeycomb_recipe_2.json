@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ice": {
+    "has_honeycomb": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:ice"
+            "items": "minecraft:honeycomb"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "unshattered:ice_recipe"
+        "recipe": "unshattered:enchanted_honeycomb_recipe_2"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_ice"
+      "has_honeycomb"
     ]
   ],
   "rewards": {
     "recipes": [
-      "unshattered:ice_recipe"
+      "unshattered:enchanted_honeycomb_recipe_2"
     ]
   }
 }

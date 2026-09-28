@@ -49,7 +49,6 @@ public class UndeadSword extends UnshatteredSword implements PassiveAbilityItem 
         context.get(AbilityContextKey.PLAYER).flatMap(player -> UnshatteredUtils.getAttributeInstance(player,
                 UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder)
         ).ifPresent(attribute -> attribute.removeModifier(ABILITY_IDENTIFIER));
-
     }
 
     @Override

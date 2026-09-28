@@ -15,6 +15,7 @@
     "SheepMixin",
     "StatsScreenMixin",
     "AbstractArrowMixin",
-    "ProjectileWeaponItemMixin"
+    "ProjectileWeaponItemMixin",
+    "CropBlockMixin"
   ]
 }

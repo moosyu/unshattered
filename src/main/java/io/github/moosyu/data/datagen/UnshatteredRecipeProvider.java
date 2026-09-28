@@ -79,10 +79,11 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
         createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_CLAY_BALL, UnshatteredItems.ENCHANTED_CLAY_BLOCK.get(), getHasName(Items.CLAY), has(Items.CLAY));
         createEnchantedItemRecipe(Items.SPONGE, 8, UnshatteredItems.ENCHANTED_SPONGE.get(), getHasName(Items.SPONGE), has(Items.SPONGE));
         createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_SPONGE.get(), 8, UnshatteredItems.ENCHANTED_WET_SPONGE.get(), getHasName(Items.SPONGE), has(Items.SPONGE));
-        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_RAW_PORK_CHOP.get(), Items.PORKCHOP, getHasName(Items.PORKCHOP), has(Items.PORKCHOP));
-        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_HONEYCOMB.get(), Items.HONEYCOMB, getHasName(Items.HONEYCOMB), has(Items.HONEYCOMB));
-        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_ICE.get(), Items.ICE, getHasName(Items.ICE), has(Items.ICE));
-        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_PACKED_ICE.get(), UnshatteredItems.ENCHANTED_ICE.get(), getHasName(UnshatteredItems.ENCHANTED_ICE.get()), has(UnshatteredItems.ENCHANTED_ICE.get()));
+        createEnchantedItemRecipe(Items.PORKCHOP, UnshatteredItems.ENCHANTED_RAW_PORK_CHOP.get(), getHasName(Items.PORKCHOP), has(Items.PORKCHOP));
+        createEnchantedItemRecipe(Items.HONEYCOMB, UnshatteredItems.ENCHANTED_HONEYCOMB.get(), getHasName(Items.HONEYCOMB), has(Items.HONEYCOMB));
+        createEnchantedItemRecipe(Items.ICE, UnshatteredItems.ENCHANTED_ICE.get(), getHasName(Items.ICE), has(Items.ICE));
+        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_ICE.get(), UnshatteredItems.ENCHANTED_PACKED_ICE.get(), getHasName(UnshatteredItems.ENCHANTED_ICE.get()), has(UnshatteredItems.ENCHANTED_ICE.get()));
+        createEnchantedItemRecipe(UnshatteredItems.TITANIUM.get(), UnshatteredItems.ENCHANTED_TITANIUM.get(), getHasName(UnshatteredItems.TITANIUM), has(UnshatteredItems.TITANIUM));
 
         new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.ZOMBIE_HEART.get()), RecipeCategory.COMBAT)
                 .pattern("AAA", "A A", "AAA")

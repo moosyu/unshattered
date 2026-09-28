@@ -3,7 +3,7 @@
   "key": {
     "A": {
       "count": 32,
-      "ingredient": "unshattered:enchanted_ice"
+      "ingredient": "minecraft:porkchop"
     }
   },
   "pattern": [
@@ -11,6 +11,6 @@
     "AA "
   ],
   "result": {
-    "id": "minecraft:ice"
+    "id": "unshattered:enchanted_raw_pork_chop"
   }
 }

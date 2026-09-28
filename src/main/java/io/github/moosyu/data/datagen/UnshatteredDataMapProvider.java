@@ -57,6 +57,7 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_ACACIA_LOG_BLOCK, new ItemRange(Items.ACACIA_LOG), PlayerSkillsAttachment.Skill.FORAGING, 6);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_DARK_OAK_LOG_BLOCK, new ItemRange(Items.DARK_OAK_LOG), PlayerSkillsAttachment.Skill.FORAGING, 6);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_ICE_BLOCK, new ItemRange(Items.ICE), PlayerSkillsAttachment.Skill.MINING, 0.5f);
+        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_TITANIUM_BLOCK, new ItemRange(UnshatteredItems.TITANIUM.get(), 2), PlayerSkillsAttachment.Skill.MINING, 100);
 
         builder(BLOCK_BREAK_DATA)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_COBBLED_MITHRIL_BLOCK.get()),
@@ -251,7 +252,8 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_COBBLED_MITHRIL_BLOCK.get()), 3, false)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_SOFT_MITHRIL_BLOCK.get()), 4, false)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_HARD_MITHRIL_BLOCK.get()), 4, false)
-                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK.get()), 2, false);
+                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK.get()), 2, false)
+                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_TITANIUM_BLOCK.get()), 5, false);
 
         builder(FISHING_ITEM_WEIGHT_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(Items.COD), new FishingWeightEntry(100000.0d), false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.SALMON), new FishingWeightEntry(75000.0d), false)

@@ -45,6 +45,14 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
         ).setTooltip(Tooltip.create(Component.translatable("container.unshattered.crafting")));
 
         addRenderableWidget(new SoundlessImageButton(leftPos + 76,
+                topPos + 25,
+                20,
+                18,
+                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/storage")),
+                _ -> ClientPacketDistributor.sendToServer(new OpenStoragePacket()))
+        ).setTooltip(Tooltip.create(Component.translatable("container.unshattered.storage")));
+
+        addRenderableWidget(new SoundlessImageButton(leftPos + 76,
                 topPos + 43,
                 20,
                 18,
@@ -69,14 +77,6 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
         ).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.skills")));
 
         addRenderableWidget(new SoundlessImageButton(leftPos + 131,
-                topPos + 61,
-                20,
-                18,
-                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/storage")),
-                _ -> ClientPacketDistributor.sendToServer(new OpenStoragePacket()))
-        ).setTooltip(Tooltip.create(Component.translatable("container.unshattered.storage")));
-
-        addRenderableWidget(new SoundlessImageButton(leftPos + 150,
                 topPos + 61,
                 20,
                 18,

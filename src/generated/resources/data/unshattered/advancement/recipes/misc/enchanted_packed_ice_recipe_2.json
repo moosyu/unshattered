@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ice": {
+    "has_enchanted_ice": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:ice"
+            "items": "unshattered:enchanted_ice"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "unshattered:enchanted_ice_recipe_2"
+        "recipe": "unshattered:enchanted_packed_ice_recipe_2"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_ice"
+      "has_enchanted_ice"
     ]
   ],
   "rewards": {
     "recipes": [
-      "unshattered:enchanted_ice_recipe_2"
+      "unshattered:enchanted_packed_ice_recipe_2"
     ]
   }
 }

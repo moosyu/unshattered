@@ -189,4 +189,10 @@ public final class UnshatteredBlocks {
                     .sound(SoundType.GLASS)
             )
     );
+
+    public static final DeferredBlock<Block> BREAKABLE_TITANIUM_BLOCK = BLOCKS.registerBlock("breakable_titanium_block",
+            props -> new Block(props.destroyTime(65.0f)
+                    .sound(SoundType.STONE)
+            )
+    );
 }

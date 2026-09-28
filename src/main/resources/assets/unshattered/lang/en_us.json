@@ -137,6 +137,11 @@
   "item.unshattered.enchanted_honeycomb": "Enchanted Honeycomb",
   "item.unshattered.infinite_quiver": "Infinite Quiver",
   "item.unshattered.artisanal_shortbow": "Artisanal Shortbow",
+  "item.unshattered.titanium": "Titanium",
+  "item.unshattered.enchanted_titanium": "Enchanted Titanium",
+  "item.unshattered.enchanted_ice": "Enchanted Ice",
+  "item.unshattered.enchanted_packed_ice": "Enchanted Packed Ice",
+  "item.unshattered.rusted_titanium_pickaxe": "Rusted Titanium Pickaxe",
 
   "item.description.unshattered.bat_the_fish": "Where is my cape!",
   "item.description.unshattered.century_the_fish": "The term 'century' was actually named after him, or so he says.",
@@ -206,6 +211,8 @@
   "item.description.unshattered.blood_chalice": "Never seems to run low no matter how much is poured out.",
   "item.description.unshattered.piggy_bank": "Never seems to run low no matter how much is poured out.",
   "item.description.unshattered.infinite_quiver": "Makes you wonder if it'd be safe to live in a house made entirely of arrows.",
+  "item.description.unshattered.titanium": "Its strength and resistance to corrosion are the highest of any metallic element.",
+  "item.description.unshattered.rusted_titanium_pickaxe": "The rust was seemingly unable to pierce the metal.",
 
   "item.ability.unshattered.rogue_sword_speed_boost": "Speed Boost",
   "item.ability.unshattered.mind_blowing": "Mind Blowing",
@@ -233,6 +240,7 @@
   "item.ability.unshattered.heavy_strike": "Heavy Strike",
   "item.ability.unshattered.pain_to_power": "Pain to Power",
   "item.ability.unshattered.bottomless": "Bottomless",
+  "item.ability.unshattered.titanium_fanatic": "Titanium Fanatic",
 
   "item.ability.description.unshattered.rogue_sword_speed_boost": "Grants [colour=0xFFFFFFFF]+0.5✦ Speed[/colour] for [colour=0xFF55FF55]30s[/colour].",
   "item.ability.description.unshattered.mind_blowing": "Deals [colour=0xFF55FF55]+100%[/colour] damage to undead mobs.",
@@ -260,6 +268,7 @@
   "item.ability.description.unshattered.heavy_strike": "Every [colour=0xFFFC3A3A]20❁[/colour] provides a bonus [colour=0xFFFFAA00]+4⸕[/colour].",
   "item.ability.description.unshattered.pain_to_power": "Sneaking trades 30% of maximum [colour=0xFFFC3A3A]❤[/colour] for [colour=0xFFFF5555]+20%⫽[/colour]. This effect lasts for [colour=0xFF55FF55]30s[/colour] and stacks.",
   "item.ability.description.unshattered.bottomless": "Ammo isn't consumed when fired.",
+  "item.ability.description.unshattered.titanium_fanatic": "Gain [colour=0xFFFFAA00]+20\uD83D\uDC8E[/colour] when breaking titanium.",
 
   "block.unshattered.fig_log": "Fig Log",
   "block.unshattered.breakable_fig_log": "Breakable Fig Log",
@@ -286,6 +295,8 @@
   "block.unshattered.breakable_acacia_log": "Breakable Acacia Log",
   "block.unshattered.breakable_dark_oak_log": "Breakable Dark Oak Log",
   "block.unshattered.breakable_lapis_ore": "Breakable Lapis Ore",
+  "block.unshattered.breakable_ice_block": "Breakable Ice Block",
+  "block.unshattered.breakable_titanium_block": "Breakable Titanium Block",
 
   "attribute.name.unshattered.sweep": "Sweep",
   "attribute.name.unshattered.foraging_fortune": "Foraging Fortune",

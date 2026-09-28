@@ -89,6 +89,7 @@ public class UnshatteredCreativeTabs {
             output.accept(BREAKABLE_ACACIA_LOG.get());
             output.accept(BREAKABLE_DARK_OAK_LOG.get());
             output.accept(BREAKABLE_ICE.get());
+            output.accept(BREAKABLE_TITANIUM.get());
         }).build()
     );
 
@@ -149,6 +150,8 @@ public class UnshatteredCreativeTabs {
             output.accept(ENCHANTED_HONEYCOMB);
             output.accept(ENCHANTED_ICE);
             output.accept(ENCHANTED_PACKED_ICE);
+            output.accept(TITANIUM);
+            output.accept(ENCHANTED_TITANIUM);
         }).build()
     );
 
@@ -206,6 +209,7 @@ public class UnshatteredCreativeTabs {
             output.accept(IRON_DAGGER.get());
             output.accept(EMERALD_DAGGER.get());
             output.accept(ARTISANAL_SHORTBOW.get());
+            output.accept(RUSTED_TITANIUM_PICKAXE.get());
         }).build()
     );
 
