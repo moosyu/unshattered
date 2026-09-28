@@ -22,7 +22,7 @@ import java.util.function.Predicate;
 
 public class ShortbowItem extends ProjectileWeaponItem {
     public ShortbowItem(Properties properties) {
-        super(properties.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.SHORTBOW));
+        super(properties.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.SHORTBOW).stacksTo(1));
     }
 
     @Override
@@ -41,18 +41,26 @@ public class ShortbowItem extends ProjectileWeaponItem {
             ammo = new ItemStack(Items.ARROW);
         }
 
+        // so the client doesnt try to re-equip the bow
+        if (level.isClientSide()) {
+            return InteractionResult.PASS;
+        }
+
         List<ItemStack> projectiles = draw(weapon, ammo, player);
         if (projectiles.isEmpty()) {
             return InteractionResult.FAIL;
         }
 
+
         if (level instanceof ServerLevel serverLevel) {
             shoot(serverLevel, player, hand, weapon, projectiles, 3.0f, 1.0f, false, null);
-            level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS, 1.0f, 1.0f / (level.getRandom().nextFloat() * 0.4f + 1.2f) + 0.5f);
-            player.getCooldowns().addCooldown(weapon, 5);
         }
 
+        level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS, 1.0f, 1.0f / (level.getRandom().nextFloat() * 0.4f + 1.2f) + 0.5f);
+        // for whatever reason cooldowns that arent multiples of four get oddly out of sync sometimes and fire like twice in one tick.
+        player.getCooldowns().addCooldown(weapon, 8);
         player.awardStat(Stats.ITEM_USED.get(this));
+        
         return InteractionResult.CONSUME;
     }
 
