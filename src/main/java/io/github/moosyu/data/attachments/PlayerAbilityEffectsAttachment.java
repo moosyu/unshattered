@@ -1,11 +1,8 @@
 package io.github.moosyu.data.attachments;
 
-import io.github.moosyu.abilities.AbilityContext;
-import io.github.moosyu.abilities.AbilityContextKey;
-import io.github.moosyu.abilities.AbilityTriggerType;
+import io.github.moosyu.abilities.*;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemTypes;
-import io.github.moosyu.abilities.PassiveAbilityItem;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -20,7 +17,7 @@ public final class PlayerAbilityEffectsAttachment {
     private final Map<Identifier, ActiveEffectEntry> activeEffects = new HashMap<>();
     private record ActiveEffectEntry(long expiryTime, @Nullable Consumer<AbilityContext> onExpire) {}
     private final Map<PassiveAbilityItem, Boolean> storedPassiveOngoingItems = new HashMap<>();
-    private final Set<PassiveAbilityItem> storedPassiveNonOngoingItems = new HashSet<>();
+    private final Set<ItemStack> storedNonOngoingItems = new HashSet<>();
 
     /**
      * @param abilityIdentifier identifier for the ability
@@ -92,13 +89,15 @@ public final class PlayerAbilityEffectsAttachment {
     /**
      * adds a passive tick item (with active set to true) to map and triggers its ability
      */
-    public void addPassiveItem(PassiveAbilityItem item, AbilityContext context) {
-        if (item.triggerTypes().contains(AbilityTriggerType.ONGOING)) {
-            if (!Boolean.TRUE.equals(storedPassiveOngoingItems.put(item, true)) && item.abilityConditionsMet(context)) {
-                item.onAbilityTriggered(context);
+    public void addPassiveItem(ItemStack item, AbilityContext context) {
+        if (item.getItem() instanceof PassiveAbilityItem passiveAbilityItem) {
+            if (passiveAbilityItem.triggerTypes().contains(AbilityTriggerType.ONGOING)) {
+                if (!Boolean.TRUE.equals(storedPassiveOngoingItems.put(passiveAbilityItem, true)) && passiveAbilityItem.abilityConditionsMet(context)) {
+                    passiveAbilityItem.onAbilityTriggered(context);
+                }
+            } else {
+                storedNonOngoingItems.add(item);
             }
-        } else {
-            storedPassiveNonOngoingItems.add(item);
         }
     }
 
@@ -111,14 +110,14 @@ public final class PlayerAbilityEffectsAttachment {
                 item.onAbilityFinished(context);
             }
         } else {
-            if (storedPassiveNonOngoingItems.remove(item)) {
+            if (storedNonOngoingItems.remove(item)) {
                 item.onAbilityFinished(context);
             }
         }
     }
 
-    public Set<PassiveAbilityItem> getStoredPassiveNonOngoingItems() {
-        return storedPassiveNonOngoingItems;
+    public Set<ItemStack> getStoredNonOngoingItems() {
+        return storedNonOngoingItems;
     }
 
     /**
@@ -178,7 +177,11 @@ public final class PlayerAbilityEffectsAttachment {
             }
         });
 
-        storedPassiveNonOngoingItems.forEach(item -> item.onAbilityFinished(context));
+        storedNonOngoingItems.forEach(itemStack -> {
+            if (itemStack.getItem() instanceof PassiveAbilityItem passiveAbilityItem) {
+                passiveAbilityItem.onAbilityFinished(context);
+            }
+        });
 
         activeEffects.clear();
     }
@@ -190,7 +193,7 @@ public final class PlayerAbilityEffectsAttachment {
      */
     public void applyPassiveEffects(ServerPlayer player) {
         storedPassiveOngoingItems.clear();
-        storedPassiveNonOngoingItems.clear();
+        storedNonOngoingItems.clear();
 
         AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, player);
         for (EquipmentSlot slot : EquipmentSlot.values()) {
@@ -204,7 +207,7 @@ public final class PlayerAbilityEffectsAttachment {
                         storedPassiveOngoingItems.put(item, false);
                     }
                 } else {
-                    storedPassiveNonOngoingItems.add(item);
+                    storedNonOngoingItems.add(itemStack);
                 }
             }
         }
@@ -219,7 +222,7 @@ public final class PlayerAbilityEffectsAttachment {
                         storedPassiveOngoingItems.put(item, false);
                     }
                 } else {
-                    storedPassiveNonOngoingItems.add(item);
+                    storedNonOngoingItems.add(itemStack);
                 }
             }
         });

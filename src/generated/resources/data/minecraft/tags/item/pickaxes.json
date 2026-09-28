@@ -1,6 +1,12 @@
 {
   "values": [
     "unshattered:broken_mithril_pickaxe",
-    "unshattered:rusted_titanium_pickaxe"
+    "unshattered:rusted_titanium_pickaxe",
+    "unshattered:titanium_pickaxe",
+    "unshattered:bandaged_mithril_pickaxe",
+    "unshattered:mithril_pickaxe",
+    "unshattered:lapis_pickaxe",
+    "unshattered:zombie_pickaxe",
+    "unshattered:promising_pickaxe"
   ]
 }

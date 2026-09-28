@@ -1,0 +1,21 @@
+{
+  "type": "unshattered:sized_recipe",
+  "key": {
+    "I": {
+      "count": 1,
+      "ingredient": "minecraft:iron_pickaxe"
+    },
+    "L": {
+      "count": 64,
+      "ingredient": "minecraft:lapis_lazuli"
+    }
+  },
+  "pattern": [
+    "LLL",
+    "LIL",
+    "LLL"
+  ],
+  "result": {
+    "id": "unshattered:lapis_pickaxe"
+  }
+}

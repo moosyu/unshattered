@@ -8,8 +8,7 @@ import io.github.moosyu.items.armours.SkeletonHat;
 import io.github.moosyu.items.talismans.*;
 import io.github.moosyu.items.tools.axes.RegionLockedFortuneAxe;
 import io.github.moosyu.items.tools.axes.UnshatteredAxeTool;
-import io.github.moosyu.items.tools.pickaxes.BrokenMithrilPickaxe;
-import io.github.moosyu.items.tools.pickaxes.RustedTitaniumPickaxe;
+import io.github.moosyu.items.tools.pickaxes.*;
 import io.github.moosyu.items.tools.rods.UnshatteredRod;
 import io.github.moosyu.items.weapons.axes.AxeWeapon;
 import io.github.moosyu.items.weapons.cleavers.*;
@@ -524,7 +523,62 @@ public class UnshatteredItems {
             )
     );
 
-    public static final DeferredItem<Item> BROKEN_MITHRIL_PICKAXE = ITEMS.registerItem("broken_mithril_pickaxe", BrokenMithrilPickaxe::new);
+    public static final DeferredItem<Item> BROKEN_MITHRIL_PICKAXE = ITEMS.registerItem("broken_mithril_pickaxe",
+            props -> new MithriPickaxeBase(props, 13, 2, "broken_mithril_pickaxe", 20)
+    );
+
+    public static final DeferredItem<Item> BANDAGED_MITHRIL_PICKAXE = ITEMS.registerItem("bandaged_mithril_pickaxe",
+            props -> new MithriPickaxeBase(props, 15, 4, "bandaged_mithril_pickaxe", 25)
+    );
+
+    public static final DeferredItem<Item> MITHRIL_PICKAXE = ITEMS.registerItem("mithril_pickaxe",
+            props -> new MithriPickaxeBase(props, 17, 7, "mithril_pickaxe", 30)
+    );
+
+    public static final DeferredItem<Item> RUSTED_TITANIUM_PICKAXE = ITEMS.registerItem("rusted_titanium_pickaxe",
+            props -> new TitaniumPickaxeBase(props, "rusted_titanium_pickaxe", 15, 15, UnshatteredRarities.UNCOMMON)
+    );
+
+    public static final DeferredItem<Item> TITANIUM_PICKAXE = ITEMS.registerItem("titanium_pickaxe",
+            props -> new TitaniumPickaxeBase(props, "titanium_pickaxe", 20, 20, UnshatteredRarities.RARE)
+    );
+
+    public static final DeferredItem<Item> LAPIS_PICKAXE = ITEMS.registerItem("lapis_pickaxe",
+            props -> new Item(props.stacksTo(1)
+                    .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON)
+                    .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.PICKAXE)
+                    .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
+                    .component(UnshatteredDataComponents.SELL_VALUE.get(), 256)
+                    .attributes(ItemAttributeModifiers.builder()
+                            .add(UnshatteredAttributeValues.DAMAGE.holder,
+                                    new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_pickaxe_damage"),
+                                            3,
+                                            AttributeModifier.Operation.ADD_VALUE
+                                    ), EquipmentSlotGroup.MAINHAND
+                            ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
+                                    new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_pickaxe_mining_speed"),
+                                            10,
+                                            AttributeModifier.Operation.ADD_VALUE
+                                    ), EquipmentSlotGroup.MAINHAND
+                            ).add(UnshatteredAttributeValues.MINING_FORTUNE.holder,
+                                    new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_pickaxe_mining_fortune"),
+                                            4,
+                                            AttributeModifier.Operation.ADD_VALUE
+                                    ), EquipmentSlotGroup.MAINHAND
+                            ).add(UnshatteredAttributeValues.BREAKING_POWER.holder,
+                                    new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_pickaxe_breaking_power"),
+                                            3,
+                                            AttributeModifier.Operation.ADD_VALUE
+                                    ), EquipmentSlotGroup.MAINHAND
+                            ).add(Attributes.ATTACK_SPEED,
+                                    new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_pickaxe_attack_speed"),
+                                            -2.8,
+                                            AttributeModifier.Operation.ADD_VALUE
+                                    ), EquipmentSlotGroup.MAINHAND
+                            ).build()
+                    )
+           )
+    );
 
     public static final DeferredItem<ZombieSwordBase> ORNATE_ZOMBIE_SWORD = ITEMS.registerItem("ornate_zombie_sword",
             props -> new ZombieSwordBase(props.component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.EPIC)
@@ -804,6 +858,7 @@ public class UnshatteredItems {
 
     public static final DeferredItem<Item> ARTISANAL_SHORTBOW = ITEMS.registerItem("artisanal_shortbow", ArtisanalShortbow::new);
 
-    public static final DeferredItem<Item> RUSTED_TITANIUM_PICKAXE = ITEMS.registerItem("rusted_titanium_pickaxe", RustedTitaniumPickaxe::new);
+    public static final DeferredItem<Item> ZOMBIE_PICKAXE = ITEMS.registerItem("zombie_pickaxe", ZombiePickaxe::new);
 
+    public static final DeferredItem<Item> PROMISING_PICKAXE = ITEMS.registerItem("promising_pickaxe", PromisingPickaxe::new);
 }

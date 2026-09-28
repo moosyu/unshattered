@@ -3,12 +3,12 @@ package io.github.moosyu.items.tools.pickaxes;
 import io.github.moosyu.abilities.AbilityContext;
 import io.github.moosyu.abilities.AbilityContextKey;
 import io.github.moosyu.abilities.AbilityTriggerType;
+import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.data.datagen.UnshatteredBlockTagsProvider;
 import io.github.moosyu.items.ItemTypes;
-import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.items.UnshatteredRarities;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.resources.Identifier;
@@ -23,33 +23,41 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 import java.util.Optional;
 import java.util.Set;
 
-import static io.github.moosyu.Unshattered.MODID;
+public class MithriPickaxeBase extends Item implements PassiveAbilityItem {
+    private final Identifier abilityIdentifier;
+    private final int mithrilSpeedBoost;
 
-public class BrokenMithrilPickaxe extends Item implements PassiveAbilityItem {
-    private static final Identifier ABILITY_IDENTIFIER = Identifier.fromNamespaceAndPath(MODID, "mithril_speed");
+    public MithriPickaxeBase(Properties properties, int miningSpeed, int miningFortune, String identifier, int mithrilSpeedBoost) {
+        Identifier abilityId = UnshatteredUtils.getUnshatteredIdentifier(identifier + "_mithril_speed");
 
-    public BrokenMithrilPickaxe(Properties properties) {
         super(properties.stacksTo(1)
+                .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
                 .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.PICKAXE)
                 .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON)
                 .component(UnshatteredDataComponents.SELL_VALUE.get(), 500)
-                .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(ABILITY_IDENTIFIER, 0, 0, 0, true))
+                .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(abilityId, 0, 0, 0, true))
                 .attributes(ItemAttributeModifiers.builder()
                         .add(UnshatteredAttributeValues.DAMAGE.holder,
-                                new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "broken_mithril_pickaxe_damage"), 4, AttributeModifier.Operation.ADD_VALUE),
+                                new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(identifier + "_damage"), 4, AttributeModifier.Operation.ADD_VALUE),
                                 EquipmentSlotGroup.MAINHAND
                         ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
-                                new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("broken_mithril_pickaxe_mining_speed"), 11, AttributeModifier.Operation.ADD_VALUE),
+                                new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(identifier + "_mining_speed"), miningSpeed, AttributeModifier.Operation.ADD_VALUE),
+                                EquipmentSlotGroup.MAINHAND
+                        ).add(UnshatteredAttributeValues.MINING_FORTUNE.holder,
+                                new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(identifier + "_mining_fortune"), miningFortune, AttributeModifier.Operation.ADD_VALUE),
                                 EquipmentSlotGroup.MAINHAND
                         ).add(UnshatteredAttributeValues.BREAKING_POWER.holder,
-                                new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "broken_mithril_pickaxe_breaking_power"), 4, AttributeModifier.Operation.ADD_VALUE),
+                                new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(identifier + "_breaking_power"), 5, AttributeModifier.Operation.ADD_VALUE),
                                 EquipmentSlotGroup.MAINHAND
                         ).add(Attributes.ATTACK_SPEED,
-                                new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("broken_mithril_pickaxe_attack_speed"), -2.8, AttributeModifier.Operation.ADD_VALUE),
+                                new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(identifier + "_attack_speed"), -2.8, AttributeModifier.Operation.ADD_VALUE),
                                 EquipmentSlotGroup.MAINHAND
                         ).build()
                 )
         );
+
+        this.abilityIdentifier = abilityId;
+        this.mithrilSpeedBoost = mithrilSpeedBoost;
     }
 
     @Override
@@ -57,7 +65,7 @@ public class BrokenMithrilPickaxe extends Item implements PassiveAbilityItem {
         context.get(AbilityContextKey.PLAYER).ifPresent(player -> {
             AttributeInstance miningSpeed = player.getAttribute(UnshatteredAttributeValues.MINING_SPEED.holder);
             if (miningSpeed != null) {
-                miningSpeed.addTransientModifier(new AttributeModifier(ABILITY_IDENTIFIER, 20, AttributeModifier.Operation.ADD_VALUE));
+                miningSpeed.addTransientModifier(new AttributeModifier(abilityIdentifier, mithrilSpeedBoost, AttributeModifier.Operation.ADD_VALUE));
             }
         });
     }
@@ -67,7 +75,7 @@ public class BrokenMithrilPickaxe extends Item implements PassiveAbilityItem {
         context.get(AbilityContextKey.PLAYER).ifPresent(player -> {
             AttributeInstance miningSpeed = player.getAttribute(UnshatteredAttributeValues.MINING_SPEED.holder);
             if (miningSpeed != null) {
-                miningSpeed.removeModifier(ABILITY_IDENTIFIER);
+                miningSpeed.removeModifier(abilityIdentifier);
             }
         });
     }

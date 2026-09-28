@@ -1,6 +1,8 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.abilities.IncrementalAbilityItem;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.enchantments.UnshatteredEnchantmentEffects;
 import io.github.moosyu.util.UnshatteredUtils;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
@@ -9,6 +11,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -90,7 +93,6 @@ public class ItemAttributeModifierHandler {
             event.addModifier(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("crossbow_damage"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
         }
 
-
         for (Object2IntMap.Entry<Holder<Enchantment>> entry : itemStack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY).entrySet()) {
             Optional<ResourceKey<Enchantment>> key = entry.getKey().unwrapKey();
             if (key.isEmpty()) continue;
@@ -101,6 +103,19 @@ public class ItemAttributeModifierHandler {
                 event.addModifier(attributeModificationEffect.getAttributeHolder(),
                         attributeModificationEffect.getAttributeModifier(entry.getIntValue()),
                         attributeModificationEffect.getEquipmentSlotGroup()
+                );
+            }
+        }
+
+        Item item = itemStack.getItem();
+        if (item instanceof IncrementalAbilityItem abilityItem) {
+            for (IncrementalAbilityItem.AttributeStage attributeStage : abilityItem.attributes()) {
+                event.addModifier(attributeStage.attributeHolder(),
+                        new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(item.getDescriptionId() + "_" + attributeStage.attributeHolder().value().getDescriptionId() + "_incremental"),
+                                abilityItem.getMilestone(itemStack) * attributeStage.amountPerMilestone(),
+                                AttributeModifier.Operation.ADD_VALUE
+                        ),
+                        EquipmentSlotGroup.MAINHAND
                 );
             }
         }

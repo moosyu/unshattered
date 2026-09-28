@@ -26,16 +26,18 @@ public abstract class ProjectileWeaponItemMixin {
         List<PassiveAbilityItem> triggeredItems = new ArrayList<>();
 
         if (player != null) {
-            for (PassiveAbilityItem item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredPassiveNonOngoingItems()) {
-                if (!item.triggerTypes().contains(AbilityTriggerType.PLAYER_USE_PROJECTILE_WEAPON_AMMO) || !item.abilityConditionsMet(context)) {
+            for (ItemStack item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredNonOngoingItems()) {
+                if (!(item.getItem() instanceof PassiveAbilityItem passiveAbilityItem)) continue;
+
+                if (!passiveAbilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_USE_PROJECTILE_WEAPON_AMMO) || !passiveAbilityItem.abilityConditionsMet(context)) {
                     continue;
                 }
 
-                item.onAbilityTriggered(context);
-                triggeredItems.add(item);
+                passiveAbilityItem.onAbilityTriggered(context);
+                triggeredItems.add(passiveAbilityItem);
 
 
-                Optional<?> result = item.triggerResult();
+                Optional<?> result = passiveAbilityItem.triggerResult();
                 if (result.isPresent() && result.get() == AbilityTriggerResult.CANCEL_EVENT) {
                     finishTriggeredItems(triggeredItems, context);
                     cir.setReturnValue(projectile.copyWithCount(1));

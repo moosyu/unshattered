@@ -1,9 +1,6 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.abilities.AbilityContext;
-import io.github.moosyu.abilities.AbilityContextKey;
-import io.github.moosyu.abilities.AbilityTriggerType;
-import io.github.moosyu.abilities.PassiveAbilityItem;
+import io.github.moosyu.abilities.*;
 import io.github.moosyu.data.drops.BlockBreakData;
 import io.github.moosyu.data.regen.RegenClientCache;
 import io.github.moosyu.data.regen.RegenPaths;
@@ -12,14 +9,12 @@ import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
-import io.github.moosyu.data.datagen.UnshatteredBlockTagsProvider;
 import io.github.moosyu.util.*;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -104,7 +99,18 @@ public class BlockBreakHandler {
 
         if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.MINING) {
             AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player).add(AbilityContextKey.BLOCKSTATE, blockState);
-            List<PassiveAbilityItem> relevantPassiveItems = UnshatteredUtils.triggerInstantPassiveAbilities(player, AbilityTriggerType.PLAYER_BREAK_MINING_BLOCK, context);
+            List<PassiveAbilityItem> triggered = new ArrayList<>();
+
+            for (ItemStack item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredNonOngoingItems()) {
+                if (item.getItem() instanceof AbilityItem abilityItem && abilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_BREAK_MINING_BLOCK)) {
+                    if (abilityItem instanceof PassiveAbilityItem passiveAbilityItem && passiveAbilityItem.abilityConditionsMet(context)) {
+                        passiveAbilityItem.onAbilityTriggered(context);
+                        triggered.add(passiveAbilityItem);
+                    } else if (abilityItem instanceof IncrementalAbilityItem incrementalAbilityItem) {
+                        incrementalAbilityItem.addIncrements(item, 1);
+                    }
+                }
+            }
 
             UnshatteredUtils.addBlockBrokenResultToInventory(blockHolder, player, UnshatteredAttributeValues.MINING_FORTUNE);
 
@@ -116,7 +122,7 @@ public class BlockBreakHandler {
             ServerLevel serverLevel = (ServerLevel) level;
             serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID).destroyRegeneratingBlock(blockPos, serverLevel);
 
-            relevantPassiveItems.forEach(item -> item.onAbilityFinished(context));
+            triggered.forEach(item -> item.onAbilityFinished(context));
         } else if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.FARMING) {
             UnshatteredUtils.addBlockBrokenResultToInventory(blockHolder, player, UnshatteredAttributeValues.FARMING_FORTUNE);
 

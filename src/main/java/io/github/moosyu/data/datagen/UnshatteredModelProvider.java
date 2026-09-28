@@ -105,6 +105,8 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_BONE.get(), Items.BONE, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.COINS_TALISMAN.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.BROKEN_MITHRIL_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.BANDAGED_MITHRIL_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.MITHRIL_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.MITHRIL.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_MITHRIL.get(), ModelTemplates.createItem(UnshatteredItems.MITHRIL.getRegisteredName()));
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_FLINT.get(), Items.FLINT, ModelTemplates.FLAT_ITEM);
@@ -169,6 +171,10 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.TITANIUM.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_TITANIUM.get(), UnshatteredItems.TITANIUM.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.RUSTED_TITANIUM_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.TITANIUM_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.LAPIS_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ZOMBIE_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.PROMISING_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_GOLD_BLOCK.get(), Blocks.GOLD_BLOCK);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_DIAMOND_BLOCK.get(), Blocks.DIAMOND_BLOCK);

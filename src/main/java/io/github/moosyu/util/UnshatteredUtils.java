@@ -2,6 +2,7 @@ package io.github.moosyu.util;
 
 import io.github.moosyu.Unshattered;
 import io.github.moosyu.abilities.AbilityContext;
+import io.github.moosyu.abilities.AbilityItem;
 import io.github.moosyu.abilities.AbilityTriggerType;
 import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
@@ -368,10 +369,10 @@ public final class UnshatteredUtils {
     public static List<PassiveAbilityItem> triggerInstantPassiveAbilities(Player player, AbilityTriggerType triggerType, AbilityContext context) {
         List<PassiveAbilityItem> triggered = new ArrayList<>();
 
-        for (PassiveAbilityItem item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredPassiveNonOngoingItems()) {
-            if (item.triggerTypes().contains(triggerType) && item.abilityConditionsMet(context)) {
-                item.onAbilityTriggered(context);
-                triggered.add(item);
+        for (ItemStack item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredNonOngoingItems()) {
+            if (item.getItem() instanceof PassiveAbilityItem passiveAbilityItem && passiveAbilityItem.triggerTypes().contains(triggerType) && passiveAbilityItem.abilityConditionsMet(context)) {
+                passiveAbilityItem.onAbilityTriggered(context);
+                triggered.add(passiveAbilityItem);
             }
         }
         return triggered;

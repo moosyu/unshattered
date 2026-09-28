@@ -80,8 +80,8 @@ public class TalismansMenu extends AbstractContainerMenu {
                 // at this point talismans only need the player context for being added and removed
                 AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, serverPlayer);
 
-                if (!current.isEmpty() && current.getItem() instanceof PassiveAbilityItem newAbilityItem) {
-                    player.getData(UnshatteredAttachments.PLAYER_ABILITIES).addPassiveItem(newAbilityItem, context);
+                if (!current.isEmpty() && current.getItem() instanceof PassiveAbilityItem) {
+                    player.getData(UnshatteredAttachments.PLAYER_ABILITIES).addPassiveItem(current, context);
                     System.out.println("stored passive item added");
                 }
 

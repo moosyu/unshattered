@@ -172,7 +172,32 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
                 .define('C', singleSizedIngredient(UnshatteredItems.ENCHANTED_HONEYCOMB))
                 .unlockedBy(getHasName(UnshatteredItems.ENCHANTED_HONEYCOMB), has(UnshatteredItems.ENCHANTED_HONEYCOMB))
                 .save(output);
-        
+
+        new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.LAPIS_PICKAXE.get()), RecipeCategory.TOOLS)
+                .pattern("LLL", "LIL", "LLL")
+                .define('L', SizedIngredient.of(Items.LAPIS_LAZULI, 64))
+                .define('I', singleSizedIngredient(Items.IRON_PICKAXE))
+                .unlockedBy(getHasName(Items.LAPIS_LAZULI), has(Items.LAPIS_LAZULI))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.TOOLS, UnshatteredItems.PROMISING_PICKAXE)
+                .pattern("III")
+                .pattern(" S ")
+                .pattern(" S ")
+                .define('I', Items.IRON_BLOCK)
+                .define('S', Items.STICK)
+                .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.TOOLS, UnshatteredItems.ZOMBIE_PICKAXE)
+                .pattern("RRR")
+                .pattern(" S ")
+                .pattern(" S ")
+                .define('R', Items.ROTTEN_FLESH)
+                .define('S', Items.STICK)
+                .unlockedBy(getHasName(Items.ROTTEN_FLESH), has(Items.ROTTEN_FLESH))
+                .save(output);
+
         createSimpleEnchantedBook(Enchantments.EFFICIENCY, 1, getHasName(UnshatteredItems.ENCHANTED_COBBLESTONE), has(UnshatteredItems.ENCHANTED_COBBLESTONE), UnshatteredItems.ENCHANTED_COBBLESTONE, 64);
         createSimpleEnchantedBook(Enchantments.SMITE, 1, getHasName(UnshatteredItems.ENCHANTED_ROTTEN_FLESH), has(UnshatteredItems.ENCHANTED_ROTTEN_FLESH), UnshatteredItems.ENCHANTED_ROTTEN_FLESH, 32);
         createSimpleEnchantedBook(Enchantments.SHARPNESS, 1, getHasName(UnshatteredItems.ENCHANTED_FLINT), has(UnshatteredItems.ENCHANTED_FLINT), UnshatteredItems.ENCHANTED_FLINT, 64);

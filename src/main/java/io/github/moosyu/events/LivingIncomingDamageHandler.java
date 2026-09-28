@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
@@ -31,11 +32,15 @@ public class LivingIncomingDamageHandler {
             AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player)
                     .add(AbilityContextKey.DAMAGE_AMOUNT, (double) event.getAmount());
 
-            for (PassiveAbilityItem item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredPassiveNonOngoingItems()) {
-                if (item.triggerTypes().contains(AbilityTriggerType.PLAYER_INCOMING_DAMAGE) && item.abilityConditionsMet(context)) {
-                    item.onAbilityTriggered(context);
-                    triggeredItems.add(item);
-                    if (item.triggerResult().isPresent() && item.triggerResult().get() == AbilityTriggerResult.CANCEL_EVENT) {
+            for (ItemStack item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredNonOngoingItems()) {
+                if (item.getItem() instanceof PassiveAbilityItem passiveAbilityItem
+                        && passiveAbilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_INCOMING_DAMAGE)
+                        && passiveAbilityItem.abilityConditionsMet(context)
+                ) {
+                    passiveAbilityItem.onAbilityTriggered(context);
+                    triggeredItems.add(passiveAbilityItem);
+
+                    if (passiveAbilityItem.triggerResult().isPresent() && passiveAbilityItem.triggerResult().get() == AbilityTriggerResult.CANCEL_EVENT) {
                         triggeredItems.forEach(triggeredItem -> triggeredItem.onAbilityFinished(context));
                         event.setCanceled(true);
                     }

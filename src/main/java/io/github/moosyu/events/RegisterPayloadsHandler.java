@@ -14,14 +14,12 @@ import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.CraftingMenu;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.jspecify.annotations.NonNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static io.github.moosyu.Unshattered.MODID;
 
@@ -162,10 +160,10 @@ public class RegisterPayloadsHandler {
                     PlayerAbilityEffectsAttachment abilities = context.player().getData(UnshatteredAttachments.PLAYER_ABILITIES);
                     AbilityContext abilityContext = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) context.player());
 
-                    for (PassiveAbilityItem item : abilities.getStoredPassiveNonOngoingItems()) {
-                        if (item.triggerTypes().contains(AbilityTriggerType.PLAYER_STARTED_SNEAKING) && item.abilityConditionsMet(abilityContext)) {
-                            item.onAbilityTriggered(abilityContext);
-                            item.onAbilityFinished(abilityContext);
+                    for (ItemStack item : abilities.getStoredNonOngoingItems()) {
+                        if (item.getItem() instanceof PassiveAbilityItem passiveAbilityItem && passiveAbilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_STARTED_SNEAKING) && passiveAbilityItem.abilityConditionsMet(abilityContext)) {
+                            passiveAbilityItem.onAbilityTriggered(abilityContext);
+                            passiveAbilityItem.onAbilityFinished(abilityContext);
                         }
                     }
                 })

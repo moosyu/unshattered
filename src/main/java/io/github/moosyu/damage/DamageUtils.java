@@ -73,11 +73,14 @@ public final class DamageUtils {
             ServerPlayer serverPlayer = (ServerPlayer) player;
 
             if (triggerAbilities) {
-                for (PassiveAbilityItem item : abilities.getStoredPassiveNonOngoingItems()) {
-                    if (item.triggerTypes().contains(AbilityTriggerType.PLAYER_DEAL_DAMAGE) && item.abilityConditionsMet(context)) {
-                        item.onAbilityTriggered(context);
-                        triggeredItems.add(item);
-                        if (item.triggerResult().isPresent() && item.triggerResult().get() == AbilityTriggerResult.CANCEL_EVENT) {
+                for (ItemStack item : abilities.getStoredNonOngoingItems()) {
+                    if (item.getItem() instanceof AbilityItem abilityItem && abilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_DEAL_DAMAGE)
+                            && abilityItem instanceof PassiveAbilityItem passiveAbilityItem
+                            && passiveAbilityItem.abilityConditionsMet(context)
+                    ) {
+                        passiveAbilityItem.onAbilityTriggered(context);
+                        triggeredItems.add(passiveAbilityItem);
+                        if (abilityItem.triggerResult().isPresent() && abilityItem.triggerResult().get() == AbilityTriggerResult.CANCEL_EVENT) {
                             triggeredItems.forEach(triggeredItem -> triggeredItem.onAbilityFinished(context));
                             return;
                         }
@@ -249,13 +252,15 @@ public final class DamageUtils {
             boolean coinLoss = true;
             ServerPlayer serverPlayer = (ServerPlayer) player;
 
-            for (PassiveAbilityItem item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredPassiveNonOngoingItems()) {
-                if (!item.triggerTypes().contains(AbilityTriggerType.PLAYER_TAKE_DAMAGE) || !item.abilityConditionsMet(context)) continue;
+            for (ItemStack item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredNonOngoingItems()) {
+                if (!(item.getItem() instanceof PassiveAbilityItem passiveAbilityItem)) continue;
 
-                item.onAbilityTriggered(context);
-                triggeredItems.add(item);
+                if (!passiveAbilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_TAKE_DAMAGE) ||  !passiveAbilityItem.abilityConditionsMet(context)) continue;
 
-                AbilityTriggerResult result = item.triggerResult().map(trigger -> {
+                passiveAbilityItem.onAbilityTriggered(context);
+                triggeredItems.add(passiveAbilityItem);
+
+                AbilityTriggerResult result = passiveAbilityItem.triggerResult().map(trigger -> {
                     if (trigger instanceof AbilityTriggerResult abilityTrigger) {
                         return abilityTrigger;
                     }

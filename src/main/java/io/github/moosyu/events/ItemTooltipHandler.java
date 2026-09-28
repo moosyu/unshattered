@@ -1,5 +1,6 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.abilities.IncrementalAbilityItem;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.data.components.ItemAbility;
@@ -34,6 +35,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static io.github.moosyu.Unshattered.MODID;
 
@@ -45,20 +47,20 @@ public class ItemTooltipHandler {
         if (event.getEntity() != null && !event.getEntity().level().isClientSide()) return;
         Player player = event.getEntity();
         if (player == null) return;
-        ItemStack stack = event.getItemStack();
+        ItemStack itemStack = event.getItemStack();
         List<Component> tooltipComponents = event.getToolTip();
-        UnshatteredRarities itemRarity = stack.getOrDefault(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.COMMON);
-        ItemTypes itemType = stack.getOrDefault(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.ITEM);
+        UnshatteredRarities itemRarity = itemStack.getOrDefault(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.COMMON);
+        ItemTypes itemType = itemStack.getOrDefault(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.ITEM);
         boolean hasAttributes = false;
-        boolean itemDescription = Boolean.TRUE.equals(stack.get(UnshatteredDataComponents.DESCRIPTION.get()));
-        ItemAbility itemAbility = stack.get(UnshatteredDataComponents.ABILITY);
-        ItemCharges itemCharges = stack.get(UnshatteredDataComponents.CHARGES);
-        int sellPrice = stack.getOrDefault(UnshatteredDataComponents.SELL_VALUE, 0) * stack.count();
-        ItemAttributeModifiers modifiers = stack.getAttributeModifiers();
-        ItemEnchantments itemEnchantments = stack.get(DataComponents.STORED_ENCHANTMENTS);
+        boolean itemDescription = Boolean.TRUE.equals(itemStack.get(UnshatteredDataComponents.DESCRIPTION.get()));
+        ItemAbility itemAbility = itemStack.get(UnshatteredDataComponents.ABILITY);
+        ItemCharges itemCharges = itemStack.get(UnshatteredDataComponents.CHARGES);
+        int sellPrice = itemStack.getOrDefault(UnshatteredDataComponents.SELL_VALUE, 0) * itemStack.count();
+        ItemAttributeModifiers modifiers = itemStack.getAttributeModifiers();
+        ItemEnchantments itemEnchantments = itemStack.get(DataComponents.STORED_ENCHANTMENTS);
 
         event.getToolTip().clear();
-        tooltipComponents.add(Component.translatable(stack.getItemName().getString()).withColor(itemRarity.getColour(1.0f)));
+        tooltipComponents.add(Component.translatable(itemStack.getItemName().getString()).withColor(itemRarity.getColour(1.0f)));
 
         if (!modifiers.modifiers().isEmpty()) {
             Map<Holder<Attribute>, double[]> mergedAmounts = new LinkedHashMap<>();
@@ -100,7 +102,7 @@ public class ItemTooltipHandler {
         if (itemDescription) {
             if (hasAttributes) tooltipComponents.add(Component.empty());
 
-            addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.description.unshattered." + BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath()).getString(), 0xFFAAAAAA), MAX_WIDTH);
+            addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.description.unshattered." + BuiltInRegistries.ITEM.getKey(itemStack.getItem()).getPath()).getString(), 0xFFAAAAAA), MAX_WIDTH);
         }
 
         // for enchanted books
@@ -135,7 +137,7 @@ public class ItemTooltipHandler {
                 }
             }
         } else {
-            Iterator<Object2IntMap.Entry<Holder<Enchantment>>> iterator = stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY).entrySet().iterator();
+            Iterator<Object2IntMap.Entry<Holder<Enchantment>>> iterator = itemStack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY).entrySet().iterator();
 
             if ((iterator.hasNext())) {
                 MutableComponent enchantmentComponent = Component.empty();
@@ -176,6 +178,21 @@ public class ItemTooltipHandler {
                 if (itemAbility.manaCost() > 0) tooltipComponents.add(Component.literal("Mana Cost: ").withColor(0xFF555555).append(Component.literal(String.valueOf(itemAbility.manaCost())).withColor(0xFF00AAAA)));
                 if (itemAbility.cooldown() > 0) tooltipComponents.add(Component.literal("Cooldown: ").withColor(0xFF555555).append(Component.literal(String.format("%.1f", (float) itemAbility.cooldown() / 20 /* convert ticks to seconds */)).append("s").withColor(0xFF55FF55)));
                 if (itemCharges != null) tooltipComponents.add(Component.literal("Charges: ").withColor(0xFF555555).append(Component.literal(String.valueOf(itemCharges.currentCharges())).withColor(0xFFFFFF55)).append(Component.literal("/").withColor(0xFF555555)).append(Component.literal((itemCharges.rechargeTime() / 20) + "s").withColor(0xFF55FF55)));
+            }
+
+            if (itemStack.getItem() instanceof IncrementalAbilityItem incrementalAbilityItem) {
+                tooltipComponents.add(Component.literal("(Max "
+                        + incrementalAbilityItem.attributes().stream().map(incremental -> "+"
+                                + (incrementalAbilityItem.getMilestone(itemStack) * incremental.amountPerMilestone())
+                                + UnshatteredAttributeValues.fromAttribute(incremental.attributeHolder().value()).symbol)
+                        .collect(Collectors.joining(", "))
+                        + ")"
+                ).withColor(0xFF555555));
+                tooltipComponents.add(Component.empty());
+                tooltipComponents.add(Component.translatable(incrementalAbilityItem.incrementNameKey()).withColor(0xFFAAAAAA)
+                        .append(Component.literal(": "))
+                        .append(Component.literal(String.valueOf(itemStack.getOrDefault(UnshatteredDataComponents.INCREMENTS_STORED.get(), 0))).withColor(0xFF55FF55))
+                );
             }
         }
 

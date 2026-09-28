@@ -26,8 +26,8 @@ public class LivingEquipmentChangeHandler {
                     abilityEffects.removePassiveItem(oldAbilityItem, context);
                 }
 
-                if (event.getTo().getItem() instanceof PassiveAbilityItem newAbilityItem) {
-                    abilityEffects.addPassiveItem(newAbilityItem, context);
+                if (event.getTo().getItem() instanceof PassiveAbilityItem) {
+                    abilityEffects.addPassiveItem(event.getTo(), context);
                 }
             }
         }

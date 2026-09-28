@@ -185,6 +185,13 @@ public class UnshatteredCreativeTabs {
             output.accept(CHALLENGING_ROD.get());
             output.accept(FISHING_ROD.get());
             output.accept(BROKEN_MITHRIL_PICKAXE.get());
+                output.accept(BANDAGED_MITHRIL_PICKAXE.get());
+                output.accept(MITHRIL_PICKAXE.get());
+            output.accept(RUSTED_TITANIUM_PICKAXE.get());
+            output.accept(TITANIUM_PICKAXE.get());
+            output.accept(LAPIS_PICKAXE.get());
+            output.accept(ZOMBIE_PICKAXE.get());
+            output.accept(PROMISING_PICKAXE.get());
         }).build()
     );
 
@@ -209,7 +216,6 @@ public class UnshatteredCreativeTabs {
             output.accept(IRON_DAGGER.get());
             output.accept(EMERALD_DAGGER.get());
             output.accept(ARTISANAL_SHORTBOW.get());
-            output.accept(RUSTED_TITANIUM_PICKAXE.get());
         }).build()
     );
 
