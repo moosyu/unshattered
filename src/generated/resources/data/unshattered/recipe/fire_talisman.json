@@ -1,0 +1,21 @@
+{
+  "type": "unshattered:sized_recipe",
+  "key": {
+    "B": {
+      "count": 8,
+      "ingredient": "unshattered:enchanted_blaze_powder"
+    },
+    "G": {
+      "count": 1,
+      "ingredient": "unshattered:enchanted_gold_ingot"
+    }
+  },
+  "pattern": [
+    "GGG",
+    "GBG",
+    "GGG"
+  ],
+  "result": {
+    "id": "unshattered:fire_talisman"
+  }
+}

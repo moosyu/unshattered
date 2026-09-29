@@ -164,6 +164,7 @@ public class ModifyDefaultComponentsHandler {
         modifyVanillaItem(event, Items.TROPICAL_FISH, ItemTypes.MATERIAL, 20);
         modifyVanillaItem(event, Items.HONEYCOMB, ItemTypes.MATERIAL, 100);
         modifyVanillaItem(event, Items.ICE, ItemTypes.MATERIAL, 1);
+        modifyVanillaItem(event, Items.BLAZE_ROD, ItemTypes.MATERIAL, 9);
     }
 
     /**

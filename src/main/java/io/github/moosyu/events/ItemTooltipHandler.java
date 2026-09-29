@@ -183,7 +183,7 @@ public class ItemTooltipHandler {
             if (itemStack.getItem() instanceof IncrementalAbilityItem incrementalAbilityItem) {
                 tooltipComponents.add(Component.literal("(Max "
                         + incrementalAbilityItem.attributes().stream().map(incremental -> "+"
-                                + (incrementalAbilityItem.getMilestone(itemStack) * incremental.amountPerMilestone())
+                                + (incrementalAbilityItem.maxMilestone() * incremental.amountPerMilestone())
                                 + UnshatteredAttributeValues.fromAttribute(incremental.attributeHolder().value()).symbol)
                         .collect(Collectors.joining(", "))
                         + ")"

@@ -3,6 +3,7 @@ package io.github.moosyu.blocks;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HalfTransparentBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -185,8 +186,9 @@ public class UnshatteredBlocks {
     );
 
     public static final DeferredBlock<Block> BREAKABLE_ICE_BLOCK = BLOCKS.registerBlock("breakable_ice_block",
-            props -> new Block(props.destroyTime(0.5f)
+            props -> new HalfTransparentBlock(props.destroyTime(0.5f)
                     .sound(SoundType.GLASS)
+                    .noOcclusion()
             )
     );
 

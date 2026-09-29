@@ -37,6 +37,7 @@ public class UnshatteredItemTagsProvider extends ItemTagsProvider {
         tag(ItemTags.AXES).add(DECENT_AXE.get());
         tag(ItemTags.AXES).add(FIG_HEW.get());
         tag(ItemTags.AXES).add(FIGSTONE_SPLITTER.get());
+        tag(ItemTags.AXES).add(PROMISING_AXE.get());
         tag(ItemTags.PICKAXES).add(BROKEN_MITHRIL_PICKAXE.get());
         tag(ItemTags.PICKAXES).add(RUSTED_TITANIUM_PICKAXE.get());
         tag(ItemTags.PICKAXES).add(TITANIUM_PICKAXE.get());

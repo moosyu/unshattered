@@ -6,6 +6,7 @@ import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.data.regions.UnshatteredRegions;
 import io.github.moosyu.items.armours.SkeletonHat;
 import io.github.moosyu.items.talismans.*;
+import io.github.moosyu.items.tools.axes.PromisingAxe;
 import io.github.moosyu.items.tools.axes.RegionLockedFortuneAxe;
 import io.github.moosyu.items.tools.axes.UnshatteredAxeTool;
 import io.github.moosyu.items.tools.pickaxes.*;
@@ -861,4 +862,18 @@ public class UnshatteredItems {
     public static final DeferredItem<Item> ZOMBIE_PICKAXE = ITEMS.registerItem("zombie_pickaxe", ZombiePickaxe::new);
 
     public static final DeferredItem<Item> PROMISING_PICKAXE = ITEMS.registerItem("promising_pickaxe", PromisingPickaxe::new);
+
+    public static final DeferredItem<Item> PROMISING_AXE = ITEMS.registerItem("promising_axe", PromisingAxe::new);
+
+    public static final DeferredItem<Item> FIRE_TALISMAN = ITEMS.registerItem("fire_talisman", FireTalisman::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_BLAZE_POWDER = ITEMS.registerItem("enchanted_blaze_powder", props -> new EnchantedItem(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 1440)
+            .component(UnshatteredDataComponents.RARITY, UnshatteredRarities.UNCOMMON))
+    );
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_BLAZE_ROD = ITEMS.registerItem("enchanted_blaze_rod", props -> new EnchantedItem(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 230400)
+            .component(UnshatteredDataComponents.RARITY, UnshatteredRarities.RARE))
+    );
 }

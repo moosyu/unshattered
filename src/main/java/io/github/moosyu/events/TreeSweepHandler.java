@@ -10,13 +10,12 @@ import io.github.moosyu.data.regen.RegenSavedData;
 import io.github.moosyu.util.UnshatteredUtils;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -73,7 +72,15 @@ public class TreeSweepHandler {
             // unless something has gone horribly wrong the "player" value in tasks should be the same in every index
             Player player = tasks.getFirst().player();
             AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player);
-            List<PassiveAbilityItem> relevantPassiveItems = UnshatteredUtils.triggerInstantPassiveAbilities(player, AbilityTriggerType.TREE_BREAK_INSTANCE_FINISH, context);
+            List<PassiveAbilityItem> triggered = new ArrayList<>();
+
+            for (ItemStack itemStack : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredNonOngoingItems()) {
+                if (itemStack.getItem() instanceof PassiveAbilityItem passiveAbilityItem && passiveAbilityItem.triggerTypes().contains(AbilityTriggerType.TREE_BREAK_INSTANCE_FINISH) && passiveAbilityItem.abilityConditionsMet(context)) {
+                    passiveAbilityItem.onAbilityTriggered(context);
+                    triggered.add(passiveAbilityItem);
+                }
+            }
+
             PlayerSkillsAttachment skills = player.getData(PLAYER_SKILLS.get());
             // a little more sketchy but i probably wont mix and match logs so this should be fine
             float expReward = 0.0f;
@@ -90,7 +97,7 @@ public class TreeSweepHandler {
             skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, expReward, player);
             player.syncData(PLAYER_SKILLS);
 
-            relevantPassiveItems.forEach(item -> item.onAbilityFinished(context));
+            triggered.forEach(item -> item.onAbilityFinished(context));
         }
     }
 
@@ -113,12 +120,26 @@ public class TreeSweepHandler {
 
             UnshatteredUtils.addBlockBrokenResultToInventory(startBlock.typeHolder(), player, UnshatteredAttributeValues.FORAGING_FORTUNE);
 
+            for (ItemStack itemStack : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredNonOngoingItems()) {
+                if (itemStack.getItem() instanceof IncrementalAbilityItem incrementalAbilityItem && incrementalAbilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_BREAK_SWEEP_BLOCK)) {
+                    incrementalAbilityItem.addIncrements(itemStack, 1);
+                }
+            }
+
             return;
         }
 
         Queue<BreakTask> result = breakConnectedLogs(level, startPos, player, sweep);
         result.add(new BreakTask(level, startPos, player, startBlock));
         ACTIVE_BREAKS.add(new TreeBreakInstance(new ArrayList<>(result)));
+
+        for (ItemStack itemStack : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredNonOngoingItems()) {
+            if (itemStack.getItem() instanceof IncrementalAbilityItem incrementalAbilityItem
+                    && incrementalAbilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_BREAK_SWEEP_BLOCK)
+            ) {
+                incrementalAbilityItem.addIncrements(itemStack, result.size());
+            }
+        }
     }
 
     private static Queue<BreakTask> breakConnectedLogs(Level level, BlockPos startPos, Player player, int sweep) {

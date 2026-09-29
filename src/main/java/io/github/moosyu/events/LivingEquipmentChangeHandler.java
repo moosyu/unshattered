@@ -2,11 +2,13 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.abilities.AbilityContext;
 import io.github.moosyu.abilities.AbilityContextKey;
+import io.github.moosyu.abilities.AbilityItem;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.abilities.PassiveAbilityItem;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
@@ -22,11 +24,12 @@ public class LivingEquipmentChangeHandler {
                 PlayerAbilityEffectsAttachment abilityEffects = player.getData(UnshatteredAttachments.PLAYER_ABILITIES);
                 AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, serverPlayer);
 
-                if (event.getFrom().getItem() instanceof PassiveAbilityItem oldAbilityItem) {
-                    abilityEffects.removePassiveItem(oldAbilityItem, context);
+                Item fromItem = event.getFrom().getItem();
+                if (fromItem instanceof AbilityItem) {
+                    abilityEffects.removePassiveItem(event.getFrom(), context);
                 }
 
-                if (event.getTo().getItem() instanceof PassiveAbilityItem) {
+                if (event.getTo().getItem() instanceof AbilityItem) {
                     abilityEffects.addPassiveItem(event.getTo(), context);
                 }
             }

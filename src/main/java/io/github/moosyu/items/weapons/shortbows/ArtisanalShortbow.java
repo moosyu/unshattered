@@ -12,6 +12,7 @@ public class ArtisanalShortbow extends ShortbowItem {
     public ArtisanalShortbow(Properties properties) {
         super(properties.component(UnshatteredDataComponents.SELL_VALUE.get(), 100)
                 .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON)
+                .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
                 .attributes(ItemAttributeModifiers.builder()
                         .add(UnshatteredAttributeValues.DAMAGE.holder,
                                 new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("artisanal_shortbow"),

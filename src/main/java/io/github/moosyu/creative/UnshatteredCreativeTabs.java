@@ -152,6 +152,8 @@ public class UnshatteredCreativeTabs {
             output.accept(ENCHANTED_PACKED_ICE);
             output.accept(TITANIUM);
             output.accept(ENCHANTED_TITANIUM);
+            output.accept(ENCHANTED_BLAZE_POWDER);
+            output.accept(ENCHANTED_BLAZE_ROD);
         }).build()
     );
 
@@ -192,6 +194,7 @@ public class UnshatteredCreativeTabs {
             output.accept(LAPIS_PICKAXE.get());
             output.accept(ZOMBIE_PICKAXE.get());
             output.accept(PROMISING_PICKAXE.get());
+            output.accept(PROMISING_AXE.get());
         }).build()
     );
 
@@ -234,6 +237,7 @@ public class UnshatteredCreativeTabs {
                         output.accept(HONEYCOMB_RING.get());
                     output.accept(BLOOD_CHALICE.get());
                     output.accept(INFINITE_QUIVER.get());
+                    output.accept(FIRE_TALISMAN.get());
                 }).build()
     );
 }

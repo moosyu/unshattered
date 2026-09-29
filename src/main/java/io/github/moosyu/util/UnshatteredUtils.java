@@ -338,7 +338,7 @@ public final class UnshatteredUtils {
     public static boolean passesManaCheck(Player player, int manaCost) {
         double playerManaAmount = player.getData(UnshatteredAttachments.PLAYER_STATE.get()).getStatValue(PlayerStateAttachment.Stat.MANA);
         if (playerManaAmount < manaCost) {
-            player.sendSystemMessage(Component.literal("You don't have enough mana to use this " + "(" + Mth.ceil(playerManaAmount) + "/" + manaCost + ").").withColor(ERROR_COLOR));
+            player.sendSystemMessage(Component.literal("You don't have enough mana to use this " + "(" + ((int) (playerManaAmount)) + "/" + manaCost + ").").withColor(ERROR_COLOR));
             return false;
         }
         return true;

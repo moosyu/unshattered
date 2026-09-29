@@ -1,5 +1,6 @@
 package io.github.moosyu.data.datagen;
 
+import io.github.moosyu.Unshattered;
 import io.github.moosyu.items.UnshatteredItems;
 import io.github.moosyu.data.recipes.SizedItemRecipeBuilder;
 import io.github.moosyu.data.recipes.SizedShapedRecipePattern;
@@ -196,6 +197,25 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
                 .define('R', Items.ROTTEN_FLESH)
                 .define('S', Items.STICK)
                 .unlockedBy(getHasName(Items.ROTTEN_FLESH), has(Items.ROTTEN_FLESH))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.TOOLS, UnshatteredItems.PROMISING_AXE)
+                .pattern("II ")
+                .pattern("IS ")
+                .pattern(" S ")
+                .define('I', Items.IRON_BLOCK)
+                .define('S', Items.STICK)
+                .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
+                .save(output);
+
+        createEnchantedItemRecipe(Items.BLAZE_ROD, UnshatteredItems.ENCHANTED_BLAZE_POWDER.get(), getHasName(Items.BLAZE_ROD), has(Items.BLAZE_ROD));
+        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_BLAZE_POWDER, UnshatteredItems.ENCHANTED_BLAZE_ROD.get(), getHasName(UnshatteredItems.ENCHANTED_BLAZE_POWDER), has(UnshatteredItems.ENCHANTED_BLAZE_POWDER));
+
+        new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.FIRE_TALISMAN.get()), RecipeCategory.MISC)
+                .pattern("GGG", "GBG", "GGG")
+                .define('B', SizedIngredient.of(UnshatteredItems.ENCHANTED_BLAZE_POWDER, 8))
+                .define('G', singleSizedIngredient(UnshatteredItems.ENCHANTED_GOLD_INGOT))
+                .unlockedBy(getHasName(UnshatteredItems.ENCHANTED_BLAZE_POWDER), has(UnshatteredItems.ENCHANTED_BLAZE_POWDER))
                 .save(output);
 
         createSimpleEnchantedBook(Enchantments.EFFICIENCY, 1, getHasName(UnshatteredItems.ENCHANTED_COBBLESTONE), has(UnshatteredItems.ENCHANTED_COBBLESTONE), UnshatteredItems.ENCHANTED_COBBLESTONE, 64);

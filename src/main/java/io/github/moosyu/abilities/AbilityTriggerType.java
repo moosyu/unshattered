@@ -1,13 +1,13 @@
 package io.github.moosyu.abilities;
 
-import io.github.moosyu.items.ItemTypes;
 import io.github.moosyu.damage.DamageUtils;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.client.event.MovementInputUpdateEvent;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -51,5 +51,9 @@ public enum AbilityTriggerType {
     /**
      * runs in {@link io.github.moosyu.events.BlockBreakHandler} inside the mining branch, cannot be used to cancel.
      */
-    PLAYER_BREAK_MINING_BLOCK
+    PLAYER_BREAK_MINING_BLOCK,
+    /**
+     * runs in {@link io.github.moosyu.events.TreeSweepHandler#trySweep(Level, BlockPos, Player)}, added specifically for incremental items
+     */
+    PLAYER_BREAK_SWEEP_BLOCK
 }

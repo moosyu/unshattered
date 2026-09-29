@@ -2,6 +2,7 @@ package io.github.moosyu.gui.menus;
 
 import io.github.moosyu.abilities.AbilityContext;
 import io.github.moosyu.abilities.AbilityContextKey;
+import io.github.moosyu.abilities.AbilityItem;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
@@ -80,13 +81,13 @@ public class TalismansMenu extends AbstractContainerMenu {
                 // at this point talismans only need the player context for being added and removed
                 AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, serverPlayer);
 
-                if (!current.isEmpty() && current.getItem() instanceof PassiveAbilityItem) {
+                if (!current.isEmpty() && current.getItem() instanceof AbilityItem) {
                     player.getData(UnshatteredAttachments.PLAYER_ABILITIES).addPassiveItem(current, context);
                     System.out.println("stored passive item added");
                 }
 
-                if (!previous.isEmpty() && previous.getItem() instanceof PassiveAbilityItem oldAbilityItem) {
-                    player.getData(UnshatteredAttachments.PLAYER_ABILITIES).removePassiveItem(oldAbilityItem, context);
+                if (!previous.isEmpty() && previous.getItem() instanceof AbilityItem) {
+                    player.getData(UnshatteredAttachments.PLAYER_ABILITIES).removePassiveItem(previous, context);
                     System.out.println("stored passive item removed");
                 }
 

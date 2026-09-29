@@ -319,7 +319,6 @@ public final class DamageUtils {
                 states.setStatValue(PlayerStateAttachment.Stat.MANA, player.getAttributeValue(UnshatteredAttributeValues.MANA.holder), player);
                 player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(), TemperatureTypes.BASE_TEMP.getValue());
 
-
                 if (coinsLost > 0) {
                     currency.removeCoins(coinsLost);
                     player.syncData(PLAYER_CURRENCY.get());
@@ -327,6 +326,10 @@ public final class DamageUtils {
 
                 PacketDistributor.sendToPlayer(serverPlayer, new DeathSoundEffectPacket());
                 states.setCancelledKnockback(true);
+
+                if (player.isOnFire()) {
+                    player.clearFire();
+                }
 
                 serverPlayer.getStats().setValue(player, Stats.CUSTOM.get(Stats.TIME_SINCE_DEATH), 0);
                 if (damageSource.getEntity() != null) {

@@ -13,6 +13,7 @@ public interface IncrementalAbilityItem extends AbilityItem  {
     record AttributeStage(Holder<Attribute> attributeHolder, int amountPerMilestone) {}
 
     List<AttributeStage> attributes();
+
     int maxMilestone();
     /**
      * @return the amount of whatever (blocks mined, enemies killed, etc) to reach a milestone
@@ -33,5 +34,4 @@ public interface IncrementalAbilityItem extends AbilityItem  {
      * @return the key for the way the increment is displayed on the tooltip eg the key for "blocks mined"
      */
     String incrementNameKey();
-
 }
