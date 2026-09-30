@@ -1,6 +1,5 @@
 package io.github.moosyu.entities.projectiles;
 
-import io.github.moosyu.items.ItemTypes;
 import io.github.moosyu.damage.DamageUtils;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.SynchedEntityData;

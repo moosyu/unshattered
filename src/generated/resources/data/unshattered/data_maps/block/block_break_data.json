@@ -62,6 +62,10 @@
         }
       ],
       "exp_amount": 25.0,
+      "powder": {
+        "powder_amount": 1,
+        "powder_type": "mithril"
+      },
       "skill": "mining"
     },
     "unshattered:breakable_cobblestone_block": {
@@ -182,6 +186,10 @@
         }
       ],
       "exp_amount": 45.0,
+      "powder": {
+        "powder_amount": 5,
+        "powder_type": "mithril"
+      },
       "skill": "mining"
     },
     "unshattered:breakable_ice_block": {
@@ -294,6 +302,10 @@
         }
       ],
       "exp_amount": 35.0,
+      "powder": {
+        "powder_amount": 2,
+        "powder_type": "mithril"
+      },
       "skill": "mining"
     },
     "unshattered:breakable_spruce_log": {

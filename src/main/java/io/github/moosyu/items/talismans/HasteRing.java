@@ -7,7 +7,7 @@ import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.items.UnshatteredRarities;
+import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -20,7 +20,7 @@ public class HasteRing extends TalismanItem implements PassiveAbilityItem {
 
     public HasteRing(Properties properties) {
         super(properties.component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(ABILITY_IDENTIFIER, 0, 0, 0, true))
-                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON)
+                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.UNCOMMON)
                 .component(UnshatteredDataComponents.SELL_VALUE.get(), 80000)
                 .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
         );

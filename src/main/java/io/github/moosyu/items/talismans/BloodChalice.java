@@ -10,7 +10,7 @@ import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.packets.ClientsidePlayerSoundEffectPacket;
-import io.github.moosyu.items.UnshatteredRarities;
+import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.util.UnshatteredUtils;
 import io.github.moosyu.damage.DamageUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -20,7 +20,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -32,7 +31,7 @@ public class BloodChalice extends TalismanItem implements PassiveAbilityItem {
 
     public BloodChalice(Properties properties) {
         super(properties.component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(ABILITY_IDENTIFIER, 0, 0, 0, true))
-                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.EPIC)
+                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.EPIC)
                 .component(UnshatteredDataComponents.SELL_VALUE.get(), 100000)
                 .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
         );

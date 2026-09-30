@@ -1,7 +1,7 @@
 package io.github.moosyu.items.weapons.shortbows;
 
 import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.items.ItemTypes;
+import io.github.moosyu.items.ItemType;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -22,7 +22,7 @@ import java.util.function.Predicate;
 
 public class ShortbowItem extends ProjectileWeaponItem {
     public ShortbowItem(Properties properties) {
-        super(properties.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.SHORTBOW).stacksTo(1));
+        super(properties.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.SHORTBOW).stacksTo(1));
     }
 
     @Override

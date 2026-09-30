@@ -9,7 +9,7 @@ import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.abilities.PassiveAbilityItem;
-import io.github.moosyu.items.UnshatteredRarities;
+import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,7 +20,7 @@ import java.util.Set;
 public class BatTalisman extends TalismanItem implements PassiveAbilityItem {
     public BatTalisman(Properties properties) {
         super(properties.component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("bat_talisman_leech"), 0, 0, 0, true))
-                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.RARE)
+                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.RARE)
                 .component(UnshatteredDataComponents.SELL_VALUE.get(), 10000)
                 .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
         );

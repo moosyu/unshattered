@@ -94,4 +94,12 @@ public final class UnshatteredAttachments {
             .sync(ByteBufCodecs.INT)
             .build()
     );
+
+    public static final Supplier<AttachmentType<PlayerPowderAttachment>> PLAYER_POWDER = ATTACHMENT_TYPES.register("player_powder", () ->
+            AttachmentType.builder(() -> new PlayerPowderAttachment(PlayerPowderAttachment.PowderBalance.ZERO, PlayerPowderAttachment.PowderBalance.ZERO, PlayerPowderAttachment.PowderBalance.ZERO))
+                    .serialize(PlayerPowderAttachment.CODEC.fieldOf("powder"))
+                    .sync(PlayerPowderAttachment.STREAM_CODEC)
+                    .copyOnDeath()
+                    .build()
+    );
 }

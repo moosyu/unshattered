@@ -81,7 +81,16 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
                 20,
                 18,
                 new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/pets")),
-                _ -> {})).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.pets")));
+                _ -> {})).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.pets"))
+        );
+
+        addRenderableWidget(new SoundlessImageButton(leftPos + 148,
+                topPos + 61,
+                20,
+                18,
+                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/skill_trees")),
+                _ -> {})).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.skill_trees"))
+        );
     }
 
 

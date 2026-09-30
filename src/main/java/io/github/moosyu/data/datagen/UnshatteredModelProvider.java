@@ -38,6 +38,12 @@ public class UnshatteredModelProvider extends ModelProvider {
         super(output, MODID);
     }
 
+    private static final ModelTemplate DRILL = new ModelTemplate(
+            Optional.of(UnshatteredUtils.getUnshatteredIdentifier("item/drill")),
+            Optional.empty(),
+            TextureSlot.LAYER0
+    );
+
     @Override
     protected void registerModels(@NonNull BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
         itemModels.generateFlatItem(UnshatteredItems.MERCENARY_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
@@ -149,25 +155,7 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.BLOOD_CHALICE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.INFINITE_QUIVER.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_HONEYCOMB.get(), Items.HONEYCOMB, ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(UnshatteredItems.ARTISANAL_SHORTBOW.get(), ModelTemplates.FLAT_ITEM.extend()
-                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, builder -> builder
-                        .rotation(-80, 260, -40)
-                        .translation(-1, -2, 2.5f)
-                        .scale(0.9f, 0.9f, 0.9f))
-                .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND, builder -> builder
-                        .rotation(-80, -280, 40)
-                        .translation(-1, -2, 2.5f)
-                        .scale(0.9f, 0.9f, 0.9f))
-                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND, builder -> builder
-                        .rotation(0, -90, 25)
-                        .translation(1.13f, 3.2f, 1.13f)
-                        .scale(0.68f, 0.68f, 0.68f))
-                .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND, builder -> builder
-                        .rotation(0, 90, -25)
-                        .translation(1.13f, 3.2f, 1.13f)
-                        .scale(0.68f, 0.68f, 0.68f))
-                .build()
-        );
+        itemModels.generateFlatItem(UnshatteredItems.ARTISANAL_SHORTBOW.get(), ModelTemplates.BOW);
         itemModels.generateFlatItem(UnshatteredItems.TITANIUM.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_TITANIUM.get(), UnshatteredItems.TITANIUM.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.RUSTED_TITANIUM_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
@@ -179,6 +167,12 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_BLAZE_POWDER.get(), Items.BLAZE_POWDER, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_BLAZE_ROD.get(), Items.BLAZE_ROD, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.FIRE_TALISMAN.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.MITHRIL_DRILL_SX_R226.get(), DRILL);
+        itemModels.generateFlatItem(UnshatteredItems.MITHRIL_DRILL_SX_R326.get(), DRILL);
+        itemModels.generateFlatItem(UnshatteredItems.TITANIUM_DRILL_DR_X355.get(), DRILL);
+        itemModels.generateFlatItem(UnshatteredItems.TITANIUM_DRILL_DR_X455.get(), DRILL);
+        itemModels.generateFlatItem(UnshatteredItems.TITANIUM_DRILL_DR_X555.get(), DRILL);
+        itemModels.generateFlatItem(UnshatteredItems.TITANIUM_DRILL_DR_X655.get(), DRILL);
 
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_GOLD_BLOCK.get(), Blocks.GOLD_BLOCK);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_DIAMOND_BLOCK.get(), Blocks.DIAMOND_BLOCK);

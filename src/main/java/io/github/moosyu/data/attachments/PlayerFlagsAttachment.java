@@ -84,7 +84,6 @@ public final class PlayerFlagsAttachment {
                 PlayerFlagsAttachment data = new PlayerFlagsAttachment();
                 data.addFlags(set);
                 return data;
-                },
-                    attachment -> new HashSet<>(attachment.flags)
+                }, attachment -> new HashSet<>(attachment.flags)
             );
 }

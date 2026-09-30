@@ -1,6 +1,5 @@
 package io.github.moosyu.data.datagen;
 
-import io.github.moosyu.items.UnshatteredItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.ItemTags;
@@ -46,6 +45,12 @@ public class UnshatteredItemTagsProvider extends ItemTagsProvider {
         tag(ItemTags.PICKAXES).add(LAPIS_PICKAXE.get());
         tag(ItemTags.PICKAXES).add(ZOMBIE_PICKAXE.get());
         tag(ItemTags.PICKAXES).add(PROMISING_PICKAXE.get());
+        tag(ItemTags.PICKAXES).add(MITHRIL_DRILL_SX_R226.get());
+        tag(ItemTags.PICKAXES).add(MITHRIL_DRILL_SX_R326.get());
+        tag(ItemTags.PICKAXES).add(TITANIUM_DRILL_DR_X355.get());
+        tag(ItemTags.PICKAXES).add(TITANIUM_DRILL_DR_X455.get());
+        tag(ItemTags.PICKAXES).add(TITANIUM_DRILL_DR_X555.get());
+        tag(ItemTags.PICKAXES).add(TITANIUM_DRILL_DR_X655.get());
         tag(ItemTags.SWORDS).add(ROGUE_SWORD.get());
         tag(ItemTags.SWORDS).add(UNDEAD_SWORD.get());
         tag(ItemTags.SWORDS).add(SQUIRE_SWORD.get());

@@ -55,5 +55,9 @@ public enum AbilityTriggerType {
     /**
      * runs in {@link io.github.moosyu.events.TreeSweepHandler#trySweep(Level, BlockPos, Player)}, added specifically for incremental items
      */
-    PLAYER_BREAK_SWEEP_BLOCK
+    PLAYER_BREAK_SWEEP_BLOCK,
+    /**
+     * runs in {@link io.github.moosyu.events.BlockBreakHandler} inside the mining branch, only for a trigger result to modify the powder
+     */
+    PLAYER_MODIFY_POWDER
 }

@@ -8,8 +8,8 @@ import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.items.ItemTypes;
-import io.github.moosyu.items.UnshatteredRarities;
+import io.github.moosyu.items.ItemType;
+import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
@@ -26,13 +26,13 @@ public class TitaniumPickaxeBase extends Item implements PassiveAbilityItem {
     private final Identifier abilityIdentifier;
     private final int fortuneBoost;
 
-    public TitaniumPickaxeBase(Properties properties, String identifier, int fortuneBoost, int miningSpeed, UnshatteredRarities rarity) {
+    public TitaniumPickaxeBase(Properties properties, String identifier, int fortuneBoost, int miningSpeed, UnshatteredRarity rarity) {
         Identifier abilityId = UnshatteredUtils.getUnshatteredIdentifier(identifier + "_titanium_fanatic");
 
         super(properties.stacksTo(1)
                 .component(UnshatteredDataComponents.RARITY.get(), rarity)
                 .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-                .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.PICKAXE)
+                .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.PICKAXE)
                 .component(UnshatteredDataComponents.SELL_VALUE.get(), 10000)
                 .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(abilityId, 0, 0, 0, true))
                 .attributes(ItemAttributeModifiers.builder()

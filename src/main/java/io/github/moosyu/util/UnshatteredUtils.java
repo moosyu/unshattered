@@ -2,7 +2,6 @@ package io.github.moosyu.util;
 
 import io.github.moosyu.Unshattered;
 import io.github.moosyu.abilities.AbilityContext;
-import io.github.moosyu.abilities.AbilityItem;
 import io.github.moosyu.abilities.AbilityTriggerType;
 import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
@@ -19,7 +18,7 @@ import io.github.moosyu.data.drops.DropTypes;
 import io.github.moosyu.data.fishing.FishingEntry;
 import io.github.moosyu.data.fishing.FishingWeightEntry;
 import io.github.moosyu.events.DataPackRegistryHandler;
-import io.github.moosyu.items.UnshatteredRarities;
+import io.github.moosyu.items.UnshatteredRarity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
@@ -32,7 +31,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -301,7 +299,7 @@ public final class UnshatteredUtils {
 
             if (randomSource.nextFloat() <= modifiedDropChance) {
                 if (fortuneBoosted) {
-                    UnshatteredRarities itemRarity = dropData.itemRange().item().components().getOrDefault(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.COMMON);
+                    UnshatteredRarity itemRarity = dropData.itemRange().item().components().getOrDefault(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.COMMON);
                     player.sendSystemMessage(Component.empty()
                             .append(Component.literal(Component.translatable("drop_type.message.unshattered." + type.key).getString().toUpperCase())
                                     .withStyle(style -> style.withColor(type.colour).withBold(true)))

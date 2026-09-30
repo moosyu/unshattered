@@ -3,7 +3,7 @@ package io.github.moosyu.items.weapons.cleavers;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.data.components.ItemAbility;
-import io.github.moosyu.items.UnshatteredRarities;
+import io.github.moosyu.items.UnshatteredRarity;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -14,7 +14,7 @@ import static io.github.moosyu.Unshattered.MODID;
 
 public class GoldenCleaver extends CleaverItem {
     public GoldenCleaver(Properties properties) {
-        super(properties.component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON)
+        super(properties.component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.UNCOMMON)
                         .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(Identifier.fromNamespaceAndPath(MODID, "golden_cleaver_cleave"), 0, 0, 0, true))
                         .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
                         .component(UnshatteredDataComponents.SELL_VALUE.get(), 80)

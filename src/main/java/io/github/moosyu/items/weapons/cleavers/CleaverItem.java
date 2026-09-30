@@ -6,7 +6,7 @@ import io.github.moosyu.abilities.AbilityTriggerType;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.damage.DamageUtils;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.items.ItemTypes;
+import io.github.moosyu.items.ItemType;
 import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.resources.Identifier;
@@ -29,7 +29,7 @@ public class CleaverItem extends Item implements PassiveAbilityItem {
     private final float cleaveDamageFraction;
 
     public CleaverItem(Properties properties, float radius, float cleaveDamageFraction) {
-        super(properties.stacksTo(1).component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.CLEAVER));
+        super(properties.stacksTo(1).component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.CLEAVER));
         this.radius = radius;
         this.cleaveDamageFraction = cleaveDamageFraction;
     }

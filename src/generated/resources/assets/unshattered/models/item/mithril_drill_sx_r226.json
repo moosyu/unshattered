@@ -1,0 +1,6 @@
+{
+  "parent": "unshattered:item/drill",
+  "textures": {
+    "layer0": "unshattered:item/mithril_drill_sx_r226"
+  }
+}

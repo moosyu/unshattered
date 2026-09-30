@@ -5,8 +5,8 @@ import io.github.moosyu.abilities.IncrementalAbilityItem;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.items.ItemTypes;
-import io.github.moosyu.items.UnshatteredRarities;
+import io.github.moosyu.items.ItemType;
+import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -35,9 +35,9 @@ public class PromisingPickaxe extends Item implements IncrementalAbilityItem {
                                 EquipmentSlotGroup.MAINHAND
                         ).build()
                 )
-                .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.PICKAXE)
+                .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.PICKAXE)
                 .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON)
+                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.UNCOMMON)
                 .component(UnshatteredDataComponents.SELL_VALUE.get(), 10)
                 .component(UnshatteredDataComponents.INCREMENTS_STORED.get(), 0)
                 .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("stored_potential"), 0, 0, 0, true))

@@ -2,7 +2,7 @@ package io.github.moosyu.data.attachments;
 
 import io.github.moosyu.abilities.*;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.items.ItemTypes;
+import io.github.moosyu.items.ItemType;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -257,7 +257,7 @@ public final class PlayerAbilityEffectsAttachment {
         player.getData(UnshatteredAttachments.PLAYER_TALISMAN_STORAGE.get()).forEach(itemStack -> {
             if (!itemStack.isEmpty()
                     && itemStack.getItem() instanceof AbilityItem
-                    && itemStack.get(UnshatteredDataComponents.ITEM_TYPE.get()) == ItemTypes.TALISMAN) {
+                    && itemStack.get(UnshatteredDataComponents.ITEM_TYPE.get()) == ItemType.TALISMAN) {
                 stacks.add(itemStack);
             }
         });

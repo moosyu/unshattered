@@ -1,5 +1,6 @@
 package io.github.moosyu.data.datagen;
 
+import io.github.moosyu.data.attachments.PlayerPowderAttachment;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.drops.BlockBreakData;
@@ -49,7 +50,6 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_LAPIS_ORE_BLOCK, new ItemRange(Items.LAPIS_LAZULI, 4, 9), PlayerSkillsAttachment.Skill.MINING, 7);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.PURE_DIAMOND_BLOCK, new ItemRange(Items.DIAMOND, 8, 10), PlayerSkillsAttachment.Skill.MINING, 20);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_OBSIDIAN_BLOCK, new ItemRange(Items.OBSIDIAN), PlayerSkillsAttachment.Skill.MINING, 20);
-        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_SOFT_MITHRIL_BLOCK, new ItemRange(UnshatteredItems.MITHRIL.get(), 2, 4), PlayerSkillsAttachment.Skill.MINING, 35);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_OAK_LOG_BLOCK, new ItemRange(Items.OAK_LOG), PlayerSkillsAttachment.Skill.FORAGING, 6);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_BIRCH_LOG_BLOCK, new ItemRange(Items.BIRCH_LOG), PlayerSkillsAttachment.Skill.FORAGING, 6);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_SPRUCE_LOG_BLOCK, new ItemRange(Items.SPRUCE_LOG), PlayerSkillsAttachment.Skill.FORAGING, 6);
@@ -62,15 +62,20 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         builder(BLOCK_BREAK_DATA)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_COBBLED_MITHRIL_BLOCK.get()),
                         new BlockBreakData(PlayerSkillsAttachment.Skill.MINING, 25, List.of(new DropData(new ItemRange(UnshatteredItems.MITHRIL.get())),
-                                new DropData(new ItemRange(Items.COBBLESTONE, 1, 3))
-                        )),
-                        false
-                )
-                .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_HARD_MITHRIL_BLOCK.get()),
+                                new DropData(new ItemRange(Items.COBBLESTONE, 1, 3))),
+                                Optional.of(new PlayerPowderAttachment.Powder(PlayerPowderAttachment.PowderType.MITHRIL, 1))
+                        ), false
+                ).add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_SOFT_MITHRIL_BLOCK.get()),
+                        new BlockBreakData(PlayerSkillsAttachment.Skill.MINING,
+                                35,
+                                List.of(new DropData(new ItemRange(UnshatteredItems.MITHRIL.get(), 2, 4))),
+                                Optional.of(new PlayerPowderAttachment.Powder(PlayerPowderAttachment.PowderType.MITHRIL, 2))
+                        ), false
+                ).add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_HARD_MITHRIL_BLOCK.get()),
                         new BlockBreakData(PlayerSkillsAttachment.Skill.MINING, 45, List.of(new DropData(new ItemRange(UnshatteredItems.MITHRIL.get(), 2, 5)),
-                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_MITHRIL.get()), 0.01f)
-                        )),
-                        false
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_MITHRIL.get()), 0.01f)),
+                                Optional.of(new PlayerPowderAttachment.Powder(PlayerPowderAttachment.PowderType.MITHRIL, 5))
+                        ), false
                 );
 
         this.builder(FISHABLE_ITEMS_EXP_DATA)

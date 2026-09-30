@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.util.StringRepresentable;
 import org.jspecify.annotations.NonNull;
 
-public enum ItemTypes implements StringRepresentable {
+public enum ItemType implements StringRepresentable {
     ITEM("item", false),
     FISH("fish", false),
     LOG("log", false),
@@ -30,19 +30,20 @@ public enum ItemTypes implements StringRepresentable {
     MATERIAL("material", false),
     CLEAVER("cleaver", true),
     PICKAXE("pickaxe", true),
+    DRILL("drill", true),
     ENCHANTED_BOOK("enchanted_book", false);
 
     private final String serializedName;
     private final boolean reforgeable;
     private final int invulnerability;
 
-    ItemTypes(String serializedName, boolean reforgeable, int invulnerability) {
+    ItemType(String serializedName, boolean reforgeable, int invulnerability) {
         this.serializedName = serializedName;
         this.reforgeable = reforgeable;
         this.invulnerability = invulnerability;
     }
 
-    ItemTypes(String serializedName, boolean reforgeable) {
+    ItemType(String serializedName, boolean reforgeable) {
         this.serializedName = serializedName;
         this.reforgeable = reforgeable;
         this.invulnerability = 10;
@@ -61,6 +62,6 @@ public enum ItemTypes implements StringRepresentable {
         return invulnerability;
     }
 
-    public static final Codec<ItemTypes> CODEC = StringRepresentable.fromEnum(ItemTypes::values);
+    public static final Codec<ItemType> CODEC = StringRepresentable.fromEnum(ItemType::values);
 
 }

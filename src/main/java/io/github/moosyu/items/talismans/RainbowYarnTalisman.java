@@ -4,7 +4,7 @@ import io.github.moosyu.abilities.*;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.packets.ClientsidePlayerSoundEffectPacket;
-import io.github.moosyu.items.UnshatteredRarities;
+import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
@@ -19,7 +19,7 @@ public class RainbowYarnTalisman extends TalismanItem implements PassiveAbilityI
 
     public RainbowYarnTalisman(Properties properties) {
         super(properties.component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON)
+                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.UNCOMMON)
                 .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(ABILITY_IDENTIFIER,
                         0,
                         0,

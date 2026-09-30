@@ -7,7 +7,7 @@ import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.damage.DamageUtils;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.items.ItemTypes;
+import io.github.moosyu.items.ItemType;
 import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.items.UnshatteredArmourMaterials;
 import io.github.moosyu.util.UnshatteredUtils;
@@ -29,25 +29,19 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.Equippable;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
-import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.items.UnshatteredArmourMaterials.LEAFLET_ARMOUR_MATERIAL;
 
 public class SkeletonHat extends Item implements PassiveAbilityItem {
     private static final Identifier ABILITY_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("skeleton_hat_explosive_arrows");
     public static ResourceKey<EquipmentAsset> SKELETON_HAT_KEY = ResourceKey.create(UnshatteredArmourMaterials.ROOT_ID, UnshatteredUtils.getUnshatteredIdentifier("skeleton_hat"));
 
     public SkeletonHat(Properties properties) {
-        super(properties.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.HELMET)
+        super(properties.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.HELMET)
                 .component(DataComponents.EQUIPPABLE,
                         Equippable.builder(EquipmentSlot.HEAD)
                                 .setEquipSound(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.SKELETON_AMBIENT))
@@ -142,8 +136,8 @@ public class SkeletonHat extends Item implements PassiveAbilityItem {
 
     @Override
     public boolean abilityConditionsMet(AbilityContext context) {
-        return (context.get(AbilityContextKey.ITEM_TYPE).map(itemType -> itemType == ItemTypes.BOW
-                || itemType == ItemTypes.SHORTBOW).orElse(false))
+        return (context.get(AbilityContextKey.ITEM_TYPE).map(itemType -> itemType == ItemType.BOW
+                || itemType == ItemType.SHORTBOW).orElse(false))
                 && context.get(AbilityContextKey.PLAYER).map(player -> player.getRandom().nextInt(5) == 0).orElse(false);
     }
 

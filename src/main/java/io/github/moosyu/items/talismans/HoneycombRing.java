@@ -8,14 +8,13 @@ import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.entities.UnshatteredEntities;
 import io.github.moosyu.entities.projectiles.HomingBee;
-import io.github.moosyu.items.UnshatteredRarities;
+import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -24,7 +23,7 @@ import java.util.Set;
 public class HoneycombRing extends TalismanItem implements PassiveAbilityItem {
     public HoneycombRing(Properties properties) {
         super(properties.component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("apian_aegis"), 0, 0, 0, true))
-                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.RARE)
+                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.RARE)
                 .component(UnshatteredDataComponents.SELL_VALUE.get(), 150000)
                 .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
         );

@@ -1,6 +1,9 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.abilities.*;
+import io.github.moosyu.data.attachments.PlayerPowderAttachment;
+import io.github.moosyu.data.components.ItemFuel;
+import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.data.drops.BlockBreakData;
 import io.github.moosyu.data.regen.RegenClientCache;
 import io.github.moosyu.data.regen.RegenPaths;
@@ -100,14 +103,21 @@ public class BlockBreakHandler {
         if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.MINING) {
             AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player).add(AbilityContextKey.BLOCKSTATE, blockState);
             List<PassiveAbilityItem> triggered = new ArrayList<>();
+            float powderModifiedAmount = 1.0f;
 
             for (ItemStack item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredNonOngoingItems()) {
-                if (item.getItem() instanceof AbilityItem abilityItem && abilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_BREAK_MINING_BLOCK)) {
+                if (!(item.getItem() instanceof AbilityItem abilityItem)) continue;
+
+                if (abilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_BREAK_MINING_BLOCK)) {
                     if (abilityItem instanceof PassiveAbilityItem passiveAbilityItem && passiveAbilityItem.abilityConditionsMet(context)) {
                         passiveAbilityItem.onAbilityTriggered(context);
                         triggered.add(passiveAbilityItem);
                     } else if (abilityItem instanceof IncrementalAbilityItem incrementalAbilityItem) {
                         incrementalAbilityItem.addIncrements(item, 1);
+                    }
+                } else if (abilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_MODIFY_POWDER) && abilityItem instanceof PassiveAbilityItem passiveAbilityItem) {
+                    if (passiveAbilityItem.triggerResult().orElse(null) instanceof Float amount) {
+                        powderModifiedAmount += amount;
                     }
                 }
             }
@@ -119,8 +129,25 @@ public class BlockBreakHandler {
                 player.syncData(PLAYER_SKILLS);
             }
 
+            final float finalPowderModifiedAmount = powderModifiedAmount;
+            blockBreakData.powder().ifPresent(powder -> player.getData(UnshatteredAttachments.PLAYER_POWDER)
+                    .addPowder(
+                            player,
+                            powder.powderType(),
+                            (int) (powder.powderAmount() * finalPowderModifiedAmount)
+                    )
+            );
+
             ServerLevel serverLevel = (ServerLevel) level;
             serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID).destroyRegeneratingBlock(blockPos, serverLevel);
+
+            // just assuming the mainhand item is the mining tool, i hope this doesnt bite me later on but drills only apply attributes in mainhand so we'll see how it goes
+            ItemStack itemStack = player.getMainHandItem();
+            ItemFuel itemFuel = itemStack.get(UnshatteredDataComponents.FUEL.get());
+
+            if (itemFuel != null) {
+                itemStack.set(UnshatteredDataComponents.FUEL.get(), new ItemFuel(itemFuel.maxFuel(), itemFuel.currentFuel() - 1));
+            }
 
             triggered.forEach(item -> item.onAbilityFinished(context));
         } else if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.FARMING) {
@@ -167,8 +194,13 @@ public class BlockBreakHandler {
         }
 
         ItemStack itemStack = player.getMainHandItem();
+        ItemFuel itemFuel = itemStack.get(UnshatteredDataComponents.FUEL.get());
         ItemAttributeModifiers itemAttributeModifiers = itemStack.get(DataComponents.ATTRIBUTE_MODIFIERS);
-        if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.MINING && itemStack.is(ItemTags.PICKAXES)) {
+        if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.MINING
+                && itemStack.is(ItemTags.PICKAXES)
+                && itemFuel != null
+                && itemFuel.currentFuel() > 0
+        ) {
             event.setNewSpeed((float) (player.getAttributeValue(UnshatteredAttributeValues.MINING_SPEED.holder)));
         } else if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.FORAGING
                 && itemStack.is(ItemTags.AXES)

@@ -195,6 +195,12 @@ public class UnshatteredCreativeTabs {
             output.accept(ZOMBIE_PICKAXE.get());
             output.accept(PROMISING_PICKAXE.get());
             output.accept(PROMISING_AXE.get());
+            output.accept(MITHRIL_DRILL_SX_R226.get());
+            output.accept(MITHRIL_DRILL_SX_R326.get());
+            output.accept(TITANIUM_DRILL_DR_X355.get());
+            output.accept(TITANIUM_DRILL_DR_X455.get());
+            output.accept(TITANIUM_DRILL_DR_X555.get());
+            output.accept(TITANIUM_DRILL_DR_X655.get());
         }).build()
     );
 

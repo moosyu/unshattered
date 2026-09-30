@@ -8,8 +8,8 @@ import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.data.datagen.UnshatteredBlockTagsProvider;
-import io.github.moosyu.items.ItemTypes;
-import io.github.moosyu.items.UnshatteredRarities;
+import io.github.moosyu.items.ItemType;
+import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
@@ -32,8 +32,8 @@ public class MithriPickaxeBase extends Item implements PassiveAbilityItem {
 
         super(properties.stacksTo(1)
                 .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-                .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.PICKAXE)
-                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.UNCOMMON)
+                .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.PICKAXE)
+                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.UNCOMMON)
                 .component(UnshatteredDataComponents.SELL_VALUE.get(), 500)
                 .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(abilityId, 0, 0, 0, true))
                 .attributes(ItemAttributeModifiers.builder()

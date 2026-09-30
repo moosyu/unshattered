@@ -1,7 +1,6 @@
 package io.github.moosyu.abilities;
 
-import io.github.moosyu.items.ItemTypes;
-import net.minecraft.core.BlockPos;
+import io.github.moosyu.items.ItemType;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,6 +13,6 @@ public record AbilityContextKey<T>(Class<T> type) {
     public static final AbilityContextKey<ItemStack> ITEM_STACK = new AbilityContextKey<>(ItemStack.class);
     public static final AbilityContextKey<Double> DAMAGE_AMOUNT = new AbilityContextKey<>(Double.class);
     public static final AbilityContextKey<BlockState> BLOCKSTATE = new AbilityContextKey<>(BlockState.class);
-    public static final AbilityContextKey<ItemTypes> ITEM_TYPE = new AbilityContextKey<>(ItemTypes.class);
+    public static final AbilityContextKey<ItemType> ITEM_TYPE = new AbilityContextKey<>(ItemType.class);
     public static final AbilityContextKey<DamageSource> DAMAGE_SOURCE = new AbilityContextKey<>(DamageSource.class);
 }

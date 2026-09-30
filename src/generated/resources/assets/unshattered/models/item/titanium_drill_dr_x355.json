@@ -1,0 +1,16 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "unshattered:item/titanium_drill_dr_x355"
+  },
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [-45, -90, -10],
+      "translation": [0, -0.25, -7.25]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [-130, -90, -10],
+      "translation": [-0.25, 0.75, -7.75]
+    }
+  }
+}

@@ -152,6 +152,12 @@
   "item.unshattered.enchanted_blaze_powder": "Enchanted Blaze Powder",
   "item.unshattered.enchanted_blaze_rod": "Enchanted Blaze Rod",
   "item.unshattered.fire_talisman": "Fire Talisman",
+  "item.unshattered.mithril_drill_sx_r226": "Mithril Drill SX-R226",
+  "item.unshattered.mithril_drill_sx_r326": "Mithril Drill SX-R326",
+  "item.unshattered.titanium_drill_dr_x355": "Titanium Drill DR-X355",
+  "item.unshattered.titanium_drill_dr_x455": "Titanium Drill DR-X455",
+  "item.unshattered.titanium_drill_dr_x555": "Titanium Drill DR-X555",
+  "item.unshattered.titanium_drill_dr_x655": "Titanium Drill DR-X655",
 
   "item.description.unshattered.bat_the_fish": "Where is my cape!",
   "item.description.unshattered.century_the_fish": "The term 'century' was actually named after him, or so he says.",
@@ -233,6 +239,12 @@
   "item.description.unshattered.promising_axe": "Much as an acorn becomes a powerful tree, this axe only gets better with time.",
   "item.description.unshattered.artisanal_shortbow": "Prone to causing rope-burn.",
   "item.description.unshattered.fire_talisman": "Feels like a warm hug.",
+  "item.description.unshattered.mithril_drill_sx_r226": "An impressively purpose-build drill with little unnecessary flair.",
+  "item.description.unshattered.mithril_drill_sx_r326": "An impressively ostentatious drill covered in unnecessary but much appreciated flair.",
+  "item.description.unshattered.titanium_drill_dr_x355": "An incredible feat of engineering with layers of layers of the strongest metals used to forge it.",
+  "item.description.unshattered.titanium_drill_dr_x455": "Originally forged to mine a dangerous and tough ore of the crimson isle, this drill showed the dwarves of old that they could go further than they ever imagined.",
+  "item.description.unshattered.titanium_drill_dr_x555": "The inclusion of a plasma finish has led of a stunningly visually unique drill being forged. Fortunately the plasma coating works in protecting delicate internals.",
+  "item.description.unshattered.titanium_drill_dr_x655": "For those willing to put in an innumerable amount of time to master their crafts. A flawless ruby is embedded inside the drill to prove the wielder's qualifications.",
 
   "item.ability.unshattered.rogue_sword_speed_boost": "Speed Boost",
   "item.ability.unshattered.mind_blowing": "Mind Blowing",
@@ -268,6 +280,8 @@
   "item.ability.unshattered.stored_potential": "Stored Potential",
   "item.ability.unshattered.axe_stored_potential": "Stored Potential",
   "item.ability.unshattered.blazeborn": "Blazeborn",
+  "item.ability.unshattered.r226_junkie": "Mithril Junkie",
+  "item.ability.unshattered.r326_junkie": "Mithril Junkie",
 
   "item.ability.description.unshattered.rogue_sword_speed_boost": "Grants [colour=0xFFFFFFFF]+0.5✦ Speed[/colour] for [colour=0xFF55FF55]30s[/colour].",
   "item.ability.description.unshattered.mind_blowing": "Deals [colour=0xFF55FF55]+100%[/colour] damage to undead mobs.",
@@ -303,6 +317,8 @@
   "item.ability.description.unshattered.stored_potential": "Grants [colour=0xFFFFAA00]+3⸕[/colour] per 100 blocks broken.",
   "item.ability.description.unshattered.axe_stored_potential": "Grants [colour=0xFFFFAA00]+1∮[/colour] per 200 blocks broken.",
   "item.ability.description.unshattered.blazeborn": "Provides immunity to fire damage.",
+  "item.ability.description.unshattered.r226_junkie": "Grants 20% [colour=0xFF00AA00]mithril powder[/colour] from mining mithril.",
+  "item.ability.description.unshattered.r236_junkie": "Grants 40% [colour=0xFF00AA00]mithril powder[/colour] from mining mithril.",
 
   "block.unshattered.fig_log": "Fig Log",
   "block.unshattered.breakable_fig_log": "Breakable Fig Log",
@@ -407,6 +423,7 @@
   "item_type.unshattered.dagger": "Dagger",
   "item_type.unshattered.enchanted_book": "Enchanted Book",
   "item_type.unshattered.crossbow": "Crossbow",
+  "item_type.unshattered.drill": "Drill",
 
   "unshattered.configuration.title": "unshattered Configs",
   "unshattered.configuration.section.unshattered.common.toml": "unshattered Configs",
@@ -425,6 +442,7 @@
   "tooltip.unshattered.applicable": "Applicable on: ",
   "tooltip.unshattered.combinable": "Combinable in Anvil",
   "tooltip.unshattered.incremental.blocks_broken": "Blocks Broken",
+  "tooltip.unshattered.fuel": "Fuel",
 
   "combat.messages.unshattered.failed": "You tried to attack... but nothing happened.",
   "fishing.messages.entity.minecraft.squid": "A Squid appeared.",
@@ -475,6 +493,7 @@
   "screen.unshattered.pets": "Pets",
   "screen.unshattered.storage.page": "Page",
   "screen.narration.unshattered.storage.search": "Search",
+  "screen.unshattered.skill_trees": "Skill Trees",
 
   "widget.unshattered.narration.scroller": "Scroller Widget",
 

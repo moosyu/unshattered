@@ -4,9 +4,10 @@ import io.github.moosyu.abilities.IncrementalAbilityItem;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.data.components.ItemAbility;
+import io.github.moosyu.data.components.ItemFuel;
 import io.github.moosyu.items.enchantments.UnshatteredEnchantmentEffects;
-import io.github.moosyu.items.ItemTypes;
-import io.github.moosyu.items.UnshatteredRarities;
+import io.github.moosyu.items.ItemType;
+import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.util.UnshatteredUtils;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
@@ -49,8 +50,8 @@ public class ItemTooltipHandler {
         if (player == null) return;
         ItemStack itemStack = event.getItemStack();
         List<Component> tooltipComponents = event.getToolTip();
-        UnshatteredRarities itemRarity = itemStack.getOrDefault(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.COMMON);
-        ItemTypes itemType = itemStack.getOrDefault(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.ITEM);
+        UnshatteredRarity itemRarity = itemStack.getOrDefault(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.COMMON);
+        ItemType itemType = itemStack.getOrDefault(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.ITEM);
         boolean hasAttributes = false;
         boolean itemDescription = Boolean.TRUE.equals(itemStack.get(UnshatteredDataComponents.DESCRIPTION.get()));
         ItemAbility itemAbility = itemStack.get(UnshatteredDataComponents.ABILITY);
@@ -58,6 +59,7 @@ public class ItemTooltipHandler {
         int sellPrice = itemStack.getOrDefault(UnshatteredDataComponents.SELL_VALUE, 0) * itemStack.count();
         ItemAttributeModifiers modifiers = itemStack.getAttributeModifiers();
         ItemEnchantments itemEnchantments = itemStack.get(DataComponents.STORED_ENCHANTMENTS);
+        ItemFuel itemFuel = itemStack.get(UnshatteredDataComponents.FUEL);
 
         event.getToolTip().clear();
         tooltipComponents.add(Component.translatable(itemStack.getItemName().getString()).withColor(itemRarity.getColour(1.0f)));
@@ -198,6 +200,15 @@ public class ItemTooltipHandler {
 
         tooltipComponents.add(Component.empty());
 
+        if (itemFuel != null) {
+            tooltipComponents.add(Component.translatable("tooltip.unshattered.fuel").withColor(0xFFAAAAAA)
+                    .append(Component.literal(": "))
+                    .append(Component.literal(String.format("%,d", itemFuel.currentFuel())).withColor(0xFF00AA00))
+                    .append(Component.literal("/" + String.format("%,d", itemFuel.maxFuel())).withColor(0xFF555555))
+            );
+            tooltipComponents.add(Component.empty());
+        }
+
         if (sellPrice > 0) {
             tooltipComponents.add(Component.translatable("tooltip.unshattered.sell_price").withColor(0xFFAAAAAA)
                     .append(Component.literal(" "))
@@ -205,7 +216,9 @@ public class ItemTooltipHandler {
             );
         }
 
-        if (itemType.reforgeable()) tooltipComponents.add(Component.translatable("tooltip.unshattered.reforgable").withColor(0xFF555555));
+        if (itemType.reforgeable()) {
+            tooltipComponents.add(Component.translatable("tooltip.unshattered.reforgable").withColor(0xFF555555));
+        }
 
         tooltipComponents.add(Component.literal(Component.translatable("rarity.unshattered." + itemRarity.name().toLowerCase()).getString().toUpperCase() + " " + Component.translatable("item_type.unshattered." + itemType.getSerializedName()).getString().toUpperCase()).withColor(itemRarity.getColour(1.0f)).withStyle(ChatFormatting.BOLD));
     }

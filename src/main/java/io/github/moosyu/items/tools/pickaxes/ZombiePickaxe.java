@@ -7,14 +7,12 @@ import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.items.ItemTypes;
-import io.github.moosyu.items.UnshatteredRarities;
+import io.github.moosyu.items.ItemType;
+import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.EntityTypeTags;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlotGroup;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
@@ -29,8 +27,8 @@ public class ZombiePickaxe extends Item implements PassiveAbilityItem {
 
     public ZombiePickaxe(Properties properties) {
         super(properties.stacksTo(1)
-                .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemTypes.PICKAXE)
-                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarities.COMMON)
+                .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.PICKAXE)
+                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.COMMON)
                 .component(UnshatteredDataComponents.SELL_VALUE.get(), 3)
                 .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
                 .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("rotten"), 0, 0, 0, true))
