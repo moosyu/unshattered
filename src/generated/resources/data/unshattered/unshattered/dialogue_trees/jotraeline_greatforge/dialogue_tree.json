@@ -1,0 +1,190 @@
+{
+  "dialogue_tree_origins": [
+    {
+      "dialogue_node": {
+        "dialogue_choices": [
+          {
+            "target_node": {
+              "dialogue_choices": [
+                {
+                  "target_node": {
+                    "dialogue_choices": [
+                      {
+                        "target_node": {
+                          "dialogue_choices": [
+                            {
+                              "target_node": {
+                                "dialogue_choices": [
+                                  {
+                                    "set_flags": [
+                                      "unshattered:jotraeline_greatforge/dialogue_tree/introduction"
+                                    ],
+                                    "target_node": {
+                                      "dialogue_choices": [
+                                        {
+                                          "text": "...",
+                                          "triggered_event": {
+                                            "type": "unshattered:open_drill_attachment"
+                                          }
+                                        }
+                                      ],
+                                      "interacted_speaking": false,
+                                      "text": {
+                                        "translate": "dialogue.unshattered.jotraeline_greatforge.player_yes"
+                                      }
+                                    },
+                                    "text": {
+                                      "translate": "dialogue.unshattered.jotraeline_greatforge.player_yes_choice"
+                                    }
+                                  },
+                                  {
+                                    "target_node": {
+                                      "dialogue_choices": [
+                                        {
+                                          "set_flags": [
+                                            "unshattered:jotraeline_greatforge/dialogue_tree/angry"
+                                          ],
+                                          "target_node": {
+                                            "dialogue_choices": [
+                                              {
+                                                "text": "..."
+                                              }
+                                            ],
+                                            "interacted_speaking": true,
+                                            "text": {
+                                              "translate": "dialogue.unshattered.jotraeline_greatforge.introduction_scowl"
+                                            }
+                                          },
+                                          "text": "..."
+                                        }
+                                      ],
+                                      "interacted_speaking": false,
+                                      "text": {
+                                        "translate": "dialogue.unshattered.jotraeline_greatforge.player_no"
+                                      }
+                                    },
+                                    "text": {
+                                      "translate": "dialogue.unshattered.jotraeline_greatforge.player_no_choice"
+                                    }
+                                  }
+                                ],
+                                "interacted_speaking": true,
+                                "text": {
+                                  "translate": "dialogue.unshattered.jotraeline_greatforge.introduction_flow"
+                                }
+                              },
+                              "text": "..."
+                            }
+                          ],
+                          "interacted_speaking": false,
+                          "text": {
+                            "translate": "dialogue.unshattered.jotraeline_greatforge.player_sorry"
+                          }
+                        },
+                        "text": {
+                          "translate": "dialogue.unshattered.jotraeline_greatforge.player_sorry_choice"
+                        }
+                      }
+                    ],
+                    "interacted_speaking": true,
+                    "text": {
+                      "translate": "dialogue.unshattered.jotraeline_greatforge.introduction_go_on"
+                    }
+                  },
+                  "text": "..."
+                }
+              ],
+              "interacted_speaking": false,
+              "text": {
+                "translate": "dialogue.unshattered.jotraeline_greatforge.player_drills"
+              }
+            },
+            "text": {
+              "translate": "dialogue.unshattered.jotraeline_greatforge.player_drills_choice"
+            }
+          },
+          {
+            "set_flags": [
+              "unshattered:jotraeline_greatforge/dialogue_tree/introduction"
+            ],
+            "target_node": {
+              "dialogue_choices": [
+                {
+                  "set_flags": [
+                    "unshattered:jotraeline_greatforge/dialogue_tree/introduction"
+                  ],
+                  "text": {
+                    "translate": "dialogue.unshattered.jotraeline_greatforge.player_sure_choice"
+                  },
+                  "triggered_event": {
+                    "type": "unshattered:open_drill_attachment"
+                  }
+                },
+                {
+                  "text": {
+                    "translate": "dialogue.unshattered.jotraeline_greatforge.player_no_thanks_choice"
+                  }
+                }
+              ],
+              "interacted_speaking": true,
+              "text": {
+                "translate": "dialogue.unshattered.jotraeline_greatforge.introduction_smrik"
+              }
+            },
+            "text": "..."
+          }
+        ],
+        "interacted_speaking": true,
+        "text": {
+          "translate": "dialogue.unshattered.jotraeline_greatforge.introduction"
+        }
+      },
+      "priority": 0
+    },
+    {
+      "dialogue_flag_requirements": {
+        "required_flags": [
+          "unshattered:jotraeline_greatforge/dialogue_tree/angry"
+        ]
+      },
+      "dialogue_node": {
+        "dialogue_choices": [
+          {
+            "text": "...",
+            "triggered_event": {
+              "type": "unshattered:start_quest",
+              "quest_identifier": "unshattered:apology_tour"
+            }
+          }
+        ],
+        "interacted_speaking": true,
+        "text": {
+          "translate": "dialogue.unshattered.jotraeline_greatforge.still_angry"
+        }
+      },
+      "priority": 2
+    },
+    {
+      "dialogue_flag_requirements": {
+        "required_flags": [
+          "unshattered:jotraeline_greatforge/dialogue_tree/introduction"
+        ]
+      },
+      "dialogue_node": {
+        "dialogue_choices": [
+          {
+            "text": "...",
+            "triggered_event": {
+              "type": "unshattered:open_drill_attachment"
+            }
+          }
+        ],
+        "interacted_speaking": true,
+        "text": {
+          "translate": "dialogue.unshattered.jotraeline_greatforge.greeting"
+        }
+      },
+      "priority": 1
+    }
+  ]
+}

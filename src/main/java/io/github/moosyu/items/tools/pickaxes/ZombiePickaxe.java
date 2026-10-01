@@ -9,6 +9,7 @@ import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.UnshatteredRarity;
+import io.github.moosyu.items.tools.UnshatteredMiningToolBase;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.EntityTypeTags;
@@ -21,7 +22,7 @@ import net.minecraft.world.phys.AABB;
 
 import java.util.Set;
 
-public class ZombiePickaxe extends Item implements PassiveAbilityItem {
+public class ZombiePickaxe extends UnshatteredMiningToolBase implements PassiveAbilityItem {
     public static Identifier ABILITY_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("rotten");
     public static int DIAMETER = 10;
 

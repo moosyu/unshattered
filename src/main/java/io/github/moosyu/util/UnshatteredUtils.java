@@ -25,6 +25,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
@@ -52,6 +53,7 @@ import org.jspecify.annotations.NonNull;
 import javax.annotation.Nullable;
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -66,37 +68,65 @@ public final class UnshatteredUtils {
     public static final int ERROR_COLOR = 0xFFFF5555;
 
     /**
-     *
      * @param input string input to be converted to component
      * @param baseColor text colour to be used when section's colour is unspecified
-     * @return parses components to work in bbcode-esque format where you can select colours with [colour=...] [/colour] in hexcode format as well as [i][/i] for itallics
+     * @return parses components to work in bbcode-esque format where you can select colours with [c=...] [/c] in hexcode format as well as [i][/i] for italics, [b][/b] for bold and [p] for the player's name
      */
-    public static Component parseStyledText(String input, int baseColor) {
+    public static Component parseStyledText(String input, int baseColor, Player player) {
         MutableComponent result = Component.empty();
-        Matcher matcher = Pattern.compile("\\[colour=(0x[0-9A-Fa-f]+)](.*?)\\[/colour]|\\[i](.*?)\\[/i]").matcher(input);
+        Matcher matcher = Pattern.compile("\\[p]|\\[(/?)([cib])(?:=(0x[0-9A-Fa-f]{1,8}))?]").matcher(input);
+
+        record Open(String tag, Style style) {}
+
+        Deque<Open> stack = new ArrayDeque<>();
+        Style base = Style.EMPTY.withColor(baseColor & 0xFFFFFF);
+        Supplier<Style> current = () -> stack.isEmpty() ? base : stack.peek().style();
         int lastEnd = 0;
 
         while (matcher.find()) {
             if (matcher.start() > lastEnd) {
-                String before = input.substring(lastEnd, matcher.start());
-                result.append(Component.literal(before).withColor(baseColor));
+                result.append(Component.literal(input.substring(lastEnd, matcher.start())).withStyle(current.get()));
             }
-            if (matcher.group(1) != null) {
-                String colorHex = matcher.group(1);
-                String text = matcher.group(2);
-                int color = (int) Long.parseLong(colorHex.substring(2), 16);
 
-                result.append(Component.literal(text).withColor(color));
-            } else if (matcher.group(3) != null) {
-                String text = matcher.group(3);
-                result.append(Component.literal(text).withColor(baseColor).withStyle(ChatFormatting.ITALIC));
+            String match = matcher.group();
+
+            if (match.equals("[p]")) {
+                result.append(Component.literal(player.getName().getString()).withStyle(current.get()));
+            } else {
+                boolean closing = !matcher.group(1).isEmpty();
+                String tag = matcher.group(2);
+
+                if (closing) {
+                    if (!stack.isEmpty() && stack.peek().tag().equals(tag)) {
+                        stack.pop();
+                    } else {
+                        // shows a random closing tag as plain text instead of trying to consume a random closing tag
+                        result.append(Component.literal(match).withStyle(current.get()));
+                    }
+                } else {
+                    Style style = current.get();
+                    switch (tag) {
+                        case "i" -> style = style.withItalic(true);
+                        case "b" -> style = style.withBold(true);
+                        case "c" -> {
+                            if (matcher.group(3) == null) {
+                                result.append(Component.literal(match).withStyle(current.get()));
+                                lastEnd = matcher.end();
+                                continue;
+                            }
+                            int color = (int) (Long.parseLong(matcher.group(3).substring(2), 16) & 0xFFFFFF);
+                            style = style.withColor(color);
+                        }
+                    }
+                    stack.push(new Open(tag, style));
+                }
             }
+
             lastEnd = matcher.end();
         }
 
         if (lastEnd < input.length()) {
-            String remaining = input.substring(lastEnd);
-            result.append(Component.literal(remaining).withColor(baseColor));
+            result.append(Component.literal(input.substring(lastEnd)).withStyle(current.get()));
         }
 
         return result;

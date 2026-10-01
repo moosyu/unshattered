@@ -7,6 +7,7 @@ import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.UnshatteredRarity;
+import io.github.moosyu.items.tools.UnshatteredMiningToolBase;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -17,7 +18,7 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 import java.util.List;
 import java.util.Set;
 
-public class PromisingPickaxe extends Item implements IncrementalAbilityItem {
+public class PromisingPickaxe extends UnshatteredMiningToolBase implements IncrementalAbilityItem {
     public PromisingPickaxe(Properties properties) {
         super(properties.stacksTo(1)
                 .attributes(ItemAttributeModifiers.builder()

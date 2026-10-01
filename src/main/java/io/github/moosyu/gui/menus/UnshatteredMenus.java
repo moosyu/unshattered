@@ -23,4 +23,8 @@ public class UnshatteredMenus {
     public static final Supplier<MenuType<ReforgeAnvilMenu>> REFORGE_ANVIL_MENU_TYPE = MENUS.register("reforge_anvil_menu_type", () ->
             new MenuType<>(ReforgeAnvilMenu::new, FeatureFlags.DEFAULT_FLAGS)
     );
+
+    public static final Supplier<MenuType<DrillAttachmentMenu>> DRILL_ATTACHMENT_MENU_TYPE = MENUS.register("drill_attachment_menu_type", () ->
+            new MenuType<>(DrillAttachmentMenu::new, FeatureFlags.DEFAULT_FLAGS)
+    );
 }

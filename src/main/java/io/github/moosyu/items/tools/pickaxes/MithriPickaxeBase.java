@@ -10,6 +10,7 @@ import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.data.datagen.UnshatteredBlockTagsProvider;
 import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.UnshatteredRarity;
+import io.github.moosyu.items.tools.UnshatteredMiningToolBase;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
@@ -23,7 +24,7 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 import java.util.Optional;
 import java.util.Set;
 
-public class MithriPickaxeBase extends Item implements PassiveAbilityItem {
+public class MithriPickaxeBase extends UnshatteredMiningToolBase implements PassiveAbilityItem {
     private final Identifier abilityIdentifier;
     private final int mithrilSpeedBoost;
 

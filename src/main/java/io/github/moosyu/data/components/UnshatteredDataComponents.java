@@ -22,4 +22,5 @@ public final class UnshatteredDataComponents {
     public static final Supplier<DataComponentType<Integer>> SELL_VALUE = DATA_COMPONENTS.registerComponentType("sell_value", builder -> builder.persistent(Codec.INT));
     public static final Supplier<DataComponentType<Integer>> INCREMENTS_STORED = DATA_COMPONENTS.registerComponentType("increments_stored", builder -> builder.persistent(Codec.INT));
     public static final Supplier<DataComponentType<ItemFuel>> FUEL = DATA_COMPONENTS.registerComponentType("fuel", builder -> builder.persistent(ItemFuel.CODEC).networkSynchronized(ItemFuel.STREAM_CODEC));
+    public static final Supplier<DataComponentType<ItemAttachments>> ITEM_ATTACHMENTS = DATA_COMPONENTS.registerComponentType("item_attachments", builder -> builder.persistent(ItemAttachments.CODEC).networkSynchronized(ItemAttachments.STREAM_CODEC));
 }

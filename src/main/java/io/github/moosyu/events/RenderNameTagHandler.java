@@ -2,6 +2,7 @@ package io.github.moosyu.events;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.entities.NPCEntity;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -16,15 +17,11 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderNameTagEvent;
-
-import java.util.Optional;
 
 import static io.github.moosyu.Unshattered.MODID;
 
@@ -38,6 +35,13 @@ public class RenderNameTagHandler {
 
         if (player == null || entity.distanceToSqr(player) > 512 || entity instanceof Player) {
             event.setCanRender(TriState.FALSE);
+            return;
+        }
+
+        if (entity instanceof NPCEntity npc) {
+            event.setCanRender(TriState.TRUE);
+            event.setContent(npc.getName().copy().withColor(npc.getNametagColour()));
+
             return;
         }
 

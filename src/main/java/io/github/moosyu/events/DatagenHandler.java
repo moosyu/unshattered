@@ -4,6 +4,7 @@ import io.github.moosyu.blocks.TalkingRockBlock;
 import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.dialogue.*;
 import io.github.moosyu.data.dialogue.events.GiveItemDialogueEvent;
+import io.github.moosyu.data.dialogue.events.OpenDrillAttachmentEvent;
 import io.github.moosyu.data.dialogue.events.StartQuestDialogueEvent;
 import io.github.moosyu.data.fishing.FishingConditions;
 import io.github.moosyu.data.fishing.TriggerMiscReward;
@@ -13,6 +14,7 @@ import io.github.moosyu.data.quests.QuestTypes;
 import io.github.moosyu.data.regen.RegenPaths.*;
 import io.github.moosyu.data.regions.*;
 import io.github.moosyu.data.datagen.*;
+import io.github.moosyu.entities.JotraelineGreatforgeNPC;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
@@ -78,15 +80,15 @@ public class DatagenHandler {
                             TalkingRockBlock.ROCK_DIALOGUE_TREE,
                             new DialogueTree(List.of(
                                     createDialogueOriginWithSelfFlag(
-                                    0,
-                                    new DialogueNode(Component.literal("hi, im a rock"),
-                                            true,
-                                            new DialogueChoice(Component.literal("interesting"),
-                                                    new DialogueNode(Component.literal("im glad you think so :)"))
+                                            0,
+                                            new DialogueNode(Component.literal("hi, im a rock"),
+                                                    true,
+                                                    new DialogueChoice(Component.literal("interesting"),
+                                                            new DialogueNode(Component.literal("im glad you think so :)"))
+                                                    ),
+                                                    new DialogueChoice(Component.literal("..."))
                                             ),
-                                            new DialogueChoice(Component.literal("..."))
-                                    ),
-                                    TalkingRockBlock.HI_MESSAGE_IDENTIFIER),
+                                            TalkingRockBlock.HI_MESSAGE_IDENTIFIER),
                                     createDialogueOriginWithSelfFlag(1,
                                             new DialogueNode(Component.literal("you've already spoken to me"),
                                                     true,
@@ -121,8 +123,111 @@ public class DatagenHandler {
                                     )
                             ))
                     );
+
+                    // got claude to make me a little webpage to help create these so i wouldnt go off the rails (sorry ocean) so this is just gonna look a little nasty
+                    registerDialogueTree(bootstrap,
+                            JotraelineGreatforgeNPC.JOTRAELINE_GREATFORGE_DIALOGUE_TREE,
+                            new DialogueTree(List.of(new DialogueTreeOrigin(0,
+                                    new DialogueNode(Component.translatable("dialogue.unshattered.jotraeline_greatforge.introduction"),
+                                            Optional.of(List.of(
+                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.jotraeline_greatforge.player_drills_choice"),
+                                                            Optional.of(
+                                                                    new DialogueNode(Component.translatable("dialogue.unshattered.jotraeline_greatforge.player_drills"),
+                                                                            Optional.of(List.of(
+                                                                                    new DialogueChoice(Component.literal("..."),
+                                                                                            Optional.of(
+                                                                                                    new DialogueNode(Component.translatable("dialogue.unshattered.jotraeline_greatforge.introduction_go_on"),
+                                                                                                            Optional.of(List.of(
+                                                                                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.jotraeline_greatforge.player_sorry_choice"),
+                                                                                                                            Optional.of(
+                                                                                                                                    new DialogueNode(Component.translatable("dialogue.unshattered.jotraeline_greatforge.player_sorry"),
+                                                                                                                                            Optional.of(List.of(
+                                                                                                                                                    new DialogueChoice(Component.literal("..."),
+                                                                                                                                                            Optional.of(
+                                                                                                                                                                    new DialogueNode(Component.translatable("dialogue.unshattered.jotraeline_greatforge.introduction_flow"),
+                                                                                                                                                                            Optional.of(List.of(
+                                                                                                                                                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.jotraeline_greatforge.player_yes_choice"),
+                                                                                                                                                                                            Optional.of(
+                                                                                                                                                                                                    new DialogueNode(Component.translatable("dialogue.unshattered.jotraeline_greatforge.player_yes"),
+                                                                                                                                                                                                            false,
+                                                                                                                                                                                                            new DialogueChoice(Component.literal("..."), new OpenDrillAttachmentEvent())
+                                                                                                                                                                                                    )
+                                                                                                                                                                                            ),
+                                                                                                                                                                                            Optional.empty(), List.of(JotraelineGreatforgeNPC.INTRODUCTION_MESSAGE_IDENTIFIER),
+                                                                                                                                                                                            Optional.empty()),
+                                                                                                                                                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.jotraeline_greatforge.player_no_choice"),
+                                                                                                                                                                                            Optional.of(
+                                                                                                                                                                                                    new DialogueNode(Component.translatable("dialogue.unshattered.jotraeline_greatforge.player_no"),
+                                                                                                                                                                                                            Optional.of(List.of(
+                                                                                                                                                                                                                    new DialogueChoice(Component.literal("..."),
+                                                                                                                                                                                                                            Optional.of(
+                                                                                                                                                                                                                                    new DialogueNode(Component.translatable("dialogue.unshattered.jotraeline_greatforge.introduction_scowl"),
+                                                                                                                                                                                                                                            true,
+                                                                                                                                                                                                                                            new DialogueChoice(Component.literal("...")))
+                                                                                                                                                                                                                            ),
+                                                                                                                                                                                                                            Optional.empty(),
+                                                                                                                                                                                                                            List.of(JotraelineGreatforgeNPC.ANGRY_IDENTIFIER),
+                                                                                                                                                                                                                            Optional.empty()
+                                                                                                                                                                                                                    )
+                                                                                                                                                                                                            )),
+                                                                                                                                                                                                            false
+                                                                                                                                                                                                    )
+                                                                                                                                                                                            ),
+                                                                                                                                                                                            Optional.empty(), List.of(),
+                                                                                                                                                                                            Optional.empty())
+                                                                                                                                                                            )),
+                                                                                                                                                                            true)),
+                                                                                                                                                            Optional.empty(), List.of(),
+                                                                                                                                                            Optional.empty())
+                                                                                                                                            )),
+                                                                                                                                            false)),
+                                                                                                                            Optional.empty(), List.of(),
+                                                                                                                            Optional.empty())
+                                                                                                            )),
+                                                                                                            true)),
+                                                                                            Optional.empty(), List.of(),
+                                                                                            Optional.empty())
+                                                                            )),
+                                                                            false)),
+                                                            Optional.empty(), List.of(),
+                                                            Optional.empty()),
+                                                    new DialogueChoice(Component.literal("..."),
+                                                            Optional.of(
+                                                                    new DialogueNode(Component.translatable("dialogue.unshattered.jotraeline_greatforge.introduction_smrik"),
+                                                                            Optional.of(List.of(
+                                                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.jotraeline_greatforge.player_sure_choice"),
+                                                                                            Optional.empty(),
+                                                                                            Optional.empty(), List.of(JotraelineGreatforgeNPC.INTRODUCTION_MESSAGE_IDENTIFIER),
+                                                                                            Optional.of(new OpenDrillAttachmentEvent())),
+                                                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.jotraeline_greatforge.player_no_thanks_choice"))
+                                                                            )),
+                                                                            true)
+                                                            ),
+                                                            Optional.empty(),
+                                                            List.of(JotraelineGreatforgeNPC.INTRODUCTION_MESSAGE_IDENTIFIER),
+                                                            Optional.empty())
+                                            )),
+                                            true),
+                                    Optional.empty(),
+                                    List.of()),
+                                    createDialogueOrigin(2,
+                                            new DialogueNode(Component.translatable("dialogue.unshattered.jotraeline_greatforge.still_angry"),
+                                                    true,
+                                                    new DialogueChoice(Component.literal("..."), new StartQuestDialogueEvent(JotraelineGreatforgeNPC.APOLOGY_TOUR))
+                                            ),
+                                            List.of(JotraelineGreatforgeNPC.ANGRY_IDENTIFIER),
+                                            List.of()
+                                    ),
+                                    createDialogueOrigin(1,
+                                            new DialogueNode(Component.translatable("dialogue.unshattered.jotraeline_greatforge.greeting"), true, new DialogueChoice(Component.literal("..."), new OpenDrillAttachmentEvent())),
+                                            List.of(JotraelineGreatforgeNPC.INTRODUCTION_MESSAGE_IDENTIFIER),
+                                            List.of()
+                                    )
+                            ))
+                    );
                 }).add(DataPackRegistryHandler.QUEST_REGISTRY_KEY, bootstrap -> {
                     createQuest(bootstrap, TalkingRockBlock.ROCKS_QUEST, QuestTypes.NOVICE, new GiveItemDialogueEvent(BuiltInRegistries.ITEM.wrapAsHolder(Items.STONE), 1));
+                    bootstrap.register(ResourceKey.create(DataPackRegistryHandler.QUEST_REGISTRY_KEY, JotraelineGreatforgeNPC.APOLOGY_TOUR), new Quest(QuestTypes.NOVICE, Optional.empty()));
                 }).add(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY, bootstrap -> {
                     createRegenPathWithBlocks(bootstrap, "stone", List.of(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get(),
                                     UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(),

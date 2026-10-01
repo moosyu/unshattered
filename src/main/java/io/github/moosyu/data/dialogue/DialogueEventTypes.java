@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import io.github.moosyu.data.dialogue.events.GiveItemDialogueEvent;
+import io.github.moosyu.data.dialogue.events.OpenDrillAttachmentEvent;
 import io.github.moosyu.data.dialogue.events.StartQuestDialogueEvent;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -23,6 +24,7 @@ public final class DialogueEventTypes {
     static {
         register("give_item", GiveItemDialogueEvent.CODEC, GiveItemDialogueEvent.STREAM_CODEC);
         register("start_quest", StartQuestDialogueEvent.CODEC, StartQuestDialogueEvent.STREAM_CODEC);
+        register("open_drill_attachment", OpenDrillAttachmentEvent.CODEC, OpenDrillAttachmentEvent.STREAM_CODEC);
     }
 
     private static <T extends DialogueTriggeredEvent> void register(String id, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {

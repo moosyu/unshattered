@@ -3,6 +3,7 @@ package io.github.moosyu.events;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.dialogue.DialogueInteractable;
+import io.github.moosyu.entities.NPCEntity;
 import io.github.moosyu.packets.OpenReforgeAnvilPacket;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.BlockPos;
@@ -26,6 +27,7 @@ import static io.github.moosyu.Unshattered.MODID;
 @EventBusSubscriber(modid = MODID)
 public class PlayerClickHandler {
     public static final Identifier ACTIVE_RIGHT_CLICK = Identifier.fromNamespaceAndPath(MODID, "active_right_click");
+    public static final int INTERACTION_COOLDOWN = 5;
 
     @SubscribeEvent
     public static void onPlayerRightClick(PlayerInteractEvent.RightClickBlock event) {
@@ -76,16 +78,35 @@ public class PlayerClickHandler {
                 return;
             }
             dialogueBlock.onDialogueTriggered(player);
-            playerAbilityEffectsAttachment.addActiveEffect(ACTIVE_RIGHT_CLICK, 5, player.level(), null);
+            playerAbilityEffectsAttachment.addActiveEffect(ACTIVE_RIGHT_CLICK, INTERACTION_COOLDOWN, player.level(), null);
         }
     }
 
     @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
         Level level = event.getLevel();
-        if (level.isClientSide()) return;
-        if (event.getTarget().is(EntityType.ARMOR_STAND) && !event.getEntity().isCreative()) {
+        Player player = event.getEntity();
+
+        if (event.getTarget().is(EntityType.ARMOR_STAND) && !player.isCreative()) {
             event.setCanceled(true);
+        }
+
+        if (event.getTarget() instanceof NPCEntity npcEntity) {
+            if (player.isCreative()) {
+                npcEntity.discard();
+            } else if (event.getHand() == InteractionHand.MAIN_HAND
+                    && !player.isCreative()
+                    && npcEntity instanceof DialogueInteractable dialogueInteractable
+            ) {
+                PlayerAbilityEffectsAttachment playerAbilityEffectsAttachment = player.getData(UnshatteredAttachments.PLAYER_ABILITIES);
+                if (playerAbilityEffectsAttachment.hasActiveEffect(ACTIVE_RIGHT_CLICK) && !level.isClientSide()) {
+                    player.sendSystemMessage(Component.translatable("misc.messages.unshattered.interact_cooldown").withColor(UnshatteredUtils.ERROR_COLOR));
+                    return;
+                }
+
+                dialogueInteractable.onDialogueTriggered(player);
+                playerAbilityEffectsAttachment.addActiveEffect(ACTIVE_RIGHT_CLICK, INTERACTION_COOLDOWN, level, null);
+            }
         }
     }
 

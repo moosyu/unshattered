@@ -28,6 +28,8 @@ public class DialogueScreen extends Screen {
     private static final int BUTTON_SPACING = 6;
     private static final int BUTTON_HEIGHT = 20;
 
+    private List<FormattedCharSequence> dialogueLines = List.of();
+
     Component talkableName;
     Player player;
     DialogueNode selectedDialogueNode;
@@ -115,6 +117,8 @@ public class DialogueScreen extends Screen {
                     .size(width, BUTTON_HEIGHT)
                     .build());
         }
+
+        dialogueLines = font.split(UnshatteredUtils.parseStyledText(selectedDialogueNode.text().getString(), 0xFFFFFFFF, player), DIALOGUE_TEXTBOX_WIDTH - (DIALOGUE_TEXTBOX_PADDING * 2));
     }
 
     @Override
@@ -143,16 +147,12 @@ public class DialogueScreen extends Screen {
         int fontSpacing = font.lineHeight + 2;
         int availableHeight = DIALOGUE_TEXTBOX_HEIGHT - (DIALOGUE_TEXTBOX_PADDING * 2);
         int maxVisibleLines = availableHeight / fontSpacing;
-        List<FormattedCharSequence> dialogueText = font.split(
-                selectedDialogueNode.text(),
-                DIALOGUE_TEXTBOX_WIDTH - (DIALOGUE_TEXTBOX_PADDING * 2)
-        );
 
-        for (int i = 0; i < dialogueText.size(); i++) {
+        for (int i = 0; i < dialogueLines.size(); i++) {
             if (i >= maxVisibleLines) break;
 
             graphics.text(font,
-                    dialogueText.get(i),
+                    dialogueLines.get(i),
                     (graphics.guiWidth() / 2) - (DIALOGUE_TEXTBOX_WIDTH / 2) + DIALOGUE_TEXTBOX_PADDING,
                     (graphics.guiHeight() - DIALOGUE_TEXTBOX_HEIGHT - BOTTOM_Y_OFFSET + DIALOGUE_TEXTBOX_PADDING) + (fontSpacing * i),
                     0xFFFFFFFF

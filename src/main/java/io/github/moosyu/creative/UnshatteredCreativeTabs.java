@@ -201,6 +201,7 @@ public class UnshatteredCreativeTabs {
             output.accept(TITANIUM_DRILL_DR_X455.get());
             output.accept(TITANIUM_DRILL_DR_X555.get());
             output.accept(TITANIUM_DRILL_DR_X655.get());
+                output.accept(MITHRIL_INFUSED_FUEL_TANK.get());
         }).build()
     );
 

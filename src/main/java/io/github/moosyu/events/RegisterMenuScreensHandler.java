@@ -1,7 +1,7 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.gui.menus.ReforgeAnvilMenu;
 import io.github.moosyu.gui.menus.UnshatteredMenus;
+import io.github.moosyu.gui.screens.DrillAttachmentScreen;
 import io.github.moosyu.gui.screens.ReforgeAnvilScreen;
 import io.github.moosyu.gui.screens.StorageScreen;
 import io.github.moosyu.gui.screens.TalismansScreen;
@@ -20,5 +20,6 @@ public class RegisterMenuScreensHandler {
         // event.register(UnshatteredMenus.INVENTORY_MENU.get(), UnshatteredInventoryScreen::new);
         event.register(UnshatteredMenus.STORAGE_MENU_TYPE.get(), StorageScreen::new);
         event.register(UnshatteredMenus.REFORGE_ANVIL_MENU_TYPE.get(), ReforgeAnvilScreen::new);
+        event.register(UnshatteredMenus.DRILL_ATTACHMENT_MENU_TYPE.get(), DrillAttachmentScreen::new);
     }
 }

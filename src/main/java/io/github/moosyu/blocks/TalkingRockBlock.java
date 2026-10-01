@@ -26,7 +26,7 @@ public class TalkingRockBlock extends HorizontalDirectionalBlock implements Dial
     public static final Identifier ROCK_DIALOGUE_TREE = UnshatteredUtils.createDialogueTreeIdentifier("rock");
     public static final Identifier HI_MESSAGE_IDENTIFIER = UnshatteredUtils.createDialogueNodeIdentifier(ROCK_DIALOGUE_TREE, "hi");
     public static final Identifier HI2_MESSAGE_IDENTIFIER = UnshatteredUtils.createDialogueNodeIdentifier(ROCK_DIALOGUE_TREE, "hi_2");
-    public static final Identifier ROCKS_QUEST = Identifier.fromNamespaceAndPath(MODID, "rocks_quest");
+    public static final Identifier ROCKS_QUEST = UnshatteredUtils.getUnshatteredIdentifier("rocks_quest");
 
     public TalkingRockBlock(Properties properties) {
         super(properties.noOcclusion());

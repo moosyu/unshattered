@@ -19,13 +19,13 @@ import org.jspecify.annotations.NonNull;
 // shoutout BeeRenderer
 public class HomingBeeRenderer extends EntityRenderer<HomingBee, BeeRenderState> {
     private static final Identifier ANGRY_BEE_TEXTURE = Identifier.withDefaultNamespace("textures/entity/bee/bee_angry.png");
-    private static final float BODY_CENTER_Y = 0.3F;
+    private static final float BODY_CENTER_Y = 0.3f;
     private final HomingBeeModel model;
 
     public HomingBeeRenderer(EntityRendererProvider.Context context) {
         super(context);
-        this.model = new HomingBeeModel(context.bakeLayer(ModelLayers.BEE));
-        this.shadowRadius = 0.2F;
+        model = new HomingBeeModel(context.bakeLayer(ModelLayers.BEE));
+        shadowRadius = 0.2f;
     }
 
     @Override
@@ -41,22 +41,21 @@ public class HomingBeeRenderer extends EntityRenderer<HomingBee, BeeRenderState>
         state.isAngry = true;
         state.isOnGround = false;
         state.hasStinger = true;
-        state.rollAmount = 0.0F;
+        state.rollAmount = 0.0f;
     }
 
     @Override
     public void submit(BeeRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, @NonNull CameraRenderState camera) {
         poseStack.pushPose();
 
-        poseStack.translate(0.0F, BODY_CENTER_Y, 0.0F);
-        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - state.yRot));
+        poseStack.translate(0.0f, BODY_CENTER_Y, 0.0f);
+        poseStack.mulPose(Axis.YP.rotationDegrees(180.0f - state.yRot));
         poseStack.mulPose(Axis.XP.rotationDegrees(state.xRot));
-        poseStack.translate(0.0F, -BODY_CENTER_Y, 0.0F);
-        poseStack.scale(-1.0F, -1.0F, 1.0F);
-        poseStack.translate(0.0F, -1.501F, 0.0F);
+        poseStack.translate(0.0f, -BODY_CENTER_Y, 0.0f);
+        poseStack.scale(-1.0f, -1.0f, 1.0f);
+        poseStack.translate(0.0f, -1.501f, 0.0f);
 
-        RenderType renderType = this.model.renderType(ANGRY_BEE_TEXTURE);
-        submitNodeCollector.submitModel(this.model, state, poseStack, renderType, state.lightCoords, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF, null, state.outlineColor, (ModelFeatureRenderer.CrumblingOverlay) null);
+        submitNodeCollector.submitModel(model, state, poseStack, model.renderType(ANGRY_BEE_TEXTURE), state.lightCoords, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF, null, state.outlineColor, null);
 
         poseStack.popPose();
         super.submit(state, poseStack, submitNodeCollector, camera);

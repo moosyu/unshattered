@@ -1,6 +1,7 @@
 package io.github.moosyu.data.attachments;
 
 import io.github.moosyu.abilities.*;
+import io.github.moosyu.data.components.ItemAttachments;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemType;
 import net.minecraft.resources.Identifier;
@@ -24,7 +25,7 @@ public final class PlayerAbilityEffectsAttachment {
      * @param abilityIdentifier identifier for the ability
      * @param abilityLength length of the ability in ticks
      * @param level server level
-     * @param onExpire consumer to run when effect expires
+     * @param onExpire consumer to run when effect expires (aside from being removed from active effects)
      */
     public void addActiveEffect(Identifier abilityIdentifier, long abilityLength, Level level, Consumer<AbilityContext> onExpire) {
         activeEffects.put(abilityIdentifier, new ActiveEffectEntry(level.getGameTime() + abilityLength, onExpire));
@@ -209,6 +210,47 @@ public final class PlayerAbilityEffectsAttachment {
     }
 
     /**
+     * apply passive effects on joining, does a full inventory and talisman bag check instead
+     * of checking a codec to make sure nothing terrible occurred in the last session.
+     */
+    public void applyPassiveEffects(ServerPlayer player) {
+        storedPassiveOngoingItems.clear();
+        storedNonOngoingItems.clear();
+
+        List<ItemStack> stacks = new ArrayList<>();
+        AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, player);
+
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            ItemStack itemStack = player.getItemBySlot(slot);
+            if (!itemStack.isEmpty() && itemStack.getItem() instanceof AbilityItem) {
+                ItemAttachments itemAttachments = itemStack.get(UnshatteredDataComponents.ITEM_ATTACHMENTS);
+
+                if (itemAttachments != null) {
+                    itemAttachments.attachments().forEach((_, attachmentItemStack) -> {
+                        if (attachmentItemStack.getItem() instanceof AbilityItem) {
+                            addPassiveItem(attachmentItemStack, context);
+                        }
+                    });
+                }
+
+                stacks.add(itemStack);
+            }
+        }
+
+        player.getData(UnshatteredAttachments.PLAYER_TALISMAN_STORAGE.get()).forEach(itemStack -> {
+            if (!itemStack.isEmpty()
+                    && itemStack.getItem() instanceof AbilityItem
+                    && itemStack.get(UnshatteredDataComponents.ITEM_TYPE.get()) == ItemType.TALISMAN) {
+                stacks.add(itemStack);
+            }
+        });
+
+        for (ItemStack stack : stacks) {
+            addPassiveItem(stack, context);
+        }
+    }
+
+    /**
      * runs onAbilityFinished for active effects and active passive items, clearing the active effects map
      * but keeping the tracked items (they're rescanned on rejoin via applyPassiveEffects)
      */
@@ -234,37 +276,6 @@ public final class PlayerAbilityEffectsAttachment {
             if (itemStack.getItem() instanceof PassiveAbilityItem passiveAbilityItem) {
                 passiveAbilityItem.onAbilityFinished(context);
             }
-        }
-    }
-
-    /**
-     * apply passive effects on joining, does a full inventory and talisman bag check instead
-     * of checking a codec to make sure nothing terrible occurred in the last session.
-     */
-    public void applyPassiveEffects(ServerPlayer player) {
-        storedPassiveOngoingItems.clear();
-        storedNonOngoingItems.clear();
-
-        List<ItemStack> stacks = new ArrayList<>();
-
-        for (EquipmentSlot slot : EquipmentSlot.values()) {
-            ItemStack itemStack = player.getItemBySlot(slot);
-            if (!itemStack.isEmpty() && itemStack.getItem() instanceof AbilityItem) {
-                stacks.add(itemStack);
-            }
-        }
-
-        player.getData(UnshatteredAttachments.PLAYER_TALISMAN_STORAGE.get()).forEach(itemStack -> {
-            if (!itemStack.isEmpty()
-                    && itemStack.getItem() instanceof AbilityItem
-                    && itemStack.get(UnshatteredDataComponents.ITEM_TYPE.get()) == ItemType.TALISMAN) {
-                stacks.add(itemStack);
-            }
-        });
-
-        AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, player);
-        for (ItemStack stack : stacks) {
-            addPassiveItem(stack, context);
         }
     }
 }

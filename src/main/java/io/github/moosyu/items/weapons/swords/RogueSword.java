@@ -48,7 +48,7 @@ public class RogueSword extends UnshatteredSword {
         if (level.isClientSide()) return InteractionResult.FAIL;
         AttributeInstance movementSpeedAttribute = player.getAttribute(Attributes.MOVEMENT_SPEED);
         PlayerAbilityEffectsAttachment playerAbilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES.get());
-        if (player.getCooldowns().isOnCooldown(this.getDefaultInstance()) || !UnshatteredUtils.passesManaCheck(player, SPEED_BOOST_ABILITY.manaCost()) || movementSpeedAttribute == null) return InteractionResult.FAIL;
+        if (player.getCooldowns().isOnCooldown(getDefaultInstance()) || !UnshatteredUtils.passesManaCheck(player, SPEED_BOOST_ABILITY.manaCost()) || movementSpeedAttribute == null) return InteractionResult.FAIL;
         if (playerAbilities.hasActiveEffect(ABILITY_IDENTIFIER)) {
             playerAbilities.addActiveEffect(ABILITY_IDENTIFIER, SPEED_BOOST_ABILITY.duration(), level, this::onSpeedBoostExpire);
         } else {
@@ -59,7 +59,7 @@ public class RogueSword extends UnshatteredSword {
             player.getData(UnshatteredAttachments.PLAYER_STATE.get())
                     .decreaseStatValue(PlayerStateAttachment.Stat.MANA, SPEED_BOOST_ABILITY.manaCost(), player);
         }
-        player.getCooldowns().addCooldown(this.getDefaultInstance(), SPEED_BOOST_ABILITY.cooldown());
+        player.getCooldowns().addCooldown(getDefaultInstance(), SPEED_BOOST_ABILITY.cooldown());
         return InteractionResult.PASS;
     }
 

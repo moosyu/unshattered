@@ -173,6 +173,7 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.TITANIUM_DRILL_DR_X455.get(), DRILL);
         itemModels.generateFlatItem(UnshatteredItems.TITANIUM_DRILL_DR_X555.get(), DRILL);
         itemModels.generateFlatItem(UnshatteredItems.TITANIUM_DRILL_DR_X655.get(), DRILL);
+        itemModels.generateFlatItem(UnshatteredItems.MITHRIL_INFUSED_FUEL_TANK.get(), ModelTemplates.FLAT_ITEM);
 
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_GOLD_BLOCK.get(), Blocks.GOLD_BLOCK);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_DIAMOND_BLOCK.get(), Blocks.DIAMOND_BLOCK);

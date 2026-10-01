@@ -4,6 +4,7 @@ import io.github.moosyu.abilities.*;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.PlayerFlagsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
+import io.github.moosyu.gui.menus.DrillAttachmentMenu;
 import io.github.moosyu.gui.menus.ReforgeAnvilMenu;
 import io.github.moosyu.gui.menus.StorageMenu;
 import io.github.moosyu.gui.menus.TalismansMenu;
@@ -100,7 +101,8 @@ public class RegisterPayloadsHandler {
                                 Component.translatable("container.unshattered.reforge_anvil")
                             ));
                         }
-                    }))
+                    })
+                )
         );
 
         registrar.playToServer(ResetFlagQueuePacket.TYPE,

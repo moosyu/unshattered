@@ -5,7 +5,9 @@ import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.data.regions.UnshatteredRegions;
 import io.github.moosyu.items.armours.SkeletonHat;
+import io.github.moosyu.items.attachments.FuelAttachmentItem;
 import io.github.moosyu.items.talismans.*;
+import io.github.moosyu.items.tools.UnshatteredMiningToolBase;
 import io.github.moosyu.items.tools.axes.PromisingAxe;
 import io.github.moosyu.items.tools.axes.RegionLockedFortuneAxe;
 import io.github.moosyu.items.tools.axes.UnshatteredAxeTool;
@@ -548,7 +550,7 @@ public class UnshatteredItems {
     );
 
     public static final DeferredItem<Item> LAPIS_PICKAXE = ITEMS.registerItem("lapis_pickaxe",
-            props -> new Item(props.stacksTo(1)
+            props -> new UnshatteredMiningToolBase(props.stacksTo(1)
                     .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.UNCOMMON)
                     .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.PICKAXE)
                     .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
@@ -931,4 +933,6 @@ public class UnshatteredItems {
             .component(UnshatteredDataComponents.SELL_VALUE.get(), 230400)
             .component(UnshatteredDataComponents.RARITY, UnshatteredRarity.RARE))
     );
+
+    public static final DeferredItem<Item> MITHRIL_INFUSED_FUEL_TANK = ITEMS.registerItem("mithril_infused_fuel_tank", props -> new FuelAttachmentItem(props,10000, -0.2f, "mithril_infused_fuel_tank", UnshatteredRarity.RARE, 35300));
 }

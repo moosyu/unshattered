@@ -3,6 +3,7 @@ package io.github.moosyu.events;
 import io.github.moosyu.entities.UnshatteredEntities;
 import io.github.moosyu.entities.renderers.GraveyardZombieVillagerRenderer;
 import io.github.moosyu.entities.renderers.HomingBeeRenderer;
+import io.github.moosyu.entities.renderers.NPCEntityRenderer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -16,5 +17,6 @@ public class EntityRenderersHandler {
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), GraveyardZombieVillagerRenderer::new);
         event.registerEntityRenderer(UnshatteredEntities.HOMING_BEE.get(), HomingBeeRenderer::new);
+        event.registerEntityRenderer(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), context -> new NPCEntityRenderer(context, "jotraeline_greatforge"));
     }
 }

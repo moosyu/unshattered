@@ -2,13 +2,10 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.abilities.IncrementalAbilityItem;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.data.components.ItemCharges;
-import io.github.moosyu.data.components.ItemAbility;
-import io.github.moosyu.data.components.ItemFuel;
+import io.github.moosyu.data.components.*;
 import io.github.moosyu.items.enchantments.UnshatteredEnchantmentEffects;
 import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.UnshatteredRarity;
-import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.util.UnshatteredUtils;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.ChatFormatting;
@@ -60,6 +57,7 @@ public class ItemTooltipHandler {
         ItemAttributeModifiers modifiers = itemStack.getAttributeModifiers();
         ItemEnchantments itemEnchantments = itemStack.get(DataComponents.STORED_ENCHANTMENTS);
         ItemFuel itemFuel = itemStack.get(UnshatteredDataComponents.FUEL);
+        ItemAttachments itemAttachments = itemStack.get(UnshatteredDataComponents.ITEM_ATTACHMENTS);
 
         event.getToolTip().clear();
         tooltipComponents.add(Component.translatable(itemStack.getItemName().getString()).withColor(itemRarity.getColour(1.0f)));
@@ -104,7 +102,7 @@ public class ItemTooltipHandler {
         if (itemDescription) {
             if (hasAttributes) tooltipComponents.add(Component.empty());
 
-            addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.description.unshattered." + BuiltInRegistries.ITEM.getKey(itemStack.getItem()).getPath()).getString(), 0xFFAAAAAA), MAX_WIDTH);
+            addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.description.unshattered." + BuiltInRegistries.ITEM.getKey(itemStack.getItem()).getPath()).getString(), 0xFFAAAAAA, player), MAX_WIDTH);
         }
 
         // for enchanted books
@@ -172,10 +170,10 @@ public class ItemTooltipHandler {
             tooltipComponents.add(Component.empty());
             if (itemAbility.passive()) {
                 tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.abilityId().getPath())).withColor(0xFFFFAA00));
-                addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityId().getPath()).getString(), 0xFFAAAAAA), MAX_WIDTH);
+                addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityId().getPath()).getString(), 0xFFAAAAAA, player), MAX_WIDTH);
             } else {
                 tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.abilityId().getPath())).withColor(0xFFFFAA00).append(Component.literal(" RIGHT CLICK").withColor(0xFFFFFF55).withStyle(ChatFormatting.BOLD)));
-                addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityId().getPath()).getString(), 0xFFAAAAAA), MAX_WIDTH);
+                addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityId().getPath()).getString(), 0xFFAAAAAA, player), MAX_WIDTH);
 
                 if (itemAbility.manaCost() > 0) tooltipComponents.add(Component.literal("Mana Cost: ").withColor(0xFF555555).append(Component.literal(String.valueOf(itemAbility.manaCost())).withColor(0xFF00AAAA)));
                 if (itemAbility.cooldown() > 0) tooltipComponents.add(Component.literal("Cooldown: ").withColor(0xFF555555).append(Component.literal(String.format("%.1f", (float) itemAbility.cooldown() / 20 /* convert ticks to seconds */)).append("s").withColor(0xFF55FF55)));
@@ -200,11 +198,21 @@ public class ItemTooltipHandler {
 
         tooltipComponents.add(Component.empty());
 
+        if (itemAttachments != null) {
+            itemAttachments.attachments().forEach(((slotType, attachmentItem) -> {
+                tooltipComponents.add(Component.translatable("item_type.unshattered." + slotType.correspondingType.getSerializedName()).withColor(0xFF459BFF)
+                        .append(Component.literal(" "))
+                        .append(attachmentItem == ItemStack.EMPTY ? Component.translatable("tooltip.unshattered.none").withColor(0xFFAAAAAA).withStyle(ChatFormatting.BOLD) : attachmentItem.getItemName().copy().withColor(0xFFAAAAAA).withStyle(ChatFormatting.BOLD))
+                );
+            }));
+            tooltipComponents.add(Component.empty());
+        }
+
         if (itemFuel != null) {
             tooltipComponents.add(Component.translatable("tooltip.unshattered.fuel").withColor(0xFFAAAAAA)
                     .append(Component.literal(": "))
                     .append(Component.literal(String.format("%,d", itemFuel.currentFuel())).withColor(0xFF00AA00))
-                    .append(Component.literal("/" + String.format("%,d", itemFuel.maxFuel())).withColor(0xFF555555))
+                    .append(Component.literal("/" + String.format("%,d", itemFuel.getMaxFuel(itemStack))).withColor(0xFF555555))
             );
             tooltipComponents.add(Component.empty());
         }

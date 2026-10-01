@@ -2,6 +2,9 @@ package io.github.moosyu.gui.menus;
 
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.components.ItemAttachments;
+import io.github.moosyu.data.components.UnshatteredDataComponents;
+import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.enchantments.UnshatteredEnchantmentEffects;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;

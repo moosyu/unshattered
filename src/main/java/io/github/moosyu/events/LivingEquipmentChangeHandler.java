@@ -6,6 +6,8 @@ import io.github.moosyu.abilities.AbilityItem;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.abilities.PassiveAbilityItem;
+import io.github.moosyu.data.components.ItemAttachments;
+import io.github.moosyu.data.components.UnshatteredDataComponents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -26,10 +28,30 @@ public class LivingEquipmentChangeHandler {
 
                 Item fromItem = event.getFrom().getItem();
                 if (fromItem instanceof AbilityItem) {
+                    ItemAttachments itemAttachments = event.getFrom().get(UnshatteredDataComponents.ITEM_ATTACHMENTS);
+
+                    if (itemAttachments != null) {
+                        itemAttachments.attachments().forEach((_, itemStack) -> {
+                            if (itemStack.getItem() instanceof AbilityItem) {
+                                abilityEffects.removePassiveItem(itemStack, context);
+                            }
+                        });
+                    }
+
                     abilityEffects.removePassiveItem(event.getFrom(), context);
                 }
 
                 if (event.getTo().getItem() instanceof AbilityItem) {
+                    ItemAttachments itemAttachments = event.getTo().get(UnshatteredDataComponents.ITEM_ATTACHMENTS);
+
+                    if (itemAttachments != null) {
+                        itemAttachments.attachments().forEach((_, itemStack) -> {
+                            if (itemStack.getItem() instanceof AbilityItem) {
+                                abilityEffects.addPassiveItem(itemStack, context);
+                            }
+                        });
+                    }
+
                     abilityEffects.addPassiveItem(event.getTo(), context);
                 }
             }

@@ -31,7 +31,13 @@ public enum ItemType implements StringRepresentable {
     CLEAVER("cleaver", true),
     PICKAXE("pickaxe", true),
     DRILL("drill", true),
-    ENCHANTED_BOOK("enchanted_book", false);
+    ENCHANTED_BOOK("enchanted_book", false),
+    HOOK("hook", false),
+    LINE("line", false),
+    SINKER("sinker", false),
+    FUEL_TANK("fuel_tank", false),
+    DRILL_ENGINE("drill_engine", false),
+    UPGRADE_MODULE("upgrade_module", false);
 
     private final String serializedName;
     private final boolean reforgeable;

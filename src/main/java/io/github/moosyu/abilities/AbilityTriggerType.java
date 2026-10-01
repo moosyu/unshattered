@@ -3,6 +3,7 @@ package io.github.moosyu.abilities;
 import io.github.moosyu.damage.DamageUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -59,5 +60,9 @@ public enum AbilityTriggerType {
     /**
      * runs in {@link io.github.moosyu.events.BlockBreakHandler} inside the mining branch, only for a trigger result to modify the powder
      */
-    PLAYER_MODIFY_POWDER
+    PLAYER_MODIFY_POWDER,
+    /**
+     * runs in {@link io.github.moosyu.items.tools.UnshatteredMiningToolBase#use(Level, Player, InteractionHand)}, only for a trigger result to modify cooldown
+     */
+    PLAYER_USE_MINING_ABILITY
 }

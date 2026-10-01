@@ -97,5 +97,23 @@ public class EntityAttributeModificationHandler {
 
         event.add(EntityType.ENDERMITE, UnshatteredAttributeValues.HEALTH.holder, 50.0d);
         event.add(EntityType.ENDERMITE, UnshatteredAttributeValues.DAMAGE.holder, 7.0);
+
+        event.add(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), Attributes.MAX_HEALTH, 20.0d);
+        event.add(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), Attributes.MOVEMENT_SPEED, 0.0d);
+        event.add(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), Attributes.KNOCKBACK_RESISTANCE, 1.0d);
+        event.add(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), Attributes.FOLLOW_RANGE, 1.0d);
+        event.add(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), Attributes.WAYPOINT_TRANSMIT_RANGE, 1.0d);
+        event.add(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), Attributes.WAYPOINT_RECEIVE_RANGE, 1.0d);
+        event.add(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), Attributes.STEP_HEIGHT, 0.0d);
+        event.add(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), Attributes.MOVEMENT_EFFICIENCY, 0.0d);
+        event.add(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), Attributes.MOVEMENT_SPEED, 0.7d);
+        event.add(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), Attributes.SCALE, 1.0d);
+        event.add(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), Attributes.GRAVITY, 0.08d);
+        event.add(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), Attributes.ARMOR, 0.0d);
+        event.add(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), Attributes.ARMOR_TOUGHNESS, 0.0d);
+        event.add(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), Attributes.MAX_ABSORPTION, 0.0d);
+        event.add(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), Attributes.KNOCKBACK_RESISTANCE, 0.0d);
+        event.add(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), Attributes.SAFE_FALL_DISTANCE, 1024.0d);
+        event.add(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), Attributes.FALL_DAMAGE_MULTIPLIER, 0.0d);
     }
 }

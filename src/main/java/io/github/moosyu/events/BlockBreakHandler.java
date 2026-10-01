@@ -146,7 +146,7 @@ public class BlockBreakHandler {
             ItemFuel itemFuel = itemStack.get(UnshatteredDataComponents.FUEL.get());
 
             if (itemFuel != null) {
-                itemStack.set(UnshatteredDataComponents.FUEL.get(), new ItemFuel(itemFuel.maxFuel(), itemFuel.currentFuel() - 1));
+                itemStack.set(UnshatteredDataComponents.FUEL.get(), new ItemFuel(itemFuel.getMaxFuel(itemStack), itemFuel.currentFuel() - 1));
             }
 
             triggered.forEach(item -> item.onAbilityFinished(context));
