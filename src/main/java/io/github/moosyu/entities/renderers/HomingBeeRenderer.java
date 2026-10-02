@@ -55,7 +55,17 @@ public class HomingBeeRenderer extends EntityRenderer<HomingBee, BeeRenderState>
         poseStack.scale(-1.0f, -1.0f, 1.0f);
         poseStack.translate(0.0f, -1.501f, 0.0f);
 
-        submitNodeCollector.submitModel(model, state, poseStack, model.renderType(ANGRY_BEE_TEXTURE), state.lightCoords, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF, null, state.outlineColor, null);
+        submitNodeCollector.submitModel(model,
+                state,
+                poseStack,
+                model.renderType(ANGRY_BEE_TEXTURE),
+                state.lightCoords,
+                OverlayTexture.NO_OVERLAY,
+                0xFFFFFFFF,
+                null,
+                state.outlineColor,
+                null
+        );
 
         poseStack.popPose();
         super.submit(state, poseStack, submitNodeCollector, camera);

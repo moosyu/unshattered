@@ -10,13 +10,14 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import org.jspecify.annotations.NonNull;
 
-public class NPCEntityRenderer extends EntityRenderer<NPCEntity, AvatarRenderState> {
+public class NPCEntityRenderer extends EntityRenderer<NPCEntity, NPCEntityRenderer.NPCRenderState> {
     private final Identifier texture;
     private final PlayerModel model;
 
@@ -27,44 +28,49 @@ public class NPCEntityRenderer extends EntityRenderer<NPCEntity, AvatarRenderSta
     public NPCEntityRenderer(EntityRendererProvider.Context context, String skinName, boolean slim) {
         super(context);
 
-        this.texture = UnshatteredUtils.getUnshatteredIdentifier("textures/entity/npcs/" + skinName + ".png");
-        this.model = new PlayerModel(
+        texture = UnshatteredUtils.getUnshatteredIdentifier("textures/entity/npcs/" + skinName + ".png");
+        model = new PlayerModel(
                 context.bakeLayer(slim ? ModelLayers.PLAYER_SLIM : ModelLayers.PLAYER),
                 slim
         );
     }
 
     @Override
-    public @NonNull AvatarRenderState createRenderState() {
-        return new AvatarRenderState();
+    public @NonNull NPCRenderState createRenderState() {
+        return new NPCRenderState();
     }
 
     @Override
-    public void extractRenderState(@NonNull NPCEntity entity, @NonNull AvatarRenderState state, float partialTick) {
+    public void extractRenderState(@NonNull NPCEntity entity, @NonNull NPCRenderState state, float partialTick) {
         super.extractRenderState(entity, state, partialTick);
 
-        state.bodyRot = Mth.rotLerp(partialTick, entity.yRotO, entity.getYRot());
-        state.yRot = 0.0f;
-        state.xRot = Mth.lerp(partialTick, entity.xRotO, entity.getXRot());
-        state.showHat = true;
-        state.showJacket = true;
-        state.showLeftSleeve = true;
-        state.showRightSleeve = true;
-        state.showLeftPants = true;
-        state.showRightPants = true;
+        AvatarRenderState avatar = state.avatar;
+        avatar.ageInTicks = state.ageInTicks;
+        avatar.bodyRot = Mth.rotLerp(partialTick, entity.yRotO, entity.getYRot());
+        avatar.yRot = Mth.lerp(partialTick, entity.yRotO, entity.getYRot());
+        avatar.xRot = Mth.lerp(partialTick, entity.xRotO, entity.getXRot());
+        avatar.showHat = true;
+        avatar.showJacket = true;
+        avatar.showLeftSleeve = true;
+        avatar.showRightSleeve = true;
+        avatar.showLeftPants = true;
+        avatar.showRightPants = true;
     }
 
     @Override
-    public void submit(AvatarRenderState state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState camera) {
+    public void submit(NPCRenderState state, PoseStack poseStack, SubmitNodeCollector collector, @NonNull CameraRenderState camera) {
+        AvatarRenderState avatar = state.avatar;
+
         poseStack.pushPose();
 
-        poseStack.mulPose(Axis.YP.rotationDegrees(180.0f - state.bodyRot));
+        poseStack.mulPose(Axis.YP.rotationDegrees(180.0f - avatar.bodyRot));
         poseStack.scale(-1.0f, -1.0f, 1.0f);
         poseStack.translate(0.0f, -1.501f, 0.0f);
+        model.setupAnim(avatar);
 
         collector.submitModel(
                 model,
-                state,
+                avatar,
                 poseStack,
                 model.renderType(texture),
                 state.lightCoords,
@@ -77,5 +83,10 @@ public class NPCEntityRenderer extends EntityRenderer<NPCEntity, AvatarRenderSta
 
         poseStack.popPose();
         super.submit(state, poseStack, collector, camera);
+    }
+
+    // getRenderer in EntityRenderDispatcher doesn't work if AvatarRenderState is used normally
+    public static class NPCRenderState extends EntityRenderState {
+        public final AvatarRenderState avatar = new AvatarRenderState();
     }
 }
