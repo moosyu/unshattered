@@ -1,7 +1,7 @@
 package io.github.moosyu.items.attachments;
 
-import io.github.moosyu.abilities.AbilityItem;
 import io.github.moosyu.abilities.AbilityTriggerType;
+import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemType;
@@ -12,7 +12,7 @@ import net.minecraft.world.item.Item;
 import java.util.Optional;
 import java.util.Set;
 
-public class FuelAttachmentItem extends Item implements AbilityItem {
+public class FuelAttachmentItem extends Item implements PassiveAbilityItem {
     private final int fuelAmount;
     private final float abilityCooldownDecrease;
 
@@ -32,10 +32,9 @@ public class FuelAttachmentItem extends Item implements AbilityItem {
         return fuelAmount;
     }
 
-    // todo: have an event when ability is triggered
     @Override
     public Set<AbilityTriggerType> triggerTypes() {
-        return Set.of();
+        return Set.of(AbilityTriggerType.PLAYER_USE_MINING_ABILITY);
     }
 
     @Override

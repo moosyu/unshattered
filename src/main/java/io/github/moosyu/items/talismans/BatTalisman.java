@@ -27,25 +27,16 @@ public class BatTalisman extends TalismanItem implements PassiveAbilityItem {
     }
 
     @Override
-    public void onAbilityTriggered(AbilityContext context) {}
-
-    @Override
-    public void onAbilityFinished(AbilityContext context) {
+    public void onAbilityTriggered(AbilityContext context) {
         Optional<LivingEntity> target = context.get(AbilityContextKey.TARGET);
         Optional<ServerPlayer> player = context.get(AbilityContextKey.PLAYER);
 
-        // the target could only be dying at this point not when triggered
         if (target.isPresent() && target.get().isDeadOrDying() && player.isPresent()) {
             player.get().getData(UnshatteredAttachments.PLAYER_STATE).increaseStatValue(PlayerStateAttachment.Stat.HEALTH,
                     UnshatteredUtils.getDefaultAttributes(target.get()).map(supplier -> supplier.getBaseValue(UnshatteredAttributeValues.HEALTH.holder)).orElse(0.0) * 0.05,
                     player.get()
             );
         }
-    }
-
-    @Override
-    public boolean abilityConditionsMet(AbilityContext context) {
-        return true;
     }
 
     @Override

@@ -35,7 +35,14 @@ public class DwarfTurtleTalisman extends TalismanItem implements PassiveAbilityI
     }
 
     @Override
-    public void onAbilityFinished(AbilityContext context) {}
+    public void onAbilityFinished(AbilityContext context) {
+        context.get(AbilityContextKey.PLAYER)
+                .ifPresent(player -> {
+                    player.getData(UnshatteredAttachments.PLAYER_STATE).setCancelledKnockback(false);
+                    player.syncData(UnshatteredAttachments.PLAYER_STATE);
+                });
+
+    }
 
     @Override
     public boolean abilityConditionsMet(AbilityContext context) {

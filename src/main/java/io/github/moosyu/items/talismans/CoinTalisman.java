@@ -36,9 +36,6 @@ public class CoinTalisman extends TalismanItem implements PassiveAbilityItem {
     }
 
     @Override
-    public void onAbilityFinished(AbilityContext context) {}
-
-    @Override
     public boolean abilityConditionsMet(AbilityContext context) {
         // roughly once every two minutes should be true
         return context.get(AbilityContextKey.PLAYER).map(player -> player.getRandom().nextInt(2400) == 0).orElse(false);

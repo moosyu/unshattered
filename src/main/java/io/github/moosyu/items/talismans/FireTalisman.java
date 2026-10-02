@@ -25,12 +25,6 @@ public class FireTalisman extends TalismanItem implements PassiveAbilityItem {
     }
 
     @Override
-    public void onAbilityTriggered(AbilityContext context) {}
-
-    @Override
-    public void onAbilityFinished(AbilityContext context) {}
-
-    @Override
     public boolean abilityConditionsMet(AbilityContext context) {
         return context.get(AbilityContextKey.DAMAGE_SOURCE).map(source -> source.is(DamageTypeTags.IS_FIRE)).orElse(false);
     }

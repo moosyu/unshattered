@@ -198,8 +198,7 @@ public class BlockBreakHandler {
         ItemAttributeModifiers itemAttributeModifiers = itemStack.get(DataComponents.ATTRIBUTE_MODIFIERS);
         if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.MINING
                 && itemStack.is(ItemTags.PICKAXES)
-                && itemFuel != null
-                && itemFuel.currentFuel() > 0
+                && (itemFuel == null || itemFuel.currentFuel() > 0)
         ) {
             event.setNewSpeed((float) (player.getAttributeValue(UnshatteredAttributeValues.MINING_SPEED.holder)));
         } else if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.FORAGING

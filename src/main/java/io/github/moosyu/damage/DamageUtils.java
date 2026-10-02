@@ -80,7 +80,7 @@ public final class DamageUtils {
                     ) {
                         passiveAbilityItem.onAbilityTriggered(context);
                         triggeredItems.add(passiveAbilityItem);
-                        if (abilityItem.triggerResult().isPresent() && abilityItem.triggerResult().get() == AbilityTriggerResult.CANCEL_EVENT) {
+                        if (passiveAbilityItem.triggerResult().isPresent() && passiveAbilityItem.triggerResult().get() == AbilityTriggerResult.CANCEL_EVENT) {
                             triggeredItems.forEach(triggeredItem -> triggeredItem.onAbilityFinished(context));
                             return;
                         }
@@ -139,14 +139,8 @@ public final class DamageUtils {
 
                 if ((targetHealth.getBaseValue() - damage) > 0) {
                     targetHealth.setBaseValue(targetHealth.getBaseValue() - damage);
-                    Vec3 preHitVelocity = target.getDeltaMovement();
                     // fake hit to trigger some of the effects which i cant be bothered replicating
                     target.hurtServer((ServerLevel) target.level(), target.damageSources().playerAttack(player), 0.0f);
-
-                    if (weakAttack) {
-                        target.setDeltaMovement(preHitVelocity);
-                        target.hurtMarked = true;
-                    }
 
                     double ferocityAmount = player.getAttributeValue(UnshatteredAttributeValues.FEROCITY.holder);
                     if (ferocityAmount > 0 && player.getData(UnshatteredAttachments.PLAYER_FEROCITY_COOLDOWN) <= 0) {

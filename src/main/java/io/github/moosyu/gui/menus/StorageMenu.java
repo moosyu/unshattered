@@ -47,7 +47,7 @@ public class StorageMenu extends AbstractContainerMenu {
             for (int col = 0; col < COLUMNS; col++) {
                 addSlot(new Slot(WINDOW, col + row * COLUMNS, (col * 18) + 8, (row * 18) - 38) {
                     @Override
-                    public boolean mayPlace(@NonNull ItemStack stack) {
+                    public boolean mayPlace(@NonNull ItemStack itemStack) {
                         if (!isSearching) return true;
 
                         return !WINDOW.getItem(getSlotIndex()).isEmpty();
@@ -65,9 +65,8 @@ public class StorageMenu extends AbstractContainerMenu {
     private void refreshWindow() {
         for (int i = 0; i < WINDOW.getContainerSize(); i++) {
             int backing = WINDOW.getDisplayIndex(i);
-            ItemStack stack = (backing >= 0 && backing < fullStorage.getContainerSize())
-                    ? fullStorage.getItem(backing) : ItemStack.EMPTY;
-            WINDOW.setItemDirect(i, stack);
+            ItemStack itemStack = (backing >= 0 && backing < fullStorage.getContainerSize()) ? fullStorage.getItem(backing) : ItemStack.EMPTY;
+            WINDOW.setItemDirect(i, itemStack);
         }
     }
 
@@ -107,8 +106,8 @@ public class StorageMenu extends AbstractContainerMenu {
             }
         } else {
             for (int i = 0; i < fullStorage.getContainerSize(); i++) {
-                ItemStack stack = fullStorage.getItem(i);
-                if (!stack.isEmpty() && stack.getHoverName().getString().toLowerCase(Locale.ROOT).contains(input.toLowerCase(Locale.ROOT))) {
+                ItemStack itemStack = fullStorage.getItem(i);
+                if (!itemStack.isEmpty() && itemStack.getHoverName().getString().toLowerCase(Locale.ROOT).contains(input.toLowerCase(Locale.ROOT))) {
                     displayedIndices.add(i);
                 }
             }
@@ -129,14 +128,14 @@ public class StorageMenu extends AbstractContainerMenu {
         final int windowSlotCount = WINDOW.getContainerSize();
 
         if (slot.hasItem()) {
-            ItemStack stack = slot.getItem();
-            clicked = stack.copy();
+            ItemStack itemStack = slot.getItem();
+            clicked = itemStack.copy();
             if (slotIndex < windowSlotCount) {
-                if (!moveItemStackTo(stack, windowSlotCount, slots.size(), true)) return ItemStack.EMPTY;
-            } else if (!moveItemStackTo(stack, 0, windowSlotCount, false)) {
+                if (!moveItemStackTo(itemStack, windowSlotCount, slots.size(), true)) return ItemStack.EMPTY;
+            } else if (!moveItemStackTo(itemStack, 0, windowSlotCount, false)) {
                 return ItemStack.EMPTY;
             }
-            if (stack.isEmpty()) {
+            if (itemStack.isEmpty()) {
                 slot.setByPlayer(ItemStack.EMPTY);
             } else {
                 slot.setChanged();
@@ -157,15 +156,15 @@ public class StorageMenu extends AbstractContainerMenu {
         }
 
         @Override
-        public void setItem(int windowIndex, @NonNull ItemStack stack) {
+        public void setItem(int windowIndex, @NonNull ItemStack itemStack) {
             int backing = getDisplayIndex(windowIndex);
-            super.setItem(windowIndex, stack);
+            super.setItem(windowIndex, itemStack);
 
             if (backing < 0 || backing >= fullStorage.getContainerSize()) return;
-            fullStorage.setItem(backing, stack);
+            fullStorage.setItem(backing, itemStack);
 
             // remove fully withdrawn stacks from view
-            if (isSearching && stack.isEmpty()) {
+            if (isSearching && itemStack.isEmpty()) {
                 int index = displayedIndices.indexOf(backing);
                 if (index >= 0) {
                     displayedIndices.remove(index);
@@ -174,8 +173,8 @@ public class StorageMenu extends AbstractContainerMenu {
             }
         }
 
-        void setItemDirect(int windowIndex, ItemStack stack) {
-            super.setItem(windowIndex, stack);
+        void setItemDirect(int windowIndex, ItemStack itemStack) {
+            super.setItem(windowIndex, itemStack);
         }
 
         private int getDisplayIndex(int windowIndex) {

@@ -10,8 +10,7 @@ public class EnchantedItem extends Item {
     }
 
     @Override
-    public boolean isFoil(@NonNull ItemStack stack) {
+    public boolean isFoil(@NonNull ItemStack itemStack) {
         return true;
     }
-
 }

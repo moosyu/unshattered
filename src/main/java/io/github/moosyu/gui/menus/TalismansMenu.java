@@ -101,17 +101,17 @@ public class TalismansMenu extends AbstractContainerMenu {
         Slot slot = slots.get(slotIndex);
 
         if (slot.hasItem()) {
-            ItemStack stack = slot.getItem();
-            clicked = stack.copy();
+            ItemStack itemStack = slot.getItem();
+            clicked = itemStack.copy();
             if (slotIndex < ROWS * COLUMNS) {
-                if (!moveItemStackTo(stack, ROWS * COLUMNS, slots.size(), true)) {
+                if (!moveItemStackTo(itemStack, ROWS * COLUMNS, slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!moveItemStackTo(stack, 0, ROWS * COLUMNS, false)) {
+            } else if (!moveItemStackTo(itemStack, 0, ROWS * COLUMNS, false)) {
                 return ItemStack.EMPTY;
             }
 
-            if (stack.isEmpty()) {
+            if (itemStack.isEmpty()) {
                 slot.setByPlayer(ItemStack.EMPTY);
             } else {
                 slot.setChanged();

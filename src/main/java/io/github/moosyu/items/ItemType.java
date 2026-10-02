@@ -69,5 +69,4 @@ public enum ItemType implements StringRepresentable {
     }
 
     public static final Codec<ItemType> CODEC = StringRepresentable.fromEnum(ItemType::values);
-
 }

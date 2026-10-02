@@ -15,10 +15,7 @@ public record OpenDrillAttachmentEvent() implements DialogueTriggeredEvent {
     @Override
     public void trigger(ServerPlayer player) {
         player.openMenu(new SimpleMenuProvider(
-                (containerId, inventory, _) -> new DrillAttachmentMenu(containerId,
-                        inventory,
-                        new SimpleContainer(DrillAttachmentMenu.SLOTS)
-                ),
+                (containerId, inventory, _) -> new DrillAttachmentMenu(containerId, inventory),
                 Component.translatable("container.unshattered.drill_attachments")
         ));
     }

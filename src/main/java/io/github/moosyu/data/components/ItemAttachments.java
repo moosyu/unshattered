@@ -48,7 +48,7 @@ public record ItemAttachments(Map<SlotType, ItemStack> attachments) {
 
     public ItemAttachments {
         EnumMap<SlotType, ItemStack> copy = new EnumMap<>(SlotType.class);
-        attachments.forEach((slot, stack) -> copy.put(slot, stack.copy()));
+        attachments.forEach((slot, itemStack) -> copy.put(slot, itemStack.copy()));
         attachments = Collections.unmodifiableMap(copy);
     }
 
@@ -67,35 +67,14 @@ public record ItemAttachments(Map<SlotType, ItemStack> attachments) {
     }
 
     public boolean has(SlotType slot) {
-        return !get(slot).isEmpty();
+        ItemStack itemStack = attachments.get(slot);
+        return itemStack != null && !itemStack.isEmpty();
     }
 
     public ItemStack get(SlotType slot) {
-        ItemStack stack = attachments.get(slot);
+        ItemStack itemStack = attachments.get(slot);
 
-        return stack == null ? ItemStack.EMPTY : stack.copy();
-    }
-
-    public boolean canAdd(SlotType slot, ItemStack itemStack) {
-        return hasSlot(slot) && !has(slot) && !itemStack.isEmpty() && (itemStack.get(UnshatteredDataComponents.ITEM_TYPE.get()) == slot.correspondingType);
-    }
-
-    public ItemAttachments add(SlotType slot, ItemStack stack) {
-        if (!canAdd(slot, stack)) return this;
-
-        Map<SlotType, ItemStack> copy = new EnumMap<>(SlotType.class);
-        copy.putAll(attachments);
-
-        return new ItemAttachments(copy);
-    }
-
-    public ItemAttachments remove(SlotType slot) {
-        if (!has(slot)) return this;
-
-        Map<SlotType, ItemStack> copy = new EnumMap<>(SlotType.class);
-        copy.putAll(attachments);
-
-        return new ItemAttachments(copy);
+        return itemStack == null ? ItemStack.EMPTY : itemStack.copy();
     }
 
     public static final Codec<ItemAttachments> CODEC = Codec.unboundedMap(SlotType.CODEC, ItemStack.OPTIONAL_CODEC).xmap(ItemAttachments::new, ItemAttachments::attachments);

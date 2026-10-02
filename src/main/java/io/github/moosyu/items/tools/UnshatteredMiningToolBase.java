@@ -1,7 +1,7 @@
 package io.github.moosyu.items.tools;
 
-import io.github.moosyu.abilities.AbilityItem;
 import io.github.moosyu.abilities.AbilityTriggerType;
+import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import net.minecraft.world.InteractionHand;
@@ -31,7 +31,7 @@ public class UnshatteredMiningToolBase extends Item {
         } else {
             float cooldownModificationAmount = 1.0f;
             for (ItemStack abilityItemStack : abilities.getStoredNonOngoingItems()) {
-                if (abilityItemStack.getItem() instanceof AbilityItem abilityItem
+                if (abilityItemStack.getItem() instanceof PassiveAbilityItem abilityItem
                         && abilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_USE_MINING_ABILITY)
                         && abilityItem.triggerResult().orElse(null) instanceof Float amount) {
                     cooldownModificationAmount += amount;

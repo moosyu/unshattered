@@ -41,9 +41,9 @@ public class ScrollableSlot extends Slot {
         return inRange() ? backingContainer.getItem(backingIndex()) : ItemStack.EMPTY;
     }
 
-    @Override public void set(@NonNull ItemStack stack) {
+    @Override public void set(@NonNull ItemStack itemStack) {
         if (inRange()) {
-            backingContainer.setItem(backingIndex(), stack); setChanged();
+            backingContainer.setItem(backingIndex(), itemStack); setChanged();
         }
     }
 
@@ -62,8 +62,8 @@ public class ScrollableSlot extends Slot {
         return inRange() ? backingContainer.removeItem(backingIndex(), amount) : ItemStack.EMPTY;
     }
 
-    @Override public boolean mayPlace(@NonNull ItemStack stack) {
-        return inRange() && backingContainer.canPlaceItem(backingIndex(), stack);
+    @Override public boolean mayPlace(@NonNull ItemStack itemStack) {
+        return inRange() && backingContainer.canPlaceItem(backingIndex(), itemStack);
     }
 
     @Override public boolean mayPickup(@NonNull Player player) {

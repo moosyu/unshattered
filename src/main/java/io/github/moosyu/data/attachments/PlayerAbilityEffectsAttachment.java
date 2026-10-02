@@ -89,19 +89,20 @@ public final class PlayerAbilityEffectsAttachment {
     }
 
     /**
-     * registers an ability item. ongoing passive items are tracked by type and triggered if their conditions are met.
-     * non-ongoing passive items and all incremental items are tracked by stack so they can be found later (to add to increments)
+     * ongoing passive items are tracked by type and triggered if their conditions are met.
+     * non-ongoing passive items and all incremental items are tracked by itemstack so they can be found later (to add to increments etc)
      */
     public void addPassiveItem(ItemStack item, AbilityContext context) {
         if (item.isEmpty() || !(item.getItem() instanceof AbilityItem abilityItem)) {
             return;
         }
 
-        boolean passive = abilityItem instanceof PassiveAbilityItem;
-        if (passive && abilityItem.triggerTypes().contains(AbilityTriggerType.ONGOING)) {
-            addOngoing((PassiveAbilityItem) abilityItem, context);
-        } else if (passive) {
-            storedNonOngoingItems.add(item);
+        if (abilityItem instanceof PassiveAbilityItem passiveAbilityItem) {
+            if (abilityItem.triggerTypes().contains(AbilityTriggerType.ONGOING)) {
+                addOngoing(passiveAbilityItem, context);
+            } else {
+                storedNonOngoingItems.add(item);
+            }
         }
 
         if (abilityItem instanceof IncrementalAbilityItem) {
@@ -117,15 +118,15 @@ public final class PlayerAbilityEffectsAttachment {
             return;
         }
 
-        boolean passive = abilityItem instanceof PassiveAbilityItem;
-        if (passive && abilityItem.triggerTypes().contains(AbilityTriggerType.ONGOING)) {
-            if (Boolean.TRUE.equals(storedPassiveOngoingItems.remove(abilityItem))) {
-                PassiveAbilityItem passiveAbilityItem = (PassiveAbilityItem) abilityItem;
-                passiveAbilityItem.onAbilityFinished(context);
-            }
-        } else if (passive) {
-            if (removeTrackedStack(itemStack)) {
-                ((PassiveAbilityItem) abilityItem).onAbilityFinished(context);
+        if (abilityItem instanceof PassiveAbilityItem passiveAbilityItem) {
+            if (abilityItem.triggerTypes().contains(AbilityTriggerType.ONGOING)) {
+                if (Boolean.TRUE.equals(storedPassiveOngoingItems.remove(abilityItem))) {
+                    passiveAbilityItem.onAbilityFinished(context);
+                }
+            } else {
+                if (removeTrackedStack(itemStack)) {
+                    passiveAbilityItem.onAbilityFinished(context);
+                }
             }
         }
 
@@ -156,15 +157,15 @@ public final class PlayerAbilityEffectsAttachment {
     }
 
     /**
-     * tries to remove a stack, as itemstack identities seem to change often it falls back to a comparison
-     * @return true if the stack was removed successfully
+     * tries to remove a itemStack, as itemstack identities seem to change often it falls back to a comparison
+     * @return true if the itemStack was removed successfully
      */
-    private boolean removeTrackedStack(ItemStack stack) {
-        if (storedNonOngoingItems.remove(stack)) {
+    private boolean removeTrackedStack(ItemStack itemStack) {
+        if (storedNonOngoingItems.remove(itemStack)) {
             return true;
         }
 
-        return storedNonOngoingItems.removeIf(tracked -> tracked.getItem() == stack.getItem());
+        return storedNonOngoingItems.removeIf(tracked -> tracked.getItem() == itemStack.getItem());
     }
 
     /**
@@ -217,7 +218,7 @@ public final class PlayerAbilityEffectsAttachment {
         storedPassiveOngoingItems.clear();
         storedNonOngoingItems.clear();
 
-        List<ItemStack> stacks = new ArrayList<>();
+        List<ItemStack> itemStacks = new ArrayList<>();
         AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, player);
 
         for (EquipmentSlot slot : EquipmentSlot.values()) {
@@ -233,7 +234,7 @@ public final class PlayerAbilityEffectsAttachment {
                     });
                 }
 
-                stacks.add(itemStack);
+                itemStacks.add(itemStack);
             }
         }
 
@@ -241,12 +242,12 @@ public final class PlayerAbilityEffectsAttachment {
             if (!itemStack.isEmpty()
                     && itemStack.getItem() instanceof AbilityItem
                     && itemStack.get(UnshatteredDataComponents.ITEM_TYPE.get()) == ItemType.TALISMAN) {
-                stacks.add(itemStack);
+                itemStacks.add(itemStack);
             }
         });
 
-        for (ItemStack stack : stacks) {
-            addPassiveItem(stack, context);
+        for (ItemStack itemStack : itemStacks) {
+            addPassiveItem(itemStack, context);
         }
     }
 

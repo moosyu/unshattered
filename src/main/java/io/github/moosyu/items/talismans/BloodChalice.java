@@ -81,14 +81,6 @@ public class BloodChalice extends TalismanItem implements PassiveAbilityItem {
     }
 
     @Override
-    public void onAbilityFinished(AbilityContext context) {}
-
-    @Override
-    public boolean abilityConditionsMet(AbilityContext context) {
-        return true;
-    }
-
-    @Override
     public Set<AbilityTriggerType> triggerTypes() {
         return Set.of(AbilityTriggerType.PLAYER_STARTED_SNEAKING);
     }
