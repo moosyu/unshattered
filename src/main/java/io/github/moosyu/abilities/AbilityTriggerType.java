@@ -64,5 +64,9 @@ public enum AbilityTriggerType {
     /**
      * runs in {@link io.github.moosyu.items.tools.UnshatteredMiningToolBase#use(Level, Player, InteractionHand)}, only for a trigger result to modify cooldown
      */
-    PLAYER_USE_MINING_ABILITY
+    PLAYER_USE_MINING_ABILITY,
+    /**
+     * runs in {@link io.github.moosyu.events.LivingKnockBackHandler}, only tries for cancel
+     */
+    PLAYER_INCOMING_KNOCKBACK
 }

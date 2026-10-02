@@ -8,6 +8,7 @@ import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.resources.Identifier;
 
+import java.util.Optional;
 import java.util.Set;
 
 public class DwarfTurtleTalisman extends TalismanItem implements PassiveAbilityItem {
@@ -26,31 +27,12 @@ public class DwarfTurtleTalisman extends TalismanItem implements PassiveAbilityI
     }
 
     @Override
-    public void onAbilityTriggered(AbilityContext context) {
-        context.get(AbilityContextKey.PLAYER)
-                .ifPresent(player -> {
-                    player.getData(UnshatteredAttachments.PLAYER_STATE).setCancelledKnockback(true);
-                    player.syncData(UnshatteredAttachments.PLAYER_STATE);
-                });
-    }
-
-    @Override
-    public void onAbilityFinished(AbilityContext context) {
-        context.get(AbilityContextKey.PLAYER)
-                .ifPresent(player -> {
-                    player.getData(UnshatteredAttachments.PLAYER_STATE).setCancelledKnockback(false);
-                    player.syncData(UnshatteredAttachments.PLAYER_STATE);
-                });
-
-    }
-
-    @Override
-    public boolean abilityConditionsMet(AbilityContext context) {
-        return context.get(AbilityContextKey.PLAYER).map(player -> !player.getData(UnshatteredAttachments.PLAYER_STATE.get()).isKnockbackCancelled()).orElse(false);
-    }
-
-    @Override
     public Set<AbilityTriggerType> triggerTypes() {
-        return Set.of(AbilityTriggerType.ONGOING);
+        return Set.of(AbilityTriggerType.PLAYER_INCOMING_KNOCKBACK);
+    }
+
+    @Override
+    public Optional<AbilityTriggerResult> triggerResult() {
+        return Optional.of(AbilityTriggerResult.CANCEL_EVENT);
     }
 }
