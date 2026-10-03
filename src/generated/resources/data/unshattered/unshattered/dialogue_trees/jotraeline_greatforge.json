@@ -17,7 +17,7 @@
                                 "dialogue_choices": [
                                   {
                                     "set_flags": [
-                                      "unshattered:jotraeline_greatforge/dialogue_tree/introduction"
+                                      "unshattered:jotraeline_greatforge/introduction"
                                     ],
                                     "target_node": {
                                       "dialogue_choices": [
@@ -42,7 +42,7 @@
                                       "dialogue_choices": [
                                         {
                                           "set_flags": [
-                                            "unshattered:jotraeline_greatforge/dialogue_tree/angry"
+                                            "unshattered:jotraeline_greatforge/angry"
                                           ],
                                           "target_node": {
                                             "dialogue_choices": [
@@ -105,13 +105,13 @@
           },
           {
             "set_flags": [
-              "unshattered:jotraeline_greatforge/dialogue_tree/introduction"
+              "unshattered:jotraeline_greatforge/introduction"
             ],
             "target_node": {
               "dialogue_choices": [
                 {
                   "set_flags": [
-                    "unshattered:jotraeline_greatforge/dialogue_tree/introduction"
+                    "unshattered:jotraeline_greatforge/introduction"
                   ],
                   "text": {
                     "translate": "dialogue.unshattered.jotraeline_greatforge.player_sure_choice"
@@ -144,7 +144,7 @@
     {
       "dialogue_flag_requirements": {
         "required_flags": [
-          "unshattered:jotraeline_greatforge/dialogue_tree/angry"
+          "unshattered:jotraeline_greatforge/angry"
         ]
       },
       "dialogue_node": {
@@ -167,7 +167,7 @@
     {
       "dialogue_flag_requirements": {
         "required_flags": [
-          "unshattered:jotraeline_greatforge/dialogue_tree/introduction"
+          "unshattered:jotraeline_greatforge/introduction"
         ]
       },
       "dialogue_node": {

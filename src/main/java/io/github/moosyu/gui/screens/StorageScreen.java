@@ -1,6 +1,5 @@
 package io.github.moosyu.gui.screens;
 
-import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.gui.menus.StorageMenu;
 import io.github.moosyu.packets.UpdateStoragePagePacket;
 import io.github.moosyu.packets.UpdateStorageSearchResultsPacket;

@@ -32,27 +32,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
 
+import static io.github.moosyu.util.UnshatteredUtils.WOOL_TYPES;
+
 @Mixin(Sheep.class)
 public class SheepMixin {
     private Player shearer;
-    private static final Item[] WOOL = {
-            Items.WHITE_WOOL,
-            Items.ORANGE_WOOL,
-            Items.MAGENTA_WOOL,
-            Items.LIGHT_BLUE_WOOL,
-            Items.YELLOW_WOOL,
-            Items.LIME_WOOL,
-            Items.PINK_WOOL,
-            Items.GRAY_WOOL,
-            Items.LIGHT_GRAY_WOOL,
-            Items.CYAN_WOOL,
-            Items.PURPLE_WOOL,
-            Items.BLUE_WOOL,
-            Items.BROWN_WOOL,
-            Items.GREEN_WOOL,
-            Items.RED_WOOL,
-            Items.BLACK_WOOL
-    };
 
     @Inject(method = "mobInteract", at = @At("HEAD"))
     private void captureShearer(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
@@ -83,9 +67,9 @@ public class SheepMixin {
                 if (effect.isPresent() && effect.get() == UnshatteredEnchantmentEffects.EFFECTS.get(UnshatteredEnchantments.RAINBOW)) {
                     PlayerFlagsAttachment playerFlagsAttachment = shearer.getData(UnshatteredAttachments.PLAYER_FLAGS.get());
                     if (playerFlagsAttachment.hasFlag(MiscFlags.RAINBOW_TALISMAN_OBTAINED)) {
-                        drops = new ItemRange(WOOL[level.getRandom().nextInt(WOOL.length)], 1, 3);
+                        drops = new ItemRange(WOOL_TYPES[level.getRandom().nextInt(WOOL_TYPES.length)], 1, 3);
                     } else {
-                        drops = new ItemRange(WOOL[1], 1, 3);
+                        drops = new ItemRange(WOOL_TYPES[1], 1, 3);
 
                         playerFlagsAttachment.addFlag(MiscFlags.RAINBOW_TALISMAN_OBTAINED);
                         shearer.syncData(UnshatteredAttachments.PLAYER_FLAGS);

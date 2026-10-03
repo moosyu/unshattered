@@ -1,0 +1,82 @@
+[
+  {
+    "item": "minecraft:white_wool",
+    "price": 32,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:orange_wool",
+    "price": 32,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:magenta_wool",
+    "price": 32,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:light_blue_wool",
+    "price": 32,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:yellow_wool",
+    "price": 32,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:lime_wool",
+    "price": 32,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:pink_wool",
+    "price": 32,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:gray_wool",
+    "price": 32,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:light_gray_wool",
+    "price": 32,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:cyan_wool",
+    "price": 32,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:purple_wool",
+    "price": 32,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:blue_wool",
+    "price": 32,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:brown_wool",
+    "price": 32,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:green_wool",
+    "price": 32,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:red_wool",
+    "price": 32,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:black_wool",
+    "price": 32,
+    "sell_multiple": true
+  }
+]

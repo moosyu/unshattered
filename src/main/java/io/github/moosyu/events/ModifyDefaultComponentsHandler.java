@@ -3,6 +3,7 @@ package io.github.moosyu.events;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.UnshatteredRarity;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.Item;
@@ -165,6 +166,10 @@ public class ModifyDefaultComponentsHandler {
         modifyVanillaItem(event, Items.HONEYCOMB, ItemType.MATERIAL, 100);
         modifyVanillaItem(event, Items.ICE, ItemType.MATERIAL, 1);
         modifyVanillaItem(event, Items.BLAZE_ROD, ItemType.MATERIAL, 9);
+
+        for (Item wool : UnshatteredUtils.WOOL_TYPES) {
+            modifyVanillaItem(event, wool, ItemType.MATERIAL, 2);
+        }
     }
 
     /**

@@ -190,6 +190,8 @@ public class UnshatteredModelProvider extends ModelProvider {
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.BEDROCK.get(), Blocks.BEDROCK);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_ICE.get(), Blocks.ICE);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_PACKED_ICE.get(), Blocks.PACKED_ICE);
+        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_WOOL.get(), Blocks.WHITE_WOOL);
+
         itemModels.generateFlatItem(UnshatteredItems.HEALING_TISSUE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFishingRod(UnshatteredItems.CHALLENGING_ROD.get());
         createColumnBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_FIG_LOG.get(), UnshatteredBlocks.FIG_LOG_BLOCK.get());

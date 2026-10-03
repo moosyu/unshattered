@@ -18,5 +18,6 @@ public class EntityRenderersHandler {
         event.registerEntityRenderer(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), GraveyardZombieVillagerRenderer::new);
         event.registerEntityRenderer(UnshatteredEntities.HOMING_BEE.get(), HomingBeeRenderer::new);
         event.registerEntityRenderer(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), context -> new NPCEntityRenderer(context, "jotraeline_greatforge"));
+        event.registerEntityRenderer(UnshatteredEntities.WOOL_WEAVER.get(), context -> new NPCEntityRenderer(context, "wool_weaver"));
     }
 }

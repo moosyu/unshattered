@@ -18,20 +18,6 @@ import org.jspecify.annotations.NonNull;
 import java.util.function.DoubleConsumer;
 
 public class ScrollerWidget extends AbstractWidget {
-    /**
-     * pointless but i reckon it makes things more clear. not even sure if right is 1 i just guessed lol.
-     */
-    enum MouseButton {
-        LEFT(0),
-        RIGHT(1);
-
-        private final int button;
-
-        MouseButton(int button) {
-            this.button = button;
-        }
-    }
-
     private static final Identifier SCROLLER_SPRITE = UnshatteredUtils.getUnshatteredIdentifier("widgets/scroller");
     static final int SCROLLER_WIDTH = 12;
     public static final int SCROLLER_HEIGHT = 15;
@@ -54,19 +40,19 @@ public class ScrollerWidget extends AbstractWidget {
     @Override
     protected void extractWidgetRenderState(@NonNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, SCROLLER_SPRITE, this.getX(), this.getY(), SCROLLER_WIDTH, SCROLLER_HEIGHT);
-        if (this.isHovered || scrolling) {
+        if (isHovered || scrolling) {
             graphics.requestCursor(scrolling ? CursorTypes.RESIZE_NS : CursorTypes.POINTING_HAND);
         }
     }
 
     @Override
     public boolean mouseClicked(@NonNull MouseButtonEvent event, boolean doubleClick) {
-        if (this.isActive()) {
-            if (this.isValidClickButton(event.buttonInfo())) {
-                boolean isMouseOver = this.isMouseOver(event.x(), event.y());
+        if (isActive()) {
+            if (isValidClickButton(event.buttonInfo())) {
+                boolean isMouseOver = isMouseOver(event.x(), event.y());
                 if (isMouseOver) {
-                    this.playDownSound(Minecraft.getInstance().getSoundManager());
-                    this.onClick(event, doubleClick);
+                    playDownSound(Minecraft.getInstance().getSoundManager());
+                    onClick(event, doubleClick);
                     return true;
                 }
             }
@@ -77,14 +63,14 @@ public class ScrollerWidget extends AbstractWidget {
 
     @Override
     public void onRelease(MouseButtonEvent event) {
-        if (event.button() == MouseButton.LEFT.button) {
+        if (event.button() == UnshatteredUtils.MouseButton.LEFT.getButton()) {
             scrolling = false;
         }
     }
 
     @Override
     protected void onDrag(@NonNull MouseButtonEvent event, double dragX, double dragY) {
-        if (event.button() == MouseButton.LEFT.button) {
+        if (event.button() == UnshatteredUtils.MouseButton.LEFT.getButton()) {
             int newY = Mth.clamp((int) Math.round(this.getY() + dragY), trackTop, trackTop + trackHeight);
 
             this.setY(newY);

@@ -221,7 +221,7 @@ public final class PlayerSkillsAttachment {
     // at some point ill figure out how to make them myself so they seem more normal
     public static final Codec<PlayerSkillsAttachment> CODEC = Codec.unboundedMap(Codec.STRING, Codec.FLOAT).xmap(map -> {
         PlayerSkillsAttachment obj = new PlayerSkillsAttachment(0, 0, 0, 0, 0, 0);
-        for (var entry : map.entrySet()) {
+        for (Map.Entry<String, Float> entry : map.entrySet()) {
             Skill skill = Skill.valueOf(entry.getKey());
             obj.skillExp[skill.ordinal()] = entry.getValue();
         }

@@ -2,9 +2,11 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.blocks.TalkingRockBlock;
 import io.github.moosyu.blocks.UnshatteredBlocks;
+import io.github.moosyu.data.ShopItem;
 import io.github.moosyu.data.dialogue.*;
 import io.github.moosyu.data.dialogue.events.GiveItemDialogueEvent;
 import io.github.moosyu.data.dialogue.events.OpenDrillAttachmentEvent;
+import io.github.moosyu.data.dialogue.events.OpenStoreMenuEvent;
 import io.github.moosyu.data.dialogue.events.StartQuestDialogueEvent;
 import io.github.moosyu.data.fishing.FishingConditions;
 import io.github.moosyu.data.fishing.TriggerMiscReward;
@@ -15,6 +17,7 @@ import io.github.moosyu.data.regen.RegenPaths.*;
 import io.github.moosyu.data.regions.*;
 import io.github.moosyu.data.datagen.*;
 import io.github.moosyu.entities.JotraelineGreatforgeNPC;
+import io.github.moosyu.entities.WoolWeaverNPC;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
@@ -38,6 +41,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.joml.Vector2i;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -225,6 +229,52 @@ public class DatagenHandler {
                                     )
                             ))
                     );
+
+                    registerDialogueTree(bootstrap,
+                            WoolWeaverNPC.WOOL_WEAVER_IDENTIFIER,
+                            new DialogueTree(List.of(new DialogueTreeOrigin(1,
+                                    new DialogueNode(Component.translatable("dialogue.unshattered.wool_weaver.greeting"),
+                                            true,
+                                            new DialogueChoice(Component.translatable("dialogue.unshattered.wool_weaver.player_yeah_choice"),
+                                                    new DialogueNode(Component.translatable("dialogue.unshattered.wool_weaver.player_yeah"),
+                                                            false,
+                                                            new DialogueChoice(Component.literal("..."),
+                                                                    new DialogueNode(Component.translatable("dialogue.unshattered.wool_weaver.meant_to_be"),
+                                                                            true,
+                                                                            new DialogueChoice(Component.translatable("dialogue.unshattered.wool_weaver.player_woolhead_choice"),
+                                                                                    new DialogueNode(Component.translatable("dialogue.unshattered.wool_weaver.player_woolhead"),
+                                                                                            false,
+                                                                                            new DialogueChoice(Component.literal("..."),
+                                                                                                    new DialogueNode(Component.translatable("dialogue.unshattered.wool_weaver.woolhead"),
+                                                                                                            true,
+                                                                                                            new DialogueChoice(Component.literal("..."), List.of(WoolWeaverNPC.WOOLHEAD_IDENTIFIER), new OpenStoreMenuEvent(WoolWeaverNPC.WOOL_WEAVER_IDENTIFIER))
+                                                                                                    )
+                                                                                            )
+                                                                                    )
+                                                                            ),
+                                                                            new DialogueChoice(Component.translatable("dialogue.unshattered.wool_weaver.player_no_choice_exit"),
+                                                                                    new DialogueNode(Component.translatable("dialogue.unshattered.wool_weaver.vibrant"))
+                                                                            )
+                                                                    )
+                                                            )
+                                                    )
+                                            ),
+                                            new DialogueChoice(Component.translatable("dialogue.unshattered.wool_weaver.player_no_choice"),
+                                                    new DialogueNode(Component.translatable("dialogue.unshattered.wool_weaver.player_no"),
+                                                            false,
+                                                            new DialogueChoice(Component.literal("..."),
+                                                                    new DialogueNode(Component.translatable("dialogue.unshattered.wool_weaver.really"),
+                                                                            true,
+                                                                            new DialogueChoice(Component.translatable("dialogue.unshattered.wool_weaver.okay"), new OpenStoreMenuEvent(WoolWeaverNPC.WOOL_WEAVER_IDENTIFIER)),
+                                                                            new DialogueChoice(Component.translatable("dialogue.unshattered.wool_weaver.player_no_choice_exit"))
+                                                                    )
+                                                            )
+                                                    )
+                                            )
+                                    ),
+                                    List.of(WoolWeaverNPC.INTRODUCTION_MESSAGE_IDENTIFIER))
+                            ))
+                    );
                 }).add(DataPackRegistryHandler.QUEST_REGISTRY_KEY, bootstrap -> {
                     createQuest(bootstrap, TalkingRockBlock.ROCKS_QUEST, QuestTypes.NOVICE, new GiveItemDialogueEvent(BuiltInRegistries.ITEM.wrapAsHolder(Items.STONE), 1));
                     bootstrap.register(ResourceKey.create(DataPackRegistryHandler.QUEST_REGISTRY_KEY, JotraelineGreatforgeNPC.APOLOGY_TOUR), new Quest(QuestTypes.NOVICE, Optional.empty()));
@@ -346,7 +396,6 @@ public class DatagenHandler {
                     createRegenPathWithBlocks(bootstrap, "ice", List.of(UnshatteredBlocks.BREAKABLE_ICE_BLOCK.get(), Blocks.AIR), 220);
 
                     createRegenPathWithBlocks(bootstrap, "titanium", List.of(UnshatteredBlocks.BREAKABLE_TITANIUM_BLOCK.get(), Blocks.AIR), 220);
-
                 }).add(DataPackRegistryHandler.FISHING_MISC_REWARD_KEY, bootstrap -> {
                     bootstrap.register(createMiscRewardResourceKey("good_catch"), new CoinReward(25000,
                             5000,
@@ -376,6 +425,11 @@ public class DatagenHandler {
                             Optional.of(FishingConditions.NONE),
                             1.0d,
                             Optional.of(10))
+                    );
+                }).add(DataPackRegistryHandler.SHOP_STOCK_KEY, bootstrap -> {
+                    createStoreStock(bootstrap,
+                            WoolWeaverNPC.WOOL_WEAVER_IDENTIFIER,
+                            Arrays.stream(UnshatteredUtils.WOOL_TYPES).map(item -> new ShopItem(BuiltInRegistries.ITEM.wrapAsHolder(item), 32, true)).toList()
                     );
                 })
         );
@@ -437,6 +491,10 @@ public class DatagenHandler {
     private static void createRegenPath(BootstrapContext<RegenPath> bootstrap, String identifier, List<BlockState> blocks, int regenTicks) {
         bootstrap.register(ResourceKey.create(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY, UnshatteredUtils.getUnshatteredIdentifier(identifier)),
                 new RegenPath(blocks, regenTicks));
+    }
+
+    private static void createStoreStock(BootstrapContext<List<ShopItem>> bootstrap, Identifier vendorIdentifier, List<ShopItem> stock) {
+        bootstrap.register(ResourceKey.create(DataPackRegistryHandler.SHOP_STOCK_KEY, vendorIdentifier), stock);
     }
 
     private static ResourceKey<TriggerMiscReward> createMiscRewardResourceKey(String path) {

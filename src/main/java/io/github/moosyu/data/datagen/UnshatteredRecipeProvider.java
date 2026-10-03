@@ -218,6 +218,22 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(UnshatteredItems.ENCHANTED_BLAZE_POWDER), has(UnshatteredItems.ENCHANTED_BLAZE_POWDER))
                 .save(output);
 
+        for (int i = 0; i < UnshatteredUtils.WOOL_TYPES.length; i++) {
+            Item ingredient = UnshatteredUtils.WOOL_TYPES[i];
+
+            new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.ENCHANTED_WOOL.get()), RecipeCategory.MISC)
+                    .pattern("WWW", "WW ", "   ")
+                    .define('W', SizedIngredient.of(ingredient, 32))
+                    .unlockedBy(getHasName(ingredient), has(ingredient))
+                    .save(output, createRecipeResourceKey(UnshatteredItems.ENCHANTED_WOOL.get(), "_" + ingredient.getDescriptionId()));
+
+            new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.ENCHANTED_WOOL.get()), RecipeCategory.MISC)
+                    .pattern(" W ", "WWW", " W ")
+                    .define('W', SizedIngredient.of(ingredient, 32))
+                    .unlockedBy(getHasName(ingredient), has(ingredient))
+                    .save(output, createRecipeResourceKey(UnshatteredItems.ENCHANTED_WOOL.get(), "_" + BuiltInRegistries.ITEM.getKey(ingredient).getPath() + "_2"));
+        }
+
         createSimpleEnchantedBook(Enchantments.EFFICIENCY, 1, getHasName(UnshatteredItems.ENCHANTED_COBBLESTONE), has(UnshatteredItems.ENCHANTED_COBBLESTONE), UnshatteredItems.ENCHANTED_COBBLESTONE, 64);
         createSimpleEnchantedBook(Enchantments.SMITE, 1, getHasName(UnshatteredItems.ENCHANTED_ROTTEN_FLESH), has(UnshatteredItems.ENCHANTED_ROTTEN_FLESH), UnshatteredItems.ENCHANTED_ROTTEN_FLESH, 32);
         createSimpleEnchantedBook(Enchantments.SHARPNESS, 1, getHasName(UnshatteredItems.ENCHANTED_FLINT), has(UnshatteredItems.ENCHANTED_FLINT), UnshatteredItems.ENCHANTED_FLINT, 64);
@@ -298,7 +314,6 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
     private void createEnchantedItemRecipe(ItemLike ingredient, Item result, String unlockedById, Criterion<?> criterion) {
         createEnchantedItemRecipe(ingredient, 32, result, unlockedById, criterion);
     }
-
 
     private void createEnchantedItemRecipe(ItemLike ingredient, int itemIngredientAmount, Item result, String unlockedById, Criterion<?> criterion) {
         SizedIngredient[] ingredients = new SizedIngredient[5];

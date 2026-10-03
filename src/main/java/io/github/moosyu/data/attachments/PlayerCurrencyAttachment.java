@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.ExtraCodecs;
 
 public final class PlayerCurrencyAttachment {
     public int coins;
@@ -38,11 +39,16 @@ public final class PlayerCurrencyAttachment {
     }
 
     /**
-     * remove coins for purse, doesnt sync
+     * remove coins for purse, doesnt sync, checks if amount can be removed
      * @param amount amount to remove
+     * @return true if the coins were successfully removed
      */
-    public void removeCoins(int amount) {
-        coins -= amount;
+    public boolean removeCoins(int amount) {
+        if (getCoins() >= amount) {
+            coins -= amount;
+            return true;
+        }
+        return false;
     }
 
     public int getBankedCoins() {
@@ -71,9 +77,9 @@ public final class PlayerCurrencyAttachment {
 
     public static final Codec<PlayerCurrencyAttachment> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
-                    Codec.INT.fieldOf("coins").forGetter(PlayerCurrencyAttachment::getCoins),
-                    Codec.INT.fieldOf("motes").forGetter(PlayerCurrencyAttachment::getMotes),
-                    Codec.INT.fieldOf("banked_coins").forGetter(PlayerCurrencyAttachment::getBankedCoins)
+                    ExtraCodecs.NON_NEGATIVE_INT.fieldOf("coins").forGetter(PlayerCurrencyAttachment::getCoins),
+                    ExtraCodecs.NON_NEGATIVE_INT.fieldOf("motes").forGetter(PlayerCurrencyAttachment::getMotes),
+                    ExtraCodecs.NON_NEGATIVE_INT.fieldOf("banked_coins").forGetter(PlayerCurrencyAttachment::getBankedCoins)
             ).apply(instance, PlayerCurrencyAttachment::new)
     );
 

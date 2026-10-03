@@ -14,8 +14,8 @@ public class SkillsScreen extends SimpleScreen {
     private final PlayerSkillsAttachment.Skill[] SKILLS = PlayerSkillsAttachment.Skill.values();
     private final Player player;
 
-    protected SkillsScreen(Component title) {
-        super(title, 176, 166, "textures/gui/empty_screen.png");
+    protected SkillsScreen() {
+        super(Component.translatable("screen.unshattered.skills"), 176, 166, "textures/gui/empty_screen.png");
 
         this.player = Minecraft.getInstance().player;
     }

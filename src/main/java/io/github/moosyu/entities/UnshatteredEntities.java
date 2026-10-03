@@ -68,4 +68,15 @@ public class UnshatteredEntities {
                             UnshatteredUtils.getUnshatteredIdentifier("jotraeline_greatforge"))
                     )
     );
+
+    public static final Supplier<EntityType<WoolWeaverNPC>> WOOL_WEAVER = ENTITY_TYPES.register(
+            "wool_weaver",
+            () -> EntityType.Builder.of(WoolWeaverNPC::new, MobCategory.CREATURE)
+                    .sized(0.6f, 1.8f)
+                    .eyeHeight(1.62f)
+                    .build(ResourceKey.create(
+                            Registries.ENTITY_TYPE,
+                            UnshatteredUtils.getUnshatteredIdentifier("wool_weaver"))
+                    )
+    );
 }

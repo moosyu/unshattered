@@ -3,6 +3,7 @@ package io.github.moosyu.gui.menus;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
@@ -26,5 +27,9 @@ public class UnshatteredMenus {
 
     public static final Supplier<MenuType<DrillAttachmentMenu>> DRILL_ATTACHMENT_MENU_TYPE = MENUS.register("drill_attachment_menu_type", () ->
             new MenuType<>(DrillAttachmentMenu::new, FeatureFlags.DEFAULT_FLAGS)
+    );
+
+    public static final Supplier<MenuType<StoreMenu>> STORE_MENU_TYPE = MENUS.register("store_menu_type", () ->
+            IMenuTypeExtension.create(StoreMenu::new)
     );
 }

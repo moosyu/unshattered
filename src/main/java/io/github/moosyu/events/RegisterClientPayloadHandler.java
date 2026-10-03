@@ -120,6 +120,7 @@ public class RegisterClientPayloadHandler {
         );
 
         event.register(ClientsidePlayerSoundEffectPacket.TYPE, (data, context) -> context.enqueueWork(() ->
-                UnshatteredUtils.playClientsideSound(context.player(), data.soundEvent().value(), SoundSource.PLAYERS, data.volume())));
+                UnshatteredUtils.playClientsideSound(context.player(), data.soundEvent().value(), SoundSource.PLAYERS, data.volume(), data.pitch()))
+        );
     }
 }

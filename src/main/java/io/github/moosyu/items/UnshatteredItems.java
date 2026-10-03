@@ -935,4 +935,9 @@ public class UnshatteredItems {
     );
 
     public static final DeferredItem<Item> MITHRIL_INFUSED_FUEL_TANK = ITEMS.registerItem("mithril_infused_fuel_tank", props -> new FuelAttachmentItem(props,10000, -0.2f, "mithril_infused_fuel_tank", UnshatteredRarity.RARE, 35300));
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_WOOL = ITEMS.registerItem("enchanted_wool", props -> new EnchantedItem(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 320)
+            .component(UnshatteredDataComponents.RARITY, UnshatteredRarity.UNCOMMON))
+    );
 }

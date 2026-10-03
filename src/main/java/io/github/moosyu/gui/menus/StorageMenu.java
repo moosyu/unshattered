@@ -59,7 +59,6 @@ public class StorageMenu extends AbstractContainerMenu {
         refreshWindow();
 
         addStandardInventorySlots(inventory, 8, 84);
-        addInventoryHotbarSlots(inventory, 8, 142);
     }
 
     private void refreshWindow() {
@@ -115,10 +114,6 @@ public class StorageMenu extends AbstractContainerMenu {
 
         currentPageIndex = 0;
         refreshWindow();
-    }
-
-    private int getTotalRows() {
-        return Mth.ceil(displayedIndices.size() / (double) COLUMNS);
     }
 
     @Override

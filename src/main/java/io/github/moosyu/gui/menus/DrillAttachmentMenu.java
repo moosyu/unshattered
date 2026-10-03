@@ -108,7 +108,6 @@ public class DrillAttachmentMenu extends AbstractContainerMenu {
         });
 
         addStandardInventorySlots(playerInventory, 8, 84);
-        addInventoryHotbarSlots(playerInventory, 8, 142);
     }
 
     @Override

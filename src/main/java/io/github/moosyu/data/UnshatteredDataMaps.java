@@ -56,5 +56,4 @@ public final class UnshatteredDataMaps {
             Registries.ENTITY_TYPE,
             FishingWeightEntry.CODEC
     ).build();
-
 }

@@ -46,7 +46,7 @@ public class LivingDamageHandler {
                 double damageDealt = ((double) ((blocksFallen - 3) * 50) / 33) / (1 + (playerDefenceValue / 100));
                 DamageUtils.damagePlayer(player, damageDealt, Component.literal("☠ " + playerName + " fell to their death!"), false, damageSource);
             } else if (event.getSource().is(DamageTypeTags.IS_DROWNING)) {
-                double damageDealt = (event.getOriginalDamage() * 200 / 33) / ((playerDefenceValue / 100) + 1);
+                double damageDealt = (event.getOriginalDamage() * 50 / 33) / ((playerDefenceValue / 100) + 1);
                 DamageUtils.damagePlayer(player, damageDealt, Component.literal("☠ " + playerName + " drowned!"), false, damageSource);
             } else if (event.getSource().is(DamageTypeTags.IS_FIRE)) {
                 double trueDefence = player.getAttributeBaseValue(UnshatteredAttributeValues.TRUE_DEFENCE.holder);

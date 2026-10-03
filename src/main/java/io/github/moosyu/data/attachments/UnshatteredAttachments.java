@@ -3,6 +3,7 @@ package io.github.moosyu.data.attachments;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import io.github.moosyu.data.regions.UnshatteredRegions;
+import io.github.moosyu.gui.menus.containers.SellSlotContainer;
 import io.github.moosyu.gui.menus.containers.StorageContainer;
 import io.github.moosyu.gui.menus.containers.TalismanContainer;
 import net.minecraft.core.BlockPos;
@@ -102,4 +103,7 @@ public final class UnshatteredAttachments {
                     .copyOnDeath()
                     .build()
     );
+
+    // to store last sell slot history between sessions
+    public static final Supplier<AttachmentType<SellSlotContainer>> PLAYER_SELL_SLOT = ATTACHMENT_TYPES.register("player_sell_slot", () -> AttachmentType.serializable(SellSlotContainer::new).build());
 }

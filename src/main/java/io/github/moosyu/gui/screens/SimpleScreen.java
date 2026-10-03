@@ -33,7 +33,7 @@ public class SimpleScreen extends Screen {
 
     @Override
     protected void init() {
-        this.backgroundTopLeft = new Vector2i((this.width - imageWidth) / 2, (this.height - imageHeight) / 2);
+        backgroundTopLeft = new Vector2i((width - imageWidth) / 2, (height - imageHeight) / 2);
     }
 
     @Override

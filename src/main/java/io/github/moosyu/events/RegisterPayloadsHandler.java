@@ -2,6 +2,7 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.abilities.*;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
+import io.github.moosyu.data.attachments.PlayerCurrencyAttachment;
 import io.github.moosyu.data.attachments.PlayerFlagsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.gui.menus.DrillAttachmentMenu;
@@ -9,8 +10,11 @@ import io.github.moosyu.gui.menus.ReforgeAnvilMenu;
 import io.github.moosyu.gui.menus.StorageMenu;
 import io.github.moosyu.gui.menus.TalismansMenu;
 import io.github.moosyu.packets.*;
+import io.github.moosyu.util.UnshatteredUtils;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
@@ -18,6 +22,7 @@ import net.minecraft.world.inventory.CraftingMenu;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.jspecify.annotations.NonNull;
@@ -168,6 +173,13 @@ public class RegisterPayloadsHandler {
                             passiveAbilityItem.onAbilityFinished(abilityContext);
                         }
                     }
+                })
+        );
+
+        registrar.playToServer(AttemptBuyingItemPacket.TYPE,
+                AttemptBuyingItemPacket.STREAM_CODEC,
+                (data, context) -> context.enqueueWork(() -> {
+                    UnshatteredUtils.tryBuyItemStack(data.price(), context.player(), data.itemStack());
                 })
         );
     }

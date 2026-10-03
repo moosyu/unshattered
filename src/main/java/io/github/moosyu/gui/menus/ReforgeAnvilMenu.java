@@ -45,7 +45,6 @@ public class ReforgeAnvilMenu extends ItemCombinerMenu {
         this.currentEnchantment = null;
 
         addStandardInventorySlots(inventory, 8, 84);
-        addInventoryHotbarSlots(inventory, 8, 142);
     }
 
     @Override

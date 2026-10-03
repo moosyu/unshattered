@@ -1,0 +1,125 @@
+{
+  "dialogue_tree_origins": [
+    {
+      "dialogue_node": {
+        "dialogue_choices": [
+          {
+            "target_node": {
+              "dialogue_choices": [
+                {
+                  "target_node": {
+                    "dialogue_choices": [
+                      {
+                        "target_node": {
+                          "dialogue_choices": [
+                            {
+                              "target_node": {
+                                "dialogue_choices": [
+                                  {
+                                    "set_flags": [
+                                      "unshattered:wool_weaver/woolhead"
+                                    ],
+                                    "text": "...",
+                                    "triggered_event": {
+                                      "type": "unshattered:open_store",
+                                      "npc_shop_identifier": "unshattered:wool_weaver"
+                                    }
+                                  }
+                                ],
+                                "interacted_speaking": true,
+                                "text": {
+                                  "translate": "dialogue.unshattered.wool_weaver.woolhead"
+                                }
+                              },
+                              "text": "..."
+                            }
+                          ],
+                          "interacted_speaking": false,
+                          "text": {
+                            "translate": "dialogue.unshattered.wool_weaver.player_woolhead"
+                          }
+                        },
+                        "text": {
+                          "translate": "dialogue.unshattered.wool_weaver.player_woolhead_choice"
+                        }
+                      },
+                      {
+                        "target_node": {
+                          "interacted_speaking": true,
+                          "text": {
+                            "translate": "dialogue.unshattered.wool_weaver.vibrant"
+                          }
+                        },
+                        "text": {
+                          "translate": "dialogue.unshattered.wool_weaver.player_no_choice_exit"
+                        }
+                      }
+                    ],
+                    "interacted_speaking": true,
+                    "text": {
+                      "translate": "dialogue.unshattered.wool_weaver.meant_to_be"
+                    }
+                  },
+                  "text": "..."
+                }
+              ],
+              "interacted_speaking": false,
+              "text": {
+                "translate": "dialogue.unshattered.wool_weaver.player_yeah"
+              }
+            },
+            "text": {
+              "translate": "dialogue.unshattered.wool_weaver.player_yeah_choice"
+            }
+          },
+          {
+            "target_node": {
+              "dialogue_choices": [
+                {
+                  "target_node": {
+                    "dialogue_choices": [
+                      {
+                        "text": {
+                          "translate": "dialogue.unshattered.wool_weaver.okay"
+                        },
+                        "triggered_event": {
+                          "type": "unshattered:open_store",
+                          "npc_shop_identifier": "unshattered:wool_weaver"
+                        }
+                      },
+                      {
+                        "text": {
+                          "translate": "dialogue.unshattered.wool_weaver.player_no_choice_exit"
+                        }
+                      }
+                    ],
+                    "interacted_speaking": true,
+                    "text": {
+                      "translate": "dialogue.unshattered.wool_weaver.really"
+                    }
+                  },
+                  "text": "..."
+                }
+              ],
+              "interacted_speaking": false,
+              "text": {
+                "translate": "dialogue.unshattered.wool_weaver.player_no"
+              }
+            },
+            "text": {
+              "translate": "dialogue.unshattered.wool_weaver.player_no_choice"
+            }
+          }
+        ],
+        "interacted_speaking": true,
+        "text": {
+          "translate": "dialogue.unshattered.wool_weaver.greeting"
+        }
+      },
+      "priority": 1,
+      "set_flags": [
+        "unshattered:wool_weaver/introduction"
+      ]
+    }
+  ]
+}

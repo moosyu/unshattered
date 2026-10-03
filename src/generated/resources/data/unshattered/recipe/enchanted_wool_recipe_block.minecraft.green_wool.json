@@ -1,0 +1,17 @@
+{
+  "type": "unshattered:sized_recipe",
+  "key": {
+    "W": {
+      "count": 32,
+      "ingredient": "minecraft:green_wool"
+    }
+  },
+  "pattern": [
+    "WWW",
+    "WW ",
+    "   "
+  ],
+  "result": {
+    "id": "unshattered:enchanted_wool"
+  }
+}

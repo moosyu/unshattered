@@ -19,13 +19,13 @@
       },
       "priority": 0,
       "set_flags": [
-        "unshattered:rock/dialogue_tree/hi"
+        "unshattered:rock/hi"
       ]
     },
     {
       "dialogue_flag_requirements": {
         "required_flags": [
-          "unshattered:rock/dialogue_tree/hi"
+          "unshattered:rock/hi"
         ]
       },
       "dialogue_node": {
@@ -53,7 +53,7 @@
       },
       "priority": 1,
       "set_flags": [
-        "unshattered:rock/dialogue_tree/hi_2"
+        "unshattered:rock/hi_2"
       ]
     },
     {
@@ -62,7 +62,7 @@
           "unshattered:rocks_quest"
         ],
         "required_flags": [
-          "unshattered:rock/dialogue_tree/hi_2"
+          "unshattered:rock/hi_2"
         ]
       },
       "dialogue_node": {

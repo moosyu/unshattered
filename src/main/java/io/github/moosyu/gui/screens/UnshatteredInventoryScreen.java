@@ -65,7 +65,7 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
                 20,
                 18,
                 new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/stats")),
-                _ -> Minecraft.getInstance().setScreen(new StatsScreen(Component.translatable("screen.unshattered.stats"))))
+                _ -> Minecraft.getInstance().setScreen(new StatsScreen()))
         ).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.stats")));
 
         addRenderableWidget(new SoundlessImageButton(leftPos + 114,
@@ -73,7 +73,7 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
                 20,
                 18,
                 new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/skills")),
-                _ -> Minecraft.getInstance().setScreen(new SkillsScreen(Component.translatable("screen.unshattered.skills"))))
+                _ -> Minecraft.getInstance().setScreen(new SkillsScreen()))
         ).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.skills")));
 
         addRenderableWidget(new SoundlessImageButton(leftPos + 131,

@@ -159,6 +159,7 @@
   "item.unshattered.titanium_drill_dr_x555": "Titanium Drill DR-X555",
   "item.unshattered.titanium_drill_dr_x655": "Titanium Drill DR-X655",
   "item.unshattered.mithril_infused_fuel_tank": "Mithril Infused Fuel Tank",
+  "item.unshattered.enchanted_wool": "Enchanted Wool",
 
   "item.description.unshattered.bat_the_fish": "Where is my cape!",
   "item.description.unshattered.century_the_fish": "The term 'century' was actually named after him, or so he says.",
@@ -504,8 +505,16 @@
   "screen.unshattered.storage.page": "Page",
   "screen.narration.unshattered.storage.search": "Search",
   "screen.unshattered.skill_trees": "Skill Trees",
+  "screen.unshattered.store": "Shop",
+  "screen.unshattered.store.text.cost": "Cost",
+  "screen.unshattered.store.text.coins": "Coins",
+  "screen.unshattered.store.text.left_click": "Left click to buy one!",
+  "screen.unshattered.store.text.right_click": "Right click for more options!",
+  "screen.unshattered.store.text.purchase_failed": "You don't have enough coins to make this order!",
+  "screen.narration.unshattered.store.price": "Price entry",
 
   "widget.unshattered.narration.scroller": "Scroller Widget",
+  "widget.unshattered.narration.shop_item": "Shop Item",
 
   "enchantment.unshattered.rainbow": "Rainbow",
 
@@ -513,6 +522,7 @@
   "minecraft.enchantable/mining": "Pickaxes and Drills",
 
   "entity.unshattered.jotraeline_greatforge": "Jotraeline Greatforge",
+  "entity.unshattered.wool_weaver": "Wool Weaver",
 
   "dialogue.unshattered.jotraeline_greatforge.introduction": "Ay [p]! I'm [c=0xFF00AA00]Jotraeline Greatforge[/c], the drill expert 'round here.",
   "dialogue.unshattered.jotraeline_greatforge.player_drills_choice": "Drills?",
@@ -530,5 +540,19 @@
   "dialogue.unshattered.jotraeline_greatforge.player_sure_choice": "Sure.",
   "dialogue.unshattered.jotraeline_greatforge.player_no_thanks_choice": "No thanks.",
   "dialogue.unshattered.jotraeline_greatforge.still_angry": "[i]Jotraeline still seems upset, looks like you'll have to find a way to make it up to her before coming back.[/i].",
-  "dialogue.unshattered.jotraeline_greatforge.greeting": "Good seeing you again [p], need an upgrade?"
+  "dialogue.unshattered.jotraeline_greatforge.greeting": "Good seeing you again [p], need an upgrade?",
+
+  "dialogue.unshattered.wool_weaver.greeting": "If wool shrinks when you wash it... why don't sheep get smaller when it rains? Just a thought.",
+  "dialogue.unshattered.wool_weaver.player_yeah_choice": "Yeah...",
+  "dialogue.unshattered.wool_weaver.player_no_choice": "They do.",
+  "dialogue.unshattered.wool_weaver.player_yeah": "Yeah... are you some kind of vendor?",
+  "dialogue.unshattered.wool_weaver.player_no": "I'm pretty sure they do shrink a little. Like the wool compresses like a wet dog's fur.",
+  "dialogue.unshattered.wool_weaver.meant_to_be": "Oh, right. I'm meant to be, people don't seem to interested in buying wool these days. Or buying anything. Real shame too, our town is awfully drab. Would you be interested in buying my wool?",
+  "dialogue.unshattered.wool_weaver.really": "Really? Wow, good to know. Would you like to buy some wool? I promise it's not wet. [i]The Wool Weaver smirks a little, she seems pleased to have learnt something new.[/i]",
+  "dialogue.unshattered.wool_weaver.player_woolhead_choice": "Sure.",
+  "dialogue.unshattered.wool_weaver.player_woolhead": "Sure, I'm a bit of a wool-head personally.",
+  "dialogue.unshattered.wool_weaver.woolhead": "[i]The Wool Weaver seems taken aback for a moment before letting out a giggle. It's difficult to tell whether she's laughing at you or just pleased to meet another wool fan.[/i]",
+  "dialogue.unshattered.wool_weaver.okay": "Okay.",
+  "dialogue.unshattered.wool_weaver.player_no_choice_exit": "No.",
+  "dialogue.unshattered.wool_weaver.vibrant": "That's a shame, everyone could do looking a little more [c=0xFFFF5555]v[/c][c=0xFFFF9000]i[/c][c=0xFFFFDE2F]b[/c][c=0xFF55FF55]r[/c][c=0xFF55FFFF]a[/c][c=0xFF459BFF]n[/c][c=0xFFFF55FF]t[/c]."
 }

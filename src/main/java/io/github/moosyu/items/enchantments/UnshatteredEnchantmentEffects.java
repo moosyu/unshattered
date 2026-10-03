@@ -62,18 +62,21 @@ public interface UnshatteredEnchantmentEffects {
                     (_, _) -> "Increases damage to arthropods by: ",
                     1843.2f
             )),
+
             Map.entry(Enchantments.SHARPNESS, damageEffect(
                     _ -> true,
                     level -> level * 0.05,
                     (_, _) -> "Increases damage dealt by: ",
                     4096.0f
             )),
+
             Map.entry(Enchantments.SMITE, damageEffect(
                     target -> target.is(EntityTypeTags.SENSITIVE_TO_SMITE),
                     level -> level * 0.1,
                     (_, _) -> "Increases damage dealt to undead mobs by: ",
                     1024.0f
             )),
+
             Map.entry(Enchantments.EFFICIENCY, new BlockBreakingAttributeComplexEffect() {
                 @Override
                 public Holder<Attribute> getAttributeHolder() {
@@ -111,6 +114,7 @@ public interface UnshatteredEnchantmentEffects {
                     return 1024.0f;
                 }
             }),
+
             Map.entry(UnshatteredEnchantments.RAINBOW, new UnshatteredSimpleEffect() {
                 @Override
                 public Component getEffectDescription(int level) {

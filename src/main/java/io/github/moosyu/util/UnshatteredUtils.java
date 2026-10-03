@@ -19,9 +19,10 @@ import io.github.moosyu.data.fishing.FishingEntry;
 import io.github.moosyu.data.fishing.FishingWeightEntry;
 import io.github.moosyu.events.DataPackRegistryHandler;
 import io.github.moosyu.items.UnshatteredRarity;
-import net.minecraft.ChatFormatting;
+import io.github.moosyu.packets.ClientsidePlayerSoundEffectPacket;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -30,6 +31,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
@@ -40,7 +42,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -48,6 +52,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jspecify.annotations.NonNull;
 
 import javax.annotation.Nullable;
@@ -66,6 +71,42 @@ public final class UnshatteredUtils {
     // text stuff
     public static DecimalFormat oneDecimalFormat = new DecimalFormat("0.#");
     public static final int ERROR_COLOR = 0xFFFF5555;
+    public static final Item[] WOOL_TYPES = {
+            Items.WHITE_WOOL,
+            Items.ORANGE_WOOL,
+            Items.MAGENTA_WOOL,
+            Items.LIGHT_BLUE_WOOL,
+            Items.YELLOW_WOOL,
+            Items.LIME_WOOL,
+            Items.PINK_WOOL,
+            Items.GRAY_WOOL,
+            Items.LIGHT_GRAY_WOOL,
+            Items.CYAN_WOOL,
+            Items.PURPLE_WOOL,
+            Items.BLUE_WOOL,
+            Items.BROWN_WOOL,
+            Items.GREEN_WOOL,
+            Items.RED_WOOL,
+            Items.BLACK_WOOL
+    };
+
+    /**
+     * pointless but i reckon it makes things more clear. not even sure if right is 1 i just guessed lol.
+     */
+    public enum MouseButton {
+        LEFT(0),
+        RIGHT(1);
+
+        private final int button;
+
+        public int getButton() {
+            return button;
+        }
+
+        MouseButton(int button) {
+            this.button = button;
+        }
+    }
 
     /**
      * @param input string input to be converted to component
@@ -239,15 +280,7 @@ public final class UnshatteredUtils {
     // dialogue
 
     /**
-     * @param dialogueInitiatorName name of whatever started the dialogue, doesn't have to be the actual name of the block/entity
-     * @return the identifier for the dialogue tree with the path looking line name/dialogue_tree
-     */
-    public static Identifier createDialogueTreeIdentifier(String dialogueInitiatorName) {
-        return getUnshatteredIdentifier(dialogueInitiatorName + "/" + "dialogue_tree");
-    }
-
-    /**
-     * @param dialogueTreeIdentifier identifier probably created using {@link #createDialogueTreeIdentifier}
+     * @param dialogueTreeIdentifier identifier probably created using {@link #getUnshatteredIdentifier(String)}
      * @param dialogueNodeName name of the node
      * @return an identifier for the dialogue node which will look something like initatior_name/dialogue_tree/node_nmae
      */
@@ -257,7 +290,7 @@ public final class UnshatteredUtils {
 
     /**
      * @param registryAccess registry access
-     * @param dialogueTreeIdentifier dialogue tree identifier from {@link #createDialogueTreeIdentifier(String)}
+     * @param dialogueTreeIdentifier dialogue tree identifier from {@link #getUnshatteredIdentifier(String)}
      * @return gets a dialogue tree object or throws an null point exception if it doesnt exist. generally for {@link io.github.moosyu.data.dialogue.DialogueInteractable#getDialogueTree(RegistryAccess)} in {@link io.github.moosyu.data.dialogue.DialogueInteractable}
      */
     public static DialogueTree getDialogueTreeObject(RegistryAccess registryAccess, Identifier dialogueTreeIdentifier) {
@@ -476,5 +509,40 @@ public final class UnshatteredUtils {
         }
 
         return metCondition && metLevelRequirement;
+    }
+
+    /**
+     * @return true if the coins could successfully be spent
+     */
+    public static boolean trySpendCoins(int price, Player player) {
+        if (player.level().isClientSide()) {
+            return false;
+        }
+
+        if (player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get()).removeCoins(price)) {
+            player.syncData(UnshatteredAttachments.PLAYER_CURRENCY);
+            PacketDistributor.sendToPlayer((ServerPlayer) player, new ClientsidePlayerSoundEffectPacket(
+                    BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.NOTE_BLOCK_PLING.value()), 0.5f, 2.0f)
+            );
+            return true;
+        }
+
+        player.sendSystemMessage(Component.translatable("screen.unshattered.store.text.purchase_failed")
+                .withColor(UnshatteredUtils.ERROR_COLOR)
+        );
+
+        PacketDistributor.sendToPlayer((ServerPlayer) player, new ClientsidePlayerSoundEffectPacket(
+                BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.VILLAGER_NO), 0.5f)
+        );
+
+        return false;
+    }
+
+    public static void tryBuyItemStack(int price, Player player, ItemStack itemStack) {
+        if (!trySpendCoins(price, player)) {
+            return;
+        }
+
+        UnshatteredUtils.givePlayerHarvestedItemStack(player, itemStack);
     }
 }

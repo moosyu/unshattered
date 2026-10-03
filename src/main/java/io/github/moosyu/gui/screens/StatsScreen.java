@@ -20,8 +20,8 @@ public class StatsScreen extends SimpleScreen {
     private int contentHeight = 0;
     private ScrollerWidget scroller;
 
-    public StatsScreen(Component title) {
-        super(title, 176, 166, "textures/gui/generic_scrollable.png");
+    public StatsScreen() {
+        super(Component.translatable("screen.unshattered.stats"), 176, 166, "textures/gui/generic_scrollable.png");
 
         viewportHeight = imageHeight - 24;
     }

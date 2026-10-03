@@ -154,6 +154,7 @@ public class UnshatteredCreativeTabs {
             output.accept(ENCHANTED_TITANIUM);
             output.accept(ENCHANTED_BLAZE_POWDER);
             output.accept(ENCHANTED_BLAZE_ROD);
+            output.accept(ENCHANTED_WOOL);
         }).build()
     );
 
