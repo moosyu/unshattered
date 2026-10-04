@@ -5,6 +5,8 @@ import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.data.regions.UnshatteredRegions;
 import io.github.moosyu.items.armours.SkeletonHat;
+import io.github.moosyu.items.attachments.DrillEngineAttachment;
+import io.github.moosyu.items.attachments.FriedGoblinEggAttachment;
 import io.github.moosyu.items.attachments.FuelAttachmentItem;
 import io.github.moosyu.items.talismans.*;
 import io.github.moosyu.items.tools.UnshatteredMiningToolBase;
@@ -940,4 +942,8 @@ public class UnshatteredItems {
             .component(UnshatteredDataComponents.SELL_VALUE.get(), 320)
             .component(UnshatteredDataComponents.RARITY, UnshatteredRarity.UNCOMMON))
     );
+
+    public static final DeferredItem<Item> MITHRIL_PLATED_DRILL_ENGINE = ITEMS.registerItem("mithril_plated_drill_engine", props -> new DrillEngineAttachment(props,8, 5, "mithril_plated_drill_engine", 45500, UnshatteredRarity.RARE));
+
+    public static final DeferredItem<Item> FRIED_GOBLIN_EGG = ITEMS.registerItem("fried_goblin_egg", FriedGoblinEggAttachment::new);
 }

@@ -1,7 +1,6 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.abilities.*;
-import io.github.moosyu.data.attachments.PlayerPowderAttachment;
 import io.github.moosyu.data.components.ItemFuel;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.data.drops.BlockBreakData;
@@ -104,6 +103,7 @@ public class BlockBreakHandler {
             AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player).add(AbilityContextKey.BLOCKSTATE, blockState);
             List<PassiveAbilityItem> triggered = new ArrayList<>();
             float powderModifiedAmount = 1.0f;
+            boolean fuelUseDisabled = false;
 
             for (ItemStack item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredNonOngoingItems()) {
                 if (!(item.getItem() instanceof AbilityItem abilityItem)) continue;
@@ -115,9 +115,11 @@ public class BlockBreakHandler {
                     } else if (abilityItem instanceof IncrementalAbilityItem incrementalAbilityItem) {
                         incrementalAbilityItem.addIncrements(item, 1);
                     }
-                } else if (abilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_MODIFY_POWDER) && abilityItem instanceof PassiveAbilityItem passiveAbilityItem) {
-                    if (passiveAbilityItem.triggerResult().orElse(null) instanceof Float amount) {
+                } else if (abilityItem instanceof PassiveAbilityItem passiveAbilityItem && passiveAbilityItem.abilityConditionsMet(context)) {
+                    if (abilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_MODIFY_POWDER) && passiveAbilityItem.triggerResult().orElse(null) instanceof Float amount) {
                         powderModifiedAmount += amount;
+                    } else if (abilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_ATTEMPT_CONSUME_FUEL)) {
+                        fuelUseDisabled = true;
                     }
                 }
             }
@@ -145,7 +147,7 @@ public class BlockBreakHandler {
             ItemStack itemStack = player.getMainHandItem();
             ItemFuel itemFuel = itemStack.get(UnshatteredDataComponents.FUEL.get());
 
-            if (itemFuel != null) {
+            if (itemFuel != null && !fuelUseDisabled) {
                 itemStack.set(UnshatteredDataComponents.FUEL.get(), new ItemFuel(itemFuel.getMaxFuel(itemStack), itemFuel.currentFuel() - 1));
             }
 

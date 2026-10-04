@@ -107,7 +107,7 @@ public class ItemTooltipHandler {
 
         // for enchanted books
         if (itemEnchantments != null) {
-            tooltipComponents.add(Component.translatable("tooltip.unshattered.combinable").withColor(0xFF555555));
+            tooltipComponents.add(Component.translatable("tooltip.unshattered.combinable").withStyle(ChatFormatting.DARK_GRAY));
             tooltipComponents.add(Component.empty());
             for (Map.Entry<Holder<Enchantment>, Integer> entry : itemEnchantments.entrySet()) {
                 Optional<ResourceKey<Enchantment>> key = entry.getKey().unwrapKey();
@@ -133,7 +133,7 @@ public class ItemTooltipHandler {
 
                 if (!supportedItems.equals(Component.empty())) {
                     tooltipComponents.add(Component.empty());
-                    tooltipComponents.add(Component.translatable("tooltip.unshattered.applicable").withColor(0xFFAAAAAA).append(supportedItems));
+                    tooltipComponents.add(Component.translatable("tooltip.unshattered.applicable").withStyle(ChatFormatting.GRAY).append(supportedItems));
                 }
             }
         } else {
@@ -175,9 +175,9 @@ public class ItemTooltipHandler {
                 tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.abilityId().getPath())).withColor(0xFFFFAA00).append(Component.literal(" RIGHT CLICK").withColor(0xFFFFFF55).withStyle(ChatFormatting.BOLD)));
                 addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityId().getPath()).getString(), 0xFFAAAAAA, player), MAX_WIDTH);
 
-                if (itemAbility.manaCost() > 0) tooltipComponents.add(Component.literal("Mana Cost: ").withColor(0xFF555555).append(Component.literal(String.valueOf(itemAbility.manaCost())).withColor(0xFF00AAAA)));
-                if (itemAbility.cooldown() > 0) tooltipComponents.add(Component.literal("Cooldown: ").withColor(0xFF555555).append(Component.literal(String.format("%.1f", (float) itemAbility.cooldown() / 20 /* convert ticks to seconds */)).append("s").withColor(0xFF55FF55)));
-                if (itemCharges != null) tooltipComponents.add(Component.literal("Charges: ").withColor(0xFF555555).append(Component.literal(String.valueOf(itemCharges.currentCharges())).withColor(0xFFFFFF55)).append(Component.literal("/").withColor(0xFF555555)).append(Component.literal((itemCharges.rechargeTime() / 20) + "s").withColor(0xFF55FF55)));
+                if (itemAbility.manaCost() > 0) tooltipComponents.add(Component.literal("Mana Cost: ").withStyle(ChatFormatting.DARK_GRAY).append(Component.literal(String.valueOf(itemAbility.manaCost())).withColor(0xFF00AAAA)));
+                if (itemAbility.cooldown() > 0) tooltipComponents.add(Component.literal("Cooldown: ").withStyle(ChatFormatting.DARK_GRAY).append(Component.literal(String.format("%.1f", (float) itemAbility.cooldown() / 20 /* convert ticks to seconds */)).append("s").withColor(0xFF55FF55)));
+                if (itemCharges != null) tooltipComponents.add(Component.literal("Charges: ").withStyle(ChatFormatting.DARK_GRAY).append(Component.literal(String.valueOf(itemCharges.currentCharges())).withColor(0xFFFFFF55)).append(Component.literal("/").withStyle(ChatFormatting.DARK_GRAY)).append(Component.literal((itemCharges.rechargeTime() / 20) + "s").withColor(0xFF55FF55)));
             }
 
             if (itemStack.getItem() instanceof IncrementalAbilityItem incrementalAbilityItem) {
@@ -187,9 +187,9 @@ public class ItemTooltipHandler {
                                 + UnshatteredAttributeValues.fromAttribute(incremental.attributeHolder().value()).symbol)
                         .collect(Collectors.joining(", "))
                         + ")"
-                ).withColor(0xFF555555));
+                ).withStyle(ChatFormatting.DARK_GRAY));
                 tooltipComponents.add(Component.empty());
-                tooltipComponents.add(Component.translatable(incrementalAbilityItem.incrementNameKey()).withColor(0xFFAAAAAA)
+                tooltipComponents.add(Component.translatable(incrementalAbilityItem.incrementNameKey()).withStyle(ChatFormatting.GRAY)
                         .append(Component.literal(": "))
                         .append(Component.literal(String.valueOf(itemStack.getOrDefault(UnshatteredDataComponents.INCREMENTS_STORED.get(), 0))).withColor(0xFF55FF55))
                 );
@@ -200,32 +200,53 @@ public class ItemTooltipHandler {
 
         if (itemAttachments != null) {
             itemAttachments.attachments().forEach(((slotType, attachmentItem) -> {
+                ItemAbility attachmentAbility = attachmentItem.get(UnshatteredDataComponents.ABILITY.get());
+
                 tooltipComponents.add(Component.translatable("item_type.unshattered." + slotType.correspondingType.getSerializedName()).withColor(0xFF459BFF)
                         .append(Component.literal(" "))
-                        .append(attachmentItem == ItemStack.EMPTY ? Component.translatable("tooltip.unshattered.none").withColor(0xFFAAAAAA).withStyle(ChatFormatting.BOLD) : attachmentItem.getItemName().copy().withColor(0xFFAAAAAA).withStyle(ChatFormatting.BOLD))
+                        .append(attachmentItem == ItemStack.EMPTY
+                                ? Component.translatable("tooltip.unshattered.none").withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.BOLD)
+                                : attachmentItem.getItemName().copy().withStyle(ChatFormatting.GREEN)
+                        )
                 );
-            }));
-            tooltipComponents.add(Component.empty());
+
+                if (attachmentAbility != null) {
+                    addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + attachmentAbility.abilityId().getPath()).getString(), 0xFFAAAAAA, player), MAX_WIDTH);
+                }
+                tooltipComponents.add(Component.empty());
+            }
+            ));
         }
 
         if (itemFuel != null) {
-            tooltipComponents.add(Component.translatable("tooltip.unshattered.fuel").withColor(0xFFAAAAAA)
+            tooltipComponents.add(Component.translatable("tooltip.unshattered.fuel").withStyle(ChatFormatting.GRAY)
                     .append(Component.literal(": "))
                     .append(Component.literal(String.format("%,d", itemFuel.currentFuel())).withColor(0xFF00AA00))
-                    .append(Component.literal("/" + String.format("%,d", itemFuel.getMaxFuel(itemStack))).withColor(0xFF555555))
+                    .append(Component.literal("/" + String.format("%,d", itemFuel.getMaxFuel(itemStack))).withStyle(ChatFormatting.DARK_GRAY))
             );
             tooltipComponents.add(Component.empty());
         }
 
         if (sellPrice > 0) {
-            tooltipComponents.add(Component.translatable("tooltip.unshattered.sell_price").withColor(0xFFAAAAAA)
+            tooltipComponents.add(Component.translatable("tooltip.unshattered.sell_price").withStyle(ChatFormatting.GRAY)
                     .append(Component.literal(" "))
                     .append(Component.literal(String.format("%,d", sellPrice)).withColor(0xFFF9A604))
             );
         }
 
         if (itemType.reforgeable()) {
-            tooltipComponents.add(Component.translatable("tooltip.unshattered.reforgable").withColor(0xFF555555));
+            tooltipComponents.add(Component.translatable("tooltip.unshattered.reforgable").withStyle(ChatFormatting.DARK_GRAY));
+        }
+
+        boolean isAttachment = false;
+        for (ItemAttachments.SlotType slotType : ItemAttachments.SlotType.values()) {
+            if (slotType.correspondingType == itemType) {
+                isAttachment = true;
+            }
+        }
+
+        if (isAttachment) {
+            tooltipComponents.add(Component.translatable("tooltip.unshattered.attachable").withStyle(ChatFormatting.DARK_GRAY));
         }
 
         tooltipComponents.add(Component.literal(Component.translatable("rarity.unshattered." + itemRarity.name().toLowerCase()).getString().toUpperCase() + " " + Component.translatable("item_type.unshattered." + itemType.getSerializedName()).getString().toUpperCase()).withColor(itemRarity.getColour(1.0f)).withStyle(ChatFormatting.BOLD));

@@ -160,6 +160,8 @@
   "item.unshattered.titanium_drill_dr_x655": "Titanium Drill DR-X655",
   "item.unshattered.mithril_infused_fuel_tank": "Mithril Infused Fuel Tank",
   "item.unshattered.enchanted_wool": "Enchanted Wool",
+  "item.unshattered.mithril_plated_drill_engine": "Mithril Plated Drill Engine",
+  "item.unshattered.fried_goblin_egg": "Fried Goblin Egg",
 
   "item.description.unshattered.bat_the_fish": "Where is my cape!",
   "item.description.unshattered.century_the_fish": "The term 'century' was actually named after him, or so he says.",
@@ -248,6 +250,8 @@
   "item.description.unshattered.titanium_drill_dr_x555": "The inclusion of a plasma finish has led of a stunningly visually unique drill being forged. Fortunately the plasma coating works in protecting delicate internals.",
   "item.description.unshattered.titanium_drill_dr_x655": "For those willing to put in an innumerable amount of time to master their crafts. A flawless ruby is embedded inside the drill to prove the wielder's qualifications.",
   "item.description.unshattered.mithril_infused_fuel_tank": "Extremely effective at compressing fuel.",
+  "item.description.unshattered.mithril_plated_drill_engine": "Releases a lot of smoke for something without any openings.",
+  "item.description.unshattered.fried_goblin_egg": "May cause disease.",
 
   "item.ability.unshattered.rogue_sword_speed_boost": "Speed Boost",
   "item.ability.unshattered.mind_blowing": "Mind Blowing",
@@ -279,13 +283,15 @@
   "item.ability.unshattered.bottomless": "Bottomless",
   "item.ability.unshattered.rusted_titanium_pickaxe_titanium_fanatic": "Titanium Fanatic",
   "item.ability.unshattered.titanium_pickaxe_titanium_fanatic": "Titanium Fanatic",
-  "item.ability.unshattered.rotten": "rotten",
+  "item.ability.unshattered.rotten": "Rotten",
   "item.ability.unshattered.stored_potential": "Stored Potential",
   "item.ability.unshattered.axe_stored_potential": "Stored Potential",
   "item.ability.unshattered.blazeborn": "Blazeborn",
   "item.ability.unshattered.r226_junkie": "Mithril Junkie",
   "item.ability.unshattered.r326_junkie": "Mithril Junkie",
   "item.ability.unshattered.mithril_infused_fuel_tank": "Flow State",
+  "item.ability.unshattered.mithril_plated_drill_engine": "Ubercharged",
+  "item.ability.unshattered.fried_goblin_egg": "Frugal",
 
   "item.ability.description.unshattered.rogue_sword_speed_boost": "Grants [c=0xFFFFFFFF]+0.5✦ Speed[/c] for [c=0xFF55FF55]30s[/c].",
   "item.ability.description.unshattered.mind_blowing": "Deals [c=0xFF55FF55]+100%[/c] damage to undead mobs.",
@@ -323,7 +329,9 @@
   "item.ability.description.unshattered.blazeborn": "Provides immunity to fire damage.",
   "item.ability.description.unshattered.r226_junkie": "Grants 20% [c=0xFF00AA00]mithril powder[/c] from mining mithril.",
   "item.ability.description.unshattered.r236_junkie": "Grants 40% [c=0xFF00AA00]mithril powder[/c] from mining mithril.",
-  "item.ability.description.unshattered.mithril_infused_fuel_tank": "Decreases pickaxe ability cooldowns by 2% when used.",
+  "item.ability.description.unshattered.mithril_infused_fuel_tank": "Decreases pickaxe ability cooldowns by [c=0xFF55FF55]2%[/c] when used.",
+  "item.ability.description.unshattered.mithril_plated_drill_engine": "Grants [c=0xFFFFAA00]+8⸕[/c] and [c=0xFFFFAA00]+5\uD83D\uDC8E[/c].",
+  "item.ability.description.unshattered.fried_goblin_egg": "Grants a [c=0xFF55FF55]25%[/c] chance to not use fuel.",
 
   "block.unshattered.fig_log": "Fig Log",
   "block.unshattered.breakable_fig_log": "Breakable Fig Log",
@@ -445,6 +453,7 @@
   "commands.unshattered.skills.skill": "Skill",
 
   "tooltip.unshattered.reforgable": "This item can be reforged!",
+  "tooltip.unshattered.attachable": "This item can be attached to a tool!",
   "tooltip.unshattered.breaking_power": "Breaking Power ",
   "tooltip.unshattered.sell_price": "Sell Price:",
   "tooltip.unshattered.applicable": "Applicable on: ",

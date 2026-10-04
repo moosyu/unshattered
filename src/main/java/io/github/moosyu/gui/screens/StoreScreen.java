@@ -5,7 +5,6 @@ import io.github.moosyu.gui.components.ShopItemWidget;
 import io.github.moosyu.gui.menus.StoreMenu;
 import io.github.moosyu.packets.AttemptBuyingItemPacket;
 import io.github.moosyu.util.UnshatteredUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
@@ -14,7 +13,6 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jspecify.annotations.NonNull;
@@ -89,7 +87,7 @@ public class StoreScreen extends AbstractContainerScreen<StoreMenu> {
 
             int buyButtonWidth = 30;
             Button button = Button.builder(Component.literal("Buy"), _ -> {
-                if (itemInputAmount > 0) {
+                if (itemInputAmount > 0 && expandedItem != null) {
                     ClientPacketDistributor.sendToServer(new AttemptBuyingItemPacket(new ItemStack(expandedItem.item(),
                             itemInputAmount),
                             expandedItem.price() * itemInputAmount)

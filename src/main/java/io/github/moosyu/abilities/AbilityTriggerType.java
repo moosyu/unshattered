@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.client.event.MovementInputUpdateEvent;
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 public enum AbilityTriggerType {
@@ -68,5 +69,9 @@ public enum AbilityTriggerType {
     /**
      * runs in {@link io.github.moosyu.events.LivingKnockBackHandler}, only tries for cancel
      */
-    PLAYER_INCOMING_KNOCKBACK
+    PLAYER_INCOMING_KNOCKBACK,
+    /**
+     * runs in {@link io.github.moosyu.events.BlockBreakHandler#onBlockBreak(BreakBlockEvent)}, only to cancel fuel use
+     */
+    PLAYER_ATTEMPT_CONSUME_FUEL
 }

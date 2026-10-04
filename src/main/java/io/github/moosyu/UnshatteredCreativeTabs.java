@@ -1,4 +1,4 @@
-package io.github.moosyu.creative;
+package io.github.moosyu;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -203,6 +203,8 @@ public class UnshatteredCreativeTabs {
             output.accept(TITANIUM_DRILL_DR_X555.get());
             output.accept(TITANIUM_DRILL_DR_X655.get());
                 output.accept(MITHRIL_INFUSED_FUEL_TANK.get());
+            output.accept(MITHRIL_PLATED_DRILL_ENGINE.get());
+            output.accept(FRIED_GOBLIN_EGG.get());
         }).build()
     );
 
