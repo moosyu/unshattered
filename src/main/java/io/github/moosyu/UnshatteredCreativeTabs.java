@@ -155,6 +155,16 @@ public class UnshatteredCreativeTabs {
             output.accept(ENCHANTED_BLAZE_POWDER);
             output.accept(ENCHANTED_BLAZE_ROD);
             output.accept(ENCHANTED_WOOL);
+                output.accept(REFINED_MITHRIL);
+            output.accept(TREASURITE);
+            output.accept(REFINED_DIAMOND);
+            output.accept(GLACITE_JEWEL);
+            output.accept(FUEL_CANISTER);
+            output.accept(GOLDEN_PLATE);
+                output.accept(REFINED_TIATNIUM);
+            output.accept(MITHRIL_PLATE);
+            output.accept(DRILL_MOTOR);
+            output.accept(GOBLIN_EGG);
         }).build()
     );
 

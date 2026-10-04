@@ -7,6 +7,8 @@ import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.ItemAttachments;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemType;
+import io.github.moosyu.util.UnshatteredUtils;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -15,6 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -53,7 +56,8 @@ public class DrillAttachmentMenu extends AbstractContainerMenu {
                 for (int i = 0; i < ATTACHMENT_TYPES.length; i++) {
                     container.setItem(i, attachments == null ? ItemStack.EMPTY : attachments.get(ATTACHMENT_TYPES[i]));
                 }
-            // this branch is for the actual attachments, clientside is only checked here so there isnt an odd delay when the drill is added or removed but that wouldn't occur in this situation
+            // this branch is for the actual attachments, clientside is only checked here so there isnt an odd delay
+            // when the drill is added or removed but that wouldn't occur in this situation
             } else if (!player.level().isClientSide() && player instanceof ServerPlayer serverPlayer) {
                 ItemAttachments current = drill.get(UnshatteredDataComponents.ITEM_ATTACHMENTS.get());
                 if (current != null) {
@@ -104,6 +108,11 @@ public class DrillAttachmentMenu extends AbstractContainerMenu {
             @Override
             public boolean mayPlace(@NonNull ItemStack itemStack) {
                 return itemStack.get(UnshatteredDataComponents.ITEM_TYPE.get()) == ItemType.DRILL;
+            }
+
+            @Override
+            public Identifier getNoItemIcon() {
+                return UnshatteredUtils.getUnshatteredIdentifier("slots/drill_outline");
             }
         });
 
@@ -187,6 +196,10 @@ public class DrillAttachmentMenu extends AbstractContainerMenu {
         @Override
         public int getMaxStackSize() {
             return 1;
+        }
+
+        public @Nullable Identifier getNoItemIcon() {
+            return type.noItemIcon;
         }
     }
 }

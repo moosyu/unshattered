@@ -946,4 +946,56 @@ public class UnshatteredItems {
     public static final DeferredItem<Item> MITHRIL_PLATED_DRILL_ENGINE = ITEMS.registerItem("mithril_plated_drill_engine", props -> new DrillEngineAttachment(props,8, 5, "mithril_plated_drill_engine", 45500, UnshatteredRarity.RARE));
 
     public static final DeferredItem<Item> FRIED_GOBLIN_EGG = ITEMS.registerItem("fried_goblin_egg", FriedGoblinEggAttachment::new);
+
+    public static final DeferredItem<Item> REFINED_MITHRIL = ITEMS.registerItem("refined_mithril", props -> new Item(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 204800)
+            .component(UnshatteredDataComponents.RARITY, UnshatteredRarity.EPIC))
+    );
+
+    public static final DeferredItem<Item> TREASURITE = ITEMS.registerItem("treasurite", props -> new Item(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 5000)
+            .component(UnshatteredDataComponents.RARITY, UnshatteredRarity.EPIC))
+    );
+
+    public static final DeferredItem<Item> REFINED_DIAMOND = ITEMS.registerItem("refined_diamond", props -> new Item(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 4096)
+            .component(UnshatteredDataComponents.RARITY, UnshatteredRarity.EPIC))
+    );
+
+    public static final DeferredItem<Item> GLACITE_JEWEL = ITEMS.registerItem("glacite_jewel", props -> new Item(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 4096)
+            .component(UnshatteredDataComponents.RARITY, UnshatteredRarity.EPIC))
+    );
+
+    public static final DeferredItem<Item> FUEL_CANISTER = ITEMS.registerItem("fuel_canister", props -> new Item(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 510)
+            .component(UnshatteredDataComponents.RARITY, UnshatteredRarity.RARE))
+    );
+
+    public static final DeferredItem<Item> GOLDEN_PLATE = ITEMS.registerItem("golden_plate", props -> new Item(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 3068)
+            .component(UnshatteredDataComponents.RARITY, UnshatteredRarity.RARE))
+    );
+
+    public static final DeferredItem<Item> REFINED_TIATNIUM = ITEMS.registerItem("refined_titanium", props -> new Item(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 51200)
+            .component(UnshatteredDataComponents.RARITY, UnshatteredRarity.LEGENDARY))
+    );
+
+    public static final DeferredItem<Item> MITHRIL_PLATE = ITEMS.registerItem("mithril_plate", props -> new Item(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 10108)
+            .component(UnshatteredDataComponents.RARITY, UnshatteredRarity.RARE))
+    );
+
+    public static final DeferredItem<Item> DRILL_MOTOR = ITEMS.registerItem("drill_motor", props -> new Item(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 5884)
+            .component(UnshatteredDataComponents.RARITY, UnshatteredRarity.RARE))
+    );
+
+    public static final DeferredItem<Item> GOBLIN_EGG = ITEMS.registerItem("goblin_egg", props -> new Item(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 421)
+            .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
+            .component(UnshatteredDataComponents.RARITY, UnshatteredRarity.RARE))
+    );
+
 }

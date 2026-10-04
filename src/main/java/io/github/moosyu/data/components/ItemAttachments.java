@@ -2,10 +2,12 @@ package io.github.moosyu.data.components;
 
 import com.mojang.serialization.Codec;
 import io.github.moosyu.items.ItemType;
+import io.github.moosyu.util.UnshatteredUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.ItemStack;
@@ -16,17 +18,19 @@ import java.util.function.IntFunction;
 
 public record ItemAttachments(Map<SlotType, ItemStack> attachments) {
     public enum SlotType implements StringRepresentable {
-        HOOK(ItemType.HOOK),
-        LINE(ItemType.LINE),
-        SINKER(ItemType.SINKER),
-        FUEL_TANK(ItemType.FUEL_TANK),
-        DRILL_ENGINE(ItemType.DRILL_ENGINE),
-        UPGRADE_MODULE(ItemType.UPGRADE_MODULE);
+        HOOK(ItemType.HOOK, UnshatteredUtils.getUnshatteredIdentifier("slots/hook_outline")),
+        LINE(ItemType.LINE, UnshatteredUtils.getUnshatteredIdentifier("slots/fishing_line_outline")),
+        SINKER(ItemType.SINKER, UnshatteredUtils.getUnshatteredIdentifier("slots/sinker_outline")),
+        FUEL_TANK(ItemType.FUEL_TANK, UnshatteredUtils.getUnshatteredIdentifier("slots/fuel_tank_outline")),
+        DRILL_ENGINE(ItemType.DRILL_ENGINE, UnshatteredUtils.getUnshatteredIdentifier("slots/drill_engine_outline")),
+        UPGRADE_MODULE(ItemType.UPGRADE_MODULE, UnshatteredUtils.getUnshatteredIdentifier("slots/uprade_module_outline"));
 
         public final ItemType correspondingType;
+        public final Identifier noItemIcon;
 
-        SlotType(ItemType correspondingType) {
+        SlotType(ItemType correspondingType, Identifier noItemIcon) {
             this.correspondingType = correspondingType;
+            this.noItemIcon = noItemIcon;
         }
 
         @Override

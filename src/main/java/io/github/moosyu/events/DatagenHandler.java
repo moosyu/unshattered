@@ -2,6 +2,7 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.blocks.TalkingRockBlock;
 import io.github.moosyu.blocks.UnshatteredBlocks;
+import io.github.moosyu.data.ForgeRecipe;
 import io.github.moosyu.data.ShopItem;
 import io.github.moosyu.data.dialogue.*;
 import io.github.moosyu.data.dialogue.events.GiveItemDialogueEvent;
@@ -18,6 +19,7 @@ import io.github.moosyu.data.regions.*;
 import io.github.moosyu.data.datagen.*;
 import io.github.moosyu.entities.JotraelineGreatforgeNPC;
 import io.github.moosyu.entities.WoolWeaverNPC;
+import io.github.moosyu.items.UnshatteredItems;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
@@ -30,6 +32,7 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -37,6 +40,7 @@ import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.joml.Vector2i;
 
@@ -431,6 +435,76 @@ public class DatagenHandler {
                             WoolWeaverNPC.WOOL_WEAVER_IDENTIFIER,
                             Arrays.stream(UnshatteredUtils.WOOL_TYPES).map(item -> new ShopItem(BuiltInRegistries.ITEM.wrapAsHolder(item), 32, true)).toList()
                     );
+                }).add(DataPackRegistryHandler.FORGE_RECIPE_KEY, bootstrap -> {
+                    createForgeRecipe(bootstrap,
+                            new ForgeRecipe(List.of(SizedIngredient.of(UnshatteredItems.ENCHANTED_MITHRIL, 160)), new ItemStack(UnshatteredItems.REFINED_MITHRIL.get()))
+                    );
+
+                    createForgeRecipe(bootstrap,
+                            new ForgeRecipe(List.of(SizedIngredient.of(UnshatteredItems.ENCHANTED_COAL_BLOCK, 2)), new ItemStack(UnshatteredItems.FUEL_CANISTER.get()))
+                    );
+
+                    createForgeRecipe(bootstrap,
+                            new ForgeRecipe(List.of(SizedIngredient.of(UnshatteredItems.ENCHANTED_DIAMOND_BLOCK, 2)), new ItemStack(UnshatteredItems.REFINED_DIAMOND.get()))
+                    );
+
+                    createForgeRecipe(bootstrap,
+                            new ForgeRecipe(List.of(SizedIngredient.of(UnshatteredItems.REFINED_DIAMOND, 1),
+                                    SizedIngredient.of(UnshatteredItems.ENCHANTED_GOLD_BLOCK, 2),
+                                    SizedIngredient.of(UnshatteredItems.GLACITE_JEWEL, 5)
+                            ), new ItemStack(UnshatteredItems.GOLDEN_PLATE.get()))
+                    );
+
+                    createForgeRecipe(bootstrap,
+                            new ForgeRecipe(List.of(SizedIngredient.of(UnshatteredItems.ENCHANTED_TITANIUM, 16)), new ItemStack(UnshatteredItems.REFINED_TIATNIUM.get()))
+                    );
+
+                    createForgeRecipe(bootstrap,
+                            new ForgeRecipe(List.of(SizedIngredient.of(UnshatteredItems.TREASURITE, 10),
+                                    SizedIngredient.of(UnshatteredItems.ENCHANTED_IRON_BLOCK, 1),
+                                    SizedIngredient.of(UnshatteredItems.ENCHANTED_REDSTONE_BLOCK, 3),
+                                    SizedIngredient.of(UnshatteredItems.GOLDEN_PLATE, 1)
+                            ), new ItemStack(UnshatteredItems.DRILL_MOTOR.get()))
+                    );
+
+                    createForgeRecipe(bootstrap,
+                            new ForgeRecipe(List.of(SizedIngredient.of(UnshatteredItems.DRILL_MOTOR, 1),
+                                    SizedIngredient.of(UnshatteredItems.REFINED_MITHRIL, 3),
+                                    SizedIngredient.of(UnshatteredItems.FUEL_CANISTER, 1)
+                            ), new ItemStack(UnshatteredItems.MITHRIL_DRILL_SX_R226.get()))
+                    );
+
+                    createForgeRecipe(bootstrap,
+                            new ForgeRecipe(List.of(SizedIngredient.of(UnshatteredItems.MITHRIL_DRILL_SX_R226, 1),
+                                    SizedIngredient.of(UnshatteredItems.GOLDEN_PLATE, 1),
+                                    SizedIngredient.of(UnshatteredItems.MITHRIL_PLATE, 1)
+                            ), new ItemStack(UnshatteredItems.MITHRIL_DRILL_SX_R326.get()))
+                    );
+
+                    createForgeRecipe(bootstrap,
+                            new ForgeRecipe(List.of(SizedIngredient.of(UnshatteredItems.REFINED_TIATNIUM, 1),
+                                    SizedIngredient.of(UnshatteredItems.REFINED_MITHRIL, 5),
+                                    SizedIngredient.of(UnshatteredItems.GOLDEN_PLATE, 1),
+                                    SizedIngredient.of(UnshatteredItems.ENCHANTED_IRON_BLOCK, 1)
+                            ), new ItemStack(UnshatteredItems.MITHRIL_PLATE.get()))
+                    );
+
+                    createForgeRecipe(bootstrap,
+                            new ForgeRecipe(List.of(SizedIngredient.of(UnshatteredItems.REFINED_DIAMOND, 5),
+                                    SizedIngredient.of(UnshatteredItems.REFINED_MITHRIL, 10),
+                                    SizedIngredient.of(UnshatteredItems.FUEL_CANISTER, 5)
+                            ), new ItemStack(UnshatteredItems.MITHRIL_INFUSED_FUEL_TANK.get()))
+                    );
+
+                    createForgeRecipe(bootstrap,
+                            new ForgeRecipe(List.of(SizedIngredient.of(UnshatteredItems.DRILL_MOTOR, 2),
+                                    SizedIngredient.of(UnshatteredItems.MITHRIL_PLATE, 1)
+                            ), new ItemStack(UnshatteredItems.MITHRIL_PLATED_DRILL_ENGINE.get()))
+                    );
+
+                    createForgeRecipe(bootstrap,
+                            new ForgeRecipe(List.of(SizedIngredient.of(UnshatteredItems.DRILL_MOTOR, 96)), new ItemStack(UnshatteredItems.FRIED_GOBLIN_EGG.get()))
+                    );
                 })
         );
     }
@@ -495,6 +569,13 @@ public class DatagenHandler {
 
     private static void createStoreStock(BootstrapContext<List<ShopItem>> bootstrap, Identifier vendorIdentifier, List<ShopItem> stock) {
         bootstrap.register(ResourceKey.create(DataPackRegistryHandler.SHOP_STOCK_KEY, vendorIdentifier), stock);
+    }
+
+    private static void createForgeRecipe(BootstrapContext<ForgeRecipe> bootstrap, ForgeRecipe forgeRecipe) {
+        bootstrap.register(ResourceKey.create(DataPackRegistryHandler.FORGE_RECIPE_KEY,
+                UnshatteredUtils.getUnshatteredIdentifier(BuiltInRegistries.ITEM.getKey(forgeRecipe.result().getItem()).getPath() + "_recipe")),
+                forgeRecipe
+        );
     }
 
     private static ResourceKey<TriggerMiscReward> createMiscRewardResourceKey(String path) {
