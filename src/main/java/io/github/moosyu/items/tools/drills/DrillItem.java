@@ -8,11 +8,13 @@ import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.items.tools.UnshatteredMiningToolBase;
 import io.github.moosyu.util.UnshatteredUtils;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import org.jspecify.annotations.NonNull;
 
 public class DrillItem extends UnshatteredMiningToolBase {
     public DrillItem(Properties properties, int damage, int miningSpeed, int miningFortune, int breakingPower, String identifier, int sellValue, UnshatteredRarity rarity) {
@@ -44,5 +46,38 @@ public class DrillItem extends UnshatteredMiningToolBase {
                         ).build()
                 )
         );
+    }
+
+    // should hopefully fix the issue like on hypixel where updating the fuel causes the breaking of the next item to
+    // reset. in most cases it wont matter because ping shouldnt be an issue but you never know.
+    @Override
+    public boolean shouldCauseBlockBreakReset(@NonNull ItemStack oldStack, ItemStack newStack) {
+        // very smart but also very dangerous, however i think drill swapping is cool and this is fast so
+        // im just checking this way
+        return !(newStack.getItem() instanceof DrillItem) || !(oldStack.getItem() instanceof DrillItem);
+    }
+
+    @Override
+    public boolean isBarVisible(ItemStack stack) {
+        ItemFuel fuel = stack.get(UnshatteredDataComponents.FUEL.get());
+        if (fuel == null) return false;
+
+        return fuel.currentFuel() < fuel.getMaxFuel(stack);
+    }
+
+    @Override
+    public int getBarWidth(ItemStack stack) {
+        ItemFuel fuel = stack.get(UnshatteredDataComponents.FUEL.get());
+        if (fuel == null) return 0;
+
+        int max = fuel.getMaxFuel(stack);
+        if (max <= 0) return 0;
+
+        return Math.round(13.0f * Mth.clamp((float) fuel.currentFuel() / max, 0.0f, 1.0f));
+    }
+
+    @Override
+    public int getBarColor(@NonNull ItemStack stack) {
+        return 0xFFFF6A00;
     }
 }

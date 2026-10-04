@@ -165,6 +165,7 @@ public class UnshatteredCreativeTabs {
             output.accept(MITHRIL_PLATE);
             output.accept(DRILL_MOTOR);
             output.accept(GOBLIN_EGG);
+                output.accept(OIL_BARREL);
         }).build()
     );
 

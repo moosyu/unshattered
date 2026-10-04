@@ -1,9 +1,5 @@
 package io.github.moosyu.gui.menus;
 
-import io.github.moosyu.abilities.AbilityContext;
-import io.github.moosyu.abilities.AbilityContextKey;
-import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
-import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.ItemAttachments;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemType;
@@ -27,8 +23,9 @@ public class DrillAttachmentMenu extends AbstractContainerMenu {
             ItemAttachments.SlotType.FUEL_TANK, ItemAttachments.SlotType.DRILL_ENGINE, ItemAttachments.SlotType.UPGRADE_MODULE
     };
 
-    private static final int DRILL_SLOT = ATTACHMENT_TYPES.length;
-    public static final int SLOTS = DRILL_SLOT + 1;
+    private static final int DRILL_SLOT_INDEX = ATTACHMENT_TYPES.length;
+    private static final int FUEL_SLOT_INDEX = DRILL_SLOT_INDEX + 1;
+    public static final int SLOTS = FUEL_SLOT_INDEX + 1;
 
     private final Player player;
     private final SimpleContainer container = new SimpleContainer(SLOTS) {
@@ -42,7 +39,7 @@ public class DrillAttachmentMenu extends AbstractContainerMenu {
 
             updating = true;
 
-            ItemStack drill = container.getItem(DRILL_SLOT);
+            ItemStack drill = container.getItem(DRILL_SLOT_INDEX);
             if (drill.isEmpty()) {
                 for (int i = 0; i < ATTACHMENT_TYPES.length; i++) {
                     container.setItem(i, ItemStack.EMPTY);
@@ -58,7 +55,7 @@ public class DrillAttachmentMenu extends AbstractContainerMenu {
                 }
             // this branch is for the actual attachments, clientside is only checked here so there isnt an odd delay
             // when the drill is added or removed but that wouldn't occur in this situation
-            } else if (!player.level().isClientSide() && player instanceof ServerPlayer serverPlayer) {
+            } else if (!player.level().isClientSide() && player instanceof ServerPlayer) {
                 ItemAttachments current = drill.get(UnshatteredDataComponents.ITEM_ATTACHMENTS.get());
                 if (current != null) {
                     ItemAttachments updated = current;
@@ -69,12 +66,6 @@ public class DrillAttachmentMenu extends AbstractContainerMenu {
                         if ((previous.isEmpty() && next.isEmpty()) || ItemStack.matches(previous, next)) {
                             continue;
                         }
-
-                        PlayerAbilityEffectsAttachment abilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES.get());
-                        AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, serverPlayer);
-
-                        abilities.removePassiveItem(previous, context);
-                        abilities.addPassiveItem(next, context);
 
                         Map<ItemAttachments.SlotType, ItemStack> copy = new EnumMap<>(ItemAttachments.SlotType.class);
                         copy.putAll(updated.attachments());
@@ -101,10 +92,10 @@ public class DrillAttachmentMenu extends AbstractContainerMenu {
         player = playerInventory.player;
 
         for (int i = 0; i < ATTACHMENT_TYPES.length; i++) {
-            addSlot(new AttachmentSlot(container, i, 51 + i * 29, 26, ATTACHMENT_TYPES[i]));
+            addSlot(new AttachmentSlot(container, i, 56 + i * 24, 24, ATTACHMENT_TYPES[i]));
         }
 
-        addSlot(new Slot(container, DRILL_SLOT, 80, 50) {
+        addSlot(new Slot(container, DRILL_SLOT_INDEX, 56, 55) {
             @Override
             public boolean mayPlace(@NonNull ItemStack itemStack) {
                 return itemStack.get(UnshatteredDataComponents.ITEM_TYPE.get()) == ItemType.DRILL;
@@ -113,6 +104,18 @@ public class DrillAttachmentMenu extends AbstractContainerMenu {
             @Override
             public Identifier getNoItemIcon() {
                 return UnshatteredUtils.getUnshatteredIdentifier("slots/drill_outline");
+            }
+        });
+
+        addSlot(new Slot(container, FUEL_SLOT_INDEX, 104, 55) {
+            @Override
+            public boolean mayPlace(@NonNull ItemStack itemStack) {
+                return itemStack.get(UnshatteredDataComponents.ITEM_TYPE.get()) == ItemType.DRILL;
+            }
+
+            @Override
+            public Identifier getNoItemIcon() {
+                return UnshatteredUtils.getUnshatteredIdentifier("slots/fuel_outline");
             }
         });
 
@@ -189,7 +192,7 @@ public class DrillAttachmentMenu extends AbstractContainerMenu {
                 return false;
             }
 
-            ItemAttachments attachments = container.getItem(DRILL_SLOT).get(UnshatteredDataComponents.ITEM_ATTACHMENTS.get());
+            ItemAttachments attachments = container.getItem(DRILL_SLOT_INDEX).get(UnshatteredDataComponents.ITEM_ATTACHMENTS.get());
             return attachments != null && attachments.hasSlot(type);
         }
 

@@ -532,6 +532,7 @@
   "screen.unshattered.store.text.right_click": "Right click for more options!",
   "screen.unshattered.store.text.purchase_failed": "You don't have enough coins to make this order!",
   "screen.narration.unshattered.store.price": "Price entry",
+  "screen.unshattered.drill_attachment": "Consume fuel",
 
   "widget.unshattered.narration.scroller": "Scroller Widget",
   "widget.unshattered.narration.shop_item": "Shop Item",

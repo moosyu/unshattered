@@ -47,7 +47,7 @@ public class StoreMenu extends AbstractContainerMenu {
 
             // these were made false because i basically do what they do with the menu clicked override
             // probably couldve done it better but it started feeling really complicated
-            @Override public boolean mayPlace(@NonNull ItemStack stack) {
+            @Override public boolean mayPlace(@NonNull ItemStack itemStack) {
                 return false;
             }
 
@@ -84,20 +84,20 @@ public class StoreMenu extends AbstractContainerMenu {
         super.clicked(slotIndex, buttonNum, containerInput, player);
     }
 
-    private boolean sellStack(ItemStack stack, Player player) {
-        int price = stack.getOrDefault(UnshatteredDataComponents.SELL_VALUE.get(), 0);
+    private boolean sellStack(ItemStack itemStack, Player player) {
+        int price = itemStack.getOrDefault(UnshatteredDataComponents.SELL_VALUE.get(), 0);
         if (price <= 0) {
             return false;
         }
 
         PlayerCurrencyAttachment currency = player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get());
-        currency.addCoins(price * stack.count());
+        currency.addCoins(price * itemStack.count());
         player.syncData(UnshatteredAttachments.PLAYER_CURRENCY);
         PacketDistributor.sendToPlayer((ServerPlayer) player, new ClientsidePlayerSoundEffectPacket(
                 BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.NOTE_BLOCK_PLING.value()), 0.5f, 2.0f)
         );
 
-        sellSlot.set(stack.copy());
+        sellSlot.set(itemStack.copy());
         return true;
     }
 

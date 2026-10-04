@@ -44,6 +44,7 @@ public class DataPackRegistryHandler {
         );
 
         event.dataPackRegistry(DIALOGUE_TREE_REGISTRY_KEY,
+                DialogueTree.CODEC,
                 DialogueTree.CODEC
         );
 

@@ -27,8 +27,7 @@ public class ServerStartingHandler {
     @SubscribeEvent
     public static void onServerStart(ServerStartingEvent event) {
         MinecraftServer server = event.getServer();
-        Unshattered.LOGGER.info("HELLO from server starting");
-        UnshatteredAttributeValues.buildLookup();
+        Unshattered.LOGGER.info("hello from moosyu");
         ServerLevel serverLevel = server.getLevel(OVERWORLD);
         BoundaryCoordinates boundaryCoordinates = BoundaryCoordinates.getRegionCoordinates(serverLevel, UnshatteredRegions.DEFAULT_REGION);
 
@@ -39,11 +38,5 @@ public class ServerStartingHandler {
             Vector2i boundaryCoordinatesLength = boundaryCoordinates.getRectangleLengths();
             RegionAreas.createRegionAreaGrid(new Vector2i(boundaryCoordinatesLength.x, boundaryCoordinatesLength.y), registryAccess.lookupOrThrow(REGION_BOUNDARY_REGISTRY_KEY).stream().toList());
         }
-
-        RegenPaths.REGEN_IDENTIFIER_BY_BLOCK = registryAccess.lookupOrThrow(REGEN_PATH_REGISTRY_KEY)
-                .listElements()
-                .collect(Collectors.toMap(ref -> ref.value().path().getFirst(),
-                        ref -> ref.key().identifier()
-                ));
     }
 }

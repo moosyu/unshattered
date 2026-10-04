@@ -223,19 +223,15 @@ public final class PlayerAbilityEffectsAttachment {
 
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             ItemStack itemStack = player.getItemBySlot(slot);
-            if (!itemStack.isEmpty() && itemStack.getItem() instanceof AbilityItem) {
-                ItemAttachments itemAttachments = itemStack.get(UnshatteredDataComponents.ITEM_ATTACHMENTS);
+            if (itemStack.isEmpty()) continue;
 
-                if (itemAttachments != null) {
-                    itemAttachments.attachments().forEach((_, attachmentItemStack) -> {
-                        if (attachmentItemStack.getItem() instanceof AbilityItem) {
-                            addPassiveItem(attachmentItemStack, context);
-                        }
-                    });
-                }
-
-                itemStacks.add(itemStack);
+            ItemAttachments itemAttachments = itemStack.get(UnshatteredDataComponents.ITEM_ATTACHMENTS);
+            if (itemAttachments != null) {
+                itemAttachments.attachments().forEach((_, a) -> {
+                    if (a.getItem() instanceof AbilityItem) addPassiveItem(a, context);
+                });
             }
+            if (itemStack.getItem() instanceof AbilityItem) itemStacks.add(itemStack);
         }
 
         player.getData(UnshatteredAttachments.PLAYER_TALISMAN_STORAGE.get()).forEach(itemStack -> {

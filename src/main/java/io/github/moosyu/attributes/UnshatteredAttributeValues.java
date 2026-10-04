@@ -21,7 +21,7 @@ public enum UnshatteredAttributeValues {
     FEROCITY("ferocity", "⫽", 0.0, 0.0, 200.0, 0xFFFF5555, true, true, true),
     MANA("mana", "✎", 20.0, 0.0, 131072.0, 0xFF55D5FF, true, false, false),
     MANA_REGEN("mana_regen", "✎", 100.0, 0.0, 2048.0, 0xFF55D5FF, true, false, true),
-    MINING_SPEED("mining_speed", "⸕", 0.0, 0.0, 128.0, 0xFFFFAA00, true, false, false),
+    MINING_SPEED("mining_speed", "⸕", 0.0, 0.0, 400.0, 0xFFFFAA00, true, false, false),
     MINING_FORTUNE("mining_fortune", "\uD83D\uDC8E", 0.0, 0.0, 2048.0, 0xFFFFAA00, true, false, false),
     MINING_SPREAD("mining_spread", "▚", 0.0, 0.0, 1024.0, 0xFFFFFF55, true, false, false),
     PRISTINE("pristine", "✧", 0.0, 0.0, 32.0, 0xFFAA00AA, true, false, false),
@@ -42,6 +42,7 @@ public enum UnshatteredAttributeValues {
     public final int color;
     public DeferredHolder<Attribute, Attribute> holder;
     public final boolean visible, offensive, percentage;
+    private static Map<Attribute, UnshatteredAttributeValues> attributeMap;
 
     UnshatteredAttributeValues(String id, String symbol, double def, double min, double max, int color, boolean visible, boolean offensive, boolean percentage) {
         this.id = id;
@@ -63,18 +64,19 @@ public enum UnshatteredAttributeValues {
         return "attribute.name.unshattered." + id;
     }
 
-    // for accessing attributes using holder values
-    public static void buildLookup() {
-        ATTRIBUTE_MAP.clear();
-        for (UnshatteredAttributeValues modAttribute : values()) {
-            if (modAttribute.holder != null) {
-                ATTRIBUTE_MAP.put(modAttribute.holder.value(), modAttribute);
-            }
-        }
-    }
-
     public static UnshatteredAttributeValues fromAttribute(Attribute attribute) {
-        return ATTRIBUTE_MAP.get(attribute);
+        Map<Attribute, UnshatteredAttributeValues> map = attributeMap;
+        // so the server and client build their own (hopefully identical) copies of the attributes map when needed
+        if (map == null) {
+            map = new HashMap<>();
+            for (UnshatteredAttributeValues value : values()) {
+                if (value.holder != null) {
+                    map.put(value.holder.value(), value);
+                }
+            }
+            attributeMap = map;
+        }
+        return map.get(attribute);
     }
 
     public static void modifyAttributeBaseValue(Player player, UnshatteredAttributeValues attribute, double amount) {

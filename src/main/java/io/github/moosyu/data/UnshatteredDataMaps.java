@@ -19,7 +19,7 @@ public final class UnshatteredDataMaps {
             UnshatteredUtils.getUnshatteredIdentifier("block_break_data"),
             Registries.BLOCK,
             BlockBreakData.CODEC
-    ).build();
+    ).synced(BlockBreakData.CODEC, true).build();
 
     public static final DataMapType<Item, Float> FISHABLE_ITEMS_EXP_DATA = DataMapType.builder(
             UnshatteredUtils.getUnshatteredIdentifier("fishable_items_exp_data"),
@@ -43,7 +43,7 @@ public final class UnshatteredDataMaps {
             UnshatteredUtils.getUnshatteredIdentifier("block_breaking_power_data"),
             Registries.BLOCK,
             Codec.INT
-    ).build();
+    ).synced(Codec.INT, true).build();
 
     public static final DataMapType<Item, FishingWeightEntry> FISHING_ITEM_WEIGHT_DATA = DataMapType.builder(
             UnshatteredUtils.getUnshatteredIdentifier("fishing_item_weight_data"),

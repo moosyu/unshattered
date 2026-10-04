@@ -13,9 +13,11 @@
     "BlocksAttacksMixin",
     "ResultSlotMixin",
     "SheepMixin",
-    "StatsScreenMixin",
     "AbstractArrowMixin",
     "ProjectileWeaponItemMixin",
     "CropBlockMixin"
+  ],
+  "client": [
+    "StatsScreenMixin"
   ]
 }

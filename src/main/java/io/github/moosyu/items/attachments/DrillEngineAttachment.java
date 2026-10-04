@@ -24,7 +24,8 @@ public class DrillEngineAttachment extends Item implements PassiveAbilityItem {
     private final Identifier miningFortuneIdentifier;
 
     public DrillEngineAttachment(Properties properties, int miningSpeed, int miningFortune, String identifier, int sellPrice, UnshatteredRarity rarity) {
-        super(properties.component(UnshatteredDataComponents.SELL_VALUE.get(), sellPrice)
+        super(properties.stacksTo(1)
+                .component(UnshatteredDataComponents.SELL_VALUE.get(), sellPrice)
                 .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.DRILL_ENGINE)
                 .component(UnshatteredDataComponents.RARITY.get(), rarity)
                 .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
@@ -40,7 +41,7 @@ public class DrillEngineAttachment extends Item implements PassiveAbilityItem {
         this.miningSpeed = miningSpeed;
         this.miningFortune = miningFortune;
         miningSpeedIdentifier = UnshatteredUtils.getUnshatteredIdentifier(identifier + "_mining_speed");
-        miningFortuneIdentifier = UnshatteredUtils.getUnshatteredIdentifier(identifier + "mining_fortune");
+        miningFortuneIdentifier = UnshatteredUtils.getUnshatteredIdentifier(identifier + "_mining_fortune");
     }
 
     @Override

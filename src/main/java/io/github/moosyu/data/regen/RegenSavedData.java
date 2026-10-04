@@ -108,7 +108,7 @@ public final class RegenSavedData extends SavedData {
             }
         } else {
             BlockState blockState = level.getBlockState(globalPos.pos());
-            Identifier regenerationIdentifier = REGEN_IDENTIFIER_BY_BLOCK.get(blockState);
+            Identifier regenerationIdentifier = RegenPaths.getRegenIdentifier(level.registryAccess(), blockState);
             if (regenerationIdentifier != null) {
                 ResourceKey<RegenPath> regenPathKey = ResourceKey.create(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY, regenerationIdentifier);
                 RegenPath regenPath = registry.getValue(regenPathKey);

@@ -17,7 +17,8 @@ public class FuelAttachmentItem extends Item implements PassiveAbilityItem {
     private final float abilityCooldownDecrease;
 
     public FuelAttachmentItem(Properties properties, int fuelAmount, float abilityCooldownDecrease, String identifier, UnshatteredRarity rarity, int sellValue) {
-        super(properties.component(UnshatteredDataComponents.RARITY.get(), rarity)
+        super(properties.stacksTo(1)
+                .component(UnshatteredDataComponents.RARITY.get(), rarity)
                 .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
                 .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.FUEL_TANK)
                 .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier(identifier), 0, 0, 0, true))

@@ -3,6 +3,10 @@ package io.github.moosyu.gui.screens;
 import io.github.moosyu.gui.menus.DrillAttachmentMenu;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
@@ -15,9 +19,19 @@ public class DrillAttachmentScreen extends AbstractContainerScreen<DrillAttachme
     }
 
     @Override
+    public void init() {
+        super.init();
+
+        ImageButton combineButton = new ImageButton(leftPos + 80 , topPos + 55, 16, 16, new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("buttons/hammer")), _ -> {});
+        combineButton.setTooltip(Tooltip.create(Component.translatable("screen.unshattered.drill_attachment")));
+
+        addRenderableWidget(combineButton);
+    }
+
+    @Override
     public void extractBackground(@NonNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         super.extractBackground(graphics, mouseX, mouseY, partialTick);
 
-        graphics.blit(RenderPipelines.GUI_TEXTURED, UnshatteredUtils.getUnshatteredIdentifier("textures/gui/drill_attachment.png"), this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, UnshatteredUtils.getUnshatteredIdentifier("textures/gui/drill_attachment.png"), leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
     }
 }

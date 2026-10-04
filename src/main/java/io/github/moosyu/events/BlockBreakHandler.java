@@ -44,7 +44,6 @@ import java.util.*;
 
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_SKILLS;
-import static io.github.moosyu.data.regen.RegenPaths.REGEN_IDENTIFIER_BY_BLOCK;
 
 // ran just before a player is to break a block
 @EventBusSubscriber(modid = MODID)
@@ -78,7 +77,7 @@ public class BlockBreakHandler {
                     }
                 }
             } else {
-                Identifier regenIdentifier = REGEN_IDENTIFIER_BY_BLOCK.get(blockState);
+                Identifier regenIdentifier = RegenPaths.getRegenIdentifier(level.registryAccess(), blockState);
                 if (regenIdentifier != null) {
                     ResourceKey<RegenPaths.RegenPath> regenPathResourceKey = ResourceKey.create(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY, regenIdentifier);
                     RegenPaths.RegenPath regenPath = registry.getValue(regenPathResourceKey);
@@ -148,7 +147,7 @@ public class BlockBreakHandler {
             ItemFuel itemFuel = itemStack.get(UnshatteredDataComponents.FUEL.get());
 
             if (itemFuel != null && !fuelUseDisabled) {
-                itemStack.set(UnshatteredDataComponents.FUEL.get(), new ItemFuel(itemFuel.getMaxFuel(itemStack), itemFuel.currentFuel() - 1));
+                itemStack.set(UnshatteredDataComponents.FUEL.get(), new ItemFuel(itemFuel.maxFuel(), Math.max(0, itemFuel.currentFuel() - 1)));
             }
 
             triggered.forEach(item -> item.onAbilityFinished(context));

@@ -989,13 +989,21 @@ public class UnshatteredItems {
 
     public static final DeferredItem<Item> DRILL_MOTOR = ITEMS.registerItem("drill_motor", props -> new Item(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.MATERIAL)
             .component(UnshatteredDataComponents.SELL_VALUE.get(), 5884)
-            .component(UnshatteredDataComponents.RARITY, UnshatteredRarity.RARE))
+            .component(UnshatteredDataComponents.RARITY, UnshatteredRarity.RARE)
+            .stacksTo(1))
     );
 
     public static final DeferredItem<Item> GOBLIN_EGG = ITEMS.registerItem("goblin_egg", props -> new Item(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.MATERIAL)
             .component(UnshatteredDataComponents.SELL_VALUE.get(), 421)
             .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-            .component(UnshatteredDataComponents.RARITY, UnshatteredRarity.RARE))
+            .component(UnshatteredDataComponents.RARITY, UnshatteredRarity.RARE)
+            .stacksTo(1))
     );
 
+    public static final DeferredItem<Item> OIL_BARREL = ITEMS.registerItem("oil_barrel", props -> new Item(props.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.MATERIAL)
+            .component(UnshatteredDataComponents.SELL_VALUE.get(), 1000)
+            .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
+            .component(UnshatteredDataComponents.RARITY, UnshatteredRarity.RARE)
+            .stacksTo(1))
+    );
 }
