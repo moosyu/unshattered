@@ -1,5 +1,6 @@
 package io.github.moosyu.gui.menus;
 
+import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.components.ItemAttachments;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemType;
@@ -98,7 +99,7 @@ public class DrillAttachmentMenu extends AbstractContainerMenu {
         addSlot(new Slot(container, DRILL_SLOT_INDEX, 56, 55) {
             @Override
             public boolean mayPlace(@NonNull ItemStack itemStack) {
-                return itemStack.get(UnshatteredDataComponents.ITEM_TYPE.get()) == ItemType.DRILL;
+                return itemStack.typeHolder().getData(UnshatteredDataMaps.ITEM_TYPE_DATA) == ItemType.DRILL;
             }
 
             @Override
@@ -110,7 +111,7 @@ public class DrillAttachmentMenu extends AbstractContainerMenu {
         addSlot(new Slot(container, FUEL_SLOT_INDEX, 104, 55) {
             @Override
             public boolean mayPlace(@NonNull ItemStack itemStack) {
-                return itemStack.get(UnshatteredDataComponents.ITEM_TYPE.get()) == ItemType.DRILL;
+                return itemStack.typeHolder().getData(UnshatteredDataMaps.ITEM_TYPE_DATA) == ItemType.DRILL;
             }
 
             @Override
@@ -188,7 +189,7 @@ public class DrillAttachmentMenu extends AbstractContainerMenu {
 
         @Override
         public boolean mayPlace(@NonNull ItemStack itemStack) {
-            if (itemStack.get(UnshatteredDataComponents.ITEM_TYPE.get()) != type.correspondingType) {
+            if (itemStack.typeHolder().getData(UnshatteredDataMaps.ITEM_TYPE_DATA) != type.correspondingType) {
                 return false;
             }
 

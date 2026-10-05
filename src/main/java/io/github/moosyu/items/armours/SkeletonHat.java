@@ -37,19 +37,16 @@ import java.util.Optional;
 import java.util.Set;
 
 public class SkeletonHat extends Item implements PassiveAbilityItem {
-    private static final Identifier ABILITY_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("skeleton_hat_explosive_arrows");
+    public static final Identifier ABILITY_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("skeleton_hat_explosive_arrows");
     public static ResourceKey<EquipmentAsset> SKELETON_HAT_KEY = ResourceKey.create(UnshatteredArmourMaterials.ROOT_ID, UnshatteredUtils.getUnshatteredIdentifier("skeleton_hat"));
 
     public SkeletonHat(Properties properties) {
-        super(properties.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.HELMET)
-                .component(DataComponents.EQUIPPABLE,
+        super(properties.component(DataComponents.EQUIPPABLE,
                         Equippable.builder(EquipmentSlot.HEAD)
                                 .setEquipSound(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.SKELETON_AMBIENT))
                                 .setAsset(SKELETON_HAT_KEY)
                                 .build()
                 )
-                .component(UnshatteredDataComponents.SELL_VALUE.get(), 8)
-                .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(ABILITY_IDENTIFIER, 0, 0, 0, true))
                 .attributes(ItemAttributeModifiers.builder()
                         .add(Attributes.MOVEMENT_SPEED,
                                 new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("skeleton_hat_speed"),

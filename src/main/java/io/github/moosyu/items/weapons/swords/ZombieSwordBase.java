@@ -38,8 +38,7 @@ public class ZombieSwordBase extends UnshatteredSword {
         Identifier abilityId = Identifier.fromNamespaceAndPath(MODID, snakeCaseIdentifier + "_instant_heal");
         ItemAbility ability = new ItemAbility(abilityId, manaCost, cooldown, 0, false);
 
-        super(properties.component(UnshatteredDataComponents.ABILITY.get(), ability)
-                .attributes(ItemAttributeModifiers.builder()
+        super(properties.attributes(ItemAttributeModifiers.builder()
                         .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(snakeCaseIdentifier + "_damage"), damage, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                         .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(snakeCaseIdentifier + "_strength"), strength, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                         .add(UnshatteredAttributeValues.MANA.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(snakeCaseIdentifier + "_mana"), mana, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)

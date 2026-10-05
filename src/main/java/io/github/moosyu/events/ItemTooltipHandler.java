@@ -2,7 +2,9 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.abilities.IncrementalAbilityItem;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.components.*;
+import io.github.moosyu.data.datagen.UnshatteredItemTagsProvider;
 import io.github.moosyu.items.enchantments.UnshatteredEnchantmentEffects;
 import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.UnshatteredRarity;
@@ -47,13 +49,13 @@ public class ItemTooltipHandler {
         if (player == null) return;
         ItemStack itemStack = event.getItemStack();
         List<Component> tooltipComponents = event.getToolTip();
-        UnshatteredRarity itemRarity = itemStack.getOrDefault(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.COMMON);
-        ItemType itemType = itemStack.getOrDefault(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.ITEM);
+        UnshatteredRarity itemRarity = UnshatteredUtils.getItemRarity(itemStack);
+        ItemType itemType = UnshatteredUtils.getItemType(itemStack);
         boolean hasAttributes = false;
-        boolean itemDescription = Boolean.TRUE.equals(itemStack.get(UnshatteredDataComponents.DESCRIPTION.get()));
-        ItemAbility itemAbility = itemStack.get(UnshatteredDataComponents.ABILITY);
+        boolean hasDescription = itemStack.is(UnshatteredItemTagsProvider.HAS_DESCRIPTION);
+        ItemAbility itemAbility = itemStack.typeHolder().getData(UnshatteredDataMaps.ITEM_ABILITY_DATA);
         ItemCharges itemCharges = itemStack.get(UnshatteredDataComponents.CHARGES);
-        int sellPrice = itemStack.getOrDefault(UnshatteredDataComponents.SELL_VALUE, 0) * itemStack.count();
+        int sellPrice = UnshatteredUtils.getItemSellValue(itemStack) * itemStack.count();
         ItemAttributeModifiers modifiers = itemStack.getAttributeModifiers();
         ItemEnchantments itemEnchantments = itemStack.get(DataComponents.STORED_ENCHANTMENTS);
         ItemFuel itemFuel = itemStack.get(UnshatteredDataComponents.FUEL);
@@ -99,7 +101,7 @@ public class ItemTooltipHandler {
             }
         }
 
-        if (itemDescription) {
+        if (hasDescription) {
             if (hasAttributes) tooltipComponents.add(Component.empty());
 
             addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.description.unshattered." + BuiltInRegistries.ITEM.getKey(itemStack.getItem()).getPath()).getString(), 0xFFAAAAAA, player), MAX_WIDTH);
@@ -200,7 +202,7 @@ public class ItemTooltipHandler {
 
         if (itemAttachments != null) {
             itemAttachments.attachments().forEach(((slotType, attachmentItem) -> {
-                ItemAbility attachmentAbility = attachmentItem.get(UnshatteredDataComponents.ABILITY.get());
+                ItemAbility attachmentAbility = attachmentItem.typeHolder().getData(UnshatteredDataMaps.ITEM_ABILITY_DATA);
 
                 tooltipComponents.add(Component.translatable("item_type.unshattered." + slotType.correspondingType.getSerializedName()).withColor(0xFF459BFF)
                         .append(Component.literal(" "))
@@ -242,6 +244,7 @@ public class ItemTooltipHandler {
         for (ItemAttachments.SlotType slotType : ItemAttachments.SlotType.values()) {
             if (slotType.correspondingType == itemType) {
                 isAttachment = true;
+                break;
             }
         }
 

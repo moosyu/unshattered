@@ -27,14 +27,10 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import java.util.Set;
 
 public class BloodChalice extends TalismanItem implements PassiveAbilityItem {
-    private static final Identifier ABILITY_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("pain_to_power");
+    public static final Identifier ABILITY_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("pain_to_power");
 
     public BloodChalice(Properties properties) {
-        super(properties.component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(ABILITY_IDENTIFIER, 0, 0, 0, true))
-                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.EPIC)
-                .component(UnshatteredDataComponents.SELL_VALUE.get(), 100000)
-                .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-        );
+        super(properties);
     }
 
     @Override

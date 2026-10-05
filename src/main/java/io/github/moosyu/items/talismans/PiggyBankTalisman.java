@@ -11,22 +11,7 @@ import java.util.Set;
 
 public class PiggyBankTalisman extends TalismanItem implements PassiveAbilityItem {
     public PiggyBankTalisman(Properties properties) {
-        super(properties.component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("piggy_bank_saving_grace"), 0, 0, 0, true))
-                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.UNCOMMON)
-                .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-                .component(UnshatteredDataComponents.SELL_VALUE.get(), 80000)
-        );
-    }
-
-    @Override
-    public void onAbilityTriggered(AbilityContext context) {}
-
-    @Override
-    public void onAbilityFinished(AbilityContext context) {}
-
-    @Override
-    public boolean abilityConditionsMet(AbilityContext context) {
-        return true;
+        super(properties);
     }
 
     @Override

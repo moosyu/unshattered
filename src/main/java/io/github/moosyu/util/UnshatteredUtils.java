@@ -18,6 +18,7 @@ import io.github.moosyu.data.drops.DropTypes;
 import io.github.moosyu.data.fishing.FishingEntry;
 import io.github.moosyu.data.fishing.FishingWeightEntry;
 import io.github.moosyu.events.DataPackRegistryHandler;
+import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.packets.ClientsidePlayerSoundEffectPacket;
 import net.minecraft.core.Holder;
@@ -362,7 +363,7 @@ public final class UnshatteredUtils {
 
             if (randomSource.nextFloat() <= modifiedDropChance) {
                 if (fortuneBoosted) {
-                    UnshatteredRarity itemRarity = dropData.itemRange().item().components().getOrDefault(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.COMMON);
+                    UnshatteredRarity itemRarity = UnshatteredUtils.getItemRarity(dropData.itemRange().item().getDefaultInstance());
                     player.sendSystemMessage(Component.empty()
                             .append(Component.literal(Component.translatable("drop_type.message.unshattered." + type.key).getString().toUpperCase())
                                     .withStyle(style -> style.withColor(type.colour).withBold(true)))
@@ -544,5 +545,32 @@ public final class UnshatteredUtils {
         }
 
         UnshatteredUtils.givePlayerHarvestedItemStack(player, itemStack);
+    }
+
+    public static ItemType getItemType(ItemStack itemStack) {
+        ItemType itemType = itemStack.typeHolder().getData(UnshatteredDataMaps.ITEM_TYPE_DATA);
+        if (itemType == null) {
+             return ItemType.ITEM;
+        }
+
+        return itemType;
+    }
+
+    public static UnshatteredRarity getItemRarity(ItemStack itemStack) {
+        UnshatteredRarity rarity = itemStack.typeHolder().getData(UnshatteredDataMaps.ITEM_RARITY_DATA);
+        if (rarity == null) {
+            return UnshatteredRarity.COMMON;
+        }
+
+        return rarity;
+    }
+
+    public static int getItemSellValue(ItemStack itemStack) {
+        Integer sellValue = itemStack.typeHolder().getData(UnshatteredDataMaps.ITEM_SELL_VALUE_DATA);
+        if (sellValue == null) {
+            return 0;
+        }
+
+        return sellValue;
     }
 }

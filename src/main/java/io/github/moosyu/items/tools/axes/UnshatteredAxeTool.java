@@ -12,6 +12,6 @@ import java.util.List;
 
 public class UnshatteredAxeTool extends Item {
     public UnshatteredAxeTool(Properties properties, float miningSpeed) {
-        super(properties.stacksTo(1).component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.AXE).component(DataComponents.TOOL, new Tool(List.of(Tool.Rule.minesAndDrops(BuiltInRegistries.acquireBootstrapRegistrationLookup(BuiltInRegistries.BLOCK).getOrThrow(BlockTags.MINEABLE_WITH_AXE), miningSpeed)), 1.0f, 0, false)));
+        super(properties.stacksTo(1).component(DataComponents.TOOL, new Tool(List.of(Tool.Rule.minesAndDrops(BuiltInRegistries.acquireBootstrapRegistrationLookup(BuiltInRegistries.BLOCK).getOrThrow(BlockTags.MINEABLE_WITH_AXE), miningSpeed)), 1.0f, 0, false)));
     }
 }

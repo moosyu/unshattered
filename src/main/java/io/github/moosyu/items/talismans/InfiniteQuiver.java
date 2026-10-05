@@ -14,29 +14,8 @@ import java.util.Set;
 
 public class InfiniteQuiver extends TalismanItem implements PassiveAbilityItem {
     public InfiniteQuiver(Properties properties) {
-        super(properties.component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.RARE)
-                .component(UnshatteredDataComponents.SELL_VALUE.get(), 10000)
-                .component(UnshatteredDataComponents.DESCRIPTION, true)
-                .component(UnshatteredDataComponents.ABILITY.get(),
-                        new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("bottomless"),
-                                0,
-                                0,
-                                0,
-                                true
-                        )
-                )
+        super(properties
         );
-    }
-
-    @Override
-    public void onAbilityTriggered(AbilityContext context) {}
-
-    @Override
-    public void onAbilityFinished(AbilityContext context) {}
-
-    @Override
-    public boolean abilityConditionsMet(AbilityContext context) {
-        return true;
     }
 
     @Override

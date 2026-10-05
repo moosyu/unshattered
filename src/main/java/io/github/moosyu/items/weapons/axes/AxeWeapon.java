@@ -8,7 +8,7 @@ import net.minecraft.world.item.component.Weapon;
 
 public class AxeWeapon extends Item {
     public AxeWeapon(Properties properties) {
-        super(properties.stacksTo(1).component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.BATTLE_AXE).component(DataComponents.WEAPON, new Weapon(1))
+        super(properties.stacksTo(1).component(DataComponents.WEAPON, new Weapon(1))
         );
     }
 }

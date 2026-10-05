@@ -16,15 +16,7 @@ import java.util.Set;
 
 public class CoinTalisman extends TalismanItem implements PassiveAbilityItem {
     public CoinTalisman(Properties properties) {
-        super(properties.component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-                .component(UnshatteredDataComponents.SELL_VALUE.get(), 70)
-                .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("coin_talisman_accrual"),
-                        0,
-                        0,
-                        0,
-                        true)
-                )
-        );
+        super(properties);
     }
 
     @Override

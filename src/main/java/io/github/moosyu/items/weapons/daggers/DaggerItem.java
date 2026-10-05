@@ -10,7 +10,6 @@ public class DaggerItem extends Item {
     public DaggerItem(Properties properties) {
         super(properties
                 .stacksTo(1)
-                .component(UnshatteredDataComponents.ITEM_TYPE, ItemType.DAGGER)
                 .component(DataComponents.WEAPON, new Weapon(1))
         );
     }

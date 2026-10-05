@@ -13,16 +13,7 @@ import java.util.Set;
 
 public class FriedGoblinEggAttachment extends Item implements PassiveAbilityItem {
     public FriedGoblinEggAttachment(Properties properties) {
-        super(properties.component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("fried_goblin_egg"),
-                0,
-                0,
-                0,
-                true))
-                .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.RARE)
-                .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.UPGRADE_MODULE)
-                .component(UnshatteredDataComponents.SELL_VALUE.get(), 20840)
-        );
+        super(properties.stacksTo(1));
     }
 
     @Override

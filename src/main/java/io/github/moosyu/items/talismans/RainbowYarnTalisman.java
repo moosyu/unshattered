@@ -15,18 +15,10 @@ import java.util.Optional;
 import java.util.Set;
 
 public class RainbowYarnTalisman extends TalismanItem implements PassiveAbilityItem {
-    private static final Identifier ABILITY_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("woolen_barrier");
+    public static final Identifier ABILITY_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("woolen_barrier");
 
     public RainbowYarnTalisman(Properties properties) {
-        super(properties.component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.UNCOMMON)
-                .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(ABILITY_IDENTIFIER,
-                        0,
-                        0,
-                        0,
-                        true)
-                )
-        );
+        super(properties);
     }
 
     @Override

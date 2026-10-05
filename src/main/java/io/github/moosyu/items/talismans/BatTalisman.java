@@ -19,11 +19,7 @@ import java.util.Set;
 
 public class BatTalisman extends TalismanItem implements PassiveAbilityItem {
     public BatTalisman(Properties properties) {
-        super(properties.component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("bat_talisman_leech"), 0, 0, 0, true))
-                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.RARE)
-                .component(UnshatteredDataComponents.SELL_VALUE.get(), 10000)
-                .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-        );
+        super(properties);
     }
 
     @Override

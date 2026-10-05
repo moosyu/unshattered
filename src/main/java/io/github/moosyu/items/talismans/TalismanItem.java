@@ -6,6 +6,6 @@ import net.minecraft.world.item.Item;
 
 public class TalismanItem extends Item {
     public TalismanItem(Properties properties) {
-        super(properties.stacksTo(1).component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.TALISMAN));
+        super(properties.stacksTo(1));
     }
 }

@@ -2,6 +2,7 @@ package io.github.moosyu.gui.layers;
 
 import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -56,7 +57,7 @@ public class SelectedItemLayer implements GuiLayer {
     private void displaySelectedText(Item heldItem, GuiGraphicsExtractor graphics, Minecraft minecraft, float opacity) {
         ItemStack heldItemStack = heldItem.getDefaultInstance();
         Component itemName = heldItem.getName(heldItemStack);
-        UnshatteredRarity rarity = heldItem.components().get(UnshatteredDataComponents.RARITY);
+        UnshatteredRarity rarity = UnshatteredUtils.getItemRarity(heldItemStack);
         int itemColor = rarity != null ? rarity.getColour(opacity) : UnshatteredRarity.COMMON.getColour(1.0f);
         graphics.text(Minecraft.getInstance().font, itemName, (graphics.guiWidth() / 2) - (minecraft.font.width(itemName) / 2), graphics.guiHeight() - 50, itemColor, true);
     }

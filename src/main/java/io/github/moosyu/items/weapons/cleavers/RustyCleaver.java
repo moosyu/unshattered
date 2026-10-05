@@ -14,11 +14,7 @@ import static io.github.moosyu.Unshattered.MODID;
 
 public class RustyCleaver extends CleaverItem {
     public RustyCleaver(Properties properties) {
-        super(properties.component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.COMMON)
-                        .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(Identifier.fromNamespaceAndPath(MODID, "rusty_cleaver_cleave"), 0, 0, 0, true))
-                        .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-                        .component(UnshatteredDataComponents.SELL_VALUE.get(), 8)
-                        .attributes(ItemAttributeModifiers.builder()
+        super(properties.attributes(ItemAttributeModifiers.builder()
                                 .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "rusty_cleaver_damage"), 4, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                                 .add(Attributes.ATTACK_SPEED, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "rusty_cleaver_sword_attack_speed"), -3.0f, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                                 .build()

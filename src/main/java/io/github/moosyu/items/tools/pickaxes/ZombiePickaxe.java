@@ -28,11 +28,6 @@ public class ZombiePickaxe extends UnshatteredMiningToolBase implements PassiveA
 
     public ZombiePickaxe(Properties properties) {
         super(properties.stacksTo(1)
-                .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.PICKAXE)
-                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.COMMON)
-                .component(UnshatteredDataComponents.SELL_VALUE.get(), 3)
-                .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-                .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("rotten"), 0, 0, 0, true))
                 .attributes(ItemAttributeModifiers.builder()
                         .add(UnshatteredAttributeValues.DAMAGE.holder,
                                 new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("zombie_pickaxe_damage"), 5, AttributeModifier.Operation.ADD_VALUE),

@@ -32,8 +32,7 @@ public class RegionLockedFortuneAxe extends UnshatteredAxeTool implements Passiv
         this.region = region;
         this.abilityIdentifier = abilityIdentifier;
 
-        super(properties.component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(abilityIdentifier, 0, 0, 0, true))
-                        .attributes(ItemAttributeModifiers.builder()
+        super(properties.attributes(ItemAttributeModifiers.builder()
                                 .add(UnshatteredAttributeValues.SWEEP.holder,
                                         new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("region_locked_sweep"),
                                                 sweepAmount,

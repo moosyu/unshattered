@@ -172,6 +172,7 @@
   "item.unshattered.mithril_plate": "Mithril Plate",
   "item.unshattered.drill_motor": "Drill Motor",
   "item.unshattered.goblin_egg": "Goblin Egg",
+  "item.unshattered.oil_barrel": "Oil Barrel",
 
   "item.description.unshattered.bat_the_fish": "Where is my cape!",
   "item.description.unshattered.century_the_fish": "The term 'century' was actually named after him, or so he says.",
@@ -263,6 +264,7 @@
   "item.description.unshattered.mithril_plated_drill_engine": "Releases a lot of smoke for something without any openings.",
   "item.description.unshattered.fried_goblin_egg": "May cause disease.",
   "item.description.unshattered.goblin_egg": "What came first, the goblin or the egg?",
+  "item.description.unshattered.oil_barrel": "Seems to have been mass produced long ago.",
 
   "item.ability.unshattered.rogue_sword_speed_boost": "Speed Boost",
   "item.ability.unshattered.mind_blowing": "Mind Blowing",

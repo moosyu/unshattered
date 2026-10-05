@@ -1,0 +1,165 @@
+{
+  "values": {
+    "unshattered:bandaged_mithril_pickaxe": {
+      "ability_id": "unshattered:bandaged_mithril_pickaxe_mithril_speed",
+      "passive": true
+    },
+    "unshattered:bat_talisman": {
+      "ability_id": "unshattered:bat_talisman_leech",
+      "passive": true
+    },
+    "unshattered:blood_chalice": {
+      "ability_id": "unshattered:pain_to_power",
+      "passive": true
+    },
+    "unshattered:broken_mithril_pickaxe": {
+      "ability_id": "unshattered:broken_mithril_pickaxe_mithril_speed",
+      "passive": true
+    },
+    "unshattered:challenging_rod": {
+      "ability_id": "unshattered:fish_out_of_water",
+      "passive": true
+    },
+    "unshattered:coins_talisman": {
+      "ability_id": "unshattered:coin_talisman_accrual",
+      "passive": true
+    },
+    "unshattered:dwarf_turtle_shell": {
+      "ability_id": "unshattered:turtle_stability",
+      "passive": true
+    },
+    "unshattered:emerald_dagger": {
+      "ability_id": "unshattered:emerald_dagger_greed",
+      "passive": true
+    },
+    "unshattered:fire_talisman": {
+      "ability_id": "unshattered:blazeborn",
+      "passive": true
+    },
+    "unshattered:fishing_rod": {
+      "ability_id": "unshattered:fish_out_of_water",
+      "passive": true
+    },
+    "unshattered:florid_zombie_sword": {
+      "ability_id": "unshattered:florid_zombie_sword_instant_heal",
+      "cooldown": 10,
+      "mana_cost": 36,
+      "passive": false
+    },
+    "unshattered:fried_goblin_egg": {
+      "ability_id": "unshattered:fried_goblin_egg",
+      "passive": true
+    },
+    "unshattered:giant_cleaver": {
+      "ability_id": "unshattered:giant_cleaver_cleave",
+      "passive": true
+    },
+    "unshattered:golden_cleaver": {
+      "ability_id": "unshattered:golden_cleaver_cleave",
+      "passive": true
+    },
+    "unshattered:haste_ring": {
+      "ability_id": "unshattered:heavy_strike",
+      "passive": true
+    },
+    "unshattered:honeycomb_ring": {
+      "ability_id": "unshattered:apian_aegis",
+      "passive": true
+    },
+    "unshattered:hyper_cleaver": {
+      "ability_id": "unshattered:hyper_cleaver_cleave",
+      "passive": true
+    },
+    "unshattered:infinite_quiver": {
+      "ability_id": "unshattered:bottomless",
+      "passive": true
+    },
+    "unshattered:mithril_drill_sx_r226": {
+      "ability_id": "unshattered:r226_junkie",
+      "passive": true
+    },
+    "unshattered:mithril_infused_fuel_tank": {
+      "ability_id": "unshattered:mithril_infused_fuel_tank",
+      "passive": true
+    },
+    "unshattered:mithril_pickaxe": {
+      "ability_id": "unshattered:mithril_pickaxe_mithril_speed",
+      "passive": true
+    },
+    "unshattered:mithril_plated_drill_engine": {
+      "ability_id": "unshattered:mithril_plated_drill_engine",
+      "passive": true
+    },
+    "unshattered:ornate_zombie_sword": {
+      "ability_id": "unshattered:ornate_zombie_sword_instant_heal",
+      "cooldown": 10,
+      "mana_cost": 30,
+      "passive": false
+    },
+    "unshattered:piggy_bank": {
+      "ability_id": "unshattered:piggy_bank_saving_grace",
+      "passive": true
+    },
+    "unshattered:promising_axe": {
+      "ability_id": "unshattered:axe_stored_potential",
+      "passive": true
+    },
+    "unshattered:promising_pickaxe": {
+      "ability_id": "unshattered:stored_potential",
+      "passive": true
+    },
+    "unshattered:rainbow_yarn_talisman": {
+      "ability_id": "unshattered:woolen_barrier",
+      "passive": true
+    },
+    "unshattered:rogue_sword": {
+      "ability_id": "unshattered:rogue_sword_speed_boost",
+      "cooldown": 100,
+      "duration": 600,
+      "mana_cost": 10,
+      "passive": false
+    },
+    "unshattered:rusted_titanium_pickaxe": {
+      "ability_id": "unshattered:rusted_titanium_pickaxe_titanium_fanatic",
+      "passive": true
+    },
+    "unshattered:rusty_cleaver": {
+      "ability_id": "unshattered:rusty_cleaver_cleave",
+      "passive": true
+    },
+    "unshattered:skeleton_hat": {
+      "ability_id": "unshattered:skeleton_hat_explosive_arrows",
+      "passive": true
+    },
+    "unshattered:spruce_axe": {
+      "ability_id": "unshattered:spruce_axe_park_enthusiast",
+      "passive": true
+    },
+    "unshattered:super_cleaver": {
+      "ability_id": "unshattered:super_cleaver_cleave",
+      "passive": true
+    },
+    "unshattered:titanium_pickaxe": {
+      "ability_id": "unshattered:titanium_pickaxe_titanium_fanatic",
+      "passive": true
+    },
+    "unshattered:treecapitator": {
+      "ability_id": "unshattered:treecapitator_park_enthusiast",
+      "passive": true
+    },
+    "unshattered:undead_sword": {
+      "ability_id": "unshattered:mind_blowing",
+      "passive": true
+    },
+    "unshattered:zombie_pickaxe": {
+      "ability_id": "unshattered:rotten",
+      "passive": true
+    },
+    "unshattered:zombie_sword": {
+      "ability_id": "unshattered:zombie_sword_instant_heal",
+      "cooldown": 10,
+      "mana_cost": 24,
+      "passive": false
+    }
+  }
+}

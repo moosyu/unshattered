@@ -2,11 +2,13 @@ package io.github.moosyu.damage;
 
 import io.github.moosyu.abilities.*;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.PlayerCurrencyAttachment;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
+import io.github.moosyu.data.datagen.UnshatteredDataMapProvider;
 import io.github.moosyu.data.regions.TemperatureTypes;
 import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.enchantments.UnshatteredEnchantmentEffects;
@@ -15,6 +17,7 @@ import io.github.moosyu.packets.DamageNumberPacket;
 import io.github.moosyu.packets.DeathSoundEffectPacket;
 import io.github.moosyu.packets.FerocityEffectPacket;
 import io.github.moosyu.packets.WeakHitSoundEffectPacket;
+import io.github.moosyu.util.UnshatteredUtils;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -66,7 +69,7 @@ public final class DamageUtils {
         } else {
             PlayerAbilityEffectsAttachment abilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES);
             List<PassiveAbilityItem> triggeredItems = new ArrayList<>();
-            ItemType itemType = Objects.requireNonNullElse(weapon.get(UnshatteredDataComponents.ITEM_TYPE.get()), ItemType.ITEM);
+            ItemType itemType = UnshatteredUtils.getItemType(weapon);
             AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player)
                     .add(AbilityContextKey.TARGET, target)
                     .add(AbilityContextKey.ITEM_TYPE, itemType);

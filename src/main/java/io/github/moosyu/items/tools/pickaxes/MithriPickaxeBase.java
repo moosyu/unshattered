@@ -32,11 +32,6 @@ public class MithriPickaxeBase extends UnshatteredMiningToolBase implements Pass
         Identifier abilityId = UnshatteredUtils.getUnshatteredIdentifier(identifier + "_mithril_speed");
 
         super(properties.stacksTo(1)
-                .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-                .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.PICKAXE)
-                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.UNCOMMON)
-                .component(UnshatteredDataComponents.SELL_VALUE.get(), 500)
-                .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(abilityId, 0, 0, 0, true))
                 .attributes(ItemAttributeModifiers.builder()
                         .add(UnshatteredAttributeValues.DAMAGE.holder,
                                 new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(identifier + "_damage"), 4, AttributeModifier.Operation.ADD_VALUE),

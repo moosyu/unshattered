@@ -1,8 +1,11 @@
 package io.github.moosyu.data.datagen;
 
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.data.ItemTagsProvider;
 import org.jspecify.annotations.NonNull;
@@ -16,6 +19,8 @@ public class UnshatteredItemTagsProvider extends ItemTagsProvider {
     public UnshatteredItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
         super(output, lookupProvider, MODID);
     }
+
+    public static final TagKey<Item> HAS_DESCRIPTION = ItemTags.create(UnshatteredUtils.getUnshatteredIdentifier("has_description"));
 
     @Override
     protected void addTags(HolderLookup.@NonNull Provider provider) {
@@ -70,5 +75,85 @@ public class UnshatteredItemTagsProvider extends ItemTagsProvider {
         tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(ROGUE_SWORD.get());
         tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(SQUIRE_SWORD.get());
         tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(MERCENARY_AXE.get());
+        tag(HAS_DESCRIPTION).add(MERCENARY_AXE.get());
+        tag(HAS_DESCRIPTION).add(TREECAPITATOR.get());
+        tag(HAS_DESCRIPTION).add(SPRUCE_AXE.get());
+        tag(HAS_DESCRIPTION).add(SERIOUSLY_DAMAGED_AXE.get());
+        tag(HAS_DESCRIPTION).add(DECENT_AXE.get());
+        tag(HAS_DESCRIPTION).add(FIG_HEW.get());
+        tag(HAS_DESCRIPTION).add(FIGSTONE_SPLITTER.get());
+        tag(HAS_DESCRIPTION).add(BAT_THE_FISH.get());
+        tag(HAS_DESCRIPTION).add(CHILL_THE_FISH.get());
+        tag(HAS_DESCRIPTION).add(CLUNK_THE_FISH.get());
+        tag(HAS_DESCRIPTION).add(DIAMOND_THE_FISH.get());
+        tag(HAS_DESCRIPTION).add(DUST_THE_FISH.get());
+        tag(HAS_DESCRIPTION).add(EGG_THE_FISH.get());
+        tag(HAS_DESCRIPTION).add(EON_THE_FISH.get());
+        tag(HAS_DESCRIPTION).add(FLAKE_THE_FISH.get());
+        tag(HAS_DESCRIPTION).add(EXPERIMENT_THE_FISH.get());
+        tag(HAS_DESCRIPTION).add(FOSSIL_THE_FISH.get());
+        tag(HAS_DESCRIPTION).add(GABAGOOL_THE_FISH.get());
+        tag(HAS_DESCRIPTION).add(GIFT_THE_FISH.get());
+        tag(HAS_DESCRIPTION).add(HERRING_THE_FISH.get());
+        tag(HAS_DESCRIPTION).add(NOPE_THE_FISH.get());
+        tag(HAS_DESCRIPTION).add(OOPS_THE_FISH.get());
+        tag(HAS_DESCRIPTION).add(PARTY_THE_FISH.get());
+        tag(HAS_DESCRIPTION).add(ROCK_THE_FISH.get());
+        tag(HAS_DESCRIPTION).add(SHRIMP_THE_FISH.get());
+        tag(HAS_DESCRIPTION).add(SKELETON_THE_FISH.get());
+        tag(HAS_DESCRIPTION).add(SPOOK_THE_FISH.get());
+        tag(HAS_DESCRIPTION).add(STEW_THE_FISH.get());
+        tag(HAS_DESCRIPTION).add(SWAMP_THE_FISH.get());
+        tag(HAS_DESCRIPTION).add(ZOOP_THE_FISH.get());
+        tag(HAS_DESCRIPTION).add(BEDROCK.get());
+        tag(HAS_DESCRIPTION).add(CAKE_SOUL.get());
+        tag(HAS_DESCRIPTION).add(CHALLENGING_ROD.get());
+        tag(HAS_DESCRIPTION).add(FISHING_ROD.get());
+        tag(HAS_DESCRIPTION).add(FIG_LOG.get());
+        tag(HAS_DESCRIPTION).add(ROGUE_SWORD.get());
+        tag(HAS_DESCRIPTION).add(SQUIRE_SWORD.get());
+        tag(HAS_DESCRIPTION).add(UNDEAD_SWORD.get());
+        tag(HAS_DESCRIPTION).add(ZOMBIE_SWORD.get());
+        tag(HAS_DESCRIPTION).add(BROKEN_MITHRIL_PICKAXE.get());
+        tag(HAS_DESCRIPTION).add(BANDAGED_MITHRIL_PICKAXE.get());
+        tag(HAS_DESCRIPTION).add(MITHRIL_PICKAXE.get());
+        tag(HAS_DESCRIPTION).add(RUSTED_TITANIUM_PICKAXE.get());
+        tag(HAS_DESCRIPTION).add(TITANIUM_PICKAXE.get());
+        tag(HAS_DESCRIPTION).add(LAPIS_PICKAXE.get());
+        tag(HAS_DESCRIPTION).add(ORNATE_ZOMBIE_SWORD.get());
+        tag(HAS_DESCRIPTION).add(FLORID_ZOMBIE_SWORD.get());
+        tag(HAS_DESCRIPTION).add(RUSTY_CLEAVER.get());
+        tag(HAS_DESCRIPTION).add(GOLDEN_CLEAVER.get());
+        tag(HAS_DESCRIPTION).add(SUPER_CLEAVER.get());
+        tag(HAS_DESCRIPTION).add(HYPER_CLEAVER.get());
+        tag(HAS_DESCRIPTION).add(GIANT_CLEAVER.get());
+        tag(HAS_DESCRIPTION).add(BAT_TALISMAN.get());
+        tag(HAS_DESCRIPTION).add(IRON_DAGGER.get());
+        tag(HAS_DESCRIPTION).add(EMERALD_DAGGER.get());
+        tag(HAS_DESCRIPTION).add(COINS_TALISMAN.get());
+        tag(HAS_DESCRIPTION).add(GOBLIN_EGG.get());
+        tag(HAS_DESCRIPTION).add(OIL_BARREL.get());
+        tag(HAS_DESCRIPTION).add(TITANIUM.get());
+        tag(HAS_DESCRIPTION).add(BLOOD_CHALICE.get());
+        tag(HAS_DESCRIPTION).add(MITHRIL_INFUSED_FUEL_TANK.get());
+        tag(HAS_DESCRIPTION).add(FRIED_GOBLIN_EGG.get());
+        tag(HAS_DESCRIPTION).add(PROMISING_PICKAXE.get());
+        tag(HAS_DESCRIPTION).add(PROMISING_AXE.get());
+        tag(HAS_DESCRIPTION).add(RAINBOW_YARN_TALISMAN.get());
+        tag(HAS_DESCRIPTION).add(PIGGY_BANK_TALISMAN.get());
+        tag(HAS_DESCRIPTION).add(INFINITE_QUIVER.get());
+        tag(HAS_DESCRIPTION).add(HONEYCOMB_RING.get());
+        tag(HAS_DESCRIPTION).add(HASTE_RING.get());
+        tag(HAS_DESCRIPTION).add(FIRE_TALISMAN.get());
+        tag(HAS_DESCRIPTION).add(ARTISANAL_SHORTBOW.get());
+        tag(HAS_DESCRIPTION).add(ZOMBIE_PICKAXE.get());
+        tag(HAS_DESCRIPTION).add(MITHRIL_PLATED_DRILL_ENGINE.get());
+        tag(HAS_DESCRIPTION).add(MITHRIL_DRILL_SX_R226.get());
+        tag(HAS_DESCRIPTION).add(MITHRIL_DRILL_SX_R326.get());
+        tag(HAS_DESCRIPTION).add(TITANIUM_DRILL_DR_X355.get());
+        tag(HAS_DESCRIPTION).add(TITANIUM_DRILL_DR_X455.get());
+        tag(HAS_DESCRIPTION).add(TITANIUM_DRILL_DR_X555.get());
+        tag(HAS_DESCRIPTION).add(TITANIUM_DRILL_DR_X655.get());
+        tag(HAS_DESCRIPTION).add(CENTURY_THE_FISH.get());
     }
 }

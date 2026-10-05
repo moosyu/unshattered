@@ -1,10 +1,13 @@
 package io.github.moosyu.data;
 
 import com.mojang.serialization.Codec;
+import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.drops.BlockBreakData;
 import io.github.moosyu.data.drops.DropData;
 import io.github.moosyu.data.drops.MobRewardData;
 import io.github.moosyu.data.fishing.FishingWeightEntry;
+import io.github.moosyu.items.ItemType;
+import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
@@ -56,4 +59,28 @@ public final class UnshatteredDataMaps {
             Registries.ENTITY_TYPE,
             FishingWeightEntry.CODEC
     ).build();
+
+    public static final DataMapType<Item, UnshatteredRarity> ITEM_RARITY_DATA = DataMapType.builder(
+            UnshatteredUtils.getUnshatteredIdentifier("item_rarity_data"),
+            Registries.ITEM,
+            UnshatteredRarity.CODEC
+    ).synced(UnshatteredRarity.CODEC, true).build();
+
+    public static final DataMapType<Item, ItemType> ITEM_TYPE_DATA = DataMapType.builder(
+            UnshatteredUtils.getUnshatteredIdentifier("item_type_data"),
+            Registries.ITEM,
+            ItemType.CODEC
+    ).synced(ItemType.CODEC, true).build();
+    
+    public static final DataMapType<Item, ItemAbility> ITEM_ABILITY_DATA = DataMapType.builder(
+            UnshatteredUtils.getUnshatteredIdentifier("item_ability_data"),
+            Registries.ITEM,
+            ItemAbility.CODEC
+    ).synced(ItemAbility.CODEC, true).build();
+
+    public static final DataMapType<Item, Integer> ITEM_SELL_VALUE_DATA = DataMapType.builder(
+            UnshatteredUtils.getUnshatteredIdentifier("item_sell_value_data"),
+            Registries.ITEM,
+            Codec.INT
+    ).synced(Codec.INT, true).build();
 }

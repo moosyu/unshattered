@@ -1,6 +1,7 @@
 package io.github.moosyu.mixins;
 
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemType;
 import io.github.moosyu.damage.DamageUtils;
@@ -57,9 +58,9 @@ public abstract class FishingHookMixin extends Projectile {
                 ci.cancel();
             } else {
                 InteractionHand hand;
-                if (player.getItemInHand(InteractionHand.MAIN_HAND).get(UnshatteredDataComponents.ITEM_TYPE.get()) == ItemType.FISHING_ROD) {
+                if (player.getItemInHand(InteractionHand.MAIN_HAND).typeHolder().getData(UnshatteredDataMaps.ITEM_TYPE_DATA) == ItemType.FISHING_ROD) {
                     hand = InteractionHand.MAIN_HAND;
-                } else if (player.getItemInHand(InteractionHand.OFF_HAND).get(UnshatteredDataComponents.ITEM_TYPE.get()) == ItemType.FISHING_ROD) {
+                } else if (player.getItemInHand(InteractionHand.OFF_HAND).typeHolder().getData(UnshatteredDataMaps.ITEM_TYPE_DATA) == ItemType.FISHING_ROD) {
                     hand = InteractionHand.OFF_HAND;
                 } else {
                     ci.cancel();

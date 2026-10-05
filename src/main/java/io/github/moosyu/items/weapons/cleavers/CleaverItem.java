@@ -29,7 +29,7 @@ public class CleaverItem extends Item implements PassiveAbilityItem {
     private final float cleaveDamageFraction;
 
     public CleaverItem(Properties properties, float radius, float cleaveDamageFraction) {
-        super(properties.stacksTo(1).component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.CLEAVER));
+        super(properties.stacksTo(1));
         this.radius = radius;
         this.cleaveDamageFraction = cleaveDamageFraction;
     }

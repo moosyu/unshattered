@@ -12,18 +12,10 @@ import java.util.Optional;
 import java.util.Set;
 
 public class DwarfTurtleTalisman extends TalismanItem implements PassiveAbilityItem {
-    private static final Identifier ABILITY_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("turtle_stability");
+    public static final Identifier ABILITY_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("turtle_stability");
 
     public DwarfTurtleTalisman(Properties properties) {
-        super(properties.component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.EPIC)
-                .component(UnshatteredDataComponents.SELL_VALUE, 250000)
-                .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(ABILITY_IDENTIFIER,
-                        0,
-                        0,
-                        0,
-                        true)
-                )
-        );
+        super(properties);
     }
 
     @Override

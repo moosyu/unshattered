@@ -72,7 +72,7 @@ public class StoreMenu extends AbstractContainerMenu {
                         setCarried(ItemStack.EMPTY);
                     }
                 } else if (!stored.isEmpty()) {
-                    if (UnshatteredUtils.trySpendCoins(stored.getOrDefault(UnshatteredDataComponents.SELL_VALUE.get(), 0) * stored.count(), player)) {
+                    if (UnshatteredUtils.trySpendCoins(UnshatteredUtils.getItemSellValue(stored) * stored.count(), player)) {
                         setCarried(stored.copy());
                         sellSlot.set(ItemStack.EMPTY);
                     }
@@ -85,7 +85,7 @@ public class StoreMenu extends AbstractContainerMenu {
     }
 
     private boolean sellStack(ItemStack itemStack, Player player) {
-        int price = itemStack.getOrDefault(UnshatteredDataComponents.SELL_VALUE.get(), 0);
+        int price = UnshatteredUtils.getItemSellValue(itemStack);
         if (price <= 0) {
             return false;
         }

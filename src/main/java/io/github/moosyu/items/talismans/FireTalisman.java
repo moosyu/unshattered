@@ -12,16 +12,7 @@ import java.util.Set;
 
 public class FireTalisman extends TalismanItem implements PassiveAbilityItem {
     public FireTalisman(Properties properties) {
-        super(properties.component(UnshatteredDataComponents.SELL_VALUE, 6480)
-                .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.UNCOMMON)
-                .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("blazeborn"),
-                        0,
-                        0,
-                        0,
-                        true)
-                )
-        );
+        super(properties);
     }
 
     @Override

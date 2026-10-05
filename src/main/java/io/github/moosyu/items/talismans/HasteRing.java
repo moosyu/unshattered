@@ -16,14 +16,10 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import java.util.Set;
 
 public class HasteRing extends TalismanItem implements PassiveAbilityItem {
-    private static final Identifier ABILITY_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("heavy_strike");
+    public static final Identifier ABILITY_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("heavy_strike");
 
     public HasteRing(Properties properties) {
-        super(properties.component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(ABILITY_IDENTIFIER, 0, 0, 0, true))
-                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.UNCOMMON)
-                .component(UnshatteredDataComponents.SELL_VALUE.get(), 80000)
-                .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-        );
+        super(properties);
     }
 
     @Override

@@ -13,27 +13,13 @@ import java.util.Set;
 
 public class MithrilDrillSXR226 extends DrillItem implements PassiveAbilityItem {
     public MithrilDrillSXR226(Properties properties) {
-        super(properties.component(UnshatteredDataComponents.ABILITY.get(),
-                new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("r226_junkie"), 0, 0, 0, true)),
+        super(properties,
                 7,
                 64,
                 13,
                 5,
-                "mithril_drill_sx_r226",
-                500000,
-                UnshatteredRarity.RARE
+                "mithril_drill_sx_r226"
         );
-    }
-
-    @Override
-    public void onAbilityTriggered(AbilityContext context) {}
-
-    @Override
-    public void onAbilityFinished(AbilityContext context) {}
-
-    @Override
-    public boolean abilityConditionsMet(AbilityContext context) {
-        return true;
     }
 
     @Override

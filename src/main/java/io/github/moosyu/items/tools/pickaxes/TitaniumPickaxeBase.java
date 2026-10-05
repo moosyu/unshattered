@@ -27,15 +27,10 @@ public class TitaniumPickaxeBase extends UnshatteredMiningToolBase implements Pa
     private final Identifier abilityIdentifier;
     private final int fortuneBoost;
 
-    public TitaniumPickaxeBase(Properties properties, String identifier, int fortuneBoost, int miningSpeed, UnshatteredRarity rarity) {
+    public TitaniumPickaxeBase(Properties properties, String identifier, int fortuneBoost, int miningSpeed) {
         Identifier abilityId = UnshatteredUtils.getUnshatteredIdentifier(identifier + "_titanium_fanatic");
 
         super(properties.stacksTo(1)
-                .component(UnshatteredDataComponents.RARITY.get(), rarity)
-                .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-                .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.PICKAXE)
-                .component(UnshatteredDataComponents.SELL_VALUE.get(), 10000)
-                .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(abilityId, 0, 0, 0, true))
                 .attributes(ItemAttributeModifiers.builder()
                         .add(UnshatteredAttributeValues.DAMAGE.holder,
                                 new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(identifier + "_damage"), 7, AttributeModifier.Operation.ADD_VALUE),

@@ -13,10 +13,10 @@ import java.util.Optional;
 import java.util.Set;
 
 public class UnshatteredRod extends FishingRodItem implements PassiveAbilityItem {
-    private static final Identifier ABILITY_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("fish_out_of_water");
+    public static final Identifier ABILITY_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("fish_out_of_water");
 
     public UnshatteredRod(Properties properties) {
-        super(properties.component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(ABILITY_IDENTIFIER, 0, 0, 0, true)));
+        super(properties);
     }
 
     @Override
@@ -25,9 +25,6 @@ public class UnshatteredRod extends FishingRodItem implements PassiveAbilityItem
             player.sendSystemMessage(Component.translatable("combat.messages.unshattered.failed").withColor(UnshatteredUtils.ERROR_COLOR));
         });
     }
-
-    @Override
-    public void onAbilityFinished(AbilityContext context) {}
 
     @Override
     public boolean abilityConditionsMet(AbilityContext context) {

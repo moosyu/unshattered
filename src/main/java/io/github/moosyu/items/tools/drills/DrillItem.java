@@ -17,12 +17,9 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 import org.jspecify.annotations.NonNull;
 
 public class DrillItem extends UnshatteredMiningToolBase {
-    public DrillItem(Properties properties, int damage, int miningSpeed, int miningFortune, int breakingPower, String identifier, int sellValue, UnshatteredRarity rarity) {
-        super(properties.component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.DRILL)
-                .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-                .component(UnshatteredDataComponents.SELL_VALUE.get(), sellValue)
+    public DrillItem(Properties properties, int damage, int miningSpeed, int miningFortune, int breakingPower, String identifier) {
+        super(properties
                 .component(UnshatteredDataComponents.FUEL.get(), new ItemFuel(3000, 3000))
-                .component(UnshatteredDataComponents.RARITY.get(), rarity)
                 .component(UnshatteredDataComponents.ITEM_ATTACHMENTS.get(),ItemAttachments.withSlots(ItemAttachments.SlotType.FUEL_TANK,
                         ItemAttachments.SlotType.DRILL_ENGINE,
                         ItemAttachments.SlotType.UPGRADE_MODULE)

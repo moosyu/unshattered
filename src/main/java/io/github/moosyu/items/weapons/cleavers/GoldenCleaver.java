@@ -14,11 +14,7 @@ import static io.github.moosyu.Unshattered.MODID;
 
 public class GoldenCleaver extends CleaverItem {
     public GoldenCleaver(Properties properties) {
-        super(properties.component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.UNCOMMON)
-                        .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(Identifier.fromNamespaceAndPath(MODID, "golden_cleaver_cleave"), 0, 0, 0, true))
-                        .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-                        .component(UnshatteredDataComponents.SELL_VALUE.get(), 80)
-                        .attributes(ItemAttributeModifiers.builder()
+        super(properties.attributes(ItemAttributeModifiers.builder()
                                 .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "golden_cleaver_damage"), 7, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                                 .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "golden_cleaver_strength"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                                 .add(Attributes.ATTACK_SPEED, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "golden_cleaver_sword_attack_speed"), -3.0f, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)

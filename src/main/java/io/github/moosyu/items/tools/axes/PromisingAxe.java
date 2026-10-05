@@ -37,12 +37,7 @@ public class PromisingAxe extends Item implements IncrementalAbilityItem {
                                 EquipmentSlotGroup.MAINHAND
                         ).build()
                 )
-                .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.AXE)
-                .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.UNCOMMON)
-                .component(UnshatteredDataComponents.SELL_VALUE.get(), 10)
                 .component(UnshatteredDataComponents.INCREMENTS_STORED.get(), 0)
-                .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("axe_stored_potential"), 0, 0, 0, true))
         );
     }
 

@@ -28,14 +28,10 @@ import static io.github.moosyu.Unshattered.MODID;
 @EventBusSubscriber(modid = MODID, value = Dist.DEDICATED_SERVER)
 public class RogueSword extends UnshatteredSword {
     private static final Identifier ABILITY_IDENTIFIER = Identifier.fromNamespaceAndPath(MODID, "rogue_sword_speed_boost");
-    private static final ItemAbility SPEED_BOOST_ABILITY = new ItemAbility(ABILITY_IDENTIFIER,10, 100, 600, false);
+    public static final ItemAbility SPEED_BOOST_ABILITY = new ItemAbility(ABILITY_IDENTIFIER,10, 100, 600, false);
 
     public RogueSword(Properties properties) {
-        super(properties
-                .component(UnshatteredDataComponents.ABILITY.get(), SPEED_BOOST_ABILITY)
-                .component(UnshatteredDataComponents.SELL_VALUE.get(), 3)
-                .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-                .attributes(ItemAttributeModifiers.builder()
+        super(properties.attributes(ItemAttributeModifiers.builder()
                         .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "rogue_sword_damage"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                         .add(Attributes.ATTACK_SPEED, new AttributeModifier(Identifier.fromNamespaceAndPath(MODID, "rogue_sword_attack_speed"), -2.4f, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                         .build()

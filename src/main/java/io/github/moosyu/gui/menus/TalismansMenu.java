@@ -3,6 +3,7 @@ package io.github.moosyu.gui.menus;
 import io.github.moosyu.abilities.AbilityContext;
 import io.github.moosyu.abilities.AbilityContextKey;
 import io.github.moosyu.abilities.AbilityItem;
+import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemType;
@@ -47,7 +48,7 @@ public class TalismansMenu extends AbstractContainerMenu {
                 addSlot(new Slot(container, col + row * 9, 8 + col * 18, 18 + row * 18) {
                     @Override
                     public boolean mayPlace(@NonNull ItemStack itemStack) {
-                        if (itemStack.getComponents().get(UnshatteredDataComponents.ITEM_TYPE) == ItemType.TALISMAN) {
+                        if (itemStack.typeHolder().getData(UnshatteredDataMaps.ITEM_TYPE_DATA) == ItemType.TALISMAN) {
                             Item placingItem = itemStack.getItem();
                             for (int i = 0; i < container.getContainerSize(); i++) {
                                 if (container.getItem(i).is(placingItem)) return false;

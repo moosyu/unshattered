@@ -36,12 +36,7 @@ public class PromisingPickaxe extends UnshatteredMiningToolBase implements Incre
                                 EquipmentSlotGroup.MAINHAND
                         ).build()
                 )
-                .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.PICKAXE)
-                .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.UNCOMMON)
-                .component(UnshatteredDataComponents.SELL_VALUE.get(), 10)
                 .component(UnshatteredDataComponents.INCREMENTS_STORED.get(), 0)
-                .component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("stored_potential"), 0, 0, 0, true))
         );
     }
 

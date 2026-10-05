@@ -4,6 +4,7 @@ import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.data.recipes.SizedItemRecipe;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -54,7 +55,7 @@ public abstract class ResultSlotMixin {
                         int slot = x + positionedRecipe.left() + (y + positionedRecipe.top()) * craftSlots.getWidth();
                         int itemRemovedCount;
                         Optional<SizedIngredient> ingredient = sizedRecipe == null ? Optional.empty() : sizedRecipe.pattern().ingredients().get(slot);
-                        int sellValue = Objects.requireNonNullElse(craftSlots.getItems().get(slot).getItem().components().get(UnshatteredDataComponents.SELL_VALUE), 0);
+                        int sellValue = UnshatteredUtils.getItemSellValue(craftSlots.getItems().get(slot));
 
                         if (ingredient.isEmpty()) {
                             itemRemovedCount = 1;

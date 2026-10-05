@@ -10,7 +10,6 @@ public class UnshatteredSword extends Item {
     public UnshatteredSword(Properties properties) {
         super(properties
                 .stacksTo(1)
-                .component(UnshatteredDataComponents.ITEM_TYPE.get(), ItemType.SWORD)
                 .component(DataComponents.WEAPON, new Weapon(1))
         );
     }

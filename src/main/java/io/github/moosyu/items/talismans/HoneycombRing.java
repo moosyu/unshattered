@@ -22,11 +22,7 @@ import java.util.Set;
 
 public class HoneycombRing extends TalismanItem implements PassiveAbilityItem {
     public HoneycombRing(Properties properties) {
-        super(properties.component(UnshatteredDataComponents.ABILITY.get(), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("apian_aegis"), 0, 0, 0, true))
-                .component(UnshatteredDataComponents.RARITY.get(), UnshatteredRarity.RARE)
-                .component(UnshatteredDataComponents.SELL_VALUE.get(), 150000)
-                .component(UnshatteredDataComponents.DESCRIPTION.get(), true)
-        );
+        super(properties);
     }
 
     @Override
