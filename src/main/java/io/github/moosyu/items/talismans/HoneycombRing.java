@@ -4,25 +4,22 @@ import io.github.moosyu.abilities.AbilityContext;
 import io.github.moosyu.abilities.AbilityContextKey;
 import io.github.moosyu.abilities.AbilityTriggerType;
 import io.github.moosyu.abilities.PassiveAbilityItem;
-import io.github.moosyu.data.components.ItemAbility;
-import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.entities.UnshatteredEntities;
 import io.github.moosyu.entities.projectiles.HomingBee;
-import io.github.moosyu.items.UnshatteredRarity;
-import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Set;
 
-public class HoneycombRing extends TalismanItem implements PassiveAbilityItem {
+public class HoneycombRing extends Item implements PassiveAbilityItem {
     public HoneycombRing(Properties properties) {
-        super(properties);
+        super(properties.stacksTo(1));
     }
 
     @Override
@@ -48,14 +45,6 @@ public class HoneycombRing extends TalismanItem implements PassiveAbilityItem {
                 level.addFreshEntity(bee);
             }
         }
-    }
-
-    @Override
-    public void onAbilityFinished(AbilityContext context) {}
-
-    @Override
-    public boolean abilityConditionsMet(AbilityContext context) {
-        return true;
     }
 
     @Override

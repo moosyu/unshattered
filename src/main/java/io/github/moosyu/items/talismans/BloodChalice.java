@@ -7,10 +7,7 @@ import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
-import io.github.moosyu.data.components.ItemAbility;
-import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.packets.ClientsidePlayerSoundEffectPacket;
-import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.util.UnshatteredUtils;
 import io.github.moosyu.damage.DamageUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -22,15 +19,16 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.Set;
 
-public class BloodChalice extends TalismanItem implements PassiveAbilityItem {
+public class BloodChalice extends Item implements PassiveAbilityItem {
     public static final Identifier ABILITY_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("pain_to_power");
 
     public BloodChalice(Properties properties) {
-        super(properties);
+        super(properties.stacksTo(1));
     }
 
     @Override

@@ -1,21 +1,16 @@
 package io.github.moosyu.items.talismans;
 
-import io.github.moosyu.abilities.AbilityContext;
 import io.github.moosyu.abilities.AbilityTriggerResult;
 import io.github.moosyu.abilities.AbilityTriggerType;
 import io.github.moosyu.abilities.PassiveAbilityItem;
-import io.github.moosyu.data.components.ItemAbility;
-import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.items.UnshatteredRarity;
-import io.github.moosyu.util.UnshatteredUtils;
+import net.minecraft.world.item.Item;
 
 import java.util.Optional;
 import java.util.Set;
 
-public class InfiniteQuiver extends TalismanItem implements PassiveAbilityItem {
+public class InfiniteQuiver extends Item implements PassiveAbilityItem {
     public InfiniteQuiver(Properties properties) {
-        super(properties
-        );
+        super(properties.stacksTo(1));
     }
 
     @Override

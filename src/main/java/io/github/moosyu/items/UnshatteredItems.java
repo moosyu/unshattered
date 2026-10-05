@@ -441,7 +441,7 @@ public class UnshatteredItems {
 
     public static final DeferredItem<DaggerItem> EMERALD_DAGGER = ITEMS.registerItem("emerald_dagger", EmeraldDagger::new);
 
-    public static final DeferredItem<TalismanItem> COINS_TALISMAN = ITEMS.registerItem("coins_talisman", CoinTalisman::new);
+    public static final DeferredItem<Item> COINS_TALISMAN = ITEMS.registerItem("coins_talisman", CoinTalisman::new);
 
     public static final DeferredItem<Item> GLOW_SQUID_BOOTS = ITEMS.registerItem("glow_squid_boots", props -> new Item(props
             .humanoidArmor(GLOW_SQUID_BOOTS_MATERIAL, ArmorType.BOOTS)

@@ -2,13 +2,10 @@ package io.github.moosyu.damage;
 
 import io.github.moosyu.abilities.*;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.PlayerCurrencyAttachment;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
-import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.data.datagen.UnshatteredDataMapProvider;
 import io.github.moosyu.data.regions.TemperatureTypes;
 import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.enchantments.UnshatteredEnchantmentEffects;
@@ -25,6 +22,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -37,7 +35,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.*;
@@ -307,10 +304,16 @@ public final class DamageUtils {
                 }
 
                 player.teleportTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5);
-                player.sendSystemMessage(deathMessage.copy()
-                        .withStyle(ChatFormatting.RED)
-                        .append(coinsLost > 0 ? Component.literal(" You lost " + coinsLost + " coins.") : Component.empty())
-                );
+
+                for (ServerPlayer playerOnServer : serverPlayer.level().getServer().getPlayerList().getPlayers()) {
+                    if (playerOnServer == serverPlayer) {
+                        playerOnServer.sendSystemMessage(deathMessage.copy()
+                                .withStyle(ChatFormatting.RED)
+                                .append(coinsLost > 0 ? Component.literal(" You lost " + coinsLost + " coins.") : Component.empty()));
+                    } else {
+                        playerOnServer.sendSystemMessage(deathMessage.copy().withStyle(ChatFormatting.RED));
+                    }
+                }
 
                 states.setStatValue(PlayerStateAttachment.Stat.HEALTH, player.getAttributeValue(UnshatteredAttributeValues.HEALTH.holder), player);
                 states.setStatValue(PlayerStateAttachment.Stat.MANA, player.getAttributeValue(UnshatteredAttributeValues.MANA.holder), player);

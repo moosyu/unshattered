@@ -4,19 +4,14 @@ import io.github.moosyu.abilities.AbilityContext;
 import io.github.moosyu.abilities.AbilityContextKey;
 import io.github.moosyu.abilities.AbilityTriggerType;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
-import io.github.moosyu.data.components.ItemAbility;
-import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.abilities.PassiveAbilityItem;
-import io.github.moosyu.util.UnshatteredUtils;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.LivingEntity;
-import org.jspecify.annotations.Nullable;
+import net.minecraft.world.item.Item;
 
 import java.util.Set;
 
-public class CoinTalisman extends TalismanItem implements PassiveAbilityItem {
+public class CoinTalisman extends Item implements PassiveAbilityItem {
     public CoinTalisman(Properties properties) {
-        super(properties);
+        super(properties.stacksTo(1));
     }
 
     @Override

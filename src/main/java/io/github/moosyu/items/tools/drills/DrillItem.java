@@ -18,7 +18,7 @@ import org.jspecify.annotations.NonNull;
 
 public class DrillItem extends UnshatteredMiningToolBase {
     public DrillItem(Properties properties, int damage, int miningSpeed, int miningFortune, int breakingPower, String identifier) {
-        super(properties
+        super(properties.stacksTo(1)
                 .component(UnshatteredDataComponents.FUEL.get(), new ItemFuel(3000, 3000))
                 .component(UnshatteredDataComponents.ITEM_ATTACHMENTS.get(),ItemAttachments.withSlots(ItemAttachments.SlotType.FUEL_TANK,
                         ItemAttachments.SlotType.DRILL_ENGINE,

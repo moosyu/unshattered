@@ -5,21 +5,19 @@ import io.github.moosyu.abilities.AbilityContextKey;
 import io.github.moosyu.abilities.AbilityTriggerType;
 import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.data.components.ItemAbility;
-import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.item.Item;
 
 import java.util.Set;
 
-public class HasteRing extends TalismanItem implements PassiveAbilityItem {
+public class HasteRing extends Item implements PassiveAbilityItem {
     public static final Identifier ABILITY_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("heavy_strike");
 
     public HasteRing(Properties properties) {
-        super(properties);
+        super(properties.stacksTo(1));
     }
 
     @Override
@@ -41,9 +39,6 @@ public class HasteRing extends TalismanItem implements PassiveAbilityItem {
             }
         });
     }
-
-    @Override
-    public void onAbilityFinished(AbilityContext context) {}
 
     @Override
     public boolean abilityConditionsMet(AbilityContext context) {

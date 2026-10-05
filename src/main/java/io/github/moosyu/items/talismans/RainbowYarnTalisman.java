@@ -1,24 +1,22 @@
 package io.github.moosyu.items.talismans;
 
 import io.github.moosyu.abilities.*;
-import io.github.moosyu.data.components.ItemAbility;
-import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.packets.ClientsidePlayerSoundEffectPacket;
-import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.Optional;
 import java.util.Set;
 
-public class RainbowYarnTalisman extends TalismanItem implements PassiveAbilityItem {
+public class RainbowYarnTalisman extends Item implements PassiveAbilityItem {
     public static final Identifier ABILITY_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("woolen_barrier");
 
     public RainbowYarnTalisman(Properties properties) {
-        super(properties);
+        super(properties.stacksTo(1));
     }
 
     @Override
@@ -30,9 +28,6 @@ public class RainbowYarnTalisman extends TalismanItem implements PassiveAbilityI
                         )
                 ));
     }
-
-    @Override
-    public void onAbilityFinished(AbilityContext context) {}
 
     @Override
     public boolean abilityConditionsMet(AbilityContext context) {
