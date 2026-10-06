@@ -2,7 +2,7 @@ package io.github.moosyu.events;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.entities.NPCEntity;
+import io.github.moosyu.entities.npcs.NPCEntity;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;

@@ -1,0 +1,14 @@
+{
+  "type": "unshattered:forge",
+  "category": "unshattered:drill_parts",
+  "duration_ticks": 32400,
+  "ingredients": [
+    {
+      "count": 96,
+      "ingredient": "unshattered:fried_goblin_egg"
+    }
+  ],
+  "result": {
+    "id": "unshattered:fried_goblin_egg"
+  }
+}

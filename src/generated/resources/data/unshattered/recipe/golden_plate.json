@@ -1,0 +1,22 @@
+{
+  "type": "unshattered:forge",
+  "category": "unshattered:forging",
+  "duration_ticks": 10800,
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": "unshattered:refined_diamond"
+    },
+    {
+      "count": 2,
+      "ingredient": "unshattered:enchanted_gold_block"
+    },
+    {
+      "count": 5,
+      "ingredient": "unshattered:glacite_jewel"
+    }
+  ],
+  "result": {
+    "id": "unshattered:golden_plate"
+  }
+}

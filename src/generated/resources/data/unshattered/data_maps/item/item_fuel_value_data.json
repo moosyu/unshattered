@@ -1,0 +1,11 @@
+{
+  "values": {
+    "minecraft:dandelion": 2,
+    "minecraft:poppy": 2,
+    "unshattered:biofuel": 12000,
+    "unshattered:enchanted_dandelion": 360,
+    "unshattered:enchanted_poppy": 1024,
+    "unshattered:goblin_egg": 2000,
+    "unshattered:oil_barrel": 10000
+  }
+}

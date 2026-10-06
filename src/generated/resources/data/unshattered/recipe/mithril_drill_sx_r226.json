@@ -1,0 +1,22 @@
+{
+  "type": "unshattered:forge",
+  "category": "unshattered:tools",
+  "duration_ticks": 14400,
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": "unshattered:fuel_canister"
+    },
+    {
+      "count": 3,
+      "ingredient": "unshattered:refined_mithril"
+    },
+    {
+      "count": 1,
+      "ingredient": "unshattered:drill_motor"
+    }
+  ],
+  "result": {
+    "id": "unshattered:mithril_drill_sx_r226"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "unshattered:forge",
+  "category": "unshattered:refining",
+  "duration_ticks": 43200,
+  "ingredients": [
+    {
+      "count": 160,
+      "ingredient": "unshattered:enchanted_titanium"
+    }
+  ],
+  "result": {
+    "id": "unshattered:refined_titanium"
+  }
+}

@@ -1,4 +1,4 @@
-package io.github.moosyu.entities;
+package io.github.moosyu.entities.npcs;
 
 import io.github.moosyu.data.dialogue.DialogueInteractable;
 import io.github.moosyu.data.dialogue.DialogueTree;

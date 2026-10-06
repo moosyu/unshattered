@@ -2,6 +2,7 @@ package io.github.moosyu.gui.menus;
 
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.components.ItemAttachments;
+import io.github.moosyu.data.components.ItemFuel;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemType;
 import io.github.moosyu.util.UnshatteredUtils;
@@ -9,6 +10,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
@@ -27,6 +29,7 @@ public class DrillAttachmentMenu extends AbstractContainerMenu {
     private static final int DRILL_SLOT_INDEX = ATTACHMENT_TYPES.length;
     private static final int FUEL_SLOT_INDEX = DRILL_SLOT_INDEX + 1;
     public static final int SLOTS = FUEL_SLOT_INDEX + 1;
+    public static final int COMBINE_FUEL_BUTTON = 0;
 
     private final Player player;
     private final SimpleContainer container = new SimpleContainer(SLOTS) {
@@ -47,6 +50,14 @@ public class DrillAttachmentMenu extends AbstractContainerMenu {
                 }
 
                 loadedDrill = ItemStack.EMPTY;
+
+                ItemStack fuel = container.getItem(FUEL_SLOT_INDEX);
+                if (!fuel.isEmpty()) {
+                    container.setItem(FUEL_SLOT_INDEX, ItemStack.EMPTY);
+                    if (!player.getInventory().add(fuel)) {
+                        player.drop(fuel, false);
+                    }
+                }
             } else if (drill != loadedDrill) {
                 loadedDrill = drill;
                 ItemAttachments attachments = drill.get(UnshatteredDataComponents.ITEM_ATTACHMENTS.get());
@@ -76,6 +87,14 @@ public class DrillAttachmentMenu extends AbstractContainerMenu {
 
                     if (updated != current) {
                         drill.set(UnshatteredDataComponents.ITEM_ATTACHMENTS.get(), updated);
+
+                        ItemFuel itemFuel = drill.get(UnshatteredDataComponents.FUEL.get());
+                        if (itemFuel != null) {
+                            int maxFuel = itemFuel.maxFuel();
+                            if (itemFuel.currentFuel() > maxFuel)  {
+                                drill.set(UnshatteredDataComponents.FUEL.get(), new ItemFuel(maxFuel, maxFuel));
+                            }
+                        }
                     }
                 }
             }
@@ -111,7 +130,8 @@ public class DrillAttachmentMenu extends AbstractContainerMenu {
         addSlot(new Slot(container, FUEL_SLOT_INDEX, 104, 55) {
             @Override
             public boolean mayPlace(@NonNull ItemStack itemStack) {
-                return itemStack.typeHolder().getData(UnshatteredDataMaps.ITEM_TYPE_DATA) == ItemType.DRILL;
+                SlotAccess drillSlotAccess = container.getSlot(DRILL_SLOT_INDEX);
+                return UnshatteredUtils.getItemFuelAmount(itemStack) > 0 && drillSlotAccess != null && !drillSlotAccess.get().isEmpty();
             }
 
             @Override
@@ -205,5 +225,37 @@ public class DrillAttachmentMenu extends AbstractContainerMenu {
         public @Nullable Identifier getNoItemIcon() {
             return type.noItemIcon;
         }
+    }
+
+    @Override
+    public boolean clickMenuButton(@NonNull Player player, int id) {
+        if (id == COMBINE_FUEL_BUTTON) {
+            combineFuel();
+            return true;
+        }
+        return super.clickMenuButton(player, id);
+    }
+
+    private void combineFuel() {
+        ItemStack drill = container.getItem(DRILL_SLOT_INDEX);
+        ItemStack fuelItem = container.getItem(FUEL_SLOT_INDEX);
+        int fuelPerItem = UnshatteredUtils.getItemFuelAmount(fuelItem);
+        ItemFuel drillFuel = drill.get(UnshatteredDataComponents.FUEL.get());
+
+        if (drill.isEmpty() || fuelItem.isEmpty() || drillFuel == null || fuelPerItem <= 0) {
+            return;
+        }
+
+        int effectiveMax = drillFuel.getMaxFuel(drill);
+        int currentFuel = drillFuel.currentFuel();
+        int needed = effectiveMax - currentFuel;
+        if (needed <= 0) {
+            return;
+        }
+
+        int itemsUsed = Math.min(fuelItem.getCount(), Math.ceilDiv(needed, fuelPerItem));
+
+        drill.set(UnshatteredDataComponents.FUEL.get(), new ItemFuel(drillFuel.maxFuel(), Math.min(effectiveMax, currentFuel + itemsUsed * fuelPerItem)));
+        container.removeItem(FUEL_SLOT_INDEX, itemsUsed);
     }
 }

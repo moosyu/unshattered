@@ -1,0 +1,18 @@
+{
+  "type": "unshattered:forge",
+  "category": "unshattered:tools",
+  "duration_ticks": 30,
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": "unshattered:golden_plate"
+    },
+    {
+      "count": 1,
+      "ingredient": "unshattered:mithril_plate"
+    }
+  ],
+  "result": {
+    "id": "unshattered:mithril_drill_sx_r326"
+  }
+}

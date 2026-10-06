@@ -1,8 +1,6 @@
 package io.github.moosyu.items.tools.rods;
 
 import io.github.moosyu.abilities.*;
-import io.github.moosyu.data.components.ItemAbility;
-import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -22,7 +20,7 @@ public class UnshatteredRod extends FishingRodItem implements PassiveAbilityItem
     @Override
     public void onAbilityTriggered(AbilityContext context) {
         context.get(AbilityContextKey.PLAYER).ifPresent(player -> {
-            player.sendSystemMessage(Component.translatable("combat.messages.unshattered.failed").withColor(UnshatteredUtils.ERROR_COLOR));
+            player.sendSystemMessage(Component.translatable("combat.messages.unshattered.failed").withColor(UnshatteredUtils.RED));
         });
     }
 

@@ -1,0 +1,18 @@
+{
+  "type": "unshattered:forge",
+  "category": "unshattered:drill_parts",
+  "duration_ticks": 43200,
+  "ingredients": [
+    {
+      "count": 2,
+      "ingredient": "unshattered:drill_motor"
+    },
+    {
+      "count": 1,
+      "ingredient": "unshattered:mithril_plate"
+    }
+  ],
+  "result": {
+    "id": "unshattered:mithril_plated_drill_engine"
+  }
+}

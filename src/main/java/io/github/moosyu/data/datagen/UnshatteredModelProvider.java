@@ -187,6 +187,7 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.DRILL_MOTOR.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.GOBLIN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.OIL_BARREL.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.BIOFUEL.get(), ModelTemplates.FLAT_ITEM);
 
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_GOLD_BLOCK.get(), Blocks.GOLD_BLOCK);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_DIAMOND_BLOCK.get(), Blocks.DIAMOND_BLOCK);
@@ -204,6 +205,8 @@ public class UnshatteredModelProvider extends ModelProvider {
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_ICE.get(), Blocks.ICE);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_PACKED_ICE.get(), Blocks.PACKED_ICE);
         createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_WOOL.get(), Blocks.WHITE_WOOL);
+        createFlatBlockTextureItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_DANDELION.get(), Blocks.DANDELION);
+        createFlatBlockTextureItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_POPPY.get(), Blocks.POPPY);
 
         itemModels.generateFlatItem(UnshatteredItems.HEALING_TISSUE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFishingRod(UnshatteredItems.CHALLENGING_ROD.get());
@@ -342,6 +345,18 @@ public class UnshatteredModelProvider extends ModelProvider {
                         blockModels.modelOutput
                 ))
         );
+    }
+
+    /**
+     * gives an item the flattened version of a block (like a flower)
+     */
+    private void createFlatBlockTextureItemModel(ItemModelGenerators itemModels, BlockModelGenerators blockModels, Item item, Block textureBlock) {
+        Identifier modelId = ModelTemplates.FLAT_ITEM.create(
+                ModelLocationUtils.getModelLocation(item),
+                TextureMapping.layer0(textureBlock),
+                blockModels.modelOutput
+        );
+        itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(modelId));
     }
 
     /**

@@ -1,0 +1,14 @@
+{
+  "type": "unshattered:forge",
+  "category": "unshattered:forging",
+  "duration_ticks": 18000,
+  "ingredients": [
+    {
+      "count": 2,
+      "ingredient": "unshattered:enchanted_coal_block"
+    }
+  ],
+  "result": {
+    "id": "unshattered:fuel_canister"
+  }
+}

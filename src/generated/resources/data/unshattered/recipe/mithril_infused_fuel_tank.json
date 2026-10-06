@@ -1,0 +1,22 @@
+{
+  "type": "unshattered:forge",
+  "category": "unshattered:drill_parts",
+  "duration_ticks": 43200,
+  "ingredients": [
+    {
+      "count": 5,
+      "ingredient": "unshattered:refined_diamond"
+    },
+    {
+      "count": 10,
+      "ingredient": "unshattered:refined_mithril"
+    },
+    {
+      "count": 5,
+      "ingredient": "unshattered:fuel_canister"
+    }
+  ],
+  "result": {
+    "id": "unshattered:mithril_infused_fuel_tank"
+  }
+}

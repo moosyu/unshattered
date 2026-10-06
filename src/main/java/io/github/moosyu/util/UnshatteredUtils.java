@@ -10,7 +10,6 @@ import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.ItemCharges;
-import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.data.dialogue.DialogueTree;
 import io.github.moosyu.data.drops.BlockBreakData;
 import io.github.moosyu.data.drops.DropData;
@@ -22,6 +21,7 @@ import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.packets.ClientsidePlayerSoundEffectPacket;
 import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -71,7 +71,23 @@ import static io.github.moosyu.data.drops.DropTypes.getDropType;
 public final class UnshatteredUtils {
     // text stuff
     public static DecimalFormat oneDecimalFormat = new DecimalFormat("0.#");
-    public static final int ERROR_COLOR = 0xFFFF5555;
+    public static final int BLACK = 0xFF000000;
+    public static final int DARK_BLUE = 0xFF0000AA;
+    public static final int DARK_GREEN = 0xFF00AA00;
+    public static final int DARK_AQUA = 0xFF00AAAA;
+    public static final int DARK_RED = 0xFFAA0000;
+    public static final int DARK_PURPLE = 0xFFAA00AA;
+    public static final int GOLD = 0xFFFFAA00;
+    public static final int GRAY = 0xFFAAAAAA;
+    public static final int DARK_GRAY = 0xFF555555;
+    public static final int BLUE = 0xFF5555FF;
+    public static final int GREEN = 0xFF55FF55;
+    public static final int AQUA = 0xFF55FFFF;
+    public static final int RED = 0xFFFF5555;
+    public static final int MAGENTA = 0xFFFF55FF;
+    public static final int YELLOW = 0xFFFFFF55;
+    public static final int WHITE = 0xFFFFFFFF;
+
     public static final Item[] WOOL_TYPES = {
             Items.WHITE_WOOL,
             Items.ORANGE_WOOL,
@@ -294,8 +310,10 @@ public final class UnshatteredUtils {
      * @param dialogueTreeIdentifier dialogue tree identifier from {@link #getUnshatteredIdentifier(String)}
      * @return gets a dialogue tree object or throws an null point exception if it doesnt exist. generally for {@link io.github.moosyu.data.dialogue.DialogueInteractable#getDialogueTree(RegistryAccess)} in {@link io.github.moosyu.data.dialogue.DialogueInteractable}
      */
-    public static DialogueTree getDialogueTreeObject(RegistryAccess registryAccess, Identifier dialogueTreeIdentifier) {
-        return Objects.requireNonNull(registryAccess.lookupOrThrow(DataPackRegistryHandler.DIALOGUE_TREE_REGISTRY_KEY).getValue(dialogueTreeIdentifier));
+    public static @Nullable DialogueTree getDialogueTreeObject(RegistryAccess registryAccess, Identifier dialogueTreeIdentifier) {
+        Optional<Registry<DialogueTree>> dialogueTreeRegistry = registryAccess.lookup(DataPackRegistryHandler.DIALOGUE_TREE_REGISTRY_KEY);
+
+        return dialogueTreeRegistry.map(dialogueTrees -> dialogueTrees.getValue(dialogueTreeIdentifier)).orElse(null);
     }
 
     // block drop methods
@@ -400,7 +418,7 @@ public final class UnshatteredUtils {
     public static boolean passesManaCheck(Player player, int manaCost) {
         double playerManaAmount = player.getData(UnshatteredAttachments.PLAYER_STATE.get()).getStatValue(PlayerStateAttachment.Stat.MANA);
         if (playerManaAmount < manaCost) {
-            player.sendSystemMessage(Component.literal("You don't have enough mana to use this " + "(" + ((int) (playerManaAmount)) + "/" + manaCost + ").").withColor(ERROR_COLOR));
+            player.sendSystemMessage(Component.literal("You don't have enough mana to use this " + "(" + ((int) (playerManaAmount)) + "/" + manaCost + ").").withColor(RED));
             return false;
         }
         return true;
@@ -416,7 +434,7 @@ public final class UnshatteredUtils {
         if (itemCharges.currentCharges() <= 0) {
             player.sendSystemMessage(
                     Component.literal("You don't have any charges left! Wait " + (((player.getData(UnshatteredAttachments.PLAYER_ABILITIES.get()).expiryTimeTicks(rechargeIdentifier) - player.level().getGameTime()) / 20) + 1) + "s.")
-                            .withColor(ERROR_COLOR));
+                            .withColor(RED));
             return false;
         }
         return true;
@@ -529,7 +547,7 @@ public final class UnshatteredUtils {
         }
 
         player.sendSystemMessage(Component.translatable("screen.unshattered.store.text.purchase_failed")
-                .withColor(UnshatteredUtils.ERROR_COLOR)
+                .withColor(UnshatteredUtils.RED)
         );
 
         PacketDistributor.sendToPlayer((ServerPlayer) player, new ClientsidePlayerSoundEffectPacket(
@@ -573,4 +591,17 @@ public final class UnshatteredUtils {
 
         return sellValue;
     }
+
+    /**
+     * @return the fuel amount of a SINGLE item in the provided itemstack
+     */
+    public static int getItemFuelAmount(ItemStack itemStack) {
+        Integer fuelAmount = itemStack.typeHolder().getData(UnshatteredDataMaps.ITEM_FUEL_VALUE_DATA);
+        if (fuelAmount == null) {
+            return 0;
+        }
+
+        return fuelAmount;
+    }
+
 }

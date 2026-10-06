@@ -8,6 +8,7 @@ import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.multiplayer.MultiPlayerGameMode;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -22,10 +23,15 @@ public class DrillAttachmentScreen extends AbstractContainerScreen<DrillAttachme
     public void init() {
         super.init();
 
-        ImageButton combineButton = new ImageButton(leftPos + 80 , topPos + 55, 16, 16, new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("buttons/hammer")), _ -> {});
-        combineButton.setTooltip(Tooltip.create(Component.translatable("screen.unshattered.drill_attachment")));
+        MultiPlayerGameMode gameMode = minecraft.gameMode;
+        if (gameMode != null) {
+            ImageButton combineButton = new ImageButton(leftPos + 80, topPos + 55, 16, 16,
+                    new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("buttons/hammer")),
+                    _ -> minecraft.gameMode.handleInventoryButtonClick(menu.containerId, DrillAttachmentMenu.COMBINE_FUEL_BUTTON));
+            combineButton.setTooltip(Tooltip.create(Component.translatable("screen.unshattered.drill_attachment")));
 
-        addRenderableWidget(combineButton);
+            addRenderableWidget(combineButton);
+        }
     }
 
     @Override

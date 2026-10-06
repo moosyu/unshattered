@@ -644,7 +644,13 @@ public class UnshatteredItems {
 
     public static final DeferredItem<Item> DRILL_MOTOR = ITEMS.registerItem("drill_motor", props -> new Item(props.stacksTo(1)));
 
-    public static final DeferredItem<Item> GOBLIN_EGG = ITEMS.registerItem("goblin_egg", props -> new Item(props.stacksTo(1)));
+    public static final DeferredItem<Item> GOBLIN_EGG = ITEMS.registerItem("goblin_egg", Item::new);
 
-    public static final DeferredItem<Item> OIL_BARREL = ITEMS.registerItem("oil_barrel", props -> new Item(props.stacksTo(1)));
+    public static final DeferredItem<Item> OIL_BARREL = ITEMS.registerItem("oil_barrel", Item::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_POPPY = ITEMS.registerItem("enchanted_poppy", EnchantedItem::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_DANDELION = ITEMS.registerItem("enchanted_dandelion", EnchantedItem::new);
+
+    public static final DeferredItem<Item> BIOFUEL = ITEMS.registerItem("biofuel", Item::new);
 }

@@ -1,0 +1,14 @@
+{
+  "type": "unshattered:forge",
+  "category": "unshattered:refining",
+  "duration_ticks": 10800,
+  "ingredients": [
+    {
+      "count": 160,
+      "ingredient": "unshattered:enchanted_mithril"
+    }
+  ],
+  "result": {
+    "id": "unshattered:refined_mithril"
+  }
+}

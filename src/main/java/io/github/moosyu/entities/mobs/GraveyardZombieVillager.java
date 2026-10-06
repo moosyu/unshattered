@@ -1,11 +1,11 @@
-package io.github.moosyu.entities;
+package io.github.moosyu.entities.mobs;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.level.Level;
 
 public class GraveyardZombieVillager extends PathfinderMob {
-    protected GraveyardZombieVillager(EntityType<? extends PathfinderMob> type, Level level) {
+    public GraveyardZombieVillager(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
     }
 

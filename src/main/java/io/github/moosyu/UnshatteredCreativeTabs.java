@@ -166,6 +166,9 @@ public class UnshatteredCreativeTabs {
             output.accept(DRILL_MOTOR);
             output.accept(GOBLIN_EGG);
                 output.accept(OIL_BARREL);
+            output.accept(ENCHANTED_POPPY);
+            output.accept(ENCHANTED_DANDELION);
+            output.accept(BIOFUEL);
         }).build()
     );
 

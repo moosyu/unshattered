@@ -20,8 +20,7 @@ import java.util.Optional;
 
 public record SizedItemRecipe(ItemStackTemplate result, SizedShapedRecipePattern pattern) implements CraftingRecipe {
     public static final MapCodec<SizedItemRecipe> CODEC = RecordCodecBuilder.mapCodec(instance ->
-            instance.group(
-                    ItemStackTemplate.CODEC.fieldOf("result").forGetter(SizedItemRecipe::result),
+            instance.group(ItemStackTemplate.CODEC.fieldOf("result").forGetter(SizedItemRecipe::result),
                     SizedShapedRecipePattern.MAP_CODEC.forGetter(SizedItemRecipe::pattern)
             ).apply(instance, SizedItemRecipe::new)
     );

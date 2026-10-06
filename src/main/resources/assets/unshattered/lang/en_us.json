@@ -173,6 +173,9 @@
   "item.unshattered.drill_motor": "Drill Motor",
   "item.unshattered.goblin_egg": "Goblin Egg",
   "item.unshattered.oil_barrel": "Oil Barrel",
+  "item.unshattered.enchanted_dandelion": "Enchanted Dandelion",
+  "item.unshattered.enchanted_poppy": "Enchanted Poppy",
+  "item.unshattered.biofuel": "Biofuel",
 
   "item.description.unshattered.bat_the_fish": "Where is my cape!",
   "item.description.unshattered.century_the_fish": "The term 'century' was actually named after him, or so he says.",
@@ -264,7 +267,8 @@
   "item.description.unshattered.mithril_plated_drill_engine": "Releases a lot of smoke for something without any openings.",
   "item.description.unshattered.fried_goblin_egg": "May cause disease.",
   "item.description.unshattered.goblin_egg": "What came first, the goblin or the egg?",
-  "item.description.unshattered.oil_barrel": "Seems to have been mass produced long ago.",
+  "item.description.unshattered.oil_barrel": "100% unrenewable energy!",
+  "item.description.unshattered.biofuel": "100% renewable energy!",
 
   "item.ability.unshattered.rogue_sword_speed_boost": "Speed Boost",
   "item.ability.unshattered.mind_blowing": "Mind Blowing",
@@ -453,6 +457,7 @@
   "item_type.unshattered.fuel_tank": "Fuel Tank",
   "item_type.unshattered.drill_engine": "Drill Engine",
   "item_type.unshattered.upgrade_module": "Upgrade Module",
+  "item_type.unshattered.fuel": "Fuel",
 
   "unshattered.configuration.title": "unshattered Configs",
   "unshattered.configuration.section.unshattered.common.toml": "unshattered Configs",
@@ -474,6 +479,8 @@
   "tooltip.unshattered.incremental.blocks_broken": "Blocks Broken",
   "tooltip.unshattered.fuel": "Fuel",
   "tooltip.unshattered.none": "NONE",
+  "tooltip.unshattered.fuelable_1": "Adds",
+  "tooltip.unshattered.fuelable_2": "fuel to a refuelable machine.",
 
   "combat.messages.unshattered.failed": "You tried to attack... but nothing happened.",
   "fishing.messages.entity.minecraft.squid": "A Squid appeared.",
@@ -546,6 +553,7 @@
 
   "entity.unshattered.jotraeline_greatforge": "Jotraeline Greatforge",
   "entity.unshattered.wool_weaver": "Wool Weaver",
+  "entity.unshattered.forger": "The Forger",
 
   "dialogue.unshattered.jotraeline_greatforge.introduction": "Ay [p]! I'm [c=0xFF00AA00]Jotraeline Greatforge[/c], the drill expert 'round here.",
   "dialogue.unshattered.jotraeline_greatforge.player_drills_choice": "Drills?",

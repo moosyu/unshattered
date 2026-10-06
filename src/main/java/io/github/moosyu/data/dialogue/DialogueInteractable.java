@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.PacketDistributor;
+import org.jspecify.annotations.Nullable;
 
 public interface DialogueInteractable {
     /**
@@ -20,7 +21,7 @@ public interface DialogueInteractable {
     /**
      * @return the origin trees for possible dialogue
      */
-    DialogueTree getDialogueTree(RegistryAccess registryAccess);
+    @Nullable DialogueTree getDialogueTree(RegistryAccess registryAccess);
 
     /**
      * code to run when dialogue is triggered
@@ -30,6 +31,11 @@ public interface DialogueInteractable {
         if (!player.level().isClientSide()) {
             PlayerFlagsAttachment playerFlagsAttachment = player.getData(UnshatteredAttachments.PLAYER_FLAGS);
             DialogueTree dialogueTree = getDialogueTree(player.registryAccess());
+            if (dialogueTree == null) {
+                Unshattered.LOGGER.error("dialogue tree of {} is null (did you datagen?)", getInteractableName().getString());
+                return;
+            }
+
             DialogueTreeOrigin chosenOrigin = null;
             for (DialogueTreeOrigin dialogueTreeOrigin : dialogueTree.dialogueTreeOrigins()) {
                 if ((dialogueTreeOrigin.dialogueFlagRequirements().isEmpty()

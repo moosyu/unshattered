@@ -3,7 +3,7 @@ package io.github.moosyu.events;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.dialogue.DialogueInteractable;
-import io.github.moosyu.entities.NPCEntity;
+import io.github.moosyu.entities.npcs.NPCEntity;
 import io.github.moosyu.packets.OpenReforgeAnvilPacket;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.BlockPos;
@@ -74,7 +74,7 @@ public class PlayerClickHandler {
         if (interactedBlock.getBlock() instanceof DialogueInteractable dialogueBlock && event.getHand() == InteractionHand.MAIN_HAND) {
             PlayerAbilityEffectsAttachment playerAbilityEffectsAttachment = player.getData(UnshatteredAttachments.PLAYER_ABILITIES);
             if (playerAbilityEffectsAttachment.hasActiveEffect(ACTIVE_RIGHT_CLICK) && !event.getLevel().isClientSide()) {
-                player.sendSystemMessage(Component.translatable("misc.messages.unshattered.interact_cooldown").withColor(UnshatteredUtils.ERROR_COLOR));
+                player.sendSystemMessage(Component.translatable("misc.messages.unshattered.interact_cooldown").withColor(UnshatteredUtils.RED));
                 return;
             }
             dialogueBlock.onDialogueTriggered(player);
@@ -100,7 +100,7 @@ public class PlayerClickHandler {
             ) {
                 PlayerAbilityEffectsAttachment playerAbilityEffectsAttachment = player.getData(UnshatteredAttachments.PLAYER_ABILITIES);
                 if (playerAbilityEffectsAttachment.hasActiveEffect(ACTIVE_RIGHT_CLICK) && !level.isClientSide()) {
-                    player.sendSystemMessage(Component.translatable("misc.messages.unshattered.interact_cooldown").withColor(UnshatteredUtils.ERROR_COLOR));
+                    player.sendSystemMessage(Component.translatable("misc.messages.unshattered.interact_cooldown").withColor(UnshatteredUtils.RED));
                     return;
                 }
 

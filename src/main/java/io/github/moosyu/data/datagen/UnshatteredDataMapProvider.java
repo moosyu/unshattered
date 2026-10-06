@@ -450,7 +450,9 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.ARTISANAL_SHORTBOW.get()), UnshatteredRarity.UNCOMMON, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.ZOMBIE_PICKAXE.get()), UnshatteredRarity.COMMON, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.PROMISING_PICKAXE.get()), UnshatteredRarity.UNCOMMON, false)
-        ;
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.ENCHANTED_POPPY.get()), UnshatteredRarity.UNCOMMON, false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.ENCHANTED_DANDELION.get()), UnshatteredRarity.UNCOMMON, false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.BIOFUEL.get()), UnshatteredRarity.RARE, false);
 
         builder(ITEM_SELL_VALUE_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.TREECAPITATOR.get()), 10000, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.SPRUCE_AXE.get()), 480, false)
@@ -573,10 +575,9 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.BROKEN_MITHRIL_PICKAXE.get()), 500, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.BANDAGED_MITHRIL_PICKAXE.get()), 5000, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.MITHRIL_PICKAXE.get()), 50000, false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.SUPER_CLEAVER.get()), 70, false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.SUPER_CLEAVER.get()), 70, false)
-
-        ;
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.ENCHANTED_DANDELION.get()), 160, false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.ENCHANTED_POPPY.get()), 576, false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.BIOFUEL.get()), 10000, false);
 
         builder(ITEM_TYPE_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.MERCENARY_AXE.get()), ItemType.BATTLE_AXE, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.TREECAPITATOR.get()), ItemType.AXE, false)
@@ -727,13 +728,16 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.MITHRIL_PLATE.get()), ItemType.MATERIAL, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.DRILL_MOTOR.get()), ItemType.MATERIAL, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.GOBLIN_EGG.get()), ItemType.MATERIAL, false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.OIL_BARREL.get()), ItemType.MATERIAL, false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.OIL_BARREL.get()), ItemType.FUEL, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.WOODEN_AXE), ItemType.BATTLE_AXE, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.STONE_AXE), ItemType.BATTLE_AXE, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.IRON_AXE), ItemType.BATTLE_AXE, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.GOLDEN_AXE), ItemType.BATTLE_AXE, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.DIAMOND_AXE), ItemType.BATTLE_AXE, false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.COINS_TALISMAN.get()), ItemType.TALISMAN, false);
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.COINS_TALISMAN.get()), ItemType.TALISMAN, false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.ENCHANTED_POPPY.get()), ItemType.FUEL, false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.ENCHANTED_DANDELION.get()), ItemType.FUEL, false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.BIOFUEL.get()), ItemType.FUEL, false);
 
         builder(ITEM_ABILITY_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.TREECAPITATOR.get()), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("treecapitator_park_enthusiast"), 0, 0, 0, true), false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.SPRUCE_AXE.get()), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("spruce_axe_park_enthusiast"), 0, 0, 0, true), false)
@@ -772,88 +776,95 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.BROKEN_MITHRIL_PICKAXE.get()), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("broken_mithril_pickaxe_mithril_speed"), 0, 0, 0, true), false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.BANDAGED_MITHRIL_PICKAXE.get()), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("bandaged_mithril_pickaxe_mithril_speed"), 0, 0, 0, true), false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.MITHRIL_PICKAXE.get()), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("mithril_pickaxe_mithril_speed"), 0, 0, 0, true), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.MITHRIL_DRILL_SX_R226.get()), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("r226_junkie"), 0, 0, 0, true), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.TITANIUM_PICKAXE.get()), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("titanium_pickaxe_titanium_fanatic"), 0, 0, 0, true), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.TITANIUM_PICKAXE.get()), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("titanium_pickaxe_titanium_fanatic"), 0, 0, 0, true), false)
-        ;
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.MITHRIL_DRILL_SX_R226.get()), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("r226_junkie"), 0, 0, 0, true), false);
 
-        modifyVanillaItem(Items.END_STONE, ItemType.MATERIAL, 2);
-        modifyVanillaItem(Items.DIAMOND, ItemType.MATERIAL, 8);
-        modifyVanillaItem(Items.COBBLESTONE, ItemType.MATERIAL, 1);
-        modifyVanillaItem(Items.IRON_HELMET, ItemType.HELMET, 2);
-        modifyVanillaItem(Items.IRON_CHESTPLATE, ItemType.CHESTPLATE, 3);
-        modifyVanillaItem(Items.IRON_LEGGINGS, ItemType.LEGGINGS, 3);
-        modifyVanillaItem(Items.IRON_BOOTS, ItemType.BOOTS, 2);
-        modifyVanillaItem(Items.DIAMOND_HELMET, ItemType.HELMET, UnshatteredRarity.UNCOMMON, 3);
-        modifyVanillaItem(Items.DIAMOND_CHESTPLATE, ItemType.CHESTPLATE, UnshatteredRarity.UNCOMMON, 5);
-        modifyVanillaItem(Items.DIAMOND_LEGGINGS, ItemType.LEGGINGS, UnshatteredRarity.UNCOMMON, 4);
-        modifyVanillaItem(Items.DIAMOND_BOOTS, ItemType.BOOTS, UnshatteredRarity.UNCOMMON, 3);
-        modifyVanillaItem(Items.GOLD_INGOT, ItemType.MATERIAL, 4);
-        modifyVanillaItem(Items.GOLD_BLOCK, ItemType.MATERIAL, 27);
-        modifyVanillaItem(Items.DIAMOND, ItemType.MATERIAL, 8);
-        modifyVanillaItem(Items.DIAMOND_BLOCK, ItemType.MATERIAL, 72);
-        modifyVanillaItem(Items.EMERALD, ItemType.MATERIAL, 4);
-        modifyVanillaItem(Items.EMERALD_BLOCK, ItemType.MATERIAL, 36);
-        modifyVanillaItem(Items.IRON_INGOT, ItemType.MATERIAL, 2);
-        modifyVanillaItem(Items.IRON_BLOCK, ItemType.MATERIAL, 18);
-        modifyVanillaItem(Items.COAL, ItemType.MATERIAL, 2);
-        modifyVanillaItem(Items.COAL_BLOCK, ItemType.MATERIAL, 18);
-        modifyVanillaItem(Items.LAPIS_LAZULI, ItemType.MATERIAL, 1);
-        modifyVanillaItem(Items.LAPIS_BLOCK, ItemType.MATERIAL, 9);
-        modifyVanillaItem(Items.REDSTONE, ItemType.MATERIAL, 1);
-        modifyVanillaItem(Items.REDSTONE_BLOCK, ItemType.MATERIAL, 9);
-        modifyVanillaItem(Items.OAK_LOG, ItemType.MATERIAL, 2);
-        modifyVanillaItem(Items.BIRCH_LOG, ItemType.MATERIAL, 2);
-        modifyVanillaItem(Items.SPRUCE_LOG, ItemType.MATERIAL, 2);
-        modifyVanillaItem(Items.JUNGLE_LOG, ItemType.MATERIAL, 2);
-        modifyVanillaItem(Items.ACACIA_LOG, ItemType.MATERIAL, 2);
-        modifyVanillaItem(Items.DARK_OAK_LOG, ItemType.MATERIAL, 2);
-        modifyVanillaItem(Items.ENCHANTED_BOOK, ItemType.ENCHANTED_BOOK, UnshatteredRarity.RARE, 0);
-        modifyVanillaItem(Items.POISONOUS_POTATO, ItemType.MATERIAL, 10);
-        modifyVanillaItem(Items.BONE, ItemType.MATERIAL, 2);
-        modifyVanillaItem(Items.FLINT, ItemType.MATERIAL, 4);
-        modifyVanillaItem(Items.STRING, ItemType.MATERIAL, 3);
-        modifyVanillaItem(Items.CLAY_BALL, ItemType.MATERIAL, 3);
-        modifyVanillaItem(Items.INK_SAC, ItemType.MATERIAL, 2);
-        modifyVanillaItem(Items.LILY_PAD, ItemType.MATERIAL, 10);
-        modifyVanillaItem(Items.PRISMARINE_SHARD, ItemType.MATERIAL, 5);
-        modifyVanillaItem(Items.PRISMARINE_CRYSTALS, ItemType.MATERIAL, 5);
-        modifyVanillaItem(Items.PUFFERFISH, ItemType.MATERIAL, 15);
-        modifyVanillaItem(Items.COD, ItemType.MATERIAL, 6);
-        modifyVanillaItem(Items.SALMON, ItemType.MATERIAL, 10);
-        modifyVanillaItem(Items.SPONGE, ItemType.MATERIAL, 50);
-        modifyVanillaItem(Items.TROPICAL_FISH, ItemType.MATERIAL, 20);
-        modifyVanillaItem(Items.HONEYCOMB, ItemType.MATERIAL, 100);
-        modifyVanillaItem(Items.ICE, ItemType.MATERIAL, 1);
-        modifyVanillaItem(Items.WOODEN_PICKAXE, ItemType.PICKAXE, 1);
-        modifyVanillaItem(Items.GOLDEN_PICKAXE, ItemType.PICKAXE, 6);
-        modifyVanillaItem(Items.STONE_PICKAXE, ItemType.PICKAXE, 2);
-        modifyVanillaItem(Items.IRON_PICKAXE, ItemType.PICKAXE, 4);
-        modifyVanillaItem(Items.DIAMOND_PICKAXE, ItemType.PICKAXE, UnshatteredRarity.UNCOMMON, 12);
-        modifyVanillaItem(Items.WOODEN_SWORD, ItemType.SWORD, 1);
-        modifyVanillaItem(Items.STONE_SWORD, ItemType.SWORD, 1);
-        modifyVanillaItem(Items.IRON_SWORD, ItemType.SWORD, 3);
-        modifyVanillaItem(Items.GOLDEN_SWORD, ItemType.SWORD, 4);
-        modifyVanillaItem(Items.DIAMOND_SWORD, ItemType.SWORD, UnshatteredRarity.UNCOMMON, 8);
-        modifyVanillaItem(Items.BOW, ItemType.BOW, 3);
-        modifyVanillaItem(Items.CROSSBOW, ItemType.CROSSBOW, UnshatteredRarity.UNCOMMON, 100);
+        setBaseData(Items.END_STONE, ItemType.MATERIAL, 2);
+        setBaseData(Items.DIAMOND, ItemType.MATERIAL, 8);
+        setBaseData(Items.COBBLESTONE, ItemType.MATERIAL, 1);
+        setBaseData(Items.IRON_HELMET, ItemType.HELMET, 2);
+        setBaseData(Items.IRON_CHESTPLATE, ItemType.CHESTPLATE, 3);
+        setBaseData(Items.IRON_LEGGINGS, ItemType.LEGGINGS, 3);
+        setBaseData(Items.IRON_BOOTS, ItemType.BOOTS, 2);
+        setBaseData(Items.DIAMOND_HELMET, ItemType.HELMET, UnshatteredRarity.UNCOMMON, 3);
+        setBaseData(Items.DIAMOND_CHESTPLATE, ItemType.CHESTPLATE, UnshatteredRarity.UNCOMMON, 5);
+        setBaseData(Items.DIAMOND_LEGGINGS, ItemType.LEGGINGS, UnshatteredRarity.UNCOMMON, 4);
+        setBaseData(Items.DIAMOND_BOOTS, ItemType.BOOTS, UnshatteredRarity.UNCOMMON, 3);
+        setBaseData(Items.GOLD_INGOT, ItemType.MATERIAL, 4);
+        setBaseData(Items.GOLD_BLOCK, ItemType.MATERIAL, 27);
+        setBaseData(Items.DIAMOND, ItemType.MATERIAL, 8);
+        setBaseData(Items.DIAMOND_BLOCK, ItemType.MATERIAL, 72);
+        setBaseData(Items.EMERALD, ItemType.MATERIAL, 4);
+        setBaseData(Items.EMERALD_BLOCK, ItemType.MATERIAL, 36);
+        setBaseData(Items.IRON_INGOT, ItemType.MATERIAL, 2);
+        setBaseData(Items.IRON_BLOCK, ItemType.MATERIAL, 18);
+        setBaseData(Items.COAL, ItemType.MATERIAL, 2);
+        setBaseData(Items.COAL_BLOCK, ItemType.MATERIAL, 18);
+        setBaseData(Items.LAPIS_LAZULI, ItemType.MATERIAL, 1);
+        setBaseData(Items.LAPIS_BLOCK, ItemType.MATERIAL, 9);
+        setBaseData(Items.REDSTONE, ItemType.MATERIAL, 1);
+        setBaseData(Items.REDSTONE_BLOCK, ItemType.MATERIAL, 9);
+        setBaseData(Items.OAK_LOG, ItemType.MATERIAL, 2);
+        setBaseData(Items.BIRCH_LOG, ItemType.MATERIAL, 2);
+        setBaseData(Items.SPRUCE_LOG, ItemType.MATERIAL, 2);
+        setBaseData(Items.JUNGLE_LOG, ItemType.MATERIAL, 2);
+        setBaseData(Items.ACACIA_LOG, ItemType.MATERIAL, 2);
+        setBaseData(Items.DARK_OAK_LOG, ItemType.MATERIAL, 2);
+        setBaseData(Items.ENCHANTED_BOOK, ItemType.ENCHANTED_BOOK, UnshatteredRarity.RARE, 0);
+        setBaseData(Items.POISONOUS_POTATO, ItemType.MATERIAL, 10);
+        setBaseData(Items.BONE, ItemType.MATERIAL, 2);
+        setBaseData(Items.FLINT, ItemType.MATERIAL, 4);
+        setBaseData(Items.STRING, ItemType.MATERIAL, 3);
+        setBaseData(Items.CLAY_BALL, ItemType.MATERIAL, 3);
+        setBaseData(Items.INK_SAC, ItemType.MATERIAL, 2);
+        setBaseData(Items.LILY_PAD, ItemType.MATERIAL, 10);
+        setBaseData(Items.PRISMARINE_SHARD, ItemType.MATERIAL, 5);
+        setBaseData(Items.PRISMARINE_CRYSTALS, ItemType.MATERIAL, 5);
+        setBaseData(Items.PUFFERFISH, ItemType.MATERIAL, 15);
+        setBaseData(Items.COD, ItemType.MATERIAL, 6);
+        setBaseData(Items.SALMON, ItemType.MATERIAL, 10);
+        setBaseData(Items.SPONGE, ItemType.MATERIAL, 50);
+        setBaseData(Items.TROPICAL_FISH, ItemType.MATERIAL, 20);
+        setBaseData(Items.HONEYCOMB, ItemType.MATERIAL, 100);
+        setBaseData(Items.ICE, ItemType.MATERIAL, 1);
+        setBaseData(Items.WOODEN_PICKAXE, ItemType.PICKAXE, 1);
+        setBaseData(Items.GOLDEN_PICKAXE, ItemType.PICKAXE, 6);
+        setBaseData(Items.STONE_PICKAXE, ItemType.PICKAXE, 2);
+        setBaseData(Items.IRON_PICKAXE, ItemType.PICKAXE, 4);
+        setBaseData(Items.DIAMOND_PICKAXE, ItemType.PICKAXE, UnshatteredRarity.UNCOMMON, 12);
+        setBaseData(Items.WOODEN_SWORD, ItemType.SWORD, 1);
+        setBaseData(Items.STONE_SWORD, ItemType.SWORD, 1);
+        setBaseData(Items.IRON_SWORD, ItemType.SWORD, 3);
+        setBaseData(Items.GOLDEN_SWORD, ItemType.SWORD, 4);
+        setBaseData(Items.DIAMOND_SWORD, ItemType.SWORD, UnshatteredRarity.UNCOMMON, 8);
+        setBaseData(Items.BOW, ItemType.BOW, 3);
+        setBaseData(Items.CROSSBOW, ItemType.CROSSBOW, UnshatteredRarity.UNCOMMON, 100);
+        setBaseData(Items.POPPY, ItemType.FUEL, UnshatteredRarity.COMMON, 2);
+        setBaseData(Items.DANDELION, ItemType.FUEL, UnshatteredRarity.COMMON, 2);
 
         for (Item wool : UnshatteredUtils.WOOL_TYPES) {
-            modifyVanillaItem(wool, ItemType.MATERIAL, 2);
+            setBaseData(wool, ItemType.MATERIAL, 2);
         }
+
+        builder(ITEM_FUEL_VALUE_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(Items.POPPY), 2, false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.DANDELION), 2, false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.ENCHANTED_DANDELION.get()), 360, false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.ENCHANTED_POPPY.get()), 1024, false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.GOBLIN_EGG.get()), 2000, false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.OIL_BARREL.get()), 10000, false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.BIOFUEL.get()), 12000, false);
     }
 
     private void createSimpleBlockDropData(DataMapProvider.Builder<BlockBreakData, Block> builder, DeferredBlock<Block> block, ItemRange itemRange, PlayerSkillsAttachment.Skill skill, float expAmount) {
         builder.add(block, new BlockBreakData(skill, expAmount, List.of(new DropData(itemRange))), false);
     }
 
-    private void modifyVanillaItem(Item item, ItemType itemType, UnshatteredRarity rarity, int sellValue) {
+    private void setBaseData(Item item, ItemType itemType, UnshatteredRarity rarity, int sellValue) {
         builder(ITEM_TYPE_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(item), itemType, false);
         builder(ITEM_RARITY_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(item), rarity, false);
         builder(ITEM_SELL_VALUE_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(item), sellValue, false);
     }
 
-    private void modifyVanillaItem(Item item, ItemType itemType, int sellValue) {
+    private void setBaseData(Item item, ItemType itemType, int sellValue) {
         builder(ITEM_TYPE_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(item), itemType, false);
         builder(ITEM_RARITY_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(item), UnshatteredRarity.COMMON, false);
         builder(ITEM_SELL_VALUE_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(item), sellValue, false);

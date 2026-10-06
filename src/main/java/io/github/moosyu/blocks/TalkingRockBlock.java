@@ -48,7 +48,7 @@ public class TalkingRockBlock extends HorizontalDirectionalBlock implements Dial
     }
 
     @Override
-    public DialogueTree getDialogueTree(RegistryAccess registryAccess) {
+    public @Nullable DialogueTree getDialogueTree(RegistryAccess registryAccess) {
         return UnshatteredUtils.getDialogueTreeObject(registryAccess, ROCK_DIALOGUE_TREE);
     }
 

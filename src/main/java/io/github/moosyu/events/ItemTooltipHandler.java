@@ -41,7 +41,7 @@ import static io.github.moosyu.Unshattered.MODID;
 
 @EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
 public class ItemTooltipHandler {
-    final static int MAX_WIDTH = 200;
+    private final static int MAX_WIDTH = 200;
     @SubscribeEvent
     public static void onItemTooltip(ItemTooltipEvent event) {
         if (event.getEntity() != null && !event.getEntity().level().isClientSide()) return;
@@ -60,6 +60,7 @@ public class ItemTooltipHandler {
         ItemEnchantments itemEnchantments = itemStack.get(DataComponents.STORED_ENCHANTMENTS);
         ItemFuel itemFuel = itemStack.get(UnshatteredDataComponents.FUEL);
         ItemAttachments itemAttachments = itemStack.get(UnshatteredDataComponents.ITEM_ATTACHMENTS);
+        int fuelAmount = UnshatteredUtils.getItemFuelAmount(itemStack) * itemStack.count();
 
         event.getToolTip().clear();
         tooltipComponents.add(Component.translatable(itemStack.getItemName().getString()).withColor(itemRarity.getColour(1.0f)));
@@ -101,10 +102,21 @@ public class ItemTooltipHandler {
             }
         }
 
+        if (fuelAmount > 0) {
+            tooltipComponents.add(Component.translatable("tooltip.unshattered.fuelable_1").withStyle(ChatFormatting.GRAY)
+                    .append(Component.literal(" +" + fuelAmount + " ").withStyle(ChatFormatting.DARK_GREEN))
+                    .append(Component.translatable("tooltip.unshattered.fuelable_2"))
+            );
+
+            if (hasDescription) {
+                tooltipComponents.add(Component.empty());
+            }
+        }
+
         if (hasDescription) {
             if (hasAttributes) tooltipComponents.add(Component.empty());
 
-            addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.description.unshattered." + BuiltInRegistries.ITEM.getKey(itemStack.getItem()).getPath()).getString(), 0xFFAAAAAA, player), MAX_WIDTH);
+            addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.description.unshattered." + BuiltInRegistries.ITEM.getKey(itemStack.getItem()).getPath()).getString(), 0xFFAAAAAA, player));
         }
 
         // for enchanted books
@@ -172,10 +184,10 @@ public class ItemTooltipHandler {
             tooltipComponents.add(Component.empty());
             if (itemAbility.passive()) {
                 tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.abilityId().getPath())).withColor(0xFFFFAA00));
-                addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityId().getPath()).getString(), 0xFFAAAAAA, player), MAX_WIDTH);
+                addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityId().getPath()).getString(), 0xFFAAAAAA, player));
             } else {
                 tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.abilityId().getPath())).withColor(0xFFFFAA00).append(Component.literal(" RIGHT CLICK").withColor(0xFFFFFF55).withStyle(ChatFormatting.BOLD)));
-                addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityId().getPath()).getString(), 0xFFAAAAAA, player), MAX_WIDTH);
+                addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityId().getPath()).getString(), 0xFFAAAAAA, player));
 
                 if (itemAbility.manaCost() > 0) tooltipComponents.add(Component.literal("Mana Cost: ").withStyle(ChatFormatting.DARK_GRAY).append(Component.literal(String.valueOf(itemAbility.manaCost())).withColor(0xFF00AAAA)));
                 if (itemAbility.cooldown() > 0) tooltipComponents.add(Component.literal("Cooldown: ").withStyle(ChatFormatting.DARK_GRAY).append(Component.literal(String.format("%.1f", (float) itemAbility.cooldown() / 20 /* convert ticks to seconds */)).append("s").withColor(0xFF55FF55)));
@@ -213,7 +225,7 @@ public class ItemTooltipHandler {
                 );
 
                 if (attachmentAbility != null) {
-                    addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + attachmentAbility.abilityId().getPath()).getString(), 0xFFAAAAAA, player), MAX_WIDTH);
+                    addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + attachmentAbility.abilityId().getPath()).getString(), 0xFFAAAAAA, player));
                 }
                 tooltipComponents.add(Component.empty());
             }
@@ -259,11 +271,10 @@ public class ItemTooltipHandler {
      *
      * @param tooltip tooltip for wrapped text to be added back to
      * @param text text component
-     * @param maxWidth width before wrap
      */
-    private static void addWrappedText(List<Component> tooltip, Component text, int maxWidth) {
+    private static void addWrappedText(List<Component> tooltip, Component text) {
         Font font = Minecraft.getInstance().font;
-        List<FormattedText> lines = font.getSplitter().splitLines(text, maxWidth, text.getStyle());
+        List<FormattedText> lines = font.getSplitter().splitLines(text, MAX_WIDTH, text.getStyle());
 
         for (FormattedText line : lines) {
             MutableComponent lineComponent = Component.empty();

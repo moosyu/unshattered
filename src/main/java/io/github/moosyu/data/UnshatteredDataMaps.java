@@ -83,4 +83,10 @@ public final class UnshatteredDataMaps {
             Registries.ITEM,
             Codec.INT
     ).synced(Codec.INT, true).build();
+
+    public static final DataMapType<Item, Integer> ITEM_FUEL_VALUE_DATA = DataMapType.builder(
+            UnshatteredUtils.getUnshatteredIdentifier("item_fuel_value_data"),
+            Registries.ITEM,
+            Codec.INT
+    ).synced(Codec.INT, true).build();
 }

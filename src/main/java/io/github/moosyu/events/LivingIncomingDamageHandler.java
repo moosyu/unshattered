@@ -60,7 +60,7 @@ public class LivingIncomingDamageHandler {
             }
 
              if (source.getEntity() instanceof Player player && player.getAttributeValue(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder) == 0.0d) {
-                player.sendSystemMessage(Component.translatable("combat.messages.unshattered.failed").withColor(UnshatteredUtils.ERROR_COLOR));
+                player.sendSystemMessage(Component.translatable("combat.messages.unshattered.failed").withColor(UnshatteredUtils.RED));
             }
         }
     }

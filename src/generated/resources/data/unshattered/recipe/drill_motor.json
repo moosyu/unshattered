@@ -1,0 +1,26 @@
+{
+  "type": "unshattered:forge",
+  "category": "unshattered:forging",
+  "duration_ticks": 54000,
+  "ingredients": [
+    {
+      "count": 10,
+      "ingredient": "unshattered:treasurite"
+    },
+    {
+      "count": 1,
+      "ingredient": "unshattered:enchanted_iron_block"
+    },
+    {
+      "count": 3,
+      "ingredient": "unshattered:enchanted_redstone_block"
+    },
+    {
+      "count": 1,
+      "ingredient": "unshattered:golden_plate"
+    }
+  ],
+  "result": {
+    "id": "unshattered:drill_motor"
+  }
+}

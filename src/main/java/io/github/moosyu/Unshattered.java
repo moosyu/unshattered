@@ -16,6 +16,7 @@ import static io.github.moosyu.attributes.UnshatteredAttributes.ATTRIBUTES;
 import static io.github.moosyu.blocks.UnshatteredBlocks.BLOCKS;
 import static io.github.moosyu.UnshatteredCreativeTabs.CREATIVE_MODE_TABS;
 import static io.github.moosyu.data.components.UnshatteredDataComponents.DATA_COMPONENTS;
+import static io.github.moosyu.data.recipes.UnshatteredRecipeBookCategories.RECIPE_BOOK_CATEGORIES;
 import static io.github.moosyu.entities.UnshatteredEntities.ENTITY_TYPES;
 import static io.github.moosyu.gui.menus.UnshatteredMenus.MENUS;
 import static io.github.moosyu.items.UnshatteredItems.*;
@@ -38,6 +39,7 @@ public class Unshattered {
         SOUND_EVENTS.register(modEventBus);
         UnshatteredRecipes.RECIPE_SERIALIZERS.register(modEventBus);
         UnshatteredRecipes.RECIPE_TYPES.register(modEventBus);
+        RECIPE_BOOK_CATEGORIES.register(modEventBus);
         MENUS.register(modEventBus);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);

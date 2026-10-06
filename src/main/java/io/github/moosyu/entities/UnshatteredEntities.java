@@ -1,5 +1,9 @@
 package io.github.moosyu.entities;
 
+import io.github.moosyu.entities.mobs.GraveyardZombieVillager;
+import io.github.moosyu.entities.npcs.ForgerNPC;
+import io.github.moosyu.entities.npcs.JotraelineGreatforgeNPC;
+import io.github.moosyu.entities.npcs.WoolWeaverNPC;
 import io.github.moosyu.entities.projectiles.HomingBee;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.registries.Registries;
@@ -65,7 +69,7 @@ public class UnshatteredEntities {
                     .eyeHeight(1.62f)
                     .build(ResourceKey.create(
                             Registries.ENTITY_TYPE,
-                            UnshatteredUtils.getUnshatteredIdentifier("jotraeline_greatforge"))
+                            JotraelineGreatforgeNPC.JOTRAELINE_GREATFORGE_DIALOGUE_TREE)
                     )
     );
 
@@ -76,7 +80,18 @@ public class UnshatteredEntities {
                     .eyeHeight(1.62f)
                     .build(ResourceKey.create(
                             Registries.ENTITY_TYPE,
-                            UnshatteredUtils.getUnshatteredIdentifier("wool_weaver"))
+                            WoolWeaverNPC.WOOL_WEAVER_IDENTIFIER)
+                    )
+    );
+
+    public static final Supplier<EntityType<ForgerNPC>> FORGER = ENTITY_TYPES.register(
+            "forger",
+            () -> EntityType.Builder.of(ForgerNPC::new, MobCategory.CREATURE)
+                    .sized(0.6f, 1.8f)
+                    .eyeHeight(1.62f)
+                    .build(ResourceKey.create(
+                            Registries.ENTITY_TYPE,
+                            ForgerNPC.FORGER_IDENTIFIER)
                     )
     );
 }

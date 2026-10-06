@@ -1,0 +1,14 @@
+{
+  "type": "unshattered:forge",
+  "category": "unshattered:refining",
+  "duration_ticks": 14400,
+  "ingredients": [
+    {
+      "count": 2,
+      "ingredient": "unshattered:enchanted_diamond_block"
+    }
+  ],
+  "result": {
+    "id": "unshattered:refined_diamond"
+  }
+}

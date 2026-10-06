@@ -31,12 +31,12 @@ public class SizedItemRecipeBuilder implements RecipeBuilder {
     }
 
     public SizedItemRecipeBuilder pattern(String... rows) {
-        this.pattern.addAll(List.of(rows));
+        pattern.addAll(List.of(rows));
         return this;
     }
 
     public SizedItemRecipeBuilder define(char symbol, SizedIngredient ingredient) {
-        if (this.key.containsKey(symbol)) {
+        if (key.containsKey(symbol)) {
             throw new IllegalArgumentException("symbol " + symbol + " is already defined");
         }
 
@@ -44,13 +44,13 @@ public class SizedItemRecipeBuilder implements RecipeBuilder {
             throw new IllegalArgumentException("space can't be used as a symbol for the recipe builder");
         }
 
-        this.key.put(symbol, ingredient);
+        key.put(symbol, ingredient);
         return this;
     }
 
     @Override
     public @NonNull RecipeBuilder unlockedBy(@NonNull String name, @NonNull Criterion<?> criterion) {
-        this.advancementBuilder.unlockedBy(name, criterion);
+        advancementBuilder.unlockedBy(name, criterion);
         return this;
     }
 
@@ -61,11 +61,11 @@ public class SizedItemRecipeBuilder implements RecipeBuilder {
 
     @Override
     public @NonNull ResourceKey<Recipe<?>> defaultId() {
-        return RecipeBuilder.getDefaultRecipeId(this.result);
+        return RecipeBuilder.getDefaultRecipeId(result);
     }
 
     @Override
     public void save(RecipeOutput output, @NonNull ResourceKey<Recipe<?>> key) {
-        output.accept(key, new SizedItemRecipe(this.result, SizedShapedRecipePattern.of(this.key, this.pattern)), advancementBuilder.build(output, key, category));
+        output.accept(key, new SizedItemRecipe(result, SizedShapedRecipePattern.of(this.key, pattern)), advancementBuilder.build(output, key, category));
     }
 }

@@ -2,7 +2,7 @@ package io.github.moosyu.entities.renderers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import io.github.moosyu.entities.NPCEntity;
+import io.github.moosyu.entities.npcs.NPCEntity;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.player.PlayerModel;

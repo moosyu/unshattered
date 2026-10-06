@@ -1,6 +1,7 @@
 package io.github.moosyu.data.datagen;
 
-import io.github.moosyu.Unshattered;
+import io.github.moosyu.data.recipes.ForgeRecipeBuilder;
+import io.github.moosyu.data.recipes.UnshatteredRecipeBookCategories;
 import io.github.moosyu.items.UnshatteredItems;
 import io.github.moosyu.data.recipes.SizedItemRecipeBuilder;
 import io.github.moosyu.data.recipes.SizedShapedRecipePattern;
@@ -239,6 +240,71 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
         createSimpleEnchantedBook(Enchantments.SHARPNESS, 1, getHasName(UnshatteredItems.ENCHANTED_FLINT), has(UnshatteredItems.ENCHANTED_FLINT), UnshatteredItems.ENCHANTED_FLINT, 64);
         createSimpleEnchantedBook(Enchantments.BANE_OF_ARTHROPODS, 1, getHasName(UnshatteredItems.ENCHANTED_STRING), has(UnshatteredItems.ENCHANTED_STRING), UnshatteredItems.ENCHANTED_STRING, 32);
         createSimpleEnchantedBook(Enchantments.PROTECTION, 1, getHasName(UnshatteredItems.ENCHANTED_IRON_BLOCK), has(UnshatteredItems.ENCHANTED_IRON_BLOCK), UnshatteredItems.ENCHANTED_IRON_BLOCK, 1);
+
+        createEnchantedItemRecipe(Items.POPPY, UnshatteredItems.ENCHANTED_POPPY.get(), getHasName(Items.POPPY), has(Items.POPPY));
+        createEnchantedItemRecipe(Items.DANDELION, UnshatteredItems.ENCHANTED_DANDELION.get(), getHasName(Items.DANDELION), has(Items.DANDELION));
+
+        ForgeRecipeBuilder.create(UnshatteredItems.REFINED_MITHRIL, UnshatteredRecipeBookCategories.REFINING, 10800)
+                .define(UnshatteredItems.ENCHANTED_MITHRIL, 160)
+                .save(output);
+
+        ForgeRecipeBuilder.create(UnshatteredItems.FUEL_CANISTER, UnshatteredRecipeBookCategories.FORGING, 18000)
+                .define(UnshatteredItems.ENCHANTED_COAL_BLOCK, 2)
+                .save(output);
+
+        ForgeRecipeBuilder.create(UnshatteredItems.REFINED_DIAMOND, UnshatteredRecipeBookCategories.REFINING, 14400)
+                .define(UnshatteredItems.ENCHANTED_DIAMOND_BLOCK, 2)
+                .save(output);
+
+        ForgeRecipeBuilder.create(UnshatteredItems.GOLDEN_PLATE, UnshatteredRecipeBookCategories.FORGING, 10800)
+                .define(UnshatteredItems.REFINED_DIAMOND)
+                .define(UnshatteredItems.ENCHANTED_GOLD_BLOCK, 2)
+                .define(UnshatteredItems.GLACITE_JEWEL, 5)
+                .save(output);
+
+        ForgeRecipeBuilder.create(UnshatteredItems.REFINED_TIATNIUM, UnshatteredRecipeBookCategories.REFINING, 43200)
+                .define(UnshatteredItems.ENCHANTED_TITANIUM, 160)
+                .save(output);
+
+        ForgeRecipeBuilder.create(UnshatteredItems.DRILL_MOTOR, UnshatteredRecipeBookCategories.FORGING, 54000)
+                .define(UnshatteredItems.TREASURITE, 10)
+                .define(UnshatteredItems.ENCHANTED_IRON_BLOCK)
+                .define(UnshatteredItems.ENCHANTED_REDSTONE_BLOCK, 3)
+                .define(UnshatteredItems.GOLDEN_PLATE)
+                .save(output);
+
+        ForgeRecipeBuilder.create(UnshatteredItems.MITHRIL_DRILL_SX_R226, UnshatteredRecipeBookCategories.TOOLS, 14400)
+                .define(UnshatteredItems.FUEL_CANISTER)
+                .define(UnshatteredItems.REFINED_MITHRIL, 3)
+                .define(UnshatteredItems.DRILL_MOTOR)
+                .save(output);
+
+        ForgeRecipeBuilder.create(UnshatteredItems.MITHRIL_DRILL_SX_R326, UnshatteredRecipeBookCategories.TOOLS, 30)
+                .define(UnshatteredItems.GOLDEN_PLATE)
+                .define(UnshatteredItems.MITHRIL_PLATE)
+                .save(output);
+
+        ForgeRecipeBuilder.create(UnshatteredItems.MITHRIL_PLATE, UnshatteredRecipeBookCategories.FORGING, 32400)
+                .define(UnshatteredItems.REFINED_TIATNIUM)
+                .define(UnshatteredItems.REFINED_MITHRIL, 5)
+                .define(UnshatteredItems.GOLDEN_PLATE)
+                .define(UnshatteredItems.ENCHANTED_IRON_BLOCK)
+                .save(output);
+
+        ForgeRecipeBuilder.create(UnshatteredItems.MITHRIL_INFUSED_FUEL_TANK, UnshatteredRecipeBookCategories.DRILL_PARTS, 43200)
+                .define(UnshatteredItems.REFINED_DIAMOND, 5)
+                .define(UnshatteredItems.REFINED_MITHRIL, 10)
+                .define(UnshatteredItems.FUEL_CANISTER, 5)
+                .save(output);
+
+        ForgeRecipeBuilder.create(UnshatteredItems.MITHRIL_PLATED_DRILL_ENGINE, UnshatteredRecipeBookCategories.DRILL_PARTS, 43200)
+                .define(UnshatteredItems.DRILL_MOTOR, 2)
+                .define(UnshatteredItems.MITHRIL_PLATE)
+                .save(output);
+
+        ForgeRecipeBuilder.create(UnshatteredItems.FRIED_GOBLIN_EGG, UnshatteredRecipeBookCategories.DRILL_PARTS, 32400)
+                .define(UnshatteredItems.FRIED_GOBLIN_EGG, 96)
+                .save(output);
     }
 
     public static class Runner extends RecipeProvider.Runner {
