@@ -12,9 +12,9 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 
 public class JotraelineGreatforgeNPC extends NPCEntity implements DialogueInteractable {
-    public static final Identifier JOTRAELINE_GREATFORGE_DIALOGUE_TREE = UnshatteredUtils.getUnshatteredIdentifier("jotraeline_greatforge");
-    public static final Identifier INTRODUCTION_MESSAGE_IDENTIFIER = UnshatteredUtils.createDialogueNodeIdentifier(JOTRAELINE_GREATFORGE_DIALOGUE_TREE, "introduction");
-    public static final Identifier ANGRY_IDENTIFIER = UnshatteredUtils.createDialogueNodeIdentifier(JOTRAELINE_GREATFORGE_DIALOGUE_TREE, "angry");
+    public static final Identifier JOTRAELINE_GREATFORGE_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("jotraeline_greatforge");
+    public static final Identifier INTRODUCTION_MESSAGE_IDENTIFIER = UnshatteredUtils.createDialogueNodeIdentifier(JOTRAELINE_GREATFORGE_IDENTIFIER, "introduction");
+    public static final Identifier ANGRY_IDENTIFIER = UnshatteredUtils.createDialogueNodeIdentifier(JOTRAELINE_GREATFORGE_IDENTIFIER, "angry");
     public static final Identifier APOLOGY_TOUR = UnshatteredUtils.getUnshatteredIdentifier("apology_tour");
 
     public JotraelineGreatforgeNPC(EntityType<? extends Mob> type, Level level) {
@@ -22,12 +22,12 @@ public class JotraelineGreatforgeNPC extends NPCEntity implements DialogueIntera
     }
 
     @Override
-    public Component getInteractableName() {
-        return getName().copy().withColor(getNametagColour()).withStyle(ChatFormatting.BOLD);
+    public Identifier getInteractableIdentifier() {
+        return JOTRAELINE_GREATFORGE_IDENTIFIER;
     }
 
     @Override
-    public DialogueTree getDialogueTree(RegistryAccess registryAccess) {
-        return UnshatteredUtils.getDialogueTreeObject(registryAccess, JOTRAELINE_GREATFORGE_DIALOGUE_TREE);
+    public Component getInteractableName() {
+        return getStyledName();
     }
 }

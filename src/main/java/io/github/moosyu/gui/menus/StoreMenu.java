@@ -71,8 +71,11 @@ public class StoreMenu extends AbstractContainerMenu {
                     if (sellStack(getCarried(), player)) {
                         setCarried(ItemStack.EMPTY);
                     }
+                // for buying back items
                 } else if (!stored.isEmpty()) {
-                    if (UnshatteredUtils.trySpendCoins(UnshatteredUtils.getItemSellValue(stored) * stored.count(), player)) {
+                    int price = UnshatteredUtils.getItemSellValue(stored) * stored.count();
+                    if (UnshatteredUtils.canAffordCoins(price, player)) {
+                        UnshatteredUtils.spendCoins(price, player);
                         setCarried(stored.copy());
                         sellSlot.set(ItemStack.EMPTY);
                     }

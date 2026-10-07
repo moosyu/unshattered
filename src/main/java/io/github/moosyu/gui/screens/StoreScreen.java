@@ -3,7 +3,7 @@ package io.github.moosyu.gui.screens;
 import io.github.moosyu.data.ShopItem;
 import io.github.moosyu.gui.components.ShopItemWidget;
 import io.github.moosyu.gui.menus.StoreMenu;
-import io.github.moosyu.packets.AttemptBuyingItemPacket;
+import io.github.moosyu.packets.AttemptPurchasePacket;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
@@ -12,23 +12,25 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jspecify.annotations.NonNull;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class StoreScreen extends AbstractContainerScreen<StoreMenu> {
-    private final int IMAGE_WIDTH = 176;
-    private final int IMAGE_HEIGHT = 200;
-    private final StoreMenu menu;
-    @Nullable private ShopItem expandedItem = null;
-    private int itemInputAmount = 1;
-
+    private static final int IMAGE_WIDTH = 176;
+    private static final int IMAGE_HEIGHT = 200;
     private static final int ITEM_Y = 20;
     private static final int COIN_TEXT_Y = 42;
     private static final int BOX_Y = 56;
+
+    private final StoreMenu menu;
+    @Nullable private ShopItem expandedItem = null;
+    private int itemInputAmount = 1;
 
     public StoreScreen(StoreMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
@@ -56,15 +58,30 @@ public class StoreScreen extends AbstractContainerScreen<StoreMenu> {
                         ? Component.literal("\n").append(Component.translatable("screen.unshattered.store.text.right_click").withColor(0xFFFFFF55))
                         : Component.empty();
 
+                MutableComponent priceDetails = Component.empty();
+
+                if (shopItem.price().isPresent()) {
+                    priceDetails.append(Component.literal(shopItem.price().get() + " ").withColor(0xFFF9A604))
+                            .append(Component.translatable("screen.unshattered.store.text.coins").withColor(0xFFF9A604))
+                            .append(Component.literal("\n"));
+                }
+
+                if (shopItem.itemTradeRequirements().isPresent()) {
+                    for (ItemStack requirement : shopItem.itemTradeRequirements().get()) {
+                        priceDetails.append(requirement.getItemName()).withColor(UnshatteredUtils.getItemRarity(requirement).getColour(1.0f))
+                                .append(requirement.count() > 1 ? "x" + requirement.count() : "").withColor(UnshatteredUtils.DARK_GRAY)
+                                .append(Component.literal("\n"));
+                    }
+                }
+
                 shopItemWidget.setTooltip(Tooltip.create(shopItem.item().value().getDefaultInstance()
                         .getItemName()
                         .copy()
                         .append(Component.literal("\n"))
                         .append(Component.translatable("screen.unshattered.store.text.cost").withColor(0xFFAAAAAA))
                         .append(Component.literal("\n"))
-                        .append(Component.literal(shopItem.price() + " ").withColor(0xFFF9A604))
-                        .append(Component.translatable("screen.unshattered.store.text.coins").withColor(0xFFF9A604))
-                        .append(Component.literal("\n\n"))
+                        .append(priceDetails)
+                        .append(Component.literal("\n"))
                         .append(Component.translatable("screen.unshattered.store.text.left_click").withColor(0xFFFFFF55))
                         .append(rightClickDetails))
                 );
@@ -88,10 +105,7 @@ public class StoreScreen extends AbstractContainerScreen<StoreMenu> {
             int buyButtonWidth = 30;
             Button button = Button.builder(Component.literal("Buy"), _ -> {
                 if (itemInputAmount > 0 && expandedItem != null) {
-                    ClientPacketDistributor.sendToServer(new AttemptBuyingItemPacket(new ItemStack(expandedItem.item(),
-                            itemInputAmount),
-                            expandedItem.price() * itemInputAmount)
-                    );
+                    ClientPacketDistributor.sendToServer(new AttemptPurchasePacket(expandedItem.item().value().getDefaultInstance(), expandedItem.price(), expandedItem.itemTradeRequirements()));
                 }
             }
             ).build();
@@ -142,9 +156,12 @@ public class StoreScreen extends AbstractContainerScreen<StoreMenu> {
         int itemX = centerX() - 8;
         int itemY = panelY() + ITEM_Y;
         ItemStack itemStack = new ItemStack(expandedItem.item(), Math.max(1, itemInputAmount));
-        Component coins = Component.literal((expandedItem.price() * itemInputAmount) + " ").append(Component.translatable("screen.unshattered.store.text.coins"));
+//        if () {
+//
+//        }
+//        Component coins = Component.literal((expandedItem.price() * itemInputAmount) + " ").append(Component.translatable("screen.unshattered.store.text.coins"));
 
-        graphics.text(font, coins, centerX() - font.width(coins) / 2, panelY() + COIN_TEXT_Y, 0xFFF9A604);
+//        graphics.text(font, coins, centerX() - font.width(coins) / 2, panelY() + COIN_TEXT_Y, 0xFFF9A604);
         graphics.item(itemStack, itemX, itemY);
         graphics.itemDecorations(font, itemStack, itemX, itemY);
 

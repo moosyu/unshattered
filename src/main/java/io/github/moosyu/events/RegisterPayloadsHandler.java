@@ -2,10 +2,8 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.abilities.*;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
-import io.github.moosyu.data.attachments.PlayerCurrencyAttachment;
 import io.github.moosyu.data.attachments.PlayerFlagsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
-import io.github.moosyu.gui.menus.DrillAttachmentMenu;
 import io.github.moosyu.gui.menus.ReforgeAnvilMenu;
 import io.github.moosyu.gui.menus.StorageMenu;
 import io.github.moosyu.gui.menus.TalismansMenu;
@@ -176,10 +174,41 @@ public class RegisterPayloadsHandler {
                 })
         );
 
-        registrar.playToServer(AttemptBuyingItemPacket.TYPE,
-                AttemptBuyingItemPacket.STREAM_CODEC,
+        registrar.playToServer(AttemptPurchasePacket.TYPE,
+                AttemptPurchasePacket.STREAM_CODEC,
                 (data, context) -> context.enqueueWork(() -> {
-                    UnshatteredUtils.tryBuyItemStack(data.price(), context.player(), data.itemStack());
+                    ServerPlayer serverPlayer = (ServerPlayer) context.player();
+
+                    if (data.price().isPresent() && !UnshatteredUtils.canAffordCoins(data.price().get(), context.player())) {
+                        context.player().sendSystemMessage(Component.translatable("screen.unshattered.store.text.purchase_failed_coins")
+                                .withColor(UnshatteredUtils.RED)
+                        );
+
+                        PacketDistributor.sendToPlayer(serverPlayer, new ClientsidePlayerSoundEffectPacket(
+                                BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.VILLAGER_NO), 0.5f)
+                        );
+
+
+                        return;
+                    }
+
+                    if (data.itemTradeRequirements().isPresent() && !UnshatteredUtils.canTradeItems(data.itemTradeRequirements().get(), context.player())) {
+                        context.player().sendSystemMessage(Component.translatable("screen.unshattered.store.text.purchase_failed_trade")
+                                .withColor(UnshatteredUtils.RED)
+                        );
+
+                        PacketDistributor.sendToPlayer(serverPlayer, new ClientsidePlayerSoundEffectPacket(
+                                BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.VILLAGER_NO), 0.5f)
+                        );
+
+                        return;
+                    }
+
+                    data.price().ifPresent(price -> UnshatteredUtils.spendCoins(price, context.player()));
+
+                    data.itemTradeRequirements().ifPresent(requirements -> UnshatteredUtils.tradeItems(requirements, context.player()));
+
+                    UnshatteredUtils.givePlayerHarvestedItemStack(context.player(), data.soldItem());
                 })
         );
     }

@@ -1,0 +1,22 @@
+{
+  "dialogue_tree_origins": [
+    {
+      "dialogue_node": {
+        "dialogue_choices": [
+          {
+            "text": "...",
+            "triggered_event": {
+              "type": "unshattered:open_store",
+              "npc_shop_identifier": "unshattered:bubu"
+            }
+          }
+        ],
+        "interacted_speaking": true,
+        "text": {
+          "translate": "dialogue.unshattered.bubu_introduction"
+        }
+      },
+      "priority": 0
+    }
+  ]
+}

@@ -15,5 +15,6 @@ public class EntityAttributeCreationHandler {
         event.put(UnshatteredEntities.WOOL_WEAVER.get(), NPCEntity.createNpcAttributes().build());
         event.put(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), NPCEntity.createNpcAttributes().build());
         event.put(UnshatteredEntities.FORGER.get(), NPCEntity.createNpcAttributes().build());
+        event.put(UnshatteredEntities.BUBU.get(), NPCEntity.createNpcAttributes().build());
     }
 }

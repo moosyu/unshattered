@@ -1,5 +1,7 @@
 package io.github.moosyu.entities.npcs;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -12,6 +14,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FluidState;
 import org.jspecify.annotations.NonNull;
 
+import java.awt.*;
+
 public class NPCEntity extends Mob {
     private final int nameColour;
 
@@ -19,6 +23,13 @@ public class NPCEntity extends Mob {
         super(type, level);
 
         this.nameColour = nameColour;
+    }
+
+    /**
+     * @return the npc name with generic styling (bold and coloured as defined by nameColour)
+     */
+    public MutableComponent getStyledName() {
+        return getName().copy().withColor(getNametagColour()).withStyle(ChatFormatting.BOLD);
     }
 
     public static AttributeSupplier.Builder createNpcAttributes() {

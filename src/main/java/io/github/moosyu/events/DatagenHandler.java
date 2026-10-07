@@ -16,8 +16,10 @@ import io.github.moosyu.data.quests.QuestTypes;
 import io.github.moosyu.data.regen.RegenPaths.*;
 import io.github.moosyu.data.regions.*;
 import io.github.moosyu.data.datagen.*;
+import io.github.moosyu.entities.npcs.BubuNPC;
 import io.github.moosyu.entities.npcs.JotraelineGreatforgeNPC;
 import io.github.moosyu.entities.npcs.WoolWeaverNPC;
+import io.github.moosyu.items.UnshatteredItems;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
@@ -81,7 +83,7 @@ public class DatagenHandler {
 
                 }).add(DataPackRegistryHandler.DIALOGUE_TREE_REGISTRY_KEY, bootstrap -> {
                     registerDialogueTree(bootstrap,
-                            TalkingRockBlock.ROCK_DIALOGUE_TREE,
+                            TalkingRockBlock.ROCK_IDENTIFIER,
                             new DialogueTree(List.of(
                                     createDialogueOriginWithSelfFlag(
                                             0,
@@ -130,7 +132,7 @@ public class DatagenHandler {
 
                     // got claude to make me a little webpage to help create these so i wouldnt go off the rails (sorry ocean) so this is just gonna look a little nasty
                     registerDialogueTree(bootstrap,
-                            JotraelineGreatforgeNPC.JOTRAELINE_GREATFORGE_DIALOGUE_TREE,
+                            JotraelineGreatforgeNPC.JOTRAELINE_GREATFORGE_IDENTIFIER,
                             new DialogueTree(List.of(new DialogueTreeOrigin(0,
                                     new DialogueNode(Component.translatable("dialogue.unshattered.jotraeline_greatforge.introduction"),
                                             Optional.of(List.of(
@@ -274,6 +276,17 @@ public class DatagenHandler {
                                     ),
                                     List.of(WoolWeaverNPC.INTRODUCTION_MESSAGE_IDENTIFIER))
                             ))
+                    );
+
+                    registerDialogueTree(bootstrap,
+                            BubuNPC.BUBU_IDENTIFIER,
+                            new DialogueTree(List.of(new DialogueTreeOrigin(0,
+                                    new DialogueNode(Component.translatable("dialogue.unshattered.bubu_introduction"),
+                                            true,
+                                            new DialogueChoice(Component.literal("..."),
+                                                    new OpenStoreMenuEvent(BubuNPC.BUBU_IDENTIFIER))
+                                    )
+                            )))
                     );
                 }).add(DataPackRegistryHandler.QUEST_REGISTRY_KEY, bootstrap -> {
                     createQuest(bootstrap, TalkingRockBlock.ROCKS_QUEST, QuestTypes.NOVICE, new GiveItemDialogueEvent(BuiltInRegistries.ITEM.wrapAsHolder(Items.STONE), 1));
@@ -429,7 +442,12 @@ public class DatagenHandler {
                 }).add(DataPackRegistryHandler.SHOP_STOCK_KEY, bootstrap -> {
                     createStoreStock(bootstrap,
                             WoolWeaverNPC.WOOL_WEAVER_IDENTIFIER,
-                            Arrays.stream(UnshatteredUtils.WOOL_TYPES).map(item -> new ShopItem(BuiltInRegistries.ITEM.wrapAsHolder(item), 32, true)).toList()
+                            Arrays.stream(UnshatteredUtils.WOOL_TYPES).map(item -> new ShopItem(item, true, 32)).toList()
+                    );
+
+                    createStoreStock(bootstrap,
+                            BubuNPC.BUBU_IDENTIFIER,
+                            List.of(new ShopItem(UnshatteredItems.BROKEN_MITHRIL_PICKAXE, false, 10000), new ShopItem(UnshatteredItems.BIOFUEL, true, 20000))
                     );
                 })
         );

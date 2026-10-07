@@ -19,13 +19,11 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
-import static io.github.moosyu.Unshattered.MODID;
-
 public class TalkingRockBlock extends HorizontalDirectionalBlock implements DialogueInteractable {
     private static final VoxelShape COLLISION_SHAPE = Block.box(5, 0, 5, 11, 9, 11);
-    public static final Identifier ROCK_DIALOGUE_TREE = UnshatteredUtils.getUnshatteredIdentifier("rock");
-    public static final Identifier HI_MESSAGE_IDENTIFIER = UnshatteredUtils.createDialogueNodeIdentifier(ROCK_DIALOGUE_TREE, "hi");
-    public static final Identifier HI2_MESSAGE_IDENTIFIER = UnshatteredUtils.createDialogueNodeIdentifier(ROCK_DIALOGUE_TREE, "hi_2");
+    public static final Identifier ROCK_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("rock");
+    public static final Identifier HI_MESSAGE_IDENTIFIER = UnshatteredUtils.createDialogueNodeIdentifier(ROCK_IDENTIFIER, "hi");
+    public static final Identifier HI2_MESSAGE_IDENTIFIER = UnshatteredUtils.createDialogueNodeIdentifier(ROCK_IDENTIFIER, "hi_2");
     public static final Identifier ROCKS_QUEST = UnshatteredUtils.getUnshatteredIdentifier("rocks_quest");
 
     public TalkingRockBlock(Properties properties) {
@@ -43,13 +41,13 @@ public class TalkingRockBlock extends HorizontalDirectionalBlock implements Dial
     }
 
     @Override
-    public Component getInteractableName() {
-        return Component.translatable("interactable.name.unshattered.rock").withStyle(ChatFormatting.BOLD);
+    public Identifier getInteractableIdentifier() {
+        return ROCK_IDENTIFIER;
     }
 
     @Override
-    public @Nullable DialogueTree getDialogueTree(RegistryAccess registryAccess) {
-        return UnshatteredUtils.getDialogueTreeObject(registryAccess, ROCK_DIALOGUE_TREE);
+    public Component getInteractableName() {
+        return Component.translatable("interactable.name.unshattered.rock").withStyle(ChatFormatting.BOLD);
     }
 
     @Override

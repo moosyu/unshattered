@@ -2,25 +2,23 @@ package io.github.moosyu.gui.components;
 
 import com.mojang.blaze3d.platform.cursor.CursorTypes;
 import io.github.moosyu.data.ShopItem;
-import io.github.moosyu.packets.AttemptBuyingItemPacket;
+import io.github.moosyu.packets.AttemptPurchasePacket;
 import io.github.moosyu.util.UnshatteredUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.input.MouseButtonInfo;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jspecify.annotations.NonNull;
 
 import java.util.function.Consumer;
 
+/**
+ * for items that are displayed in shop menus
+ */
 public class ShopItemWidget extends AbstractWidget {
     private final ShopItem shopItem;
     private final ItemStack itemStack;
@@ -56,7 +54,7 @@ public class ShopItemWidget extends AbstractWidget {
     @Override
     public void onClick(@NonNull MouseButtonEvent event, boolean doubleClick) {
         if (event.button() == UnshatteredUtils.MouseButton.LEFT.getButton()) {
-            ClientPacketDistributor.sendToServer(new AttemptBuyingItemPacket(itemStack, shopItem.price() * itemStack.count()));
+            ClientPacketDistributor.sendToServer(new AttemptPurchasePacket(itemStack, shopItem.price(), shopItem.itemTradeRequirements()));
         } else if (shopItem.sellMultiple()) {
             onRightClick.accept(shopItem);
         }

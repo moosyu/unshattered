@@ -10,20 +10,14 @@ import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.ItemCharges;
-import io.github.moosyu.data.dialogue.DialogueTree;
 import io.github.moosyu.data.drops.BlockBreakData;
 import io.github.moosyu.data.drops.DropData;
 import io.github.moosyu.data.drops.DropTypes;
 import io.github.moosyu.data.fishing.FishingEntry;
 import io.github.moosyu.data.fishing.FishingWeightEntry;
-import io.github.moosyu.events.DataPackRegistryHandler;
 import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.UnshatteredRarity;
-import io.github.moosyu.packets.ClientsidePlayerSoundEffectPacket;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -32,7 +26,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
@@ -53,7 +46,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.jspecify.annotations.NonNull;
 
 import javax.annotation.Nullable;
@@ -76,7 +68,7 @@ public final class UnshatteredUtils {
     public static final int DARK_GREEN = 0xFF00AA00;
     public static final int DARK_AQUA = 0xFF00AAAA;
     public static final int DARK_RED = 0xFFAA0000;
-    public static final int DARK_PURPLE = 0xFFAA00AA;
+    public static final int PURPLE = 0xFFAA00AA;
     public static final int GOLD = 0xFFFFAA00;
     public static final int GRAY = 0xFFAAAAAA;
     public static final int DARK_GRAY = 0xFF555555;
@@ -305,17 +297,6 @@ public final class UnshatteredUtils {
         return getUnshatteredIdentifier(dialogueTreeIdentifier.getPath() + "/" +  dialogueNodeName);
     }
 
-    /**
-     * @param registryAccess registry access
-     * @param dialogueTreeIdentifier dialogue tree identifier from {@link #getUnshatteredIdentifier(String)}
-     * @return gets a dialogue tree object or throws an null point exception if it doesnt exist. generally for {@link io.github.moosyu.data.dialogue.DialogueInteractable#getDialogueTree(RegistryAccess)} in {@link io.github.moosyu.data.dialogue.DialogueInteractable}
-     */
-    public static @Nullable DialogueTree getDialogueTreeObject(RegistryAccess registryAccess, Identifier dialogueTreeIdentifier) {
-        Optional<Registry<DialogueTree>> dialogueTreeRegistry = registryAccess.lookup(DataPackRegistryHandler.DIALOGUE_TREE_REGISTRY_KEY);
-
-        return dialogueTreeRegistry.map(dialogueTrees -> dialogueTrees.getValue(dialogueTreeIdentifier)).orElse(null);
-    }
-
     // block drop methods
 
     /**
@@ -530,39 +511,47 @@ public final class UnshatteredUtils {
         return metCondition && metLevelRequirement;
     }
 
-    /**
-     * @return true if the coins could successfully be spent
-     */
-    public static boolean trySpendCoins(int price, Player player) {
-        if (player.level().isClientSide()) {
-            return false;
-        }
-
-        if (player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get()).removeCoins(price)) {
-            player.syncData(UnshatteredAttachments.PLAYER_CURRENCY);
-            PacketDistributor.sendToPlayer((ServerPlayer) player, new ClientsidePlayerSoundEffectPacket(
-                    BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.NOTE_BLOCK_PLING.value()), 0.5f, 2.0f)
-            );
-            return true;
-        }
-
-        player.sendSystemMessage(Component.translatable("screen.unshattered.store.text.purchase_failed")
-                .withColor(UnshatteredUtils.RED)
-        );
-
-        PacketDistributor.sendToPlayer((ServerPlayer) player, new ClientsidePlayerSoundEffectPacket(
-                BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.VILLAGER_NO), 0.5f)
-        );
-
-        return false;
+    public static boolean canAffordCoins(int price, Player player) {
+        return player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get()).getCoins() >= price;
     }
 
-    public static void tryBuyItemStack(int price, Player player, ItemStack itemStack) {
-        if (!trySpendCoins(price, player)) {
+    public static boolean canTradeItems(List<ItemStack> requiredItems, Player player) {
+        for (ItemStack ingredient : requiredItems) {
+            int totalAvailable = player.getInventory().clearOrCountMatchingItems(
+                    itemStack -> ItemStack.isSameItemSameComponents(itemStack, ingredient),
+                    0,
+                    player.inventoryMenu.getCraftSlots()
+            );
+            if (totalAvailable < ingredient.getCount()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * assumes {@link #canAffordCoins(int, Player)} was run to check whether the transaction can be made
+     */
+    public static void spendCoins(int price, Player player) {
+        player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get()).removeCoins(price);
+        player.syncData(UnshatteredAttachments.PLAYER_CURRENCY);
+    }
+
+    /**
+     * assumes {@link #canTradeItems(List, Player)} was run to check whether the transaction can be made
+     */
+    public static void tradeItems(List<ItemStack> requiredItems, Player player) {
+        if (player.level().isClientSide()) {
             return;
         }
 
-        UnshatteredUtils.givePlayerHarvestedItemStack(player, itemStack);
+        for (ItemStack ingredient : requiredItems) {
+            player.getInventory().clearOrCountMatchingItems(
+                    itemStack -> ItemStack.isSameItemSameComponents(itemStack, ingredient),
+                    ingredient.getCount(),
+                    player.inventoryMenu.getCraftSlots()
+            );
+        }
     }
 
     public static ItemType getItemType(ItemStack itemStack) {

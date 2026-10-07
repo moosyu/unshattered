@@ -21,12 +21,12 @@ public class WoolWeaverNPC extends NPCEntity implements DialogueInteractable {
     }
 
     @Override
-    public Component getInteractableName() {
-        return getName().copy().withColor(getNametagColour()).withStyle(ChatFormatting.BOLD);
+    public Identifier getInteractableIdentifier() {
+        return WOOL_WEAVER_IDENTIFIER;
     }
 
     @Override
-    public DialogueTree getDialogueTree(RegistryAccess registryAccess) {
-        return UnshatteredUtils.getDialogueTreeObject(registryAccess, WOOL_WEAVER_IDENTIFIER);
+    public Component getInteractableName() {
+        return getStyledName();
     }
 }

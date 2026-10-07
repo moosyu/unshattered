@@ -1,0 +1,12 @@
+[
+  {
+    "item": "unshattered:broken_mithril_pickaxe",
+    "price": 10000,
+    "sell_multiple": false
+  },
+  {
+    "item": "unshattered:biofuel",
+    "price": 20000,
+    "sell_multiple": true
+  }
+]

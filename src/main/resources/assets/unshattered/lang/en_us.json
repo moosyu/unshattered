@@ -539,7 +539,8 @@
   "screen.unshattered.store.text.coins": "Coins",
   "screen.unshattered.store.text.left_click": "Left click to buy one!",
   "screen.unshattered.store.text.right_click": "Right click for more options!",
-  "screen.unshattered.store.text.purchase_failed": "You don't have enough coins to make this order!",
+  "screen.unshattered.store.text.purchase_failed_coins": "You don't have enough coins to make this purchase!",
+  "screen.unshattered.store.text.purchase_failed_trade": "You don't have enough resources to make this purchase!",
   "screen.narration.unshattered.store.price": "Price entry",
   "screen.unshattered.drill_attachment": "Consume fuel",
 
@@ -554,6 +555,7 @@
   "entity.unshattered.jotraeline_greatforge": "Jotraeline Greatforge",
   "entity.unshattered.wool_weaver": "Wool Weaver",
   "entity.unshattered.forger": "The Forger",
+  "entity.unshattered.bubu": "Bubu",
 
   "dialogue.unshattered.jotraeline_greatforge.introduction": "Ay [p]! I'm [c=0xFF00AA00]Jotraeline Greatforge[/c], the drill expert 'round here.",
   "dialogue.unshattered.jotraeline_greatforge.player_drills_choice": "Drills?",
@@ -585,5 +587,7 @@
   "dialogue.unshattered.wool_weaver.woolhead": "[i]The Wool Weaver seems taken aback for a moment before letting out a giggle. It's difficult to tell whether she's laughing at you or just pleased to meet another wool fan.[/i]",
   "dialogue.unshattered.wool_weaver.okay": "Okay.",
   "dialogue.unshattered.wool_weaver.player_no_choice_exit": "No.",
-  "dialogue.unshattered.wool_weaver.vibrant": "That's a shame, everyone could do looking a little more [c=0xFFFF5555]v[/c][c=0xFFFF9000]i[/c][c=0xFFFFDE2F]b[/c][c=0xFF55FF55]r[/c][c=0xFF55FFFF]a[/c][c=0xFF459BFF]n[/c][c=0xFFFF55FF]t[/c]."
+  "dialogue.unshattered.wool_weaver.vibrant": "That's a shame, everyone could do looking a little more [c=0xFFFF5555]v[/c][c=0xFFFF9000]i[/c][c=0xFFFFDE2F]b[/c][c=0xFF55FF55]r[/c][c=0xFF55FFFF]a[/c][c=0xFF459BFF]n[/c][c=0xFFFF55FF]t[/c].",
+
+  "dialogue.unshattered.bubu_introduction": "You'll be needing some stronger pickaxes to mine down here! Conveniently for you, I've got just what you need!"
 }

@@ -8,16 +8,16 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 
-public class ForgerNPC extends NPCEntity implements DialogueInteractable {
-    public static final Identifier FORGER_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("forger");
+public class BubuNPC extends NPCEntity implements DialogueInteractable {
+    public static final Identifier BUBU_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("bubu");
 
-    public ForgerNPC(EntityType<? extends Mob> type, Level level) {
-        super(type, level, UnshatteredUtils.AQUA);
+    public BubuNPC(EntityType<? extends Mob> type, Level level) {
+        super(type, level, UnshatteredUtils.PURPLE);
     }
 
     @Override
     public Identifier getInteractableIdentifier() {
-        return FORGER_IDENTIFIER;
+        return BUBU_IDENTIFIER;
     }
 
     @Override
