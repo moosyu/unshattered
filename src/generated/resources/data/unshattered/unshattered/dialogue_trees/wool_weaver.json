@@ -51,7 +51,7 @@
                           }
                         },
                         "text": {
-                          "translate": "dialogue.unshattered.wool_weaver.player_no_choice_exit"
+                          "translate": "dialogue.unshattered.generic.player_no_choice"
                         }
                       }
                     ],
@@ -89,7 +89,7 @@
                       },
                       {
                         "text": {
-                          "translate": "dialogue.unshattered.wool_weaver.player_no_choice_exit"
+                          "translate": "dialogue.unshattered.generic.player_no_choice"
                         }
                       }
                     ],

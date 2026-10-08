@@ -1,0 +1,431 @@
+{
+  "dialogue_tree_origins": [
+    {
+      "dialogue_node": {
+        "dialogue_choices": [
+          {
+            "target_node": {
+              "dialogue_choices": [
+                {
+                  "target_node": {
+                    "dialogue_choices": [
+                      {
+                        "target_node": {
+                          "dialogue_choices": [
+                            {
+                              "target_node": {
+                                "dialogue_choices": [
+                                  {
+                                    "target_node": {
+                                      "dialogue_choices": [
+                                        {
+                                          "target_node": {
+                                            "dialogue_choices": [
+                                              {
+                                                "target_node": {
+                                                  "dialogue_choices": [
+                                                    {
+                                                      "target_node": {
+                                                        "dialogue_choices": [
+                                                          {
+                                                            "target_node": {
+                                                              "dialogue_choices": [
+                                                                {
+                                                                  "text": {
+                                                                    "translate": "dialogue.unshattered.generic.player_yes_choice"
+                                                                  }
+                                                                },
+                                                                {
+                                                                  "text": {
+                                                                    "translate": "dialogue.unshattered.generic.player_no_choice"
+                                                                  }
+                                                                }
+                                                              ],
+                                                              "interacted_speaking": true,
+                                                              "text": {
+                                                                "translate": "dialogue.unshattered.forger_dialogue_finished"
+                                                              }
+                                                            },
+                                                            "text": "..."
+                                                          }
+                                                        ],
+                                                        "interacted_speaking": true,
+                                                        "text": {
+                                                          "translate": "dialogue.unshattered.forger_lords_4"
+                                                        }
+                                                      },
+                                                      "text": "..."
+                                                    }
+                                                  ],
+                                                  "interacted_speaking": true,
+                                                  "text": {
+                                                    "translate": "dialogue.unshattered.forger_lords_3"
+                                                  }
+                                                },
+                                                "text": "..."
+                                              }
+                                            ],
+                                            "interacted_speaking": true,
+                                            "text": {
+                                              "translate": "dialogue.unshattered.forger_lords_2"
+                                            }
+                                          },
+                                          "text": "..."
+                                        }
+                                      ],
+                                      "interacted_speaking": true,
+                                      "text": {
+                                        "translate": "dialogue.unshattered.forger_lords"
+                                      }
+                                    },
+                                    "text": {
+                                      "translate": "dialogue.unshattered.player_dwarven_lords"
+                                    }
+                                  },
+                                  {
+                                    "text": "... (OPEN FORGE SCREEN)"
+                                  }
+                                ],
+                                "interacted_speaking": true,
+                                "text": {
+                                  "translate": "dialogue.unshattered.forger_divan_2"
+                                }
+                              },
+                              "text": "..."
+                            }
+                          ],
+                          "interacted_speaking": true,
+                          "text": {
+                            "translate": "dialogue.unshattered.forger_divan"
+                          }
+                        },
+                        "text": {
+                          "translate": "dialogue.unshattered.player_divan"
+                        }
+                      },
+                      {
+                        "target_node": {
+                          "dialogue_choices": [
+                            {
+                              "target_node": {
+                                "dialogue_choices": [
+                                  {
+                                    "target_node": {
+                                      "dialogue_choices": [
+                                        {
+                                          "target_node": {
+                                            "dialogue_choices": [
+                                              {
+                                                "target_node": {
+                                                  "dialogue_choices": [
+                                                    {
+                                                      "text": {
+                                                        "translate": "dialogue.unshattered.generic.player_yes_choice"
+                                                      }
+                                                    },
+                                                    {
+                                                      "text": {
+                                                        "translate": "dialogue.unshattered.generic.player_no_choice"
+                                                      }
+                                                    }
+                                                  ],
+                                                  "interacted_speaking": true,
+                                                  "text": {
+                                                    "translate": "dialogue.unshattered.forger_dialogue_finished"
+                                                  }
+                                                },
+                                                "text": "..."
+                                              }
+                                            ],
+                                            "interacted_speaking": true,
+                                            "text": {
+                                              "translate": "dialogue.unshattered.forger_lords_4"
+                                            }
+                                          },
+                                          "text": "..."
+                                        }
+                                      ],
+                                      "interacted_speaking": true,
+                                      "text": {
+                                        "translate": "dialogue.unshattered.forger_lords_3"
+                                      }
+                                    },
+                                    "text": "..."
+                                  }
+                                ],
+                                "interacted_speaking": true,
+                                "text": {
+                                  "translate": "dialogue.unshattered.forger_lords_2"
+                                }
+                              },
+                              "text": "..."
+                            }
+                          ],
+                          "interacted_speaking": true,
+                          "text": {
+                            "translate": "dialogue.unshattered.forger_lords"
+                          }
+                        },
+                        "text": {
+                          "translate": "dialogue.unshattered.player_dwarven_lords"
+                        }
+                      },
+                      {
+                        "text": "... (OPEN FORGE SCREEN)"
+                      }
+                    ],
+                    "interacted_speaking": true,
+                    "text": {
+                      "translate": "dialogue.unshattered.forger_forge"
+                    }
+                  },
+                  "text": {
+                    "translate": "dialogue.unshattered.forger_player_forge"
+                  }
+                }
+              ],
+              "interacted_speaking": false,
+              "text": {
+                "translate": "dialogue.unshattered.forger_name"
+              }
+            },
+            "text": {
+              "translate": "dialogue.unshattered.forger_player_name_choice"
+            }
+          },
+          {
+            "target_node": {
+              "dialogue_choices": [
+                {
+                  "target_node": {
+                    "dialogue_choices": [
+                      {
+                        "target_node": {
+                          "dialogue_choices": [
+                            {
+                              "target_node": {
+                                "dialogue_choices": [
+                                  {
+                                    "target_node": {
+                                      "dialogue_choices": [
+                                        {
+                                          "target_node": {
+                                            "dialogue_choices": [
+                                              {
+                                                "target_node": {
+                                                  "dialogue_choices": [
+                                                    {
+                                                      "target_node": {
+                                                        "dialogue_choices": [
+                                                          {
+                                                            "text": {
+                                                              "translate": "dialogue.unshattered.generic.player_yes_choice"
+                                                            }
+                                                          },
+                                                          {
+                                                            "text": {
+                                                              "translate": "dialogue.unshattered.generic.player_no_choice"
+                                                            }
+                                                          }
+                                                        ],
+                                                        "interacted_speaking": true,
+                                                        "text": {
+                                                          "translate": "dialogue.unshattered.forger_dialogue_finished"
+                                                        }
+                                                      },
+                                                      "text": "..."
+                                                    }
+                                                  ],
+                                                  "interacted_speaking": true,
+                                                  "text": {
+                                                    "translate": "dialogue.unshattered.forger_lords_4"
+                                                  }
+                                                },
+                                                "text": "..."
+                                              }
+                                            ],
+                                            "interacted_speaking": true,
+                                            "text": {
+                                              "translate": "dialogue.unshattered.forger_lords_3"
+                                            }
+                                          },
+                                          "text": "..."
+                                        }
+                                      ],
+                                      "interacted_speaking": true,
+                                      "text": {
+                                        "translate": "dialogue.unshattered.forger_lords_2"
+                                      }
+                                    },
+                                    "text": "..."
+                                  }
+                                ],
+                                "interacted_speaking": true,
+                                "text": {
+                                  "translate": "dialogue.unshattered.forger_lords"
+                                }
+                              },
+                              "text": {
+                                "translate": "dialogue.unshattered.player_dwarven_lords"
+                              }
+                            },
+                            {
+                              "text": "... (OPEN FORGE SCREEN)"
+                            }
+                          ],
+                          "interacted_speaking": true,
+                          "text": {
+                            "translate": "dialogue.unshattered.forger_divan_2"
+                          }
+                        },
+                        "text": "..."
+                      }
+                    ],
+                    "interacted_speaking": true,
+                    "text": {
+                      "translate": "dialogue.unshattered.forger_divan"
+                    }
+                  },
+                  "text": {
+                    "translate": "dialogue.unshattered.player_divan"
+                  }
+                },
+                {
+                  "target_node": {
+                    "dialogue_choices": [
+                      {
+                        "target_node": {
+                          "dialogue_choices": [
+                            {
+                              "target_node": {
+                                "dialogue_choices": [
+                                  {
+                                    "target_node": {
+                                      "dialogue_choices": [
+                                        {
+                                          "target_node": {
+                                            "dialogue_choices": [
+                                              {
+                                                "target_node": {
+                                                  "dialogue_choices": [
+                                                    {
+                                                      "target_node": {
+                                                        "dialogue_choices": [
+                                                          {
+                                                            "text": {
+                                                              "translate": "dialogue.unshattered.generic.player_yes_choice"
+                                                            }
+                                                          },
+                                                          {
+                                                            "text": {
+                                                              "translate": "dialogue.unshattered.generic.player_no_choice"
+                                                            }
+                                                          }
+                                                        ],
+                                                        "interacted_speaking": true,
+                                                        "text": {
+                                                          "translate": "dialogue.unshattered.forger_dialogue_finished"
+                                                        }
+                                                      },
+                                                      "text": "..."
+                                                    }
+                                                  ],
+                                                  "interacted_speaking": true,
+                                                  "text": {
+                                                    "translate": "dialogue.unshattered.forger_divan_2"
+                                                  }
+                                                },
+                                                "text": "..."
+                                              }
+                                            ],
+                                            "interacted_speaking": true,
+                                            "text": {
+                                              "translate": "dialogue.unshattered.forger_divan"
+                                            }
+                                          },
+                                          "text": {
+                                            "translate": "dialogue.unshattered.player_divan"
+                                          }
+                                        },
+                                        {
+                                          "text": "... (OPEN FORGE SCREEN)"
+                                        }
+                                      ],
+                                      "interacted_speaking": true,
+                                      "text": {
+                                        "translate": "dialogue.unshattered.forger_lords_4"
+                                      }
+                                    },
+                                    "text": "..."
+                                  }
+                                ],
+                                "interacted_speaking": true,
+                                "text": {
+                                  "translate": "dialogue.unshattered.forger_lords_3"
+                                }
+                              },
+                              "text": "..."
+                            }
+                          ],
+                          "interacted_speaking": true,
+                          "text": {
+                            "translate": "dialogue.unshattered.forger_lords_2"
+                          }
+                        },
+                        "text": "..."
+                      }
+                    ],
+                    "interacted_speaking": true,
+                    "text": {
+                      "translate": "dialogue.unshattered.forger_lords"
+                    }
+                  },
+                  "text": {
+                    "translate": "dialogue.unshattered.player_dwarven_lords"
+                  }
+                },
+                {
+                  "text": "... (OPEN FORGE SCREEN)"
+                }
+              ],
+              "interacted_speaking": true,
+              "text": {
+                "translate": "dialogue.unshattered.forger_forge"
+              }
+            },
+            "text": {
+              "translate": "dialogue.unshattered.forger_player_forge"
+            }
+          }
+        ],
+        "interacted_speaking": true,
+        "text": {
+          "translate": "dialogue.unshattered.forger_introduction"
+        }
+      },
+      "priority": 0,
+      "set_flags": [
+        "unshattered:forger_introduction"
+      ]
+    },
+    {
+      "dialogue_flag_requirements": {
+        "required_flags": [
+          "unshattered:forger_introduction"
+        ]
+      },
+      "dialogue_node": {
+        "dialogue_choices": [
+          {
+            "text": "..."
+          }
+        ],
+        "interacted_speaking": true,
+        "text": {
+          "translate": "dialogue.unshattered.forger_player_return"
+        }
+      },
+      "priority": 1
+    }
+  ]
+}

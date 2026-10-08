@@ -10,9 +10,10 @@ import net.minecraft.world.level.Level;
 
 public class ForgerNPC extends NPCEntity implements DialogueInteractable {
     public static final Identifier FORGER_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("forger");
+    public static final Identifier FORGER_INTRODUCTION = UnshatteredUtils.getUnshatteredIdentifier("forger_introduction");
 
     public ForgerNPC(EntityType<? extends Mob> type, Level level) {
-        super(type, level, UnshatteredUtils.AQUA);
+        super(type, level, UnshatteredUtils.CYAN);
     }
 
     @Override

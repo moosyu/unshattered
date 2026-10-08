@@ -260,7 +260,7 @@
   "item.description.unshattered.mithril_drill_sx_r226": "An impressively purpose-build drill with little unnecessary flair.",
   "item.description.unshattered.mithril_drill_sx_r326": "An impressively ostentatious drill covered in unnecessary but much appreciated flair.",
   "item.description.unshattered.titanium_drill_dr_x355": "An incredible feat of engineering with layers of layers of the strongest metals used to forge it.",
-  "item.description.unshattered.titanium_drill_dr_x455": "Originally forged to mine a dangerous and tough ore of the crimson isle, this drill showed the dwarves of old that they could go further than they ever imagined.",
+  "item.description.unshattered.titanium_drill_dr_x455": "Originally forged to mine a dangerous and tough ore of the crimson isle, this drill showed the Dwarves of old that they could go further than they ever imagined.",
   "item.description.unshattered.titanium_drill_dr_x555": "The inclusion of a plasma finish has led of a stunningly visually unique drill being forged. Fortunately the plasma coating works in protecting delicate internals.",
   "item.description.unshattered.titanium_drill_dr_x655": "For those willing to put in an innumerable amount of time to master their crafts. A flawless ruby is embedded inside the drill to prove the wielder's qualifications.",
   "item.description.unshattered.mithril_infused_fuel_tank": "Extremely effective at compressing fuel.",
@@ -557,6 +557,9 @@
   "entity.unshattered.forger": "The Forger",
   "entity.unshattered.bubu": "Bubu",
 
+  "dialogue.unshattered.generic.player_yes_choice": "No.",
+  "dialogue.unshattered.generic.player_no_choice": "No.",
+
   "dialogue.unshattered.jotraeline_greatforge.introduction": "Ay [p]! I'm [c=0xFF00AA00]Jotraeline Greatforge[/c], the drill expert 'round here.",
   "dialogue.unshattered.jotraeline_greatforge.player_drills_choice": "Drills?",
   "dialogue.unshattered.jotraeline_greatforge.player_drills": "Drills? Why'd I need them when I have a pickaxe?? You aren't making a lick of sense Jotraeline.",
@@ -566,7 +569,6 @@
   "dialogue.unshattered.jotraeline_greatforge.introduction_flow": "Yeah well I wasn't though... Really ruined my flow now, want to check out my drill attachment station (I guess)? [i]Jotraeline seems a little dejected. Seems you ruined her day.[/i]",
   "dialogue.unshattered.jotraeline_greatforge.player_yes_choice": "Please.",
   "dialogue.unshattered.jotraeline_greatforge.player_yes": "I'd love to, sorry again Jotraeline.",
-  "dialogue.unshattered.jotraeline_greatforge.player_no_choice": "No.",
   "dialogue.unshattered.jotraeline_greatforge.player_no": "No offense, but to be honest Jotraeline, I couldn't possibly care less about drills. You've done a pretty awful job selling this idea to me and I won't pretend to in order to lift your mood.",
   "dialogue.unshattered.jotraeline_greatforge.introduction_scowl": "[i]Jotraeline scowls at you in silence. Seems you haven't made a very good first impression.[/i]",
   "dialogue.unshattered.jotraeline_greatforge.introduction_smrik": "[i]Jotraeline smirks, she seems happy with how smoothly her pitch is going.[/i] Would you like to check out my drill attachment station? I won't forge you a drill but if you have one I'll apply upgrades free of charge!",
@@ -586,8 +588,23 @@
   "dialogue.unshattered.wool_weaver.player_woolhead": "Sure, I'm a bit of a wool-head personally.",
   "dialogue.unshattered.wool_weaver.woolhead": "[i]The Wool Weaver seems taken aback for a moment before letting out a giggle. It's difficult to tell whether she's laughing at you or just pleased to meet another wool fan.[/i]",
   "dialogue.unshattered.wool_weaver.okay": "Okay.",
-  "dialogue.unshattered.wool_weaver.player_no_choice_exit": "No.",
   "dialogue.unshattered.wool_weaver.vibrant": "That's a shame, everyone could do looking a little more [c=0xFFFF5555]v[/c][c=0xFFFF9000]i[/c][c=0xFFFFDE2F]b[/c][c=0xFF55FF55]r[/c][c=0xFF55FFFF]a[/c][c=0xFF459BFF]n[/c][c=0xFFFF55FF]t[/c].",
 
-  "dialogue.unshattered.bubu_introduction": "You'll be needing some stronger pickaxes to mine down here! Conveniently for you, I've got just what you need!"
+  "dialogue.unshattered.bubu_introduction": "You'll be needing some stronger pickaxes to mine down here! Conveniently for you, I've got just what you need!",
+
+  "dialogue.unshattered.forger_introduction": "You must be new to the Dwarven Mines. I'm the current Forgekeeper, the overseer of the great Dwarven Forge.",
+  "dialogue.unshattered.forger_player_name_choice": "You have a name?",
+  "dialogue.unshattered.forger_name": "Nay, once you get named the Forgekeeper you sever all yer ties to the past until you have completed your duty. I'm the Forgekeeper now and I will be until I return to the ground, we Dwarves are the most commited people you'll ever find.",
+  "dialogue.unshattered.forger_player_forge": "The forge?",
+  "dialogue.unshattered.forger_forge": "This here is the forge, first constructed by the first [c=0xFFAA0000]Dwarven Lord[/c], [c=0xFF55FFFF]Divan[/c]. I'll forge anything requested as is my duty, however if you'd like to make extra requests you'll have to contribute to improving the mines. Speak to the [c=0xFFFFAA00]Dwarven King[/c] about it.",
+  "dialogue.unshattered.player_divan": "Divan?",
+  "dialogue.unshattered.forger_divan": "[i]The Forgekeeper laughs uproariously.[/i] You ain't heard of [c=0xFF55FFFF]Divan[/c]? He's the greatest dwarf to ever live, bringing forth a new era with him. It's said he could forge with his barehands and a single blow from his drill could shatter a Glacite vein. He even conquered the [c=0xFFAA00AA]Crystal Hollows[/c], however one day he left for the Hollows and never returned.",
+  "dialogue.unshattered.forger_divan_2": "It's said pieces of his gear are spread throughout, I dream of being able to forge with a piece of it. Ahh, look at me pattering on, I'm sure you'll hear enough about him while you're here. [i]The Forgekeeper wears a wide grin, it seems he has great pride for his Dwarven heritage[/i].",
+  "dialogue.unshattered.player_dwarven_lords": "Dwarven Lords?",
+  "dialogue.unshattered.forger_lords": "Ahh, yes. It wasn't just [c=0xFF55FFFF]Divan[/c]. We Dwarves grant the title of [c=0xFFAA0000]Dwarven Lord[/c] to when someone does something truly great. The second was [c=0xFFAA0000]Dwarven Lord[/c] Myra, she forged the gemstone gauntlet. Apparently she could use it to channel the [c=0xFFAA00AA]Crystal Hollows'[/c] magic to seal the [c=0xFF55FFFF]Glacite Tunnels[/c] and construct the Great Ice Wall.",
+  "dialogue.unshattered.forger_lords_2": " Afterwards she sealed herself inside the wall, her mana keeping the Glacite from spreading.",
+  "dialogue.unshattered.forger_lords_3": "The third [c=0xFFAA0000]Dwarven Lord[/c] was Kaelen. Yknow, before the Dragon King invaded the humans he came our mines. They wanted to take it, yet were stopped by Kaelen alone. Supposedly he had a shield said that could repel all magic. After the dragon's retreat, Kaelen was swallowed by the ground, turned to stone. You can still find 'im in front of the mines.",
+  "dialogue.unshattered.forger_lords_4": "I hope I'll one day be able to forge such a legendary tool as theirs.",
+  "dialogue.unshattered.forger_dialogue_finished": "Now, would you like me to forge anything for ya?",
+  "dialogue.unshattered.forger_player_return": "Well, hello again. You seem to be doing all right. Need anything forged?"
 }

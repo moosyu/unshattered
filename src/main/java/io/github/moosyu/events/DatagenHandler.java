@@ -17,6 +17,7 @@ import io.github.moosyu.data.regen.RegenPaths.*;
 import io.github.moosyu.data.regions.*;
 import io.github.moosyu.data.datagen.*;
 import io.github.moosyu.entities.npcs.BubuNPC;
+import io.github.moosyu.entities.npcs.ForgerNPC;
 import io.github.moosyu.entities.npcs.JotraelineGreatforgeNPC;
 import io.github.moosyu.entities.npcs.WoolWeaverNPC;
 import io.github.moosyu.items.UnshatteredItems;
@@ -161,7 +162,7 @@ public class DatagenHandler {
                                                                                                                                                                                             ),
                                                                                                                                                                                             Optional.empty(), List.of(JotraelineGreatforgeNPC.INTRODUCTION_MESSAGE_IDENTIFIER),
                                                                                                                                                                                             Optional.empty()),
-                                                                                                                                                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.jotraeline_greatforge.player_no_choice"),
+                                                                                                                                                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.generic.player_no_choice"),
                                                                                                                                                                                             Optional.of(
                                                                                                                                                                                                     new DialogueNode(Component.translatable("dialogue.unshattered.jotraeline_greatforge.player_no"),
                                                                                                                                                                                                             Optional.of(List.of(
@@ -254,7 +255,7 @@ public class DatagenHandler {
                                                                                             )
                                                                                     )
                                                                             ),
-                                                                            new DialogueChoice(Component.translatable("dialogue.unshattered.wool_weaver.player_no_choice_exit"),
+                                                                            new DialogueChoice(Component.translatable("dialogue.unshattered.generic.player_no_choice"),
                                                                                     new DialogueNode(Component.translatable("dialogue.unshattered.wool_weaver.vibrant"))
                                                                             )
                                                                     )
@@ -268,7 +269,7 @@ public class DatagenHandler {
                                                                     new DialogueNode(Component.translatable("dialogue.unshattered.wool_weaver.really"),
                                                                             true,
                                                                             new DialogueChoice(Component.translatable("dialogue.unshattered.wool_weaver.okay"), new OpenStoreMenuEvent(WoolWeaverNPC.WOOL_WEAVER_IDENTIFIER)),
-                                                                            new DialogueChoice(Component.translatable("dialogue.unshattered.wool_weaver.player_no_choice_exit"))
+                                                                            new DialogueChoice(Component.translatable("dialogue.unshattered.generic.player_no_choice"))
                                                                     )
                                                             )
                                                     )
@@ -288,8 +289,187 @@ public class DatagenHandler {
                                     )
                             )))
                     );
+
+                    registerDialogueTree(bootstrap,
+                            ForgerNPC.FORGER_IDENTIFIER,
+                            new DialogueTree(List.of(
+                                    new DialogueTreeOrigin(0,
+                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_introduction"), true,
+                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.forger_player_name_choice"),
+                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_name"), false,
+                                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.forger_player_forge"),
+                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_forge"), true,
+                                                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.player_divan"),
+                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_divan"), true,
+                                                                                                    new DialogueChoice(Component.literal("..."),
+                                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_divan_2"), true,
+                                                                                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.player_dwarven_lords"),
+                                                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_lords"), true,
+                                                                                                                                    new DialogueChoice(Component.literal("..."),
+                                                                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_lords_2"), true,
+                                                                                                                                                    new DialogueChoice(Component.literal("..."),
+                                                                                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_lords_3"), true,
+                                                                                                                                                                    new DialogueChoice(Component.literal("..."),
+                                                                                                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_lords_4"), true,
+                                                                                                                                                                                    new DialogueChoice(Component.literal("..."),
+                                                                                                                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_dialogue_finished"), true,
+                                                                                                                                                                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.generic.player_yes_choice")),
+                                                                                                                                                                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.generic.player_no_choice"))
+                                                                                                                                                                                            )
+                                                                                                                                                                                    )
+                                                                                                                                                                            )
+                                                                                                                                                                    )
+                                                                                                                                                            )
+                                                                                                                                                    )
+                                                                                                                                            )
+                                                                                                                                    )
+                                                                                                                            )
+                                                                                                                    ),
+                                                                                                                    new DialogueChoice(Component.literal("... (OPEN FORGE SCREEN)"),
+                                                                                                                            Optional.empty(),
+                                                                                                                            Optional.empty(),
+                                                                                                                            List.of(),
+                                                                                                                            Optional.empty()
+                                                                                                                    )
+                                                                                                            )
+                                                                                                    )
+                                                                                            )
+                                                                                    ),
+                                                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.player_dwarven_lords"),
+                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_lords"), true,
+                                                                                                    new DialogueChoice(Component.literal("..."),
+                                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_lords_2"), true,
+                                                                                                                    new DialogueChoice(Component.literal("..."),
+                                                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_lords_3"), true,
+                                                                                                                                    new DialogueChoice(Component.literal("..."),
+                                                                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_lords_4"), true,
+                                                                                                                                                    new DialogueChoice(Component.literal("..."),
+                                                                                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_dialogue_finished"), true,
+                                                                                                                                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.generic.player_yes_choice")),
+                                                                                                                                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.generic.player_no_choice"))
+                                                                                                                                                            )
+                                                                                                                                                    )
+                                                                                                                                            )
+                                                                                                                                    )
+                                                                                                                            )
+                                                                                                                    )
+                                                                                                            )
+                                                                                                    )
+                                                                                            )
+                                                                                    ),
+                                                                                    new DialogueChoice(Component.literal("... (OPEN FORGE SCREEN)"),
+                                                                                            Optional.empty(),
+                                                                                            Optional.empty(),
+                                                                                            List.of(),
+                                                                                            Optional.empty()
+                                                                                    )
+                                                                            )
+                                                                    )
+                                                            )
+                                                    ),
+                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.forger_player_forge"),
+                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_forge"), true,
+                                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.player_divan"),
+                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_divan"), true,
+                                                                                    new DialogueChoice(Component.literal("..."),
+                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_divan_2"), true,
+                                                                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.player_dwarven_lords"),
+                                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_lords"), true,
+                                                                                                                    new DialogueChoice(Component.literal("..."),
+                                                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_lords_2"), true,
+                                                                                                                                    new DialogueChoice(Component.literal("..."),
+                                                                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_lords_3"), true,
+                                                                                                                                                    new DialogueChoice(Component.literal("..."),
+                                                                                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_lords_4"), true,
+                                                                                                                                                                    new DialogueChoice(Component.literal("..."),
+                                                                                                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_dialogue_finished"), true,
+                                                                                                                                                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.generic.player_yes_choice")),
+                                                                                                                                                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.generic.player_no_choice"))
+                                                                                                                                                                            )
+                                                                                                                                                                    )
+                                                                                                                                                            )
+                                                                                                                                                    )
+                                                                                                                                            )
+                                                                                                                                    )
+                                                                                                                            )
+                                                                                                                    )
+                                                                                                            )
+                                                                                                    ),
+                                                                                                    new DialogueChoice(Component.literal("... (OPEN FORGE SCREEN)"),
+                                                                                                            Optional.empty(),
+                                                                                                            Optional.empty(),
+                                                                                                            List.of(),
+                                                                                                            Optional.empty()
+                                                                                                    )
+                                                                                            )
+                                                                                    )
+                                                                            )
+                                                                    ),
+                                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.player_dwarven_lords"),
+                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_lords"), true,
+                                                                                    new DialogueChoice(Component.literal("..."),
+                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_lords_2"), true,
+                                                                                                    new DialogueChoice(Component.literal("..."),
+                                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_lords_3"), true,
+                                                                                                                    new DialogueChoice(Component.literal("..."),
+                                                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_lords_4"), true,
+                                                                                                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.player_divan"),
+                                                                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_divan"), true,
+                                                                                                                                                    new DialogueChoice(Component.literal("..."),
+                                                                                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_divan_2"), true,
+                                                                                                                                                                    new DialogueChoice(Component.literal("..."),
+                                                                                                                                                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_dialogue_finished"), true,
+                                                                                                                                                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.generic.player_yes_choice")),
+                                                                                                                                                                                    new DialogueChoice(Component.translatable("dialogue.unshattered.generic.player_no_choice"))
+                                                                                                                                                                            )
+                                                                                                                                                                    )
+                                                                                                                                                            )
+                                                                                                                                                    )
+                                                                                                                                            )
+                                                                                                                                    ),
+                                                                                                                                    new DialogueChoice(Component.literal("... (OPEN FORGE SCREEN)"),
+                                                                                                                                            Optional.empty(),
+                                                                                                                                            Optional.empty(),
+                                                                                                                                            List.of(),
+                                                                                                                                            Optional.empty()
+                                                                                                                                    )
+                                                                                                                            )
+                                                                                                                    )
+                                                                                                            )
+                                                                                                    )
+                                                                                            )
+                                                                                    )
+                                                                            )
+                                                                    ),
+                                                                    new DialogueChoice(Component.literal("... (OPEN FORGE SCREEN)"),
+                                                                            Optional.empty(),
+                                                                            Optional.empty(),
+                                                                            List.of(),
+                                                                            Optional.empty()
+                                                                    )
+                                                            )
+                                                    )
+                                            ),
+                                            Optional.empty(),
+                                            List.of(ForgerNPC.FORGER_INTRODUCTION)
+                                    ),
+                                    new DialogueTreeOrigin(1,
+                                            new DialogueNode(Component.translatable("dialogue.unshattered.forger_player_return"),
+                                                    Optional.of(List.of(
+                                                            new DialogueChoice(Component.literal("..."),
+                                                                    Optional.empty(),
+                                                                    Optional.empty(), List.of(),
+                                                                    Optional.empty())
+                                                    )),
+                                                    true),
+                                            Optional.of(new DialogueFlagRequirements(List.of(ForgerNPC.FORGER_INTRODUCTION), List.of())),
+                                            List.of()
+                                    )
+                            ))
+                    );
                 }).add(DataPackRegistryHandler.QUEST_REGISTRY_KEY, bootstrap -> {
                     createQuest(bootstrap, TalkingRockBlock.ROCKS_QUEST, QuestTypes.NOVICE, new GiveItemDialogueEvent(BuiltInRegistries.ITEM.wrapAsHolder(Items.STONE), 1));
+
                     bootstrap.register(ResourceKey.create(DataPackRegistryHandler.QUEST_REGISTRY_KEY, JotraelineGreatforgeNPC.APOLOGY_TOUR), new Quest(QuestTypes.NOVICE, Optional.empty()));
                 }).add(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY, bootstrap -> {
                     createRegenPathWithBlocks(bootstrap, "stone", List.of(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get(),
@@ -447,7 +627,10 @@ public class DatagenHandler {
 
                     createStoreStock(bootstrap,
                             BubuNPC.BUBU_IDENTIFIER,
-                            List.of(new ShopItem(UnshatteredItems.BROKEN_MITHRIL_PICKAXE, false, 10000), new ShopItem(UnshatteredItems.BIOFUEL, true, 20000))
+                            List.of(new ShopItem(UnshatteredItems.BROKEN_MITHRIL_PICKAXE, false, 10000),
+                                    new ShopItem(UnshatteredItems.RUSTED_TITANIUM_PICKAXE, false, 50000),
+                                    new ShopItem(UnshatteredItems.BIOFUEL, true, 20000)
+                            )
                     );
                 })
         );

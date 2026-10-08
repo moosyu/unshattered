@@ -208,6 +208,13 @@ public class RegisterPayloadsHandler {
 
                     data.itemTradeRequirements().ifPresent(requirements -> UnshatteredUtils.tradeItems(requirements, context.player()));
 
+                    PacketDistributor.sendToPlayer(serverPlayer, new ClientsidePlayerSoundEffectPacket(
+                            BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.NOTE_BLOCK_PLING.value()),
+                                    1.0f,
+                                    2.0f
+                            )
+                    );
+
                     UnshatteredUtils.givePlayerHarvestedItemStack(context.player(), data.soldItem());
                 })
         );

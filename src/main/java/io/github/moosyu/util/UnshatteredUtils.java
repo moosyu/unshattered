@@ -74,7 +74,7 @@ public final class UnshatteredUtils {
     public static final int DARK_GRAY = 0xFF555555;
     public static final int BLUE = 0xFF5555FF;
     public static final int GREEN = 0xFF55FF55;
-    public static final int AQUA = 0xFF55FFFF;
+    public static final int CYAN = 0xFF55FFFF;
     public static final int RED = 0xFFFF5555;
     public static final int MAGENTA = 0xFFFF55FF;
     public static final int YELLOW = 0xFFFFFF55;
@@ -156,8 +156,8 @@ public final class UnshatteredUtils {
                 } else {
                     Style style = current.get();
                     switch (tag) {
-                        case "i" -> style = style.withItalic(true);
                         case "b" -> style = style.withBold(true);
+                        case "i" -> style = style.withItalic(true).withColor(UnshatteredUtils.GRAY);
                         case "c" -> {
                             if (matcher.group(3) == null) {
                                 result.append(Component.literal(match).withStyle(current.get()));

@@ -8,7 +8,6 @@ import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
@@ -19,16 +18,15 @@ import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jspecify.annotations.NonNull;
 
 import javax.annotation.Nullable;
-import java.util.Optional;
+import java.util.*;
 
 public class StoreScreen extends AbstractContainerScreen<StoreMenu> {
     private static final int IMAGE_WIDTH = 176;
     private static final int IMAGE_HEIGHT = 200;
-    private static final int ITEM_Y = 20;
-    private static final int COIN_TEXT_Y = 42;
     private static final int BOX_Y = 56;
 
     private final StoreMenu menu;
+    private final Map<ShopItemWidget, List<Component>> widgetTooltips = new HashMap<>();
     @Nullable private ShopItem expandedItem = null;
     private int itemInputAmount = 1;
 
@@ -43,6 +41,8 @@ public class StoreScreen extends AbstractContainerScreen<StoreMenu> {
         super.init();
 
         if (expandedItem == null) {
+            widgetTooltips.clear();
+
             int columns = (IMAGE_WIDTH - 14) / 16;
             for (int i = 0; i < menu.getShopItems().size(); i++) {
                 ShopItem shopItem = menu.getShopItems().get(i);
@@ -54,37 +54,17 @@ public class StoreScreen extends AbstractContainerScreen<StoreMenu> {
                         this::openSellPage
                 );
 
-                Component rightClickDetails = shopItem.sellMultiple()
-                        ? Component.literal("\n").append(Component.translatable("screen.unshattered.store.text.right_click").withColor(0xFFFFFF55))
-                        : Component.empty();
+                List<Component> itemTooltip = new ArrayList<>(getTooltipFromItem(minecraft, new ItemStack(shopItem.item().value())));
 
-                MutableComponent priceDetails = Component.empty();
+                itemTooltip.addAll(buildPriceLines(shopItem));
+                itemTooltip.add(Component.empty());
+                itemTooltip.add(Component.translatable("screen.unshattered.store.text.left_click").withColor(0xFFFFFF55));
 
-                if (shopItem.price().isPresent()) {
-                    priceDetails.append(Component.literal(shopItem.price().get() + " ").withColor(0xFFF9A604))
-                            .append(Component.translatable("screen.unshattered.store.text.coins").withColor(0xFFF9A604))
-                            .append(Component.literal("\n"));
+                if (shopItem.sellMultiple()) {
+                    itemTooltip.add(Component.translatable("screen.unshattered.store.text.right_click").withColor(0xFFFFFF55));
                 }
 
-                if (shopItem.itemTradeRequirements().isPresent()) {
-                    for (ItemStack requirement : shopItem.itemTradeRequirements().get()) {
-                        priceDetails.append(requirement.getItemName()).withColor(UnshatteredUtils.getItemRarity(requirement).getColour(1.0f))
-                                .append(requirement.count() > 1 ? "x" + requirement.count() : "").withColor(UnshatteredUtils.DARK_GRAY)
-                                .append(Component.literal("\n"));
-                    }
-                }
-
-                shopItemWidget.setTooltip(Tooltip.create(shopItem.item().value().getDefaultInstance()
-                        .getItemName()
-                        .copy()
-                        .append(Component.literal("\n"))
-                        .append(Component.translatable("screen.unshattered.store.text.cost").withColor(0xFFAAAAAA))
-                        .append(Component.literal("\n"))
-                        .append(priceDetails)
-                        .append(Component.literal("\n"))
-                        .append(Component.translatable("screen.unshattered.store.text.left_click").withColor(0xFFFFFF55))
-                        .append(rightClickDetails))
-                );
+                widgetTooltips.put(shopItemWidget, itemTooltip);
 
                 addRenderableWidget(shopItemWidget);
             }
@@ -107,8 +87,7 @@ public class StoreScreen extends AbstractContainerScreen<StoreMenu> {
                 if (itemInputAmount > 0 && expandedItem != null) {
                     ClientPacketDistributor.sendToServer(new AttemptPurchasePacket(expandedItem.item().value().getDefaultInstance(), expandedItem.price(), expandedItem.itemTradeRequirements()));
                 }
-            }
-            ).build();
+            }).build();
             button.setWidth(buyButtonWidth);
             button.setPosition(centerX() - (buyButtonWidth * 2), panelY() + BOX_Y - 5);
 
@@ -150,23 +129,26 @@ public class StoreScreen extends AbstractContainerScreen<StoreMenu> {
         super.extractRenderState(graphics, mouseX, mouseY, partialTick);
 
         if (expandedItem == null) {
+            for (Map.Entry<ShopItemWidget, List<Component>> entry : widgetTooltips.entrySet()) {
+                if (entry.getKey().isHovered()) {
+                    graphics.setTooltipForNextFrame(font, entry.getValue(), Optional.empty(), mouseX, mouseY);
+                    break;
+                }
+            }
             return;
         }
 
         int itemX = centerX() - 8;
-        int itemY = panelY() + ITEM_Y;
+        int itemY = panelY() + 30;
         ItemStack itemStack = new ItemStack(expandedItem.item(), Math.max(1, itemInputAmount));
-//        if () {
-//
-//        }
-//        Component coins = Component.literal((expandedItem.price() * itemInputAmount) + " ").append(Component.translatable("screen.unshattered.store.text.coins"));
 
-//        graphics.text(font, coins, centerX() - font.width(coins) / 2, panelY() + COIN_TEXT_Y, 0xFFF9A604);
         graphics.item(itemStack, itemX, itemY);
         graphics.itemDecorations(font, itemStack, itemX, itemY);
 
         if (mouseX >= itemX && mouseX < itemX + 16 && mouseY >= itemY && mouseY < itemY + 16) {
-            graphics.setTooltipForNextFrame(font, itemStack, mouseX, mouseY);
+            List<Component> tooltipContent = getTooltipFromItem(minecraft, itemStack);
+            tooltipContent.addAll(buildPriceLines(expandedItem));
+            graphics.setTooltipForNextFrame(font, tooltipContent, itemStack.getTooltipImage(), mouseX, mouseY);
         }
     }
 
@@ -180,5 +162,36 @@ public class StoreScreen extends AbstractContainerScreen<StoreMenu> {
 
     private int centerX() {
         return panelX() + IMAGE_WIDTH / 2;
+    }
+
+    private List<Component> buildPriceLines(ShopItem shopItem) {
+        List<Component> lines = new ArrayList<>();
+
+        lines.add(Component.empty());
+
+        lines.add(Component.translatable("screen.unshattered.store.text.cost").withColor(UnshatteredUtils.GRAY));
+
+        shopItem.price().ifPresent(price ->
+                lines.add(Component.literal(String.format("%,d", price) + " ")
+                        .append(Component.translatable("screen.unshattered.store.text.coins"))
+                        .withColor(0xFFF9A604)
+                )
+        );
+
+        shopItem.itemTradeRequirements().ifPresent(requirements -> {
+            for (ItemStack requirement : requirements) {
+                MutableComponent line = requirement.getItemName().copy()
+                        .withColor(UnshatteredUtils.getItemRarity(requirement).getColour(1.0f));
+
+                if (requirement.count() > 1) {
+                    line.append(Component.literal(" x" + requirement.count())
+                            .withColor(UnshatteredUtils.DARK_GRAY));
+                }
+
+                lines.add(line);
+            }
+        });
+
+        return lines;
     }
 }
