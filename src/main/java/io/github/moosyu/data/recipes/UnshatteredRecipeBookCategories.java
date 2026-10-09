@@ -13,11 +13,7 @@ public class UnshatteredRecipeBookCategories {
 
     public static final Supplier<RecipeBookCategory> REFINING = RECIPE_BOOK_CATEGORIES.register("refining", RecipeBookCategory::new);
     public static final Supplier<RecipeBookCategory> GEAR = RECIPE_BOOK_CATEGORIES.register("gear", RecipeBookCategory::new);
-    public static final Supplier<RecipeBookCategory> PERFECT_GEMSTONES = RECIPE_BOOK_CATEGORIES.register("perfect_gemstones", RecipeBookCategory::new);
     public static final Supplier<RecipeBookCategory> FORGING = RECIPE_BOOK_CATEGORIES.register("forging", RecipeBookCategory::new);
-    public static final Supplier<RecipeBookCategory> REFORGE_STONES = RECIPE_BOOK_CATEGORIES.register("reforge_stones", RecipeBookCategory::new);
-    public static final Supplier<RecipeBookCategory> PETS = RECIPE_BOOK_CATEGORIES.register("pets", RecipeBookCategory::new);
     public static final Supplier<RecipeBookCategory> TOOLS = RECIPE_BOOK_CATEGORIES.register("tools", RecipeBookCategory::new);
     public static final Supplier<RecipeBookCategory> DRILL_PARTS = RECIPE_BOOK_CATEGORIES.register("drill_parts", RecipeBookCategory::new);
-    public static final Supplier<RecipeBookCategory> OTHER = RECIPE_BOOK_CATEGORIES.register("other", RecipeBookCategory::new);
 }

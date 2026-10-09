@@ -32,4 +32,8 @@ public class UnshatteredMenus {
     public static final Supplier<MenuType<StoreMenu>> STORE_MENU_TYPE = MENUS.register("store_menu_type", () ->
             IMenuTypeExtension.create(StoreMenu::new)
     );
+
+    public static final Supplier<MenuType<ForgeMenu>> FORGE_MENU_TYPE = MENUS.register("forge_menu_type", () ->
+            new MenuType<>(ForgeMenu::new, FeatureFlags.DEFAULT_FLAGS)
+    );
 }

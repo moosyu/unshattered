@@ -26,7 +26,6 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
     public final int IMAGE_HEIGHT = 166;
     private float xMouse;
     private float yMouse;
-    private final RandomSource randomSource = RandomSource.create();
 
     public UnshatteredInventoryScreen(InventoryMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);

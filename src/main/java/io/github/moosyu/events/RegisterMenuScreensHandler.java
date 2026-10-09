@@ -21,5 +21,6 @@ public class RegisterMenuScreensHandler {
         event.register(UnshatteredMenus.REFORGE_ANVIL_MENU_TYPE.get(), ReforgeAnvilScreen::new);
         event.register(UnshatteredMenus.DRILL_ATTACHMENT_MENU_TYPE.get(), DrillAttachmentScreen::new);
         event.register(UnshatteredMenus.STORE_MENU_TYPE.get(), StoreScreen::new);
+        event.register(UnshatteredMenus.FORGE_MENU_TYPE.get(), ForgeScreen::new);
     }
 }

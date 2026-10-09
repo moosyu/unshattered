@@ -4,10 +4,7 @@ import io.github.moosyu.blocks.TalkingRockBlock;
 import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.ShopItem;
 import io.github.moosyu.data.dialogue.*;
-import io.github.moosyu.data.dialogue.events.GiveItemDialogueEvent;
-import io.github.moosyu.data.dialogue.events.OpenDrillAttachmentEvent;
-import io.github.moosyu.data.dialogue.events.OpenStoreMenuEvent;
-import io.github.moosyu.data.dialogue.events.StartQuestDialogueEvent;
+import io.github.moosyu.data.dialogue.events.*;
 import io.github.moosyu.data.fishing.FishingConditions;
 import io.github.moosyu.data.fishing.TriggerMiscReward;
 import io.github.moosyu.data.fishing.rewards.CoinReward;
@@ -325,12 +322,7 @@ public class DatagenHandler {
                                                                                                                                     )
                                                                                                                             )
                                                                                                                     ),
-                                                                                                                    new DialogueChoice(Component.literal("... (OPEN FORGE SCREEN)"),
-                                                                                                                            Optional.empty(),
-                                                                                                                            Optional.empty(),
-                                                                                                                            List.of(),
-                                                                                                                            Optional.empty()
-                                                                                                                    )
+                                                                                                                    new DialogueChoice(Component.literal("..."), new OpenForgeEvent())
                                                                                                             )
                                                                                                     )
                                                                                             )
@@ -357,12 +349,7 @@ public class DatagenHandler {
                                                                                                     )
                                                                                             )
                                                                                     ),
-                                                                                    new DialogueChoice(Component.literal("... (OPEN FORGE SCREEN)"),
-                                                                                            Optional.empty(),
-                                                                                            Optional.empty(),
-                                                                                            List.of(),
-                                                                                            Optional.empty()
-                                                                                    )
+                                                                                    new DialogueChoice(Component.literal("..."), new OpenForgeEvent())
                                                                             )
                                                                     )
                                                             )
@@ -395,12 +382,7 @@ public class DatagenHandler {
                                                                                                                     )
                                                                                                             )
                                                                                                     ),
-                                                                                                    new DialogueChoice(Component.literal("... (OPEN FORGE SCREEN)"),
-                                                                                                            Optional.empty(),
-                                                                                                            Optional.empty(),
-                                                                                                            List.of(),
-                                                                                                            Optional.empty()
-                                                                                                    )
+                                                                                                    new DialogueChoice(Component.literal("..."), new OpenForgeEvent())
                                                                                             )
                                                                                     )
                                                                             )
@@ -427,12 +409,7 @@ public class DatagenHandler {
                                                                                                                                                     )
                                                                                                                                             )
                                                                                                                                     ),
-                                                                                                                                    new DialogueChoice(Component.literal("... (OPEN FORGE SCREEN)"),
-                                                                                                                                            Optional.empty(),
-                                                                                                                                            Optional.empty(),
-                                                                                                                                            List.of(),
-                                                                                                                                            Optional.empty()
-                                                                                                                                    )
+                                                                                                                                    new DialogueChoice(Component.literal("..."), new OpenForgeEvent())
                                                                                                                             )
                                                                                                                     )
                                                                                                             )
@@ -441,12 +418,7 @@ public class DatagenHandler {
                                                                                     )
                                                                             )
                                                                     ),
-                                                                    new DialogueChoice(Component.literal("... (OPEN FORGE SCREEN)"),
-                                                                            Optional.empty(),
-                                                                            Optional.empty(),
-                                                                            List.of(),
-                                                                            Optional.empty()
-                                                                    )
+                                                                    new DialogueChoice(Component.literal("..."), new OpenForgeEvent())
                                                             )
                                                     )
                                             ),
@@ -455,13 +427,9 @@ public class DatagenHandler {
                                     ),
                                     new DialogueTreeOrigin(1,
                                             new DialogueNode(Component.translatable("dialogue.unshattered.forger_player_return"),
-                                                    Optional.of(List.of(
-                                                            new DialogueChoice(Component.literal("..."),
-                                                                    Optional.empty(),
-                                                                    Optional.empty(), List.of(),
-                                                                    Optional.empty())
-                                                    )),
-                                                    true),
+                                                    true,
+                                                    new DialogueChoice(Component.literal("..."), new OpenForgeEvent())
+                                            ),
                                             Optional.of(new DialogueFlagRequirements(List.of(ForgerNPC.FORGER_INTRODUCTION), List.of())),
                                             List.of()
                                     )

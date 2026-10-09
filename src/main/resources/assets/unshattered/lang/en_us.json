@@ -543,9 +543,16 @@
   "screen.unshattered.store.text.purchase_failed_trade": "You don't have enough resources to make this purchase!",
   "screen.narration.unshattered.store.price": "Price entry",
   "screen.unshattered.drill_attachment": "Consume fuel",
+  "screen.unshattered.forge": "Forge",
+  "screen.unshattered.forge.title.categories": "Categories",
+  "screen.unshattered.forge.title.recipes": "Recipes",
+  "screen.unshattered.forge.title.crafting": "Crafting",
+  "screen.unshattered.forge.title.browse": "Click to browse!",
 
   "widget.unshattered.narration.scroller": "Scroller Widget",
   "widget.unshattered.narration.shop_item": "Shop Item",
+  "widget.unshattered.narration.forge_recipe": "Forge Recipe",
+  "widget.unshattered.narration.forge_category": "Forge Category",
 
   "enchantment.unshattered.rainbow": "Rainbow",
 
@@ -606,5 +613,16 @@
   "dialogue.unshattered.forger_lords_3": "The third [c=0xFFAA0000]Dwarven Lord[/c] was Kaelen. Yknow, before the Dragon King invaded the humans he came our mines. They wanted to take it, yet were stopped by Kaelen alone. Supposedly he had a shield said that could repel all magic. After the dragon's retreat, Kaelen was swallowed by the ground, turned to stone. You can still find 'im in front of the mines.",
   "dialogue.unshattered.forger_lords_4": "I hope I'll one day be able to forge such a legendary tool as theirs.",
   "dialogue.unshattered.forger_dialogue_finished": "Now, would you like me to forge anything for ya?",
-  "dialogue.unshattered.forger_player_return": "Well, hello again. You seem to be doing all right. Need anything forged?"
+  "dialogue.unshattered.forger_player_return": "Well, hello again. You seem to be doing all right. Need anything forged?",
+
+  "recipe_book.category.unshattered.refining": "Refining",
+  "recipe_book.category.unshattered.description.refining": "Refine your ores into more powerful ores.",
+  "recipe_book.category.unshattered.gear": "Gear",
+  "recipe_book.category.unshattered.description.gear": "Forge helpful accessories and armour pieces.",
+  "recipe_book.category.unshattered.forging": "Forging",
+  "recipe_book.category.unshattered.description.forging": "Refine your ores into parts used in lots of gear.",
+  "recipe_book.category.unshattered.tools": "Tools",
+  "recipe_book.category.unshattered.description.tools": "Forge your ores into various tools.",
+  "recipe_book.category.unshattered.drill_parts": "Drill Parts",
+  "recipe_book.category.unshattered.description.drill_parts": "Forge your ore into improvements for your drill."
 }

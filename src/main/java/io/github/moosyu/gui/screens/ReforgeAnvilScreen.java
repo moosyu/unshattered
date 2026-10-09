@@ -17,14 +17,14 @@ import org.jspecify.annotations.NonNull;
 public class ReforgeAnvilScreen extends AbstractContainerScreen<ReforgeAnvilMenu> {
     public ReforgeAnvilScreen(ReforgeAnvilMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
-        this.titleLabelX = 60;
+        titleLabelX = 60;
     }
 
     @Override
     public void extractBackground(@NonNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         super.extractBackground(graphics, mouseX, mouseY, partialTick);
 
-        graphics.blit(RenderPipelines.GUI_TEXTURED, UnshatteredUtils.getUnshatteredIdentifier("textures/gui/anvil.png"), this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, UnshatteredUtils.getUnshatteredIdentifier("textures/gui/anvil.png"), leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
     }
 
     @Override

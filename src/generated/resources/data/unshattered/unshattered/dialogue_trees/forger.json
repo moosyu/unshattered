@@ -83,7 +83,10 @@
                                     }
                                   },
                                   {
-                                    "text": "... (OPEN FORGE SCREEN)"
+                                    "text": "...",
+                                    "triggered_event": {
+                                      "type": "unshattered:open_forge"
+                                    }
                                   }
                                 ],
                                 "interacted_speaking": true,
@@ -171,7 +174,10 @@
                         }
                       },
                       {
-                        "text": "... (OPEN FORGE SCREEN)"
+                        "text": "...",
+                        "triggered_event": {
+                          "type": "unshattered:open_forge"
+                        }
                       }
                     ],
                     "interacted_speaking": true,
@@ -270,7 +276,10 @@
                               }
                             },
                             {
-                              "text": "... (OPEN FORGE SCREEN)"
+                              "text": "...",
+                              "triggered_event": {
+                                "type": "unshattered:open_forge"
+                              }
                             }
                           ],
                           "interacted_speaking": true,
@@ -348,7 +357,10 @@
                                           }
                                         },
                                         {
-                                          "text": "... (OPEN FORGE SCREEN)"
+                                          "text": "...",
+                                          "triggered_event": {
+                                            "type": "unshattered:open_forge"
+                                          }
                                         }
                                       ],
                                       "interacted_speaking": true,
@@ -385,7 +397,10 @@
                   }
                 },
                 {
-                  "text": "... (OPEN FORGE SCREEN)"
+                  "text": "...",
+                  "triggered_event": {
+                    "type": "unshattered:open_forge"
+                  }
                 }
               ],
               "interacted_speaking": true,
@@ -417,7 +432,10 @@
       "dialogue_node": {
         "dialogue_choices": [
           {
-            "text": "..."
+            "text": "...",
+            "triggered_event": {
+              "type": "unshattered:open_forge"
+            }
           }
         ],
         "interacted_speaking": true,
