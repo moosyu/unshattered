@@ -548,6 +548,9 @@
   "screen.unshattered.forge.title.recipes": "Recipes",
   "screen.unshattered.forge.title.crafting": "Crafting",
   "screen.unshattered.forge.title.browse": "Click to browse!",
+  "screen.unshattered.forge.items_required": "Items Required",
+  "screen.unshattered.forge.duration": "Duration:",
+  "screen.unshattered.forge.craft": "Craft!",
 
   "widget.unshattered.narration.scroller": "Scroller Widget",
   "widget.unshattered.narration.shop_item": "Shop Item",

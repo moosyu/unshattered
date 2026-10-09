@@ -3,6 +3,7 @@ package io.github.moosyu.events;
 import io.github.moosyu.abilities.*;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.PlayerFlagsAttachment;
+import io.github.moosyu.data.attachments.PlayerForgeSlotsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.gui.menus.ReforgeAnvilMenu;
 import io.github.moosyu.gui.menus.StorageMenu;
@@ -24,6 +25,9 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.jspecify.annotations.NonNull;
+
+import java.time.Instant;
+import java.util.Optional;
 
 import static io.github.moosyu.Unshattered.MODID;
 
@@ -216,6 +220,23 @@ public class RegisterPayloadsHandler {
                     );
 
                     UnshatteredUtils.givePlayerHarvestedItemStack(context.player(), data.soldItem());
+                })
+        );
+
+        registrar.playToServer(AttemptForgeItemPacket.TYPE,
+                AttemptForgeItemPacket.STREAM_CODEC,
+                (data, context) -> context.enqueueWork(() -> {
+                    PlayerForgeSlotsAttachment forgeSlotsAttachment = context.player().getData(UnshatteredAttachments.PLAYER_FORGE_SLOTS.get());
+
+                    if (forgeSlotsAttachment.availableSlots() >= data.forgeSlotIndex() + 1) {
+                        forgeSlotsAttachment.slots().set(data.forgeSlotIndex(),
+                                new PlayerForgeSlotsAttachment.ForgeSlot(data.endTime(),
+                                        Optional.of(data.result())
+                                )
+                        );
+
+                        context.player().syncData(UnshatteredAttachments.PLAYER_FORGE_SLOTS);
+                    }
                 })
         );
     }

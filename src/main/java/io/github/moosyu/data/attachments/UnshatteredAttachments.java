@@ -12,6 +12,8 @@ import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Supplier;
 
 import static io.github.moosyu.Unshattered.MODID;
@@ -106,4 +108,12 @@ public final class UnshatteredAttachments {
 
     // to store last sell slot history between sessions
     public static final Supplier<AttachmentType<SellSlotContainer>> PLAYER_SELL_SLOT = ATTACHMENT_TYPES.register("player_sell_slot", () -> AttachmentType.serializable(SellSlotContainer::new).build());
+
+    public static final Supplier<AttachmentType<PlayerForgeSlotsAttachment>> PLAYER_FORGE_SLOTS = ATTACHMENT_TYPES.register("player_forge_slots", () ->
+            AttachmentType.builder(() -> new PlayerForgeSlotsAttachment(1, List.of()))
+                    .serialize(PlayerForgeSlotsAttachment.CODEC.fieldOf("forge_slots"))
+                    .sync(PlayerForgeSlotsAttachment.STREAM_CODEC)
+                    .copyOnDeath()
+                    .build()
+    );
 }

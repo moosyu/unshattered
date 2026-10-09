@@ -2,36 +2,47 @@ package io.github.moosyu.gui.screens;
 
 import com.mojang.blaze3d.platform.cursor.CursorTypes;
 import io.github.moosyu.Unshattered;
+import io.github.moosyu.data.attachments.PlayerForgeSlotsAttachment;
+import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.recipes.ForgeCategoryDisplay;
+import io.github.moosyu.data.recipes.ForgeRecipe;
+import io.github.moosyu.events.RecipeReceivedHandler;
 import io.github.moosyu.gui.menus.ForgeMenu;
-import io.github.moosyu.packets.AttemptPurchasePacket;
+import io.github.moosyu.packets.AttemptForgeItemPacket;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.components.ImageButton;
-import net.minecraft.client.gui.components.ItemDisplayWidget;
-import net.minecraft.client.gui.components.Tooltip;
-import net.minecraft.client.gui.components.WidgetSprites;
+import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeBookCategory;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import org.jspecify.annotations.NonNull;
 
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
-    private static final int BUTTON_SIZE = 20;
+    private static final int CATEGORY_BUTTON_SIZE = 20;
+    private static final int SLOT_BUTTON_SIZE = 18;
 
     private enum Page {
+        FORGE(Component.translatable("screen.unshattered.forge")),
         CATEGORIES(Component.translatable("screen.unshattered.forge.title.categories")),
-        RECIPES(Component.translatable("screen.unshattered.forge.title.recipes")),
-        CRAFTING(Component.translatable("screen.unshattered.forge.title.crafting"));
+        RECIPES(Component.translatable("screen.unshattered.forge.title.recipes"));
 
         final Component pageTitle;
         Page(Component pageTitle) {
@@ -39,7 +50,9 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
         }
     }
 
-    private Page currentPage = Page.CATEGORIES;
+    private Page currentPage = Page.FORGE;
+    private Integer currentSlotIndex = null;
+    private RecipeBookCategory currentCategory = null;
 
     public ForgeScreen(ForgeMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title, 176, 204);
@@ -50,28 +63,47 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
     protected void init() {
         super.init();
 
-        if (currentPage == Page.CATEGORIES) {
+        if (currentPage == Page.FORGE) {
+            for (int i = 0; i < PlayerForgeSlotsAttachment.MAX_SLOTS; i++) {
+                if (currentSlotIndex == null) {
+                    int index = i;
+                    addRenderableWidget(Button.builder(Component.literal("Slot " + i), _ -> {
+                        currentPage = Page.CATEGORIES;
+                        currentSlotIndex = index;
+                        rebuildWidgets();
+                    }).build());
+                }
+            }
+        } else if (currentPage == Page.CATEGORIES) {
             List<RecipeBookCategory> recipeBookCategories = ForgeCategoryDisplay.all();
             for (int i = 0; i < recipeBookCategories.size(); i++) {
+                // stupid lambdas...
+                int index = i;
                 ForgeCategoryWidget widget = new ForgeCategoryWidget(minecraft, recipeBookCategories.get(i), () -> {
                     currentPage = Page.RECIPES;
+                    currentCategory = recipeBookCategories.get(index);
                     rebuildWidgets();
                 });
-                widget.setPosition(leftPos + 44 + ((BUTTON_SIZE + 14) * (i % 3)), topPos + 25 + ((i / 3) * (BUTTON_SIZE + 7)));
+                widget.setPosition(leftPos + 44 + ((CATEGORY_BUTTON_SIZE + 14) * (i % 3)), topPos + 25 + ((i / 3) * (CATEGORY_BUTTON_SIZE + 7)));
                 addRenderableWidget(widget);
             }
-        } else if (currentPage == Page.RECIPES) {
-            addRenderableWidget(new BackButtonWidget(leftPos + (imageWidth / 2) - (BUTTON_SIZE / 2), topPos + 84,
-                    _ -> {
-                        currentPage = Page.CATEGORIES;
-                        rebuildWidgets();
-                    })
-            );
-        } else if (currentPage == Page.CRAFTING) {
 
+            addBackButton(Page.FORGE);
+        } else if (currentPage == Page.RECIPES) {
+            List<RecipeHolder<ForgeRecipe>> categoryRecipes = RecipeReceivedHandler.FORGE_RECIPES.stream().filter(recipe ->
+                    recipe.value().category() == currentCategory
+            ).toList();
+
+            for (int i = 0; i < categoryRecipes.size(); i++) {
+                ForgeRecipe value = categoryRecipes.get(i).value();
+                ForgeRecipeWidget widget = new ForgeRecipeWidget(minecraft, new ItemStack(value.result().item()), value);
+                widget.setPosition(leftPos + 15 + ((i % 8 ) * SLOT_BUTTON_SIZE), topPos + 26 + ((i / 4) * SLOT_BUTTON_SIZE));
+                addRenderableWidget(widget);
+            }
+
+            addBackButton(Page.CATEGORIES);
         } else {
             Unshattered.LOGGER.error("forge screen init failed");
-            return;
         }
     }
 
@@ -90,7 +122,7 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
 
     private static class ForgeCategoryWidget extends ItemDisplayWidget {
         private static final int ITEM_SIZE = 16;
-        private static final int ITEM_OFFSET = (BUTTON_SIZE - ITEM_SIZE) / 2;
+        private static final int ITEM_OFFSET = (CATEGORY_BUTTON_SIZE - ITEM_SIZE) / 2;
 
         private final Runnable onClick;
 
@@ -98,8 +130,8 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
             super(minecraft,
                     ITEM_OFFSET,
                     ITEM_OFFSET,
-                    BUTTON_SIZE,
-                    BUTTON_SIZE,
+                    CATEGORY_BUTTON_SIZE,
+                    CATEGORY_BUTTON_SIZE,
                     Component.translatable("widget.unshattered.narration.forge_category"),
                     ForgeCategoryDisplay.getIcon(category),
                     false,
@@ -129,7 +161,8 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
                             Identifier.withDefaultNamespace("widget/button_disabled"),
                             Identifier.withDefaultNamespace("widget/button_highlighted")
                     ).get(isActive(), isHovered()),
-                    getX(), getY(), getWidth(), getHeight());
+                    getX(), getY(), getWidth(), getHeight()
+            );
 
             if (isHovered()) {
                 graphics.requestCursor(CursorTypes.POINTING_HAND);
@@ -144,9 +177,26 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
         }
     }
 
-    private static class ForgeRecipeWidget extends ItemDisplayWidget {
-        public ForgeRecipeWidget(Minecraft minecraft, int offsetX, int offsetY, ItemStack itemStack) {
-            super(minecraft, offsetX, offsetY, 16, 16, Component.translatable("widget.unshattered.narration.forge_recipe"), itemStack, false, false);
+    private class ForgeRecipeWidget extends ItemDisplayWidget {
+        ItemStack itemStack;
+        ForgeRecipe forgeRecipe;
+
+        public ForgeRecipeWidget(Minecraft minecraft, ItemStack itemStack, ForgeRecipe forgeRecipe) {
+            super(minecraft, 1, 1, SLOT_BUTTON_SIZE, SLOT_BUTTON_SIZE, Component.translatable("widget.unshattered.narration.forge_recipe"), itemStack, false, true);
+
+            this.itemStack = itemStack;
+            this.forgeRecipe = forgeRecipe;
+        }
+
+        @Override
+        protected void extractWidgetRenderState(@NonNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+            graphics.blit(RenderPipelines.GUI_TEXTURED, UnshatteredUtils.getUnshatteredIdentifier("textures/gui/sprites/widgets/slot.png"), getX(), getY(), 0, 0, getWidth(), getHeight(), getWidth(), getHeight());
+
+            if (isHovered()) {
+                graphics.requestCursor(CursorTypes.POINTING_HAND);
+            }
+
+            super.extractWidgetRenderState(graphics, mouseX, mouseY, a);
         }
 
 
@@ -154,15 +204,87 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
         protected void updateWidgetNarration(@NonNull NarrationElementOutput narrationElementOutput) {
             defaultButtonNarrationText(narrationElementOutput);
         }
+
+        // to disable the annoying outline
+        @Override
+        public boolean isFocused() {
+            return false;
+        }
+
+        @Override
+        protected void extractTooltip(@NonNull GuiGraphicsExtractor graphics, int x, int y) {
+            List<Component> lines = new ArrayList<>(Screen.getTooltipFromItem(minecraft, itemStack));
+
+            lines.add(Component.empty());
+            lines.add(Component.translatable("screen.unshattered.forge.items_required").withColor(UnshatteredUtils.YELLOW));
+            for (SizedIngredient sizedIngredient : forgeRecipe.ingredients()) {
+                Optional<Holder<Item>> ingredientItemHolder = sizedIngredient.ingredient().getValues().stream().findFirst();
+
+                ingredientItemHolder.ifPresent(ingredient -> {
+                    Item ingredientItem = ingredient.value();
+                    ItemStack ingredientItemStack = new ItemStack(ingredientItem);
+
+                    lines.add(ingredientItemStack.getDisplayName()
+                            .copy()
+                            .withColor(UnshatteredUtils.getItemRarity(ingredientItemStack).getColour(1.0f))
+                            .append(sizedIngredient.count() > 1
+                                    ? Component.literal(" x" + sizedIngredient.count()).withColor(UnshatteredUtils.DARK_GRAY)
+                                    : Component.empty()
+                            )
+                    );
+                });
+            }
+
+            lines.add(Component.empty());
+            lines.add(Component.translatable("screen.unshattered.forge.duration")
+                    .withColor(UnshatteredUtils.GRAY)
+                    .append(Component.literal(" " + getTimeDisplay(forgeRecipe.durationSeconds()))
+                            .withColor(UnshatteredUtils.CYAN)
+                    )
+            );
+            lines.add(Component.translatable("screen.unshattered.forge.craft").withColor(UnshatteredUtils.YELLOW));
+
+            graphics.setTooltipForNextFrame(minecraft.font, lines, itemStack.getTooltipImage(), x, y);
+        }
+
+        // intellij got really pissed off at me until i made this for whatever reason
+        private @NonNull String getTimeDisplay(long seconds) {
+            if (seconds < 60) {
+                return seconds + "s";
+            } else if (seconds < 3600) {
+                return (seconds / 60) + "m";
+            } else if (seconds < 86400) {
+                return (seconds / 3600) + "m";
+            } else {
+                return (seconds / 86400) + "d";
+            }
+        }
+
+        @Override
+        public void onClick(@NonNull MouseButtonEvent event, boolean doubleClick) {
+            ClientPacketDistributor.sendToServer(new AttemptForgeItemPacket(Instant.now().getEpochSecond(),
+                    new ItemStack(forgeRecipe.result().item()),
+                    currentSlotIndex)
+            );
+
+            currentPage = Page.FORGE;
+            rebuildWidgets();
+        }
     }
 
-    private static class BackButtonWidget extends ImageButton {
-        public BackButtonWidget(int x, int y, OnPress onPress) {
-            super(x, y, BUTTON_SIZE, BUTTON_SIZE, new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("widgets/back_button"),
-                            UnshatteredUtils.getUnshatteredIdentifier("widgets/back_button_disabled"),
-                            UnshatteredUtils.getUnshatteredIdentifier("widgets/back_button_highlighted")
-                    ), onPress
-            );
-        }
+    private void addBackButton(Page targetPage) {
+        addRenderableWidget(new ImageButton(leftPos + (imageWidth / 2) - (CATEGORY_BUTTON_SIZE / 2),
+                topPos + 84,
+                CATEGORY_BUTTON_SIZE,
+                CATEGORY_BUTTON_SIZE,
+                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("widgets/back_button"),
+                        UnshatteredUtils.getUnshatteredIdentifier("widgets/back_button_disabled"),
+                        UnshatteredUtils.getUnshatteredIdentifier("widgets/back_button_highlighted")
+                ),
+                _ -> {
+                    currentPage = targetPage;
+                    rebuildWidgets();
+                })
+        );
     }
 }
