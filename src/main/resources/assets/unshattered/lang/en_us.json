@@ -551,11 +551,16 @@
   "screen.unshattered.forge.items_required": "Items Required",
   "screen.unshattered.forge.duration": "Duration:",
   "screen.unshattered.forge.craft": "Craft!",
+  "screen.unshattered.forge.slot": "Slot",
+  "screen.unshattered.forge.view": "View and start forge processes using the materials you have.",
+  "screen.unshattered.forge.start_process": "Click to start process!",
+  "screen.unshattered.forge.time_remaining": "Time remaining",
 
   "widget.unshattered.narration.scroller": "Scroller Widget",
   "widget.unshattered.narration.shop_item": "Shop Item",
   "widget.unshattered.narration.forge_recipe": "Forge Recipe",
   "widget.unshattered.narration.forge_category": "Forge Category",
+  "widget.unshattered.narration.forge_item": "Forge Item",
 
   "enchantment.unshattered.rainbow": "Rainbow",
 

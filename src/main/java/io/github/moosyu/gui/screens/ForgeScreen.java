@@ -8,6 +8,7 @@ import io.github.moosyu.data.recipes.ForgeCategoryDisplay;
 import io.github.moosyu.data.recipes.ForgeRecipe;
 import io.github.moosyu.events.RecipeReceivedHandler;
 import io.github.moosyu.gui.menus.ForgeMenu;
+import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.packets.AttemptForgeItemPacket;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.Minecraft;
@@ -22,8 +23,10 @@ import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
@@ -31,6 +34,8 @@ import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import org.jspecify.annotations.NonNull;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -64,15 +69,22 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
         super.init();
 
         if (currentPage == Page.FORGE) {
+            Player player = Minecraft.getInstance().player;;
+
+            if (player == null) {
+                return;
+            }
+
+            PlayerForgeSlotsAttachment forgeSlots = player.getData(UnshatteredAttachments.PLAYER_FORGE_SLOTS.get());
+
             for (int i = 0; i < PlayerForgeSlotsAttachment.MAX_SLOTS; i++) {
-                if (currentSlotIndex == null) {
-                    int index = i;
-                    addRenderableWidget(Button.builder(Component.literal("Slot " + i), _ -> {
-                        currentPage = Page.CATEGORIES;
-                        currentSlotIndex = index;
-                        rebuildWidgets();
-                    }).build());
-                }
+                PlayerForgeSlotsAttachment.ForgeSlot forgeSlot = forgeSlots.slots().get(i);
+                ForgeItemWidget forgeItemWidget = new ForgeItemWidget(minecraft, forgeSlot.itemStack().isPresent() ? forgeSlot.itemStack().get() : ItemStack.EMPTY,
+                        i,
+                        forgeSlot.endTime()
+                );
+                forgeItemWidget.setPosition(leftPos + 40 + (16 * i), topPos + 34);
+                addRenderableWidget(forgeItemWidget);
             }
         } else if (currentPage == Page.CATEGORIES) {
             List<RecipeBookCategory> recipeBookCategories = ForgeCategoryDisplay.all();
@@ -119,6 +131,55 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
         graphics.text(font, currentPage.pageTitle, titleLabelX, titleLabelY, 0xFF404040, false);
         graphics.text(font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, 0xFF404040, false);
     }
+
+    private static class ForgeItemWidget extends ItemDisplayWidget {
+        private final boolean emptySlot;
+
+        public ForgeItemWidget(Minecraft minecraft, ItemStack itemStack, int slotNumber, long endTime) {
+            Component tooltipText;
+
+            if (itemStack.isEmpty()) {
+                itemStack = new ItemStack(Items.BLAST_FURNACE);
+                emptySlot = true;
+                tooltipText = Component.translatable("screen.unshattered.forge.slot").withColor(UnshatteredUtils.GREEN)
+                        .append(Component.literal(" #" + slotNumber).withColor(UnshatteredUtils.GREEN))
+                        .append(Component.literal("\n"))
+                        .append(Component.translatable("screen.unshattered.forge.view").withColor(UnshatteredUtils.GRAY))
+                        .append(Component.literal("\n\n"))
+                        .append(Component.translatable("screen.unshattered.forge.start_process").withColor(UnshatteredUtils.YELLOW));
+            } else {
+                emptySlot = false;
+
+                UnshatteredRarity rarity = UnshatteredUtils.getItemRarity(itemStack);
+                tooltipText = itemStack.getItemName().copy().withColor(rarity.getColour(1.0f))
+                        .append(Component.literal("\n"))
+                        .append(Component.translatable("screen.unshattered.forge.time_remaining").withColor(UnshatteredUtils.GRAY))
+                        .append(Component.literal(": ").withColor(UnshatteredUtils.GRAY))
+                        .append(Component.literal(getTimeDisplay(Instant.now().getEpochSecond() - endTime)).withColor(UnshatteredUtils.GREEN))
+                        .append("\n")
+                        .append(Component.literal(String.valueOf(LocalDateTime.ofInstant(Instant.ofEpochSecond(endTime), ZoneId.systemDefault()))).withColor(UnshatteredUtils.CYAN));
+            }
+
+            super(minecraft, 0, 0, 16, 16, Component.translatable("widget.unshattered.narration.forge_item"), itemStack, false, false);
+
+            setTooltip(Tooltip.create(tooltipText));
+        }
+
+        @Override
+        protected void extractWidgetRenderState(@NonNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+            if (isHovered()) {
+                graphics.requestCursor(CursorTypes.POINTING_HAND);
+            }
+
+            super.extractWidgetRenderState(graphics, mouseX, mouseY, a);
+        }
+
+        @Override
+        public boolean isFocused() {
+            return false;
+        }
+    }
+
 
     private static class ForgeCategoryWidget extends ItemDisplayWidget {
         private static final int ITEM_SIZE = 16;
@@ -247,23 +308,10 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
             graphics.setTooltipForNextFrame(minecraft.font, lines, itemStack.getTooltipImage(), x, y);
         }
 
-        // intellij got really pissed off at me until i made this for whatever reason
-        private @NonNull String getTimeDisplay(long seconds) {
-            if (seconds < 60) {
-                return seconds + "s";
-            } else if (seconds < 3600) {
-                return (seconds / 60) + "m";
-            } else if (seconds < 86400) {
-                return (seconds / 3600) + "m";
-            } else {
-                return (seconds / 86400) + "d";
-            }
-        }
-
         @Override
         public void onClick(@NonNull MouseButtonEvent event, boolean doubleClick) {
             ClientPacketDistributor.sendToServer(new AttemptForgeItemPacket(Instant.now().getEpochSecond(),
-                    new ItemStack(forgeRecipe.result().item()),
+                    forgeRecipe,
                     currentSlotIndex)
             );
 
@@ -286,5 +334,18 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
                     rebuildWidgets();
                 })
         );
+    }
+
+    // intellij got really pissed off at me until i made this for whatever reason
+    private static @NonNull String getTimeDisplay(long seconds) {
+        if (seconds < 60) {
+            return seconds + "s";
+        } else if (seconds < 3600) {
+            return (seconds / 60) + "m";
+        } else if (seconds < 86400) {
+            return (seconds / 3600) + "m";
+        } else {
+            return (seconds / 86400) + "d";
+        }
     }
 }
