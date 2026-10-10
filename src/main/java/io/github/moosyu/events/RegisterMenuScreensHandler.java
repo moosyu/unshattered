@@ -7,8 +7,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
-import java.util.List;
-
 import static io.github.moosyu.Unshattered.MODID;
 
 @EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
@@ -20,7 +18,7 @@ public class RegisterMenuScreensHandler {
         event.register(UnshatteredMenus.STORAGE_MENU_TYPE.get(), StorageScreen::new);
         event.register(UnshatteredMenus.REFORGE_ANVIL_MENU_TYPE.get(), ReforgeAnvilScreen::new);
         event.register(UnshatteredMenus.DRILL_ATTACHMENT_MENU_TYPE.get(), DrillAttachmentScreen::new);
-        event.register(UnshatteredMenus.STORE_MENU_TYPE.get(), StoreScreen::new);
+        event.register(UnshatteredMenus.VENDOR_MENU_TYPE.get(), VendorScreen::new);
         event.register(UnshatteredMenus.FORGE_MENU_TYPE.get(), ForgeScreen::new);
     }
 }

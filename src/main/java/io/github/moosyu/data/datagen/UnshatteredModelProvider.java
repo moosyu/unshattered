@@ -19,7 +19,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -188,36 +187,40 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.GOBLIN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.OIL_BARREL.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.BIOFUEL.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_WHEAT.get(), Items.WHEAT, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_POTATO.get(), Items.POTATO, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_CARROT.get(), Items.CARROT, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ROOKIE_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 
-        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_GOLD_BLOCK.get(), Blocks.GOLD_BLOCK);
-        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_DIAMOND_BLOCK.get(), Blocks.DIAMOND_BLOCK);
-        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_EMERALD_BLOCK.get(), Blocks.EMERALD_BLOCK);
-        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_IRON_BLOCK.get(), Blocks.IRON_BLOCK);
-        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_COAL_BLOCK.get(), Blocks.COAL_BLOCK);
-        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_LAPIS_BLOCK.get(), Blocks.LAPIS_BLOCK);
-        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_REDSTONE_BLOCK.get(), Blocks.REDSTONE_BLOCK);
-        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_COBBLESTONE.get(), Blocks.COBBLESTONE);
-        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_OBSIDIAN.get(), Blocks.OBSIDIAN);
-        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_CLAY_BLOCK.get(), Blocks.CLAY);
-        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_SPONGE.get(), Blocks.SPONGE);
-        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_WET_SPONGE.get(), Blocks.WET_SPONGE);
-        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.BEDROCK.get(), Blocks.BEDROCK);
-        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_ICE.get(), Blocks.ICE);
-        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_PACKED_ICE.get(), Blocks.PACKED_ICE);
-        createCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_WOOL.get(), Blocks.WHITE_WOOL);
-        createFlatBlockTextureItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_DANDELION.get(), Blocks.DANDELION);
-        createFlatBlockTextureItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_POPPY.get(), Blocks.POPPY);
+        copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_GOLD_BLOCK.get(), Blocks.GOLD_BLOCK);
+        copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_DIAMOND_BLOCK.get(), Blocks.DIAMOND_BLOCK);
+        copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_EMERALD_BLOCK.get(), Blocks.EMERALD_BLOCK);
+        copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_IRON_BLOCK.get(), Blocks.IRON_BLOCK);
+        copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_COAL_BLOCK.get(), Blocks.COAL_BLOCK);
+        copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_LAPIS_BLOCK.get(), Blocks.LAPIS_BLOCK);
+        copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_REDSTONE_BLOCK.get(), Blocks.REDSTONE_BLOCK);
+        copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_COBBLESTONE.get(), Blocks.COBBLESTONE);
+        copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_OBSIDIAN.get(), Blocks.OBSIDIAN);
+        copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_CLAY_BLOCK.get(), Blocks.CLAY);
+        copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_SPONGE.get(), Blocks.SPONGE);
+        copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_WET_SPONGE.get(), Blocks.WET_SPONGE);
+        copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.BEDROCK.get(), Blocks.BEDROCK);
+        copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_ICE.get(), Blocks.ICE);
+        copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_PACKED_ICE.get(), Blocks.PACKED_ICE);
+        copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_WOOL.get(), Blocks.WHITE_WOOL);
+        copyFlatBlockTextureItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_DANDELION.get(), Blocks.DANDELION);
+        copyFlatBlockTextureItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_POPPY.get(), Blocks.POPPY);
 
         itemModels.generateFlatItem(UnshatteredItems.HEALING_TISSUE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFishingRod(UnshatteredItems.CHALLENGING_ROD.get());
-        createColumnBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_FIG_LOG.get(), UnshatteredBlocks.FIG_LOG_BLOCK.get());
-        createColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_OAK_LOG.get(), Blocks.OAK_LOG);
-        createColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_BIRCH_LOG.get(), Blocks.BIRCH_LOG);
-        createColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_SPRUCE_LOG.get(), Blocks.SPRUCE_LOG);
-        createColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_JUNGLE_LOG.get(), Blocks.JUNGLE_LOG);
-        createColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_ACACIA_LOG.get(), Blocks.ACACIA_LOG);
-        createColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_DARK_OAK_LOG.get(), Blocks.DARK_OAK_LOG);
-        createColumnBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_BONE_BLOCK.get(), Blocks.BONE_BLOCK);
+        copyColumnBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_FIG_LOG.get(), UnshatteredBlocks.FIG_LOG_BLOCK.get());
+        copyColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_OAK_LOG.get(), Blocks.OAK_LOG);
+        copyColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_BIRCH_LOG.get(), Blocks.BIRCH_LOG);
+        copyColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_SPRUCE_LOG.get(), Blocks.SPRUCE_LOG);
+        copyColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_JUNGLE_LOG.get(), Blocks.JUNGLE_LOG);
+        copyColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_ACACIA_LOG.get(), Blocks.ACACIA_LOG);
+        copyColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_DARK_OAK_LOG.get(), Blocks.DARK_OAK_LOG);
+        copyColumnBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_BONE_BLOCK.get(), Blocks.BONE_BLOCK);
 
         itemModels.itemModelOutput.accept(UnshatteredItems.FISHING_ROD.get(),
                 ItemModelUtils.conditional(new FishingRodCast(),
@@ -237,42 +240,42 @@ public class UnshatteredModelProvider extends ModelProvider {
 
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_OAK_LOG_BLOCK.get(),
                 BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(UnshatteredBlocks.BREAKABLE_OAK_LOG_BLOCK.get(),
-                        createColumnNoSideSuffix(Blocks.OAK_LOG),
+                        copyColumnNoSideSuffix(Blocks.OAK_LOG),
                         blockModels.modelOutput)
                 ))
         );
 
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_BIRCH_LOG_BLOCK.get(),
                 BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(UnshatteredBlocks.BREAKABLE_BIRCH_LOG_BLOCK.get(),
-                        createColumnNoSideSuffix(Blocks.BIRCH_LOG),
+                        copyColumnNoSideSuffix(Blocks.BIRCH_LOG),
                         blockModels.modelOutput)
                 ))
         );
 
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_SPRUCE_LOG_BLOCK.get(),
                 BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(UnshatteredBlocks.BREAKABLE_SPRUCE_LOG_BLOCK.get(),
-                        createColumnNoSideSuffix(Blocks.SPRUCE_LOG),
+                        copyColumnNoSideSuffix(Blocks.SPRUCE_LOG),
                         blockModels.modelOutput)
                 ))
         );
 
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_JUNGLE_LOG_BLOCK.get(),
                 BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(UnshatteredBlocks.BREAKABLE_JUNGLE_LOG_BLOCK.get(),
-                        createColumnNoSideSuffix(Blocks.JUNGLE_LOG),
+                        copyColumnNoSideSuffix(Blocks.JUNGLE_LOG),
                         blockModels.modelOutput)
                 ))
         );
 
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_ACACIA_LOG_BLOCK.get(),
                 BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(UnshatteredBlocks.BREAKABLE_ACACIA_LOG_BLOCK.get(),
-                        createColumnNoSideSuffix(Blocks.ACACIA_LOG),
+                        copyColumnNoSideSuffix(Blocks.ACACIA_LOG),
                         blockModels.modelOutput)
                 ))
         );
 
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_DARK_OAK_LOG_BLOCK.get(),
                 BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(UnshatteredBlocks.BREAKABLE_DARK_OAK_LOG_BLOCK.get(),
-                        createColumnNoSideSuffix(Blocks.DARK_OAK_LOG),
+                        copyColumnNoSideSuffix(Blocks.DARK_OAK_LOG),
                         blockModels.modelOutput)
                 ))
         );
@@ -287,28 +290,23 @@ public class UnshatteredModelProvider extends ModelProvider {
                 )
         );
 
-        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(
-                UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK.get(),
-                BlockModelGenerators.plainVariant(ModelTemplates.CROP.create(
-                        UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK.get(),
-                        TextureMapping.crop(TextureMapping.getBlockTexture(Blocks.WHEAT, "_stage7")),
-                        blockModels.modelOutput
-                ))
-        ));
+        copyCropBlock(blockModels, UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK.get(), Blocks.WHEAT, "_stage7");
+        copyCropBlock(blockModels, UnshatteredBlocks.BREAKABLE_CARROT_BLOCK.get(), Blocks.CARROTS, "_stage3");
+        copyCropBlock(blockModels, UnshatteredBlocks.BREAKABLE_POTATO_BLOCK.get(), Blocks.POTATOES, "_stage3");
 
-        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get(), Blocks.STONE);
-        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(), Blocks.COBBLESTONE);
-        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_COAL_ORE_BLOCK.get(), Blocks.COAL_ORE);
-        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_IRON_ORE_BLOCK.get(), Blocks.IRON_ORE);
-        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_COPPER_ORE_BLOCK.get(), Blocks.COPPER_ORE);
-        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_GOLD_ORE_BLOCK.get(), Blocks.GOLD_ORE);
-        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_REDSTONE_ORE_BLOCK.get(), Blocks.REDSTONE_ORE);
-        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_EMERALD_ORE_BLOCK.get(), Blocks.EMERALD_ORE);
-        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_DIAMOND_ORE_BLOCK.get(), Blocks.DIAMOND_ORE);
-        createVanillaCubeBlock(blockModels, UnshatteredBlocks.PURE_DIAMOND_BLOCK.get(), Blocks.DIAMOND_BLOCK);
-        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_OBSIDIAN_BLOCK.get(), Blocks.OBSIDIAN);
-        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_LAPIS_ORE_BLOCK.get(), Blocks.LAPIS_ORE);
-        createVanillaCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_ICE_BLOCK.get(), Blocks.ICE);
+        copyCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get(), Blocks.STONE);
+        copyCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(), Blocks.COBBLESTONE);
+        copyCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_COAL_ORE_BLOCK.get(), Blocks.COAL_ORE);
+        copyCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_IRON_ORE_BLOCK.get(), Blocks.IRON_ORE);
+        copyCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_COPPER_ORE_BLOCK.get(), Blocks.COPPER_ORE);
+        copyCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_GOLD_ORE_BLOCK.get(), Blocks.GOLD_ORE);
+        copyCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_REDSTONE_ORE_BLOCK.get(), Blocks.REDSTONE_ORE);
+        copyCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_EMERALD_ORE_BLOCK.get(), Blocks.EMERALD_ORE);
+        copyCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_DIAMOND_ORE_BLOCK.get(), Blocks.DIAMOND_ORE);
+        copyCubeBlock(blockModels, UnshatteredBlocks.PURE_DIAMOND_BLOCK.get(), Blocks.DIAMOND_BLOCK);
+        copyCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_OBSIDIAN_BLOCK.get(), Blocks.OBSIDIAN);
+        copyCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_LAPIS_ORE_BLOCK.get(), Blocks.LAPIS_ORE);
+        copyCubeBlock(blockModels, UnshatteredBlocks.BREAKABLE_ICE_BLOCK.get(), Blocks.ICE);
 
         blockModels.createTrivialCube(UnshatteredBlocks.BREAKABLE_COBBLED_MITHRIL_BLOCK.get());
         blockModels.createTrivialCube(UnshatteredBlocks.BREAKABLE_SOFT_MITHRIL_BLOCK.get());
@@ -322,7 +320,7 @@ public class UnshatteredModelProvider extends ModelProvider {
      * @param breakableBlock the breakable block
      * @param blockTexture the block being used for the texture
      */
-    private void createVanillaCubeBlock(BlockModelGenerators blockModels, Block breakableBlock, Block blockTexture) {
+    private void copyCubeBlock(BlockModelGenerators blockModels, Block breakableBlock, Block blockTexture) {
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(breakableBlock,
                 BlockModelGenerators.plainVariant(ModelTemplates.CUBE_ALL.create(breakableBlock,
                         TextureMapping.cube(blockTexture),
@@ -338,7 +336,7 @@ public class UnshatteredModelProvider extends ModelProvider {
      * @param blockItem the item being textured
      * @param blockTexture the block to be used for the texture
      */
-    private void createCubeBlockItemModel(ItemModelGenerators itemModels, BlockModelGenerators blockModels, Item blockItem, Block blockTexture) {
+    private void copyCubeBlockItemModel(ItemModelGenerators itemModels, BlockModelGenerators blockModels, Item blockItem, Block blockTexture) {
         itemModels.itemModelOutput.accept(blockItem,
                 ItemModelUtils.plainModel(ModelTemplates.CUBE_ALL.create(UnshatteredUtils.getUnshatteredIdentifier("block/" + BuiltInRegistries.ITEM.getKey(blockItem).getPath()),
                         TextureMapping.cube(blockTexture),
@@ -350,7 +348,7 @@ public class UnshatteredModelProvider extends ModelProvider {
     /**
      * gives an item the flattened version of a block (like a flower)
      */
-    private void createFlatBlockTextureItemModel(ItemModelGenerators itemModels, BlockModelGenerators blockModels, Item item, Block textureBlock) {
+    private void copyFlatBlockTextureItemModel(ItemModelGenerators itemModels, BlockModelGenerators blockModels, Item item, Block textureBlock) {
         Identifier modelId = ModelTemplates.FLAT_ITEM.create(
                 ModelLocationUtils.getModelLocation(item),
                 TextureMapping.layer0(textureBlock),
@@ -366,7 +364,7 @@ public class UnshatteredModelProvider extends ModelProvider {
      * @param blockItem the item being textured
      * @param blockTexture the block to be used for the texture
      */
-    private void createColumnBlockItemModel(ItemModelGenerators itemModels, BlockModelGenerators blockModels, Item blockItem, Block blockTexture) {
+    private void copyColumnBlockItemModel(ItemModelGenerators itemModels, BlockModelGenerators blockModels, Item blockItem, Block blockTexture) {
         itemModels.itemModelOutput.accept(blockItem,
                 ItemModelUtils.plainModel(ModelTemplates.CUBE_COLUMN.create(UnshatteredUtils.getUnshatteredIdentifier("block/" + BuiltInRegistries.ITEM.getKey(blockItem).getPath()),
                         TextureMapping.column(blockTexture),
@@ -383,16 +381,33 @@ public class UnshatteredModelProvider extends ModelProvider {
      * @param blockItem the item being textured
      * @param blockTexture the block to be used for the texture
      */
-    private void createColumnBlockItemModelNoSideSuffix(ItemModelGenerators itemModels, BlockModelGenerators blockModels, Item blockItem, Block blockTexture) {
+    private void copyColumnBlockItemModelNoSideSuffix(ItemModelGenerators itemModels, BlockModelGenerators blockModels, Item blockItem, Block blockTexture) {
         itemModels.itemModelOutput.accept(blockItem,
                 ItemModelUtils.plainModel(ModelTemplates.CUBE_COLUMN.create(UnshatteredUtils.getUnshatteredIdentifier("block/" + BuiltInRegistries.ITEM.getKey(blockItem).getPath()),
-                        createColumnNoSideSuffix(blockTexture),
+                        copyColumnNoSideSuffix(blockTexture),
                         blockModels.modelOutput)
                 )
         );
     }
 
-    private TextureMapping createColumnNoSideSuffix(Block blockTexture) {
+    /**
+     * copies a vanilla crop's texture
+     * @param newBlock the breakable block copying the vanilla texture
+     * @param vanillaBlock the vanilla crop having its texture taken
+     * @param suffix for a blockstate (which most vanilla crops have). final stage would generally be _stage7
+     */
+    private void copyCropBlock(BlockModelGenerators blockModels, Block newBlock, Block vanillaBlock, String suffix) {
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(
+                newBlock,
+                BlockModelGenerators.plainVariant(ModelTemplates.CROP.create(
+                        newBlock,
+                        TextureMapping.crop(TextureMapping.getBlockTexture(vanillaBlock, suffix)),
+                        blockModels.modelOutput
+                ))
+        ));
+    }
+
+    private TextureMapping copyColumnNoSideSuffix(Block blockTexture) {
         return new TextureMapping().put(TextureSlot.SIDE, TextureMapping.getBlockTexture(blockTexture)).put(TextureSlot.END, TextureMapping.getBlockTexture(blockTexture, "_top"));
     }
 }

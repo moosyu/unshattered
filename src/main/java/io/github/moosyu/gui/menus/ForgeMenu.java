@@ -17,7 +17,7 @@ public class ForgeMenu extends AbstractContainerMenu {
     public ForgeMenu(int containerId, Inventory inventory, Container container) {
         super(UnshatteredMenus.FORGE_MENU_TYPE.get(), containerId);
 
-        addStandardInventorySlots(inventory, 8, 121);
+        addStandardInventorySlots(inventory, 8, 122);
     }
 
     @Override

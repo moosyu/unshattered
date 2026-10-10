@@ -1,10 +1,7 @@
 package io.github.moosyu.entities;
 
 import io.github.moosyu.entities.mobs.GraveyardZombieVillager;
-import io.github.moosyu.entities.npcs.BubuNPC;
-import io.github.moosyu.entities.npcs.ForgerNPC;
-import io.github.moosyu.entities.npcs.JotraelineGreatforgeNPC;
-import io.github.moosyu.entities.npcs.WoolWeaverNPC;
+import io.github.moosyu.entities.npcs.*;
 import io.github.moosyu.entities.projectiles.HomingBee;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.registries.Registries;
@@ -104,6 +101,17 @@ public class UnshatteredEntities {
                     .build(ResourceKey.create(
                             Registries.ENTITY_TYPE,
                             BubuNPC.BUBU_IDENTIFIER)
+                    )
+    );
+
+    public static final Supplier<EntityType<JennyNPC>> JENNY = ENTITY_TYPES.register(
+            "jenny",
+            () -> EntityType.Builder.of(JennyNPC::new, MobCategory.CREATURE)
+                    .sized(0.6f, 1.8f)
+                    .eyeHeight(1.62f)
+                    .build(ResourceKey.create(
+                            Registries.ENTITY_TYPE,
+                            JennyNPC.JENNY_IDENTIFIER)
                     )
     );
 }

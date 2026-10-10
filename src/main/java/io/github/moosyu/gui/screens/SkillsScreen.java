@@ -10,6 +10,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import org.jspecify.annotations.NonNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SkillsScreen extends SimpleScreen {
     private final PlayerSkillsAttachment.Skill[] SKILLS = PlayerSkillsAttachment.Skill.values();
     private final Player player;
@@ -33,11 +36,15 @@ public class SkillsScreen extends SimpleScreen {
             PlayerSkillsAttachment.Skill currentSkill = SKILLS[i];
             int currentLevel = skills.getLevel(skills.getExp(currentSkill));
             String skillExpText;
+            int xPos = backgroundTopLeft.x + X_OFFSET;
+            int yPos = (20 * i) + backgroundTopLeft.y + Y_OFFSET;
+            float nextLevelExp = skills.getNextLevelExpRequirement(currentLevel);
+            float currentLevelExp = skills.getCurrentLevelExp(currentSkill, currentLevel);
 
             if (skills.isMaxLevel(currentLevel)) {
-                skillExpText = String.valueOf((int) skills.getExp(currentSkill));
+                skillExpText = String.format("%,d", (int) skills.getExp(currentSkill));
             } else {
-                skillExpText = (int) skills.getCurrentLevelExp(currentSkill, currentLevel) + "/" + (int) skills.getNextLevelExpRequirement(currentLevel);
+                skillExpText = String.format("%,d", (int) (skills.getNextLevelExpRequirement(currentLevel) - skills.getCurrentLevelExp(currentSkill, currentLevel)));
             }
 
             graphics.text(font,
@@ -47,15 +54,15 @@ public class SkillsScreen extends SimpleScreen {
                             + skillExpText
                             + ")"
                     ),
-                    backgroundTopLeft.x + X_OFFSET,
-                    (20 * i) + backgroundTopLeft.y + Y_OFFSET,
+                    xPos,
+                    yPos,
                     0xFFFFFFFF
             );
 
             graphics.blit(RenderPipelines.GUI_TEXTURED,
                     UnshatteredUtils.getUnshatteredIdentifier("textures/gui/sprites/widgets/skill_exp_bar_empty.png"),
-                    backgroundTopLeft.x + X_OFFSET,
-                    (20 * i) + 12 + backgroundTopLeft.y + Y_OFFSET,
+                    xPos,
+                    yPos + 12,
                     0,
                     0,
                     BAR_WIDTH,
@@ -66,8 +73,8 @@ public class SkillsScreen extends SimpleScreen {
 
             graphics.blit(RenderPipelines.GUI_TEXTURED,
                     UnshatteredUtils.getUnshatteredIdentifier("textures/gui/sprites/widgets/skill_exp_bar_filled.png"),
-                    backgroundTopLeft.x + X_OFFSET,
-                    (20 * i) + 12 + backgroundTopLeft.y + Y_OFFSET,
+                    xPos,
+                    yPos + 12,
                     0,
                     0,
                     (int) (BAR_WIDTH * skills.getPercentageToNextLevel(skills.getExp(currentSkill))),
@@ -75,6 +82,27 @@ public class SkillsScreen extends SimpleScreen {
                     BAR_WIDTH,
                     BAR_HEIGHT
             );
+
+            if (mouseX >= xPos
+                    && mouseX < xPos + BAR_WIDTH
+                    && mouseY >= yPos
+                    && mouseY < yPos + 12 + BAR_HEIGHT
+            ) {
+
+                if (skills.isMaxLevel(currentLevel)) {
+                    skillExpText = String.format("%,d", (int) skills.getExp(currentSkill));
+                } else {
+                    skillExpText = String.format("%,d", (int) (skills.getNextLevelExpRequirement(currentLevel) - skills.getCurrentLevelExp(currentSkill, currentLevel)));
+                }
+                List<Component> tooltip = new ArrayList<>();
+
+                tooltip.add(Component.translatable("skills.name.unshattered." + currentSkill.getId()).withColor(UnshatteredUtils.GREEN));
+                tooltip.add(Component.translatable("skills.description.unshattered." + currentSkill.getId()).withColor(UnshatteredUtils.GRAY));
+                tooltip.add(Component.empty());
+                tooltip.add(Component.translatable("screen.unshattered.skills.progress").withColor(UnshatteredUtils.GRAY));
+
+                graphics.setComponentTooltipForNextFrame(font, tooltip, mouseX, mouseY);
+            }
         }
     }
 }

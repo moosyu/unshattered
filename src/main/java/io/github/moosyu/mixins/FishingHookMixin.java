@@ -89,83 +89,82 @@ public abstract class FishingHookMixin extends Projectile {
         RandomSource random = hook.getRandom();
         double fishingSpeed = player.getAttributeValue(UnshatteredAttributeValues.FISHING_SPEED.holder);
         double fishingSpeedPercentage = (UnshatteredAttributeValues.FISHING_SPEED.max + 20 - fishingSpeed) / UnshatteredAttributeValues.FISHING_SPEED.max;
-        if (this.nibble > 0) {
-            --this.nibble;
-            if (this.nibble <= 0) {
-                this.timeUntilLured = 0;
-                this.timeUntilHooked = 0;
+        if (nibble > 0) {
+            --nibble;
+            if (nibble <= 0) {
+                timeUntilLured = 0;
+                timeUntilHooked = 0;
                 hook.getEntityData().set(DATA_BITING, false);
             }
-        } else if (this.timeUntilHooked > 0) {
-            this.timeUntilHooked -= 1;
-            if (this.timeUntilHooked > 0) {
-                this.fishAngle = this.fishAngle + (float)random.triangle(0.0, 9.188);
-                float angle = this.fishAngle * (float) (Math.PI / 180.0);
+        } else if (timeUntilHooked > 0) {
+            timeUntilHooked -= 1;
+            if (timeUntilHooked > 0) {
+                fishAngle += (float) random.triangle(0.0, 9.188);
+                float angle = fishAngle * (float) (Math.PI / 180.0);
                 float angleSin = Mth.sin(angle);
                 float angleCos = Mth.cos(angle);
-                double fishX = hook.getX() + angleSin * this.timeUntilHooked * 0.1F;
-                double fishY = Mth.floor(hook.getY()) + 1.0F;
-                double fishZ = hook.getZ() + angleCos * this.timeUntilHooked * 0.1F;
+                double fishX = hook.getX() + angleSin * timeUntilHooked * 0.1f;
+                double fishY = Mth.floor(hook.getY()) + 1.0f;
+                double fishZ = hook.getZ() + angleCos * timeUntilHooked * 0.1f;
                 BlockState splashBlockState = level.getBlockState(BlockPos.containing(fishX, fishY - 1.0, fishZ));
                 if (splashBlockState.is(Blocks.WATER)) {
-                    if (random.nextFloat() < 0.15F) {
-                        level.sendParticles(ParticleTypes.BUBBLE, fishX, fishY - 0.1F, fishZ, 1, angleSin, 0.1, angleCos, 0.0);
+                    if (random.nextFloat() < 0.15f) {
+                        level.sendParticles(ParticleTypes.BUBBLE, fishX, fishY - 0.1f, fishZ, 1, angleSin, 0.1, angleCos, 0.0);
                     }
 
-                    float particleXMovement = angleSin * 0.04F;
-                    float particleZMovement = angleCos * 0.04F;
+                    float particleXMovement = angleSin * 0.04f;
+                    float particleZMovement = angleCos * 0.04f;
                     level.sendParticles(ParticleTypes.FISHING, fishX, fishY, fishZ, 0, particleZMovement, 0.01, -particleXMovement, 1.0);
                     level.sendParticles(ParticleTypes.FISHING, fishX, fishY, fishZ, 0, -particleZMovement, 0.01, particleXMovement, 1.0);
                 }
             } else {
-                level.playSound(null, hook.getX(), hook.getY(), hook.getZ(), SoundEvents.FISHING_BOBBER_SPLASH, hook.getSoundSource(), 0.25f, 1.0F + (random.nextFloat() - random.nextFloat()) * 0.4F);
+                level.playSound(null, hook.getX(), hook.getY(), hook.getZ(), SoundEvents.FISHING_BOBBER_SPLASH, hook.getSoundSource(), 0.25f, 1.0f + (random.nextFloat() - random.nextFloat()) * 0.4f);
                 double y = hook.getY() + 0.5;
-                level.sendParticles(ParticleTypes.BUBBLE, hook.getX(), y, hook.getZ(), (int)(1.0F + hook.getBbWidth() * 20.0F), hook.getBbWidth(), 0.0, hook.getBbWidth(), 0.2F);
-                level.sendParticles(
-                        ParticleTypes.FISHING,
+                level.sendParticles(ParticleTypes.BUBBLE, hook.getX(), y, hook.getZ(), (int)(1.0f + hook.getBbWidth() * 20.0f), hook.getBbWidth(), 0.0, hook.getBbWidth(), 0.2f);
+                level.sendParticles(ParticleTypes.FISHING,
                         hook.getX(),
                         y,
                         hook.getZ(),
-                        (int)(1.0F + hook.getBbWidth() * 20.0F),
+                        (int)(1.0f + hook.getBbWidth() * 20.0f),
                         hook.getBbWidth(),
                         0.0,
                         hook.getBbWidth(),
-                        0.2F
+                        0.2f
                 );
-                this.nibble = Mth.nextInt(random, 20, 40);
+                nibble = Mth.nextInt(random, 20, 40);
                 hook.getEntityData().set(DATA_BITING, true);
                 System.out.println("Nibbling");
             }
         } else if (this.timeUntilLured > 0) {
-            this.timeUntilLured -= 1;
-            float teaseChance = 0.15F;
-            if (this.timeUntilLured < 20) {
-                teaseChance += (20 - this.timeUntilLured) * 0.05F;
-            } else if (this.timeUntilLured < 40) {
-                teaseChance += (40 - this.timeUntilLured) * 0.02F;
-            } else if (this.timeUntilLured < 60) {
-                teaseChance += (60 - this.timeUntilLured) * 0.01F;
+            timeUntilLured -= 1;
+            float teaseChance = 0.15f;
+            if (timeUntilLured < 20) {
+                teaseChance += (20 - timeUntilLured) * 0.05f;
+            } else if (timeUntilLured < 40) {
+                teaseChance += (40 - timeUntilLured) * 0.02f;
+            } else if (timeUntilLured < 60) {
+                teaseChance += (60 - timeUntilLured) * 0.01f;
             }
 
             if (random.nextFloat() < teaseChance) {
-                float angle = Mth.nextFloat(random, 0.0F, 360.0F) * (float) (Math.PI / 180.0);
-                float dist = Mth.nextFloat(random, 25.0F, 60.0F);
+                float angle = Mth.nextFloat(random, 0.0f, 360.0f) * (float) (Math.PI / 180.0);
+                float dist = Mth.nextFloat(random, 25.0f, 60.0f);
                 double fishX = hook.getX() + Mth.sin(angle) * dist * 0.1;
-                double fishY = Mth.floor(hook.getY()) + 1.0F;
+                double fishY = Mth.floor(hook.getY()) + 1.0f;
                 double fishZ = hook.getZ() + Mth.cos(angle) * dist * 0.1;
                 BlockState splashBlockState = level.getBlockState(BlockPos.containing(fishX, fishY - 1.0, fishZ));
                 if (splashBlockState.is(Blocks.WATER)) {
-                    level.sendParticles(ParticleTypes.SPLASH, fishX, fishY, fishZ, 2 + random.nextInt(2), 0.1F, 0.0, 0.1F, 0.0);
+                    level.sendParticles(ParticleTypes.SPLASH, fishX, fishY, fishZ, 2 + random.nextInt(2), 0.1f, 0.0, 0.1f, 0.0);
                 }
             }
 
-            if (this.timeUntilLured <= 0) {
-                this.fishAngle = Mth.nextFloat(random, 0.0F, 360.0F);
-                this.timeUntilHooked = random.nextInt(10, Math.max(20, (int) (100 * fishingSpeedPercentage)));
+            if (timeUntilLured <= 0) {
+                fishAngle = Mth.nextFloat(random, 0.0f, 360.0f);
+                timeUntilHooked = random.nextInt(10, Math.max(20, (int) (100 * fishingSpeedPercentage)));
                 System.out.println("Fish approaching");
             }
         } else {
-            this.timeUntilLured = random.nextInt(20, Math.max(40, (int) (160 * fishingSpeedPercentage)));
+            timeUntilLured = random.nextInt(20, Math.max(40, (int) (160 * fishingSpeedPercentage)));
         }
     }
 }

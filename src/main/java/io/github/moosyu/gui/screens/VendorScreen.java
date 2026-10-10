@@ -1,8 +1,8 @@
 package io.github.moosyu.gui.screens;
 
 import com.mojang.blaze3d.platform.cursor.CursorTypes;
-import io.github.moosyu.data.ShopItem;
-import io.github.moosyu.gui.menus.StoreMenu;
+import io.github.moosyu.data.VendorItem;
+import io.github.moosyu.gui.menus.VendorMenu;
 import io.github.moosyu.packets.AttemptPurchasePacket;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -14,6 +14,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.input.MouseButtonInfo;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Inventory;
@@ -25,17 +26,17 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Consumer;
 
-public class StoreScreen extends AbstractContainerScreen<StoreMenu> {
+public class VendorScreen extends AbstractContainerScreen<VendorMenu> {
     private static final int IMAGE_WIDTH = 176;
     private static final int IMAGE_HEIGHT = 200;
     private static final int BOX_Y = 56;
 
-    private final StoreMenu menu;
-    private final Map<ShopItemWidget, List<Component>> widgetTooltips = new HashMap<>();
-    @Nullable private ShopItem expandedItem = null;
+    private final VendorMenu menu;
+    private final Map<VendorItemWidget, List<Component>> widgetTooltips = new HashMap<>();
+    @Nullable private VendorItem expandedItem = null;
     private int itemInputAmount = 1;
 
-    public StoreScreen(StoreMenu menu, Inventory inventory, Component title) {
+    public VendorScreen(VendorMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
 
         this.menu = menu;
@@ -49,33 +50,33 @@ public class StoreScreen extends AbstractContainerScreen<StoreMenu> {
             widgetTooltips.clear();
 
             int columns = (IMAGE_WIDTH - 14) / 16;
-            for (int i = 0; i < menu.getShopItems().size(); i++) {
-                ShopItem shopItem = menu.getShopItems().get(i);
-                ShopItemWidget shopItemWidget = new ShopItemWidget(panelX() + (16 * (i % columns)) + 8,
+            for (int i = 0; i < menu.getVendorItems().size(); i++) {
+                VendorItem vendorItem = menu.getVendorItems().get(i);
+                VendorItemWidget vendorItemWidget = new VendorItemWidget(panelX() + (16 * (i % columns)) + 8,
                         (panelY() - 28) + (16 * (i / columns)) + 48,
                         16,
                         16,
-                        shopItem,
+                        vendorItem,
                         this::openSellPage
                 );
 
-                List<Component> itemTooltip = new ArrayList<>(getTooltipFromItem(minecraft, new ItemStack(shopItem.item().value())));
+                List<Component> itemTooltip = new ArrayList<>(getTooltipFromItem(minecraft, new ItemStack(vendorItem.item().value())));
 
-                itemTooltip.addAll(buildPriceLines(shopItem));
+                itemTooltip.addAll(buildPriceLines(vendorItem));
                 itemTooltip.add(Component.empty());
-                itemTooltip.add(Component.translatable("screen.unshattered.store.text.left_click").withColor(0xFFFFFF55));
+                itemTooltip.add(Component.translatable("screen.unshattered.vendor.text.left_click").withColor(0xFFFFFF55));
 
-                if (shopItem.sellMultiple()) {
-                    itemTooltip.add(Component.translatable("screen.unshattered.store.text.right_click").withColor(0xFFFFFF55));
+                if (vendorItem.sellMultiple()) {
+                    itemTooltip.add(Component.translatable("screen.unshattered.vendor.text.right_click").withColor(0xFFFFFF55));
                 }
 
-                widgetTooltips.put(shopItemWidget, itemTooltip);
+                widgetTooltips.put(vendorItemWidget, itemTooltip);
 
-                addRenderableWidget(shopItemWidget);
+                addRenderableWidget(vendorItemWidget);
             }
         } else {
             int editBoxWidth = 40;
-            EditBox quantityEntryBox = new EditBox(font, editBoxWidth, 12, Component.translatable("screen.narration.unshattered.store.price"));
+            EditBox quantityEntryBox = new EditBox(font, editBoxWidth, 12, Component.translatable("screen.narration.unshattered.vendor.price"));
             quantityEntryBox.setValue(String.valueOf(itemInputAmount));
             quantityEntryBox.setPosition(centerX() - editBoxWidth / 2, panelY() + BOX_Y);
             quantityEntryBox.setFilter(filter -> filter.isEmpty() || filter.matches("^[0-9]+$"));
@@ -88,13 +89,11 @@ public class StoreScreen extends AbstractContainerScreen<StoreMenu> {
             });
 
             int buyButtonWidth = 30;
-            Button button = Button.builder(Component.literal("Buy"), _ -> {
+            SoundlessButton buyButton = new SoundlessButton(centerX() - (buyButtonWidth * 2), panelY() + BOX_Y - 6, buyButtonWidth, _ -> {
                 if (itemInputAmount > 0 && expandedItem != null) {
-                    ClientPacketDistributor.sendToServer(new AttemptPurchasePacket(expandedItem.item().value().getDefaultInstance(), expandedItem.price(), expandedItem.itemTradeRequirements()));
+                    ClientPacketDistributor.sendToServer(new AttemptPurchasePacket(new ItemStack(expandedItem.item(), itemInputAmount), expandedItem.price(), expandedItem.itemTradeRequirements()));
                 }
-            }).build();
-            button.setWidth(buyButtonWidth);
-            button.setPosition(centerX() - (buyButtonWidth * 2), panelY() + BOX_Y - 5);
+            });
 
             int backButtonWidth = 30;
             Button backButton = Button.builder(Component.literal("Back"), _ -> {
@@ -106,7 +105,7 @@ public class StoreScreen extends AbstractContainerScreen<StoreMenu> {
             backButton.setPosition(centerX() + backButtonWidth, panelY() + BOX_Y - 5);
 
             addRenderableWidget(quantityEntryBox);
-            addRenderableWidget(button);
+            addRenderableWidget(buyButton);
             addRenderableWidget(backButton);
         }
     }
@@ -115,7 +114,7 @@ public class StoreScreen extends AbstractContainerScreen<StoreMenu> {
     public void extractBackground(@NonNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         super.extractBackground(graphics, mouseX, mouseY, partialTick);
 
-        graphics.blit(RenderPipelines.GUI_TEXTURED, UnshatteredUtils.getUnshatteredIdentifier("textures/gui/store.png"), (width - IMAGE_WIDTH) / 2, ((height - IMAGE_HEIGHT) / 2) - 28, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, 256, 256);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, UnshatteredUtils.getUnshatteredIdentifier("textures/gui/vendor.png"), (width - IMAGE_WIDTH) / 2, ((height - IMAGE_HEIGHT) / 2) - 28, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, 256, 256);
     }
 
     @Override
@@ -124,8 +123,8 @@ public class StoreScreen extends AbstractContainerScreen<StoreMenu> {
         graphics.text(font, playerInventoryTitle, inventoryLabelX, inventoryLabelY - 10, 0xFF404040, false);
     }
 
-    private void openSellPage(ShopItem shopItem) {
-        expandedItem = shopItem;
+    private void openSellPage(VendorItem vendorItem) {
+        expandedItem = vendorItem;
         rebuildWidgets();
     }
 
@@ -134,7 +133,7 @@ public class StoreScreen extends AbstractContainerScreen<StoreMenu> {
         super.extractRenderState(graphics, mouseX, mouseY, partialTick);
 
         if (expandedItem == null) {
-            for (Map.Entry<ShopItemWidget, List<Component>> entry : widgetTooltips.entrySet()) {
+            for (Map.Entry<VendorItemWidget, List<Component>> entry : widgetTooltips.entrySet()) {
                 if (entry.getKey().isHovered()) {
                     graphics.setTooltipForNextFrame(font, entry.getValue(), Optional.empty(), mouseX, mouseY);
                     break;
@@ -169,21 +168,21 @@ public class StoreScreen extends AbstractContainerScreen<StoreMenu> {
         return panelX() + IMAGE_WIDTH / 2;
     }
 
-    private List<Component> buildPriceLines(ShopItem shopItem) {
+    private List<Component> buildPriceLines(VendorItem vendorItem) {
         List<Component> lines = new ArrayList<>();
 
         lines.add(Component.empty());
 
-        lines.add(Component.translatable("screen.unshattered.store.text.cost").withColor(UnshatteredUtils.GRAY));
+        lines.add(Component.translatable("screen.unshattered.vendor.text.cost").withColor(UnshatteredUtils.GRAY));
 
-        shopItem.price().ifPresent(price ->
+        vendorItem.price().ifPresent(price ->
                 lines.add(Component.literal(String.format("%,d", price) + " ")
-                        .append(Component.translatable("screen.unshattered.store.text.coins"))
+                        .append(Component.translatable("screen.unshattered.vendor.text.coins"))
                         .withColor(0xFFF9A604)
                 )
         );
 
-        shopItem.itemTradeRequirements().ifPresent(requirements -> {
+        vendorItem.itemTradeRequirements().ifPresent(requirements -> {
             for (ItemStack requirement : requirements) {
                 MutableComponent line = requirement.getItemName().copy()
                         .withColor(UnshatteredUtils.getItemRarity(requirement).getColour(1.0f));
@@ -200,17 +199,17 @@ public class StoreScreen extends AbstractContainerScreen<StoreMenu> {
         return lines;
     }
 
-    public static class ShopItemWidget extends AbstractWidget {
-        private final ShopItem shopItem;
+    public static class VendorItemWidget extends AbstractWidget {
+        private final VendorItem vendorItem;
         private final ItemStack itemStack;
-        private final Consumer<ShopItem> onRightClick;
+        private final Consumer<VendorItem> onRightClick;
 
-        public ShopItemWidget(int x, int y, int width, int height, ShopItem shopItem, Consumer<ShopItem> onRightClick) {
+        public VendorItemWidget(int x, int y, int width, int height, VendorItem vendorItem, Consumer<VendorItem> onRightClick) {
             super(x, y, width, height, Component.translatable("widget.unshattered.narration.shop_item"));
 
-            this.shopItem = shopItem;
+            this.vendorItem = vendorItem;
             this.onRightClick = onRightClick;
-            itemStack = shopItem.item().value().getDefaultInstance();
+            itemStack = vendorItem.item().value().getDefaultInstance();
         }
 
         @Override
@@ -235,10 +234,22 @@ public class StoreScreen extends AbstractContainerScreen<StoreMenu> {
         @Override
         public void onClick(@NonNull MouseButtonEvent event, boolean doubleClick) {
             if (event.button() == UnshatteredUtils.MouseButton.LEFT.getButton()) {
-                ClientPacketDistributor.sendToServer(new AttemptPurchasePacket(itemStack, shopItem.price(), shopItem.itemTradeRequirements()));
-            } else if (shopItem.sellMultiple()) {
-                onRightClick.accept(shopItem);
+                ClientPacketDistributor.sendToServer(new AttemptPurchasePacket(itemStack, vendorItem.price(), vendorItem.itemTradeRequirements()));
+            } else if (vendorItem.sellMultiple()) {
+                onRightClick.accept(vendorItem);
             }
         }
+
+        @Override
+        public void playDownSound(@NonNull SoundManager soundManager) {}
+    }
+
+    private static class SoundlessButton extends Button.Plain {
+        public SoundlessButton(int x, int y, int width, OnPress onPress) {
+            super(x, y, width, 20, Component.translatable("screen.unshattered.vendor.buy"), onPress, Button.DEFAULT_NARRATION);
+        }
+
+        @Override
+        public void playDownSound(@NonNull SoundManager soundManager) {}
     }
 }

@@ -2,7 +2,7 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.blocks.TalkingRockBlock;
 import io.github.moosyu.blocks.UnshatteredBlocks;
-import io.github.moosyu.data.ShopItem;
+import io.github.moosyu.data.VendorItem;
 import io.github.moosyu.data.dialogue.*;
 import io.github.moosyu.data.dialogue.events.*;
 import io.github.moosyu.data.fishing.FishingConditions;
@@ -13,10 +13,7 @@ import io.github.moosyu.data.quests.QuestTypes;
 import io.github.moosyu.data.regen.RegenPaths.*;
 import io.github.moosyu.data.regions.*;
 import io.github.moosyu.data.datagen.*;
-import io.github.moosyu.entities.npcs.BubuNPC;
-import io.github.moosyu.entities.npcs.ForgerNPC;
-import io.github.moosyu.entities.npcs.JotraelineGreatforgeNPC;
-import io.github.moosyu.entities.npcs.WoolWeaverNPC;
+import io.github.moosyu.entities.npcs.*;
 import io.github.moosyu.items.UnshatteredItems;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.Holder;
@@ -435,6 +432,16 @@ public class DatagenHandler {
                                     )
                             ))
                     );
+
+                    registerDialogueTree(bootstrap,
+                            JennyNPC.JENNY_IDENTIFIER,
+                            new DialogueTree(List.of(new DialogueTreeOrigin(2,
+                                    new DialogueNode(Component.translatable("dialogue.unshattered.jenny_introduction"),
+                                            true,
+                                            new DialogueChoice(Component.literal("..."), new OpenStoreMenuEvent(JennyNPC.JENNY_IDENTIFIER))),
+                                    List.of(JennyNPC.JENNY_INTRODUCTION))
+                            ))
+                    );
                 }).add(DataPackRegistryHandler.QUEST_REGISTRY_KEY, bootstrap -> {
                     createQuest(bootstrap, TalkingRockBlock.ROCKS_QUEST, QuestTypes.NOVICE, new GiveItemDialogueEvent(BuiltInRegistries.ITEM.wrapAsHolder(Items.STONE), 1));
 
@@ -484,18 +491,6 @@ public class DatagenHandler {
                     createRegenPathWithBlocks(bootstrap, "lapis", List.of(UnshatteredBlocks.BREAKABLE_LAPIS_ORE_BLOCK.get(),
                                     UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(), Blocks.BEDROCK),
                             150
-                    );
-
-                    createRegenPath(bootstrap, "wheat", List.of(UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK.get().defaultBlockState(),
-                            Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, 6),
-                            Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, 5),
-                            Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, 4),
-                            Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, 3),
-                            Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, 2),
-                            Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, 1),
-                            Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, 0)),
-                            200,
-                            6
                     );
 
                     createRegenPathWithBlocks(bootstrap, "pure_diamond", List.of(UnshatteredBlocks.PURE_DIAMOND_BLOCK.get(),
@@ -557,6 +552,12 @@ public class DatagenHandler {
                     createRegenPathWithBlocks(bootstrap, "ice", List.of(UnshatteredBlocks.BREAKABLE_ICE_BLOCK.get(), Blocks.AIR), 220);
 
                     createRegenPathWithBlocks(bootstrap, "titanium", List.of(UnshatteredBlocks.BREAKABLE_TITANIUM_BLOCK.get(), Blocks.AIR), 220);
+
+                    createCropRegenPath(bootstrap, Blocks.WHEAT, UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK.get(), 7);
+
+                    createCropRegenPath(bootstrap, Blocks.CARROTS, UnshatteredBlocks.BREAKABLE_CARROT_BLOCK.get(), 4);
+
+                    createCropRegenPath(bootstrap, Blocks.POTATOES, UnshatteredBlocks.BREAKABLE_POTATO_BLOCK.get(), 4);
                 }).add(DataPackRegistryHandler.FISHING_MISC_REWARD_KEY, bootstrap -> {
                     bootstrap.register(createMiscRewardResourceKey("good_catch"), new CoinReward(25000,
                             5000,
@@ -590,14 +591,31 @@ public class DatagenHandler {
                 }).add(DataPackRegistryHandler.SHOP_STOCK_KEY, bootstrap -> {
                     createStoreStock(bootstrap,
                             WoolWeaverNPC.WOOL_WEAVER_IDENTIFIER,
-                            Arrays.stream(UnshatteredUtils.WOOL_TYPES).map(item -> new ShopItem(item, true, 32)).toList()
+                            Arrays.stream(UnshatteredUtils.WOOL_TYPES).map(item -> new VendorItem(item, true, 32)).toList()
                     );
 
                     createStoreStock(bootstrap,
                             BubuNPC.BUBU_IDENTIFIER,
-                            List.of(new ShopItem(UnshatteredItems.BROKEN_MITHRIL_PICKAXE, false, 10000),
-                                    new ShopItem(UnshatteredItems.RUSTED_TITANIUM_PICKAXE, false, 50000),
-                                    new ShopItem(UnshatteredItems.BIOFUEL, true, 20000)
+                            List.of(new VendorItem(UnshatteredItems.BROKEN_MITHRIL_PICKAXE, false, 10000),
+                                    new VendorItem(UnshatteredItems.RUSTED_TITANIUM_PICKAXE, false, 50000),
+                                    new VendorItem(UnshatteredItems.BIOFUEL, true, 20000)
+                            )
+                    );
+
+                    createStoreStock(bootstrap,
+                            JennyNPC.JENNY_IDENTIFIER,
+                            List.of(new VendorItem(Items.WHEAT, 8),
+                                    new VendorItem(Items.CARROT, 6),
+                                    new VendorItem(Items.POTATO, 6),
+                                    new VendorItem(Items.MELON_SLICE, 4),
+                                    new VendorItem(Items.SUGAR_CANE, 10),
+                                    new VendorItem(Items.PUMPKIN, 25),
+                                    new VendorItem(Items.COCOA_BEANS, 5),
+                                    new VendorItem(Items.RED_MUSHROOM, 25),
+                                    new VendorItem(Items.BROWN_MUSHROOM, 25),
+                                    new VendorItem(Items.SAND, 4),
+                                    new VendorItem(Items.CACTUS, 15),
+                                    new VendorItem(UnshatteredItems.ROOKIE_HOE, false, 10)
                             )
                     );
                 })
@@ -662,7 +680,22 @@ public class DatagenHandler {
                 new RegenPath(blocks, regenTicks));
     }
 
-    private static void createStoreStock(BootstrapContext<List<ShopItem>> bootstrap, Identifier vendorIdentifier, List<ShopItem> stock) {
+    /**
+     * @param blockStateCrop crop that presumably has seven unbreakable stages to get block states from
+     * @param finalStageCrop the final growth stage
+     */
+    private static void createCropRegenPath(BootstrapContext<RegenPath> bootstrap, Block blockStateCrop, Block finalStageCrop, int stages) {
+        List<BlockState> blockStates = new ArrayList<>();
+        blockStates.add(finalStageCrop.defaultBlockState());
+
+        for (int stage = stages - 1; stage >= 0; stage--) {
+            blockStates.add(blockStateCrop.defaultBlockState().setValue(CropBlock.AGE, stage));
+        }
+
+        createRegenPath(bootstrap, BuiltInRegistries.BLOCK.getKey(finalStageCrop).getPath(), blockStates, 200, stages - 1);
+    }
+
+    private static void createStoreStock(BootstrapContext<List<VendorItem>> bootstrap, Identifier vendorIdentifier, List<VendorItem> stock) {
         bootstrap.register(ResourceKey.create(DataPackRegistryHandler.SHOP_STOCK_KEY, vendorIdentifier), stock);
     }
 

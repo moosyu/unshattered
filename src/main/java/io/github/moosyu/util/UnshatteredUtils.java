@@ -513,18 +513,24 @@ public final class UnshatteredUtils {
         return metCondition && metLevelRequirement;
     }
 
+    /**
+     * @param price total price of items being bought (multiply by item count)
+     */
     public static boolean canAffordCoins(int price, Player player) {
         return player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get()).getCoins() >= price;
     }
 
-    public static boolean canTradeItems(List<ItemStack> requiredItems, Player player) {
+    /**
+     * @param purchasedItemCount the amount of items being purchased as required items is for 1
+     */
+    public static boolean canTradeItems(List<ItemStack> requiredItems, Player player, int purchasedItemCount) {
         for (ItemStack ingredient : requiredItems) {
             int totalAvailable = player.getInventory().clearOrCountMatchingItems(
                     itemStack -> ItemStack.isSameItemSameComponents(itemStack, ingredient),
                     0,
                     player.inventoryMenu.getCraftSlots()
             );
-            if (totalAvailable < ingredient.getCount()) {
+            if (totalAvailable < (ingredient.getCount() * purchasedItemCount)) {
                 return false;
             }
         }
@@ -540,9 +546,9 @@ public final class UnshatteredUtils {
     }
 
     /**
-     * assumes {@link #canTradeItems(List, Player)} was run to check whether the transaction can be made
+     * assumes {@link #canTradeItems(List, Player, int)} was run to check whether the transaction can be made
      */
-    public static void tradeItems(List<ItemStack> requiredItems, Player player) {
+    public static void tradeItems(List<ItemStack> requiredItems, Player player, int purchasedItemCount) {
         if (player.level().isClientSide()) {
             return;
         }
@@ -550,7 +556,7 @@ public final class UnshatteredUtils {
         for (ItemStack ingredient : requiredItems) {
             player.getInventory().clearOrCountMatchingItems(
                     itemStack -> ItemStack.isSameItemSameComponents(itemStack, ingredient),
-                    ingredient.getCount(),
+                    ingredient.getCount() * purchasedItemCount,
                     player.inventoryMenu.getCraftSlots()
             );
         }

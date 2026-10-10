@@ -2,11 +2,11 @@ package io.github.moosyu.data.dialogue.events;
 
 import com.mojang.serialization.MapCodec;
 import io.github.moosyu.Unshattered;
-import io.github.moosyu.data.ShopItem;
+import io.github.moosyu.data.VendorItem;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.dialogue.DialogueTriggeredEvent;
 import io.github.moosyu.events.DataPackRegistryHandler;
-import io.github.moosyu.gui.menus.StoreMenu;
+import io.github.moosyu.gui.menus.VendorMenu;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -20,17 +20,17 @@ import java.util.List;
 public record OpenStoreMenuEvent(Identifier npcShopIdentifier) implements DialogueTriggeredEvent {
     @Override
     public void trigger(ServerPlayer player) {
-        List<ShopItem> shopItems = player.registryAccess().lookupOrThrow(DataPackRegistryHandler.SHOP_STOCK_KEY).getValue(npcShopIdentifier);
+        List<VendorItem> vendorItems = player.registryAccess().lookupOrThrow(DataPackRegistryHandler.SHOP_STOCK_KEY).getValue(npcShopIdentifier);
 
-        if (shopItems == null) {
+        if (vendorItems == null) {
             Unshattered.LOGGER.warn("no shop stock found for {}", npcShopIdentifier);
             return;
         }
 
-        player.openMenu(new SimpleMenuProvider((containerId, inventory, _) -> new StoreMenu(containerId, inventory, shopItems, player.getData(UnshatteredAttachments.PLAYER_SELL_SLOT)),
-                        Component.translatable("screen.unshattered.store")
+        player.openMenu(new SimpleMenuProvider((containerId, inventory, _) -> new VendorMenu(containerId, inventory, vendorItems, player.getData(UnshatteredAttachments.PLAYER_SELL_SLOT)),
+                        Component.translatable("screen.unshattered.vendor")
                 ),
-                buf -> ShopItem.STREAM_CODEC.apply(ByteBufCodecs.list()).encode(buf, shopItems)
+                buf -> VendorItem.STREAM_CODEC.apply(ByteBufCodecs.list()).encode(buf, vendorItems)
         );
     }
 

@@ -8,7 +8,6 @@ import io.github.moosyu.data.recipes.ForgeCategoryDisplay;
 import io.github.moosyu.data.recipes.ForgeRecipe;
 import io.github.moosyu.events.RecipeReceivedHandler;
 import io.github.moosyu.gui.menus.ForgeMenu;
-import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.packets.AttemptClaimForgedItemPacket;
 import io.github.moosyu.packets.AttemptForgeItemPacket;
 import io.github.moosyu.util.UnshatteredUtils;
@@ -20,9 +19,12 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -63,10 +65,14 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
     private Integer currentSlotIndex = null;
     private RecipeBookCategory currentCategory = null;
     private PlayerForgeSlotsAttachment lastForgeSlots = null;
+    private int lastCompletedCount = 0;
+    private final Player player;
 
     public ForgeScreen(ForgeMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title, 176, 204);
         inventoryLabelY = imageHeight - 94;
+
+        player = Minecraft.getInstance().player;
     }
 
     @Override
@@ -74,19 +80,17 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
         super.init();
 
         if (currentPage == Page.FORGE) {
-            Player player = Minecraft.getInstance().player;
-
             if (player == null) {
                 return;
             }
 
             PlayerForgeSlotsAttachment forgeSlots = player.getData(UnshatteredAttachments.PLAYER_FORGE_SLOTS.get());
-
             for (int forgeSlotIndex = 0; forgeSlotIndex < PlayerForgeSlotsAttachment.MAX_SLOTS; forgeSlotIndex++) {
                 ForgeItemWidget forgeItemWidget = createForgeItemWidget(forgeSlotIndex, forgeSlots);
                 addRenderableWidget(forgeItemWidget);
             }
 
+            lastCompletedCount = countCompletedSlots(forgeSlots);
             lastForgeSlots = forgeSlots;
         } else if (currentPage == Page.CATEGORIES) {
             List<RecipeBookCategory> recipeBookCategories = ForgeCategoryDisplay.all();
@@ -121,12 +125,52 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
         }
     }
 
+    @Override
+    public void extractRenderState(@NonNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+        super.extractRenderState(graphics, mouseX, mouseY, a);
+
+        if (player == null || currentPage != Page.FORGE) {
+            return;
+        }
+
+        PlayerForgeSlotsAttachment forgeSlots = player.getData(UnshatteredAttachments.PLAYER_FORGE_SLOTS.get());
+        for (int i = 0; i < forgeSlots.slots().size(); i++) {
+            graphics.blit(RenderPipelines.GUI_TEXTURED,
+                    UnshatteredUtils.getUnshatteredIdentifier("textures/gui/sprites/widgets/forge_progress_bar_empty.png"),
+                    leftPos + 40 + (18 * i),
+                    topPos + 46,
+                    0,
+                    0,
+                    6,
+                    51,
+                    6,
+                    51
+            );
+
+            PlayerForgeSlotsAttachment.ForgeSlot slot = forgeSlots.slots().get(i);
+            if (slot.itemStack().isPresent()) {
+                int filledHeight = (int) (51 * Math.clamp((float) (Instant.now().getEpochSecond() - slot.startTime()) / slot.forgingDuration(), 0.0f, 1.0f));
+                graphics.blit(RenderPipelines.GUI_TEXTURED,
+                        UnshatteredUtils.getUnshatteredIdentifier("textures/gui/sprites/widgets/forge_progress_bar.png"),
+                        leftPos + 40 + (18 * i),
+                        topPos + 46,
+                        0,
+                        0,
+                        6,
+                        filledHeight,
+                        6,
+                        51
+                );
+            }
+        }
+    }
+
     private @NonNull ForgeItemWidget createForgeItemWidget(int forgeSlotIndex, PlayerForgeSlotsAttachment forgeSlots) {
         PlayerForgeSlotsAttachment.ForgeSlot forgeSlot = forgeSlots.slots().get(forgeSlotIndex);
         ForgeItemWidget forgeItemWidget = new ForgeItemWidget(minecraft,
                 forgeSlot.itemStack().isPresent() ? forgeSlot.itemStack().get() : ItemStack.EMPTY,
                 forgeSlotIndex,
-                forgeSlot.endTime(),
+                forgeSlot.startTime() + forgeSlot.forgingDuration(),
                 () -> {
                     currentPage = Page.CATEGORIES;
                     currentSlotIndex = forgeSlotIndex;
@@ -134,13 +178,13 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
                 },
                 () -> {
                     if (forgeSlot.itemStack().isPresent()) {
-                        ClientPacketDistributor.sendToServer(new AttemptClaimForgedItemPacket(forgeSlot.itemStack().get(), forgeSlotIndex, forgeSlot.endTime()));
+                        ClientPacketDistributor.sendToServer(new AttemptClaimForgedItemPacket(forgeSlot.itemStack().get(), forgeSlotIndex, forgeSlot.startTime() + forgeSlot.forgingDuration()));
                     } else {
                         Unshattered.LOGGER.error("attempted to claim empty item from forge");
                     }
                 }
         );
-        forgeItemWidget.setPosition(leftPos + 40 + (16 * forgeSlotIndex), topPos + 26);
+        forgeItemWidget.setPosition(leftPos + 35 + (18 * forgeSlotIndex), topPos + 26);
         return forgeItemWidget;
     }
 
@@ -157,13 +201,15 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
         graphics.text(font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, 0xFF404040, false);
     }
 
-    private static class ForgeItemWidget extends ItemDisplayWidget {
+    private class ForgeItemWidget extends ItemDisplayWidget {
         private final boolean emptySlot;
         private final boolean completedSlot;
         private final Runnable onClick;
         private final Runnable onCompleteClick;
         private final Supplier<Component> tooltipSupplier;
         private long lastTooltipSecond = -1;
+        private final long endTime;
+        private final boolean inProgress;
 
         public ForgeItemWidget(Minecraft minecraft, ItemStack itemStack, int slotIndex, long endTime, Runnable onClick, Runnable onCompleteClick) {
             Component tooltipText = Component.empty();
@@ -177,7 +223,7 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
                 PlayerForgeSlotsAttachment forgeSlots = player.getData(UnshatteredAttachments.PLAYER_FORGE_SLOTS.get());
                 PlayerForgeSlotsAttachment.ForgeSlot forgeSlot = forgeSlots.slots().get(slotIndex);
 
-                if (forgeSlot.itemStack().isPresent() && forgeSlot.endTime() <= Instant.now().getEpochSecond()) {
+                if (forgeSlot.itemStack().isPresent() && (forgeSlot.startTime() + forgeSlot.forgingDuration()) <= Instant.now().getEpochSecond()) {
                     completed = true;
                     tooltipSet = true;
                     tooltipText = itemStack.getItemName().copy().withColor(UnshatteredUtils.getItemRarity(itemStack).getColour(1.0f))
@@ -223,6 +269,8 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
             this.onCompleteClick = onCompleteClick;
             setTooltip(Tooltip.create(tooltipText));
             tooltipSupplier = supplier;
+            this.endTime = endTime;
+            inProgress = supplier != null;
         }
 
         @Override
@@ -251,10 +299,18 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
         public void onClick(@NonNull MouseButtonEvent event, boolean doubleClick) {
             if (emptySlot) {
                 onClick.run();
-            } else if (completedSlot) {
+            } else if (completedSlot || (inProgress && Instant.now().getEpochSecond() >= endTime)) {
                 onCompleteClick.run();
+            } else {
+                UnshatteredUtils.playClientsideSound(player, SoundEvents.VILLAGER_NO, SoundSource.UI, 0.5f);
+                return;
             }
+
+            playButtonClickSound(Minecraft.getInstance().getSoundManager());
         }
+
+        @Override
+        public void playDownSound(@NonNull SoundManager soundManager) {}
     }
 
     private static class ForgeCategoryWidget extends ItemDisplayWidget {
@@ -361,7 +417,7 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
                     Item ingredientItem = ingredient.value();
                     ItemStack ingredientItemStack = new ItemStack(ingredientItem);
 
-                    lines.add(ingredientItemStack.getDisplayName()
+                    lines.add(ingredientItemStack.getItemName()
                             .copy()
                             .withColor(UnshatteredUtils.getItemRarity(ingredientItemStack).getColour(1.0f))
                             .append(sizedIngredient.count() > 1
@@ -438,9 +494,22 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
 
         if (currentPage == Page.FORGE && lastForgeSlots != null) {
             Player player = Minecraft.getInstance().player;
-            if (player != null && player.getData(UnshatteredAttachments.PLAYER_FORGE_SLOTS.get()) != lastForgeSlots) {
-                rebuildWidgets();
+            if (player != null) {
+                PlayerForgeSlotsAttachment current = player.getData(UnshatteredAttachments.PLAYER_FORGE_SLOTS.get());
+                if (current != lastForgeSlots || countCompletedSlots(current) != lastCompletedCount) {
+                    rebuildWidgets();
+                }
             }
         }
+    }
+
+    private static int countCompletedSlots(PlayerForgeSlotsAttachment forgeSlots) {
+        int count = 0;
+        for (PlayerForgeSlotsAttachment.ForgeSlot slot : forgeSlots.slots()) {
+            if (slot.itemStack().isPresent() && slot.startTime() + slot.forgingDuration() <= Instant.now().getEpochSecond()) {
+                count++;
+            }
+        }
+        return count;
     }
 }

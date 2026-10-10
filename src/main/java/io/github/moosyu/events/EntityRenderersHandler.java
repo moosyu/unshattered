@@ -21,5 +21,6 @@ public class EntityRenderersHandler {
         event.registerEntityRenderer(UnshatteredEntities.WOOL_WEAVER.get(), context -> new NPCEntityRenderer(context, "wool_weaver", true));
         event.registerEntityRenderer(UnshatteredEntities.FORGER.get(), context -> new NPCEntityRenderer(context, "forger"));
         event.registerEntityRenderer(UnshatteredEntities.BUBU.get(), context -> new NPCEntityRenderer(context, "bubu"));
+        event.registerEntityRenderer(UnshatteredEntities.JENNY.get(), context -> new NPCEntityRenderer(context, "jenny", true));
     }
 }

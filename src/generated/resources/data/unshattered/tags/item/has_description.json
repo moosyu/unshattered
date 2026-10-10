@@ -1,7 +1,6 @@
 {
   "values": [
     "unshattered:mercenary_axe",
-    "unshattered:treecapitator",
     "unshattered:spruce_axe",
     "unshattered:seriously_damaged_axe",
     "unshattered:decent_axe",
@@ -47,11 +46,11 @@
     "unshattered:lapis_pickaxe",
     "unshattered:ornate_zombie_sword",
     "unshattered:florid_zombie_sword",
-    "unshattered:rusty_cleaver",
     "unshattered:golden_cleaver",
     "unshattered:super_cleaver",
     "unshattered:hyper_cleaver",
     "unshattered:giant_cleaver",
+    "unshattered:rusty_cleaver",
     "unshattered:bat_talisman",
     "unshattered:iron_dagger",
     "unshattered:emerald_dagger",
@@ -79,6 +78,7 @@
     "unshattered:titanium_drill_dr_x455",
     "unshattered:titanium_drill_dr_x555",
     "unshattered:titanium_drill_dr_x655",
-    "unshattered:century_the_fish"
+    "unshattered:century_the_fish",
+    "unshattered:rookie_hoe"
   ]
 }

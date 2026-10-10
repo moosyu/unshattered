@@ -280,6 +280,7 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
                 .save(output);
 
         ForgeRecipeBuilder.create(UnshatteredItems.MITHRIL_DRILL_SX_R326, UnshatteredRecipeBookCategories.TOOLS, 30)
+                .define(UnshatteredItems.MITHRIL_DRILL_SX_R226)
                 .define(UnshatteredItems.GOLDEN_PLATE)
                 .define(UnshatteredItems.MITHRIL_PLATE)
                 .save(output);
@@ -305,6 +306,10 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
         ForgeRecipeBuilder.create(UnshatteredItems.FRIED_GOBLIN_EGG, UnshatteredRecipeBookCategories.DRILL_PARTS, 32400)
                 .define(UnshatteredItems.FRIED_GOBLIN_EGG, 96)
                 .save(output);
+
+        createEnchantedItemRecipe(Items.WHEAT, UnshatteredItems.ENCHANTED_WHEAT.get(), getHasName(Items.WHEAT), has(Items.WHEAT));
+        createEnchantedItemRecipe(Items.CARROT, UnshatteredItems.ENCHANTED_CARROT.get(), getHasName(Items.CARROT), has(Items.CARROT));
+        createEnchantedItemRecipe(Items.POTATO, UnshatteredItems.ENCHANTED_POTATO.get(), getHasName(Items.POTATO), has(Items.POTATO));
     }
 
     public static class Runner extends RecipeProvider.Runner {

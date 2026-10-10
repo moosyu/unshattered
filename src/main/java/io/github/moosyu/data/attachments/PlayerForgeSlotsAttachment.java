@@ -27,20 +27,22 @@ public record PlayerForgeSlotsAttachment(int availableSlots, List<ForgeSlot> slo
     }
 
     /**
-     * @param endTime gotten with Instant.now().getEpochSecond() + ForgeRecipe#durationSeconds
+     * @param startTime gotten with Instant.now().getEpochSecond()
      */
-    public record ForgeSlot(long endTime, Optional<ItemStack> itemStack) {
-        public static ForgeSlot EMPTY_SLOT = new ForgeSlot(0L ,Optional.empty());
+    public record ForgeSlot(long startTime, long forgingDuration, Optional<ItemStack> itemStack) {
+        public static ForgeSlot EMPTY_SLOT = new ForgeSlot(0L, 0L,Optional.empty());
 
         public static Codec<ForgeSlot> CODEC = RecordCodecBuilder.create(instance ->
                 instance.group(
-                        Codec.LONG.fieldOf("end_time").forGetter(ForgeSlot::endTime),
+                        Codec.LONG.fieldOf("end_time").forGetter(ForgeSlot::startTime),
+                        Codec.LONG.fieldOf("recipe_length").forGetter(ForgeSlot::forgingDuration),
                         ItemStack.CODEC.optionalFieldOf("itemstack").forGetter(ForgeSlot::itemStack)
                 ).apply(instance, ForgeSlot::new)
         );
 
         public static StreamCodec<RegistryFriendlyByteBuf, ForgeSlot> STREAM_CODEC = StreamCodec.composite(
-                ByteBufCodecs.LONG, ForgeSlot::endTime,
+                ByteBufCodecs.LONG, ForgeSlot::startTime,
+                ByteBufCodecs.LONG, ForgeSlot::forgingDuration,
                 ItemStack.STREAM_CODEC.apply(ByteBufCodecs::optional), ForgeSlot::itemStack,
                 ForgeSlot::new
         );

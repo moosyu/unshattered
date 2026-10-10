@@ -158,8 +158,8 @@ public final class PlayerAbilityEffectsAttachment {
     }
 
     /**
-     * tries to remove a soldItem, as itemstack identities seem to change often it falls back to a comparison
-     * @return true if the soldItem was removed successfully
+     * tries to remove a soldItemStack, as itemstack identities seem to change often it falls back to a comparison
+     * @return true if the soldItemStack was removed successfully
      */
     private boolean removeTrackedStack(ItemStack itemStack) {
         if (storedNonOngoingItems.remove(itemStack)) {

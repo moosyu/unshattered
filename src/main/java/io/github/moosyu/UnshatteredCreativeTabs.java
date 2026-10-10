@@ -90,6 +90,8 @@ public class UnshatteredCreativeTabs {
             output.accept(BREAKABLE_DARK_OAK_LOG.get());
             output.accept(BREAKABLE_ICE.get());
             output.accept(BREAKABLE_TITANIUM.get());
+            output.accept(BREAKABLE_POTATO.get());
+            output.accept(BREAKABLE_CARROT.get());
         }).build()
     );
 
@@ -169,6 +171,9 @@ public class UnshatteredCreativeTabs {
             output.accept(ENCHANTED_POPPY);
             output.accept(ENCHANTED_DANDELION);
             output.accept(BIOFUEL);
+                output.accept(ENCHANTED_WHEAT);
+                output.accept(ENCHANTED_POTATO);
+                output.accept(ENCHANTED_CARROT);
         }).build()
     );
 
@@ -219,6 +224,7 @@ public class UnshatteredCreativeTabs {
                 output.accept(MITHRIL_INFUSED_FUEL_TANK.get());
             output.accept(MITHRIL_PLATED_DRILL_ENGINE.get());
             output.accept(FRIED_GOBLIN_EGG.get());
+            output.accept(ROOKIE_HOE.get());
         }).build()
     );
 

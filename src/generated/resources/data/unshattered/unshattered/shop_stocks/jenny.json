@@ -1,0 +1,62 @@
+[
+  {
+    "item": "minecraft:wheat",
+    "price": 8,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:carrot",
+    "price": 6,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:potato",
+    "price": 6,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:melon_slice",
+    "price": 4,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:sugar_cane",
+    "price": 10,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:pumpkin",
+    "price": 25,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:cocoa_beans",
+    "price": 5,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:red_mushroom",
+    "price": 25,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:brown_mushroom",
+    "price": 25,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:sand",
+    "price": 4,
+    "sell_multiple": true
+  },
+  {
+    "item": "minecraft:cactus",
+    "price": 15,
+    "sell_multiple": true
+  },
+  {
+    "item": "unshattered:rookie_hoe",
+    "price": 10,
+    "sell_multiple": false
+  }
+]

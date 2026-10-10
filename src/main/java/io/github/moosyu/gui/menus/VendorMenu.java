@@ -1,9 +1,8 @@
 package io.github.moosyu.gui.menus;
 
-import io.github.moosyu.data.ShopItem;
+import io.github.moosyu.data.VendorItem;
 import io.github.moosyu.data.attachments.PlayerCurrencyAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
-import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.packets.ClientsidePlayerSoundEffectPacket;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -12,7 +11,6 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -26,17 +24,17 @@ import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 
-public class StoreMenu extends AbstractContainerMenu {
-    private final List<ShopItem> shopItems;
+public class VendorMenu extends AbstractContainerMenu {
+    private final List<VendorItem> vendorItems;
     private final Slot sellSlot;
 
-    public StoreMenu(int containerId, Inventory playerInventory, RegistryFriendlyByteBuf buf) {
-        this(containerId, playerInventory, ShopItem.STREAM_CODEC.apply(ByteBufCodecs.list()).decode(buf), new SimpleContainer(1));
+    public VendorMenu(int containerId, Inventory playerInventory, RegistryFriendlyByteBuf buf) {
+        this(containerId, playerInventory, VendorItem.STREAM_CODEC.apply(ByteBufCodecs.list()).decode(buf), new SimpleContainer(1));
     }
 
-    public StoreMenu(int containerId, Inventory playerInventory, List<ShopItem> shopItems, Container container) {
-        super(UnshatteredMenus.STORE_MENU_TYPE.get(), containerId);
-        this.shopItems = shopItems;
+    public VendorMenu(int containerId, Inventory playerInventory, List<VendorItem> vendorItems, Container container) {
+        super(UnshatteredMenus.VENDOR_MENU_TYPE.get(), containerId);
+        this.vendorItems = vendorItems;
 
         addStandardInventorySlots(playerInventory, 8, 73);
         this.sellSlot = addSlot(new Slot(container, 0, 80, 41) {
@@ -125,7 +123,7 @@ public class StoreMenu extends AbstractContainerMenu {
         return true;
     }
 
-    public List<ShopItem> getShopItems() {
-        return shopItems;
+    public List<VendorItem> getVendorItems() {
+        return vendorItems;
     }
 }

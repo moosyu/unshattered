@@ -2,13 +2,12 @@ package io.github.moosyu.blocks;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HalfTransparentBlock;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jspecify.annotations.NonNull;
 
 import static io.github.moosyu.Unshattered.MODID;
 
@@ -47,12 +46,7 @@ public class UnshatteredBlocks {
             )
     );
 
-    public static final DeferredBlock<Block> BREAKABLE_WHEAT_BLOCK = BLOCKS.registerBlock("breakable_wheat_block",
-            props -> new Block(props
-                    .sound(SoundType.CROP)
-                    .noCollision()
-            )
-    );
+    public static final DeferredBlock<Block> BREAKABLE_WHEAT_BLOCK = BLOCKS.registerBlock("breakable_wheat_block", UnshatteredCropBlock::new);
 
     public static final DeferredBlock<Block> BREAKABLE_IRON_ORE_BLOCK = BLOCKS.registerBlock("breakable_iron_ore_block",
             props -> new Block(props
@@ -197,4 +191,8 @@ public class UnshatteredBlocks {
                     .sound(SoundType.STONE)
             )
     );
+
+    public static final DeferredBlock<Block> BREAKABLE_CARROT_BLOCK = BLOCKS.registerBlock("breakable_carrot_block", UnshatteredCropBlock::new);
+
+    public static final DeferredBlock<Block> BREAKABLE_POTATO_BLOCK = BLOCKS.registerBlock("breakable_potato_block", UnshatteredCropBlock::new);
 }

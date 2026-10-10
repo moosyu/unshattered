@@ -28,6 +28,20 @@
       "exp_amount": 6.0,
       "skill": "foraging"
     },
+    "unshattered:breakable_carrot_block": {
+      "drop_data": [
+        {
+          "drop_chance": 1.0,
+          "item_range": {
+            "item": "minecraft:carrot",
+            "max_amount": 5,
+            "min_amount": 2
+          }
+        }
+      ],
+      "exp_amount": 4.0,
+      "skill": "farming"
+    },
     "unshattered:breakable_coal_ore_block": {
       "drop_data": [
         {
@@ -276,6 +290,20 @@
       "exp_amount": 20.0,
       "skill": "mining"
     },
+    "unshattered:breakable_potato_block": {
+      "drop_data": [
+        {
+          "drop_chance": 1.0,
+          "item_range": {
+            "item": "minecraft:potato",
+            "max_amount": 5,
+            "min_amount": 2
+          }
+        }
+      ],
+      "exp_amount": 4.0,
+      "skill": "farming"
+    },
     "unshattered:breakable_redstone_ore_block": {
       "drop_data": [
         {
@@ -362,7 +390,7 @@
         }
       ],
       "exp_amount": 4.0,
-      "skill": "mining"
+      "skill": "farming"
     },
     "unshattered:pure_diamond_block": {
       "drop_data": [

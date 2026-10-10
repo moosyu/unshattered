@@ -320,6 +320,8 @@ public class UnshatteredItems {
     public static final DeferredItem<BlockItem> BREAKABLE_OBSIDIAN = ITEMS.registerSimpleBlockItem(BREAKABLE_OBSIDIAN_BLOCK.getDelegate());
     public static final DeferredItem<BlockItem> BREAKABLE_LAPIS_ORE = ITEMS.registerSimpleBlockItem(BREAKABLE_LAPIS_ORE_BLOCK.getDelegate());
     public static final DeferredItem<BlockItem> BREAKABLE_ICE = ITEMS.registerSimpleBlockItem(BREAKABLE_ICE_BLOCK.getDelegate());
+    public static final DeferredItem<BlockItem> BREAKABLE_CARROT = ITEMS.registerSimpleBlockItem(BREAKABLE_CARROT_BLOCK.getDelegate());
+    public static final DeferredItem<BlockItem> BREAKABLE_POTATO = ITEMS.registerSimpleBlockItem(BREAKABLE_POTATO_BLOCK.getDelegate());
 
     public static final DeferredItem<Item> ROGUE_SWORD = ITEMS.registerItem("rogue_sword", RogueSword::new);
 
@@ -653,4 +655,20 @@ public class UnshatteredItems {
     public static final DeferredItem<EnchantedItem> ENCHANTED_DANDELION = ITEMS.registerItem("enchanted_dandelion", EnchantedItem::new);
 
     public static final DeferredItem<Item> BIOFUEL = ITEMS.registerItem("biofuel", Item::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_WHEAT = ITEMS.registerItem("enchanted_wheat", EnchantedItem::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_CARROT = ITEMS.registerItem("enchanted_carrot", EnchantedItem::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_POTATO = ITEMS.registerItem("enchanted_potato", EnchantedItem::new);
+
+    public static final DeferredItem<Item> ROOKIE_HOE = ITEMS.registerItem("rookie_hoe", props -> new Item(props.stacksTo(1)
+            .attributes(ItemAttributeModifiers.builder().add(Attributes.ATTACK_SPEED,
+                    new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("rooke_hoe_attack_speed"), -2.0f, AttributeModifier.Operation.ADD_VALUE),
+                    EquipmentSlotGroup.MAINHAND
+            ).add(UnshatteredAttributeValues.FARMING_FORTUNE.holder,
+                    new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("rooke_hoe_farming_fortune"), 5.0f, AttributeModifier.Operation.ADD_VALUE),
+                    EquipmentSlotGroup.MAINHAND
+            ).build()))
+    );
 }

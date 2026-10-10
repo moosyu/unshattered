@@ -1,13 +1,7 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.Unshattered;
 import io.github.moosyu.abilities.*;
-import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
-import io.github.moosyu.data.attachments.PlayerFlagsAttachment;
-import io.github.moosyu.data.attachments.PlayerForgeSlotsAttachment;
-import io.github.moosyu.data.attachments.UnshatteredAttachments;
-import io.github.moosyu.data.recipes.ForgeRecipe;
-import io.github.moosyu.data.recipes.ForgeRecipeInput;
+import io.github.moosyu.data.attachments.*;
 import io.github.moosyu.gui.menus.ReforgeAnvilMenu;
 import io.github.moosyu.gui.menus.StorageMenu;
 import io.github.moosyu.gui.menus.TalismansMenu;
@@ -187,9 +181,10 @@ public class RegisterPayloadsHandler {
                 AttemptPurchasePacket.STREAM_CODEC,
                 (data, context) -> context.enqueueWork(() -> {
                     ServerPlayer serverPlayer = (ServerPlayer) context.player();
+                    int soldItemCount = data.soldItemStack().count();
 
-                    if (data.price().isPresent() && !UnshatteredUtils.canAffordCoins(data.price().get(), context.player())) {
-                        context.player().sendSystemMessage(Component.translatable("screen.unshattered.store.text.purchase_failed_coins")
+                    if (data.price().isPresent() && !UnshatteredUtils.canAffordCoins(data.price().get() * soldItemCount, context.player())) {
+                        context.player().sendSystemMessage(Component.translatable("screen.unshattered.vendor.text.purchase_failed_coins")
                                 .withColor(UnshatteredUtils.RED)
                         );
 
@@ -201,8 +196,8 @@ public class RegisterPayloadsHandler {
                         return;
                     }
 
-                    if (data.itemTradeRequirements().isPresent() && !UnshatteredUtils.canTradeItems(data.itemTradeRequirements().get(), context.player())) {
-                        context.player().sendSystemMessage(Component.translatable("screen.unshattered.store.text.purchase_failed_trade")
+                    if (data.itemTradeRequirements().isPresent() && !UnshatteredUtils.canTradeItems(data.itemTradeRequirements().get(), context.player(), soldItemCount)) {
+                        context.player().sendSystemMessage(Component.translatable("screen.unshattered.vendor.text.purchase_failed_trade")
                                 .withColor(UnshatteredUtils.RED)
                         );
 
@@ -213,9 +208,9 @@ public class RegisterPayloadsHandler {
                         return;
                     }
 
-                    data.price().ifPresent(price -> UnshatteredUtils.spendCoins(price, context.player()));
+                    data.price().ifPresent(price -> UnshatteredUtils.spendCoins(price * soldItemCount, context.player()));
 
-                    data.itemTradeRequirements().ifPresent(requirements -> UnshatteredUtils.tradeItems(requirements, context.player()));
+                    data.itemTradeRequirements().ifPresent(requirements -> UnshatteredUtils.tradeItems(requirements, context.player(), soldItemCount));
 
                     PacketDistributor.sendToPlayer(serverPlayer, new ClientsidePlayerSoundEffectPacket(
                             BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.NOTE_BLOCK_PLING.value()),
@@ -224,7 +219,7 @@ public class RegisterPayloadsHandler {
                             )
                     );
 
-                    UnshatteredUtils.givePlayerHarvestedItemStack(context.player(), data.soldItem());
+                    UnshatteredUtils.givePlayerHarvestedItemStack(context.player(), data.soldItemStack());
                 })
         );
 
@@ -237,12 +232,14 @@ public class RegisterPayloadsHandler {
                             && UnshatteredUtils.canForgeItem(context.player(), data.forgeRecipe())
                     ) {
                         List<PlayerForgeSlotsAttachment.ForgeSlot> newSlots = new ArrayList<>(forgeSlotsAttachment.slots());
-                        newSlots.set(data.forgeSlotIndex(), new PlayerForgeSlotsAttachment.ForgeSlot(Instant.now().getEpochSecond() + data.forgeRecipe().durationSeconds(),
+                        newSlots.set(data.forgeSlotIndex(), new PlayerForgeSlotsAttachment.ForgeSlot(Instant.now().getEpochSecond(),
+                                data.forgeRecipe().durationSeconds(),
                                 Optional.of(new ItemStack(data.forgeRecipe().result().item()))
                         ));
 
                         context.player().setData(UnshatteredAttachments.PLAYER_FORGE_SLOTS.get(), new PlayerForgeSlotsAttachment(forgeSlotsAttachment.availableSlots(), newSlots));
                         context.player().syncData(UnshatteredAttachments.PLAYER_FORGE_SLOTS);
+                        data.forgeRecipe().consume(context.player().getInventory());
                     }
                 })
         );
@@ -258,14 +255,14 @@ public class RegisterPayloadsHandler {
 
                     PlayerForgeSlotsAttachment.ForgeSlot slot = forgeSlotsAttachment.slots().get(data.forgeSlotIndex());
 
-                    if (slot.itemStack().isEmpty() || slot.endTime() > Instant.now().getEpochSecond()) {
+                    if (slot.itemStack().isEmpty() || (slot.startTime() + slot.forgingDuration()) > Instant.now().getEpochSecond()) {
                         return;
                     }
 
                     ItemStack claimedItem = slot.itemStack().get().copy();
                     List<PlayerForgeSlotsAttachment.ForgeSlot> newSlots = new ArrayList<>(forgeSlotsAttachment.slots());
 
-                    newSlots.set(data.forgeSlotIndex(), new PlayerForgeSlotsAttachment.ForgeSlot(0, Optional.empty()));
+                    newSlots.set(data.forgeSlotIndex(), new PlayerForgeSlotsAttachment.ForgeSlot(0, 0, Optional.empty()));
                     context.player().setData(UnshatteredAttachments.PLAYER_FORGE_SLOTS.get(), new PlayerForgeSlotsAttachment(forgeSlotsAttachment.availableSlots(), newSlots));
                     context.player().syncData(UnshatteredAttachments.PLAYER_FORGE_SLOTS);
 
@@ -277,6 +274,7 @@ public class RegisterPayloadsHandler {
                             )
                     );
 
+                    context.player().getData(UnshatteredAttachments.PLAYER_SKILLS.get()).addExp(PlayerSkillsAttachment.Skill.CARPENTRY, (float) (UnshatteredUtils.getItemSellValue(data.claimedItem()) * 0.1), context.player());
                     UnshatteredUtils.givePlayerHarvestedItemStack(context.player(), claimedItem);
                 })
         );

@@ -29,8 +29,8 @@ public class UnshatteredMenus {
             new MenuType<>(DrillAttachmentMenu::new, FeatureFlags.DEFAULT_FLAGS)
     );
 
-    public static final Supplier<MenuType<StoreMenu>> STORE_MENU_TYPE = MENUS.register("store_menu_type", () ->
-            IMenuTypeExtension.create(StoreMenu::new)
+    public static final Supplier<MenuType<VendorMenu>> VENDOR_MENU_TYPE = MENUS.register("vendor_menu_type", () ->
+            IMenuTypeExtension.create(VendorMenu::new)
     );
 
     public static final Supplier<MenuType<ForgeMenu>> FORGE_MENU_TYPE = MENUS.register("forge_menu_type", () ->

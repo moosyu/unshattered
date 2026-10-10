@@ -33,6 +33,9 @@
                                                                 {
                                                                   "text": {
                                                                     "translate": "dialogue.unshattered.generic.player_yes_choice"
+                                                                  },
+                                                                  "triggered_event": {
+                                                                    "type": "unshattered:open_forge"
                                                                   }
                                                                 },
                                                                 {
@@ -124,6 +127,9 @@
                                                     {
                                                       "text": {
                                                         "translate": "dialogue.unshattered.generic.player_yes_choice"
+                                                      },
+                                                      "triggered_event": {
+                                                        "type": "unshattered:open_forge"
                                                       }
                                                     },
                                                     {

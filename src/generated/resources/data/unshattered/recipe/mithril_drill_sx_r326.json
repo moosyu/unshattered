@@ -5,6 +5,10 @@
   "ingredients": [
     {
       "count": 1,
+      "ingredient": "unshattered:mithril_drill_sx_r226"
+    },
+    {
+      "count": 1,
       "ingredient": "unshattered:golden_plate"
     },
     {
