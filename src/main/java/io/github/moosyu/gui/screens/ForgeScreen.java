@@ -9,6 +9,7 @@ import io.github.moosyu.data.recipes.ForgeRecipe;
 import io.github.moosyu.events.RecipeReceivedHandler;
 import io.github.moosyu.gui.menus.ForgeMenu;
 import io.github.moosyu.items.UnshatteredRarity;
+import io.github.moosyu.packets.AttemptClaimForgedItemPacket;
 import io.github.moosyu.packets.AttemptForgeItemPacket;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.Minecraft;
@@ -36,9 +37,12 @@ import org.jspecify.annotations.NonNull;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
     private static final int CATEGORY_BUTTON_SIZE = 20;
@@ -58,6 +62,7 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
     private Page currentPage = Page.FORGE;
     private Integer currentSlotIndex = null;
     private RecipeBookCategory currentCategory = null;
+    private PlayerForgeSlotsAttachment lastForgeSlots = null;
 
     public ForgeScreen(ForgeMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title, 176, 204);
@@ -69,7 +74,7 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
         super.init();
 
         if (currentPage == Page.FORGE) {
-            Player player = Minecraft.getInstance().player;;
+            Player player = Minecraft.getInstance().player;
 
             if (player == null) {
                 return;
@@ -77,15 +82,12 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
 
             PlayerForgeSlotsAttachment forgeSlots = player.getData(UnshatteredAttachments.PLAYER_FORGE_SLOTS.get());
 
-            for (int i = 0; i < PlayerForgeSlotsAttachment.MAX_SLOTS; i++) {
-                PlayerForgeSlotsAttachment.ForgeSlot forgeSlot = forgeSlots.slots().get(i);
-                ForgeItemWidget forgeItemWidget = new ForgeItemWidget(minecraft, forgeSlot.itemStack().isPresent() ? forgeSlot.itemStack().get() : ItemStack.EMPTY,
-                        i,
-                        forgeSlot.endTime()
-                );
-                forgeItemWidget.setPosition(leftPos + 40 + (16 * i), topPos + 34);
+            for (int forgeSlotIndex = 0; forgeSlotIndex < PlayerForgeSlotsAttachment.MAX_SLOTS; forgeSlotIndex++) {
+                ForgeItemWidget forgeItemWidget = createForgeItemWidget(forgeSlotIndex, forgeSlots);
                 addRenderableWidget(forgeItemWidget);
             }
+
+            lastForgeSlots = forgeSlots;
         } else if (currentPage == Page.CATEGORIES) {
             List<RecipeBookCategory> recipeBookCategories = ForgeCategoryDisplay.all();
             for (int i = 0; i < recipeBookCategories.size(); i++) {
@@ -119,6 +121,29 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
         }
     }
 
+    private @NonNull ForgeItemWidget createForgeItemWidget(int forgeSlotIndex, PlayerForgeSlotsAttachment forgeSlots) {
+        PlayerForgeSlotsAttachment.ForgeSlot forgeSlot = forgeSlots.slots().get(forgeSlotIndex);
+        ForgeItemWidget forgeItemWidget = new ForgeItemWidget(minecraft,
+                forgeSlot.itemStack().isPresent() ? forgeSlot.itemStack().get() : ItemStack.EMPTY,
+                forgeSlotIndex,
+                forgeSlot.endTime(),
+                () -> {
+                    currentPage = Page.CATEGORIES;
+                    currentSlotIndex = forgeSlotIndex;
+                    rebuildWidgets();
+                },
+                () -> {
+                    if (forgeSlot.itemStack().isPresent()) {
+                        ClientPacketDistributor.sendToServer(new AttemptClaimForgedItemPacket(forgeSlot.itemStack().get(), forgeSlotIndex, forgeSlot.endTime()));
+                    } else {
+                        Unshattered.LOGGER.error("attempted to claim empty item from forge");
+                    }
+                }
+        );
+        forgeItemWidget.setPosition(leftPos + 40 + (16 * forgeSlotIndex), topPos + 26);
+        return forgeItemWidget;
+    }
+
     @Override
     public void extractBackground(@NonNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         super.extractBackground(graphics, mouseX, mouseY, partialTick);
@@ -134,41 +159,84 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
 
     private static class ForgeItemWidget extends ItemDisplayWidget {
         private final boolean emptySlot;
+        private final boolean completedSlot;
+        private final Runnable onClick;
+        private final Runnable onCompleteClick;
+        private final Supplier<Component> tooltipSupplier;
+        private long lastTooltipSecond = -1;
 
-        public ForgeItemWidget(Minecraft minecraft, ItemStack itemStack, int slotNumber, long endTime) {
-            Component tooltipText;
+        public ForgeItemWidget(Minecraft minecraft, ItemStack itemStack, int slotIndex, long endTime, Runnable onClick, Runnable onCompleteClick) {
+            Component tooltipText = Component.empty();
+            Supplier<Component> supplier = null;
+            Player player = minecraft.player;
+            boolean tooltipSet = false;
+            boolean empty = false;
+            boolean completed = false;
 
-            if (itemStack.isEmpty()) {
-                itemStack = new ItemStack(Items.BLAST_FURNACE);
-                emptySlot = true;
-                tooltipText = Component.translatable("screen.unshattered.forge.slot").withColor(UnshatteredUtils.GREEN)
-                        .append(Component.literal(" #" + slotNumber).withColor(UnshatteredUtils.GREEN))
-                        .append(Component.literal("\n"))
-                        .append(Component.translatable("screen.unshattered.forge.view").withColor(UnshatteredUtils.GRAY))
-                        .append(Component.literal("\n\n"))
-                        .append(Component.translatable("screen.unshattered.forge.start_process").withColor(UnshatteredUtils.YELLOW));
-            } else {
-                emptySlot = false;
+            if (player != null) {
+                PlayerForgeSlotsAttachment forgeSlots = player.getData(UnshatteredAttachments.PLAYER_FORGE_SLOTS.get());
+                PlayerForgeSlotsAttachment.ForgeSlot forgeSlot = forgeSlots.slots().get(slotIndex);
 
-                UnshatteredRarity rarity = UnshatteredUtils.getItemRarity(itemStack);
-                tooltipText = itemStack.getItemName().copy().withColor(rarity.getColour(1.0f))
-                        .append(Component.literal("\n"))
-                        .append(Component.translatable("screen.unshattered.forge.time_remaining").withColor(UnshatteredUtils.GRAY))
-                        .append(Component.literal(": ").withColor(UnshatteredUtils.GRAY))
-                        .append(Component.literal(getTimeDisplay(Instant.now().getEpochSecond() - endTime)).withColor(UnshatteredUtils.GREEN))
-                        .append("\n")
-                        .append(Component.literal(String.valueOf(LocalDateTime.ofInstant(Instant.ofEpochSecond(endTime), ZoneId.systemDefault()))).withColor(UnshatteredUtils.CYAN));
+                if (forgeSlot.itemStack().isPresent() && forgeSlot.endTime() <= Instant.now().getEpochSecond()) {
+                    completed = true;
+                    tooltipSet = true;
+                    tooltipText = itemStack.getItemName().copy().withColor(UnshatteredUtils.getItemRarity(itemStack).getColour(1.0f))
+                            .append(Component.literal("\n"))
+                            .append(Component.translatable("screen.unshattered.forge.completed").withColor(UnshatteredUtils.YELLOW));
+                } else if (forgeSlots.availableSlots() <= slotIndex) {
+                    itemStack = new ItemStack(Items.BEDROCK);
+                    tooltipText = Component.translatable("screen.unshattered.forge.locked").withColor(UnshatteredUtils.RED);
+                    tooltipSet = true;
+                }
+            }
+
+            if (!tooltipSet) {
+                if (itemStack.isEmpty()) {
+                    itemStack = new ItemStack(Items.BLAST_FURNACE);
+                    empty = true;
+                    tooltipText = Component.translatable("screen.unshattered.forge.slot").withColor(UnshatteredUtils.GREEN)
+                            .append(Component.literal(" #" + (slotIndex + 1)).withColor(UnshatteredUtils.GREEN))
+                            .append(Component.literal("\n"))
+                            .append(Component.translatable("screen.unshattered.forge.view").withColor(UnshatteredUtils.GRAY))
+                            .append(Component.literal("\n\n"))
+                            .append(Component.translatable("screen.unshattered.forge.start_process").withColor(UnshatteredUtils.YELLOW));
+                } else {
+                    ItemStack tooltipStack = itemStack;
+                    supplier = () -> tooltipStack.getItemName().copy().withColor(UnshatteredUtils.getItemRarity(tooltipStack).getColour(1.0f))
+                            .append(Component.literal("\n"))
+                            .append(Component.translatable("screen.unshattered.forge.time_remaining").withColor(UnshatteredUtils.GRAY))
+                            .append(Component.literal(": ").withColor(UnshatteredUtils.GRAY))
+                            .append(Component.literal(getTimeDisplay(Math.max(0, endTime - Instant.now().getEpochSecond()))).withColor(UnshatteredUtils.GREEN))
+                            .append("\n")
+                            .append(Component.translatable("screen.unshattered.forge.ends").withColor(UnshatteredUtils.CYAN))
+                            .append(Component.literal(": ").withColor(UnshatteredUtils.CYAN))
+                            .append(Component.literal(LocalDateTime.ofInstant(Instant.ofEpochSecond(endTime), ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("MMMM d, h:mm a", Locale.ENGLISH))).withColor(UnshatteredUtils.CYAN));
+                    tooltipText = supplier.get();
+                }
             }
 
             super(minecraft, 0, 0, 16, 16, Component.translatable("widget.unshattered.narration.forge_item"), itemStack, false, false);
 
+            emptySlot = empty;
+            completedSlot = completed;
+            this.onClick = onClick;
+            this.onCompleteClick = onCompleteClick;
             setTooltip(Tooltip.create(tooltipText));
+            tooltipSupplier = supplier;
         }
 
         @Override
         protected void extractWidgetRenderState(@NonNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
             if (isHovered()) {
                 graphics.requestCursor(CursorTypes.POINTING_HAND);
+            }
+
+            if (tooltipSupplier != null) {
+                long now = Instant.now().getEpochSecond();
+                if (now != lastTooltipSecond) {
+                    lastTooltipSecond = now;
+                    setTooltip(Tooltip.create(tooltipSupplier.get()));
+                }
             }
 
             super.extractWidgetRenderState(graphics, mouseX, mouseY, a);
@@ -178,8 +246,16 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
         public boolean isFocused() {
             return false;
         }
-    }
 
+        @Override
+        public void onClick(@NonNull MouseButtonEvent event, boolean doubleClick) {
+            if (emptySlot) {
+                onClick.run();
+            } else if (completedSlot) {
+                onCompleteClick.run();
+            }
+        }
+    }
 
     private static class ForgeCategoryWidget extends ItemDisplayWidget {
         private static final int ITEM_SIZE = 16;
@@ -310,13 +386,20 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
 
         @Override
         public void onClick(@NonNull MouseButtonEvent event, boolean doubleClick) {
-            ClientPacketDistributor.sendToServer(new AttemptForgeItemPacket(Instant.now().getEpochSecond(),
-                    forgeRecipe,
-                    currentSlotIndex)
-            );
+            Player player = minecraft.player;
 
-            currentPage = Page.FORGE;
-            rebuildWidgets();
+            if (player == null) {
+                return;
+            }
+
+            if (UnshatteredUtils.canForgeItem(player, forgeRecipe)) {
+                ClientPacketDistributor.sendToServer(new AttemptForgeItemPacket(forgeRecipe, currentSlotIndex));
+
+                currentPage = Page.FORGE;
+                rebuildWidgets();
+            } else {
+                player.sendSystemMessage(Component.translatable("screen.unshattered.forge.forge_failed").withColor(UnshatteredUtils.RED));
+            }
         }
     }
 
@@ -343,9 +426,21 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
         } else if (seconds < 3600) {
             return (seconds / 60) + "m";
         } else if (seconds < 86400) {
-            return (seconds / 3600) + "m";
+            return (seconds / 3600) + "h";
         } else {
             return (seconds / 86400) + "d";
+        }
+    }
+
+    @Override
+    protected void containerTick() {
+        super.containerTick();
+
+        if (currentPage == Page.FORGE && lastForgeSlots != null) {
+            Player player = Minecraft.getInstance().player;
+            if (player != null && player.getData(UnshatteredAttachments.PLAYER_FORGE_SLOTS.get()) != lastForgeSlots) {
+                rebuildWidgets();
+            }
         }
     }
 }

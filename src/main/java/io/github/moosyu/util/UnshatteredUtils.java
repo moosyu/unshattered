@@ -15,6 +15,8 @@ import io.github.moosyu.data.drops.DropData;
 import io.github.moosyu.data.drops.DropTypes;
 import io.github.moosyu.data.fishing.FishingEntry;
 import io.github.moosyu.data.fishing.FishingWeightEntry;
+import io.github.moosyu.data.recipes.ForgeRecipe;
+import io.github.moosyu.data.recipes.ForgeRecipeInput;
 import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.UnshatteredRarity;
 import net.minecraft.core.Holder;
@@ -77,7 +79,7 @@ public final class UnshatteredUtils {
     public static final int CYAN = 0xFF55FFFF;
     public static final int RED = 0xFFFF5555;
     public static final int MAGENTA = 0xFFFF55FF;
-    public static final int YELLOW = 0xFFFFFF55;
+    public static final int YELLOW = 0xFFFFDE2F;
     public static final int WHITE = 0xFFFFFFFF;
 
     public static final Item[] WOOL_TYPES = {
@@ -593,4 +595,10 @@ public final class UnshatteredUtils {
         return fuelAmount;
     }
 
+    /**
+     * for running clientside for an error message and then serverside to make sure no funny business went on
+     */
+    public static boolean canForgeItem(Player player, ForgeRecipe forgeRecipe) {
+        return forgeRecipe.matches(ForgeRecipeInput.getRecipeInput(player), player.level());
+    }
 }

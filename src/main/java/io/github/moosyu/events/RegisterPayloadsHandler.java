@@ -1,10 +1,12 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.Unshattered;
 import io.github.moosyu.abilities.*;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.PlayerFlagsAttachment;
 import io.github.moosyu.data.attachments.PlayerForgeSlotsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.recipes.ForgeRecipe;
 import io.github.moosyu.data.recipes.ForgeRecipeInput;
 import io.github.moosyu.gui.menus.ReforgeAnvilMenu;
 import io.github.moosyu.gui.menus.StorageMenu;
@@ -27,6 +29,9 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.jspecify.annotations.NonNull;
 
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static io.github.moosyu.Unshattered.MODID;
@@ -229,16 +234,50 @@ public class RegisterPayloadsHandler {
                     PlayerForgeSlotsAttachment forgeSlotsAttachment = context.player().getData(UnshatteredAttachments.PLAYER_FORGE_SLOTS.get());
 
                     if (forgeSlotsAttachment.availableSlots() >= data.forgeSlotIndex() + 1
-                            && data.forgeRecipe().matches(ForgeRecipeInput.getRecipeInput(context.player()), context.player().level())
+                            && UnshatteredUtils.canForgeItem(context.player(), data.forgeRecipe())
                     ) {
-                        forgeSlotsAttachment.slots().set(data.forgeSlotIndex(),
-                                new PlayerForgeSlotsAttachment.ForgeSlot(data.endTime(),
-                                        Optional.of(new ItemStack(data.forgeRecipe().result().item()))
-                                )
-                        );
+                        List<PlayerForgeSlotsAttachment.ForgeSlot> newSlots = new ArrayList<>(forgeSlotsAttachment.slots());
+                        newSlots.set(data.forgeSlotIndex(), new PlayerForgeSlotsAttachment.ForgeSlot(Instant.now().getEpochSecond() + data.forgeRecipe().durationSeconds(),
+                                Optional.of(new ItemStack(data.forgeRecipe().result().item()))
+                        ));
 
+                        context.player().setData(UnshatteredAttachments.PLAYER_FORGE_SLOTS.get(), new PlayerForgeSlotsAttachment(forgeSlotsAttachment.availableSlots(), newSlots));
                         context.player().syncData(UnshatteredAttachments.PLAYER_FORGE_SLOTS);
                     }
+                })
+        );
+
+        registrar.playToServer(AttemptClaimForgedItemPacket.TYPE,
+                AttemptClaimForgedItemPacket.STREAM_CODEC,
+                (data, context) -> context.enqueueWork(() -> {
+                    PlayerForgeSlotsAttachment forgeSlotsAttachment = context.player().getData(UnshatteredAttachments.PLAYER_FORGE_SLOTS.get());
+
+                    if (data.forgeSlotIndex() < 0 || data.forgeSlotIndex() >= forgeSlotsAttachment.slots().size()) {
+                        return;
+                    }
+
+                    PlayerForgeSlotsAttachment.ForgeSlot slot = forgeSlotsAttachment.slots().get(data.forgeSlotIndex());
+
+                    if (slot.itemStack().isEmpty() || slot.endTime() > Instant.now().getEpochSecond()) {
+                        return;
+                    }
+
+                    ItemStack claimedItem = slot.itemStack().get().copy();
+                    List<PlayerForgeSlotsAttachment.ForgeSlot> newSlots = new ArrayList<>(forgeSlotsAttachment.slots());
+
+                    newSlots.set(data.forgeSlotIndex(), new PlayerForgeSlotsAttachment.ForgeSlot(0, Optional.empty()));
+                    context.player().setData(UnshatteredAttachments.PLAYER_FORGE_SLOTS.get(), new PlayerForgeSlotsAttachment(forgeSlotsAttachment.availableSlots(), newSlots));
+                    context.player().syncData(UnshatteredAttachments.PLAYER_FORGE_SLOTS);
+
+                    PacketDistributor.sendToPlayer((ServerPlayer) context.player(),
+                            new ClientsidePlayerSoundEffectPacket(
+                                    BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.NOTE_BLOCK_PLING.value()),
+                                    1.0f,
+                                    2.0f
+                            )
+                    );
+
+                    UnshatteredUtils.givePlayerHarvestedItemStack(context.player(), claimedItem);
                 })
         );
     }

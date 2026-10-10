@@ -26,6 +26,9 @@ public record PlayerForgeSlotsAttachment(int availableSlots, List<ForgeSlot> slo
         availableSlots = Math.min(availableSlots, MAX_SLOTS);
     }
 
+    /**
+     * @param endTime gotten with Instant.now().getEpochSecond() + ForgeRecipe#durationSeconds
+     */
     public record ForgeSlot(long endTime, Optional<ItemStack> itemStack) {
         public static ForgeSlot EMPTY_SLOT = new ForgeSlot(0L ,Optional.empty());
 

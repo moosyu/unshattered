@@ -555,6 +555,10 @@
   "screen.unshattered.forge.view": "View and start forge processes using the materials you have.",
   "screen.unshattered.forge.start_process": "Click to start process!",
   "screen.unshattered.forge.time_remaining": "Time remaining",
+  "screen.unshattered.forge.forge_failed": "You don't have enough materials to forge this item!",
+  "screen.unshattered.forge.locked": "Slot locked!",
+  "screen.unshattered.forge.ends": "Ends at",
+  "screen.unshattered.forge.completed": "Forging completed, click to claim!",
 
   "widget.unshattered.narration.scroller": "Scroller Widget",
   "widget.unshattered.narration.shop_item": "Shop Item",
@@ -572,7 +576,7 @@
   "entity.unshattered.forger": "The Forger",
   "entity.unshattered.bubu": "Bubu",
 
-  "dialogue.unshattered.generic.player_yes_choice": "No.",
+  "dialogue.unshattered.generic.player_yes_choice": "Yes.",
   "dialogue.unshattered.generic.player_no_choice": "No.",
 
   "dialogue.unshattered.jotraeline_greatforge.introduction": "Ay [p]! I'm [c=0xFF00AA00]Jotraeline Greatforge[/c], the drill expert 'round here.",
@@ -617,8 +621,8 @@
   "dialogue.unshattered.forger_divan_2": "It's said pieces of his gear are spread throughout, I dream of being able to forge with a piece of it. Ahh, look at me pattering on, I'm sure you'll hear enough about him while you're here. [i]The Forgekeeper wears a wide grin, it seems he has great pride for his Dwarven heritage[/i].",
   "dialogue.unshattered.player_dwarven_lords": "Dwarven Lords?",
   "dialogue.unshattered.forger_lords": "Ahh, yes. It wasn't just [c=0xFF55FFFF]Divan[/c]. We Dwarves grant the title of [c=0xFFAA0000]Dwarven Lord[/c] to when someone does something truly great. The second was [c=0xFFAA0000]Dwarven Lord[/c] Myra, she forged the gemstone gauntlet. Apparently she could use it to channel the [c=0xFFAA00AA]Crystal Hollows'[/c] magic to seal the [c=0xFF55FFFF]Glacite Tunnels[/c] and construct the Great Ice Wall.",
-  "dialogue.unshattered.forger_lords_2": " Afterwards she sealed herself inside the wall, her mana keeping the Glacite from spreading.",
-  "dialogue.unshattered.forger_lords_3": "The third [c=0xFFAA0000]Dwarven Lord[/c] was Kaelen. Yknow, before the Dragon King invaded the humans he came our mines. They wanted to take it, yet were stopped by Kaelen alone. Supposedly he had a shield said that could repel all magic. After the dragon's retreat, Kaelen was swallowed by the ground, turned to stone. You can still find 'im in front of the mines.",
+  "dialogue.unshattered.forger_lords_2": "Afterwards she sealed herself inside the wall and her mana keeps Glacite from spreading.",
+  "dialogue.unshattered.forger_lords_3": "The third [c=0xFFAA0000]Dwarven Lord[/c] was Kaelen. Yknow, before the Dragon King invaded the humans he came our mines? They wanted to take it, yet were stopped by Kaelen alone. Supposedly he had a shield said that could repel all magic. After the dragon's retreat, Kaelen was swallowed by the ground, turned to stone. You can still find 'im in front of the mines.",
   "dialogue.unshattered.forger_lords_4": "I hope I'll one day be able to forge such a legendary tool as theirs.",
   "dialogue.unshattered.forger_dialogue_finished": "Now, would you like me to forge anything for ya?",
   "dialogue.unshattered.forger_player_return": "Well, hello again. You seem to be doing all right. Need anything forged?",
