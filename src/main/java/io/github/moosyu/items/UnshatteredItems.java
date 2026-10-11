@@ -322,6 +322,16 @@ public class UnshatteredItems {
     public static final DeferredItem<BlockItem> BREAKABLE_ICE = ITEMS.registerSimpleBlockItem(BREAKABLE_ICE_BLOCK.getDelegate());
     public static final DeferredItem<BlockItem> BREAKABLE_CARROT = ITEMS.registerSimpleBlockItem(BREAKABLE_CARROT_BLOCK.getDelegate());
     public static final DeferredItem<BlockItem> BREAKABLE_POTATO = ITEMS.registerSimpleBlockItem(BREAKABLE_POTATO_BLOCK.getDelegate());
+    public static final DeferredItem<BlockItem> BREAKABLE_MELON = ITEMS.registerSimpleBlockItem(BREAKABLE_MELON_BLOCK.getDelegate());
+    public static final DeferredItem<BlockItem> BREAKABLE_SUGAR_CANE = ITEMS.registerSimpleBlockItem(BREAKABLE_SUGARCANE_BLOCK.getDelegate());
+    public static final DeferredItem<BlockItem> BREAKABLE_CACTUS = ITEMS.registerSimpleBlockItem(BREAKABLE_CACTUS_BLOCK.getDelegate());
+    public static final DeferredItem<BlockItem> BREAKABLE_SAND = ITEMS.registerSimpleBlockItem(BREAKABLE_SAND_BLOCK.getDelegate());
+    public static final DeferredItem<BlockItem> BREAKABLE_BROWN_MUSHROOM_BLOCK = ITEMS.registerSimpleBlockItem(UnshatteredBlocks.BREAKABLE_BROWN_MUSHROOM_BLOCK.getDelegate());
+    public static final DeferredItem<BlockItem> BREAKABLE_RED_MUSHROOM_BLOCK = ITEMS.registerSimpleBlockItem(UnshatteredBlocks.BREAKABLE_RED_MUSHROOM_BLOCK.getDelegate());
+    public static final DeferredItem<BlockItem> BREAKABLE_BROWN_MUSHROOM = ITEMS.registerSimpleBlockItem(UnshatteredBlocks.BREAKABLE_BROWN_MUSHROOM.getDelegate());
+    public static final DeferredItem<BlockItem> BREAKABLE_RED_MUSHROOM = ITEMS.registerSimpleBlockItem(UnshatteredBlocks.BREAKABLE_RED_MUSHROOM.getDelegate());
+    public static final DeferredItem<BlockItem> BREAKABLE_COCOA_BEAN = ITEMS.registerSimpleBlockItem(BREAKABLE_COCOA_BEAN_BLOCK.getDelegate());
+    public static final DeferredItem<BlockItem> BREAKABLE_PUMPKIN = ITEMS.registerSimpleBlockItem(BREAKABLE_PUMPKIN_BLOCK.getDelegate());
 
     public static final DeferredItem<Item> ROGUE_SWORD = ITEMS.registerItem("rogue_sword", RogueSword::new);
 
@@ -671,4 +681,32 @@ public class UnshatteredItems {
                     EquipmentSlotGroup.MAINHAND
             ).build()))
     );
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_MELON_SLICE = ITEMS.registerItem("enchanted_melon_slice", EnchantedItem::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_MELON = ITEMS.registerItem("enchanted_melon", EnchantedItem::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_SUGAR = ITEMS.registerItem("enchanted_sugar", EnchantedItem::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_SUGAR_CANE = ITEMS.registerItem("enchanted_sugar_cane", EnchantedItem::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_PUMPKIN = ITEMS.registerItem("enchanted_pumpkin", EnchantedItem::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_COCOA_BEANS = ITEMS.registerItem("enchanted_cocoa_beans", EnchantedItem::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_COOKIE = ITEMS.registerItem("enchanted_cookie", EnchantedItem::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_RED_MUSHROOM = ITEMS.registerItem("enchanted_red_mushroom", EnchantedItem::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_BROWN_MUSHROOM = ITEMS.registerItem("enchanted_brown_mushroom", EnchantedItem::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_RED_MUSHROOM_BLOCK = ITEMS.registerItem("enchanted_red_mushroom_block", EnchantedItem::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_BROWN_MUSHROOM_BLOCK = ITEMS.registerItem("enchanted_brown_mushroom_block", EnchantedItem::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_SAND = ITEMS.registerItem("enchanted_sand", EnchantedItem::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_CACTUS_GREEN = ITEMS.registerItem("enchanted_cactus_green", EnchantedItem::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_CACTUS = ITEMS.registerItem("enchanted_cactus", EnchantedItem::new);
 }

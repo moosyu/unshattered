@@ -2,6 +2,7 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.abilities.*;
 import io.github.moosyu.data.attachments.*;
+import io.github.moosyu.data.recipes.ForgeRecipe;
 import io.github.moosyu.gui.menus.ReforgeAnvilMenu;
 import io.github.moosyu.gui.menus.StorageMenu;
 import io.github.moosyu.gui.menus.TalismansMenu;
@@ -229,17 +230,21 @@ public class RegisterPayloadsHandler {
                     PlayerForgeSlotsAttachment forgeSlotsAttachment = context.player().getData(UnshatteredAttachments.PLAYER_FORGE_SLOTS.get());
 
                     if (forgeSlotsAttachment.availableSlots() >= data.forgeSlotIndex() + 1
-                            && UnshatteredUtils.canForgeItem(context.player(), data.forgeRecipe())
-                    ) {
+                            && UnshatteredUtils.canForgeItem(context.player(), data.forgeRecipe())) {
+                        ForgeRecipe recipe = data.forgeRecipe();
+                        // needs to be done before consume
+                        ItemStack result = recipe.assembleWithComponent(context.player().getInventory());
+
                         List<PlayerForgeSlotsAttachment.ForgeSlot> newSlots = new ArrayList<>(forgeSlotsAttachment.slots());
-                        newSlots.set(data.forgeSlotIndex(), new PlayerForgeSlotsAttachment.ForgeSlot(Instant.now().getEpochSecond(),
-                                data.forgeRecipe().durationSeconds(),
-                                Optional.of(new ItemStack(data.forgeRecipe().result().item()))
+                        newSlots.set(data.forgeSlotIndex(), new PlayerForgeSlotsAttachment.ForgeSlot(
+                                Instant.now().getEpochSecond(),
+                                recipe.durationSeconds(),
+                                Optional.of(result)
                         ));
 
                         context.player().setData(UnshatteredAttachments.PLAYER_FORGE_SLOTS.get(), new PlayerForgeSlotsAttachment(forgeSlotsAttachment.availableSlots(), newSlots));
                         context.player().syncData(UnshatteredAttachments.PLAYER_FORGE_SLOTS);
-                        data.forgeRecipe().consume(context.player().getInventory());
+                        recipe.consume(context.player().getInventory());
                     }
                 })
         );
@@ -275,6 +280,7 @@ public class RegisterPayloadsHandler {
                     );
 
                     context.player().getData(UnshatteredAttachments.PLAYER_SKILLS.get()).addExp(PlayerSkillsAttachment.Skill.CARPENTRY, (float) (UnshatteredUtils.getItemSellValue(data.claimedItem()) * 0.1), context.player());
+                    context.player().syncData(UnshatteredAttachments.PLAYER_SKILLS.get());
                     UnshatteredUtils.givePlayerHarvestedItemStack(context.player(), claimedItem);
                 })
         );

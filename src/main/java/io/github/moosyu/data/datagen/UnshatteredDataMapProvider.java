@@ -31,6 +31,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.DataMapProvider;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -117,12 +118,34 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         setBaseData(UnshatteredItems.ENCHANTED_CARROT.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 480);
         setBaseData(UnshatteredItems.ENCHANTED_POTATO.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 480);
         setBaseData(UnshatteredItems.ROOKIE_HOE.get(), ItemType.HOE, UnshatteredRarity.COMMON, 3);
+        setBaseData(Items.MELON_SLICE, ItemType.MATERIAL, UnshatteredRarity.COMMON, 2);
+        setBaseData(UnshatteredItems.ENCHANTED_MELON_SLICE.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 320);
+        setBaseData(UnshatteredItems.ENCHANTED_MELON.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 51200);
+        setBaseData(Items.SUGAR_CANE, ItemType.MATERIAL, UnshatteredRarity.COMMON, 4);
+        setBaseData(UnshatteredItems.ENCHANTED_SUGAR.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 640);
+        setBaseData(UnshatteredItems.ENCHANTED_SUGAR_CANE.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 102400);
+        setBaseData(Items.PUMPKIN, ItemType.MATERIAL, UnshatteredRarity.COMMON, 10);
+        setBaseData(UnshatteredItems.ENCHANTED_PUMPKIN, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 1600);
+        setBaseData(Items.COCOA_BEANS, ItemType.MATERIAL, UnshatteredRarity.COMMON, 3);
+        setBaseData(UnshatteredItems.ENCHANTED_COCOA_BEANS.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 480);
+        setBaseData(UnshatteredItems.ENCHANTED_COOKIE.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 76800);
+        setBaseData(Items.RED_MUSHROOM, ItemType.MATERIAL, UnshatteredRarity.COMMON, 10);
+        setBaseData(Items.BROWN_MUSHROOM, ItemType.MATERIAL, UnshatteredRarity.COMMON, 10);
+        setBaseData(UnshatteredItems.ENCHANTED_RED_MUSHROOM.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 1600);
+        setBaseData(UnshatteredItems.ENCHANTED_BROWN_MUSHROOM.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 1600);
+        setBaseData(UnshatteredItems.ENCHANTED_RED_MUSHROOM_BLOCK.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 256000);
+        setBaseData(UnshatteredItems.ENCHANTED_BROWN_MUSHROOM_BLOCK.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 256000);
+        setBaseData(Items.SAND, ItemType.MATERIAL, UnshatteredRarity.COMMON, 2);
+        setBaseData(UnshatteredItems.ENCHANTED_SAND.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 320);
+        setBaseData(Items.CACTUS, ItemType.MATERIAL, UnshatteredRarity.COMMON, 4);
+        setBaseData(UnshatteredItems.ENCHANTED_CACTUS_GREEN.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 640);
+        setBaseData(UnshatteredItems.ENCHANTED_CACTUS.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 102400);
 
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK, new ItemRange(UnshatteredItems.FIG_LOG.get()), PlayerSkillsAttachment.Skill.FORAGING, 15);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_STONE_BLOCK, new ItemRange(Items.COBBLESTONE), PlayerSkillsAttachment.Skill.MINING, 1);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK, new ItemRange(Items.COBBLESTONE), PlayerSkillsAttachment.Skill.MINING, 1);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_COAL_ORE_BLOCK, new ItemRange(Items.COAL), PlayerSkillsAttachment.Skill.MINING, 4);
-        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK, new ItemRange(Items.WHEAT, 1, 2), PlayerSkillsAttachment.Skill.FARMING, 4);
+        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK, new ItemRange(Items.WHEAT, 1, 2), PlayerSkillsAttachment.Skill.FARMING, 8);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_IRON_ORE_BLOCK, new ItemRange(Items.IRON_INGOT), PlayerSkillsAttachment.Skill.MINING, 5);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_COPPER_ORE_BLOCK, new ItemRange(Items.COPPER_INGOT, 2, 5), PlayerSkillsAttachment.Skill.MINING, 5);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_GOLD_ORE_BLOCK, new ItemRange(Items.GOLD_INGOT), PlayerSkillsAttachment.Skill.MINING, 6);
@@ -140,8 +163,18 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_DARK_OAK_LOG_BLOCK, new ItemRange(Items.DARK_OAK_LOG), PlayerSkillsAttachment.Skill.FORAGING, 6);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_ICE_BLOCK, new ItemRange(Items.ICE), PlayerSkillsAttachment.Skill.MINING, 0.5f);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_TITANIUM_BLOCK, new ItemRange(UnshatteredItems.TITANIUM.get(), 2), PlayerSkillsAttachment.Skill.MINING, 100);
-        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_CARROT_BLOCK, new ItemRange(Items.CARROT, 2, 5), PlayerSkillsAttachment.Skill.FARMING, 4);
-        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_POTATO_BLOCK, new ItemRange(Items.POTATO, 2, 5), PlayerSkillsAttachment.Skill.FARMING, 4);
+        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_CARROT_BLOCK, new ItemRange(Items.CARROT, 2, 5), PlayerSkillsAttachment.Skill.FARMING, 8);
+        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_POTATO_BLOCK, new ItemRange(Items.POTATO, 2, 5), PlayerSkillsAttachment.Skill.FARMING, 8);
+        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_SUGARCANE_BLOCK, new ItemRange(Items.SUGAR_CANE), PlayerSkillsAttachment.Skill.FARMING, 4);
+        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_RED_MUSHROOM, new ItemRange(Items.RED_MUSHROOM), PlayerSkillsAttachment.Skill.FARMING, 12);
+        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_BROWN_MUSHROOM, new ItemRange(Items.BROWN_MUSHROOM), PlayerSkillsAttachment.Skill.FARMING, 12);
+        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_COCOA_BEAN_BLOCK, new ItemRange(Items.COCOA_BEANS, 3, 4), PlayerSkillsAttachment.Skill.FARMING, 8);
+        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_MELON_BLOCK, new ItemRange(Items.MELON_SLICE, 3, 7), PlayerSkillsAttachment.Skill.FARMING, 8);
+        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_PUMPKIN_BLOCK, new ItemRange(Items.PUMPKIN), PlayerSkillsAttachment.Skill.FARMING, 9);
+        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_RED_MUSHROOM_BLOCK, new ItemRange(Items.RED_MUSHROOM, 2, 3), PlayerSkillsAttachment.Skill.FARMING, 12);
+        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_BROWN_MUSHROOM_BLOCK, new ItemRange(Items.BROWN_MUSHROOM, 2, 3), PlayerSkillsAttachment.Skill.FARMING, 12);
+        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_CACTUS_BLOCK, new ItemRange(Items.CACTUS), PlayerSkillsAttachment.Skill.FARMING, 4);
+        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_SAND_BLOCK, new ItemRange(Items.SAND), PlayerSkillsAttachment.Skill.MINING, 3);
 
         builder(BLOCK_BREAK_DATA)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_COBBLED_MITHRIL_BLOCK.get()),
@@ -181,7 +214,8 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         List.of(new MobItemDropData(Items.ROTTEN_FLESH, false),
                                 new MobItemDropData(Items.POISONOUS_POTATO, 0.02f, true),
                                 new MobItemDropData(Items.POTATO, 0.01f, true),
-                                new MobItemDropData(Items.CARROT, 0.01f, true)
+                                new MobItemDropData(Items.CARROT, 0.01f, true),
+                                new MobItemDropData(Items.IRON_SWORD, 0.001f, true)
                         ),
                         1,
                         8,
@@ -189,7 +223,9 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         6.0f
                 ), false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SKELETON), new MobRewardData(
-                        List.of(new MobItemDropData(Items.BONE, 1, 2, 1.0f, false)),
+                        List.of(new MobItemDropData(Items.BONE, 1, 2, 1.0f, false),
+                                new MobItemDropData(Items.CROSSBOW, 1, 0.001f, true)
+                        ),
                         1,
                         8,
                         PlayerSkillsAttachment.Skill.COMBAT,
@@ -870,10 +906,10 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         builder.add(block, new BlockBreakData(skill, expAmount, List.of(new DropData(itemRange))), false);
     }
 
-    private void setBaseData(Item item, ItemType itemType, UnshatteredRarity rarity, int sellValue) {
-        builder(ITEM_TYPE_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(item), itemType, false);
-        builder(ITEM_RARITY_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(item), rarity, false);
-        builder(ITEM_SELL_VALUE_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(item), sellValue, false);
+    private void setBaseData(ItemLike item, ItemType itemType, UnshatteredRarity rarity, int sellValue) {
+        builder(ITEM_TYPE_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(item.asItem()), itemType, false);
+        builder(ITEM_RARITY_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(item.asItem()), rarity, false);
+        builder(ITEM_SELL_VALUE_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(item.asItem()), sellValue, false);
     }
 
     private void setBaseData(Item item, ItemType itemType, int sellValue) {

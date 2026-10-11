@@ -1,6 +1,7 @@
 {
   "type": "unshattered:forge",
   "category": "unshattered:tools",
+  "copy_components_from": 0,
   "duration_ticks": 30,
   "ingredients": [
     {

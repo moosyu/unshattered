@@ -19,9 +19,11 @@ import io.github.moosyu.data.recipes.ForgeRecipe;
 import io.github.moosyu.data.recipes.ForgeRecipeInput;
 import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.UnshatteredRarity;
+import net.minecraft.client.gui.Font;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.Identifier;
@@ -606,5 +608,20 @@ public final class UnshatteredUtils {
      */
     public static boolean canForgeItem(Player player, ForgeRecipe forgeRecipe) {
         return forgeRecipe.matches(ForgeRecipeInput.getRecipeInput(player), player.level());
+    }
+
+    public static List<Component> wrapText(Font font, Component text) {
+        List<Component> tooltip = new ArrayList<>();
+
+        for (FormattedText line : font.getSplitter().splitLines(text, 200, Style.EMPTY)) {
+            MutableComponent lineComponent = Component.empty();
+            line.visit((style, str) -> {
+                lineComponent.append(Component.literal(str).withStyle(style));
+                return Optional.empty();
+            }, Style.EMPTY);
+            tooltip.add(lineComponent);
+        }
+
+        return tooltip;
     }
 }

@@ -17,11 +17,13 @@ import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import org.jspecify.annotations.NonNull;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @param durationSeconds seconds (not ticks) the recipe takes to forge. used as forge time uses epoch seconds.
+ * @param copyComponentsFrom the index of ingredients that will have the data components copied (for transferring them over like drills)
  */
-public record ForgeRecipe(ItemStackTemplate result, List<SizedIngredient> ingredients, RecipeBookCategory category, long durationSeconds) implements Recipe<ForgeRecipeInput> {
+public record ForgeRecipe(ItemStackTemplate result, List<SizedIngredient> ingredients, RecipeBookCategory category, long durationSeconds, Optional<Integer> copyComponentsFrom) implements Recipe<ForgeRecipeInput> {
     @Override
     public boolean matches(@NonNull ForgeRecipeInput input, @NonNull Level level) {
         for (SizedIngredient ingredient : ingredients) {
@@ -43,6 +45,26 @@ public record ForgeRecipe(ItemStackTemplate result, List<SizedIngredient> ingred
     @Override
     public @NonNull ItemStack assemble(@NonNull ForgeRecipeInput input) {
         return result.create();
+    }
+
+    public ItemStack assembleWithComponent(Inventory inventory) {
+        ItemStack output = result.create();
+
+        copyComponentsFrom.ifPresent(index -> {
+            if (index < 0 || index >= ingredients.size()) {
+                return;
+            }
+
+            SizedIngredient base = ingredients.get(index);
+            for (ItemStack stack : inventory.getNonEquipmentItems()) {
+                if (base.ingredient().test(stack)) {
+                    output.applyComponents(stack.getComponentsPatch());
+                    break;
+                }
+            }
+        });
+
+        return output;
     }
 
     @Override
@@ -99,7 +121,8 @@ public record ForgeRecipe(ItemStackTemplate result, List<SizedIngredient> ingred
                     ItemStackTemplate.CODEC.fieldOf("result").forGetter(ForgeRecipe::result),
                     SizedIngredient.NESTED_CODEC.listOf().fieldOf("ingredients").forGetter(ForgeRecipe::ingredients),
                     BuiltInRegistries.RECIPE_BOOK_CATEGORY.byNameCodec().fieldOf("category").forGetter(ForgeRecipe::category),
-                    Codec.LONG.fieldOf("duration_ticks").forGetter(ForgeRecipe::durationSeconds)
+                    Codec.LONG.fieldOf("duration_ticks").forGetter(ForgeRecipe::durationSeconds),
+                    Codec.INT.optionalFieldOf("copy_components_from").forGetter(ForgeRecipe::copyComponentsFrom)
             ).apply(instance, ForgeRecipe::new)
     );
 
@@ -108,7 +131,7 @@ public record ForgeRecipe(ItemStackTemplate result, List<SizedIngredient> ingred
             SizedIngredient.STREAM_CODEC.apply(ByteBufCodecs.list()), ForgeRecipe::ingredients,
             ByteBufCodecs.registry(Registries.RECIPE_BOOK_CATEGORY), ForgeRecipe::category,
             ByteBufCodecs.LONG, ForgeRecipe::durationSeconds,
+            ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), ForgeRecipe::copyComponentsFrom,
             ForgeRecipe::new
     );
-
 }

@@ -92,6 +92,16 @@ public class UnshatteredCreativeTabs {
             output.accept(BREAKABLE_TITANIUM.get());
             output.accept(BREAKABLE_POTATO.get());
             output.accept(BREAKABLE_CARROT.get());
+                output.accept(BREAKABLE_MELON.get());
+                output.accept(BREAKABLE_SUGAR_CANE.get());
+                output.accept(BREAKABLE_CACTUS.get());
+                output.accept(BREAKABLE_SAND.get());
+                output.accept(BREAKABLE_BROWN_MUSHROOM_BLOCK.get());
+                output.accept(BREAKABLE_RED_MUSHROOM_BLOCK.get());
+                output.accept(BREAKABLE_BROWN_MUSHROOM.get());
+                output.accept(BREAKABLE_RED_MUSHROOM.get());
+                output.accept(BREAKABLE_COCOA_BEAN.get());
+                output.accept(BREAKABLE_PUMPKIN.get());
         }).build()
     );
 
@@ -174,6 +184,20 @@ public class UnshatteredCreativeTabs {
                 output.accept(ENCHANTED_WHEAT);
                 output.accept(ENCHANTED_POTATO);
                 output.accept(ENCHANTED_CARROT);
+            output.accept(ENCHANTED_MELON_SLICE);
+            output.accept(ENCHANTED_MELON);
+            output.accept(ENCHANTED_SUGAR);
+            output.accept(ENCHANTED_SUGAR_CANE);
+            output.accept(ENCHANTED_CACTUS);
+            output.accept(ENCHANTED_CACTUS_GREEN);
+            output.accept(ENCHANTED_SAND);
+            output.accept(ENCHANTED_BROWN_MUSHROOM_BLOCK);
+            output.accept(ENCHANTED_RED_MUSHROOM_BLOCK);
+            output.accept(ENCHANTED_BROWN_MUSHROOM);
+            output.accept(ENCHANTED_RED_MUSHROOM);
+            output.accept(ENCHANTED_COOKIE);
+            output.accept(ENCHANTED_COCOA_BEANS);
+            output.accept(ENCHANTED_PUMPKIN);
         }).build()
     );
 

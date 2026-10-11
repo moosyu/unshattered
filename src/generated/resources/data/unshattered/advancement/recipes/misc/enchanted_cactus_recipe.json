@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_enchanted_cactus_green": {
+      "conditions": {
+        "items": [
+          {
+            "items": "unshattered:enchanted_cactus_green"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "unshattered:enchanted_cactus_recipe"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_enchanted_cactus_green"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "unshattered:enchanted_cactus_recipe"
+    ]
+  }
+}

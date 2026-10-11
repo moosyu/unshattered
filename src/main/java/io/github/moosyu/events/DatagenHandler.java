@@ -558,6 +558,27 @@ public class DatagenHandler {
                     createCropRegenPath(bootstrap, Blocks.CARROTS, UnshatteredBlocks.BREAKABLE_CARROT_BLOCK.get(), 4);
 
                     createCropRegenPath(bootstrap, Blocks.POTATOES, UnshatteredBlocks.BREAKABLE_POTATO_BLOCK.get(), 4);
+
+                    createRegenPathWithBlocks(bootstrap, "pumpkin", List.of(UnshatteredBlocks.BREAKABLE_PUMPKIN_BLOCK.get(), Blocks.AIR), 560);
+
+                    createRegenPathWithBlocks(bootstrap, "melon", List.of(UnshatteredBlocks.BREAKABLE_MELON_BLOCK.get(), Blocks.AIR), 560);
+
+                    createRegenPathWithBlocks(bootstrap, "sand", List.of(UnshatteredBlocks.BREAKABLE_SAND_BLOCK.get(), Blocks.SANDSTONE), 180);
+
+                    createRegenPathWithBlocks(bootstrap, "red_mushroom", List.of(UnshatteredBlocks.BREAKABLE_RED_MUSHROOM.get(), Blocks.AIR), 400);
+
+                    createRegenPathWithBlocks(bootstrap, "brown_mushroom", List.of(UnshatteredBlocks.BREAKABLE_BROWN_MUSHROOM.get(), Blocks.AIR), 400);
+
+                    createRegenPathWithBlocks(bootstrap, "red_mushroom_block", List.of(UnshatteredBlocks.BREAKABLE_RED_MUSHROOM_BLOCK.get(), Blocks.AIR), 600);
+
+                    createRegenPathWithBlocks(bootstrap, "brown_mushroom_block", List.of(UnshatteredBlocks.BREAKABLE_BROWN_MUSHROOM_BLOCK.get(), Blocks.AIR), 600);
+
+                    createRegenPathWithBlocks(bootstrap, "cactus", List.of(UnshatteredBlocks.BREAKABLE_CACTUS_BLOCK.get(), Blocks.AIR), 500);
+
+                    createRegenPathWithBlocks(bootstrap, "sugarcane", List.of(UnshatteredBlocks.BREAKABLE_SUGARCANE_BLOCK.get(), Blocks.AIR), 500);
+
+                    createRegenPathWithBlocks(bootstrap, "cocoa", List.of(UnshatteredBlocks.BREAKABLE_COCOA_BEAN_BLOCK.get(), Blocks.AIR), 600);
+
                 }).add(DataPackRegistryHandler.FISHING_MISC_REWARD_KEY, bootstrap -> {
                     bootstrap.register(createMiscRewardResourceKey("good_catch"), new CoinReward(25000,
                             5000,

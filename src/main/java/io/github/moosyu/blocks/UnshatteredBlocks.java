@@ -195,4 +195,49 @@ public class UnshatteredBlocks {
     public static final DeferredBlock<Block> BREAKABLE_CARROT_BLOCK = BLOCKS.registerBlock("breakable_carrot_block", UnshatteredCropBlock::new);
 
     public static final DeferredBlock<Block> BREAKABLE_POTATO_BLOCK = BLOCKS.registerBlock("breakable_potato_block", UnshatteredCropBlock::new);
+
+    public static final DeferredBlock<Block> BREAKABLE_SUGARCANE_BLOCK = BLOCKS.registerBlock("breakable_sugarcane_block", props ->
+            new Block(props.sound(SoundType.GRASS)
+                    .noOcclusion()
+                    .noCollision()
+            )
+    );
+
+    public static final DeferredBlock<Block> BREAKABLE_RED_MUSHROOM = BLOCKS.registerBlock("breakable_red_mushroom", UnshatteredMushroomBlock::new);
+
+    public static final DeferredBlock<Block> BREAKABLE_BROWN_MUSHROOM = BLOCKS.registerBlock("breakable_brown_mushroom", UnshatteredMushroomBlock::new);
+
+    public static final DeferredBlock<Block> BREAKABLE_COCOA_BEAN_BLOCK = BLOCKS.registerBlock("breakable_cocoa_bean_block", UnshatteredCocoaBeanBlock::new);
+
+    public static final DeferredBlock<Block> BREAKABLE_MELON_BLOCK = BLOCKS.registerBlock("breakable_melon_block",
+            props -> new Block(props.sound(SoundType.WOOD)
+                    .destroyTime(1.0f)
+            )
+    );
+
+    public static final DeferredBlock<Block> BREAKABLE_PUMPKIN_BLOCK = BLOCKS.registerBlock("breakable_pumpkin_block",
+            props -> new Block(props.sound(SoundType.WOOD)
+                    .destroyTime(1.0f)
+            )
+    );
+
+    public static final DeferredBlock<Block> BREAKABLE_RED_MUSHROOM_BLOCK = BLOCKS.registerBlock("breakable_red_mushroom_block",
+            props -> new Block(props.sound(SoundType.WOOD)
+                    .destroyTime(0.2f)
+            )
+    );
+
+    public static final DeferredBlock<Block> BREAKABLE_BROWN_MUSHROOM_BLOCK = BLOCKS.registerBlock("breakable_brown_mushroom_block",
+            props -> new Block(props.sound(SoundType.WOOD)
+                    .destroyTime(0.2f)
+            )
+    );
+
+    public static final DeferredBlock<Block> BREAKABLE_CACTUS_BLOCK = BLOCKS.registerBlock("breakable_cactus_block", UnshatteredCactusBlock::new);
+
+    public static final DeferredBlock<Block> BREAKABLE_SAND_BLOCK = BLOCKS.registerBlock("breakable_sand_block",
+            props -> new Block(props.sound(SoundType.SAND)
+                    .destroyTime(0.5f)
+            )
+    );
 }

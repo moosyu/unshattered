@@ -369,6 +369,17 @@
               "min_amount": 1
             }
           }
+        },
+        {
+          "combat_fortune_boosted": true,
+          "drop_data": {
+            "drop_chance": 0.001,
+            "item_range": {
+              "item": "minecraft:crossbow",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
         }
       ],
       "experience": 6.0,
@@ -537,6 +548,17 @@
             "drop_chance": 0.01,
             "item_range": {
               "item": "minecraft:carrot",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": true,
+          "drop_data": {
+            "drop_chance": 0.001,
+            "item_range": {
+              "item": "minecraft:iron_sword",
               "max_amount": 1,
               "min_amount": 1
             }

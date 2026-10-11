@@ -280,7 +280,7 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
                 .save(output);
 
         ForgeRecipeBuilder.create(UnshatteredItems.MITHRIL_DRILL_SX_R326, UnshatteredRecipeBookCategories.TOOLS, 30)
-                .define(UnshatteredItems.MITHRIL_DRILL_SX_R226)
+                .defineBase(UnshatteredItems.MITHRIL_DRILL_SX_R226)
                 .define(UnshatteredItems.GOLDEN_PLATE)
                 .define(UnshatteredItems.MITHRIL_PLATE)
                 .save(output);
@@ -310,6 +310,20 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
         createEnchantedItemRecipe(Items.WHEAT, UnshatteredItems.ENCHANTED_WHEAT.get(), getHasName(Items.WHEAT), has(Items.WHEAT));
         createEnchantedItemRecipe(Items.CARROT, UnshatteredItems.ENCHANTED_CARROT.get(), getHasName(Items.CARROT), has(Items.CARROT));
         createEnchantedItemRecipe(Items.POTATO, UnshatteredItems.ENCHANTED_POTATO.get(), getHasName(Items.POTATO), has(Items.POTATO));
+        createEnchantedItemRecipe(Items.MELON_SLICE, UnshatteredItems.ENCHANTED_MELON_SLICE.get(), getHasName(Items.MELON_SLICE), has(Items.MELON_SLICE));
+        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_MELON_SLICE.get(), UnshatteredItems.ENCHANTED_MELON.get());
+        createEnchantedItemRecipe(Items.SUGAR_CANE, UnshatteredItems.ENCHANTED_SUGAR.get());
+        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_SUGAR.get(), UnshatteredItems.ENCHANTED_SUGAR_CANE.get());
+        createEnchantedItemRecipe(Items.PUMPKIN, UnshatteredItems.ENCHANTED_PUMPKIN.get());
+        createEnchantedItemRecipe(Items.COCOA_BEANS, UnshatteredItems.ENCHANTED_COCOA_BEANS.get());
+        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_COCOA_BEANS.get(), UnshatteredItems.ENCHANTED_COOKIE.get());
+        createEnchantedItemRecipe(Items.RED_MUSHROOM, UnshatteredItems.ENCHANTED_RED_MUSHROOM.get());
+        createEnchantedItemRecipe(Items.BROWN_MUSHROOM, UnshatteredItems.ENCHANTED_BROWN_MUSHROOM.get());
+        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_RED_MUSHROOM.get(), UnshatteredItems.ENCHANTED_RED_MUSHROOM_BLOCK.get());
+        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_BROWN_MUSHROOM.get(), UnshatteredItems.ENCHANTED_BROWN_MUSHROOM_BLOCK.get());
+        createEnchantedItemRecipe(Items.SAND, UnshatteredItems.ENCHANTED_SAND.get());
+        createEnchantedItemRecipe(Items.CACTUS, UnshatteredItems.ENCHANTED_CACTUS_GREEN.get());
+        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_CACTUS_GREEN.get(), UnshatteredItems.ENCHANTED_CACTUS.get());
     }
 
     public static class Runner extends RecipeProvider.Runner {
@@ -384,6 +398,13 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
 
     private void createEnchantedItemRecipe(ItemLike ingredient, Item result, String unlockedById, Criterion<?> criterion) {
         createEnchantedItemRecipe(ingredient, 32, result, unlockedById, criterion);
+    }
+
+    /**
+     * create enchanted item recipe with recipe unlocking when the ingredient is collected
+     */
+    private void createEnchantedItemRecipe(ItemLike ingredient, Item result) {
+        createEnchantedItemRecipe(ingredient, 32, result, getHasName(ingredient), has(ingredient));
     }
 
     private void createEnchantedItemRecipe(ItemLike ingredient, int itemIngredientAmount, Item result, String unlockedById, Criterion<?> criterion) {

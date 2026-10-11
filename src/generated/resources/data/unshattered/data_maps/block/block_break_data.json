@@ -28,6 +28,48 @@
       "exp_amount": 6.0,
       "skill": "foraging"
     },
+    "unshattered:breakable_brown_mushroom": {
+      "drop_data": [
+        {
+          "drop_chance": 1.0,
+          "item_range": {
+            "item": "minecraft:brown_mushroom",
+            "max_amount": 1,
+            "min_amount": 1
+          }
+        }
+      ],
+      "exp_amount": 12.0,
+      "skill": "farming"
+    },
+    "unshattered:breakable_brown_mushroom_block": {
+      "drop_data": [
+        {
+          "drop_chance": 1.0,
+          "item_range": {
+            "item": "minecraft:brown_mushroom",
+            "max_amount": 3,
+            "min_amount": 2
+          }
+        }
+      ],
+      "exp_amount": 12.0,
+      "skill": "farming"
+    },
+    "unshattered:breakable_cactus_block": {
+      "drop_data": [
+        {
+          "drop_chance": 1.0,
+          "item_range": {
+            "item": "minecraft:cactus",
+            "max_amount": 1,
+            "min_amount": 1
+          }
+        }
+      ],
+      "exp_amount": 4.0,
+      "skill": "farming"
+    },
     "unshattered:breakable_carrot_block": {
       "drop_data": [
         {
@@ -39,7 +81,7 @@
           }
         }
       ],
-      "exp_amount": 4.0,
+      "exp_amount": 8.0,
       "skill": "farming"
     },
     "unshattered:breakable_coal_ore_block": {
@@ -95,6 +137,20 @@
       ],
       "exp_amount": 1.0,
       "skill": "mining"
+    },
+    "unshattered:breakable_cocoa_bean_block": {
+      "drop_data": [
+        {
+          "drop_chance": 1.0,
+          "item_range": {
+            "item": "minecraft:cocoa_beans",
+            "max_amount": 4,
+            "min_amount": 3
+          }
+        }
+      ],
+      "exp_amount": 8.0,
+      "skill": "farming"
     },
     "unshattered:breakable_copper_ore_block": {
       "drop_data": [
@@ -262,6 +318,20 @@
       "exp_amount": 7.0,
       "skill": "mining"
     },
+    "unshattered:breakable_melon_block": {
+      "drop_data": [
+        {
+          "drop_chance": 1.0,
+          "item_range": {
+            "item": "minecraft:melon_slice",
+            "max_amount": 7,
+            "min_amount": 3
+          }
+        }
+      ],
+      "exp_amount": 8.0,
+      "skill": "farming"
+    },
     "unshattered:breakable_oak_log": {
       "drop_data": [
         {
@@ -301,7 +371,49 @@
           }
         }
       ],
-      "exp_amount": 4.0,
+      "exp_amount": 8.0,
+      "skill": "farming"
+    },
+    "unshattered:breakable_pumpkin_block": {
+      "drop_data": [
+        {
+          "drop_chance": 1.0,
+          "item_range": {
+            "item": "minecraft:pumpkin",
+            "max_amount": 1,
+            "min_amount": 1
+          }
+        }
+      ],
+      "exp_amount": 9.0,
+      "skill": "farming"
+    },
+    "unshattered:breakable_red_mushroom": {
+      "drop_data": [
+        {
+          "drop_chance": 1.0,
+          "item_range": {
+            "item": "minecraft:red_mushroom",
+            "max_amount": 1,
+            "min_amount": 1
+          }
+        }
+      ],
+      "exp_amount": 12.0,
+      "skill": "farming"
+    },
+    "unshattered:breakable_red_mushroom_block": {
+      "drop_data": [
+        {
+          "drop_chance": 1.0,
+          "item_range": {
+            "item": "minecraft:red_mushroom",
+            "max_amount": 3,
+            "min_amount": 2
+          }
+        }
+      ],
+      "exp_amount": 12.0,
       "skill": "farming"
     },
     "unshattered:breakable_redstone_ore_block": {
@@ -316,6 +428,20 @@
         }
       ],
       "exp_amount": 7.0,
+      "skill": "mining"
+    },
+    "unshattered:breakable_sand_block": {
+      "drop_data": [
+        {
+          "drop_chance": 1.0,
+          "item_range": {
+            "item": "minecraft:sand",
+            "max_amount": 1,
+            "min_amount": 1
+          }
+        }
+      ],
+      "exp_amount": 3.0,
       "skill": "mining"
     },
     "unshattered:breakable_soft_mithril_block": {
@@ -364,6 +490,20 @@
       "exp_amount": 1.0,
       "skill": "mining"
     },
+    "unshattered:breakable_sugarcane_block": {
+      "drop_data": [
+        {
+          "drop_chance": 1.0,
+          "item_range": {
+            "item": "minecraft:sugar_cane",
+            "max_amount": 1,
+            "min_amount": 1
+          }
+        }
+      ],
+      "exp_amount": 4.0,
+      "skill": "farming"
+    },
     "unshattered:breakable_titanium_block": {
       "drop_data": [
         {
@@ -389,7 +529,7 @@
           }
         }
       ],
-      "exp_amount": 4.0,
+      "exp_amount": 8.0,
       "skill": "farming"
     },
     "unshattered:pure_diamond_block": {

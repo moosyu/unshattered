@@ -1,0 +1,12 @@
+{
+  "path": [
+    {
+      "Name": "unshattered:breakable_pumpkin_block"
+    },
+    {
+      "Name": "minecraft:air"
+    }
+  ],
+  "regen_ticks": 560,
+  "stages_incremented": 1
+}

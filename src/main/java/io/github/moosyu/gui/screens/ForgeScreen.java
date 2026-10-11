@@ -67,6 +67,9 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
     private PlayerForgeSlotsAttachment lastForgeSlots = null;
     private int lastCompletedCount = 0;
     private final Player player;
+    private boolean awaitingForgeSync = false;
+    private PlayerForgeSlotsAttachment syncBaseline = null;
+    private int syncWaitTicks = 0;
 
     public ForgeScreen(ForgeMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title, 176, 204);
@@ -129,6 +132,8 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
     public void extractRenderState(@NonNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
         super.extractRenderState(graphics, mouseX, mouseY, a);
 
+        int barHeight = 52;
+
         if (player == null || currentPage != Page.FORGE) {
             return;
         }
@@ -142,14 +147,13 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
                     0,
                     0,
                     6,
-                    51,
+                    barHeight,
                     6,
-                    51
+                    barHeight
             );
 
             PlayerForgeSlotsAttachment.ForgeSlot slot = forgeSlots.slots().get(i);
             if (slot.itemStack().isPresent()) {
-                int filledHeight = (int) (51 * Math.clamp((float) (Instant.now().getEpochSecond() - slot.startTime()) / slot.forgingDuration(), 0.0f, 1.0f));
                 graphics.blit(RenderPipelines.GUI_TEXTURED,
                         UnshatteredUtils.getUnshatteredIdentifier("textures/gui/sprites/widgets/forge_progress_bar.png"),
                         leftPos + 40 + (18 * i),
@@ -157,9 +161,9 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
                         0,
                         0,
                         6,
-                        filledHeight,
+                        (int) (barHeight * Math.clamp((float) (Instant.now().getEpochSecond() - slot.startTime()) / slot.forgingDuration(), 0.0f, 1.0f)),
                         6,
-                        51
+                        barHeight
                 );
             }
         }
@@ -444,15 +448,16 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
         public void onClick(@NonNull MouseButtonEvent event, boolean doubleClick) {
             Player player = minecraft.player;
 
-            if (player == null) {
+            if (player == null || awaitingForgeSync) {
                 return;
             }
 
             if (UnshatteredUtils.canForgeItem(player, forgeRecipe)) {
                 ClientPacketDistributor.sendToServer(new AttemptForgeItemPacket(forgeRecipe, currentSlotIndex));
 
-                currentPage = Page.FORGE;
-                rebuildWidgets();
+                awaitingForgeSync = true;
+                syncBaseline = player.getData(UnshatteredAttachments.PLAYER_FORGE_SLOTS.get());
+                syncWaitTicks = 0;
             } else {
                 player.sendSystemMessage(Component.translatable("screen.unshattered.forge.forge_failed").withColor(UnshatteredUtils.RED));
             }
@@ -492,13 +497,31 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
     protected void containerTick() {
         super.containerTick();
 
+        Player player = Minecraft.getInstance().player;
+        if (player == null) {
+            return;
+        }
+
+        // to make sure when the forge page is reopened everything is in order so there won't be a strange flash of the
+        // previous item
+        if (awaitingForgeSync) {
+            PlayerForgeSlotsAttachment current = player.getData(UnshatteredAttachments.PLAYER_FORGE_SLOTS.get());
+
+            // ++syncWaitTicks > 40 is a timeout in case the sync failed
+            if (current != syncBaseline || ++syncWaitTicks > 40) {
+                awaitingForgeSync = false;
+                syncBaseline = null;
+                currentPage = Page.FORGE;
+                rebuildWidgets();
+            }
+
+            return;
+        }
+
         if (currentPage == Page.FORGE && lastForgeSlots != null) {
-            Player player = Minecraft.getInstance().player;
-            if (player != null) {
-                PlayerForgeSlotsAttachment current = player.getData(UnshatteredAttachments.PLAYER_FORGE_SLOTS.get());
-                if (current != lastForgeSlots || countCompletedSlots(current) != lastCompletedCount) {
-                    rebuildWidgets();
-                }
+            PlayerForgeSlotsAttachment current = player.getData(UnshatteredAttachments.PLAYER_FORGE_SLOTS.get());
+            if (current != lastForgeSlots || countCompletedSlots(current) != lastCompletedCount) {
+                rebuildWidgets();
             }
         }
     }

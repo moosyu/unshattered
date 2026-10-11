@@ -1,0 +1,12 @@
+{
+  "path": [
+    {
+      "Name": "unshattered:breakable_red_mushroom_block"
+    },
+    {
+      "Name": "minecraft:air"
+    }
+  ],
+  "regen_ticks": 600,
+  "stages_incremented": 1
+}

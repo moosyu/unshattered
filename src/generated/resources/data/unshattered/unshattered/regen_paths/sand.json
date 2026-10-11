@@ -1,0 +1,12 @@
+{
+  "path": [
+    {
+      "Name": "unshattered:breakable_sand_block"
+    },
+    {
+      "Name": "minecraft:sandstone"
+    }
+  ],
+  "regen_ticks": 180,
+  "stages_incremented": 1
+}

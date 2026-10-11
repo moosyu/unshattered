@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.moosyu.items.ItemRange;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.ItemLike;
 
 /**
  * record for normal items dropped by mobs
@@ -12,20 +13,20 @@ import net.minecraft.world.item.Item;
  * @param combatFortuneBoosted whether the drop chance is boosted by combat fortune
  */
 public record MobItemDropData(DropData dropData, boolean combatFortuneBoosted) {
-    public MobItemDropData(Item item, boolean combatFortuneBoosted) {
-        this(new DropData(new ItemRange(item)), combatFortuneBoosted);
+    public MobItemDropData(ItemLike item, boolean combatFortuneBoosted) {
+        this(new DropData(new ItemRange(item.asItem())), combatFortuneBoosted);
     }
 
-    public MobItemDropData(Item item, float dropChance, boolean combatFortuneBoosted) {
-        this(new DropData(new ItemRange(item), dropChance), combatFortuneBoosted);
+    public MobItemDropData(ItemLike item, float dropChance, boolean combatFortuneBoosted) {
+        this(new DropData(new ItemRange(item.asItem()), dropChance), combatFortuneBoosted);
     }
 
-    public MobItemDropData(Item item, int minAmount, int maxAmount, float dropChance, boolean combatFortuneBoosted) {
-        this(new DropData(new ItemRange(item, minAmount, maxAmount), dropChance), combatFortuneBoosted);
+    public MobItemDropData(ItemLike item, int minAmount, int maxAmount, float dropChance, boolean combatFortuneBoosted) {
+        this(new DropData(new ItemRange(item.asItem(), minAmount, maxAmount), dropChance), combatFortuneBoosted);
     }
 
-    public MobItemDropData(Item item, int amount, float dropChance, boolean combatFortuneBoosted) {
-        this(new DropData(new ItemRange(item, amount), dropChance), combatFortuneBoosted);
+    public MobItemDropData(ItemLike item, int amount, float dropChance, boolean combatFortuneBoosted) {
+        this(new DropData(new ItemRange(item.asItem(), amount), dropChance), combatFortuneBoosted);
     }
 
     public static final Codec<MobItemDropData> CODEC = RecordCodecBuilder.create(instance -> instance.group(

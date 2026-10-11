@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_enchanted_brown_mushroom": {
+      "conditions": {
+        "items": [
+          {
+            "items": "unshattered:enchanted_brown_mushroom"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "unshattered:enchanted_brown_mushroom_block_recipe"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_enchanted_brown_mushroom"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "unshattered:enchanted_brown_mushroom_block_recipe"
+    ]
+  }
+}

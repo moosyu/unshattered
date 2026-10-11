@@ -14,6 +14,7 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class ForgeRecipeBuilder implements RecipeBuilder {
@@ -21,6 +22,7 @@ public class ForgeRecipeBuilder implements RecipeBuilder {
     private final RecipeBookCategory category;
     private final List<SizedIngredient> ingredients = new ArrayList<>();
     private final long durationSeconds;
+    private @Nullable Integer copyComponentsFrom = null;
 
     public ForgeRecipeBuilder(ItemStackTemplate result, Supplier<RecipeBookCategory> category, long durationSeconds) {
         this.result = result;
@@ -35,6 +37,11 @@ public class ForgeRecipeBuilder implements RecipeBuilder {
     public ForgeRecipeBuilder define(ItemLike ingredient, int count) {
         ingredients.add(SizedIngredient.of(ingredient, count));
         return this;
+    }
+
+    public ForgeRecipeBuilder defineBase(ItemLike item) {
+        copyComponentsFrom = ingredients.size();
+        return define(item);
     }
 
     /**
@@ -62,6 +69,6 @@ public class ForgeRecipeBuilder implements RecipeBuilder {
 
     @Override
     public void save(RecipeOutput recipeOutput, @NonNull ResourceKey<Recipe<?>> key) {
-        recipeOutput.accept(key, new ForgeRecipe(result, ingredients, category, durationSeconds), null);
+        recipeOutput.accept(key, new ForgeRecipe(result, ingredients, category, durationSeconds, Optional.ofNullable(copyComponentsFrom)), null);
     }
 }

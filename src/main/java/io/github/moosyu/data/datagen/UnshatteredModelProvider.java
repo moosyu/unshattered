@@ -191,6 +191,37 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_POTATO.get(), Items.POTATO, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_CARROT.get(), Items.CARROT, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.ROOKIE_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_MELON_SLICE.get(), Items.MELON_SLICE, ModelTemplates.FLAT_ITEM);
+        copyColumnBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_MELON.get(), Blocks.MELON);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_SUGAR.get(), Items.SUGAR, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_SUGAR_CANE.get(), Items.SUGAR_CANE, ModelTemplates.FLAT_ITEM);
+        copyColumnBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_PUMPKIN.get(), Blocks.PUMPKIN);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_COCOA_BEANS.get(), Items.COCOA_BEANS, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_COOKIE.get(), Items.COOKIE, ModelTemplates.FLAT_ITEM);
+        copyFlatBlockTextureItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_RED_MUSHROOM.get(), Blocks.RED_MUSHROOM);
+        copyFlatBlockTextureItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_BROWN_MUSHROOM.get(), Blocks.BROWN_MUSHROOM);
+        copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_RED_MUSHROOM_BLOCK.get(), Blocks.RED_MUSHROOM_BLOCK);
+        copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_BROWN_MUSHROOM_BLOCK.get(), Blocks.BROWN_MUSHROOM_BLOCK);
+        copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_SAND.get(), Blocks.SAND);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_CACTUS_GREEN.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.itemModelOutput.accept(UnshatteredItems.ENCHANTED_CACTUS.get(),
+                ItemModelUtils.plainModel(ModelTemplates.CUBE_BOTTOM_TOP.extend()
+                        .element(elementBuilder -> elementBuilder.from(0, 0, 0).to(16, 16, 16)
+                                .face(Direction.DOWN, faceBuilder -> faceBuilder.uvs(0, 0, 16, 16).texture(TextureSlot.BOTTOM).cullface(Direction.DOWN))
+                                .face(Direction.UP,   faceBuilder -> faceBuilder.uvs(0, 0, 16, 16).texture(TextureSlot.TOP).cullface(Direction.UP)))
+                        .element(elementBuilder -> elementBuilder.from(0, 0, 1).to(16, 16, 15)
+                                .face(Direction.NORTH, faceBuilder -> faceBuilder.uvs(0, 0, 16, 16).texture(TextureSlot.SIDE))
+                                .face(Direction.SOUTH, faceBuilder -> faceBuilder.uvs(0, 0, 16, 16).texture(TextureSlot.SIDE)))
+                        .element(elementBuilder -> elementBuilder.from(1, 0, 0).to(15, 16, 16)
+                                .face(Direction.WEST, faceBuilder -> faceBuilder.uvs(0, 0, 16, 16).texture(TextureSlot.SIDE))
+                                .face(Direction.EAST, faceBuilder -> faceBuilder.uvs(0, 0, 16, 16).texture(TextureSlot.SIDE)))
+                        .build()
+                        .create(UnshatteredUtils.getUnshatteredIdentifier("block/" + BuiltInRegistries.ITEM.getKey(UnshatteredItems.ENCHANTED_CACTUS.get()).getPath()),
+                                TextureMapping.cubeBottomTop(Blocks.CACTUS),
+                                blockModels.modelOutput
+                        )
+                )
+        );
 
         copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_GOLD_BLOCK.get(), Blocks.GOLD_BLOCK);
         copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_DIAMOND_BLOCK.get(), Blocks.DIAMOND_BLOCK);
@@ -240,42 +271,42 @@ public class UnshatteredModelProvider extends ModelProvider {
 
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_OAK_LOG_BLOCK.get(),
                 BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(UnshatteredBlocks.BREAKABLE_OAK_LOG_BLOCK.get(),
-                        copyColumnNoSideSuffix(Blocks.OAK_LOG),
+                        createColumnNoSideSuffix(Blocks.OAK_LOG),
                         blockModels.modelOutput)
                 ))
         );
 
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_BIRCH_LOG_BLOCK.get(),
                 BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(UnshatteredBlocks.BREAKABLE_BIRCH_LOG_BLOCK.get(),
-                        copyColumnNoSideSuffix(Blocks.BIRCH_LOG),
+                        createColumnNoSideSuffix(Blocks.BIRCH_LOG),
                         blockModels.modelOutput)
                 ))
         );
 
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_SPRUCE_LOG_BLOCK.get(),
                 BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(UnshatteredBlocks.BREAKABLE_SPRUCE_LOG_BLOCK.get(),
-                        copyColumnNoSideSuffix(Blocks.SPRUCE_LOG),
+                        createColumnNoSideSuffix(Blocks.SPRUCE_LOG),
                         blockModels.modelOutput)
                 ))
         );
 
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_JUNGLE_LOG_BLOCK.get(),
                 BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(UnshatteredBlocks.BREAKABLE_JUNGLE_LOG_BLOCK.get(),
-                        copyColumnNoSideSuffix(Blocks.JUNGLE_LOG),
+                        createColumnNoSideSuffix(Blocks.JUNGLE_LOG),
                         blockModels.modelOutput)
                 ))
         );
 
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_ACACIA_LOG_BLOCK.get(),
                 BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(UnshatteredBlocks.BREAKABLE_ACACIA_LOG_BLOCK.get(),
-                        copyColumnNoSideSuffix(Blocks.ACACIA_LOG),
+                        createColumnNoSideSuffix(Blocks.ACACIA_LOG),
                         blockModels.modelOutput)
                 ))
         );
 
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_DARK_OAK_LOG_BLOCK.get(),
                 BlockModelGenerators.plainVariant(ModelTemplates.CUBE_COLUMN.create(UnshatteredBlocks.BREAKABLE_DARK_OAK_LOG_BLOCK.get(),
-                        copyColumnNoSideSuffix(Blocks.DARK_OAK_LOG),
+                        createColumnNoSideSuffix(Blocks.DARK_OAK_LOG),
                         blockModels.modelOutput)
                 ))
         );
@@ -312,6 +343,28 @@ public class UnshatteredModelProvider extends ModelProvider {
         blockModels.createTrivialCube(UnshatteredBlocks.BREAKABLE_SOFT_MITHRIL_BLOCK.get());
         blockModels.createTrivialCube(UnshatteredBlocks.BREAKABLE_HARD_MITHRIL_BLOCK.get());
         blockModels.createTrivialCube(UnshatteredBlocks.BREAKABLE_TITANIUM_BLOCK.get());
+
+        blockModels.createCrossBlock(UnshatteredBlocks.BREAKABLE_SUGARCANE_BLOCK.get(), BlockModelGenerators.PlantType.TINTED, TextureMapping.cross(Blocks.SUGAR_CANE));
+        blockModels.createCrossBlock(UnshatteredBlocks.BREAKABLE_RED_MUSHROOM.get(), BlockModelGenerators.PlantType.NOT_TINTED, TextureMapping.cross(Blocks.RED_MUSHROOM));
+        blockModels.createCrossBlock(UnshatteredBlocks.BREAKABLE_BROWN_MUSHROOM.get(), BlockModelGenerators.PlantType.NOT_TINTED, TextureMapping.cross(Blocks.BROWN_MUSHROOM));
+        blockModels.createTrivialBlock(UnshatteredBlocks.BREAKABLE_MELON_BLOCK.get(), TexturedModel.createDefault(_ -> TextureMapping.column(Blocks.MELON), ModelTemplates.CUBE_COLUMN));
+        blockModels.createTrivialBlock(UnshatteredBlocks.BREAKABLE_PUMPKIN_BLOCK.get(), TexturedModel.createDefault(_ -> TextureMapping.column(Blocks.PUMPKIN), ModelTemplates.CUBE_COLUMN));
+        blockModels.createTrivialBlock(UnshatteredBlocks.BREAKABLE_RED_MUSHROOM_BLOCK.get(), TexturedModel.createDefault(_ -> TextureMapping.cube(Blocks.RED_MUSHROOM_BLOCK), ModelTemplates.CUBE_ALL));
+        blockModels.createTrivialBlock(UnshatteredBlocks.BREAKABLE_BROWN_MUSHROOM_BLOCK.get(), TexturedModel.createDefault(_ -> TextureMapping.cube(Blocks.BROWN_MUSHROOM_BLOCK), ModelTemplates.CUBE_ALL));
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(UnshatteredBlocks.BREAKABLE_CACTUS_BLOCK.get(), BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(Blocks.CACTUS))));
+        blockModels.registerSimpleItemModel(UnshatteredBlocks.BREAKABLE_CACTUS_BLOCK.get(), ModelLocationUtils.getModelLocation(Blocks.CACTUS));
+        blockModels.createTrivialBlock(UnshatteredBlocks.BREAKABLE_SAND_BLOCK.get(), TexturedModel.createDefault(_ -> TextureMapping.cube(Blocks.SAND), ModelTemplates.CUBE_ALL));
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(
+                        UnshatteredBlocks.BREAKABLE_COCOA_BEAN_BLOCK.get(),
+                        BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(Blocks.COCOA, "_stage2")))
+                .with(PropertyDispatch.modify(BlockStateProperties.HORIZONTAL_FACING)
+                        .select(Direction.SOUTH, BlockModelGenerators.NOP)
+                        .select(Direction.WEST, BlockModelGenerators.Y_ROT_90)
+                        .select(Direction.NORTH, BlockModelGenerators.Y_ROT_180)
+                        .select(Direction.EAST, BlockModelGenerators.Y_ROT_270))
+        );
+
+        itemModels.generateFlatItem(UnshatteredItems.BREAKABLE_COCOA_BEAN.get(), Items.COCOA_BEANS, ModelTemplates.FLAT_ITEM);
     }
 
     /**
@@ -384,7 +437,7 @@ public class UnshatteredModelProvider extends ModelProvider {
     private void copyColumnBlockItemModelNoSideSuffix(ItemModelGenerators itemModels, BlockModelGenerators blockModels, Item blockItem, Block blockTexture) {
         itemModels.itemModelOutput.accept(blockItem,
                 ItemModelUtils.plainModel(ModelTemplates.CUBE_COLUMN.create(UnshatteredUtils.getUnshatteredIdentifier("block/" + BuiltInRegistries.ITEM.getKey(blockItem).getPath()),
-                        copyColumnNoSideSuffix(blockTexture),
+                        createColumnNoSideSuffix(blockTexture),
                         blockModels.modelOutput)
                 )
         );
@@ -407,7 +460,7 @@ public class UnshatteredModelProvider extends ModelProvider {
         ));
     }
 
-    private TextureMapping copyColumnNoSideSuffix(Block blockTexture) {
+    private TextureMapping createColumnNoSideSuffix(Block blockTexture) {
         return new TextureMapping().put(TextureSlot.SIDE, TextureMapping.getBlockTexture(blockTexture)).put(TextureSlot.END, TextureMapping.getBlockTexture(blockTexture, "_top"));
     }
 }

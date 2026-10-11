@@ -38,22 +38,11 @@ public class SkillsScreen extends SimpleScreen {
             String skillExpText;
             int xPos = backgroundTopLeft.x + X_OFFSET;
             int yPos = (20 * i) + backgroundTopLeft.y + Y_OFFSET;
-            float nextLevelExp = skills.getNextLevelExpRequirement(currentLevel);
+            float nextLevelExpRequirement = skills.getNextLevelExpRequirement(currentLevel);
             float currentLevelExp = skills.getCurrentLevelExp(currentSkill, currentLevel);
 
-            if (skills.isMaxLevel(currentLevel)) {
-                skillExpText = String.format("%,d", (int) skills.getExp(currentSkill));
-            } else {
-                skillExpText = String.format("%,d", (int) (skills.getNextLevelExpRequirement(currentLevel) - skills.getCurrentLevelExp(currentSkill, currentLevel)));
-            }
-
             graphics.text(font,
-                    Component.translatable("skills.name.unshattered."
-                            + currentSkill.getId()).append(" " + UnshatteredUtils.convertTextToRomanNumeral(currentLevel)
-                            + " ("
-                            + skillExpText
-                            + ")"
-                    ),
+                    Component.translatable("skills.name.unshattered." + currentSkill.getId()).append(" " + UnshatteredUtils.convertTextToRomanNumeral(currentLevel)),
                     xPos,
                     yPos,
                     0xFFFFFFFF
@@ -89,17 +78,43 @@ public class SkillsScreen extends SimpleScreen {
                     && mouseY < yPos + 12 + BAR_HEIGHT
             ) {
 
-                if (skills.isMaxLevel(currentLevel)) {
-                    skillExpText = String.format("%,d", (int) skills.getExp(currentSkill));
-                } else {
-                    skillExpText = String.format("%,d", (int) (skills.getNextLevelExpRequirement(currentLevel) - skills.getCurrentLevelExp(currentSkill, currentLevel)));
-                }
                 List<Component> tooltip = new ArrayList<>();
 
                 tooltip.add(Component.translatable("skills.name.unshattered." + currentSkill.getId()).withColor(UnshatteredUtils.GREEN));
-                tooltip.add(Component.translatable("skills.description.unshattered." + currentSkill.getId()).withColor(UnshatteredUtils.GRAY));
+
+                tooltip.addAll(UnshatteredUtils.wrapText(font, Component.translatable("skills.description.unshattered." + currentSkill.getId()).withColor(UnshatteredUtils.GRAY)));
+
                 tooltip.add(Component.empty());
-                tooltip.add(Component.translatable("screen.unshattered.skills.progress").withColor(UnshatteredUtils.GRAY));
+
+                tooltip.add(Component.translatable("screen.unshattered.skills.progress").withColor(UnshatteredUtils.GRAY)
+                        .append(Component.literal(" "))
+                        .append(Component.translatable("screen.unshattered.skills.level"))
+                        .append(Component.literal(" "))
+                        .append(Component.literal(UnshatteredUtils.convertTextToRomanNumeral(currentLevel + 1)))
+                        .append(Component.literal(" "))
+                        .append(Component.literal("("))
+                        .append(Component.literal(String.valueOf(((int) currentLevelExp))).withColor(UnshatteredUtils.YELLOW))
+                        .append(Component.literal("/").withColor(UnshatteredUtils.GOLD))
+                        .append(Component.literal(String.valueOf((int) nextLevelExpRequirement)).withColor(UnshatteredUtils.YELLOW))
+                        .append(Component.literal(")"))
+                );
+
+                tooltip.add(Component.empty());
+
+                tooltip.add(Component.translatable("screen.unshattered.skills.level").withColor(UnshatteredUtils.YELLOW)
+                        .append(Component.literal(" "))
+                        .append(Component.literal(UnshatteredUtils.convertTextToRomanNumeral(currentLevel + 1)))
+                        .append(Component.literal(" "))
+                        .append(Component.translatable("screen.unshattered.skills.rewards"))
+                );
+
+                for (PlayerSkillsAttachment.LevelReward reward : currentSkill.getRewards(currentLevel)) {
+                    tooltip.add(reward.getComponent());
+                }
+
+                tooltip.add(Component.literal("    " + String.format("%,d", currentSkill.getCoinReward(currentLevel)) + " ").withColor(UnshatteredUtils.GOLD)
+                        .append(Component.translatable("misc.unshattered.coins"))
+                );
 
                 graphics.setComponentTooltipForNextFrame(font, tooltip, mouseX, mouseY);
             }

@@ -12,10 +12,4 @@ public class UnshatteredCropBlock extends Block {
                 .noOcclusion()
         );
     }
-
-    // seems to remove the shadow. not sure why noOcclusion doesn't though...
-    @Override
-    protected boolean propagatesSkylightDown(@NonNull BlockState state) {
-        return state.getFluidState().isEmpty();
-    }
 }

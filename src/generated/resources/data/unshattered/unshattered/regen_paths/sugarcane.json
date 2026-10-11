@@ -1,0 +1,12 @@
+{
+  "path": [
+    {
+      "Name": "unshattered:breakable_sugarcane_block"
+    },
+    {
+      "Name": "minecraft:air"
+    }
+  ],
+  "regen_ticks": 500,
+  "stages_incremented": 1
+}

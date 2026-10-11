@@ -15,10 +15,19 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import org.jspecify.annotations.NonNull;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
+import java.util.function.IntFunction;
 
 public final class PlayerSkillsAttachment {
+    public record LevelReward(UnshatteredAttributeValues attribute, double amount) {
+        public Component getComponent() {
+            return Component.literal("    " + ((amount == Math.floor(amount)) ? String.valueOf((long) amount) : String.valueOf(amount)) + (attribute.percentage ? "%" : "")).withColor(0xFF00FF24)
+                    .append(Component.literal(" " + attribute.symbol + " ").withColor(attribute.color))
+                    .append(Component.translatable(attribute.getTranslationKey()).withColor(attribute.color));
+        }
+    }
+
     /**
      * cumulative skill exps
      */
@@ -133,65 +142,52 @@ public final class PlayerSkillsAttachment {
     private final float[] skillExp = new float[Skill.values().length];
 
     public enum Skill implements StringRepresentable {
-        COMBAT("combat", (player, _) -> {
-            // i know normal sb gives you a flat damage multiplier but i feel like thats a little strange so ill give people an actual stat
-            addPlayerAttributeReward(player, UnshatteredAttributeValues.CRITICAL_DAMAGE, 10.0d);
-            addPlayerAttributeReward(player, UnshatteredAttributeValues.CRITICAL_CHANCE, 1.0d);
-        }),
-        FARMING("farming", (player, level) -> {
-            double healthAmount;
-            if (level < 15) {
-                healthAmount = 1.0d;
-            } else if (level < 20) {
-                healthAmount = 2.0d;
-            } else if (level < 25) {
-                healthAmount = 3.0d;
-            } else {
-                healthAmount = 4.0d;
-            }
-            addPlayerAttributeReward(player, UnshatteredAttributeValues.HEALTH, healthAmount);
-            addPlayerAttributeReward(player, UnshatteredAttributeValues.FARMING_FORTUNE, 2.0d);
-        }),
-        FISHING("fishing", (player, _) -> {
-            addPlayerAttributeReward(player, UnshatteredAttributeValues.FISHING_SPEED, 1.0d);
-            addPlayerAttributeReward(player, UnshatteredAttributeValues.FISHING_FORTUNE, 0.1d);
-
-        }),
-        MINING("mining", (player, level) -> {
-            double defenceAmount;
-            if (level < 15) {
-                defenceAmount = 1.0d;
-            } else {
-                defenceAmount = 2.0d;
-            }
-            addPlayerAttributeReward(player, UnshatteredAttributeValues.DEFENCE, defenceAmount);
-            addPlayerAttributeReward(player, UnshatteredAttributeValues.MINING_FORTUNE, 2.0d);
-        }),
-        FORAGING("foraging", (player, level) -> {
-            double strengthAmount;
-            if (level < 15) {
-                strengthAmount = 1.0d;
-            } else {
-                strengthAmount = 2.0d;
-            }
-            addPlayerAttributeReward(player, UnshatteredAttributeValues.STRENGTH, strengthAmount);
-            addPlayerAttributeReward(player, UnshatteredAttributeValues.FARMING_FORTUNE, 2.0d);
-        }),
-        MAGECRAFT("magecraft", (player, _) -> {
-            addPlayerAttributeReward(player, UnshatteredAttributeValues.MANA, 2.0d);
-            addPlayerAttributeReward(player, UnshatteredAttributeValues.MANA_REGEN, 1.5d);
-        }),
-        CARPENTRY("carpentry", (player, _) -> addPlayerAttributeReward(player, UnshatteredAttributeValues.HEALTH, 1.0d));
+        COMBAT("combat", _ -> List.of(
+                new LevelReward(UnshatteredAttributeValues.CRITICAL_DAMAGE, 10.0d),
+                new LevelReward(UnshatteredAttributeValues.CRITICAL_CHANCE, 1.0d)
+        )),
+        FARMING("farming", level -> List.of(
+                new LevelReward(UnshatteredAttributeValues.HEALTH,
+                        level < 15 ? 1.0d : level < 20 ? 2.0d : level < 25 ? 3.0d : 4.0d),
+                new LevelReward(UnshatteredAttributeValues.FARMING_FORTUNE, 2.0d)
+        )),
+        FISHING("fishing", _ -> List.of(
+                new LevelReward(UnshatteredAttributeValues.FISHING_SPEED, 1.0d),
+                new LevelReward(UnshatteredAttributeValues.FISHING_FORTUNE, 0.1d)
+        )),
+        MINING("mining", level -> List.of(
+                new LevelReward(UnshatteredAttributeValues.DEFENCE, level < 15 ? 1.0d : 2.0d),
+                new LevelReward(UnshatteredAttributeValues.MINING_FORTUNE, 2.0d)
+        )),
+        FORAGING("foraging", level -> List.of(
+                new LevelReward(UnshatteredAttributeValues.STRENGTH, level < 15 ? 1.0d : 2.0d),
+                new LevelReward(UnshatteredAttributeValues.FARMING_FORTUNE, 2.0d)
+        )),
+        MAGECRAFT("magecraft", _ -> List.of(
+                new LevelReward(UnshatteredAttributeValues.MANA, 2.0d),
+                new LevelReward(UnshatteredAttributeValues.MANA_REGEN, 1.5d)
+        )),
+        CARPENTRY("carpentry", _ -> List.of(
+                new LevelReward(UnshatteredAttributeValues.HEALTH, 1.0d)
+        ));
 
         private final String id;
-        /**
-         * integer is the level
-         */
-        private final BiConsumer<Player, Integer> levelUpReward;
+        private final IntFunction<List<LevelReward>> rewards;
 
-        Skill(String id, BiConsumer<Player, Integer> levelUpReward) {
+        Skill(String id, IntFunction<List<LevelReward>> rewards) {
             this.id = id;
-            this.levelUpReward = levelUpReward;
+            this.rewards = rewards;
+        }
+
+        public List<LevelReward> getRewards(int level) {
+            return rewards.apply(level);
+        }
+
+        /**
+         * @param levelIndex intended level - 1 so for the next level use "current level" number here
+         */
+        public int getCoinReward(int levelIndex) {
+            return COINS_LEVEL_TABLE[levelIndex];
         }
 
         public String getTranslationKey() {
@@ -261,14 +257,21 @@ public final class PlayerSkillsAttachment {
                     .append(Component.literal(UnshatteredUtils.convertTextToRomanNumeral(1)).withColor(0xFF00ADAB))
                 );
             }
-            player.sendSystemMessage(Component.literal(""));
+            player.sendSystemMessage(Component.empty());
             player.sendSystemMessage(Component.literal(" REWARDS").withColor(0xFF00FF24).withStyle(ChatFormatting.BOLD));
-            if (!player.level().isClientSide()) {
-                skill.levelUpReward.accept(player, currentLevel);
+
+            for (LevelReward reward : skill.getRewards(currentLevel)) {
+                if (!player.level().isClientSide()) {
+                    UnshatteredAttributeValues.modifyAttributeBaseValue(player, reward.attribute(), reward.amount());
+                    player.sendSystemMessage(reward.getComponent());
+                }
             }
-            player.sendSystemMessage(Component.literal("    " + String.format("%,d", COINS_LEVEL_TABLE[currentLevel]) + " " + Component.translatable("misc.unshattered.coins").getString()).withColor(0xFFFFAA00));
-            player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get()).addCoins(COINS_LEVEL_TABLE[currentLevel]);
+
+            int coins = skill.getCoinReward(currentLevel);
+            player.sendSystemMessage(Component.literal("    " + String.format("%,d", coins) + " " + Component.translatable("misc.unshattered.coins").getString()).withColor(0xFFFFAA00));
+            player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get()).addCoins(coins);
             player.syncData(UnshatteredAttachments.PLAYER_CURRENCY.get());
+
             currentLevel++;
             player.sendSystemMessage(Component.literal(borderBar.toString()).withColor(0xFF00ADAB));
         }
@@ -276,6 +279,9 @@ public final class PlayerSkillsAttachment {
         PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
     }
 
+    /**
+     * @param exp total exp for a skill
+     */
     public int getLevel(float exp) {
         int level = 0;
         while (level < SKILL_LEVEL_TABLE.length && exp >= SKILL_LEVEL_TABLE[level]) {
