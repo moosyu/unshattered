@@ -140,12 +140,15 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         setBaseData(Items.CACTUS, ItemType.MATERIAL, UnshatteredRarity.COMMON, 4);
         setBaseData(UnshatteredItems.ENCHANTED_CACTUS_GREEN.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 640);
         setBaseData(UnshatteredItems.ENCHANTED_CACTUS.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 102400);
+        setBaseData(UnshatteredItems.ENCHANTED_BAKED_POTATO.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 76800);
+        setBaseData(UnshatteredItems.ENCHANTED_HAY_BALE.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 153600);
+        setBaseData(UnshatteredItems.ENCHANTED_GOLDEN_CARROT.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 61440);
+        setBaseData(UnshatteredItems.POLISHED_PUMPKIN.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 256000);
 
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK, new ItemRange(UnshatteredItems.FIG_LOG.get()), PlayerSkillsAttachment.Skill.FORAGING, 15);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_STONE_BLOCK, new ItemRange(Items.COBBLESTONE), PlayerSkillsAttachment.Skill.MINING, 1);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK, new ItemRange(Items.COBBLESTONE), PlayerSkillsAttachment.Skill.MINING, 1);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_COAL_ORE_BLOCK, new ItemRange(Items.COAL), PlayerSkillsAttachment.Skill.MINING, 4);
-        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK, new ItemRange(Items.WHEAT, 1, 2), PlayerSkillsAttachment.Skill.FARMING, 8);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_IRON_ORE_BLOCK, new ItemRange(Items.IRON_INGOT), PlayerSkillsAttachment.Skill.MINING, 5);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_COPPER_ORE_BLOCK, new ItemRange(Items.COPPER_INGOT, 2, 5), PlayerSkillsAttachment.Skill.MINING, 5);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_GOLD_ORE_BLOCK, new ItemRange(Items.GOLD_INGOT), PlayerSkillsAttachment.Skill.MINING, 6);
@@ -163,19 +166,7 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_DARK_OAK_LOG_BLOCK, new ItemRange(Items.DARK_OAK_LOG), PlayerSkillsAttachment.Skill.FORAGING, 6);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_ICE_BLOCK, new ItemRange(Items.ICE), PlayerSkillsAttachment.Skill.MINING, 0.5f);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_TITANIUM_BLOCK, new ItemRange(UnshatteredItems.TITANIUM.get(), 2), PlayerSkillsAttachment.Skill.MINING, 100);
-        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_CARROT_BLOCK, new ItemRange(Items.CARROT, 2, 5), PlayerSkillsAttachment.Skill.FARMING, 8);
-        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_POTATO_BLOCK, new ItemRange(Items.POTATO, 2, 5), PlayerSkillsAttachment.Skill.FARMING, 8);
-        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_SUGARCANE_BLOCK, new ItemRange(Items.SUGAR_CANE), PlayerSkillsAttachment.Skill.FARMING, 4);
-        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_RED_MUSHROOM, new ItemRange(Items.RED_MUSHROOM), PlayerSkillsAttachment.Skill.FARMING, 12);
-        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_BROWN_MUSHROOM, new ItemRange(Items.BROWN_MUSHROOM), PlayerSkillsAttachment.Skill.FARMING, 12);
-        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_COCOA_BEAN_BLOCK, new ItemRange(Items.COCOA_BEANS, 3, 4), PlayerSkillsAttachment.Skill.FARMING, 8);
-        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_MELON_BLOCK, new ItemRange(Items.MELON_SLICE, 3, 7), PlayerSkillsAttachment.Skill.FARMING, 8);
-        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_PUMPKIN_BLOCK, new ItemRange(Items.PUMPKIN), PlayerSkillsAttachment.Skill.FARMING, 9);
-        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_RED_MUSHROOM_BLOCK, new ItemRange(Items.RED_MUSHROOM, 2, 3), PlayerSkillsAttachment.Skill.FARMING, 12);
-        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_BROWN_MUSHROOM_BLOCK, new ItemRange(Items.BROWN_MUSHROOM, 2, 3), PlayerSkillsAttachment.Skill.FARMING, 12);
-        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_CACTUS_BLOCK, new ItemRange(Items.CACTUS), PlayerSkillsAttachment.Skill.FARMING, 4);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_SAND_BLOCK, new ItemRange(Items.SAND), PlayerSkillsAttachment.Skill.MINING, 3);
-        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.GIANT_POTATO, new ItemRange(Items.POTATO, 9, 11), PlayerSkillsAttachment.Skill.FARMING, 23);
 
         builder(BLOCK_BREAK_DATA)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_COBBLED_MITHRIL_BLOCK.get()),
@@ -194,6 +185,92 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                                 new DropData(new ItemRange(UnshatteredItems.ENCHANTED_MITHRIL.get()), 0.01f)),
                                 Optional.of(new PlayerPowderAttachment.Powder(PlayerPowderAttachment.PowderType.MITHRIL, 5))
                         ), false
+                ).add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_POTATO_BLOCK.get()),
+                        new BlockBreakData(PlayerSkillsAttachment.Skill.FARMING, 8, List.of(new DropData(new ItemRange(Items.POTATO, 2, 5)),
+                                new DropData(new ItemRange(Items.POISONOUS_POTATO), 0.02f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_POTATO.get(), 1, 2), 0.001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_POTATO.get(), 10, 16), 0.0001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_BAKED_POTATO.get()), 0.00001f)
+                        )), false
+                ).add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.GIANT_POTATO.get()),
+                        new BlockBreakData(PlayerSkillsAttachment.Skill.FARMING, 23, List.of(new DropData(new ItemRange(Items.POTATO, 9, 11)),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_POTATO.get(), 4, 7), 0.001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_POTATO.get(), 16, 24), 0.0001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_BAKED_POTATO.get(), 1, 2), 0.00001f)
+                        )), false
+                ).add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK.get()),
+                        new BlockBreakData(PlayerSkillsAttachment.Skill.FARMING, 8, List.of(new DropData(new ItemRange(Items.WHEAT, 1, 2)),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_WHEAT.get(), 2, 3), 0.001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_WHEAT.get(), 5, 9), 0.0001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_HAY_BALE.get()), 0.00001f)
+                        )), false
+                ).add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_CARROT_BLOCK.get()),
+                        new BlockBreakData(PlayerSkillsAttachment.Skill.FARMING, 8, List.of(new DropData(new ItemRange(Items.WHEAT, 2, 5)),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_CARROT.get(), 1, 2), 0.001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_CARROT.get(), 10, 14), 0.0001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_GOLDEN_CARROT.get()), 0.00001f)
+                        )), false
+                ).add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.GIANT_CARROT.get()),
+                        new BlockBreakData(PlayerSkillsAttachment.Skill.FARMING, 19, List.of(new DropData(new ItemRange(Items.CARROT, 6, 9)),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_CARROT.get(), 4, 9), 0.001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_CARROT.get(), 15, 19), 0.0001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_GOLDEN_CARROT.get(), 2, 3), 0.00001f)
+                        )), false
+                ).add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_SUGARCANE_BLOCK.get()),
+                        new BlockBreakData(PlayerSkillsAttachment.Skill.FARMING, 4, List.of(new DropData(new ItemRange(Items.SUGAR_CANE)),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_SUGAR.get(), 1, 2), 0.001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_SUGAR.get(), 6, 9), 0.0001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_SUGAR_CANE.get()), 0.00001f)
+                        )), false
+                ).add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_RED_MUSHROOM.get()),
+                        new BlockBreakData(PlayerSkillsAttachment.Skill.FARMING, 12, List.of(new DropData(new ItemRange(Items.RED_MUSHROOM)),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_RED_MUSHROOM.get(), 1, 3), 0.001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_RED_MUSHROOM.get(), 7, 8), 0.0001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_RED_MUSHROOM_BLOCK.get()), 0.00001f)
+                        )), false
+                ).add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_BROWN_MUSHROOM.get()),
+                        new BlockBreakData(PlayerSkillsAttachment.Skill.FARMING, 12, List.of(new DropData(new ItemRange(Items.BROWN_MUSHROOM)),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_BROWN_MUSHROOM.get(), 1, 3), 0.001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_BROWN_MUSHROOM.get(), 7, 8), 0.0001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_BROWN_MUSHROOM_BLOCK.get()), 0.00001f)
+                        )), false
+                ).add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_RED_MUSHROOM_BLOCK.get()),
+                        new BlockBreakData(PlayerSkillsAttachment.Skill.FARMING, 18, List.of(new DropData(new ItemRange(Items.RED_MUSHROOM, 3, 5)),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_RED_MUSHROOM.get(), 3, 5), 0.001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_RED_MUSHROOM.get(), 10, 14), 0.0001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_RED_MUSHROOM_BLOCK.get(), 1, 3), 0.00001f)
+                        )), false
+                ).add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_BROWN_MUSHROOM_BLOCK.get()),
+                        new BlockBreakData(PlayerSkillsAttachment.Skill.FARMING, 18, List.of(new DropData(new ItemRange(Items.BROWN_MUSHROOM, 3, 5)),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_BROWN_MUSHROOM.get(), 3, 5), 0.001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_BROWN_MUSHROOM.get(), 10, 14), 0.0001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_BROWN_MUSHROOM_BLOCK.get(), 1, 3), 0.00001f)
+                        )), false
+                ).add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_COCOA_BEAN_BLOCK.get()),
+                        new BlockBreakData(PlayerSkillsAttachment.Skill.FARMING, 8, List.of(new DropData(new ItemRange(Items.COCOA_BEANS, 3, 4)),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_COCOA_BEANS.get(), 6, 9), 0.001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_COCOA_BEANS.get(), 14, 18), 0.0001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_COOKIE.get(), 3, 6), 0.00001f)
+                        )), false
+                ).add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_MELON_BLOCK.get()),
+                        new BlockBreakData(PlayerSkillsAttachment.Skill.FARMING, 8, List.of(new DropData(new ItemRange(Items.COCOA_BEANS, 3, 7)),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_COCOA_BEANS.get(), 5, 10), 0.001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_COCOA_BEANS.get(), 17, 23), 0.0001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_COOKIE.get(), 1, 3), 0.00001f)
+                        )), false
+                ).add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_PUMPKIN_BLOCK.get()),
+                        new BlockBreakData(PlayerSkillsAttachment.Skill.FARMING, 9, List.of(new DropData(new ItemRange(Items.PUMPKIN)),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_PUMPKIN.get(), 4, 6), 0.001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_PUMPKIN.get(), 12, 17), 0.0001f),
+                                new DropData(new ItemRange(UnshatteredItems.POLISHED_PUMPKIN.get(), 1, 2), 0.00001f)
+                        )), false
+                ).add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_CACTUS_BLOCK.get()),
+                        new BlockBreakData(PlayerSkillsAttachment.Skill.FARMING, 4, List.of(new DropData(new ItemRange(Items.CACTUS)),
+                                new DropData(new ItemRange(Items.CACTUS_FLOWER), 0.1f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_CACTUS_GREEN.get(), 5, 8), 0.001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_CACTUS_GREEN.get(), 11, 16), 0.0001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_CACTUS.get(), 1, 2), 0.00001f)
+                        )), false
                 );
 
         builder(FISHABLE_ITEMS_EXP_DATA)

@@ -172,5 +172,8 @@ public class UnshatteredItemTagsProvider extends ItemTagsProvider {
                 .add(TITANIUM_DRILL_DR_X655.get())
                 .add(CENTURY_THE_FISH.get())
                 .add(ROOKIE_HOE.get());
+
+        tag(ItemTags.HOES)
+                .add(ROOKIE_HOE.get());
     }
 }

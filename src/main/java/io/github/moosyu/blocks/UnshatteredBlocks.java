@@ -242,4 +242,10 @@ public class UnshatteredBlocks {
                     .destroyTime(1.0f)
             )
     );
+
+    public static final DeferredBlock<Block> GIANT_CARROT = BLOCKS.registerBlock("giant_carrot",
+            props -> new Block(props.sound(SoundType.WOOD)
+                    .destroyTime(1.0f)
+            )
+    );
 }

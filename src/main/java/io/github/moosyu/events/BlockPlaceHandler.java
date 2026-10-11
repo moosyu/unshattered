@@ -12,7 +12,12 @@ import static io.github.moosyu.Unshattered.MODID;
 public class BlockPlaceHandler {
     @SubscribeEvent
     public static void onBlockPlace(BlockEvent.EntityPlaceEvent event) {
-        if (event.getLevel().isClientSide()) return;
-        if (!(event.getEntity() instanceof Player player && player.isCreative())) event.setCanceled(true);
+        if (event.getLevel().isClientSide()) {
+            return;
+        }
+
+        if (!(event.getEntity() instanceof Player player && player.isCreative())) {
+            event.setCanceled(true);
+        }
     }
 }

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_enchanted_potato": {
+      "conditions": {
+        "items": [
+          {
+            "items": "unshattered:enchanted_potato"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "unshattered:enchanted_baked_potato_recipe"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_enchanted_potato"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "unshattered:enchanted_baked_potato_recipe"
+    ]
+  }
+}

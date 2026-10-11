@@ -29,5 +29,11 @@
     }
   ],
   "regen_ticks": 200,
-  "stages_incremented": 3
+  "stages_incremented": 3,
+  "variant": {
+    "blockState": {
+      "Name": "unshattered:giant_carrot"
+    },
+    "chance": 0.01
+  }
 }

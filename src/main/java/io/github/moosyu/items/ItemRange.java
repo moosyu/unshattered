@@ -6,6 +6,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.ItemLike;
 
 /**
  * stores an item and a number range
@@ -14,12 +15,12 @@ import net.minecraft.world.item.Item;
  * @param maxAmount
  */
 public record ItemRange(Item item, int minAmount, int maxAmount) {
-    public ItemRange(Item item) {
-        this(item, 1, 1);
+    public ItemRange(ItemLike item) {
+        this(item.asItem(), 1, 1);
     }
 
-    public ItemRange(Item item, int amount) {
-        this(item, amount, amount);
+    public ItemRange(ItemLike item, int amount) {
+        this(item.asItem(), amount, amount);
     }
 
     public static final Codec<ItemRange> CODEC = RecordCodecBuilder.create(instance ->

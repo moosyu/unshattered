@@ -194,6 +194,10 @@
   "item.unshattered.enchanted_cookie": "Enchanted Cookie",
   "item.unshattered.enchanted_cocoa_beans": "Enchanted Cocoa Beans",
   "item.unshattered.enchanted_pumpkin": "Enchanted Pumpkin",
+  "item.unshattered.enchanted_hay_bale": "Enchanted Hay Bale",
+  "item.unshattered.enchanted_baked_potato": "Enchanted Baked Potato",
+  "item.unshattered.enchanted_golden_carrot": "Enchanted Golden Carrot",
+  "item.unshattered.polished_pumpkin": "Polished Pumpkin",
 
   "item.description.unshattered.bat_the_fish": "Where is my cape!",
   "item.description.unshattered.century_the_fish": "The term 'century' was actually named after him, or so he says.",
@@ -408,6 +412,7 @@
   "block.unshattered.breakable_red_mushroom": "Breakable Red Mushroom",
   "block.unshattered.breakable_cocoa_bean_block": "Breakable Cocoa Bean",
   "block.unshattered.breakable_pumpkin_block": "Breakable Pumpkin",
+  "block.unshattered.giant_carrot": "Giant Carrot",
 
   "attribute.name.unshattered.sweep": "Sweep",
   "attribute.name.unshattered.foraging_fortune": "Foraging Fortune",

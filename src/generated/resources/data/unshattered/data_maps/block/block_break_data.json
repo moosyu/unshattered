@@ -37,6 +37,30 @@
             "max_amount": 1,
             "min_amount": 1
           }
+        },
+        {
+          "drop_chance": 0.001,
+          "item_range": {
+            "item": "unshattered:enchanted_brown_mushroom",
+            "max_amount": 3,
+            "min_amount": 1
+          }
+        },
+        {
+          "drop_chance": 1.0E-4,
+          "item_range": {
+            "item": "unshattered:enchanted_brown_mushroom",
+            "max_amount": 8,
+            "min_amount": 7
+          }
+        },
+        {
+          "drop_chance": 1.0E-5,
+          "item_range": {
+            "item": "unshattered:enchanted_brown_mushroom_block",
+            "max_amount": 1,
+            "min_amount": 1
+          }
         }
       ],
       "exp_amount": 12.0,
@@ -48,12 +72,36 @@
           "drop_chance": 1.0,
           "item_range": {
             "item": "minecraft:brown_mushroom",
+            "max_amount": 5,
+            "min_amount": 3
+          }
+        },
+        {
+          "drop_chance": 0.001,
+          "item_range": {
+            "item": "unshattered:enchanted_brown_mushroom",
+            "max_amount": 5,
+            "min_amount": 3
+          }
+        },
+        {
+          "drop_chance": 1.0E-4,
+          "item_range": {
+            "item": "unshattered:enchanted_brown_mushroom",
+            "max_amount": 14,
+            "min_amount": 10
+          }
+        },
+        {
+          "drop_chance": 1.0E-5,
+          "item_range": {
+            "item": "unshattered:enchanted_brown_mushroom_block",
             "max_amount": 3,
-            "min_amount": 2
+            "min_amount": 1
           }
         }
       ],
-      "exp_amount": 12.0,
+      "exp_amount": 18.0,
       "skill": "farming"
     },
     "unshattered:breakable_cactus_block": {
@@ -63,6 +111,38 @@
           "item_range": {
             "item": "minecraft:cactus",
             "max_amount": 1,
+            "min_amount": 1
+          }
+        },
+        {
+          "drop_chance": 0.1,
+          "item_range": {
+            "item": "minecraft:cactus_flower",
+            "max_amount": 1,
+            "min_amount": 1
+          }
+        },
+        {
+          "drop_chance": 0.001,
+          "item_range": {
+            "item": "unshattered:enchanted_cactus_green",
+            "max_amount": 8,
+            "min_amount": 5
+          }
+        },
+        {
+          "drop_chance": 1.0E-4,
+          "item_range": {
+            "item": "unshattered:enchanted_cactus_green",
+            "max_amount": 16,
+            "min_amount": 11
+          }
+        },
+        {
+          "drop_chance": 1.0E-5,
+          "item_range": {
+            "item": "unshattered:enchanted_cactus",
+            "max_amount": 2,
             "min_amount": 1
           }
         }
@@ -75,9 +155,33 @@
         {
           "drop_chance": 1.0,
           "item_range": {
-            "item": "minecraft:carrot",
+            "item": "minecraft:wheat",
             "max_amount": 5,
             "min_amount": 2
+          }
+        },
+        {
+          "drop_chance": 0.001,
+          "item_range": {
+            "item": "unshattered:enchanted_carrot",
+            "max_amount": 2,
+            "min_amount": 1
+          }
+        },
+        {
+          "drop_chance": 1.0E-4,
+          "item_range": {
+            "item": "unshattered:enchanted_carrot",
+            "max_amount": 14,
+            "min_amount": 10
+          }
+        },
+        {
+          "drop_chance": 1.0E-5,
+          "item_range": {
+            "item": "unshattered:enchanted_golden_carrot",
+            "max_amount": 1,
+            "min_amount": 1
           }
         }
       ],
@@ -145,6 +249,30 @@
           "item_range": {
             "item": "minecraft:cocoa_beans",
             "max_amount": 4,
+            "min_amount": 3
+          }
+        },
+        {
+          "drop_chance": 0.001,
+          "item_range": {
+            "item": "unshattered:enchanted_cocoa_beans",
+            "max_amount": 9,
+            "min_amount": 6
+          }
+        },
+        {
+          "drop_chance": 1.0E-4,
+          "item_range": {
+            "item": "unshattered:enchanted_cocoa_beans",
+            "max_amount": 18,
+            "min_amount": 14
+          }
+        },
+        {
+          "drop_chance": 1.0E-5,
+          "item_range": {
+            "item": "unshattered:enchanted_cookie",
+            "max_amount": 6,
             "min_amount": 3
           }
         }
@@ -323,9 +451,33 @@
         {
           "drop_chance": 1.0,
           "item_range": {
-            "item": "minecraft:melon_slice",
+            "item": "minecraft:cocoa_beans",
             "max_amount": 7,
             "min_amount": 3
+          }
+        },
+        {
+          "drop_chance": 0.001,
+          "item_range": {
+            "item": "unshattered:enchanted_cocoa_beans",
+            "max_amount": 10,
+            "min_amount": 5
+          }
+        },
+        {
+          "drop_chance": 1.0E-4,
+          "item_range": {
+            "item": "unshattered:enchanted_cocoa_beans",
+            "max_amount": 23,
+            "min_amount": 17
+          }
+        },
+        {
+          "drop_chance": 1.0E-5,
+          "item_range": {
+            "item": "unshattered:enchanted_cookie",
+            "max_amount": 3,
+            "min_amount": 1
           }
         }
       ],
@@ -369,6 +521,38 @@
             "max_amount": 5,
             "min_amount": 2
           }
+        },
+        {
+          "drop_chance": 0.02,
+          "item_range": {
+            "item": "minecraft:poisonous_potato",
+            "max_amount": 1,
+            "min_amount": 1
+          }
+        },
+        {
+          "drop_chance": 0.001,
+          "item_range": {
+            "item": "unshattered:enchanted_potato",
+            "max_amount": 2,
+            "min_amount": 1
+          }
+        },
+        {
+          "drop_chance": 1.0E-4,
+          "item_range": {
+            "item": "unshattered:enchanted_potato",
+            "max_amount": 16,
+            "min_amount": 10
+          }
+        },
+        {
+          "drop_chance": 1.0E-5,
+          "item_range": {
+            "item": "unshattered:enchanted_baked_potato",
+            "max_amount": 1,
+            "min_amount": 1
+          }
         }
       ],
       "exp_amount": 8.0,
@@ -381,6 +565,30 @@
           "item_range": {
             "item": "minecraft:pumpkin",
             "max_amount": 1,
+            "min_amount": 1
+          }
+        },
+        {
+          "drop_chance": 0.001,
+          "item_range": {
+            "item": "unshattered:enchanted_pumpkin",
+            "max_amount": 6,
+            "min_amount": 4
+          }
+        },
+        {
+          "drop_chance": 1.0E-4,
+          "item_range": {
+            "item": "unshattered:enchanted_pumpkin",
+            "max_amount": 17,
+            "min_amount": 12
+          }
+        },
+        {
+          "drop_chance": 1.0E-5,
+          "item_range": {
+            "item": "unshattered:polished_pumpkin",
+            "max_amount": 2,
             "min_amount": 1
           }
         }
@@ -397,6 +605,30 @@
             "max_amount": 1,
             "min_amount": 1
           }
+        },
+        {
+          "drop_chance": 0.001,
+          "item_range": {
+            "item": "unshattered:enchanted_red_mushroom",
+            "max_amount": 3,
+            "min_amount": 1
+          }
+        },
+        {
+          "drop_chance": 1.0E-4,
+          "item_range": {
+            "item": "unshattered:enchanted_red_mushroom",
+            "max_amount": 8,
+            "min_amount": 7
+          }
+        },
+        {
+          "drop_chance": 1.0E-5,
+          "item_range": {
+            "item": "unshattered:enchanted_red_mushroom_block",
+            "max_amount": 1,
+            "min_amount": 1
+          }
         }
       ],
       "exp_amount": 12.0,
@@ -408,12 +640,36 @@
           "drop_chance": 1.0,
           "item_range": {
             "item": "minecraft:red_mushroom",
+            "max_amount": 5,
+            "min_amount": 3
+          }
+        },
+        {
+          "drop_chance": 0.001,
+          "item_range": {
+            "item": "unshattered:enchanted_red_mushroom",
+            "max_amount": 5,
+            "min_amount": 3
+          }
+        },
+        {
+          "drop_chance": 1.0E-4,
+          "item_range": {
+            "item": "unshattered:enchanted_red_mushroom",
+            "max_amount": 14,
+            "min_amount": 10
+          }
+        },
+        {
+          "drop_chance": 1.0E-5,
+          "item_range": {
+            "item": "unshattered:enchanted_red_mushroom_block",
             "max_amount": 3,
-            "min_amount": 2
+            "min_amount": 1
           }
         }
       ],
-      "exp_amount": 12.0,
+      "exp_amount": 18.0,
       "skill": "farming"
     },
     "unshattered:breakable_redstone_ore_block": {
@@ -499,6 +755,30 @@
             "max_amount": 1,
             "min_amount": 1
           }
+        },
+        {
+          "drop_chance": 0.001,
+          "item_range": {
+            "item": "unshattered:enchanted_sugar",
+            "max_amount": 2,
+            "min_amount": 1
+          }
+        },
+        {
+          "drop_chance": 1.0E-4,
+          "item_range": {
+            "item": "unshattered:enchanted_sugar",
+            "max_amount": 9,
+            "min_amount": 6
+          }
+        },
+        {
+          "drop_chance": 1.0E-5,
+          "item_range": {
+            "item": "unshattered:enchanted_sugar_cane",
+            "max_amount": 1,
+            "min_amount": 1
+          }
         }
       ],
       "exp_amount": 4.0,
@@ -527,9 +807,71 @@
             "max_amount": 2,
             "min_amount": 1
           }
+        },
+        {
+          "drop_chance": 0.001,
+          "item_range": {
+            "item": "unshattered:enchanted_wheat",
+            "max_amount": 3,
+            "min_amount": 2
+          }
+        },
+        {
+          "drop_chance": 1.0E-4,
+          "item_range": {
+            "item": "unshattered:enchanted_wheat",
+            "max_amount": 9,
+            "min_amount": 5
+          }
+        },
+        {
+          "drop_chance": 1.0E-5,
+          "item_range": {
+            "item": "unshattered:enchanted_hay_bale",
+            "max_amount": 1,
+            "min_amount": 1
+          }
         }
       ],
       "exp_amount": 8.0,
+      "skill": "farming"
+    },
+    "unshattered:giant_carrot": {
+      "drop_data": [
+        {
+          "drop_chance": 1.0,
+          "item_range": {
+            "item": "minecraft:carrot",
+            "max_amount": 9,
+            "min_amount": 6
+          }
+        },
+        {
+          "drop_chance": 0.001,
+          "item_range": {
+            "item": "unshattered:enchanted_carrot",
+            "max_amount": 9,
+            "min_amount": 4
+          }
+        },
+        {
+          "drop_chance": 1.0E-4,
+          "item_range": {
+            "item": "unshattered:enchanted_carrot",
+            "max_amount": 19,
+            "min_amount": 15
+          }
+        },
+        {
+          "drop_chance": 1.0E-5,
+          "item_range": {
+            "item": "unshattered:enchanted_golden_carrot",
+            "max_amount": 3,
+            "min_amount": 2
+          }
+        }
+      ],
+      "exp_amount": 19.0,
       "skill": "farming"
     },
     "unshattered:giant_potato": {
@@ -540,6 +882,30 @@
             "item": "minecraft:potato",
             "max_amount": 11,
             "min_amount": 9
+          }
+        },
+        {
+          "drop_chance": 0.001,
+          "item_range": {
+            "item": "unshattered:enchanted_potato",
+            "max_amount": 7,
+            "min_amount": 4
+          }
+        },
+        {
+          "drop_chance": 1.0E-4,
+          "item_range": {
+            "item": "unshattered:enchanted_potato",
+            "max_amount": 24,
+            "min_amount": 16
+          }
+        },
+        {
+          "drop_chance": 1.0E-5,
+          "item_range": {
+            "item": "unshattered:enchanted_baked_potato",
+            "max_amount": 2,
+            "min_amount": 1
           }
         }
       ],

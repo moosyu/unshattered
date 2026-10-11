@@ -324,6 +324,10 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
         createEnchantedItemRecipe(Items.SAND, UnshatteredItems.ENCHANTED_SAND.get());
         createEnchantedItemRecipe(Items.CACTUS, UnshatteredItems.ENCHANTED_CACTUS_GREEN.get());
         createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_CACTUS_GREEN.get(), UnshatteredItems.ENCHANTED_CACTUS.get());
+        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_POTATO.get(), UnshatteredItems.ENCHANTED_BAKED_POTATO.get());
+        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_WHEAT.get(), UnshatteredItems.ENCHANTED_HAY_BALE.get());
+        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_CARROT.get(), UnshatteredItems.ENCHANTED_GOLDEN_CARROT.get());
+        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_PUMPKIN.get(), UnshatteredItems.POLISHED_PUMPKIN.get());
     }
 
     public static class Runner extends RecipeProvider.Runner {

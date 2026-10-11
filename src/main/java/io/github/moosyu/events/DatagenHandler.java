@@ -557,7 +557,7 @@ public class DatagenHandler {
                                     .setValue(BreakableTitaniumBlock.ORIGIN,
                                             BreakableTitaniumBlock.MithrilOrigin.SOFT
                                     ),
-                                    0.1f
+                                    0.005f
                             ),
                             null
                     );
@@ -572,7 +572,7 @@ public class DatagenHandler {
                                     .setValue(BreakableTitaniumBlock.ORIGIN,
                                             BreakableTitaniumBlock.MithrilOrigin.HARD
                                     ),
-                                    0.1f
+                                    0.005f
                             ),
                             null
                     );
@@ -587,7 +587,7 @@ public class DatagenHandler {
                                     .setValue(BreakableTitaniumBlock.ORIGIN,
                                             BreakableTitaniumBlock.MithrilOrigin.COBBLED
                                     ),
-                                    0.1f
+                                    0.005f
                             ),
                             null
                     );
@@ -596,8 +596,6 @@ public class DatagenHandler {
 
                     createCropRegenPath(bootstrap, Blocks.WHEAT, UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK.get(), 7);
 
-                    createCropRegenPath(bootstrap, Blocks.CARROTS, UnshatteredBlocks.BREAKABLE_CARROT_BLOCK.get(), 4);
-
                     createCropRegenPath(bootstrap,
                             Blocks.POTATOES,
                             UnshatteredBlocks.BREAKABLE_POTATO_BLOCK.get(),
@@ -605,6 +603,15 @@ public class DatagenHandler {
                             new RegenPath.RegenVariant(UnshatteredBlocks.GIANT_POTATO.get().defaultBlockState(), 0.01f),
                             null
                     );
+
+                    createCropRegenPath(bootstrap,
+                            Blocks.CARROTS,
+                            UnshatteredBlocks.BREAKABLE_CARROT_BLOCK.get(),
+                            4,
+                            new RegenPath.RegenVariant(UnshatteredBlocks.GIANT_CARROT.get().defaultBlockState(), 0.01f),
+                            null
+                    );
+
 
                     createRegenPathWithBlocks(bootstrap, "pumpkin", List.of(UnshatteredBlocks.BREAKABLE_PUMPKIN_BLOCK.get(), Blocks.AIR), 560);
 

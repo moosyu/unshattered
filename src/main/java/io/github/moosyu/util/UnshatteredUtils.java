@@ -329,8 +329,7 @@ public final class UnshatteredUtils {
         boolean rolledAboveOccasional = false;
 
         for (DropData blockDropData : blockBreakData.dropData()) {
-            rolledAboveOccasional = blockDropData.getNonGuaranteedDrop(
-                    true,
+            rolledAboveOccasional = blockDropData.getNonGuaranteedDrop(true,
                     rolledAboveOccasional,
                     player,
                     fortuneType

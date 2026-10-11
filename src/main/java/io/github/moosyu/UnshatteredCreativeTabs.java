@@ -103,6 +103,7 @@ public class UnshatteredCreativeTabs {
                 output.accept(BREAKABLE_COCOA_BEAN.get());
                 output.accept(BREAKABLE_PUMPKIN.get());
             output.accept(GIANT_POTATO.get());
+            output.accept(GIANT_CARROT.get());
         }).build()
     );
 
@@ -199,6 +200,10 @@ public class UnshatteredCreativeTabs {
             output.accept(ENCHANTED_COOKIE);
             output.accept(ENCHANTED_COCOA_BEANS);
             output.accept(ENCHANTED_PUMPKIN);
+            output.accept(ENCHANTED_BAKED_POTATO);
+            output.accept(ENCHANTED_HAY_BALE);
+            output.accept(ENCHANTED_GOLDEN_CARROT);
+            output.accept(POLISHED_PUMPKIN);
         }).build()
     );
 

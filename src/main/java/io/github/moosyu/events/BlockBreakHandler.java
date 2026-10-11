@@ -1,8 +1,10 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.abilities.*;
+import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.components.ItemFuel;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
+import io.github.moosyu.data.datagen.UnshatteredBlockTagsProvider;
 import io.github.moosyu.data.drops.BlockBreakData;
 import io.github.moosyu.data.regen.RegenClientCache;
 import io.github.moosyu.data.regen.RegenPaths;
@@ -161,6 +163,12 @@ public class BlockBreakHandler {
 
             ServerLevel serverLevel = (ServerLevel) level;
             serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID).destroyRegeneratingBlock(blockPos, serverLevel, player);
+
+            BlockPos blockAbovePos = blockPos.above();
+            BlockState blockStateAbove = level.getBlockState(blockPos.above());
+            if (blockStateAbove.is(UnshatteredBlocks.BREAKABLE_SUGARCANE_BLOCK) || blockStateAbove.is(UnshatteredBlocks.BREAKABLE_CACTUS_BLOCK)) {
+                onBlockBreak(new BreakBlockEvent(level, blockAbovePos, blockStateAbove, player));
+            }
         } else if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.FORAGING) {
             if (blockState.is(BlockTags.FLOWERS)) {
                 skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, blockBreakData.expAmount(), player);
@@ -187,8 +195,8 @@ public class BlockBreakHandler {
 
         BlockState blockState = level.getBlockState(blockPos.get());
         Holder<Block> block = blockState.typeHolder();
-        BlockBreakData blockBreakData = block.getData(UnshatteredDataMaps.BLOCK_BREAK_DATA);
 
+        BlockBreakData blockBreakData = block.getData(UnshatteredDataMaps.BLOCK_BREAK_DATA);
         if (blockBreakData == null || !hasBreakingPowerRequirement(player, blockState.typeHolder())) {
             event.setNewSpeed(0.0f);
             return;
@@ -208,6 +216,11 @@ public class BlockBreakHandler {
                 && (itemAttributeModifiers == null || itemAttributeModifiers.modifiers().stream().noneMatch(entry -> entry.attribute().equals(UnshatteredAttributeValues.BREAKING_POWER.holder)))
         ) {
             event.setNewSpeed((float) ((1 + (127 * player.getAttributeValue(UnshatteredAttributeValues.SWEEP.holder))/119) - (Math.pow(player.getAttributeValue(UnshatteredAttributeValues.SWEEP.holder), 2)/3570)));
+        } else if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.FARMING
+                && itemStack.is(ItemTags.HOES)
+        ) {
+            // instabreak farming blocks with hoes
+            event.setNewSpeed(100f);
         } else {
             event.setNewSpeed(0.0f);
         }

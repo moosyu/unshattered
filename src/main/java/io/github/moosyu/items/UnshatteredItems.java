@@ -333,6 +333,7 @@ public class UnshatteredItems {
     public static final DeferredItem<BlockItem> BREAKABLE_COCOA_BEAN = ITEMS.registerSimpleBlockItem(BREAKABLE_COCOA_BEAN_BLOCK.getDelegate());
     public static final DeferredItem<BlockItem> BREAKABLE_PUMPKIN = ITEMS.registerSimpleBlockItem(BREAKABLE_PUMPKIN_BLOCK.getDelegate());
     public static final DeferredItem<BlockItem> GIANT_POTATO = ITEMS.registerSimpleBlockItem(UnshatteredBlocks.GIANT_POTATO.getDelegate());
+    public static final DeferredItem<BlockItem> GIANT_CARROT = ITEMS.registerSimpleBlockItem(UnshatteredBlocks.GIANT_CARROT.getDelegate());
 
     public static final DeferredItem<Item> ROGUE_SWORD = ITEMS.registerItem("rogue_sword", RogueSword::new);
 
@@ -710,4 +711,12 @@ public class UnshatteredItems {
     public static final DeferredItem<EnchantedItem> ENCHANTED_CACTUS_GREEN = ITEMS.registerItem("enchanted_cactus_green", EnchantedItem::new);
 
     public static final DeferredItem<EnchantedItem> ENCHANTED_CACTUS = ITEMS.registerItem("enchanted_cactus", EnchantedItem::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_BAKED_POTATO = ITEMS.registerItem("enchanted_baked_potato", EnchantedItem::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_HAY_BALE = ITEMS.registerItem("enchanted_hay_bale", EnchantedItem::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_GOLDEN_CARROT = ITEMS.registerItem("enchanted_golden_carrot", EnchantedItem::new);
+
+    public static final DeferredItem<Item> POLISHED_PUMPKIN = ITEMS.registerItem("polished_pumpkin", Item::new);
 }

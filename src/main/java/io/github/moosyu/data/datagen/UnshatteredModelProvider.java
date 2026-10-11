@@ -376,6 +376,11 @@ public class UnshatteredModelProvider extends ModelProvider {
 
         itemModels.generateFlatItem(UnshatteredItems.BREAKABLE_COCOA_BEAN.get(), Items.COCOA_BEANS, ModelTemplates.FLAT_ITEM);
         blockModels.createTrivialCube(UnshatteredBlocks.GIANT_POTATO.get());
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_BAKED_POTATO.get(), Items.BAKED_POTATO, ModelTemplates.FLAT_ITEM);
+        copyColumnBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_HAY_BALE.get(), Blocks.HAY_BLOCK);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_GOLDEN_CARROT.get(), Items.GOLDEN_CARROT, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.POLISHED_PUMPKIN.get(), ModelTemplates.FLAT_ITEM);
+        blockModels.createTrivialBlock(UnshatteredBlocks.GIANT_CARROT.get(), TexturedModel.CUBE_TOP_BOTTOM);
     }
 
     /**
