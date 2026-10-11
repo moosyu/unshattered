@@ -60,14 +60,13 @@ public record DropData(ItemRange itemRange, float dropChance) {
                             .append(Component.literal(Component.translatable("drop_type.message.unshattered." + type.key).getString().toUpperCase())
                                     .withStyle(style -> style.withColor(type.colour).withBold(true)))
                             .append(Component.literal(" "))
-                            .append(Component.translatable(itemRange().item().getDescriptionId())
-                                    .withStyle(style -> style.withColor(itemRarity.getColour(1.0f)).withBold(false)))
+                            .append(Component.translatable(itemRange().item().getDescriptionId()).withStyle(style -> style.withColor(itemRarity.getColour(1.0f)).withBold(false)))
                             .append(fortuneValue > 0 ?
                                     Component.literal(" (+" + Math.round(fortuneValue) + fortuneType.symbol + " ")
                                             .append(Component.translatable(fortuneType.getTranslationKey()))
                                             .append(Component.literal(")"))
-                                            .withStyle(style -> style.withColor(fortuneType.color).withBold(false)) : Component.empty()
-                            ));
+                                            .withStyle(style -> style.withColor(fortuneType.color).withBold(false)) : Component.empty())
+                            .append(dropStack.count() > 1 ? Component.literal(" x" + dropStack.count()) : Component.empty()).withColor(UnshatteredUtils.DARK_GRAY));
                 }
                 // for if you didnt get the drop (gives them another chance to get other rare drop)
             } else {
