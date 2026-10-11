@@ -175,6 +175,7 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_BROWN_MUSHROOM_BLOCK, new ItemRange(Items.BROWN_MUSHROOM, 2, 3), PlayerSkillsAttachment.Skill.FARMING, 12);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_CACTUS_BLOCK, new ItemRange(Items.CACTUS), PlayerSkillsAttachment.Skill.FARMING, 4);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_SAND_BLOCK, new ItemRange(Items.SAND), PlayerSkillsAttachment.Skill.MINING, 3);
+        createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.GIANT_POTATO, new ItemRange(Items.POTATO, 9, 11), PlayerSkillsAttachment.Skill.FARMING, 23);
 
         builder(BLOCK_BREAK_DATA)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_COBBLED_MITHRIL_BLOCK.get()),

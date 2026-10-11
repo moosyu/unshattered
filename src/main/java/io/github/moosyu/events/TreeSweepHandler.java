@@ -59,7 +59,7 @@ public class TreeSweepHandler {
 
             if (!level.isEmptyBlock(pos)) {
                 ServerLevel serverLevel = (ServerLevel) level;
-                serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID).destroyRegeneratingBlock(pos, serverLevel);
+                serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID).destroyRegeneratingBlock(pos, serverLevel, current.player);
             }
 
             listPos++;
@@ -107,7 +107,7 @@ public class TreeSweepHandler {
 
         // removing the initial block (as the vanilla block break is cancelled)
         ServerLevel serverLevel = (ServerLevel) level;
-        serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID).destroyRegeneratingBlock(startPos, serverLevel);
+        serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID).destroyRegeneratingBlock(startPos, serverLevel, player);
 
         int sweep = (int) player.getAttributeValue(UnshatteredAttributeValues.SWEEP.holder);
         if (sweep <= 0) {

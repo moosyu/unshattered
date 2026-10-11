@@ -1,4 +1,8 @@
 {
+  "condition": {
+    "type": "unshattered:check_below",
+    "block_below_requirement": "minecraft:air"
+  },
   "path": [
     {
       "Name": "unshattered:breakable_sugarcane_block"

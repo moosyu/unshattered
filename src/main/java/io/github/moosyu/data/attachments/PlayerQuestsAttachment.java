@@ -34,7 +34,7 @@ public final class PlayerQuestsAttachment {
     }
 
     /**
-     * inverts the quest's completion state
+     * inverts the quest's completion blockState
      * @param quest the quest to be changed
      */
     public void updateQuestCompletion(Quest quest) {
@@ -44,7 +44,7 @@ public final class PlayerQuestsAttachment {
     /**
      * get whether a quest is completed
      * @param quest the quest to be checked
-     * @return quest completion state or null if the player doesn't have the quest
+     * @return quest completion blockState or null if the player doesn't have the quest
      */
     public boolean getQuestState(Quest quest) {
         return quests.get(quest);

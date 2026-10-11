@@ -186,11 +186,7 @@ public class UnshatteredBlocks {
             )
     );
 
-    public static final DeferredBlock<Block> BREAKABLE_TITANIUM_BLOCK = BLOCKS.registerBlock("breakable_titanium_block",
-            props -> new Block(props.destroyTime(65.0f)
-                    .sound(SoundType.STONE)
-            )
-    );
+    public static final DeferredBlock<Block> BREAKABLE_TITANIUM_BLOCK = BLOCKS.registerBlock("breakable_titanium_block", BreakableTitaniumBlock::new);
 
     public static final DeferredBlock<Block> BREAKABLE_CARROT_BLOCK = BLOCKS.registerBlock("breakable_carrot_block", UnshatteredCropBlock::new);
 
@@ -238,6 +234,12 @@ public class UnshatteredBlocks {
     public static final DeferredBlock<Block> BREAKABLE_SAND_BLOCK = BLOCKS.registerBlock("breakable_sand_block",
             props -> new Block(props.sound(SoundType.SAND)
                     .destroyTime(0.5f)
+            )
+    );
+
+    public static final DeferredBlock<Block> GIANT_POTATO = BLOCKS.registerBlock("giant_potato",
+            props -> new Block(props.sound(SoundType.WOOD)
+                    .destroyTime(1.0f)
             )
     );
 }

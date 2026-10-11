@@ -1,6 +1,12 @@
 {
   "variants": {
-    "": {
+    "origin=cobbled": {
+      "model": "unshattered:block/breakable_titanium_block"
+    },
+    "origin=hard": {
+      "model": "unshattered:block/breakable_titanium_block"
+    },
+    "origin=soft": {
       "model": "unshattered:block/breakable_titanium_block"
     }
   }

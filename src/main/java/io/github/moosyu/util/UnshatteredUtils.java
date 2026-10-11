@@ -329,68 +329,13 @@ public final class UnshatteredUtils {
         boolean rolledAboveOccasional = false;
 
         for (DropData blockDropData : blockBreakData.dropData()) {
-            rolledAboveOccasional = UnshatteredUtils.getNonGuaranteedDrop(blockDropData,
+            rolledAboveOccasional = blockDropData.getNonGuaranteedDrop(
                     true,
                     rolledAboveOccasional,
                     player,
                     fortuneType
             );
         }
-    }
-
-    public static boolean getNonGuaranteedDrop(DropData dropData, boolean fortuneBoosted, boolean rolledAboveOccasional, Player player, @Nullable UnshatteredAttributeValues fortuneType) {
-        double modifiedDropChance;
-        double fortuneValue;
-        RandomSource randomSource = player.getRandom();
-
-        if (fortuneType == null) return rolledAboveOccasional;
-
-        ItemStack dropStack = new ItemStack(dropData.itemRange().item(), dropData.itemRange().getDropAmount(randomSource));
-        fortuneValue = player.getAttributeValue(fortuneType.holder);
-
-        if (dropData.dropChance() < 1.0) {
-            DropTypes type = getDropType(dropData.dropChance());
-            // so the player cant roll a bunch of super rare drops in a single go ever if they're really lucky
-            if (dropData.dropChance() < DropTypes.OCCASIONAL.minRate) {
-                if (rolledAboveOccasional) {
-                    return true;
-                }
-                rolledAboveOccasional = true;
-            }
-
-            if (fortuneBoosted) {
-                modifiedDropChance = dropData.dropChance() * (1 + (fortuneValue / 100));
-            } else {
-                modifiedDropChance = dropData.dropChance();
-            }
-
-            if (randomSource.nextFloat() <= modifiedDropChance) {
-                if (fortuneBoosted) {
-                    UnshatteredRarity itemRarity = UnshatteredUtils.getItemRarity(dropData.itemRange().item().getDefaultInstance());
-                    player.sendSystemMessage(Component.empty()
-                            .append(Component.literal(Component.translatable("drop_type.message.unshattered." + type.key).getString().toUpperCase())
-                                    .withStyle(style -> style.withColor(type.colour).withBold(true)))
-                            .append(Component.literal(" "))
-                            .append(Component.translatable(dropData.itemRange().item().getDescriptionId())
-                                    .withStyle(style -> style.withColor(itemRarity.getColour(1.0f)).withBold(false)))
-                            .append(fortuneValue > 0 ?
-                                    Component.literal(" (+" + Math.round(fortuneValue) + fortuneType.symbol + " ")
-                                            .append(Component.translatable(fortuneType.getTranslationKey()))
-                                            .append(Component.literal(")"))
-                                            .withStyle(style -> style.withColor(fortuneType.color).withBold(false)) : Component.empty()
-                            ));
-                }
-                // for if you didnt get the drop (gives them another chance to get other rare drop)
-            } else {
-                return false;
-            }
-        } else {
-            dropStack = new ItemStack(dropStack.getItem(), UnshatteredUtils.getItemsCount(fortuneValue, dropStack.count()));
-        }
-
-        UnshatteredUtils.givePlayerHarvestedItemStack(player, dropStack);
-
-        return rolledAboveOccasional;
     }
 
     // item requirements

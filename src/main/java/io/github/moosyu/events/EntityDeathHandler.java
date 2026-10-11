@@ -50,7 +50,7 @@ public class EntityDeathHandler {
             boolean rolledAboveOccasional = false;
             // may end up doing it weighted instead of rolling them all at once, we'll see though
             for (MobItemDropData itemDrop : mobLoot.drops()) {
-                rolledAboveOccasional = UnshatteredUtils.getNonGuaranteedDrop(itemDrop.dropData(), itemDrop.combatFortuneBoosted(), rolledAboveOccasional, player, UnshatteredAttributeValues.COMBAT_FORTUNE);
+                rolledAboveOccasional = itemDrop.dropData().getNonGuaranteedDrop(itemDrop.combatFortuneBoosted(), rolledAboveOccasional, player, UnshatteredAttributeValues.COMBAT_FORTUNE);
             }
 
             if (mobLoot.experience() > 0.0f) {

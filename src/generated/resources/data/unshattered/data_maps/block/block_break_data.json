@@ -532,6 +532,20 @@
       "exp_amount": 8.0,
       "skill": "farming"
     },
+    "unshattered:giant_potato": {
+      "drop_data": [
+        {
+          "drop_chance": 1.0,
+          "item_range": {
+            "item": "minecraft:potato",
+            "max_amount": 11,
+            "min_amount": 9
+          }
+        }
+      ],
+      "exp_amount": 23.0,
+      "skill": "farming"
+    },
     "unshattered:pure_diamond_block": {
       "drop_data": [
         {

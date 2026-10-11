@@ -8,5 +8,14 @@
     }
   ],
   "regen_ticks": 220,
-  "stages_incremented": 1
+  "stages_incremented": 1,
+  "variant": {
+    "blockState": {
+      "Name": "unshattered:breakable_titanium_block",
+      "Properties": {
+        "origin": "soft"
+      }
+    },
+    "chance": 0.1
+  }
 }

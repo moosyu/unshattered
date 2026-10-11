@@ -1,12 +1,14 @@
 package io.github.moosyu.data.datagen;
 
 import com.mojang.math.Transformation;
+import io.github.moosyu.blocks.BreakableTitaniumBlock;
 import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.items.UnshatteredItems;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.MultiVariant;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.*;
@@ -342,7 +344,15 @@ public class UnshatteredModelProvider extends ModelProvider {
         blockModels.createTrivialCube(UnshatteredBlocks.BREAKABLE_COBBLED_MITHRIL_BLOCK.get());
         blockModels.createTrivialCube(UnshatteredBlocks.BREAKABLE_SOFT_MITHRIL_BLOCK.get());
         blockModels.createTrivialCube(UnshatteredBlocks.BREAKABLE_HARD_MITHRIL_BLOCK.get());
-        blockModels.createTrivialCube(UnshatteredBlocks.BREAKABLE_TITANIUM_BLOCK.get());
+
+        MultiVariant titaniumVariant = BlockModelGenerators.plainVariant(TexturedModel.CUBE.create(UnshatteredBlocks.BREAKABLE_TITANIUM_BLOCK.get(), blockModels.modelOutput));
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(UnshatteredBlocks.BREAKABLE_TITANIUM_BLOCK.get())
+                .with(PropertyDispatch.initial(BreakableTitaniumBlock.ORIGIN)
+                        .select(BreakableTitaniumBlock.MithrilOrigin.SOFT, titaniumVariant)
+                        .select(BreakableTitaniumBlock.MithrilOrigin.HARD, titaniumVariant)
+                        .select(BreakableTitaniumBlock.MithrilOrigin.COBBLED, titaniumVariant)
+                )
+        );
 
         blockModels.createCrossBlock(UnshatteredBlocks.BREAKABLE_SUGARCANE_BLOCK.get(), BlockModelGenerators.PlantType.TINTED, TextureMapping.cross(Blocks.SUGAR_CANE));
         blockModels.createCrossBlock(UnshatteredBlocks.BREAKABLE_RED_MUSHROOM.get(), BlockModelGenerators.PlantType.NOT_TINTED, TextureMapping.cross(Blocks.RED_MUSHROOM));
@@ -365,6 +375,7 @@ public class UnshatteredModelProvider extends ModelProvider {
         );
 
         itemModels.generateFlatItem(UnshatteredItems.BREAKABLE_COCOA_BEAN.get(), Items.COCOA_BEANS, ModelTemplates.FLAT_ITEM);
+        blockModels.createTrivialCube(UnshatteredBlocks.GIANT_POTATO.get());
     }
 
     /**

@@ -102,6 +102,7 @@ public class UnshatteredCreativeTabs {
                 output.accept(BREAKABLE_RED_MUSHROOM.get());
                 output.accept(BREAKABLE_COCOA_BEAN.get());
                 output.accept(BREAKABLE_PUMPKIN.get());
+            output.accept(GIANT_POTATO.get());
         }).build()
     );
 

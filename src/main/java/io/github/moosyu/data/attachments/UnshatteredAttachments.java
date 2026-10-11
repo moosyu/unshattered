@@ -30,7 +30,7 @@ public final class UnshatteredAttachments {
                     .build()
     );
 
-    // no serializer as the state should reset on rejoin
+    // no serializer as the blockState should reset on rejoin
     public static final Supplier<AttachmentType<PlayerStateAttachment>> PLAYER_STATE = ATTACHMENT_TYPES.register("player_state", () ->
             AttachmentType.builder(PlayerStateAttachment::new)
                     .sync(new StateSyncHandler())

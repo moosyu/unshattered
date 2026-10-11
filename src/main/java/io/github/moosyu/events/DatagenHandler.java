@@ -1,5 +1,6 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.blocks.BreakableTitaniumBlock;
 import io.github.moosyu.blocks.TalkingRockBlock;
 import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.VendorItem;
@@ -10,7 +11,9 @@ import io.github.moosyu.data.fishing.TriggerMiscReward;
 import io.github.moosyu.data.fishing.rewards.CoinReward;
 import io.github.moosyu.data.quests.Quest;
 import io.github.moosyu.data.quests.QuestTypes;
+import io.github.moosyu.data.regen.RegenCondition;
 import io.github.moosyu.data.regen.RegenPaths.*;
+import io.github.moosyu.data.regen.conditions.NotBelowBlock;
 import io.github.moosyu.data.regions.*;
 import io.github.moosyu.data.datagen.*;
 import io.github.moosyu.entities.npcs.*;
@@ -37,6 +40,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.joml.Vector2i;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -543,21 +547,64 @@ public class DatagenHandler {
                             200
                     );
 
-                    createRegenPathWithBlocks(bootstrap, "soft_mithril", List.of(UnshatteredBlocks.BREAKABLE_SOFT_MITHRIL_BLOCK.get(), Blocks.BEDROCK), 220);
+                    createRegenPath(bootstrap,
+                            "soft_mithril",
+                            List.of(UnshatteredBlocks.BREAKABLE_SOFT_MITHRIL_BLOCK.get().defaultBlockState(), Blocks.BEDROCK.defaultBlockState()),
+                            220,
+                            1,
+                            new RegenPath.RegenVariant(UnshatteredBlocks.BREAKABLE_TITANIUM_BLOCK.get()
+                                    .defaultBlockState()
+                                    .setValue(BreakableTitaniumBlock.ORIGIN,
+                                            BreakableTitaniumBlock.MithrilOrigin.SOFT
+                                    ),
+                                    0.1f
+                            ),
+                            null
+                    );
 
-                    createRegenPathWithBlocks(bootstrap, "hard_mithril", List.of(UnshatteredBlocks.BREAKABLE_HARD_MITHRIL_BLOCK.get(), Blocks.BEDROCK), 220);
+                    createRegenPath(bootstrap,
+                            "hard_mithril",
+                            List.of(UnshatteredBlocks.BREAKABLE_HARD_MITHRIL_BLOCK.get().defaultBlockState(), Blocks.BEDROCK.defaultBlockState()),
+                            220,
+                            1,
+                            new RegenPath.RegenVariant(UnshatteredBlocks.BREAKABLE_TITANIUM_BLOCK.get()
+                                    .defaultBlockState()
+                                    .setValue(BreakableTitaniumBlock.ORIGIN,
+                                            BreakableTitaniumBlock.MithrilOrigin.HARD
+                                    ),
+                                    0.1f
+                            ),
+                            null
+                    );
 
-                    createRegenPathWithBlocks(bootstrap, "cobbled_mithril", List.of(UnshatteredBlocks.BREAKABLE_COBBLED_MITHRIL_BLOCK.get(), Blocks.BEDROCK), 220);
+                    createRegenPath(bootstrap,
+                            "cobbled_mithril",
+                            List.of(UnshatteredBlocks.BREAKABLE_COBBLED_MITHRIL_BLOCK.get().defaultBlockState(), Blocks.BEDROCK.defaultBlockState()),
+                            220,
+                            1,
+                            new RegenPath.RegenVariant(UnshatteredBlocks.BREAKABLE_TITANIUM_BLOCK.get()
+                                    .defaultBlockState()
+                                    .setValue(BreakableTitaniumBlock.ORIGIN,
+                                            BreakableTitaniumBlock.MithrilOrigin.COBBLED
+                                    ),
+                                    0.1f
+                            ),
+                            null
+                    );
 
                     createRegenPathWithBlocks(bootstrap, "ice", List.of(UnshatteredBlocks.BREAKABLE_ICE_BLOCK.get(), Blocks.AIR), 220);
-
-                    createRegenPathWithBlocks(bootstrap, "titanium", List.of(UnshatteredBlocks.BREAKABLE_TITANIUM_BLOCK.get(), Blocks.AIR), 220);
 
                     createCropRegenPath(bootstrap, Blocks.WHEAT, UnshatteredBlocks.BREAKABLE_WHEAT_BLOCK.get(), 7);
 
                     createCropRegenPath(bootstrap, Blocks.CARROTS, UnshatteredBlocks.BREAKABLE_CARROT_BLOCK.get(), 4);
 
-                    createCropRegenPath(bootstrap, Blocks.POTATOES, UnshatteredBlocks.BREAKABLE_POTATO_BLOCK.get(), 4);
+                    createCropRegenPath(bootstrap,
+                            Blocks.POTATOES,
+                            UnshatteredBlocks.BREAKABLE_POTATO_BLOCK.get(),
+                            4,
+                            new RegenPath.RegenVariant(UnshatteredBlocks.GIANT_POTATO.get().defaultBlockState(), 0.01f),
+                            null
+                    );
 
                     createRegenPathWithBlocks(bootstrap, "pumpkin", List.of(UnshatteredBlocks.BREAKABLE_PUMPKIN_BLOCK.get(), Blocks.AIR), 560);
 
@@ -573,12 +620,27 @@ public class DatagenHandler {
 
                     createRegenPathWithBlocks(bootstrap, "brown_mushroom_block", List.of(UnshatteredBlocks.BREAKABLE_BROWN_MUSHROOM_BLOCK.get(), Blocks.AIR), 600);
 
-                    createRegenPathWithBlocks(bootstrap, "cactus", List.of(UnshatteredBlocks.BREAKABLE_CACTUS_BLOCK.get(), Blocks.AIR), 500);
+                    createRegenPath(bootstrap,
+                            "cactus",
+                            List.of(UnshatteredBlocks.BREAKABLE_CACTUS_BLOCK.get().defaultBlockState(),
+                                    Blocks.AIR.defaultBlockState()
+                            ),
+                            500,
+                            1,
+                            null,
+                            new NotBelowBlock(Blocks.AIR)
+                    );
 
-                    createRegenPathWithBlocks(bootstrap, "sugarcane", List.of(UnshatteredBlocks.BREAKABLE_SUGARCANE_BLOCK.get(), Blocks.AIR), 500);
+                    createRegenPath(bootstrap,
+                            "sugarcane",
+                            List.of(UnshatteredBlocks.BREAKABLE_SUGARCANE_BLOCK.get().defaultBlockState(), Blocks.AIR.defaultBlockState()),
+                            500,
+                            1,
+                            null,
+                            new NotBelowBlock(Blocks.AIR)
+                    );
 
                     createRegenPathWithBlocks(bootstrap, "cocoa", List.of(UnshatteredBlocks.BREAKABLE_COCOA_BEAN_BLOCK.get(), Blocks.AIR), 600);
-
                 }).add(DataPackRegistryHandler.FISHING_MISC_REWARD_KEY, bootstrap -> {
                     bootstrap.register(createMiscRewardResourceKey("good_catch"), new CoinReward(25000,
                             5000,
@@ -691,9 +753,9 @@ public class DatagenHandler {
                 new RegenPath(blocks.stream().map(Block::defaultBlockState).toList(), regenTicks));
     }
 
-    private static void createRegenPath(BootstrapContext<RegenPath> bootstrap, String identifier, List<BlockState> blocks, int regenTicks, int stagesIncremented) {
+    private static void createRegenPath(BootstrapContext<RegenPath> bootstrap, String identifier, List<BlockState> blocks, int regenTicks, int stagesIncremented, @Nullable RegenPath.RegenVariant variant, @Nullable RegenCondition condition) {
         bootstrap.register(ResourceKey.create(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY, UnshatteredUtils.getUnshatteredIdentifier(identifier)),
-                new RegenPath(blocks, regenTicks, stagesIncremented));
+                new RegenPath(blocks, regenTicks, stagesIncremented, Optional.ofNullable(variant), Optional.ofNullable(condition)));
     }
 
     private static void createRegenPath(BootstrapContext<RegenPath> bootstrap, String identifier, List<BlockState> blocks, int regenTicks) {
@@ -706,6 +768,14 @@ public class DatagenHandler {
      * @param finalStageCrop the final growth stage
      */
     private static void createCropRegenPath(BootstrapContext<RegenPath> bootstrap, Block blockStateCrop, Block finalStageCrop, int stages) {
+        createCropRegenPath(bootstrap, blockStateCrop, finalStageCrop, stages, null, null);
+    }
+
+    /**
+     * @param blockStateCrop crop that presumably has seven unbreakable stages to get block states from
+     * @param finalStageCrop the final growth stage
+     */
+    private static void createCropRegenPath(BootstrapContext<RegenPath> bootstrap, Block blockStateCrop, Block finalStageCrop, int stages, RegenPath.RegenVariant regenVariant, @Nullable RegenCondition condition) {
         List<BlockState> blockStates = new ArrayList<>();
         blockStates.add(finalStageCrop.defaultBlockState());
 
@@ -713,7 +783,7 @@ public class DatagenHandler {
             blockStates.add(blockStateCrop.defaultBlockState().setValue(CropBlock.AGE, stage));
         }
 
-        createRegenPath(bootstrap, BuiltInRegistries.BLOCK.getKey(finalStageCrop).getPath(), blockStates, 200, stages - 1);
+        createRegenPath(bootstrap, BuiltInRegistries.BLOCK.getKey(finalStageCrop).getPath(), blockStates, 200, stages - 1, regenVariant, condition);
     }
 
     private static void createStoreStock(BootstrapContext<List<VendorItem>> bootstrap, Identifier vendorIdentifier, List<VendorItem> stock) {

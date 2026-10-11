@@ -140,7 +140,7 @@ public class BlockBreakHandler {
             );
 
             ServerLevel serverLevel = (ServerLevel) level;
-            serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID).destroyRegeneratingBlock(blockPos, serverLevel);
+            serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID).destroyRegeneratingBlock(blockPos, serverLevel, player);
 
             // just assuming the mainhand item is the mining tool, i hope this doesnt bite me later on but drills only apply attributes in mainhand so we'll see how it goes
             ItemStack itemStack = player.getMainHandItem();
@@ -160,7 +160,7 @@ public class BlockBreakHandler {
             }
 
             ServerLevel serverLevel = (ServerLevel) level;
-            serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID).destroyRegeneratingBlock(blockPos, serverLevel);
+            serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID).destroyRegeneratingBlock(blockPos, serverLevel, player);
         } else if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.FORAGING) {
             if (blockState.is(BlockTags.FLOWERS)) {
                 skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, blockBreakData.expAmount(), player);

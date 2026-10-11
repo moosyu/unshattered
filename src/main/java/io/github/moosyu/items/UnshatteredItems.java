@@ -332,6 +332,7 @@ public class UnshatteredItems {
     public static final DeferredItem<BlockItem> BREAKABLE_RED_MUSHROOM = ITEMS.registerSimpleBlockItem(UnshatteredBlocks.BREAKABLE_RED_MUSHROOM.getDelegate());
     public static final DeferredItem<BlockItem> BREAKABLE_COCOA_BEAN = ITEMS.registerSimpleBlockItem(BREAKABLE_COCOA_BEAN_BLOCK.getDelegate());
     public static final DeferredItem<BlockItem> BREAKABLE_PUMPKIN = ITEMS.registerSimpleBlockItem(BREAKABLE_PUMPKIN_BLOCK.getDelegate());
+    public static final DeferredItem<BlockItem> GIANT_POTATO = ITEMS.registerSimpleBlockItem(UnshatteredBlocks.GIANT_POTATO.getDelegate());
 
     public static final DeferredItem<Item> ROGUE_SWORD = ITEMS.registerItem("rogue_sword", RogueSword::new);
 
