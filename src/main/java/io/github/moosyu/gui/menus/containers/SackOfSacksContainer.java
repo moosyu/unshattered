@@ -1,0 +1,30 @@
+package io.github.moosyu.gui.menus.containers;
+
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.common.util.ValueIOSerializable;
+
+public class SackOfSacksContainer extends SimpleContainer implements ValueIOSerializable {
+    public static final int SACK_SLOTS = 27;
+
+    public SackOfSacksContainer() {
+        super(SACK_SLOTS);
+    }
+
+    @Override
+    public void serialize(ValueOutput output) {
+        output.store("items", NonNullList.codecOf(ItemStack.OPTIONAL_CODEC), this.getItems());
+    }
+
+    @Override
+    public void deserialize(ValueInput input) {
+        input.read("items", NonNullList.codecOf(ItemStack.OPTIONAL_CODEC)).ifPresent(items -> {
+            for (int i = 0; i < Math.min(items.size(), this.getItems().size()); i++) {
+                this.getItems().set(i, items.get(i));
+            }
+        });
+    }
+}

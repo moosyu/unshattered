@@ -1,14 +1,14 @@
 package io.github.moosyu.data.dialogue;
 
 import io.github.moosyu.Unshattered;
+import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.attachments.PlayerFlagsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.events.DataPackRegistryHandler;
 import io.github.moosyu.packets.OpenDialoguePacket;
-import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -27,7 +27,7 @@ public interface DialogueInteractable {
     /**
      * @return the name of whatever is triggering the dialgoue
      */
-    Component getInteractableName();
+    MutableComponent getInteractableName();
 
     /**
      * @return the origin trees for possible dialogue
@@ -43,8 +43,9 @@ public interface DialogueInteractable {
      */
     default void onDialogueTriggered(Player player) {
         if (!player.level().isClientSide()) {
+            RegistryAccess registryAccess = player.registryAccess();
             PlayerFlagsAttachment playerFlagsAttachment = player.getData(UnshatteredAttachments.PLAYER_FLAGS);
-            DialogueTree dialogueTree = getDialogueTree(player.registryAccess());
+            DialogueTree dialogueTree = getDialogueTree(registryAccess);
             if (dialogueTree == null) {
                 Unshattered.LOGGER.error("dialogue tree of {} is null (did you datagen?)", getInteractableName().getString());
                 return;
@@ -66,6 +67,7 @@ public interface DialogueInteractable {
             }
 
             playerFlagsAttachment.addFlagsToQueue(chosenOrigin.setFlags());
+
             PacketDistributor.sendToPlayer((ServerPlayer) player, new OpenDialoguePacket(getInteractableName(), chosenOrigin.dialogueNode()));
         } else {
             player.swing(InteractionHand.MAIN_HAND);

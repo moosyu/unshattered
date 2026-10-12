@@ -1,11 +1,9 @@
 package io.github.moosyu.entities.npcs;
 
 import io.github.moosyu.data.dialogue.DialogueInteractable;
-import io.github.moosyu.data.dialogue.DialogueTree;
 import io.github.moosyu.util.UnshatteredUtils;
-import net.minecraft.ChatFormatting;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -18,7 +16,7 @@ public class JotraelineGreatforgeNPC extends NPCEntity implements DialogueIntera
     public static final Identifier APOLOGY_TOUR = UnshatteredUtils.getUnshatteredIdentifier("apology_tour");
 
     public JotraelineGreatforgeNPC(EntityType<? extends Mob> type, Level level) {
-        super(type, level, 0xFF00AA00);
+        super(type, level);
     }
 
     @Override
@@ -27,7 +25,7 @@ public class JotraelineGreatforgeNPC extends NPCEntity implements DialogueIntera
     }
 
     @Override
-    public Component getInteractableName() {
-        return getStyledName();
+    public MutableComponent getInteractableName() {
+        return getBoldName();
     }
 }

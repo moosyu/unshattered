@@ -1,0 +1,23 @@
+{
+  "type": "unshattered:forge",
+  "category": "unshattered:tools",
+  "copy_components_from": 0,
+  "duration_ticks": 7200,
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": "unshattered:rusted_titanium_pickaxe"
+    },
+    {
+      "count": 4,
+      "ingredient": "unshattered:enchanted_titanium"
+    },
+    {
+      "count": 1,
+      "ingredient": "unshattered:bejeweled_handle"
+    }
+  ],
+  "result": {
+    "id": "unshattered:titanium_pickaxe"
+  }
+}

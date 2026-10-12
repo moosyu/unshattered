@@ -1,0 +1,27 @@
+{
+  "type": "unshattered:forge",
+  "category": "unshattered:tools",
+  "copy_components_from": 0,
+  "duration_ticks": 32400,
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": "unshattered:titanium_drill_dr_x355"
+    },
+    {
+      "count": 10,
+      "ingredient": "unshattered:refined_diamond"
+    },
+    {
+      "count": 12,
+      "ingredient": "unshattered:refined_titanium"
+    },
+    {
+      "count": 5,
+      "ingredient": "unshattered:mithril_plate"
+    }
+  ],
+  "result": {
+    "id": "unshattered:titanium_drill_dr_x455"
+  }
+}

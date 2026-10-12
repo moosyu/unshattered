@@ -1,7 +1,5 @@
 package io.github.moosyu.events;
 
-import com.mojang.serialization.Codec;
-import io.github.moosyu.data.VendorItem;
 import io.github.moosyu.data.dialogue.DialogueTree;
 import io.github.moosyu.data.fishing.FishingRewardTypes;
 import io.github.moosyu.data.fishing.TriggerMiscReward;
@@ -16,8 +14,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 
-import java.util.List;
-
 import static io.github.moosyu.Unshattered.MODID;
 
 @EventBusSubscriber(modid = MODID)
@@ -28,7 +24,6 @@ public class DataPackRegistryHandler {
     public static final ResourceKey<Registry<Quest>> QUEST_REGISTRY_KEY = ResourceKey.createRegistryKey(UnshatteredUtils.getUnshatteredIdentifier("quests"));
     public static final ResourceKey<Registry<RegenPath>> REGEN_PATH_REGISTRY_KEY = ResourceKey.createRegistryKey(UnshatteredUtils.getUnshatteredIdentifier("regen_paths"));
     public static final ResourceKey<Registry<TriggerMiscReward>> FISHING_MISC_REWARD_KEY = ResourceKey.createRegistryKey(UnshatteredUtils.getUnshatteredIdentifier("fishing_misc_rewards"));
-    public static final ResourceKey<Registry<List<VendorItem>>> SHOP_STOCK_KEY = ResourceKey.createRegistryKey(UnshatteredUtils.getUnshatteredIdentifier("shop_stocks"));
 
     @SubscribeEvent
     public static void registerDatapackRegistries(DataPackRegistryEvent.NewRegistry event) {
@@ -57,10 +52,6 @@ public class DataPackRegistryHandler {
 
         event.dataPackRegistry(FISHING_MISC_REWARD_KEY,
                 FishingRewardTypes.CODEC
-        );
-
-        event.dataPackRegistry(SHOP_STOCK_KEY,
-                Codec.list(VendorItem.CODEC)
         );
     }
 }

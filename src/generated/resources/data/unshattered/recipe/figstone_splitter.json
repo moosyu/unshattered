@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "F": "unshattered:figstone",
+    "H": "unshattered:fig_hew"
+  },
+  "pattern": [
+    "FF ",
+    "HF ",
+    "F  "
+  ],
+  "result": {
+    "id": "unshattered:figstone_splitter"
+  }
+}

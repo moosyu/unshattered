@@ -1,6 +1,7 @@
 package io.github.moosyu.data.datagen;
 
 import io.github.moosyu.util.UnshatteredUtils;
+import mezz.jei.api.constants.Tags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.ItemTags;
@@ -21,6 +22,7 @@ public class UnshatteredItemTagsProvider extends ItemTagsProvider {
     }
 
     public static final TagKey<Item> HAS_DESCRIPTION = ItemTags.create(UnshatteredUtils.getUnshatteredIdentifier("has_description"));
+    public static final TagKey<Item> HIDDEN_FROM_RECIPE_VIEWER = ItemTags.create(Tags.HIDDEN_FROM_RECIPE_VIEWERS);
 
     @Override
     protected void addTags(HolderLookup.@NonNull Provider provider) {
@@ -171,9 +173,54 @@ public class UnshatteredItemTagsProvider extends ItemTagsProvider {
                 .add(TITANIUM_DRILL_DR_X555.get())
                 .add(TITANIUM_DRILL_DR_X655.get())
                 .add(CENTURY_THE_FISH.get())
-                .add(ROOKIE_HOE.get());
+                .add(ROOKIE_HOE.get())
+                .add(STRETCHING_STICK.get())
+                .add(FIGSTONE.get())
+                .add(PLASMA.get());
 
         tag(ItemTags.HOES)
                 .add(ROOKIE_HOE.get());
+
+        tag(HIDDEN_FROM_RECIPE_VIEWER)
+                .add(BREAKABLE_FIG_LOG.get())
+                .add(BREAKABLE_STONE.get())
+                .add(BREAKABLE_COAL_ORE.get())
+                .add(BREAKABLE_WHEAT.get())
+                .add(BREAKABLE_COBBLESTONE.get())
+                .add(BREAKABLE_IRON_ORE.get())
+                .add(BREAKABLE_COPPER_ORE.get())
+                .add(BREAKABLE_GOLD_ORE.get())
+                .add(BREAKABLE_REDSTONE_ORE.get())
+                .add(BREAKABLE_EMERALD_ORE.get())
+                .add(BREAKABLE_DIAMOND_ORE.get())
+                .add(PURE_DIAMOND.get())
+                .add(BREAKABLE_OBSIDIAN.get())
+                .add(BREAKABLE_LAPIS_ORE.get())
+                .add(BREAKABLE_ICE.get())
+                .add(BREAKABLE_CARROT.get())
+                .add(BREAKABLE_POTATO.get())
+                .add(BREAKABLE_MELON.get())
+                .add(BREAKABLE_SUGAR_CANE.get())
+                .add(BREAKABLE_CACTUS.get())
+                .add(BREAKABLE_SAND.get())
+                .add(BREAKABLE_BROWN_MUSHROOM_BLOCK.get())
+                .add(BREAKABLE_RED_MUSHROOM_BLOCK.get())
+                .add(BREAKABLE_BROWN_MUSHROOM.get())
+                .add(BREAKABLE_RED_MUSHROOM.get())
+                .add(BREAKABLE_COCOA_BEAN.get())
+                .add(BREAKABLE_PUMPKIN.get())
+                .add(GIANT_CARROT.get())
+                .add(GIANT_POTATO.get())
+                .add(BREAKABLE_SOFT_MITHRIL_BLOCK.get())
+                .add(BREAKABLE_HARD_MITHRIL_BLOCK.get())
+                .add(BREAKABLE_COBBLED_MITHRIL_BLOCK.get())
+                .add(BREAKABLE_TITANIUM.get())
+                .add(BREAKABLE_OAK_LOG.get())
+                .add(BREAKABLE_BIRCH_LOG.get())
+                .add(BREAKABLE_SPRUCE_LOG.get())
+                .add(BREAKABLE_JUNGLE_LOG.get())
+                .add(BREAKABLE_ACACIA_LOG.get())
+                .add(BREAKABLE_DARK_OAK_LOG.get())
+                .add(ROCK_TALKABLE_BLOCK.get());
     }
 }

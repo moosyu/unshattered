@@ -3,7 +3,6 @@ package io.github.moosyu.data;
 import com.mojang.serialization.Codec;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.drops.BlockBreakData;
-import io.github.moosyu.data.drops.DropData;
 import io.github.moosyu.data.drops.MobRewardData;
 import io.github.moosyu.data.fishing.FishingWeightEntry;
 import io.github.moosyu.items.ItemType;
@@ -89,4 +88,17 @@ public final class UnshatteredDataMaps {
             Registries.ITEM,
             Codec.INT
     ).synced(Codec.INT, true).build();
+
+    public static final DataMapType<EntityType<?>, List<VendorItem>> VENDOR_SHOP_DATA = DataMapType.builder(
+            UnshatteredUtils.getUnshatteredIdentifier("vendor_shop_data"),
+            Registries.ENTITY_TYPE,
+            VendorItem.CODEC.listOf()
+    ).synced(VendorItem.CODEC.listOf(), true).build();
+
+    public static final DataMapType<EntityType<?>, NpcData> NPC_DATA = DataMapType.builder(
+            UnshatteredUtils.getUnshatteredIdentifier("npc_skin_data"),
+            Registries.ENTITY_TYPE,
+            NpcData.CODEC
+    ).synced(NpcData.CODEC, true).build();
+
 }

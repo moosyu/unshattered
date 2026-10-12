@@ -14,22 +14,16 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FluidState;
 import org.jspecify.annotations.NonNull;
 
-import java.awt.*;
-
 public class NPCEntity extends Mob {
-    private final int nameColour;
-
-    public NPCEntity(EntityType<? extends Mob> type, Level level, int nameColour) {
+    public NPCEntity(EntityType<? extends Mob> type, Level level) {
         super(type, level);
-
-        this.nameColour = nameColour;
     }
 
     /**
      * @return the npc name with generic styling (bold and coloured as defined by nameColour)
      */
-    public MutableComponent getStyledName() {
-        return getName().copy().withColor(getNametagColour()).withStyle(ChatFormatting.BOLD);
+    public MutableComponent getBoldName() {
+        return getName().copy().withStyle(ChatFormatting.BOLD);
     }
 
     public static AttributeSupplier.Builder createNpcAttributes() {
@@ -78,8 +72,4 @@ public class NPCEntity extends Mob {
     }
 
     @Override public void knockback(double strength, double x, double z) {}
-
-    public int getNametagColour() {
-        return nameColour;
-    }
 }

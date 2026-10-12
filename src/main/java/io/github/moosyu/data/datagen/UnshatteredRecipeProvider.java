@@ -262,7 +262,7 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
                 .define(UnshatteredItems.GLACITE_JEWEL, 5)
                 .save(output);
 
-        ForgeRecipeBuilder.create(UnshatteredItems.REFINED_TIATNIUM, UnshatteredRecipeBookCategories.REFINING, 43200)
+        ForgeRecipeBuilder.create(UnshatteredItems.REFINED_TITANIUM, UnshatteredRecipeBookCategories.REFINING, 43200)
                 .define(UnshatteredItems.ENCHANTED_TITANIUM, 160)
                 .save(output);
 
@@ -286,7 +286,7 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
                 .save(output);
 
         ForgeRecipeBuilder.create(UnshatteredItems.MITHRIL_PLATE, UnshatteredRecipeBookCategories.FORGING, 32400)
-                .define(UnshatteredItems.REFINED_TIATNIUM)
+                .define(UnshatteredItems.REFINED_TITANIUM)
                 .define(UnshatteredItems.REFINED_MITHRIL, 5)
                 .define(UnshatteredItems.GOLDEN_PLATE)
                 .define(UnshatteredItems.ENCHANTED_IRON_BLOCK)
@@ -305,6 +305,48 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
 
         ForgeRecipeBuilder.create(UnshatteredItems.FRIED_GOBLIN_EGG, UnshatteredRecipeBookCategories.DRILL_PARTS, 32400)
                 .define(UnshatteredItems.FRIED_GOBLIN_EGG, 96)
+                .save(output);
+
+        ForgeRecipeBuilder.create(UnshatteredItems.TITANIUM_DRILL_DR_X355, UnshatteredRecipeBookCategories.TOOLS, 32400)
+                .define(UnshatteredItems.REFINED_TITANIUM, 8)
+                .define(UnshatteredItems.REFINED_MITHRIL, 8)
+                .define(UnshatteredItems.DRILL_MOTOR)
+                .define(UnshatteredItems.FUEL_CANISTER)
+                .define(UnshatteredItems.GOLDEN_PLATE, 6)
+                .save(output);
+
+        ForgeRecipeBuilder.create(UnshatteredItems.TITANIUM_DRILL_DR_X455, UnshatteredRecipeBookCategories.TOOLS, 32400)
+                .defineBase(UnshatteredItems.TITANIUM_DRILL_DR_X355)
+                .define(UnshatteredItems.REFINED_DIAMOND, 10)
+                .define(UnshatteredItems.REFINED_TITANIUM, 12)
+                .define(UnshatteredItems.MITHRIL_PLATE, 5)
+                .save(output);
+
+        ForgeRecipeBuilder.create(UnshatteredItems.TITANIUM_DRILL_DR_X555, UnshatteredRecipeBookCategories.TOOLS, 32400)
+                .defineBase(UnshatteredItems.TITANIUM_DRILL_DR_X455)
+                .define(UnshatteredItems.REFINED_DIAMOND, 20)
+                .define(UnshatteredItems.REFINED_TITANIUM, 16)
+                .define(UnshatteredItems.ENCHANTED_IRON_BLOCK, 2)
+                .define(UnshatteredItems.MITHRIL_PLATE, 10)
+                .define(UnshatteredItems.PLASMA, 20)
+                .save(output);
+
+        ForgeRecipeBuilder.create(UnshatteredItems.BANDAGED_MITHRIL_PICKAXE, UnshatteredRecipeBookCategories.TOOLS, 3600)
+                .defineBase(UnshatteredItems.BROKEN_MITHRIL_PICKAXE)
+                .define(UnshatteredItems.ENCHANTED_MITHRIL, 2)
+                .save(output);
+
+        ForgeRecipeBuilder.create(UnshatteredItems.MITHRIL_PICKAXE, UnshatteredRecipeBookCategories.TOOLS, 3600)
+                .defineBase(UnshatteredItems.BANDAGED_MITHRIL_PICKAXE)
+                .define(UnshatteredItems.ENCHANTED_MITHRIL, 64)
+                .define(UnshatteredItems.ENCHANTED_GOLD_INGOT, 32)
+                .define(UnshatteredItems.BEJEWELED_HANDLE)
+                .save(output);
+
+        ForgeRecipeBuilder.create(UnshatteredItems.TITANIUM_PICKAXE, UnshatteredRecipeBookCategories.TOOLS, 7200)
+                .defineBase(UnshatteredItems.RUSTED_TITANIUM_PICKAXE)
+                .define(UnshatteredItems.ENCHANTED_TITANIUM, 4)
+                .define(UnshatteredItems.BEJEWELED_HANDLE)
                 .save(output);
 
         createEnchantedItemRecipe(Items.WHEAT, UnshatteredItems.ENCHANTED_WHEAT.get(), getHasName(Items.WHEAT), has(Items.WHEAT));
@@ -328,6 +370,22 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
         createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_WHEAT.get(), UnshatteredItems.ENCHANTED_HAY_BALE.get());
         createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_CARROT.get(), UnshatteredItems.ENCHANTED_GOLDEN_CARROT.get());
         createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_PUMPKIN.get(), UnshatteredItems.POLISHED_PUMPKIN.get());
+
+        new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.FIG_HEW.get()), RecipeCategory.MISC)
+                .pattern("FF ", "SF ", "S  ")
+                .define('F', SizedIngredient.of(UnshatteredItems.ENCHANTED_FIG_LOG, 10))
+                .define('S', SizedIngredient.of(UnshatteredItems.STRETCHING_STICK, 4))
+                .unlockedBy(getHasName(UnshatteredItems.FIG_LOG), has(UnshatteredItems.FIG_LOG))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.TOOLS, UnshatteredItems.FIGSTONE_SPLITTER)
+                .pattern("FF ")
+                .pattern("HF ")
+                .pattern("F  ")
+                .define('F', UnshatteredItems.FIGSTONE)
+                .define('H', UnshatteredItems.FIG_HEW)
+                .unlockedBy(getHasName(UnshatteredItems.FIG_HEW), has(UnshatteredItems.FIG_HEW))
+                .save(output);
     }
 
     public static class Runner extends RecipeProvider.Runner {

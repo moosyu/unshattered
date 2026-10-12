@@ -2,8 +2,9 @@ package io.github.moosyu.entities.renderers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import io.github.moosyu.data.NpcData;
+import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.entities.npcs.NPCEntity;
-import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
@@ -13,22 +14,20 @@ import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import org.jspecify.annotations.NonNull;
 
 public class NPCEntityRenderer extends EntityRenderer<NPCEntity, NPCEntityRenderer.NPCRenderState> {
-    private final Identifier texture;
     private final PlayerModel model;
 
-    public NPCEntityRenderer(EntityRendererProvider.Context context, String skinName) {
-        this(context, skinName, false);
+    public NPCEntityRenderer(EntityRendererProvider.Context context) {
+        this(context, false);
     }
 
-    public NPCEntityRenderer(EntityRendererProvider.Context context, String skinName, boolean slim) {
+    public NPCEntityRenderer(EntityRendererProvider.Context context, boolean slim) {
         super(context);
-
-        texture = UnshatteredUtils.getUnshatteredIdentifier("textures/entity/npcs/" + skinName + ".png");
         model = new PlayerModel(
                 context.bakeLayer(slim ? ModelLayers.PLAYER_SLIM : ModelLayers.PLAYER),
                 slim
@@ -45,6 +44,8 @@ public class NPCEntityRenderer extends EntityRenderer<NPCEntity, NPCEntityRender
         super.extractRenderState(entity, state, partialTick);
 
         AvatarRenderState avatar = state.avatar;
+        NpcData npcData = BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.getType()).getData(UnshatteredDataMaps.NPC_DATA);
+
         avatar.ageInTicks = state.ageInTicks;
         avatar.bodyRot = Mth.rotLerp(partialTick, entity.yRotO, entity.getYRot());
         avatar.yRot = Mth.lerp(partialTick, entity.yRotO, entity.getYRot());
@@ -55,6 +56,11 @@ public class NPCEntityRenderer extends EntityRenderer<NPCEntity, NPCEntityRender
         avatar.showRightSleeve = true;
         avatar.showLeftPants = true;
         avatar.showRightPants = true;
+
+        if (npcData != null) {
+            state.texture = npcData.skinLocation().withPrefix("textures/").withSuffix(".png");
+        }
+
     }
 
     @Override
@@ -72,7 +78,7 @@ public class NPCEntityRenderer extends EntityRenderer<NPCEntity, NPCEntityRender
                 model,
                 avatar,
                 poseStack,
-                model.renderType(texture),
+                model.renderType(state.texture),
                 state.lightCoords,
                 OverlayTexture.NO_OVERLAY,
                 0xFFFFFFFF,
@@ -88,5 +94,6 @@ public class NPCEntityRenderer extends EntityRenderer<NPCEntity, NPCEntityRender
     // getRenderer in EntityRenderDispatcher doesn't work if AvatarRenderState is used normally
     public static class NPCRenderState extends EntityRenderState {
         public final AvatarRenderState avatar = new AvatarRenderState();
+        public Identifier texture;
     }
 }

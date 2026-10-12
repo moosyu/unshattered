@@ -8,24 +8,8 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.util.ValueIOSerializable;
 
 public class SellSlotContainer extends SimpleContainer implements ValueIOSerializable {
-    ItemStack currentItemStack = ItemStack.EMPTY;
-
     public SellSlotContainer() {
         super(1);
-    }
-
-    @Override
-    public void setChanged() {
-        super.setChanged();
-
-        ItemStack changedStack = getItem(0);
-        if (changedStack != currentItemStack) {
-            if (changedStack.isEmpty()) {
-
-            } else {
-
-            }
-        }
     }
 
     @Override

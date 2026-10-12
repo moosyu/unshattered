@@ -175,7 +175,7 @@ public class UnshatteredCreativeTabs {
             output.accept(GLACITE_JEWEL);
             output.accept(FUEL_CANISTER);
             output.accept(GOLDEN_PLATE);
-                output.accept(REFINED_TIATNIUM);
+                output.accept(REFINED_TITANIUM);
             output.accept(MITHRIL_PLATE);
             output.accept(DRILL_MOTOR);
             output.accept(GOBLIN_EGG);
@@ -204,6 +204,10 @@ public class UnshatteredCreativeTabs {
             output.accept(ENCHANTED_HAY_BALE);
             output.accept(ENCHANTED_GOLDEN_CARROT);
             output.accept(POLISHED_PUMPKIN);
+            output.accept(STRETCHING_STICK);
+            output.accept(FIGSTONE);
+            output.accept(PLASMA);
+            output.accept(BEJEWELED_HANDLE);
         }).build()
     );
 

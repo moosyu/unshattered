@@ -183,7 +183,7 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.REFINED_DIAMOND.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.FUEL_CANISTER.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.GOLDEN_PLATE.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(UnshatteredItems.REFINED_TIATNIUM.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.REFINED_TITANIUM.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.MITHRIL_PLATE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.DRILL_MOTOR.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.GOBLIN_EGG.get(), ModelTemplates.FLAT_ITEM);
@@ -381,6 +381,10 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_GOLDEN_CARROT.get(), Items.GOLDEN_CARROT, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.POLISHED_PUMPKIN.get(), ModelTemplates.FLAT_ITEM);
         blockModels.createTrivialBlock(UnshatteredBlocks.GIANT_CARROT.get(), TexturedModel.CUBE_TOP_BOTTOM);
+        itemModels.generateFlatItem(UnshatteredItems.STRETCHING_STICK.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.FIGSTONE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.PLASMA.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.BEJEWELED_HANDLE.get(), ModelTemplates.FLAT_ITEM);
     }
 
     /**

@@ -1,0 +1,165 @@
+{
+  "values": {
+    "unshattered:bubu": [
+      {
+        "item": "unshattered:broken_mithril_pickaxe",
+        "price": 10000,
+        "sell_multiple": false
+      },
+      {
+        "item": "unshattered:rusted_titanium_pickaxe",
+        "price": 50000,
+        "sell_multiple": false
+      },
+      {
+        "item": "unshattered:biofuel",
+        "price": 20000,
+        "sell_multiple": true
+      }
+    ],
+    "unshattered:jenny": [
+      {
+        "item": "minecraft:wheat",
+        "price": 8,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:carrot",
+        "price": 6,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:potato",
+        "price": 6,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:melon_slice",
+        "price": 4,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:sugar_cane",
+        "price": 10,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:pumpkin",
+        "price": 25,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:cocoa_beans",
+        "price": 5,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:red_mushroom",
+        "price": 25,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:brown_mushroom",
+        "price": 25,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:sand",
+        "price": 4,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:cactus",
+        "price": 15,
+        "sell_multiple": true
+      },
+      {
+        "item": "unshattered:rookie_hoe",
+        "price": 10,
+        "sell_multiple": false
+      }
+    ],
+    "unshattered:wool_weaver": [
+      {
+        "item": "minecraft:white_wool",
+        "price": 32,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:orange_wool",
+        "price": 32,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:magenta_wool",
+        "price": 32,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:light_blue_wool",
+        "price": 32,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:yellow_wool",
+        "price": 32,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:lime_wool",
+        "price": 32,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:pink_wool",
+        "price": 32,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:gray_wool",
+        "price": 32,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:light_gray_wool",
+        "price": 32,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:cyan_wool",
+        "price": 32,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:purple_wool",
+        "price": 32,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:blue_wool",
+        "price": 32,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:brown_wool",
+        "price": 32,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:green_wool",
+        "price": 32,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:red_wool",
+        "price": 32,
+        "sell_multiple": true
+      },
+      {
+        "item": "minecraft:black_wool",
+        "price": 32,
+        "sell_multiple": true
+      }
+    ]
+  }
+}

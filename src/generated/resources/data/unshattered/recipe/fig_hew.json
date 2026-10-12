@@ -1,0 +1,21 @@
+{
+  "type": "unshattered:sized_recipe",
+  "key": {
+    "F": {
+      "count": 10,
+      "ingredient": "unshattered:enchanted_fig_log"
+    },
+    "S": {
+      "count": 4,
+      "ingredient": "unshattered:stretching_stick"
+    }
+  },
+  "pattern": [
+    "FF ",
+    "SF ",
+    "S  "
+  ],
+  "result": {
+    "id": "unshattered:fig_hew"
+  }
+}

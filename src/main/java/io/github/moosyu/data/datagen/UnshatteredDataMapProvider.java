@@ -1,5 +1,7 @@
 package io.github.moosyu.data.datagen;
 
+import io.github.moosyu.data.NpcData;
+import io.github.moosyu.data.VendorItem;
 import io.github.moosyu.data.attachments.PlayerPowderAttachment;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.blocks.UnshatteredBlocks;
@@ -10,6 +12,7 @@ import io.github.moosyu.data.drops.MobItemDropData;
 import io.github.moosyu.data.drops.MobRewardData;
 import io.github.moosyu.data.fishing.FishingConditions;
 import io.github.moosyu.data.fishing.FishingWeightEntry;
+import io.github.moosyu.entities.UnshatteredEntities;
 import io.github.moosyu.items.ItemRange;
 import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.UnshatteredItems;
@@ -37,6 +40,7 @@ import net.neoforged.neoforge.common.data.DataMapProvider;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import org.jspecify.annotations.NonNull;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -144,6 +148,10 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         setBaseData(UnshatteredItems.ENCHANTED_HAY_BALE.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 153600);
         setBaseData(UnshatteredItems.ENCHANTED_GOLDEN_CARROT.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 61440);
         setBaseData(UnshatteredItems.POLISHED_PUMPKIN.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 256000);
+        setBaseData(UnshatteredItems.STRETCHING_STICK.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 2000);
+        setBaseData(UnshatteredItems.FIGSTONE.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 204800);
+        setBaseData(UnshatteredItems.PLASMA.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 20000);
+        setBaseData(UnshatteredItems.BEJEWELED_HANDLE.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 10000);
 
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK, new ItemRange(UnshatteredItems.FIG_LOG.get()), PlayerSkillsAttachment.Skill.FORAGING, 15);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_STONE_BLOCK, new ItemRange(Items.COBBLESTONE), PlayerSkillsAttachment.Skill.MINING, 1);
@@ -610,7 +618,7 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.GLACITE_JEWEL.get()), UnshatteredRarity.RARE, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.FUEL_CANISTER.get()), UnshatteredRarity.RARE, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.GOLDEN_PLATE.get()), UnshatteredRarity.RARE, false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.REFINED_TIATNIUM.get()), UnshatteredRarity.LEGENDARY, false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.REFINED_TITANIUM.get()), UnshatteredRarity.LEGENDARY, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.MITHRIL_PLATE.get()), UnshatteredRarity.RARE, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.DRILL_MOTOR.get()), UnshatteredRarity.RARE, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.GOBLIN_EGG.get()), UnshatteredRarity.RARE, false)
@@ -725,7 +733,7 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.GOBLIN_EGG.get()), 421, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.DRILL_MOTOR.get()), 5884, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.MITHRIL_PLATE.get()), 10108, false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.REFINED_TIATNIUM.get()), 51200, false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.REFINED_TITANIUM.get()), 51200, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.GOLDEN_PLATE.get()), 3068, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.FUEL_CANISTER.get()), 510, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.GLACITE_JEWEL.get()), 2000, false)
@@ -910,7 +918,7 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.GLACITE_JEWEL.get()), ItemType.MATERIAL, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.FUEL_CANISTER.get()), ItemType.MATERIAL, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.GOLDEN_PLATE.get()), ItemType.MATERIAL, false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.REFINED_TIATNIUM.get()), ItemType.MATERIAL, false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.REFINED_TITANIUM.get()), ItemType.MATERIAL, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.MITHRIL_PLATE.get()), ItemType.MATERIAL, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.DRILL_MOTOR.get()), ItemType.MATERIAL, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.GOBLIN_EGG.get()), ItemType.MATERIAL, false)
@@ -978,6 +986,38 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.GOBLIN_EGG.get()), 2000, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.OIL_BARREL.get()), 10000, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.BIOFUEL.get()), 12000, false);
+
+        builder(VENDOR_SHOP_DATA).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.WOOL_WEAVER.get()),
+                Arrays.stream(UnshatteredUtils.WOOL_TYPES).map(item -> new VendorItem(item, true, 32)).toList(),
+                false
+        ).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.BUBU.get()),
+                List.of(new VendorItem(UnshatteredItems.BROKEN_MITHRIL_PICKAXE, false, 10000),
+                        new VendorItem(UnshatteredItems.RUSTED_TITANIUM_PICKAXE, false, 50000),
+                        new VendorItem(UnshatteredItems.BIOFUEL, true, 20000)
+                ),
+                false
+        ).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.JENNY.get()),
+                List.of(new VendorItem(Items.WHEAT, 8),
+                        new VendorItem(Items.CARROT, 6),
+                        new VendorItem(Items.POTATO, 6),
+                        new VendorItem(Items.MELON_SLICE, 4),
+                        new VendorItem(Items.SUGAR_CANE, 10),
+                        new VendorItem(Items.PUMPKIN, 25),
+                        new VendorItem(Items.COCOA_BEANS, 5),
+                        new VendorItem(Items.RED_MUSHROOM, 25),
+                        new VendorItem(Items.BROWN_MUSHROOM, 25),
+                        new VendorItem(Items.SAND, 4),
+                        new VendorItem(Items.CACTUS, 15),
+                        new VendorItem(UnshatteredItems.ROOKIE_HOE, false, 10)
+                ),
+                false
+        );
+
+        createNpcSkinData(UnshatteredEntities.BUBU.get(), "bubu", UnshatteredUtils.PURPLE);
+        createNpcSkinData(UnshatteredEntities.FORGER.get(), "forger", UnshatteredUtils.CYAN);
+        createNpcSkinData(UnshatteredEntities.JENNY.get(), "jenny", UnshatteredUtils.WHITE);
+        createNpcSkinData(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), "jotraeline_greatforge", UnshatteredUtils.DARK_GREEN);
+        createNpcSkinData(UnshatteredEntities.WOOL_WEAVER.get(), "wool_weaver", UnshatteredUtils.WHITE);
     }
 
     private void createSimpleBlockDropData(DataMapProvider.Builder<BlockBreakData, Block> builder, DeferredBlock<Block> block, ItemRange itemRange, PlayerSkillsAttachment.Skill skill, float expAmount) {
@@ -994,5 +1034,9 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         builder(ITEM_TYPE_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(item), itemType, false);
         builder(ITEM_RARITY_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(item), UnshatteredRarity.COMMON, false);
         builder(ITEM_SELL_VALUE_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(item), sellValue, false);
+    }
+
+    private void createNpcSkinData(EntityType<?> entityType, String name, int colour) {
+        builder(NPC_DATA).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entityType), new NpcData(UnshatteredUtils.getUnshatteredIdentifier("entity/npcs/" + name), colour), false);
     }
 }

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class ForgeCategoryDisplay {
+public class ForgeCategories {
     private static final Map<RecipeBookCategory, Supplier<ItemStack>> ICONS = new LinkedHashMap<>();
 
     private static void init() {

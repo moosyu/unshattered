@@ -1,0 +1,9 @@
+{
+  "values": {
+    "unshattered:bubu": "unshattered:entity/npcs/bubu",
+    "unshattered:forger": "unshattered:entity/npcs/forger",
+    "unshattered:jenny": "unshattered:entity/npcs/jenny",
+    "unshattered:jotraeline_greatforge": "unshattered:entity/npcs/jotraeline_greatforge",
+    "unshattered:wool_weaver": "unshattered:entity/npcs/wool_weaver"
+  }
+}

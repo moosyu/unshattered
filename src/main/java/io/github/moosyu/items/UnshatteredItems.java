@@ -652,7 +652,7 @@ public class UnshatteredItems {
 
     public static final DeferredItem<Item> GOLDEN_PLATE = ITEMS.registerItem("golden_plate", Item::new);
 
-    public static final DeferredItem<Item> REFINED_TIATNIUM = ITEMS.registerItem("refined_titanium", Item::new);
+    public static final DeferredItem<Item> REFINED_TITANIUM = ITEMS.registerItem("refined_titanium", Item::new);
 
     public static final DeferredItem<Item> MITHRIL_PLATE = ITEMS.registerItem("mithril_plate", Item::new);
 
@@ -719,4 +719,12 @@ public class UnshatteredItems {
     public static final DeferredItem<EnchantedItem> ENCHANTED_GOLDEN_CARROT = ITEMS.registerItem("enchanted_golden_carrot", EnchantedItem::new);
 
     public static final DeferredItem<Item> POLISHED_PUMPKIN = ITEMS.registerItem("polished_pumpkin", Item::new);
+
+    public static final DeferredItem<Item> STRETCHING_STICK = ITEMS.registerItem("stretching_stick", Item::new);
+
+    public static final DeferredItem<Item> FIGSTONE = ITEMS.registerItem("figstone", Item::new);
+
+    public static final DeferredItem<Item> PLASMA = ITEMS.registerItem("plasma", Item::new);
+
+    public static final DeferredItem<Item> BEJEWELED_HANDLE = ITEMS.registerItem("bejeweled_handle", Item::new);
 }

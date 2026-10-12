@@ -1,0 +1,27 @@
+{
+  "type": "unshattered:forge",
+  "category": "unshattered:tools",
+  "copy_components_from": 0,
+  "duration_ticks": 3600,
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": "unshattered:bandaged_mithril_pickaxe"
+    },
+    {
+      "count": 64,
+      "ingredient": "unshattered:enchanted_mithril"
+    },
+    {
+      "count": 32,
+      "ingredient": "unshattered:enchanted_gold_ingot"
+    },
+    {
+      "count": 1,
+      "ingredient": "unshattered:bejeweled_handle"
+    }
+  ],
+  "result": {
+    "id": "unshattered:mithril_pickaxe"
+  }
+}

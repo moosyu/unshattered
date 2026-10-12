@@ -3,7 +3,6 @@ package io.github.moosyu.events;
 import io.github.moosyu.blocks.BreakableTitaniumBlock;
 import io.github.moosyu.blocks.TalkingRockBlock;
 import io.github.moosyu.blocks.UnshatteredBlocks;
-import io.github.moosyu.data.VendorItem;
 import io.github.moosyu.data.dialogue.*;
 import io.github.moosyu.data.dialogue.events.*;
 import io.github.moosyu.data.fishing.FishingConditions;
@@ -16,8 +15,8 @@ import io.github.moosyu.data.regen.RegenPaths.*;
 import io.github.moosyu.data.regen.conditions.NotBelowBlock;
 import io.github.moosyu.data.regions.*;
 import io.github.moosyu.data.datagen.*;
+import io.github.moosyu.entities.UnshatteredEntities;
 import io.github.moosyu.entities.npcs.*;
-import io.github.moosyu.items.UnshatteredItems;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
@@ -248,7 +247,7 @@ public class DatagenHandler {
                                                                                             new DialogueChoice(Component.literal("..."),
                                                                                                     new DialogueNode(Component.translatable("dialogue.unshattered.wool_weaver.woolhead"),
                                                                                                             true,
-                                                                                                            new DialogueChoice(Component.literal("..."), List.of(WoolWeaverNPC.WOOLHEAD_IDENTIFIER), new OpenStoreMenuEvent(WoolWeaverNPC.WOOL_WEAVER_IDENTIFIER))
+                                                                                                            new DialogueChoice(Component.literal("..."), List.of(WoolWeaverNPC.WOOLHEAD_IDENTIFIER), new OpenStoreMenuEvent(UnshatteredEntities.WOOL_WEAVER.get()))
                                                                                                     )
                                                                                             )
                                                                                     )
@@ -266,7 +265,7 @@ public class DatagenHandler {
                                                             new DialogueChoice(Component.literal("..."),
                                                                     new DialogueNode(Component.translatable("dialogue.unshattered.wool_weaver.really"),
                                                                             true,
-                                                                            new DialogueChoice(Component.translatable("dialogue.unshattered.wool_weaver.okay"), new OpenStoreMenuEvent(WoolWeaverNPC.WOOL_WEAVER_IDENTIFIER)),
+                                                                            new DialogueChoice(Component.translatable("dialogue.unshattered.wool_weaver.okay"), new OpenStoreMenuEvent(UnshatteredEntities.WOOL_WEAVER.get())),
                                                                             new DialogueChoice(Component.translatable("dialogue.unshattered.generic.player_no_choice"))
                                                                     )
                                                             )
@@ -283,7 +282,7 @@ public class DatagenHandler {
                                     new DialogueNode(Component.translatable("dialogue.unshattered.bubu_introduction"),
                                             true,
                                             new DialogueChoice(Component.literal("..."),
-                                                    new OpenStoreMenuEvent(BubuNPC.BUBU_IDENTIFIER))
+                                                    new OpenStoreMenuEvent(UnshatteredEntities.BUBU.get()))
                                     )
                             )))
                     );
@@ -442,7 +441,7 @@ public class DatagenHandler {
                             new DialogueTree(List.of(new DialogueTreeOrigin(2,
                                     new DialogueNode(Component.translatable("dialogue.unshattered.jenny_introduction"),
                                             true,
-                                            new DialogueChoice(Component.literal("..."), new OpenStoreMenuEvent(JennyNPC.JENNY_IDENTIFIER))),
+                                            new DialogueChoice(Component.literal("..."), new OpenStoreMenuEvent(UnshatteredEntities.JENNY.get()))),
                                     List.of(JennyNPC.JENNY_INTRODUCTION))
                             ))
                     );
@@ -678,36 +677,6 @@ public class DatagenHandler {
                             1.0d,
                             Optional.of(10))
                     );
-                }).add(DataPackRegistryHandler.SHOP_STOCK_KEY, bootstrap -> {
-                    createStoreStock(bootstrap,
-                            WoolWeaverNPC.WOOL_WEAVER_IDENTIFIER,
-                            Arrays.stream(UnshatteredUtils.WOOL_TYPES).map(item -> new VendorItem(item, true, 32)).toList()
-                    );
-
-                    createStoreStock(bootstrap,
-                            BubuNPC.BUBU_IDENTIFIER,
-                            List.of(new VendorItem(UnshatteredItems.BROKEN_MITHRIL_PICKAXE, false, 10000),
-                                    new VendorItem(UnshatteredItems.RUSTED_TITANIUM_PICKAXE, false, 50000),
-                                    new VendorItem(UnshatteredItems.BIOFUEL, true, 20000)
-                            )
-                    );
-
-                    createStoreStock(bootstrap,
-                            JennyNPC.JENNY_IDENTIFIER,
-                            List.of(new VendorItem(Items.WHEAT, 8),
-                                    new VendorItem(Items.CARROT, 6),
-                                    new VendorItem(Items.POTATO, 6),
-                                    new VendorItem(Items.MELON_SLICE, 4),
-                                    new VendorItem(Items.SUGAR_CANE, 10),
-                                    new VendorItem(Items.PUMPKIN, 25),
-                                    new VendorItem(Items.COCOA_BEANS, 5),
-                                    new VendorItem(Items.RED_MUSHROOM, 25),
-                                    new VendorItem(Items.BROWN_MUSHROOM, 25),
-                                    new VendorItem(Items.SAND, 4),
-                                    new VendorItem(Items.CACTUS, 15),
-                                    new VendorItem(UnshatteredItems.ROOKIE_HOE, false, 10)
-                            )
-                    );
                 })
         );
     }
@@ -791,10 +760,6 @@ public class DatagenHandler {
         }
 
         createRegenPath(bootstrap, BuiltInRegistries.BLOCK.getKey(finalStageCrop).getPath(), blockStates, 200, stages - 1, regenVariant, condition);
-    }
-
-    private static void createStoreStock(BootstrapContext<List<VendorItem>> bootstrap, Identifier vendorIdentifier, List<VendorItem> stock) {
-        bootstrap.register(ResourceKey.create(DataPackRegistryHandler.SHOP_STOCK_KEY, vendorIdentifier), stock);
     }
 
     private static ResourceKey<TriggerMiscReward> createMiscRewardResourceKey(String path) {

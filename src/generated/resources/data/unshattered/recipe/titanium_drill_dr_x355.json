@@ -1,0 +1,30 @@
+{
+  "type": "unshattered:forge",
+  "category": "unshattered:tools",
+  "duration_ticks": 32400,
+  "ingredients": [
+    {
+      "count": 8,
+      "ingredient": "unshattered:refined_titanium"
+    },
+    {
+      "count": 8,
+      "ingredient": "unshattered:refined_mithril"
+    },
+    {
+      "count": 1,
+      "ingredient": "unshattered:drill_motor"
+    },
+    {
+      "count": 1,
+      "ingredient": "unshattered:fuel_canister"
+    },
+    {
+      "count": 6,
+      "ingredient": "unshattered:golden_plate"
+    }
+  ],
+  "result": {
+    "id": "unshattered:titanium_drill_dr_x355"
+  }
+}

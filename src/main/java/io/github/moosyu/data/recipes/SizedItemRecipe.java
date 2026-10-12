@@ -74,8 +74,19 @@ public record SizedItemRecipe(ItemStackTemplate result, SizedShapedRecipePattern
     @Override
     public @NonNull List<RecipeDisplay> display() {
         List<SlotDisplay> ingredientDisplays = pattern.ingredients().stream()
-                .map(optSized -> optSized.map(SizedIngredient::ingredient))
-                .map(Ingredient::optionalIngredientToDisplay)
+                .map(optSized -> optSized.map(sizedIngredient -> {
+                    Ingredient ingredient = sizedIngredient.ingredient();
+
+                    if (ingredient.isCustom()) {
+                         return Ingredient.optionalIngredientToDisplay(Optional.of(ingredient));
+                     }
+
+                    return new SlotDisplay.Composite(ingredient.getValues()
+                            .stream()
+                            .map(holder -> (SlotDisplay) new SlotDisplay.ItemStackSlotDisplay(new ItemStackTemplate(holder, sizedIngredient.count())))
+                            .toList()
+                    );
+                }).orElse(SlotDisplay.Empty.INSTANCE))
                 .toList();
 
         return List.of(new ShapedCraftingRecipeDisplay(
@@ -86,7 +97,6 @@ public record SizedItemRecipe(ItemStackTemplate result, SizedShapedRecipePattern
                 new SlotDisplay.ItemSlotDisplay(Items.CRAFTING_TABLE)
         ));
     }
-
     @Override
     public @NonNull PlacementInfo placementInfo() {
         List<Optional<Ingredient>> ingredients = pattern.ingredients().stream().map(optSized -> optSized.map(SizedIngredient::ingredient)).toList();

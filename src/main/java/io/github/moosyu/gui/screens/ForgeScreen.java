@@ -4,7 +4,7 @@ import com.mojang.blaze3d.platform.cursor.CursorTypes;
 import io.github.moosyu.Unshattered;
 import io.github.moosyu.data.attachments.PlayerForgeSlotsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
-import io.github.moosyu.data.recipes.ForgeCategoryDisplay;
+import io.github.moosyu.data.recipes.ForgeCategories;
 import io.github.moosyu.data.recipes.ForgeRecipe;
 import io.github.moosyu.events.RecipeReceivedHandler;
 import io.github.moosyu.gui.menus.ForgeMenu;
@@ -96,7 +96,7 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
             lastCompletedCount = countCompletedSlots(forgeSlots);
             lastForgeSlots = forgeSlots;
         } else if (currentPage == Page.CATEGORIES) {
-            List<RecipeBookCategory> recipeBookCategories = ForgeCategoryDisplay.all();
+            List<RecipeBookCategory> recipeBookCategories = ForgeCategories.all();
             for (int i = 0; i < recipeBookCategories.size(); i++) {
                 // stupid lambdas...
                 int index = i;
@@ -256,7 +256,7 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
                             .append(Component.literal("\n"))
                             .append(Component.translatable("screen.unshattered.forge.time_remaining").withColor(UnshatteredUtils.GRAY))
                             .append(Component.literal(": ").withColor(UnshatteredUtils.GRAY))
-                            .append(Component.literal(getTimeDisplay(Math.max(0, endTime - Instant.now().getEpochSecond()))).withColor(UnshatteredUtils.GREEN))
+                            .append(Component.literal(UnshatteredUtils.getTimeDisplay(Math.max(0, endTime - Instant.now().getEpochSecond()))).withColor(UnshatteredUtils.GREEN))
                             .append("\n")
                             .append(Component.translatable("screen.unshattered.forge.ends").withColor(UnshatteredUtils.CYAN))
                             .append(Component.literal(": ").withColor(UnshatteredUtils.CYAN))
@@ -330,14 +330,14 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
                     CATEGORY_BUTTON_SIZE,
                     CATEGORY_BUTTON_SIZE,
                     Component.translatable("widget.unshattered.narration.forge_category"),
-                    ForgeCategoryDisplay.getIcon(category),
+                    ForgeCategories.getIcon(category),
                     false,
                     false
             );
 
-            setTooltip(Tooltip.create(ForgeCategoryDisplay.getName(category).copy()
+            setTooltip(Tooltip.create(ForgeCategories.getName(category).copy()
                     .append(Component.literal("\n"))
-                    .append(ForgeCategoryDisplay.getDescription(category))
+                    .append(ForgeCategories.getDescription(category))
                     .append(Component.literal("\n"))
                     .append(Component.translatable("screen.unshattered.forge.title.browse").withColor(UnshatteredUtils.YELLOW))
             ));
@@ -435,7 +435,7 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
             lines.add(Component.empty());
             lines.add(Component.translatable("screen.unshattered.forge.duration")
                     .withColor(UnshatteredUtils.GRAY)
-                    .append(Component.literal(" " + getTimeDisplay(forgeRecipe.durationSeconds()))
+                    .append(Component.literal(" " + UnshatteredUtils.getTimeDisplay(forgeRecipe.durationSeconds()))
                             .withColor(UnshatteredUtils.CYAN)
                     )
             );
@@ -478,19 +478,6 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
                     rebuildWidgets();
                 })
         );
-    }
-
-    // intellij got really pissed off at me until i made this for whatever reason
-    private static @NonNull String getTimeDisplay(long seconds) {
-        if (seconds < 60) {
-            return seconds + "s";
-        } else if (seconds < 3600) {
-            return (seconds / 60) + "m";
-        } else if (seconds < 86400) {
-            return (seconds / 3600) + "h";
-        } else {
-            return (seconds / 86400) + "d";
-        }
     }
 
     @Override

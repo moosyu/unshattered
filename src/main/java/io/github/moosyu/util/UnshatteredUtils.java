@@ -568,4 +568,17 @@ public final class UnshatteredUtils {
 
         return tooltip;
     }
+
+    // intellij got really pissed off at me until i made this for whatever reason
+    public static @NonNull String getTimeDisplay(long seconds) {
+        if (seconds < 60) {
+            return seconds + "s";
+        } else if (seconds < 3600) {
+            return (seconds / 60) + "m";
+        } else if (seconds < 86400) {
+            return (seconds / 3600) + "h";
+        } else {
+            return (seconds / 86400) + "d";
+        }
+    }
 }

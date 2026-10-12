@@ -7,6 +7,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -46,7 +47,7 @@ public class TalkingRockBlock extends HorizontalDirectionalBlock implements Dial
     }
 
     @Override
-    public Component getInteractableName() {
+    public MutableComponent getInteractableName() {
         return Component.translatable("interactable.name.unshattered.rock").withStyle(ChatFormatting.BOLD);
     }
 

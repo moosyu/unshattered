@@ -1,0 +1,19 @@
+{
+  "type": "unshattered:forge",
+  "category": "unshattered:tools",
+  "copy_components_from": 0,
+  "duration_ticks": 3600,
+  "ingredients": [
+    {
+      "count": 1,
+      "ingredient": "unshattered:broken_mithril_pickaxe"
+    },
+    {
+      "count": 2,
+      "ingredient": "unshattered:enchanted_mithril"
+    }
+  ],
+  "result": {
+    "id": "unshattered:bandaged_mithril_pickaxe"
+  }
+}

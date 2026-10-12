@@ -1,6 +1,7 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.entities.UnshatteredEntities;
+import io.github.moosyu.entities.npcs.JennyNPC;
 import io.github.moosyu.entities.renderers.GraveyardZombieVillagerRenderer;
 import io.github.moosyu.entities.renderers.HomingBeeRenderer;
 import io.github.moosyu.entities.renderers.NPCEntityRenderer;
@@ -17,10 +18,10 @@ public class EntityRenderersHandler {
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), GraveyardZombieVillagerRenderer::new);
         event.registerEntityRenderer(UnshatteredEntities.HOMING_BEE.get(), HomingBeeRenderer::new);
-        event.registerEntityRenderer(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), context -> new NPCEntityRenderer(context, "jotraeline_greatforge"));
-        event.registerEntityRenderer(UnshatteredEntities.WOOL_WEAVER.get(), context -> new NPCEntityRenderer(context, "wool_weaver", true));
-        event.registerEntityRenderer(UnshatteredEntities.FORGER.get(), context -> new NPCEntityRenderer(context, "forger"));
-        event.registerEntityRenderer(UnshatteredEntities.BUBU.get(), context -> new NPCEntityRenderer(context, "bubu"));
-        event.registerEntityRenderer(UnshatteredEntities.JENNY.get(), context -> new NPCEntityRenderer(context, "jenny", true));
+        event.registerEntityRenderer(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), NPCEntityRenderer::new);
+        event.registerEntityRenderer(UnshatteredEntities.WOOL_WEAVER.get(), context -> new NPCEntityRenderer(context, true));
+        event.registerEntityRenderer(UnshatteredEntities.FORGER.get(), NPCEntityRenderer::new);
+        event.registerEntityRenderer(UnshatteredEntities.BUBU.get(), NPCEntityRenderer::new);
+        event.registerEntityRenderer(UnshatteredEntities.JENNY.get(), context -> new NPCEntityRenderer(context, true));
     }
 }

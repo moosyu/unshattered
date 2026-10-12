@@ -3,6 +3,7 @@ package io.github.moosyu.data.attachments;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import io.github.moosyu.data.regions.UnshatteredRegions;
+import io.github.moosyu.gui.menus.containers.SackOfSacksContainer;
 import io.github.moosyu.gui.menus.containers.SellSlotContainer;
 import io.github.moosyu.gui.menus.containers.StorageContainer;
 import io.github.moosyu.gui.menus.containers.TalismanContainer;
@@ -12,7 +13,6 @@ import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -116,4 +116,6 @@ public final class UnshatteredAttachments {
                     .copyOnDeath()
                     .build()
     );
+
+    public static final Supplier<AttachmentType<SackOfSacksContainer>> PLAYER_SACK_OF_SACKS_STORAGE = ATTACHMENT_TYPES.register("player_sack_of_sacks_storage", () -> AttachmentType.serializable(SackOfSacksContainer::new).build());
 }
