@@ -1013,11 +1013,13 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 false
         );
 
-        createNpcSkinData(UnshatteredEntities.BUBU.get(), "bubu", UnshatteredUtils.PURPLE);
-        createNpcSkinData(UnshatteredEntities.FORGER.get(), "forger", UnshatteredUtils.CYAN);
-        createNpcSkinData(UnshatteredEntities.JENNY.get(), "jenny", UnshatteredUtils.WHITE);
-        createNpcSkinData(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), "jotraeline_greatforge", UnshatteredUtils.DARK_GREEN);
-        createNpcSkinData(UnshatteredEntities.WOOL_WEAVER.get(), "wool_weaver", UnshatteredUtils.WHITE);
+        createEntityNPCData(UnshatteredEntities.BUBU.get(), "bubu", UnshatteredUtils.PURPLE);
+        createEntityNPCData(UnshatteredEntities.FORGER.get(), "forger", UnshatteredUtils.CYAN);
+        createEntityNPCData(UnshatteredEntities.JENNY.get(), "jenny", UnshatteredUtils.WHITE);
+        createEntityNPCData(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), "jotraeline_greatforge", UnshatteredUtils.DARK_GREEN);
+        createEntityNPCData(UnshatteredEntities.WOOL_WEAVER.get(), "wool_weaver", UnshatteredUtils.WHITE);
+
+        createBlockNPCData(UnshatteredBlocks.ROCK_TALKABLE_BLOCK.get(), 0xFFFFFFFF);
     }
 
     private void createSimpleBlockDropData(DataMapProvider.Builder<BlockBreakData, Block> builder, DeferredBlock<Block> block, ItemRange itemRange, PlayerSkillsAttachment.Skill skill, float expAmount) {
@@ -1036,7 +1038,11 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         builder(ITEM_SELL_VALUE_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(item), sellValue, false);
     }
 
-    private void createNpcSkinData(EntityType<?> entityType, String name, int colour) {
-        builder(NPC_DATA).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entityType), new NpcData(UnshatteredUtils.getUnshatteredIdentifier("entity/npcs/" + name), colour), false);
+    private void createEntityNPCData(EntityType<?> entityType, String name, int colour) {
+        builder(ENTITY_NPC_DATA).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entityType), new NpcData(UnshatteredUtils.getUnshatteredIdentifier("entity/npcs/" + name), colour), false);
+    }
+
+    private void createBlockNPCData(Block block, int colour) {
+        builder(BLOCK_NPC_DATA).add(BuiltInRegistries.BLOCK.wrapAsHolder(block), colour, false);
     }
 }

@@ -41,7 +41,7 @@ public interface DialogueInteractable {
      * code to run when dialogue is triggered
      * @param player the player triggering the dialogue
      */
-    default void onDialogueTriggered(Player player) {
+    default void onDialogueTriggered(Player player, int interactionColour) {
         if (!player.level().isClientSide()) {
             RegistryAccess registryAccess = player.registryAccess();
             PlayerFlagsAttachment playerFlagsAttachment = player.getData(UnshatteredAttachments.PLAYER_FLAGS);
@@ -68,7 +68,7 @@ public interface DialogueInteractable {
 
             playerFlagsAttachment.addFlagsToQueue(chosenOrigin.setFlags());
 
-            PacketDistributor.sendToPlayer((ServerPlayer) player, new OpenDialoguePacket(getInteractableName(), chosenOrigin.dialogueNode()));
+            PacketDistributor.sendToPlayer((ServerPlayer) player, new OpenDialoguePacket(getInteractableName().withColor(interactionColour), chosenOrigin.dialogueNode()));
         } else {
             player.swing(InteractionHand.MAIN_HAND);
         }

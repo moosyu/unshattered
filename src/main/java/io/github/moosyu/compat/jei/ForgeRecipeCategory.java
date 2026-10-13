@@ -69,14 +69,10 @@ public class ForgeRecipeCategory implements IRecipeCategory<RecipeHolder<ForgeRe
         List<SizedIngredient> ingredients = recipe.ingredients();
         for (int i = 0; i < ingredients.size(); i++) {
             SizedIngredient sized = ingredients.get(i);
-            int x = 1 + (i % COLUMNS) * SLOT;
-            int y = 1 + (i / COLUMNS) * SLOT;
 
-            List<ItemStack> itemStacks = sized.ingredient().getValues().stream()
+            builder.addInputSlot(1 + (i % COLUMNS) * SLOT, 1 + (i / COLUMNS) * SLOT).setStandardSlotBackground().addItemStacks(sized.ingredient().getValues().stream()
                     .map(holder -> new ItemStack(holder, sized.count()))
-                    .toList();
-
-            builder.addInputSlot(x, y).setStandardSlotBackground().addItemStacks(itemStacks);
+                    .toList());
         }
         builder.addOutputSlot(WIDTH - 1 - SLOT, 12).setStandardSlotBackground().add(recipe.result().create());
     }
@@ -87,7 +83,7 @@ public class ForgeRecipeCategory implements IRecipeCategory<RecipeHolder<ForgeRe
         Font font = Minecraft.getInstance().font;
         int textWidth = font.width(time);
 
-        arrow.draw(graphics, 70, 13);
+        arrow.draw(graphics, WIDTH / 2, 13);
         graphics.text(font, time, (WIDTH - textWidth) / 2 + 10, 45, 0xFF808080, false);
     }
 }

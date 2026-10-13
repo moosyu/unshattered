@@ -1,0 +1,29 @@
+{
+  "values": {
+    "unshattered:bubu": {
+      "npc_colour": -5635926,
+      "skin_location": "unshattered:entity/npcs/bubu",
+      "texture_path": "unshattered:textures/entity/npcs/bubu.png"
+    },
+    "unshattered:forger": {
+      "npc_colour": -11141121,
+      "skin_location": "unshattered:entity/npcs/forger",
+      "texture_path": "unshattered:textures/entity/npcs/forger.png"
+    },
+    "unshattered:jenny": {
+      "npc_colour": -1,
+      "skin_location": "unshattered:entity/npcs/jenny",
+      "texture_path": "unshattered:textures/entity/npcs/jenny.png"
+    },
+    "unshattered:jotraeline_greatforge": {
+      "npc_colour": -16733696,
+      "skin_location": "unshattered:entity/npcs/jotraeline_greatforge",
+      "texture_path": "unshattered:textures/entity/npcs/jotraeline_greatforge.png"
+    },
+    "unshattered:wool_weaver": {
+      "npc_colour": -1,
+      "skin_location": "unshattered:entity/npcs/wool_weaver",
+      "texture_path": "unshattered:textures/entity/npcs/wool_weaver.png"
+    }
+  }
+}

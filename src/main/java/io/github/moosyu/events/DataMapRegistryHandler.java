@@ -24,6 +24,7 @@ public class DataMapRegistryHandler {
         event.register(ITEM_SELL_VALUE_DATA);
         event.register(ITEM_FUEL_VALUE_DATA);
         event.register(VENDOR_SHOP_DATA);
-        event.register(NPC_DATA);
+        event.register(ENTITY_NPC_DATA);
+        event.register(BLOCK_NPC_DATA);
     }
 }

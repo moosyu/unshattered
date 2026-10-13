@@ -2,6 +2,8 @@ package io.github.moosyu.events;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.data.NpcData;
+import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.entities.npcs.NPCEntity;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.Camera;
@@ -9,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
@@ -40,7 +43,10 @@ public class RenderNameTagHandler {
 
         if (entity instanceof NPCEntity npc) {
             event.setCanRender(TriState.TRUE);
-            event.setContent(npc.getName().copy().withColor(npc.getNametagColour()));
+            NpcData npcData = BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(npc.getType()).getData(UnshatteredDataMaps.ENTITY_NPC_DATA);
+            if (npcData != null) {
+                event.setContent(npc.getName().copy().withColor(npcData.npcColour()));
+            }
 
             return;
         }

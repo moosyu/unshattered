@@ -21,6 +21,7 @@ import org.jspecify.annotations.NonNull;
 
 public class NPCEntityRenderer extends EntityRenderer<NPCEntity, NPCEntityRenderer.NPCRenderState> {
     private final PlayerModel model;
+    private final boolean slim;
 
     public NPCEntityRenderer(EntityRendererProvider.Context context) {
         this(context, false);
@@ -28,6 +29,9 @@ public class NPCEntityRenderer extends EntityRenderer<NPCEntity, NPCEntityRender
 
     public NPCEntityRenderer(EntityRendererProvider.Context context, boolean slim) {
         super(context);
+
+        this.slim = slim;
+
         model = new PlayerModel(
                 context.bakeLayer(slim ? ModelLayers.PLAYER_SLIM : ModelLayers.PLAYER),
                 slim
@@ -44,11 +48,11 @@ public class NPCEntityRenderer extends EntityRenderer<NPCEntity, NPCEntityRender
         super.extractRenderState(entity, state, partialTick);
 
         AvatarRenderState avatar = state.avatar;
-        NpcData npcData = BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.getType()).getData(UnshatteredDataMaps.NPC_DATA);
+        NpcData npcData = BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.getType()).getData(UnshatteredDataMaps.ENTITY_NPC_DATA);
 
         avatar.ageInTicks = state.ageInTicks;
-        avatar.bodyRot = Mth.rotLerp(partialTick, entity.yRotO, entity.getYRot());
-        avatar.yRot = Mth.lerp(partialTick, entity.yRotO, entity.getYRot());
+        avatar.bodyRot = Mth.rotLerp(partialTick, entity.yBodyRotO, entity.yBodyRot);
+        avatar.yRot = Mth.clamp(Mth.wrapDegrees(Mth.rotLerp(partialTick, entity.yHeadRotO, entity.yHeadRot) - avatar.bodyRot), -30.0f, 30.0f);
         avatar.xRot = Mth.lerp(partialTick, entity.xRotO, entity.getXRot());
         avatar.showHat = true;
         avatar.showJacket = true;
@@ -58,27 +62,25 @@ public class NPCEntityRenderer extends EntityRenderer<NPCEntity, NPCEntityRender
         avatar.showRightPants = true;
 
         if (npcData != null) {
-            state.texture = npcData.skinLocation().withPrefix("textures/").withSuffix(".png");
+            state.texture = npcData.texturePath();
         }
-
     }
 
     @Override
     public void submit(NPCRenderState state, PoseStack poseStack, SubmitNodeCollector collector, @NonNull CameraRenderState camera) {
         AvatarRenderState avatar = state.avatar;
+        Identifier texture = state.texture == null ? (slim ? Identifier.withDefaultNamespace("textures/entity/player/slim/steve.png") : Identifier.withDefaultNamespace("textures/entity/player/wide/steve.png")) : state.texture;
 
         poseStack.pushPose();
-
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0f - avatar.bodyRot));
         poseStack.scale(-1.0f, -1.0f, 1.0f);
         poseStack.translate(0.0f, -1.501f, 0.0f);
-        model.setupAnim(avatar);
 
         collector.submitModel(
                 model,
                 avatar,
                 poseStack,
-                model.renderType(state.texture),
+                model.renderType(texture),
                 state.lightCoords,
                 OverlayTexture.NO_OVERLAY,
                 0xFFFFFFFF,

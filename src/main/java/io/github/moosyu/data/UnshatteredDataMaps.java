@@ -95,10 +95,15 @@ public final class UnshatteredDataMaps {
             VendorItem.CODEC.listOf()
     ).synced(VendorItem.CODEC.listOf(), true).build();
 
-    public static final DataMapType<EntityType<?>, NpcData> NPC_DATA = DataMapType.builder(
-            UnshatteredUtils.getUnshatteredIdentifier("npc_skin_data"),
+    public static final DataMapType<EntityType<?>, NpcData> ENTITY_NPC_DATA = DataMapType.builder(
+            UnshatteredUtils.getUnshatteredIdentifier("entity_npc_data"),
             Registries.ENTITY_TYPE,
             NpcData.CODEC
     ).synced(NpcData.CODEC, true).build();
 
+    public static final DataMapType<Block, Integer> BLOCK_NPC_DATA = DataMapType.builder(
+            UnshatteredUtils.getUnshatteredIdentifier("block_name_colour_data"),
+            Registries.BLOCK,
+            Codec.INT
+    ).synced(Codec.INT, true).build();
 }

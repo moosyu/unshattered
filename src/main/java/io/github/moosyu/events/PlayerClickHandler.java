@@ -1,5 +1,7 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.data.NpcData;
+import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.dialogue.DialogueInteractable;
@@ -7,6 +9,7 @@ import io.github.moosyu.entities.npcs.NPCEntity;
 import io.github.moosyu.packets.OpenReforgeAnvilPacket;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
@@ -16,6 +19,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -32,34 +36,34 @@ public class PlayerClickHandler {
     @SubscribeEvent
     public static void onPlayerRightClick(PlayerInteractEvent.RightClickBlock event) {
         BlockPos pos = event.getPos();
-        BlockState interactedBlock = event.getLevel().getBlockState(pos);
+        BlockState interactedBlockState = event.getLevel().getBlockState(pos);
         Player player = event.getEntity();
         // was thinking about a set or something for this but supposedly thatd be slower. i cant see how but whatever
-        if (interactedBlock.is(Blocks.FURNACE)
-                || interactedBlock.is(Blocks.BLAST_FURNACE)
-                || interactedBlock.is(BlockTags.COPPER_CHESTS)
-                || interactedBlock.is(Blocks.ENDER_CHEST)
-                || interactedBlock.is(BlockTags.SHULKER_BOXES)
-                || interactedBlock.is(Blocks.BARREL)
-                || interactedBlock.is(BlockTags.BEDS)
-                || interactedBlock.is(BlockTags.ALL_SIGNS)
-                || interactedBlock.is(Blocks.RESPAWN_ANCHOR)
-                || interactedBlock.is(Blocks.LECTERN)
-                || interactedBlock.is(BlockTags.WOODEN_SHELVES)
-                || interactedBlock.is(Blocks.REDSTONE_TORCH)
-                || interactedBlock.is(Blocks.SMOKER)
-                || interactedBlock.is(Blocks.BLAST_FURNACE)
-                || interactedBlock.is(Blocks.LOOM)
-                || interactedBlock.is(Blocks.GRINDSTONE)
-                || interactedBlock.is(Blocks.SMITHING_TABLE)
-                || interactedBlock.is(Blocks.FLETCHING_TABLE)
-                || interactedBlock.is(Blocks.CARTOGRAPHY_TABLE)
-                || interactedBlock.is(Blocks.STONECUTTER)
-                || interactedBlock.is(Blocks.BREWING_STAND)
-                || interactedBlock.is(Blocks.ENCHANTING_TABLE)
+        if (interactedBlockState.is(Blocks.FURNACE)
+                || interactedBlockState.is(Blocks.BLAST_FURNACE)
+                || interactedBlockState.is(BlockTags.COPPER_CHESTS)
+                || interactedBlockState.is(Blocks.ENDER_CHEST)
+                || interactedBlockState.is(BlockTags.SHULKER_BOXES)
+                || interactedBlockState.is(Blocks.BARREL)
+                || interactedBlockState.is(BlockTags.BEDS)
+                || interactedBlockState.is(BlockTags.ALL_SIGNS)
+                || interactedBlockState.is(Blocks.RESPAWN_ANCHOR)
+                || interactedBlockState.is(Blocks.LECTERN)
+                || interactedBlockState.is(BlockTags.WOODEN_SHELVES)
+                || interactedBlockState.is(Blocks.REDSTONE_TORCH)
+                || interactedBlockState.is(Blocks.SMOKER)
+                || interactedBlockState.is(Blocks.BLAST_FURNACE)
+                || interactedBlockState.is(Blocks.LOOM)
+                || interactedBlockState.is(Blocks.GRINDSTONE)
+                || interactedBlockState.is(Blocks.SMITHING_TABLE)
+                || interactedBlockState.is(Blocks.FLETCHING_TABLE)
+                || interactedBlockState.is(Blocks.CARTOGRAPHY_TABLE)
+                || interactedBlockState.is(Blocks.STONECUTTER)
+                || interactedBlockState.is(Blocks.BREWING_STAND)
+                || interactedBlockState.is(Blocks.ENCHANTING_TABLE)
         ) event.setCanceled(true);
 
-        if (interactedBlock.is(Blocks.ANVIL)) {
+        if (interactedBlockState.is(Blocks.ANVIL)) {
             event.setCanceled(true);
             player.swing(InteractionHand.MAIN_HAND);
             ClientPacketDistributor.sendToServer(new OpenReforgeAnvilPacket());
@@ -70,14 +74,17 @@ public class PlayerClickHandler {
             event.setUseItem(TriState.FALSE);
         }
 
+        Block interactedBlock = interactedBlockState.getBlock();
         // i *think* this was firing on both hands for some reason so i added the event#getHand gate
-        if (interactedBlock.getBlock() instanceof DialogueInteractable dialogueBlock && event.getHand() == InteractionHand.MAIN_HAND) {
+        if (interactedBlock instanceof DialogueInteractable dialogueBlock && event.getHand() == InteractionHand.MAIN_HAND) {
             PlayerAbilityEffectsAttachment playerAbilityEffectsAttachment = player.getData(UnshatteredAttachments.PLAYER_ABILITIES);
             if (playerAbilityEffectsAttachment.hasActiveEffect(ACTIVE_RIGHT_CLICK) && !event.getLevel().isClientSide()) {
                 player.sendSystemMessage(Component.translatable("misc.messages.unshattered.interact_cooldown").withColor(UnshatteredUtils.RED));
                 return;
             }
-            dialogueBlock.onDialogueTriggered(player);
+
+            Integer npcNameColour = BuiltInRegistries.BLOCK.wrapAsHolder(interactedBlock).getData(UnshatteredDataMaps.BLOCK_NPC_DATA);
+            dialogueBlock.onDialogueTriggered(player, npcNameColour == null ? 0xFFFFFFFF : npcNameColour);
             playerAbilityEffectsAttachment.addActiveEffect(ACTIVE_RIGHT_CLICK, INTERACTION_COOLDOWN, player.level(), null);
         }
     }
@@ -104,7 +111,8 @@ public class PlayerClickHandler {
                     return;
                 }
 
-                dialogueInteractable.onDialogueTriggered(player);
+                NpcData npcData = BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(npcEntity.getType()).getData(UnshatteredDataMaps.ENTITY_NPC_DATA);
+                dialogueInteractable.onDialogueTriggered(player, npcData == null ? 0xFFFFFFFF : npcData.npcColour());
                 playerAbilityEffectsAttachment.addActiveEffect(ACTIVE_RIGHT_CLICK, INTERACTION_COOLDOWN, level, null);
             }
         }

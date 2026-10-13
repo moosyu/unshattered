@@ -48,7 +48,7 @@ public class NPCEntity extends Mob {
 
     @Override
     protected void registerGoals() {
-        goalSelector.addGoal(0, new LookAtPlayerGoal(this, Player.class, 10.0f, 1.0f));
+        goalSelector.addGoal(0, new LookAtPlayerGoal(this, Player.class, 3.0f, 1.0f));
     }
 
     @Override public boolean isInvulnerableTo(@NonNull ServerLevel level, @NonNull DamageSource source) {
