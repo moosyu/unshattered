@@ -1,29 +1,22 @@
 package io.github.moosyu.gui.screens;
 
-import io.github.moosyu.gui.components.SoundlessImageButton;
-import io.github.moosyu.packets.OpenCraftingPacket;
-import io.github.moosyu.packets.OpenStoragePacket;
-import io.github.moosyu.packets.OpenTalismanBagPacket;
-import io.github.moosyu.util.UnshatteredUtils;
-import net.minecraft.client.Minecraft;
+import io.github.moosyu.gui.components.tabs.TabBar;
+import io.github.moosyu.gui.components.tabs.UnshatteredTabs;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.components.Tooltip;
-import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.InventoryMenu;
-import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jspecify.annotations.NonNull;
 
 public class UnshatteredInventoryScreen extends AbstractContainerScreen<InventoryMenu> {
     private static final Identifier TEXTURE = Identifier.withDefaultNamespace("textures/gui/container/inventory.png");
     public final int IMAGE_WIDTH = 176;
     public final int IMAGE_HEIGHT = 166;
+    private final TabBar tabBar = new TabBar(UnshatteredTabs.ALL, UnshatteredTabs.INVENTORY, TabBar.GENERIC_OFFSET_TOP, TabBar.GENERIC_OFFSET_BOTTOM);
     private float xMouse;
     private float yMouse;
 
@@ -35,63 +28,8 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
     protected void init() {
         super.init();
 
-        addRenderableWidget(new SoundlessImageButton(leftPos + 76,
-                topPos + 7,
-                20,
-                18,
-                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/crafting")),
-                _ -> ClientPacketDistributor.sendToServer(new OpenCraftingPacket()))
-        ).setTooltip(Tooltip.create(Component.translatable("container.unshattered.crafting")));
-
-        addRenderableWidget(new SoundlessImageButton(leftPos + 76,
-                topPos + 25,
-                20,
-                18,
-                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/storage")),
-                _ -> ClientPacketDistributor.sendToServer(new OpenStoragePacket()))
-        ).setTooltip(Tooltip.create(Component.translatable("container.unshattered.storage")));
-
-        addRenderableWidget(new SoundlessImageButton(leftPos + 76,
-                topPos + 43,
-                20,
-                18,
-                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/talisman_bag")),
-                _ -> ClientPacketDistributor.sendToServer(new OpenTalismanBagPacket()))
-        ).setTooltip(Tooltip.create(Component.translatable("container.unshattered.talisman_bag")));
-
-        addRenderableWidget(new SoundlessImageButton(leftPos + 97,
-                topPos + 60,
-                20,
-                18,
-                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/stats")),
-                _ -> Minecraft.getInstance().setScreen(new StatsScreen()))
-        ).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.stats")));
-
-        addRenderableWidget(new SoundlessImageButton(leftPos + 114,
-                topPos + 61,
-                20,
-                18,
-                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/skills")),
-                _ -> Minecraft.getInstance().setScreen(new SkillsScreen()))
-        ).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.skills")));
-
-        addRenderableWidget(new SoundlessImageButton(leftPos + 131,
-                topPos + 61,
-                20,
-                18,
-                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/pets")),
-                _ -> {})).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.pets"))
-        );
-
-        addRenderableWidget(new SoundlessImageButton(leftPos + 148,
-                topPos + 61,
-                20,
-                18,
-                new WidgetSprites(UnshatteredUtils.getUnshatteredIdentifier("inventory_buttons/skill_trees")),
-                _ -> {})).setTooltip(Tooltip.create(Component.translatable("screen.unshattered.skill_trees"))
-        );
+        tabBar.init(leftPos, topPos, this::addRenderableWidget);
     }
-
 
     @Override
     public void extractBackground(@NonNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
@@ -115,5 +53,7 @@ public class UnshatteredInventoryScreen extends AbstractContainerScreen<Inventor
         super.extractRenderState(graphics, mouseX, mouseY, a);
         this.xMouse = mouseX;
         this.yMouse = mouseY;
+
+        tabBar.displayIcons(graphics);
     }
 }

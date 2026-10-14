@@ -1,5 +1,7 @@
 package io.github.moosyu.gui.screens;
 
+import io.github.moosyu.gui.components.tabs.TabBar;
+import io.github.moosyu.gui.components.tabs.UnshatteredTabs;
 import io.github.moosyu.gui.menus.StorageMenu;
 import io.github.moosyu.packets.UpdateStoragePagePacket;
 import io.github.moosyu.packets.UpdateStorageSearchResultsPacket;
@@ -29,6 +31,7 @@ public class StorageScreen extends AbstractContainerScreen<StorageMenu> {
     private EditBox searchBox;
     private Button nextButton;
     private Button prevButton;
+    private final TabBar tabBar = new TabBar(UnshatteredTabs.ALL, UnshatteredTabs.STORAGE, -82, TabBar.GENERIC_OFFSET_BOTTOM);
 
     public StorageScreen(StorageMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
@@ -42,13 +45,13 @@ public class StorageScreen extends AbstractContainerScreen<StorageMenu> {
 
         Vector2i backgroundTopLeft = new Vector2i((width - IMAGE_WIDTH) / 2, ((height - IMAGE_HEIGHT) / 2) - 28);
 
-        nextButton = Button.builder(Component.literal("+"), button -> {
+        nextButton = Button.builder(Component.literal("+"), _ -> {
             ClientPacketDistributor.sendToServer(new UpdateStoragePagePacket(true));
             menu.updatePage(true);
             updateNavButtonsActiveState();
         }).pos(backgroundTopLeft.x() + 82, backgroundTopLeft.y() + 4).size(12, 12).build();
 
-        prevButton = Button.builder(Component.literal("-"), button -> {
+        prevButton = Button.builder(Component.literal("-"), _ -> {
             ClientPacketDistributor.sendToServer(new UpdateStoragePagePacket(false));
             menu.updatePage(false);
             updateNavButtonsActiveState();
@@ -70,6 +73,8 @@ public class StorageScreen extends AbstractContainerScreen<StorageMenu> {
         addRenderableWidget(searchBox);
 
         updateNavButtonsActiveState();
+
+        tabBar.init(leftPos, topPos, this::addRenderableWidget);
     }
 
     /**
@@ -90,29 +95,6 @@ public class StorageScreen extends AbstractContainerScreen<StorageMenu> {
         int x = (width - IMAGE_WIDTH) / 2;
         int y = (height - IMAGE_HEIGHT) / 2;
         graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y - 28, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, 256, 256);
-    }
-
-    @Override
-    public boolean keyPressed(@NonNull KeyEvent event) {
-        if (searchBox.isFocused() && searchBox.keyPressed(event)) {
-            return true;
-        }
-
-        Minecraft minecraft = Minecraft.getInstance();
-        LocalPlayer player = minecraft.player;
-
-        if (!searchBox.isFocused() && minecraft.options.keyInventory.matches(event) && player != null) {
-            // to skip this.minecraft.setScreen((Screen) null) which resets mouse position
-            player.connection.send(new ServerboundContainerClosePacket(menu.containerId));
-            minecraft.setScreen(new UnshatteredInventoryScreen(player.inventoryMenu, player.getInventory(), Component.translatable("container.inventory")));
-            return true;
-        }
-
-        if (searchBox.isFocused()) {
-            return true;
-        }
-
-        return super.keyPressed(event);
     }
 
     @Override
@@ -143,5 +125,12 @@ public class StorageScreen extends AbstractContainerScreen<StorageMenu> {
         );
 
         graphics.text(font, playerInventoryTitle.copy(), inventoryLabelX, inventoryLabelY, 0xFF404040, false);
+    }
+
+    @Override
+    public void extractRenderState(@NonNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+        super.extractRenderState(graphics, mouseX, mouseY, partialTick);
+
+        tabBar.displayIcons(graphics);
     }
 }

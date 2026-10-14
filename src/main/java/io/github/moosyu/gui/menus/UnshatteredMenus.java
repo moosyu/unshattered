@@ -36,4 +36,8 @@ public class UnshatteredMenus {
     public static final Supplier<MenuType<ForgeMenu>> FORGE_MENU_TYPE = MENUS.register("forge_menu_type", () ->
             new MenuType<>(ForgeMenu::new, FeatureFlags.DEFAULT_FLAGS)
     );
+
+    public static final Supplier<MenuType<SackOfSacksMenu>> SACK_OF_SACKS_MENU_TYPE = MENUS.register("sack_of_sacks_menu_type", () ->
+            new MenuType<>(SackOfSacksMenu::new, FeatureFlags.DEFAULT_FLAGS)
+    );
 }

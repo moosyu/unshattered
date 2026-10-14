@@ -3,15 +3,20 @@ package io.github.moosyu.compat.jei;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.VendorItem;
 import io.github.moosyu.events.RecipeReceivedHandler;
+import io.github.moosyu.gui.screens.SkillsScreen;
 import io.github.moosyu.util.UnshatteredUtils;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
+import mezz.jei.api.gui.handlers.IGuiProperties;
 import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
@@ -69,9 +74,6 @@ public class UnshatteredJEIPlugin implements IModPlugin {
                 });
             }
         }
-
-        System.out.println("DONE");
-        System.out.println(vendorItems);
 
         return vendorItems;
     }

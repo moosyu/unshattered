@@ -43,17 +43,4 @@ public class SimpleScreen extends Screen {
 
         graphics.blit(RenderPipelines.GUI_TEXTURED, texture, backgroundTopLeft.x, backgroundTopLeft.y, 0, 0, imageWidth, imageHeight, 256, 256);
     }
-
-    @Override
-    public boolean keyPressed(@NonNull KeyEvent event) {
-        Minecraft minecraft = Minecraft.getInstance();
-        Player player = minecraft.player;
-
-        if (minecraft.options.keyInventory.matches(event) && player != null) {
-            minecraft.setScreen(new UnshatteredInventoryScreen(player.inventoryMenu, player.getInventory(), Component.translatable("container.inventory")));
-            return true;
-        }
-
-        return super.keyPressed(event);
-    }
 }

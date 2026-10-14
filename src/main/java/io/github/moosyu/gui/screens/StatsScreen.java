@@ -2,6 +2,8 @@ package io.github.moosyu.gui.screens;
 
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.gui.components.ScrollerWidget;
+import io.github.moosyu.gui.components.tabs.TabBar;
+import io.github.moosyu.gui.components.tabs.UnshatteredTabs;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -15,15 +17,36 @@ import org.jspecify.annotations.NonNull;
 
 public class StatsScreen extends SimpleScreen {
     private static final int LINE_HEIGHT = 12;
+    public static final int IMAGE_WIDTH = 176;
+    public static final int IMAGE_HEIGHT = 166;
+
     private final int viewportHeight;
     private double scrollOffset = 0;
     private int contentHeight = 0;
     private ScrollerWidget scroller;
+    private final TabBar tabBar = new TabBar(UnshatteredTabs.ALL, UnshatteredTabs.STATS, TabBar.GENERIC_OFFSET_TOP, TabBar.GENERIC_OFFSET_BOTTOM);
+    public int leftPos;
+    public int topPos;
 
     public StatsScreen() {
-        super(Component.translatable("screen.unshattered.stats"), 176, 166, "textures/gui/generic_scrollable.png");
+        super(Component.translatable("screen.unshattered.stats"), IMAGE_WIDTH, IMAGE_HEIGHT, "textures/gui/generic_scrollable.png");
 
         viewportHeight = imageHeight - 24;
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+
+        int maxScroll = Math.max(0, contentHeight - viewportHeight);
+        scroller = new ScrollerWidget(backgroundTopLeft.x() + 156, backgroundTopLeft.y() + 6, imageHeight - 12 - ScrollerWidget.SCROLLER_HEIGHT, progress -> scrollOffset = progress * Math.max(0, contentHeight - viewportHeight));
+        addRenderableWidget(scroller);
+
+        scroller.setScrollProgress(maxScroll == 0 ? 0.0 : Mth.clamp(scrollOffset, 0, maxScroll) / maxScroll);
+
+        leftPos = (width - imageWidth) / 2;
+        topPos = (height - imageHeight) / 2;
+        tabBar.init(leftPos, topPos, this::addRenderableWidget);
     }
 
     @Override
@@ -80,6 +103,8 @@ public class StatsScreen extends SimpleScreen {
         );
 
         graphics.disableScissor();
+
+        tabBar.displayIcons(graphics);
     }
 
     /**
@@ -127,17 +152,6 @@ public class StatsScreen extends SimpleScreen {
                     attributeColour
             );
         }
-    }
-
-    @Override
-    protected void init() {
-        super.init();
-
-        int maxScroll = Math.max(0, contentHeight - viewportHeight);
-        scroller = new ScrollerWidget(backgroundTopLeft.x() + 156, backgroundTopLeft.y() + 6, imageHeight - 12 - ScrollerWidget.SCROLLER_HEIGHT, progress -> scrollOffset = progress * Math.max(0, contentHeight - viewportHeight));
-        addRenderableWidget(scroller);
-
-        scroller.setScrollProgress(maxScroll == 0 ? 0.0 : Mth.clamp(scrollOffset, 0, maxScroll) / maxScroll);
     }
 
     @Override

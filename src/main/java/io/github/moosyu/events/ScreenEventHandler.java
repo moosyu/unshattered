@@ -1,8 +1,10 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.gui.screens.DialogueScreen;
+import io.github.moosyu.gui.components.tabs.TabBar;
+import io.github.moosyu.gui.components.tabs.UnshatteredTabs;
 import io.github.moosyu.gui.screens.UnshatteredInventoryScreen;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.CraftingScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.player.LocalPlayer;
@@ -13,12 +15,16 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ScreenEvent;
-import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+
+import java.util.Map;
+import java.util.WeakHashMap;
 
 import static io.github.moosyu.Unshattered.MODID;
 
 @EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
 public class ScreenEventHandler {
+    private static final Map<Screen, TabBar> BARS = new WeakHashMap<>();
+
     @SubscribeEvent
     public static void onScreenEventOpen(ScreenEvent.Opening event) {
         Minecraft minecraft = Minecraft.getInstance();
@@ -39,17 +45,22 @@ public class ScreenEventHandler {
     }
 
     @SubscribeEvent
-    public static void onScreenKeyPressed(ScreenEvent.KeyPressed.Pre event) {
-        Minecraft minecraft = Minecraft.getInstance();
-        LocalPlayer player = minecraft.player;
-        if (Minecraft.getInstance().player == null) return;
-
+    static void onInit(ScreenEvent.Init.Post event) {
         if (event.getScreen() instanceof CraftingScreen craftingScreen) {
-            if (minecraft.options.keyInventory.matches(event.getKeyEvent())) {
-                event.setCanceled(true);
-                player.connection.send(new ServerboundContainerClosePacket(craftingScreen.getMenu().containerId));
-                minecraft.setScreen(new UnshatteredInventoryScreen(player.inventoryMenu, player.getInventory(), Component.translatable("container.inventory")));
-            }
+            TabBar bar = new TabBar(UnshatteredTabs.ALL, UnshatteredTabs.CRAFTING, TabBar.GENERIC_OFFSET_TOP, TabBar.GENERIC_OFFSET_BOTTOM);
+
+            int left = (craftingScreen.width - 176) / 2;
+            int top  = (craftingScreen.height - 166) / 2;
+            bar.init(left, top, event::addListener);
+            BARS.put(craftingScreen, bar);
+        }
+    }
+
+    @SubscribeEvent
+    static void onRender(ScreenEvent.Render.Post event) {
+        TabBar bar = BARS.get(event.getScreen());
+        if (bar != null) {
+            bar.displayIcons(event.getGuiGraphics());
         }
     }
 }

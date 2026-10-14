@@ -2,6 +2,8 @@ package io.github.moosyu.gui.screens;
 
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
+import io.github.moosyu.gui.components.tabs.TabBar;
+import io.github.moosyu.gui.components.tabs.UnshatteredTabs;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -14,13 +16,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SkillsScreen extends SimpleScreen {
+    public static final int IMAGE_WIDTH = 176;
+    public static final int IMAGE_HEIGHT = 166;
+
     private final PlayerSkillsAttachment.Skill[] SKILLS = PlayerSkillsAttachment.Skill.values();
     private final Player player;
+    private final TabBar tabBar = new TabBar(UnshatteredTabs.ALL, UnshatteredTabs.SKILLS, TabBar.GENERIC_OFFSET_TOP, TabBar.GENERIC_OFFSET_BOTTOM);
+    public int leftPos;
+    public int topPos;
 
-    protected SkillsScreen() {
-        super(Component.translatable("screen.unshattered.skills"), 176, 166, "textures/gui/empty_screen.png");
+    public SkillsScreen() {
+        super(Component.translatable("screen.unshattered.skills"), IMAGE_WIDTH, IMAGE_HEIGHT, "textures/gui/empty_screen.png");
 
         this.player = Minecraft.getInstance().player;
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+
+        leftPos = (width - imageWidth) / 2;
+        topPos = (height - imageHeight) / 2;
+        tabBar.init(leftPos, topPos, this::addRenderableWidget);
     }
 
     @Override
@@ -35,7 +52,6 @@ public class SkillsScreen extends SimpleScreen {
         for (int i = 0; i < SKILLS.length; i++) {
             PlayerSkillsAttachment.Skill currentSkill = SKILLS[i];
             int currentLevel = skills.getLevel(skills.getExp(currentSkill));
-            String skillExpText;
             int xPos = backgroundTopLeft.x + X_OFFSET;
             int yPos = (20 * i) + backgroundTopLeft.y + Y_OFFSET;
             float nextLevelExpRequirement = skills.getNextLevelExpRequirement(currentLevel);
@@ -119,5 +135,9 @@ public class SkillsScreen extends SimpleScreen {
                 graphics.setComponentTooltipForNextFrame(font, tooltip, mouseX, mouseY);
             }
         }
+
+        super.extractRenderState(graphics, mouseX, mouseY, partialTick);
+
+        tabBar.displayIcons(graphics);
     }
 }

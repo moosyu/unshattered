@@ -39,7 +39,8 @@ public enum ItemType implements StringRepresentable {
     DRILL_ENGINE("drill_engine", false),
     UPGRADE_MODULE("upgrade_module", false),
     FUEL("fuel", false),
-    HOE("hoe", true);
+    HOE("hoe", true),
+    SACK("sack", false);
 
     private final String serializedName;
     private final boolean reforgeable;

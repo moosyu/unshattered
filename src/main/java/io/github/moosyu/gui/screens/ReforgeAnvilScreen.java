@@ -29,18 +29,4 @@ public class ReforgeAnvilScreen extends AbstractContainerScreen<ReforgeAnvilMenu
 
     @Override
     protected void extractLabels(@NonNull GuiGraphicsExtractor graphics, int xm, int ym) {}
-
-    @Override
-    public boolean keyPressed(@NonNull KeyEvent event) {
-        Minecraft minecraft = Minecraft.getInstance();
-        LocalPlayer player = minecraft.player;
-
-        if (minecraft.options.keyInventory.matches(event) && player != null) {
-            player.connection.send(new ServerboundContainerClosePacket(menu.containerId));
-            minecraft.setScreen(new UnshatteredInventoryScreen(player.inventoryMenu, player.getInventory(), Component.translatable("container.inventory")));
-            return true;
-        }
-
-        return super.keyPressed(event);
-    }
 }

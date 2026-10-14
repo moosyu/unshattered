@@ -4,6 +4,7 @@ import io.github.moosyu.abilities.*;
 import io.github.moosyu.data.attachments.*;
 import io.github.moosyu.data.recipes.ForgeRecipe;
 import io.github.moosyu.gui.menus.ReforgeAnvilMenu;
+import io.github.moosyu.gui.menus.SackOfSacksMenu;
 import io.github.moosyu.gui.menus.StorageMenu;
 import io.github.moosyu.gui.menus.TalismansMenu;
 import io.github.moosyu.packets.*;
@@ -282,6 +283,23 @@ public class RegisterPayloadsHandler {
                     context.player().getData(UnshatteredAttachments.PLAYER_SKILLS.get()).addExp(PlayerSkillsAttachment.Skill.CARPENTRY, (float) (UnshatteredUtils.getItemSellValue(data.claimedItem()) * 0.1), context.player());
                     context.player().syncData(UnshatteredAttachments.PLAYER_SKILLS.get());
                     UnshatteredUtils.givePlayerHarvestedItemStack(context.player(), claimedItem);
+                })
+        );
+
+        registrar.playToServer(OpenSackOfSacksPacket.TYPE,
+                OpenSackOfSacksPacket.STREAM_CODEC,
+                (_, context) -> context.enqueueWork(() -> {
+                    if (context.player() instanceof ServerPlayer serverPlayer) {
+                        serverPlayer.openMenu(new SimpleMenuProvider(
+                                (containerId,
+                                 inventory,
+                                 _) -> new SackOfSacksMenu(containerId,
+                                        inventory,
+                                        serverPlayer.getData(UnshatteredAttachments.PLAYER_SACK_OF_SACKS_STORAGE)
+                                ),
+                                Component.translatable("screen.unshattered.sack_of_sacks")
+                        ));
+                    }
                 })
         );
     }

@@ -508,6 +508,7 @@
   "item_type.unshattered.upgrade_module": "Upgrade Module",
   "item_type.unshattered.fuel": "Fuel",
   "item_type.unshattered.hoe": "Hoe",
+  "item_type.unshattered.sack": "Sack",
 
   "unshattered.configuration.title": "unshattered Configs",
   "unshattered.configuration.section.unshattered.common.toml": "unshattered Configs",
@@ -613,6 +614,8 @@
   "screen.unshattered.forge.ends": "Ends at",
   "screen.unshattered.forge.completed": "Forging completed, click to claim!",
   "screen.unshattered.vendor.buy": "Buy",
+  "screen.unshattered.quests": "Quests",
+  "screen.unshattered.sack_of_sacks": "Sack of Sacks",
 
   "widget.unshattered.narration.scroller": "Scroller Widget",
   "widget.unshattered.narration.shop_item": "Shop Item",
