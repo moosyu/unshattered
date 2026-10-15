@@ -3,21 +3,24 @@ package io.github.moosyu.items.talismans;
 import io.github.moosyu.abilities.AbilityContext;
 import io.github.moosyu.abilities.AbilityContextKey;
 import io.github.moosyu.abilities.AbilityTriggerType;
+import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
-import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
 
 import java.util.Optional;
 import java.util.Set;
 
-public class BatTalisman extends Item implements PassiveAbilityItem {
-    public BatTalisman(Properties properties) {
-        super(properties.stacksTo(1));
+public class BatTalismanBase extends TieredTalisman implements PassiveAbilityItem {
+    private final float lifeStealAmount;
+
+    public BatTalismanBase(Properties properties, float lifeStealAmount) {
+        super(properties, UnshatteredUtils.getUnshatteredIdentifier("bat_talisman_path"));
+
+        this.lifeStealAmount = lifeStealAmount;
     }
 
     @Override
@@ -27,7 +30,7 @@ public class BatTalisman extends Item implements PassiveAbilityItem {
 
         if (target.isPresent() && target.get().isDeadOrDying() && player.isPresent()) {
             player.get().getData(UnshatteredAttachments.PLAYER_STATE).increaseStatValue(PlayerStateAttachment.Stat.HEALTH,
-                    UnshatteredUtils.getDefaultAttributes(target.get()).map(supplier -> supplier.getBaseValue(UnshatteredAttributeValues.HEALTH.holder)).orElse(0.0) * 0.05,
+                    UnshatteredUtils.getDefaultAttributes(target.get()).map(supplier -> supplier.getBaseValue(UnshatteredAttributeValues.HEALTH.holder)).orElse(0.0) * lifeStealAmount,
                     player.get()
             );
         }

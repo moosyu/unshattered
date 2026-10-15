@@ -451,7 +451,7 @@
         {
           "drop_chance": 1.0,
           "item_range": {
-            "item": "minecraft:cocoa_beans",
+            "item": "minecraft:melon_slice",
             "max_amount": 7,
             "min_amount": 3
           }
@@ -459,7 +459,7 @@
         {
           "drop_chance": 0.001,
           "item_range": {
-            "item": "unshattered:enchanted_cocoa_beans",
+            "item": "unshattered:enchanted_melon_slice",
             "max_amount": 10,
             "min_amount": 5
           }
@@ -467,7 +467,7 @@
         {
           "drop_chance": 1.0E-4,
           "item_range": {
-            "item": "unshattered:enchanted_cocoa_beans",
+            "item": "unshattered:enchanted_melon_slice",
             "max_amount": 23,
             "min_amount": 17
           }
@@ -475,7 +475,7 @@
         {
           "drop_chance": 1.0E-5,
           "item_range": {
-            "item": "unshattered:enchanted_cookie",
+            "item": "unshattered:enchanted_melon",
             "max_amount": 3,
             "min_amount": 1
           }

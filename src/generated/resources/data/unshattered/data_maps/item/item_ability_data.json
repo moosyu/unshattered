@@ -4,6 +4,10 @@
       "ability_id": "unshattered:bandaged_mithril_pickaxe_mithril_speed",
       "passive": true
     },
+    "unshattered:bat_artifact": {
+      "ability_id": "unshattered:bat_artifact_leech",
+      "passive": true
+    },
     "unshattered:bat_talisman": {
       "ability_id": "unshattered:bat_talisman_leech",
       "passive": true

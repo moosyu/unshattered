@@ -442,7 +442,7 @@ public class UnshatteredItems {
     public static final DeferredItem<Item> SUPER_CLEAVER = ITEMS.registerItem("super_cleaver", SuperCleaver::new);
     public static final DeferredItem<Item> HYPER_CLEAVER = ITEMS.registerItem("hyper_cleaver", HyperCleaver::new);
     public static final DeferredItem<Item> GIANT_CLEAVER = ITEMS.registerItem("giant_cleaver", GiantCleaver::new);
-    public static final DeferredItem<Item> BAT_TALISMAN = ITEMS.registerItem("bat_talisman", BatTalisman::new);
+    public static final DeferredItem<BatTalismanBase> BAT_TALISMAN = ITEMS.registerItem("bat_talisman", props -> new BatTalismanBase(props, 0.05f));
 
     public static final DeferredItem<DaggerItem> IRON_DAGGER = ITEMS.registerItem("iron_dagger", props -> new DaggerItem(props
             .attributes(ItemAttributeModifiers.builder()
@@ -727,4 +727,10 @@ public class UnshatteredItems {
     public static final DeferredItem<Item> PLASMA = ITEMS.registerItem("plasma", Item::new);
 
     public static final DeferredItem<Item> BEJEWELED_HANDLE = ITEMS.registerItem("bejeweled_handle", Item::new);
+
+    public static final DeferredItem<BatTalismanBase> BAT_ARTIFACT = ITEMS.registerItem("bat_artifact", props -> new BatTalismanBase(props, 0.15f));
+
+    public static final DeferredItem<Item> GREEN_CANDY = ITEMS.registerItem("green_candy", Item::new);
+
+    public static final DeferredItem<Item> PURPLE_CANDY = ITEMS.registerItem("purple_candy", Item::new);
 }

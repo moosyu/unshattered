@@ -208,6 +208,8 @@ public class UnshatteredCreativeTabs {
             output.accept(FIGSTONE);
             output.accept(PLASMA);
             output.accept(BEJEWELED_HANDLE);
+            output.accept(GREEN_CANDY);
+            output.accept(PURPLE_CANDY);
         }).build()
     );
 
@@ -302,6 +304,7 @@ public class UnshatteredCreativeTabs {
                     output.accept(BLOOD_CHALICE.get());
                     output.accept(INFINITE_QUIVER.get());
                     output.accept(FIRE_TALISMAN.get());
+                    output.accept(BAT_ARTIFACT.get());
                 }).build()
     );
 }

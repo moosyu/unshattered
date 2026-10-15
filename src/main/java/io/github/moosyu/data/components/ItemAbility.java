@@ -3,6 +3,7 @@ package io.github.moosyu.data.components;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.resources.Identifier;
 
 /**
@@ -14,6 +15,13 @@ import net.minecraft.resources.Identifier;
  * @param passive whether the ability is passive
  */
 public record ItemAbility(Identifier abilityId, int manaCost, int cooldown, int duration, boolean passive) {
+    /**
+     * create passive item ability
+     */
+    public ItemAbility(String abilityIdentifier) {
+        this(UnshatteredUtils.getUnshatteredIdentifier(abilityIdentifier), 0, 0, 0, true);
+    }
+
     public static final Codec<ItemAbility> CODEC = RecordCodecBuilder.create((RecordCodecBuilder.Instance<ItemAbility> instance) -> instance.group(
             Identifier.CODEC.fieldOf("ability_id").forGetter(ItemAbility::abilityId),
             Codec.INT.optionalFieldOf("mana_cost", 0).forGetter(ItemAbility::manaCost),

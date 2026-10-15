@@ -176,7 +176,11 @@ public class UnshatteredItemTagsProvider extends ItemTagsProvider {
                 .add(ROOKIE_HOE.get())
                 .add(STRETCHING_STICK.get())
                 .add(FIGSTONE.get())
-                .add(PLASMA.get());
+                .add(PLASMA.get())
+                .add(BAT_ARTIFACT.get())
+                .add(GREEN_CANDY.get())
+                .add(PURPLE_CANDY.get())
+                .add(DWARF_TURTLE_SHELL.get());
 
         tag(ItemTags.HOES)
                 .add(ROOKIE_HOE.get());

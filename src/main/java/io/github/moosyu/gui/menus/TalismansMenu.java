@@ -5,15 +5,18 @@ import io.github.moosyu.abilities.AbilityContextKey;
 import io.github.moosyu.abilities.AbilityItem;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
-import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.ItemType;
 import io.github.moosyu.gui.menus.containers.TalismanContainer;
+import io.github.moosyu.items.talismans.TieredTalisman;
+import io.github.moosyu.util.UnshatteredUtils;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -23,8 +26,11 @@ public class TalismansMenu extends AbstractContainerMenu {
     private final int ROWS = 3;
     private final int COLUMNS = 9;
     private final ItemStack[] lastKnownStacks = new ItemStack[TalismanContainer.TALISMAN_SLOTS_MAX];
-    private final Inventory playerInventory;
+    private final Player player;
     private final Container container;
+
+    // may place goes off a bunch of times so this is just to block it from sending like 10 errors
+    private boolean sentTieredError = false;
 
     // client side
     public TalismansMenu(int containerId, Inventory playerInventory) {
@@ -37,7 +43,7 @@ public class TalismansMenu extends AbstractContainerMenu {
 
         checkContainerSize(container, container.getContainerSize());
         this.container = container;
-        this.playerInventory = playerInventory;
+        this.player = playerInventory.player;
 
         for (int i = 0; i < container.getContainerSize(); i++) {
             lastKnownStacks[i] = container.getItem(i).copy();
@@ -48,14 +54,35 @@ public class TalismansMenu extends AbstractContainerMenu {
                 addSlot(new Slot(container, col + row * 9, 8 + col * 18, 18 + row * 18) {
                     @Override
                     public boolean mayPlace(@NonNull ItemStack itemStack) {
-                        if (itemStack.typeHolder().getData(UnshatteredDataMaps.ITEM_TYPE_DATA) == ItemType.TALISMAN) {
-                            Item placingItem = itemStack.getItem();
-                            for (int i = 0; i < container.getContainerSize(); i++) {
-                                if (container.getItem(i).is(placingItem)) return false;
-                            }
-                            return true;
+                        if (itemStack.typeHolder().getData(UnshatteredDataMaps.ITEM_TYPE_DATA) != ItemType.TALISMAN) {
+                            return false;
                         }
-                        return false;
+
+                        Item placingItem = itemStack.getItem();
+
+                        for (int i = 0; i < container.getContainerSize(); i++) {
+                            ItemStack existing = container.getItem(i);
+                            if (existing.isEmpty()) {
+                                continue;
+                            }
+
+                            if (existing.is(placingItem)) {
+                                return false;
+                            }
+
+                            if (placingItem instanceof TieredTalisman placingTiered
+                                    && existing.getItem() instanceof TieredTalisman existingTiered
+                                    && placingTiered.tierIdentifier.equals(existingTiered.tierIdentifier)
+                            ) {
+                                if (player.level().isClientSide() && !sentTieredError) {
+                                    sentTieredError = true;
+                                    player.sendSystemMessage(Component.translatable("screen.unshattered.talisman.tiered_block").withColor(UnshatteredUtils.RED));
+                                }
+                                return false;
+                            }
+                        }
+
+                        return true;
                     }
                 });
             }
@@ -65,10 +92,15 @@ public class TalismansMenu extends AbstractContainerMenu {
     }
 
     @Override
+    public void clicked(int slotIndex, int buttonNum, @NonNull ContainerInput containerInput, @NonNull Player player) {
+        sentTieredError = false;
+        super.clicked(slotIndex, buttonNum, containerInput, player);
+    }
+
+    @Override
     public void broadcastChanges() {
         super.broadcastChanges();
 
-        Player player = playerInventory.player;
         if (player.level().isClientSide() || !(player instanceof ServerPlayer serverPlayer)) return;
 
         for (int i = 0; i < container.getContainerSize(); i++) {

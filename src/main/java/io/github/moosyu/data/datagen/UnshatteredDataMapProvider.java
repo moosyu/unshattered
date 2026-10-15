@@ -152,6 +152,9 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         setBaseData(UnshatteredItems.FIGSTONE.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 204800);
         setBaseData(UnshatteredItems.PLASMA.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 20000);
         setBaseData(UnshatteredItems.BEJEWELED_HANDLE.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 10000);
+        setBaseData(UnshatteredItems.BAT_ARTIFACT.get(), ItemType.TALISMAN, UnshatteredRarity.EPIC, 35000);
+        setBaseData(UnshatteredItems.GREEN_CANDY.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 500);
+        setBaseData(UnshatteredItems.PURPLE_CANDY.get(), ItemType.MATERIAL, UnshatteredRarity.EPIC, 5000);
 
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK, new ItemRange(UnshatteredItems.FIG_LOG.get()), PlayerSkillsAttachment.Skill.FORAGING, 15);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_STONE_BLOCK, new ItemRange(Items.COBBLESTONE), PlayerSkillsAttachment.Skill.MINING, 1);
@@ -213,7 +216,7 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                                 new DropData(new ItemRange(UnshatteredItems.ENCHANTED_HAY_BALE.get()), 0.00001f)
                         )), false
                 ).add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_CARROT_BLOCK.get()),
-                        new BlockBreakData(PlayerSkillsAttachment.Skill.FARMING, 8, List.of(new DropData(new ItemRange(Items.WHEAT, 2, 5)),
+                        new BlockBreakData(PlayerSkillsAttachment.Skill.FARMING, 8, List.of(new DropData(new ItemRange(Items.CARROT, 2, 5)),
                                 new DropData(new ItemRange(UnshatteredItems.ENCHANTED_CARROT.get(), 1, 2), 0.001f),
                                 new DropData(new ItemRange(UnshatteredItems.ENCHANTED_CARROT.get(), 10, 14), 0.0001f),
                                 new DropData(new ItemRange(UnshatteredItems.ENCHANTED_GOLDEN_CARROT.get()), 0.00001f)
@@ -261,10 +264,10 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                                 new DropData(new ItemRange(UnshatteredItems.ENCHANTED_COOKIE.get(), 3, 6), 0.00001f)
                         )), false
                 ).add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_MELON_BLOCK.get()),
-                        new BlockBreakData(PlayerSkillsAttachment.Skill.FARMING, 8, List.of(new DropData(new ItemRange(Items.COCOA_BEANS, 3, 7)),
-                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_COCOA_BEANS.get(), 5, 10), 0.001f),
-                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_COCOA_BEANS.get(), 17, 23), 0.0001f),
-                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_COOKIE.get(), 1, 3), 0.00001f)
+                        new BlockBreakData(PlayerSkillsAttachment.Skill.FARMING, 8, List.of(new DropData(new ItemRange(Items.MELON_SLICE, 3, 7)),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_MELON_SLICE.get(), 5, 10), 0.001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_MELON_SLICE.get(), 17, 23), 0.0001f),
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_MELON.get(), 1, 3), 0.00001f)
                         )), false
                 ).add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_PUMPKIN_BLOCK.get()),
                         new BlockBreakData(PlayerSkillsAttachment.Skill.FARMING, 9, List.of(new DropData(new ItemRange(Items.PUMPKIN)),
@@ -973,7 +976,8 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.BROKEN_MITHRIL_PICKAXE.get()), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("broken_mithril_pickaxe_mithril_speed"), 0, 0, 0, true), false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.BANDAGED_MITHRIL_PICKAXE.get()), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("bandaged_mithril_pickaxe_mithril_speed"), 0, 0, 0, true), false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.MITHRIL_PICKAXE.get()), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("mithril_pickaxe_mithril_speed"), 0, 0, 0, true), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.MITHRIL_DRILL_SX_R226.get()), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("r226_junkie"), 0, 0, 0, true), false);
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.MITHRIL_DRILL_SX_R226.get()), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("r226_junkie"), 0, 0, 0, true), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.BAT_ARTIFACT.get()), new ItemAbility("bat_artifact_leech"), false);
 
         for (Item wool : UnshatteredUtils.WOOL_TYPES) {
             setBaseData(wool, ItemType.MATERIAL, 2);
