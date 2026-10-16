@@ -12,6 +12,7 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundContainerClosePacket;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
@@ -113,8 +114,11 @@ public class UnshatteredTabs {
         }
 
         if (player.containerMenu != player.inventoryMenu) {
+            AbstractContainerMenu oldMenu = player.containerMenu;
             // so the cursor doesnt reset
-            player.connection.send(new ServerboundContainerClosePacket(player.containerMenu.containerId));
+            player.connection.send(new ServerboundContainerClosePacket(oldMenu.containerId));
+            // the inventory menu doesnt seem to update on the clientside so this (should) fix that
+            player.inventoryMenu.setCarried(oldMenu.getCarried());
+            player.containerMenu = player.inventoryMenu;
         }
-    }
-}
+    }}

@@ -1,5 +1,7 @@
 {
-  "description": "enchantment.minecraft.bane_of_arthropods",
+  "description": {
+    "translate": "enchantment.minecraft.bane_of_arthropods"
+  },
   "exclusive_set": "#minecraft:exclusive_set/damage",
   "supported_items": "#minecraft:enchantable/sharp_weapon",
   "weight": 1,

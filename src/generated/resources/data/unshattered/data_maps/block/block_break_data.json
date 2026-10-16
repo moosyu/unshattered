@@ -155,7 +155,7 @@
         {
           "drop_chance": 1.0,
           "item_range": {
-            "item": "minecraft:wheat",
+            "item": "minecraft:carrot",
             "max_amount": 5,
             "min_amount": 2
           }

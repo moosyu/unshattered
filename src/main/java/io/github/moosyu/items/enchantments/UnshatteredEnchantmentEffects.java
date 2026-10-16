@@ -133,7 +133,32 @@ public interface UnshatteredEnchantmentEffects {
 
                 @Override
                 public float initialCarpentryExperience() {
+                    // wont be crafted anyways...
                     return 0;
+                }
+            }),
+
+            Map.entry(Enchantments.PROTECTION, new UnshatteredComplexEffect<>() {
+                @Override
+                public Component getEffectDescription(int level) {
+                    return Component.literal("Grants ").withColor(0xFFAAAAAA)
+                            .append(Component.literal("+" + getEffectBonus(level) + " " + UnshatteredAttributeValues.DEFENCE.symbol).withColor(UnshatteredAttributeValues.DEFENCE.color))
+                            .append(Component.literal(".").withColor(0xFFAAAAAA));
+                }
+
+                @Override
+                public float initialCarpentryExperience() {
+                    return 5120.0f;
+                }
+
+                @Override
+                public boolean checkPassesEffectRequirement(Player player, Object context) {
+                    return true;
+                }
+
+                @Override
+                public double getEffectBonus(int level) {
+                    return 4 * level;
                 }
             })
     );
