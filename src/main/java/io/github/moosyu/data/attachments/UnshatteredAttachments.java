@@ -118,4 +118,6 @@ public final class UnshatteredAttachments {
     );
 
     public static final Supplier<AttachmentType<SackOfSacksContainer>> PLAYER_SACK_OF_SACKS_STORAGE = ATTACHMENT_TYPES.register("player_sack_of_sacks_storage", () -> AttachmentType.serializable(SackOfSacksContainer::new).build());
+
+    public static final Supplier<AttachmentType<BlockPos>> MOB_SPAWN_BLOCK_POS = ATTACHMENT_TYPES.register("mob_spawn_blockPos", () -> AttachmentType.builder(() -> BlockPos.ZERO).build());
 }

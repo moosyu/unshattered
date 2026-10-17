@@ -1,6 +1,7 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.data.regen.RegenSavedData;
+import io.github.moosyu.spawning.SpawnManager;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Mth;

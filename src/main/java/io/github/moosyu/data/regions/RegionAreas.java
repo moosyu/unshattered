@@ -2,13 +2,14 @@ package io.github.moosyu.data.regions;
 
 import io.github.moosyu.data.attachments.PlayerRegionAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
+import io.github.moosyu.events.DataPackRegistryHandler;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import org.joml.Vector2i;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public final class RegionAreas {
     public static final int REGION_CHUNK_SIZE = 256;
@@ -101,5 +102,46 @@ public final class RegionAreas {
         }
 
         updatePlayerRegionAttachment(player, selectedBoundary);
+    }
+
+    public static Set<Region> getSurroundingRegions(ServerPlayer player) {
+        if (chunks == null || player.level().isClientSide()) {
+            return Set.of();
+        }
+
+        // multiplied by 16 because a chunk is 16 blocks
+        int searchBlocksRadius = player.level().getServer().getPlayerList().getSimulationDistance() * 16;
+        Vector2i searchTopLeft = new Vector2i(player.blockPosition().getX() - searchBlocksRadius, player.blockPosition().getZ() - searchBlocksRadius);
+        Vector2i searchBottomRight = new Vector2i(player.blockPosition().getX() + searchBlocksRadius, player.blockPosition().getZ() + searchBlocksRadius);
+
+        Set<RegionBoundary> candidates = new HashSet<>();
+        for (int i = Mth.clamp(Math.floorDiv(searchTopLeft.x - worldMinX, REGION_CHUNK_SIZE), 0, chunks.length - 1);
+             i <= Mth.clamp(Math.floorDiv(searchBottomRight.x - worldMinX, REGION_CHUNK_SIZE), 0, chunks.length - 1);
+             i++
+        ) {
+            for (int j = Mth.clamp(Math.floorDiv(searchTopLeft.y - worldMinZ, REGION_CHUNK_SIZE), 0, chunks[0].length - 1);
+                 j <= Mth.clamp(Math.floorDiv(searchBottomRight.y - worldMinZ, REGION_CHUNK_SIZE), 0, chunks[0].length - 1);
+                 j++
+            ) {
+                candidates.addAll(chunks[i][j]);
+            }
+        }
+
+        Set<Region> regions = new HashSet<>();
+        for (RegionBoundary boundary : candidates) {
+            BoundaryCoordinates boundaryCoordinates = boundary.boundaryCoordinates();
+
+            if (boundaryCoordinates.minY() <= (player.blockPosition().getY() + searchBlocksRadius)
+                    && boundaryCoordinates.maxY() >= (player.blockPosition().getY() - searchBlocksRadius)
+                    && checkRectangleOverlap(searchTopLeft,
+                    searchBottomRight,
+                    boundaryCoordinates.topLeftCornerCoordinates(),
+                    boundaryCoordinates.bottomRightCornerCoordinates()
+            )) {
+                regions.add(boundary.region().value());
+            }
+        }
+
+        return regions;
     }
 }

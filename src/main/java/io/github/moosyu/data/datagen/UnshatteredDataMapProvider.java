@@ -12,6 +12,8 @@ import io.github.moosyu.data.drops.MobItemDropData;
 import io.github.moosyu.data.drops.MobRewardData;
 import io.github.moosyu.data.fishing.FishingConditions;
 import io.github.moosyu.data.fishing.FishingWeightEntry;
+import io.github.moosyu.data.regions.Region;
+import io.github.moosyu.data.regions.UnshatteredRegions;
 import io.github.moosyu.entities.UnshatteredEntities;
 import io.github.moosyu.items.ItemRange;
 import io.github.moosyu.items.ItemType;
@@ -27,10 +29,13 @@ import io.github.moosyu.items.tools.rods.UnshatteredRod;
 import io.github.moosyu.items.weapons.daggers.EmeraldDagger;
 import io.github.moosyu.items.weapons.swords.RogueSword;
 import io.github.moosyu.items.weapons.swords.UndeadSword;
+import io.github.moosyu.spawning.EntitySpawnPoint;
 import io.github.moosyu.util.UnshatteredUtils;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -1018,6 +1023,8 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         createEntityNPCData(UnshatteredEntities.WOOL_WEAVER.get(), "wool_weaver", UnshatteredUtils.WHITE);
 
         createBlockNPCData(UnshatteredBlocks.ROCK_TALKABLE_BLOCK.get(), 0xFFFFFFFF);
+
+        createMobSpawnData(UnshatteredRegions.DEFAULT_REGION, EntityType.ZOMBIE, 263, 65, -228);
     }
 
     private void createSimpleBlockDropData(DataMapProvider.Builder<BlockBreakData, Block> builder, DeferredBlock<Block> block, ItemRange itemRange, PlayerSkillsAttachment.Skill skill, float expAmount) {
@@ -1042,5 +1049,9 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
 
     private void createBlockNPCData(Block block, int colour) {
         builder(BLOCK_NPC_DATA).add(BuiltInRegistries.BLOCK.wrapAsHolder(block), colour, false);
+    }
+
+    private void createMobSpawnData(ResourceKey<Region> region, EntityType<?> entityType, int x, int y, int z) {
+        builder(MOB_SPAWN_DATA).add(region, new EntitySpawnPoint(entityType, new BlockPos(x, y, z)), false);
     }
 }

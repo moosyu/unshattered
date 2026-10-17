@@ -5,8 +5,11 @@ import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.drops.BlockBreakData;
 import io.github.moosyu.data.drops.MobRewardData;
 import io.github.moosyu.data.fishing.FishingWeightEntry;
+import io.github.moosyu.data.regions.Region;
+import io.github.moosyu.events.DataPackRegistryHandler;
 import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.UnshatteredRarity;
+import io.github.moosyu.spawning.EntitySpawnPoint;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
@@ -106,4 +109,10 @@ public final class UnshatteredDataMaps {
             Registries.BLOCK,
             Codec.INT
     ).synced(Codec.INT, true).build();
+
+    public static final DataMapType<Region, EntitySpawnPoint> MOB_SPAWN_DATA = DataMapType.builder(
+            UnshatteredUtils.getUnshatteredIdentifier("mob_spawn_data"),
+            DataPackRegistryHandler.REGION_REGISTRY_KEY,
+            EntitySpawnPoint.CODEC
+    ).build();
 }
