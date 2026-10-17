@@ -2,6 +2,7 @@ package io.github.moosyu.data.regions;
 
 import io.github.moosyu.data.attachments.PlayerRegionAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import org.joml.Vector2i;
@@ -70,27 +71,31 @@ public final class RegionAreas {
                 && Math.max(aTopLeft.y, aBottomRight.y) >= Math.min(bTopLeft.y, bBottomRight.y);
     }
 
-    public static boolean containsPoint(BoundaryCoordinates boundaryCoordinates, int x, int z) {
-        return x >= Math.min(boundaryCoordinates.topLeftCornerCoordinates().x, boundaryCoordinates.bottomRightCornerCoordinates().x)
-                && x <= Math.max(boundaryCoordinates.topLeftCornerCoordinates().x, boundaryCoordinates.bottomRightCornerCoordinates().x)
-                && z >= Math.min(boundaryCoordinates.topLeftCornerCoordinates().y, boundaryCoordinates.bottomRightCornerCoordinates().y)
-                && z <= Math.max(boundaryCoordinates.topLeftCornerCoordinates().y, boundaryCoordinates.bottomRightCornerCoordinates().y);
+    public static boolean containsPoint(BoundaryCoordinates bc, int x, int y, int z) {
+        return y >= bc.minY() && y <= bc.maxY()
+                && x >= Math.min(bc.topLeftCornerCoordinates().x, bc.bottomRightCornerCoordinates().x)
+                && x <= Math.max(bc.topLeftCornerCoordinates().x, bc.bottomRightCornerCoordinates().x)
+                && z >= Math.min(bc.topLeftCornerCoordinates().y, bc.bottomRightCornerCoordinates().y)
+                && z <= Math.max(bc.topLeftCornerCoordinates().y, bc.bottomRightCornerCoordinates().y);
     }
 
     public static void updatePlayerRegion(Player player) {
-        if (player.getData(UnshatteredAttachments.PLAYER_REGION.get()).currentBlockPos().getX() == player.blockPosition().getX()
-                && player.getData(UnshatteredAttachments.PLAYER_REGION.get()).currentBlockPos().getZ() == player.blockPosition().getZ()
-        ) return;
+        BlockPos blockPos = player.blockPosition();
+        if (player.getData(UnshatteredAttachments.PLAYER_REGION.get()).currentBlockPos().equals(blockPos)) {
+            return;
+        }
 
-        int blockX = player.getBlockX();
-        int blockZ = player.getBlockZ();
+        int blockX = blockPos.getX();
+        int blockY = blockPos.getY();
+        int blockZ = blockPos.getZ();
         int chunkX = Mth.clamp(Math.floorDiv(blockX - worldMinX, REGION_CHUNK_SIZE), 0, chunks.length - 1);
         int chunkZ = Mth.clamp(Math.floorDiv(blockZ - worldMinZ, REGION_CHUNK_SIZE), 0, chunks[0].length - 1);
         RegionBoundary selectedBoundary = null;
 
         for (RegionBoundary regionBoundary : chunks[chunkX][chunkZ]) {
-            if (!containsPoint(regionBoundary.boundaryCoordinates(), blockX, blockZ)) continue;
-            if (selectedBoundary == null || regionBoundary.boundaryCoordinates().priority() > selectedBoundary.boundaryCoordinates().priority()) {
+            BoundaryCoordinates bc = regionBoundary.boundaryCoordinates();
+            if (!containsPoint(bc, blockX, blockY, blockZ)) continue;
+            if (selectedBoundary == null || bc.priority() > selectedBoundary.boundaryCoordinates().priority()) {
                 selectedBoundary = regionBoundary;
             }
         }

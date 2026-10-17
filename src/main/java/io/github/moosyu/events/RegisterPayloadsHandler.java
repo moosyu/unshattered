@@ -1,6 +1,7 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.abilities.*;
+import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.attachments.*;
 import io.github.moosyu.data.recipes.ForgeRecipe;
 import io.github.moosyu.gui.menus.ReforgeAnvilMenu;
@@ -280,7 +281,7 @@ public class RegisterPayloadsHandler {
                             )
                     );
 
-                    context.player().getData(UnshatteredAttachments.PLAYER_SKILLS.get()).addExp(PlayerSkillsAttachment.Skill.CARPENTRY, (float) (UnshatteredUtils.getItemSellValue(data.claimedItem()) * 0.1), context.player());
+                    context.player().getData(UnshatteredAttachments.PLAYER_SKILLS.get()).addExp(PlayerSkillsAttachment.Skill.CARPENTRY, (float) (UnshatteredUtils.getItemSellValue(data.claimedItem()) * 0.1), context.player(), UnshatteredAttributeValues.CARPENTRY_WISDOM.holder);
                     context.player().syncData(UnshatteredAttachments.PLAYER_SKILLS.get());
                     UnshatteredUtils.givePlayerHarvestedItemStack(context.player(), claimedItem);
                 })

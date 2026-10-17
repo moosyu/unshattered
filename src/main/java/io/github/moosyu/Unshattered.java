@@ -29,11 +29,11 @@ public class Unshattered {
 
     public Unshattered(IEventBus modEventBus, ModContainer modContainer) {
         BLOCKS.register(modEventBus);
-        ITEMS.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
         ATTACHMENT_TYPES.register(modEventBus);
         UnshatteredAttributes.registerAll();
         ATTRIBUTES.register(modEventBus);
+        ITEMS.register(modEventBus);
         DATA_COMPONENTS.register(modEventBus);
         ENTITY_TYPES.register(modEventBus);
         SOUND_EVENTS.register(modEventBus);

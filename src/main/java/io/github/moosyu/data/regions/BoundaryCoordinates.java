@@ -1,6 +1,7 @@
 package io.github.moosyu.data.regions;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.moosyu.Unshattered;
 import io.github.moosyu.util.UnshatteredCodecs;
@@ -22,13 +23,25 @@ import static io.github.moosyu.events.DataPackRegistryHandler.REGION_BOUNDARY_RE
  * @param bottomRightCornerCoordinates
  * @param priority whether this takes priority over other regions the player is in. highest priority wins. two regions with the same priority wont throw an error but which region is picked becomes unpredictable.
  */
-public record BoundaryCoordinates(Vector2i topLeftCornerCoordinates, Vector2i bottomRightCornerCoordinates, int priority) {
-    public static final Codec<BoundaryCoordinates> CODEC = RecordCodecBuilder.create(instance ->
+public record BoundaryCoordinates(Vector2i topLeftCornerCoordinates, Vector2i bottomRightCornerCoordinates, int minY, int maxY, int priority) {
+    /**
+     * for boundary areas with only one level
+     */
+    public BoundaryCoordinates(Vector2i topLeftCornerCoordinates, Vector2i bottomRightCornerCoordinates, int priority) {
+        this(topLeftCornerCoordinates, bottomRightCornerCoordinates, Integer.MIN_VALUE, Integer.MAX_VALUE, priority);
+    }
+
+    public static final Codec<BoundaryCoordinates> CODEC = RecordCodecBuilder.<BoundaryCoordinates>create(instance ->
             instance.group(
                     UnshatteredCodecs.VECTOR_2I_CODEC.fieldOf("top_left_corner_coordinates").forGetter(BoundaryCoordinates::topLeftCornerCoordinates),
                     UnshatteredCodecs.VECTOR_2I_CODEC.fieldOf("bottom_right_corner_coordinates").forGetter(BoundaryCoordinates::bottomRightCornerCoordinates),
+                    Codec.INT.optionalFieldOf("min_y", Integer.MIN_VALUE).forGetter(BoundaryCoordinates::minY),
+                    Codec.INT.optionalFieldOf("max_y", Integer.MAX_VALUE).forGetter(BoundaryCoordinates::maxY),
                     Codec.INT.fieldOf("priority").forGetter(BoundaryCoordinates::priority)
             ).apply(instance, BoundaryCoordinates::new)
+    ).validate(bc -> bc.minY() <= bc.maxY()
+            ? DataResult.success(bc)
+            : DataResult.error(() -> "min_y (" + bc.minY() + ") must be <= max_y (" + bc.maxY() + ")")
     );
 
     /**

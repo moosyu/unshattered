@@ -1,6 +1,7 @@
 package io.github.moosyu.entities;
 
 import io.github.moosyu.entities.mobs.GraveyardZombieVillager;
+import io.github.moosyu.entities.mobs.SneakyCreeper;
 import io.github.moosyu.entities.npcs.*;
 import io.github.moosyu.entities.projectiles.HomingBee;
 import io.github.moosyu.util.UnshatteredUtils;
@@ -113,5 +114,14 @@ public class UnshatteredEntities {
                             Registries.ENTITY_TYPE,
                             JennyNPC.JENNY_IDENTIFIER)
                     )
+    );
+
+    public static final Supplier<EntityType<SneakyCreeper>> SNEAKY_CREEPER = ENTITY_TYPES.register(
+            "sneaky_creeper",
+            () -> EntityType.Builder.of(SneakyCreeper::new, MobCategory.MONSTER)
+                    .sized(0.6f, 1.7f)
+                    .clientTrackingRange(8)
+                    .notInPeaceful()
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("sneaky_creeper")))
     );
 }

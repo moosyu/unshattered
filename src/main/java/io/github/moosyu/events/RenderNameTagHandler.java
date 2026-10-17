@@ -36,7 +36,7 @@ public class RenderNameTagHandler {
         Player player = minecraft.player;
         Entity entity = event.getEntity();
 
-        if (player == null || entity.distanceToSqr(player) > 512 || entity instanceof Player) {
+        if (player == null || entity.distanceToSqr(player) > 512 || entity instanceof Player || entity.isInvisible()) {
             event.setCanRender(TriState.FALSE);
             return;
         }

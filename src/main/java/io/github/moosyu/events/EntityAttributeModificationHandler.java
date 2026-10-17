@@ -37,6 +37,13 @@ public class EntityAttributeModificationHandler {
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.FISHING_FORTUNE.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.BREAKING_POWER.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributeValues.COMBAT_WISDOM.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributeValues.FARMING_WISDOM.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributeValues.FISHING_WISDOM.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributeValues.MINING_WISDOM.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributeValues.FORAGING_WISDOM.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributeValues.MAGECRAFT_WISDOM.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributeValues.CARPENTRY_WISDOM.holder);
 
         event.add(EntityType.ZOMBIE, UnshatteredAttributeValues.HEALTH.holder, 20.0);
         event.add(EntityType.ZOMBIE, UnshatteredAttributeValues.DAMAGE.holder, 5.0d);
@@ -62,24 +69,6 @@ public class EntityAttributeModificationHandler {
         event.add(EntityType.SQUID, UnshatteredAttributeValues.HEALTH.holder, 10.0d);
 
         event.add(EntityType.GLOW_SQUID, UnshatteredAttributeValues.HEALTH.holder, 40.0d);
-
-        event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), UnshatteredAttributeValues.HEALTH.holder, 80.0d);
-        event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), UnshatteredAttributeValues.DAMAGE.holder, 20.0d);
-        event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), Attributes.MAX_HEALTH, 1.0d);
-        event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), Attributes.FOLLOW_RANGE, 1.0d);
-        event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), Attributes.WAYPOINT_TRANSMIT_RANGE, 1.0d);
-        event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), Attributes.WAYPOINT_RECEIVE_RANGE, 1.0d);
-        event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), Attributes.STEP_HEIGHT, 0.0d);
-        event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), Attributes.MOVEMENT_EFFICIENCY, 0.0d);
-        event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), Attributes.MOVEMENT_SPEED, 0.7d);
-        event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), Attributes.SCALE, 1.0d);
-        event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), Attributes.GRAVITY, 0.08d);
-        event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), Attributes.ARMOR, 0.0d);
-        event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), Attributes.ARMOR_TOUGHNESS, 0.0d);
-        event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), Attributes.MAX_ABSORPTION, 0.0d);
-        event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), Attributes.KNOCKBACK_RESISTANCE, 0.0d);
-        event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), Attributes.SAFE_FALL_DISTANCE, 1024.0d);
-        event.add(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), Attributes.FALL_DAMAGE_MULTIPLIER, 0.0d);
 
         event.add(EntityType.MOOSHROOM, UnshatteredAttributeValues.HEALTH.holder, 10.0d);
 

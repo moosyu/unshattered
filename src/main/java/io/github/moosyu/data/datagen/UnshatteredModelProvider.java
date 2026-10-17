@@ -388,6 +388,11 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.BAT_ARTIFACT.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.GREEN_CANDY.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.PURPLE_CANDY.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.LAPIS_HELMET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.LAPIS_CHESTPLATE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.LAPIS_LEGGINGS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.LAPIS_BOOTS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_GUNPOWDER.get(), Items.GUNPOWDER, ModelTemplates.FLAT_ITEM);
     }
 
     /**

@@ -118,43 +118,48 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         setBaseData(Items.CROSSBOW, ItemType.CROSSBOW, UnshatteredRarity.UNCOMMON, 100);
         setBaseData(Items.POPPY, ItemType.FUEL, UnshatteredRarity.COMMON, 2);
         setBaseData(Items.DANDELION, ItemType.FUEL, UnshatteredRarity.COMMON, 2);
-        setBaseData(UnshatteredItems.ENCHANTED_WHEAT.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 960);
-        setBaseData(UnshatteredItems.ENCHANTED_CARROT.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 480);
-        setBaseData(UnshatteredItems.ENCHANTED_POTATO.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 480);
-        setBaseData(UnshatteredItems.ROOKIE_HOE.get(), ItemType.HOE, UnshatteredRarity.COMMON, 3);
+        setBaseData(UnshatteredItems.ENCHANTED_WHEAT, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 960);
+        setBaseData(UnshatteredItems.ENCHANTED_CARROT, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 480);
+        setBaseData(UnshatteredItems.ENCHANTED_POTATO, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 480);
+        setBaseData(UnshatteredItems.ROOKIE_HOE, ItemType.HOE, UnshatteredRarity.COMMON, 3);
         setBaseData(Items.MELON_SLICE, ItemType.MATERIAL, UnshatteredRarity.COMMON, 2);
-        setBaseData(UnshatteredItems.ENCHANTED_MELON_SLICE.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 320);
-        setBaseData(UnshatteredItems.ENCHANTED_MELON.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 51200);
+        setBaseData(UnshatteredItems.ENCHANTED_MELON_SLICE, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 320);
+        setBaseData(UnshatteredItems.ENCHANTED_MELON, ItemType.MATERIAL, UnshatteredRarity.RARE, 51200);
         setBaseData(Items.SUGAR_CANE, ItemType.MATERIAL, UnshatteredRarity.COMMON, 4);
-        setBaseData(UnshatteredItems.ENCHANTED_SUGAR.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 640);
-        setBaseData(UnshatteredItems.ENCHANTED_SUGAR_CANE.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 102400);
+        setBaseData(UnshatteredItems.ENCHANTED_SUGAR, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 640);
+        setBaseData(UnshatteredItems.ENCHANTED_SUGAR_CANE, ItemType.MATERIAL, UnshatteredRarity.RARE, 102400);
         setBaseData(Items.PUMPKIN, ItemType.MATERIAL, UnshatteredRarity.COMMON, 10);
         setBaseData(UnshatteredItems.ENCHANTED_PUMPKIN, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 1600);
         setBaseData(Items.COCOA_BEANS, ItemType.MATERIAL, UnshatteredRarity.COMMON, 3);
-        setBaseData(UnshatteredItems.ENCHANTED_COCOA_BEANS.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 480);
-        setBaseData(UnshatteredItems.ENCHANTED_COOKIE.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 76800);
+        setBaseData(UnshatteredItems.ENCHANTED_COCOA_BEANS, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 480);
+        setBaseData(UnshatteredItems.ENCHANTED_COOKIE, ItemType.MATERIAL, UnshatteredRarity.RARE, 76800);
         setBaseData(Items.RED_MUSHROOM, ItemType.MATERIAL, UnshatteredRarity.COMMON, 10);
         setBaseData(Items.BROWN_MUSHROOM, ItemType.MATERIAL, UnshatteredRarity.COMMON, 10);
-        setBaseData(UnshatteredItems.ENCHANTED_RED_MUSHROOM.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 1600);
-        setBaseData(UnshatteredItems.ENCHANTED_BROWN_MUSHROOM.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 1600);
-        setBaseData(UnshatteredItems.ENCHANTED_RED_MUSHROOM_BLOCK.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 256000);
-        setBaseData(UnshatteredItems.ENCHANTED_BROWN_MUSHROOM_BLOCK.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 256000);
+        setBaseData(UnshatteredItems.ENCHANTED_RED_MUSHROOM, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 1600);
+        setBaseData(UnshatteredItems.ENCHANTED_BROWN_MUSHROOM, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 1600);
+        setBaseData(UnshatteredItems.ENCHANTED_RED_MUSHROOM_BLOCK, ItemType.MATERIAL, UnshatteredRarity.RARE, 256000);
+        setBaseData(UnshatteredItems.ENCHANTED_BROWN_MUSHROOM_BLOCK, ItemType.MATERIAL, UnshatteredRarity.RARE, 256000);
         setBaseData(Items.SAND, ItemType.MATERIAL, UnshatteredRarity.COMMON, 2);
-        setBaseData(UnshatteredItems.ENCHANTED_SAND.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 320);
+        setBaseData(UnshatteredItems.ENCHANTED_SAND, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 320);
         setBaseData(Items.CACTUS, ItemType.MATERIAL, UnshatteredRarity.COMMON, 4);
-        setBaseData(UnshatteredItems.ENCHANTED_CACTUS_GREEN.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 640);
-        setBaseData(UnshatteredItems.ENCHANTED_CACTUS.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 102400);
-        setBaseData(UnshatteredItems.ENCHANTED_BAKED_POTATO.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 76800);
-        setBaseData(UnshatteredItems.ENCHANTED_HAY_BALE.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 153600);
-        setBaseData(UnshatteredItems.ENCHANTED_GOLDEN_CARROT.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 61440);
-        setBaseData(UnshatteredItems.POLISHED_PUMPKIN.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 256000);
-        setBaseData(UnshatteredItems.STRETCHING_STICK.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 2000);
-        setBaseData(UnshatteredItems.FIGSTONE.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 204800);
-        setBaseData(UnshatteredItems.PLASMA.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 20000);
-        setBaseData(UnshatteredItems.BEJEWELED_HANDLE.get(), ItemType.MATERIAL, UnshatteredRarity.RARE, 10000);
-        setBaseData(UnshatteredItems.BAT_ARTIFACT.get(), ItemType.TALISMAN, UnshatteredRarity.EPIC, 35000);
-        setBaseData(UnshatteredItems.GREEN_CANDY.get(), ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 500);
-        setBaseData(UnshatteredItems.PURPLE_CANDY.get(), ItemType.MATERIAL, UnshatteredRarity.EPIC, 5000);
+        setBaseData(UnshatteredItems.ENCHANTED_CACTUS_GREEN, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 640);
+        setBaseData(UnshatteredItems.ENCHANTED_CACTUS, ItemType.MATERIAL, UnshatteredRarity.RARE, 102400);
+        setBaseData(UnshatteredItems.ENCHANTED_BAKED_POTATO, ItemType.MATERIAL, UnshatteredRarity.RARE, 76800);
+        setBaseData(UnshatteredItems.ENCHANTED_HAY_BALE, ItemType.MATERIAL, UnshatteredRarity.RARE, 153600);
+        setBaseData(UnshatteredItems.ENCHANTED_GOLDEN_CARROT, ItemType.MATERIAL, UnshatteredRarity.RARE, 61440);
+        setBaseData(UnshatteredItems.POLISHED_PUMPKIN, ItemType.MATERIAL, UnshatteredRarity.RARE, 256000);
+        setBaseData(UnshatteredItems.STRETCHING_STICK, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 2000);
+        setBaseData(UnshatteredItems.FIGSTONE, ItemType.MATERIAL, UnshatteredRarity.RARE, 204800);
+        setBaseData(UnshatteredItems.PLASMA, ItemType.MATERIAL, UnshatteredRarity.RARE, 20000);
+        setBaseData(UnshatteredItems.BEJEWELED_HANDLE, ItemType.MATERIAL, UnshatteredRarity.RARE, 10000);
+        setBaseData(UnshatteredItems.BAT_ARTIFACT, ItemType.TALISMAN, UnshatteredRarity.EPIC, 35000);
+        setBaseData(UnshatteredItems.GREEN_CANDY, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 500);
+        setBaseData(UnshatteredItems.PURPLE_CANDY, ItemType.MATERIAL, UnshatteredRarity.EPIC, 5000);
+        setBaseData(UnshatteredItems.LAPIS_HELMET, ItemType.HELMET, UnshatteredRarity.UNCOMMON, 1000);
+        setBaseData(UnshatteredItems.LAPIS_CHESTPLATE, ItemType.CHESTPLATE, UnshatteredRarity.UNCOMMON, 1000);
+        setBaseData(UnshatteredItems.LAPIS_LEGGINGS, ItemType.LEGGINGS, UnshatteredRarity.UNCOMMON, 1000);
+        setBaseData(UnshatteredItems.LAPIS_BOOTS, ItemType.BOOTS, UnshatteredRarity.UNCOMMON, 1000);
+        setBaseData(UnshatteredItems.ENCHANTED_GUNPOWDER, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 640);
 
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK, new ItemRange(UnshatteredItems.FIG_LOG.get()), PlayerSkillsAttachment.Skill.FORAGING, 15);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_STONE_BLOCK, new ItemRange(Items.COBBLESTONE), PlayerSkillsAttachment.Skill.MINING, 1);
@@ -310,8 +315,7 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         8,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         6.0f
-                ), false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SKELETON), new MobRewardData(
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SKELETON), new MobRewardData(
                         List.of(new MobItemDropData(Items.BONE, 1, 2, 1.0f, false),
                                 new MobItemDropData(Items.CROSSBOW, 1, 0.001f, true)
                         ),
@@ -319,15 +323,13 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         8,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         6.0f
-                ), false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SLIME), new MobRewardData(
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SLIME), new MobRewardData(
                         List.of(new MobItemDropData(Items.SLIME_BALL, false)),
                         1,
                         8,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         6.0f
-                ), false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SPIDER), new MobRewardData(
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SPIDER), new MobRewardData(
                         List.of(new MobItemDropData(Items.STRING, false),
                                 new MobItemDropData(Items.SPIDER_EYE, 0.5f, false)
                         ),
@@ -335,8 +337,7 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         8,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         8.0f
-                ), false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.CAVE_SPIDER), new MobRewardData(
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.CAVE_SPIDER), new MobRewardData(
                         List.of(new MobItemDropData(Items.STRING, false),
                                 new MobItemDropData(Items.SPIDER_EYE, 0.5f, false)
                         ),
@@ -344,8 +345,7 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         8,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         8.0f
-                ), false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.WITCH), new MobRewardData(
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.WITCH), new MobRewardData(
                         List.of(new MobItemDropData(Items.GUNPOWDER, 0.5f, false),
                                 new MobItemDropData(Items.GLOWSTONE_DUST, 0.5f, false),
                                 new MobItemDropData(Items.GLASS_BOTTLE, 1, 2, 0.2f, false)
@@ -353,41 +353,35 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         1,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         15.0f
-                ), false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.ENDERMAN), new MobRewardData(
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.ENDERMAN), new MobRewardData(
                         List.of(new MobItemDropData(Items.ENDER_PEARL, false)),
                         2,
                         12,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         15.0f
-                ), false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.BAT), new MobRewardData(
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.BAT), new MobRewardData(
                         List.of(new MobItemDropData(UnshatteredItems.BAT_TALISMAN.get(), 0.01f, true)),
                         100,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         33.0f
-                ), false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.CREEPER), new MobRewardData(
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.CREEPER), new MobRewardData(
                         List.of(new MobItemDropData(Items.GUNPOWDER, false)),
                         2,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         8.0f
-                ), false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.BLAZE), new MobRewardData(
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.BLAZE), new MobRewardData(
                         List.of(new MobItemDropData(Items.BLAZE_ROD, false)),
                         3,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         10.0f
-                ), false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SQUID), new MobRewardData(
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SQUID), new MobRewardData(
                         List.of(new MobItemDropData(Items.INK_SAC, 1, 2, 1.0f, false),
                                 new MobItemDropData(Items.LILY_PAD, false)
                         ),
                         5,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         75.0f
-                ), false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.GLOW_SQUID), new MobRewardData(
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.GLOW_SQUID), new MobRewardData(
                         List.of(new MobItemDropData(Items.INK_SAC, 3, 6, 1.0f, false),
                                 new MobItemDropData(Items.LILY_PAD, false),
                                 new MobItemDropData(UnshatteredItems.GLOW_SQUID_BOOTS.get(),  0.08f, true)
@@ -395,32 +389,28 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         5,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         36.0f
-                ), false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SHEEP), new MobRewardData(
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SHEEP), new MobRewardData(
                         List.of(new MobItemDropData(Items.MUTTON, 1, 2, 1.0f, false),
                                 new MobItemDropData(Items.WHITE_WOOL, false)
                         ),
                         0,
                         PlayerSkillsAttachment.Skill.FARMING,
                         3.0f
-                ), false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.COW), new MobRewardData(
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.COW), new MobRewardData(
                         List.of(new MobItemDropData(Items.BEEF, false),
                                 new MobItemDropData(Items.LEATHER, false)
                         ),
                         0,
                         PlayerSkillsAttachment.Skill.FARMING,
                         3.0f
-                ), false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.CHICKEN), new MobRewardData(
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.CHICKEN), new MobRewardData(
                         List.of(new MobItemDropData(Items.FEATHER, false),
                                 new MobItemDropData(Items.CHICKEN, false)
                         ),
                         0,
                         PlayerSkillsAttachment.Skill.FARMING,
                         2.0f
-                ), false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.RABBIT), new MobRewardData(
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.RABBIT), new MobRewardData(
                         List.of(new MobItemDropData(Items.RABBIT, false),
                                 new MobItemDropData(Items.RABBIT_HIDE, 0.7f, false),
                                 new MobItemDropData(Items.RABBIT_FOOT, 0.7f, false)
@@ -428,14 +418,12 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         0,
                         PlayerSkillsAttachment.Skill.FARMING,
                         5.0f
-                ), false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.PIG), new MobRewardData(
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.PIG), new MobRewardData(
                         List.of(new MobItemDropData(Items.PORKCHOP, false)),
                         0,
                         PlayerSkillsAttachment.Skill.FARMING,
                         3.0f
-                ), false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.MOOSHROOM), new MobRewardData(
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.MOOSHROOM), new MobRewardData(
                         List.of(new MobItemDropData(Items.BEEF, false),
                                 new MobItemDropData(Items.RED_MUSHROOM, 1, 4, 1.0f, false),
                                 new MobItemDropData(Items.LEATHER, false)
@@ -443,12 +431,18 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         0,
                         PlayerSkillsAttachment.Skill.FARMING,
                         5.0f
-                ), false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.ENDERMITE), new MobRewardData(
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.ENDERMITE), new MobRewardData(
                         List.of(new MobItemDropData(Items.END_STONE, 1, 2, 1.0f, false)),
                         10,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         20.0f
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.SNEAKY_CREEPER.get()), new MobRewardData(
+                        List.of(new MobItemDropData(Items.GUNPOWDER, 1.0f, false),
+                                new MobItemDropData(UnshatteredItems.ENCHANTED_GUNPOWDER, 0.005f, true)
+                        ),
+                        1,
+                        PlayerSkillsAttachment.Skill.COMBAT,
+                        7.0f
                 ), false);
 
         builder(BLOCK_BREAKING_POWER_DATA)

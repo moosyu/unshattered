@@ -74,17 +74,17 @@ public class ItemAttributeModifierHandler {
         } else if (itemStack.is(Items.IRON_HELMET)) {
             event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("iron_helmet_defence"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.HEAD);
         } else if (itemStack.is(Items.IRON_CHESTPLATE)) {
-            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("iron_chestplate_defence"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.CHEST);
+            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("iron_chestplate_defence"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.CHEST);
         } else if (itemStack.is(Items.IRON_LEGGINGS)) {
-            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("iron_leggings_defence"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.LEGS);
+            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("iron_leggings_defence"), 4, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.LEGS);
         } else if (itemStack.is(Items.IRON_BOOTS)) {
             event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("iron_boots_defence"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET);
         } else if (itemStack.is(Items.DIAMOND_HELMET)) {
             event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_helmet_defence"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.HEAD);
         } else if (itemStack.is(Items.DIAMOND_CHESTPLATE)) {
-            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_chestplate_defence"), 8, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.CHEST);
+            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_chestplate_defence"), 7, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.CHEST);
         } else if (itemStack.is(Items.DIAMOND_LEGGINGS)) {
-            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_leggings_defence"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.LEGS);
+            event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_leggings_defence"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.LEGS);
         } else if (itemStack.is(Items.DIAMOND_BOOTS)) {
             event.addModifier(UnshatteredAttributeValues.DEFENCE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_boots_defence"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET);
         } else if (itemStack.is(Items.BOW)) {

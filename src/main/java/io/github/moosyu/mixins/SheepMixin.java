@@ -1,5 +1,6 @@
 package io.github.moosyu.mixins;
 
+import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.MiscFlags;
 import io.github.moosyu.data.attachments.PlayerFlagsAttachment;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
@@ -54,11 +55,11 @@ public class SheepMixin {
             level.playSound(null, sheep, SoundEvents.SHEEP_SHEAR, soundSource, 1.0f, 1.0f);
             sheep.setSheared(true);
 
-            shearer.getData(UnshatteredAttachments.PLAYER_SKILLS.get()).addExp(PlayerSkillsAttachment.Skill.FARMING, 3, shearer);
+            shearer.getData(UnshatteredAttachments.PLAYER_SKILLS.get()).addExp(PlayerSkillsAttachment.Skill.FARMING, 3, shearer, UnshatteredAttributeValues.FARMING_WISDOM.holder);
             shearer.syncData(UnshatteredAttachments.PLAYER_SKILLS.get());
 
 
-            for (Object2IntMap.Entry<Holder<Enchantment>> entry : shearer.getMainHandItem().getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY).entrySet()) {
+            for (Object2IntMap.Entry<Holder<Enchantment>> entry : tool.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY).entrySet()) {
                 Optional<ResourceKey<Enchantment>> key = entry.getKey().unwrapKey();
                 if (key.isEmpty()) continue;
 

@@ -40,6 +40,6 @@ public record Region(int colour, RegionTemperatureTypes temperatureType, boolean
     }
 
     public static String getRegionTranslationKey(ResourceKey<Region> regionResourceKey) {
-        return "region.name.unshattered." + regionResourceKey.identifier().getPath();
+        return "region.unshattered." + regionResourceKey.identifier().getPath();
     }
 }

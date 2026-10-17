@@ -5,6 +5,7 @@ import io.github.moosyu.entities.npcs.JennyNPC;
 import io.github.moosyu.entities.renderers.GraveyardZombieVillagerRenderer;
 import io.github.moosyu.entities.renderers.HomingBeeRenderer;
 import io.github.moosyu.entities.renderers.NPCEntityRenderer;
+import net.minecraft.client.renderer.entity.CreeperRenderer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -23,5 +24,6 @@ public class EntityRenderersHandler {
         event.registerEntityRenderer(UnshatteredEntities.FORGER.get(), NPCEntityRenderer::new);
         event.registerEntityRenderer(UnshatteredEntities.BUBU.get(), NPCEntityRenderer::new);
         event.registerEntityRenderer(UnshatteredEntities.JENNY.get(), context -> new NPCEntityRenderer(context, true));
+        event.registerEntityRenderer(UnshatteredEntities.SNEAKY_CREEPER.get(), CreeperRenderer::new);
     }
 }

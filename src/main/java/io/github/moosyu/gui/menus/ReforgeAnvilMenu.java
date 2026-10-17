@@ -1,5 +1,6 @@
 package io.github.moosyu.gui.menus;
 
+import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.ItemAttachments;
@@ -50,7 +51,7 @@ public class ReforgeAnvilMenu extends ItemCombinerMenu {
     @Override
     protected void onTake(@NonNull Player player, @NonNull ItemStack itemStack) {
         if (currentEnchantment != null && !player.level().isClientSide() && player instanceof ServerPlayer) {
-            player.getData(UnshatteredAttachments.PLAYER_SKILLS.get()).addExp(PlayerSkillsAttachment.Skill.CARPENTRY, currentEnchantment.currentEnchantment().getCarpentryExperience(currentEnchantment.level), player);
+            player.getData(UnshatteredAttachments.PLAYER_SKILLS.get()).addExp(PlayerSkillsAttachment.Skill.CARPENTRY, currentEnchantment.currentEnchantment().getCarpentryExperience(currentEnchantment.level), player, UnshatteredAttributeValues.CARPENTRY_WISDOM.holder);
             player.syncData(UnshatteredAttachments.PLAYER_SKILLS.get());
         }
 

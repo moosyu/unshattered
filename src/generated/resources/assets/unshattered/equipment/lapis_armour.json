@@ -1,0 +1,19 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "unshattered:lapis"
+      }
+    ],
+    "humanoid_baby": [
+      {
+        "texture": "unshattered:lapis"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "unshattered:lapis"
+      }
+    ]
+  }
+}

@@ -26,18 +26,18 @@ import io.github.moosyu.items.weapons.shortbows.ArtisanalShortbow;
 import io.github.moosyu.items.weapons.swords.*;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.util.UnshatteredUtils;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.item.equipment.Equippable;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.items.UnshatteredArmourMaterials.GLOW_SQUID_BOOTS_MATERIAL;
-import static io.github.moosyu.items.UnshatteredArmourMaterials.LEAFLET_ARMOUR_MATERIAL;
 import static io.github.moosyu.blocks.UnshatteredBlocks.*;
 
 public class UnshatteredItems {
@@ -104,40 +104,41 @@ public class UnshatteredItems {
             12.0f
     ));
 
-    public static final DeferredItem<Item> LEAFLET_HELMET = ITEMS.registerItem("leaflet_helmet", props -> new Item(props
-            .humanoidArmor(LEAFLET_ARMOUR_MATERIAL, ArmorType.HELMET)
-            .attributes(ItemAttributeModifiers.builder().add(UnshatteredAttributeValues.HEALTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_helmet_health"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.HEAD)
+    public static final DeferredItem<Item> LEAFLET_HELMET = createSimpleArmourPiece("leaflet_helmet",
+            UnshatteredArmourMaterials.LEAFLET_MATERIAL,
+            ArmorType.HELMET,
+            ItemAttributeModifiers.builder()
+                    .add(UnshatteredAttributeValues.HEALTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_helmet_health"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.HEAD)
                     .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_helmet_foraging_fortune"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.HEAD)
                     .build()
-            )
-    ));
+    );
 
-    public static final DeferredItem<Item> LEAFLET_CHESTPLATE = ITEMS.registerItem("leaflet_chestplate", props -> new Item(props
-            .humanoidArmor(LEAFLET_ARMOUR_MATERIAL, ArmorType.CHESTPLATE)
-            .attributes(ItemAttributeModifiers.builder()
+    public static final DeferredItem<Item> LEAFLET_CHESTPLATE = createSimpleArmourPiece("leaflet_chestplate",
+            UnshatteredArmourMaterials.LEAFLET_MATERIAL,
+            ArmorType.CHESTPLATE,
+            ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.HEALTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_chestplate_health"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.CHEST)
                     .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_chestplate_foraging_fortune"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.CHEST)
                     .build()
-            )
-    ));
+    );
 
-    public static final DeferredItem<Item> LEAFLET_LEGGINGS = ITEMS.registerItem("leaflet_leggings", props -> new Item(props
-            .humanoidArmor(LEAFLET_ARMOUR_MATERIAL, ArmorType.LEGGINGS)
-            .attributes(ItemAttributeModifiers.builder()
+    public static final DeferredItem<Item> LEAFLET_LEGGINGS = createSimpleArmourPiece("leaflet_leggings",
+            UnshatteredArmourMaterials.LEAFLET_MATERIAL,
+            ArmorType.LEGGINGS,
+            ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.HEALTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_leggings_health"), 4, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.LEGS)
                     .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_leggings_foraging_fortune"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.LEGS)
                     .build()
-            )
-    ));
+    );
 
-    public static final DeferredItem<Item> LEAFLET_BOOTS = ITEMS.registerItem("leaflet_boots", props -> new Item(props
-            .humanoidArmor(LEAFLET_ARMOUR_MATERIAL, ArmorType.BOOTS)
-            .attributes(ItemAttributeModifiers.builder()
+    public static final DeferredItem<Item> LEAFLET_BOOTS = createSimpleArmourPiece("leaflet_boots",
+            UnshatteredArmourMaterials.LEAFLET_MATERIAL,
+            ArmorType.BOOTS,
+            ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.HEALTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_boots_health"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
                     .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_boots_foraging_fortune"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
                     .build()
-            )
-    ));
+    );
 
     public static final DeferredItem<EnchantedItem> BAT_THE_FISH = ITEMS.registerItem("bat_the_fish", props -> new EnchantedItem(props
             .stacksTo(1)
@@ -457,14 +458,14 @@ public class UnshatteredItems {
 
     public static final DeferredItem<Item> COINS_TALISMAN = ITEMS.registerItem("coins_talisman", CoinTalisman::new);
 
-    public static final DeferredItem<Item> GLOW_SQUID_BOOTS = ITEMS.registerItem("glow_squid_boots", props -> new Item(props
-            .humanoidArmor(GLOW_SQUID_BOOTS_MATERIAL, ArmorType.BOOTS)
-            .attributes(ItemAttributeModifiers.builder()
+    public static final DeferredItem<Item> GLOW_SQUID_BOOTS = createSimpleArmourPiece("glow_squid_boots",
+            UnshatteredArmourMaterials.GLOW_SQUID_BOOTS_MATERIAL,
+            ArmorType.BOOTS,
+            ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.FISHING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("squid_boots_fishing_fortune"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
                     .add(UnshatteredAttributeValues.HEALTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("squid_boots_health"), 12, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
                     .build()
-            )
-    ));
+    );
 
     public static final DeferredItem<BlockItem> ROCK_TALKABLE_BLOCK = ITEMS.registerSimpleBlockItem(UnshatteredBlocks.ROCK_TALKABLE_BLOCK.getDelegate());
 
@@ -733,4 +734,95 @@ public class UnshatteredItems {
     public static final DeferredItem<Item> GREEN_CANDY = ITEMS.registerItem("green_candy", Item::new);
 
     public static final DeferredItem<Item> PURPLE_CANDY = ITEMS.registerItem("purple_candy", Item::new);
+
+    public static final DeferredItem<Item> LAPIS_HELMET = createSimpleArmourPiece("lapis_helmet",
+            UnshatteredArmourMaterials.LAPIS_ARMOUR_MATERIAL,
+            ArmorType.HELMET,
+            ItemAttributeModifiers.builder()
+                    .add(UnshatteredAttributeValues.DEFENCE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_helmet_defence"), 4, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.HEAD
+                    ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_helmet_mining_speed"), 3, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.HEAD
+                    ).add(UnshatteredAttributeValues.MINING_FORTUNE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_helmet_mining_fortune"), 1, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.HEAD
+                    ).add(UnshatteredAttributeValues.MINING_WISDOM.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_helmet_mining_wisdom"), 10, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.HEAD
+                    ).build()
+    );
+
+    public static final DeferredItem<Item> LAPIS_CHESTPLATE = createSimpleArmourPiece("lapis_chestplate",
+            UnshatteredArmourMaterials.LAPIS_ARMOUR_MATERIAL,
+            ArmorType.CHESTPLATE,
+            ItemAttributeModifiers.builder()
+                    .add(UnshatteredAttributeValues.DEFENCE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_chestplate_defence"), 7, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.CHEST
+                    ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_chestplate_mining_speed"), 3, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.CHEST
+                    ).add(UnshatteredAttributeValues.MINING_FORTUNE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_chestplate_mining_fortune"), 2, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.CHEST
+                    ).add(UnshatteredAttributeValues.MINING_WISDOM.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_chestplate_mining_wisdom"), 10, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.CHEST
+                    ).build()
+    );
+
+    public static final DeferredItem<Item> LAPIS_LEGGINGS = createSimpleArmourPiece("lapis_leggings",
+            UnshatteredArmourMaterials.LAPIS_ARMOUR_MATERIAL,
+            ArmorType.LEGGINGS,
+            ItemAttributeModifiers.builder()
+                    .add(UnshatteredAttributeValues.DEFENCE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_leggings_defence"), 6, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.LEGS
+                    ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_leggings_mining_speed"), 3, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.LEGS
+                    )
+                    .add(UnshatteredAttributeValues.MINING_FORTUNE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_leggings_mining_fortune"), 1, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.LEGS
+                    ).add(UnshatteredAttributeValues.MINING_WISDOM.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_leggings_mining_wisdom"), 10, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.LEGS
+                    ).build()
+    );
+
+    public static final DeferredItem<Item> LAPIS_BOOTS = createSimpleArmourPiece("lapis_boots",
+            UnshatteredArmourMaterials.LAPIS_ARMOUR_MATERIAL,
+            ArmorType.BOOTS,
+            ItemAttributeModifiers.builder()
+                    .add(UnshatteredAttributeValues.DEFENCE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_boots_defence"), 3, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.FEET
+                    ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_boots_mining_speed"), 3, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.FEET
+                    ).add(UnshatteredAttributeValues.MINING_FORTUNE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_boots_mining_fortune"), 1, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.FEET
+                    ).add(UnshatteredAttributeValues.MINING_WISDOM.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_boots_mining_wisdom"), 10, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.FEET
+                    ).build()
+    );
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_GUNPOWDER = ITEMS.registerItem("enchanted_gunpowder", EnchantedItem::new);
+
+    private static DeferredItem<Item> createSimpleArmourPiece(String name, UnshatteredArmourMaterials.UnshatteredArmourMaterial material, ArmorType type, ItemAttributeModifiers attributeModifiers) {
+        return ITEMS.registerItem(name, props -> new Item(props
+                .stacksTo(1)
+                .component(DataComponents.EQUIPPABLE, Equippable.builder(type.getSlot())
+                        .setEquipSound(material.equipSound())
+                        .setAsset(material.assetId())
+                        .build()
+                )
+                .attributes(attributeModifiers)
+        ));
+    }
 }

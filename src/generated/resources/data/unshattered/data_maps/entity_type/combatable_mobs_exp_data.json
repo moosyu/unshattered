@@ -569,6 +569,36 @@
       "max_coins": 8,
       "min_coins": 1,
       "skill": "combat"
+    },
+    "unshattered:sneaky_creeper": {
+      "drops": [
+        {
+          "combat_fortune_boosted": false,
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:gunpowder",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": true,
+          "drop_data": {
+            "drop_chance": 0.005,
+            "item_range": {
+              "item": "unshattered:enchanted_gunpowder",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        }
+      ],
+      "experience": 7.0,
+      "max_coins": 1,
+      "min_coins": 1,
+      "skill": "combat"
     }
   }
 }

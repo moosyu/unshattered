@@ -4,7 +4,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import static io.github.moosyu.Unshattered.MODID;
@@ -13,298 +12,305 @@ import static io.github.moosyu.items.UnshatteredItems.*;
 public class UnshatteredCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_ITEMS_TAB = CREATIVE_MODE_TABS.register("unshattered_items_tab",
-        () -> CreativeModeTab.builder()
-        .title(Component.translatable("item_group.unshattered.items"))
-        .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
-        .icon(() -> BAT_THE_FISH.get().getDefaultInstance())
-        .displayItems((_, output) -> {
-            output.accept(BAT_THE_FISH.get());
-            output.accept(CENTURY_THE_FISH.get());
-            output.accept(CHILL_THE_FISH.get());
-            output.accept(CLUNK_THE_FISH.get());
-            output.accept(DIAMOND_THE_FISH.get());
-            output.accept(DUST_THE_FISH.get());
-            output.accept(EGG_THE_FISH.get());
-            output.accept(EON_THE_FISH.get());
-            output.accept(FLAKE_THE_FISH.get());
-            output.accept(EXPERIMENT_THE_FISH.get());
-            output.accept(FOSSIL_THE_FISH.get());
-            output.accept(GABAGOOL_THE_FISH.get());
-            output.accept(GIFT_THE_FISH.get());
-            output.accept(HERRING_THE_FISH.get());
-            output.accept(NOPE_THE_FISH.get());
-            output.accept(OOPS_THE_FISH.get());
-            output.accept(PARTY_THE_FISH.get());
-            output.accept(ROCK_THE_FISH.get());
-            output.accept(SHRIMP_THE_FISH.get());
-            output.accept(SKELETON_THE_FISH.get());
-            output.accept(SPOOK_THE_FISH.get());
-            output.accept(STEW_THE_FISH.get());
-            output.accept(SWAMP_THE_FISH.get());
-            output.accept(ZOOP_THE_FISH.get());
-            output.accept(BEDROCK.get());
-            output.accept(CAKE_SOUL.get());
-        }).build()
-    );
+    static {
+        CREATIVE_MODE_TABS.register("unshattered_items_tab",
+                () -> CreativeModeTab.builder()
+                        .title(Component.translatable("item_group.unshattered.items"))
+                        .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
+                        .icon(() -> BAT_THE_FISH.get().getDefaultInstance())
+                        .displayItems((_, output) -> {
+                            output.accept(BAT_THE_FISH);
+                            output.accept(CENTURY_THE_FISH);
+                            output.accept(CHILL_THE_FISH);
+                            output.accept(CLUNK_THE_FISH);
+                            output.accept(DIAMOND_THE_FISH);
+                            output.accept(DUST_THE_FISH);
+                            output.accept(EGG_THE_FISH);
+                            output.accept(EON_THE_FISH);
+                            output.accept(FLAKE_THE_FISH);
+                            output.accept(EXPERIMENT_THE_FISH);
+                            output.accept(FOSSIL_THE_FISH);
+                            output.accept(GABAGOOL_THE_FISH);
+                            output.accept(GIFT_THE_FISH);
+                            output.accept(HERRING_THE_FISH);
+                            output.accept(NOPE_THE_FISH);
+                            output.accept(OOPS_THE_FISH);
+                            output.accept(PARTY_THE_FISH);
+                            output.accept(ROCK_THE_FISH);
+                            output.accept(SHRIMP_THE_FISH);
+                            output.accept(SKELETON_THE_FISH);
+                            output.accept(SPOOK_THE_FISH);
+                            output.accept(STEW_THE_FISH);
+                            output.accept(SWAMP_THE_FISH);
+                            output.accept(ZOOP_THE_FISH);
+                            output.accept(BEDROCK);
+                            output.accept(CAKE_SOUL);
+                        }).build()
+        );
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_DECORATIVE_BLOCKS_TAB = CREATIVE_MODE_TABS.register("unshattered_decorative_blocks_tab",
-        () -> CreativeModeTab.builder()
-        .title(Component.translatable("item_group.unshattered.decorative_blocks"))
-        .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
-        .icon(() -> FIG_LOG.get().getDefaultInstance())
-        .displayItems((_, output) -> {
-            output.accept(FIG_LOG.get());
-            output.accept(ROCK_TALKABLE_BLOCK.get());
-        }).build()
-    );
+        CREATIVE_MODE_TABS.register("unshattered_decorative_blocks_tab",
+                () -> CreativeModeTab.builder()
+                        .title(Component.translatable("item_group.unshattered.decorative_blocks"))
+                        .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
+                        .icon(() -> FIG_LOG.get().getDefaultInstance())
+                        .displayItems((_, output) -> {
+                            output.accept(FIG_LOG);
+                            output.accept(ROCK_TALKABLE_BLOCK);
+                        }).build()
+        );
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_BREAKABLE_BLOCKS_TAB = CREATIVE_MODE_TABS.register("unshattered_breakable_blocks_tab",
-        () -> CreativeModeTab.builder()
-        .title(Component.translatable("item_group.unshattered.breakable_blocks"))
-        .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
-        .icon(() -> BREAKABLE_COBBLESTONE.get().getDefaultInstance())
-        .displayItems((_, output) -> {
-            output.accept(BREAKABLE_STONE.get());
-            output.accept(BREAKABLE_COBBLESTONE.get());
-            output.accept(BREAKABLE_FIG_LOG.get());
-            output.accept(BREAKABLE_COAL_ORE.get());
-            output.accept(BREAKABLE_IRON_ORE.get());
-            output.accept(BREAKABLE_COPPER_ORE.get());
-            output.accept(BREAKABLE_GOLD_ORE.get());
-            output.accept(BREAKABLE_REDSTONE_ORE.get());
-            output.accept(BREAKABLE_LAPIS_ORE.get());
-            output.accept(BREAKABLE_EMERALD_ORE.get());
-            output.accept(BREAKABLE_DIAMOND_ORE.get());
-            output.accept(PURE_DIAMOND.get());
-            output.accept(BREAKABLE_OBSIDIAN.get());
-            output.accept(BREAKABLE_WHEAT.get());
-            output.accept(BREAKABLE_SOFT_MITHRIL_BLOCK.get());
-            output.accept(BREAKABLE_HARD_MITHRIL_BLOCK.get());
-            output.accept(BREAKABLE_COBBLED_MITHRIL_BLOCK.get());
-            output.accept(BREAKABLE_OAK_LOG.get());
-            output.accept(BREAKABLE_BIRCH_LOG.get());
-            output.accept(BREAKABLE_SPRUCE_LOG.get());
-            output.accept(BREAKABLE_JUNGLE_LOG.get());
-            output.accept(BREAKABLE_ACACIA_LOG.get());
-            output.accept(BREAKABLE_DARK_OAK_LOG.get());
-            output.accept(BREAKABLE_ICE.get());
-            output.accept(BREAKABLE_TITANIUM.get());
-            output.accept(BREAKABLE_POTATO.get());
-            output.accept(BREAKABLE_CARROT.get());
-                output.accept(BREAKABLE_MELON.get());
-                output.accept(BREAKABLE_SUGAR_CANE.get());
-                output.accept(BREAKABLE_CACTUS.get());
-                output.accept(BREAKABLE_SAND.get());
-                output.accept(BREAKABLE_BROWN_MUSHROOM_BLOCK.get());
-                output.accept(BREAKABLE_RED_MUSHROOM_BLOCK.get());
-                output.accept(BREAKABLE_BROWN_MUSHROOM.get());
-                output.accept(BREAKABLE_RED_MUSHROOM.get());
-                output.accept(BREAKABLE_COCOA_BEAN.get());
-                output.accept(BREAKABLE_PUMPKIN.get());
-            output.accept(GIANT_POTATO.get());
-            output.accept(GIANT_CARROT.get());
-        }).build()
-    );
+        CREATIVE_MODE_TABS.register("unshattered_breakable_blocks_tab",
+                () -> CreativeModeTab.builder()
+                        .title(Component.translatable("item_group.unshattered.breakable_blocks"))
+                        .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
+                        .icon(() -> BREAKABLE_COBBLESTONE.get().getDefaultInstance())
+                        .displayItems((_, output) -> {
+                            output.accept(BREAKABLE_STONE);
+                            output.accept(BREAKABLE_COBBLESTONE);
+                            output.accept(BREAKABLE_FIG_LOG);
+                            output.accept(BREAKABLE_COAL_ORE);
+                            output.accept(BREAKABLE_IRON_ORE);
+                            output.accept(BREAKABLE_COPPER_ORE);
+                            output.accept(BREAKABLE_GOLD_ORE);
+                            output.accept(BREAKABLE_REDSTONE_ORE);
+                            output.accept(BREAKABLE_LAPIS_ORE);
+                            output.accept(BREAKABLE_EMERALD_ORE);
+                            output.accept(BREAKABLE_DIAMOND_ORE);
+                            output.accept(PURE_DIAMOND);
+                            output.accept(BREAKABLE_OBSIDIAN);
+                            output.accept(BREAKABLE_WHEAT);
+                            output.accept(BREAKABLE_SOFT_MITHRIL_BLOCK);
+                            output.accept(BREAKABLE_HARD_MITHRIL_BLOCK);
+                            output.accept(BREAKABLE_COBBLED_MITHRIL_BLOCK);
+                            output.accept(BREAKABLE_OAK_LOG);
+                            output.accept(BREAKABLE_BIRCH_LOG);
+                            output.accept(BREAKABLE_SPRUCE_LOG);
+                            output.accept(BREAKABLE_JUNGLE_LOG);
+                            output.accept(BREAKABLE_ACACIA_LOG);
+                            output.accept(BREAKABLE_DARK_OAK_LOG);
+                            output.accept(BREAKABLE_ICE);
+                            output.accept(BREAKABLE_TITANIUM);
+                            output.accept(BREAKABLE_POTATO);
+                            output.accept(BREAKABLE_CARROT);
+                            output.accept(BREAKABLE_MELON);
+                            output.accept(BREAKABLE_SUGAR_CANE);
+                            output.accept(BREAKABLE_CACTUS);
+                            output.accept(BREAKABLE_SAND);
+                            output.accept(BREAKABLE_BROWN_MUSHROOM_BLOCK);
+                            output.accept(BREAKABLE_RED_MUSHROOM_BLOCK);
+                            output.accept(BREAKABLE_BROWN_MUSHROOM);
+                            output.accept(BREAKABLE_RED_MUSHROOM);
+                            output.accept(BREAKABLE_COCOA_BEAN);
+                            output.accept(BREAKABLE_PUMPKIN);
+                            output.accept(GIANT_POTATO);
+                            output.accept(GIANT_CARROT);
+                        }).build()
+        );
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_RESOURCES_TAB = CREATIVE_MODE_TABS.register("unshattered_resources_tab",
-        () -> CreativeModeTab.builder()
-        .title(Component.translatable("item_group.unshattered.unshattered_resources"))
-        .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
-        .icon(() -> ENCHANTED_FIG_LOG.get().getDefaultInstance())
-        .displayItems((_, output) -> {
-            output.accept(ENCHANTED_FIG_LOG.get());
-            output.accept(ENCHANTED_ROTTEN_FLESH);
-            output.accept(ZOMBIE_HEART);
-            output.accept(GOLDEN_POWDER);
-            output.accept(ENCHANTED_GOLD_INGOT);
-            output.accept(ENCHANTED_GOLD_BLOCK);
-            output.accept(HEALING_TISSUE);
-            output.accept(ENCHANTED_DIAMOND);
-            output.accept(ENCHANTED_DIAMOND_BLOCK);
-            output.accept(ENCHANTED_EMERALD);
-            output.accept(ENCHANTED_EMERALD_BLOCK);
-            output.accept(ENCHANTED_IRON);
-            output.accept(ENCHANTED_IRON_BLOCK);
-            output.accept(ENCHANTED_COAL);
-            output.accept(ENCHANTED_COAL_BLOCK);
-            output.accept(ENCHANTED_LAPIS);
-            output.accept(ENCHANTED_LAPIS_BLOCK);
-            output.accept(ENCHANTED_REDSTONE);
-            output.accept(ENCHANTED_REDSTONE_BLOCK);
-            output.accept(MITHRIL);
-            output.accept(ENCHANTED_MITHRIL);
-            output.accept(ENCHANTED_OAK_LOG);
-            output.accept(ENCHANTED_BIRCH_LOG);
-            output.accept(ENCHANTED_SPRUCE_LOG);
-            output.accept(ENCHANTED_JUNGLE_LOG);
-            output.accept(ENCHANTED_ACACIA_LOG);
-            output.accept(ENCHANTED_DARK_OAK_LOG);
-            output.accept(ENCHANTED_POISONOUS_POTATO);
-            output.accept(ENCHANTED_BONE);
-            output.accept(ENCHANTED_BONE_BLOCK);
-            output.accept(ENCHANTED_COBBLESTONE);
-            output.accept(ENCHANTED_FLINT);
-            output.accept(ENCHANTED_STRING);
-            output.accept(ENCHANTED_OBSIDIAN);
-            output.accept(ENCHANTED_CLAY_BALL);
-            output.accept(ENCHANTED_CLAY_BLOCK);
-            output.accept(ENCHANTED_INK_SAC);
-            output.accept(ENCHANTED_LILY_PAD);
-            output.accept(ENCHANTED_PRISMARINE_SHARD);
-            output.accept(ENCHANTED_PRISMARINE_CRYSTALS);
-            output.accept(ENCHANTED_PUFFERFISH);
-            output.accept(ENCHANTED_COD);
-            output.accept(ENCHANTED_COOKED_COD);
-            output.accept(ENCHANTED_SALMON);
-            output.accept(ENCHANTED_COOKED_SALMON);
-            output.accept(ENCHANTED_SPONGE);
-            output.accept(ENCHANTED_WET_SPONGE);
-            output.accept(ENCHANTED_TROPICAL_FISH);
-            output.accept(ENCHANTED_HONEYCOMB);
-            output.accept(ENCHANTED_ICE);
-            output.accept(ENCHANTED_PACKED_ICE);
-            output.accept(TITANIUM);
-            output.accept(ENCHANTED_TITANIUM);
-            output.accept(ENCHANTED_BLAZE_POWDER);
-            output.accept(ENCHANTED_BLAZE_ROD);
-            output.accept(ENCHANTED_WOOL);
-                output.accept(REFINED_MITHRIL);
-            output.accept(TREASURITE);
-            output.accept(REFINED_DIAMOND);
-            output.accept(GLACITE_JEWEL);
-            output.accept(FUEL_CANISTER);
-            output.accept(GOLDEN_PLATE);
-                output.accept(REFINED_TITANIUM);
-            output.accept(MITHRIL_PLATE);
-            output.accept(DRILL_MOTOR);
-            output.accept(GOBLIN_EGG);
-                output.accept(OIL_BARREL);
-            output.accept(ENCHANTED_POPPY);
-            output.accept(ENCHANTED_DANDELION);
-            output.accept(BIOFUEL);
-                output.accept(ENCHANTED_WHEAT);
-                output.accept(ENCHANTED_POTATO);
-                output.accept(ENCHANTED_CARROT);
-            output.accept(ENCHANTED_MELON_SLICE);
-            output.accept(ENCHANTED_MELON);
-            output.accept(ENCHANTED_SUGAR);
-            output.accept(ENCHANTED_SUGAR_CANE);
-            output.accept(ENCHANTED_CACTUS);
-            output.accept(ENCHANTED_CACTUS_GREEN);
-            output.accept(ENCHANTED_SAND);
-            output.accept(ENCHANTED_BROWN_MUSHROOM_BLOCK);
-            output.accept(ENCHANTED_RED_MUSHROOM_BLOCK);
-            output.accept(ENCHANTED_BROWN_MUSHROOM);
-            output.accept(ENCHANTED_RED_MUSHROOM);
-            output.accept(ENCHANTED_COOKIE);
-            output.accept(ENCHANTED_COCOA_BEANS);
-            output.accept(ENCHANTED_PUMPKIN);
-            output.accept(ENCHANTED_BAKED_POTATO);
-            output.accept(ENCHANTED_HAY_BALE);
-            output.accept(ENCHANTED_GOLDEN_CARROT);
-            output.accept(POLISHED_PUMPKIN);
-            output.accept(STRETCHING_STICK);
-            output.accept(FIGSTONE);
-            output.accept(PLASMA);
-            output.accept(BEJEWELED_HANDLE);
-            output.accept(GREEN_CANDY);
-            output.accept(PURPLE_CANDY);
-        }).build()
-    );
+        CREATIVE_MODE_TABS.register("unshattered_resources_tab",
+                () -> CreativeModeTab.builder()
+                        .title(Component.translatable("item_group.unshattered.unshattered_resources"))
+                        .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
+                        .icon(() -> ENCHANTED_FIG_LOG.get().getDefaultInstance())
+                        .displayItems((_, output) -> {
+                            output.accept(ENCHANTED_FIG_LOG);
+                            output.accept(ENCHANTED_ROTTEN_FLESH);
+                            output.accept(ZOMBIE_HEART);
+                            output.accept(GOLDEN_POWDER);
+                            output.accept(ENCHANTED_GOLD_INGOT);
+                            output.accept(ENCHANTED_GOLD_BLOCK);
+                            output.accept(HEALING_TISSUE);
+                            output.accept(ENCHANTED_DIAMOND);
+                            output.accept(ENCHANTED_DIAMOND_BLOCK);
+                            output.accept(ENCHANTED_EMERALD);
+                            output.accept(ENCHANTED_EMERALD_BLOCK);
+                            output.accept(ENCHANTED_IRON);
+                            output.accept(ENCHANTED_IRON_BLOCK);
+                            output.accept(ENCHANTED_COAL);
+                            output.accept(ENCHANTED_COAL_BLOCK);
+                            output.accept(ENCHANTED_LAPIS);
+                            output.accept(ENCHANTED_LAPIS_BLOCK);
+                            output.accept(ENCHANTED_REDSTONE);
+                            output.accept(ENCHANTED_REDSTONE_BLOCK);
+                            output.accept(MITHRIL);
+                            output.accept(ENCHANTED_MITHRIL);
+                            output.accept(ENCHANTED_OAK_LOG);
+                            output.accept(ENCHANTED_BIRCH_LOG);
+                            output.accept(ENCHANTED_SPRUCE_LOG);
+                            output.accept(ENCHANTED_JUNGLE_LOG);
+                            output.accept(ENCHANTED_ACACIA_LOG);
+                            output.accept(ENCHANTED_DARK_OAK_LOG);
+                            output.accept(ENCHANTED_POISONOUS_POTATO);
+                            output.accept(ENCHANTED_BONE);
+                            output.accept(ENCHANTED_BONE_BLOCK);
+                            output.accept(ENCHANTED_COBBLESTONE);
+                            output.accept(ENCHANTED_FLINT);
+                            output.accept(ENCHANTED_STRING);
+                            output.accept(ENCHANTED_OBSIDIAN);
+                            output.accept(ENCHANTED_CLAY_BALL);
+                            output.accept(ENCHANTED_CLAY_BLOCK);
+                            output.accept(ENCHANTED_INK_SAC);
+                            output.accept(ENCHANTED_LILY_PAD);
+                            output.accept(ENCHANTED_PRISMARINE_SHARD);
+                            output.accept(ENCHANTED_PRISMARINE_CRYSTALS);
+                            output.accept(ENCHANTED_PUFFERFISH);
+                            output.accept(ENCHANTED_COD);
+                            output.accept(ENCHANTED_COOKED_COD);
+                            output.accept(ENCHANTED_SALMON);
+                            output.accept(ENCHANTED_COOKED_SALMON);
+                            output.accept(ENCHANTED_SPONGE);
+                            output.accept(ENCHANTED_WET_SPONGE);
+                            output.accept(ENCHANTED_TROPICAL_FISH);
+                            output.accept(ENCHANTED_HONEYCOMB);
+                            output.accept(ENCHANTED_ICE);
+                            output.accept(ENCHANTED_PACKED_ICE);
+                            output.accept(TITANIUM);
+                            output.accept(ENCHANTED_TITANIUM);
+                            output.accept(ENCHANTED_BLAZE_POWDER);
+                            output.accept(ENCHANTED_BLAZE_ROD);
+                            output.accept(ENCHANTED_WOOL);
+                            output.accept(REFINED_MITHRIL);
+                            output.accept(TREASURITE);
+                            output.accept(REFINED_DIAMOND);
+                            output.accept(GLACITE_JEWEL);
+                            output.accept(FUEL_CANISTER);
+                            output.accept(GOLDEN_PLATE);
+                            output.accept(REFINED_TITANIUM);
+                            output.accept(MITHRIL_PLATE);
+                            output.accept(DRILL_MOTOR);
+                            output.accept(GOBLIN_EGG);
+                            output.accept(OIL_BARREL);
+                            output.accept(ENCHANTED_POPPY);
+                            output.accept(ENCHANTED_DANDELION);
+                            output.accept(BIOFUEL);
+                            output.accept(ENCHANTED_WHEAT);
+                            output.accept(ENCHANTED_POTATO);
+                            output.accept(ENCHANTED_CARROT);
+                            output.accept(ENCHANTED_MELON_SLICE);
+                            output.accept(ENCHANTED_MELON);
+                            output.accept(ENCHANTED_SUGAR);
+                            output.accept(ENCHANTED_SUGAR_CANE);
+                            output.accept(ENCHANTED_CACTUS);
+                            output.accept(ENCHANTED_CACTUS_GREEN);
+                            output.accept(ENCHANTED_SAND);
+                            output.accept(ENCHANTED_BROWN_MUSHROOM_BLOCK);
+                            output.accept(ENCHANTED_RED_MUSHROOM_BLOCK);
+                            output.accept(ENCHANTED_BROWN_MUSHROOM);
+                            output.accept(ENCHANTED_RED_MUSHROOM);
+                            output.accept(ENCHANTED_COOKIE);
+                            output.accept(ENCHANTED_COCOA_BEANS);
+                            output.accept(ENCHANTED_PUMPKIN);
+                            output.accept(ENCHANTED_BAKED_POTATO);
+                            output.accept(ENCHANTED_HAY_BALE);
+                            output.accept(ENCHANTED_GOLDEN_CARROT);
+                            output.accept(POLISHED_PUMPKIN);
+                            output.accept(STRETCHING_STICK);
+                            output.accept(FIGSTONE);
+                            output.accept(PLASMA);
+                            output.accept(BEJEWELED_HANDLE);
+                            output.accept(GREEN_CANDY);
+                            output.accept(PURPLE_CANDY);
+                            output.accept(ENCHANTED_GUNPOWDER);
+                        }).build()
+        );
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_ARMOUR_TAB = CREATIVE_MODE_TABS.register("unshattered_armour_tab",
-        () -> CreativeModeTab.builder()
-        .title(Component.translatable("item_group.unshattered.armour"))
-        .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
-        .icon(() -> LEAFLET_CHESTPLATE.get().getDefaultInstance())
-        .displayItems((_, output) -> {
-            output.accept(LEAFLET_HELMET.get());
-            output.accept(LEAFLET_CHESTPLATE.get());
-            output.accept(LEAFLET_LEGGINGS.get());
-            output.accept(LEAFLET_BOOTS.get());
-            output.accept(GLOW_SQUID_BOOTS.get());
-            output.accept(SKELETON_HAT);
-        }).build()
-    );
+        CREATIVE_MODE_TABS.register("unshattered_armour_tab",
+                () -> CreativeModeTab.builder()
+                        .title(Component.translatable("item_group.unshattered.armour"))
+                        .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
+                        .icon(() -> LEAFLET_CHESTPLATE.get().getDefaultInstance())
+                        .displayItems((_, output) -> {
+                            output.accept(LEAFLET_HELMET);
+                            output.accept(LEAFLET_CHESTPLATE);
+                            output.accept(LEAFLET_LEGGINGS);
+                            output.accept(LEAFLET_BOOTS);
+                            output.accept(GLOW_SQUID_BOOTS);
+                            output.accept(SKELETON_HAT);
+                            output.accept(LAPIS_HELMET);
+                            output.accept(LAPIS_CHESTPLATE);
+                            output.accept(LAPIS_LEGGINGS);
+                            output.accept(LAPIS_BOOTS);
+                        }).build()
+        );
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_TOOLS_TAB = CREATIVE_MODE_TABS.register("unshattered_tools_tab",
-        () -> CreativeModeTab.builder()
-        .title(Component.translatable("item_group.unshattered.tools"))
-        .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
-        .icon(() -> TREECAPITATOR.get().getDefaultInstance())
-        .displayItems((_, output) -> {
-            output.accept(TREECAPITATOR.get());
-            output.accept(SPRUCE_AXE.get());
-            output.accept(SERIOUSLY_DAMAGED_AXE.get());
-            output.accept(DECENT_AXE.get());
-            output.accept(FIG_HEW.get());
-            output.accept(FIGSTONE_SPLITTER.get());
-            output.accept(CHALLENGING_ROD.get());
-            output.accept(FISHING_ROD.get());
-            output.accept(BROKEN_MITHRIL_PICKAXE.get());
-                output.accept(BANDAGED_MITHRIL_PICKAXE.get());
-                output.accept(MITHRIL_PICKAXE.get());
-            output.accept(RUSTED_TITANIUM_PICKAXE.get());
-            output.accept(TITANIUM_PICKAXE.get());
-            output.accept(LAPIS_PICKAXE.get());
-            output.accept(ZOMBIE_PICKAXE.get());
-            output.accept(PROMISING_PICKAXE.get());
-            output.accept(PROMISING_AXE.get());
-            output.accept(MITHRIL_DRILL_SX_R226.get());
-            output.accept(MITHRIL_DRILL_SX_R326.get());
-            output.accept(TITANIUM_DRILL_DR_X355.get());
-            output.accept(TITANIUM_DRILL_DR_X455.get());
-            output.accept(TITANIUM_DRILL_DR_X555.get());
-            output.accept(TITANIUM_DRILL_DR_X655.get());
-                output.accept(MITHRIL_INFUSED_FUEL_TANK.get());
-            output.accept(MITHRIL_PLATED_DRILL_ENGINE.get());
-            output.accept(FRIED_GOBLIN_EGG.get());
-            output.accept(ROOKIE_HOE.get());
-        }).build()
-    );
+        CREATIVE_MODE_TABS.register("unshattered_tools_tab",
+                () -> CreativeModeTab.builder()
+                        .title(Component.translatable("item_group.unshattered.tools"))
+                        .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
+                        .icon(() -> TREECAPITATOR.get().getDefaultInstance())
+                        .displayItems((_, output) -> {
+                            output.accept(TREECAPITATOR);
+                            output.accept(SPRUCE_AXE);
+                            output.accept(SERIOUSLY_DAMAGED_AXE);
+                            output.accept(DECENT_AXE);
+                            output.accept(FIG_HEW);
+                            output.accept(FIGSTONE_SPLITTER);
+                            output.accept(CHALLENGING_ROD);
+                            output.accept(FISHING_ROD);
+                            output.accept(BROKEN_MITHRIL_PICKAXE);
+                            output.accept(BANDAGED_MITHRIL_PICKAXE);
+                            output.accept(MITHRIL_PICKAXE);
+                            output.accept(RUSTED_TITANIUM_PICKAXE);
+                            output.accept(TITANIUM_PICKAXE);
+                            output.accept(LAPIS_PICKAXE);
+                            output.accept(ZOMBIE_PICKAXE);
+                            output.accept(PROMISING_PICKAXE);
+                            output.accept(PROMISING_AXE);
+                            output.accept(MITHRIL_DRILL_SX_R226);
+                            output.accept(MITHRIL_DRILL_SX_R326);
+                            output.accept(TITANIUM_DRILL_DR_X355);
+                            output.accept(TITANIUM_DRILL_DR_X455);
+                            output.accept(TITANIUM_DRILL_DR_X555);
+                            output.accept(TITANIUM_DRILL_DR_X655);
+                            output.accept(MITHRIL_INFUSED_FUEL_TANK);
+                            output.accept(MITHRIL_PLATED_DRILL_ENGINE);
+                            output.accept(FRIED_GOBLIN_EGG);
+                            output.accept(ROOKIE_HOE);
+                        }).build()
+        );
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_WEAPONS_TAB = CREATIVE_MODE_TABS.register("unshattered_weapons_tab",
-        () -> CreativeModeTab.builder()
-        .title(Component.translatable("item_group.unshattered.weapons"))
-        .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
-        .icon(() -> MERCENARY_AXE.get().getDefaultInstance())
-        .displayItems((_, output) -> {
-            output.accept(MERCENARY_AXE.get());
-            output.accept(ROGUE_SWORD.get());
-            output.accept(SQUIRE_SWORD.get());
-            output.accept(UNDEAD_SWORD.get());
-            output.accept(ZOMBIE_SWORD.get());
-            output.accept(ORNATE_ZOMBIE_SWORD.get());
-            output.accept(FLORID_ZOMBIE_SWORD.get());
-            output.accept(RUSTY_CLEAVER.get());
-            output.accept(GOLDEN_CLEAVER.get());
-            output.accept(SUPER_CLEAVER.get());
-            output.accept(HYPER_CLEAVER.get());
-            output.accept(GIANT_CLEAVER.get());
-            output.accept(IRON_DAGGER.get());
-            output.accept(EMERALD_DAGGER.get());
-            output.accept(ARTISANAL_SHORTBOW.get());
-        }).build()
-    );
+        CREATIVE_MODE_TABS.register("unshattered_weapons_tab",
+                () -> CreativeModeTab.builder()
+                        .title(Component.translatable("item_group.unshattered.weapons"))
+                        .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
+                        .icon(() -> MERCENARY_AXE.get().getDefaultInstance())
+                        .displayItems((_, output) -> {
+                            output.accept(MERCENARY_AXE);
+                            output.accept(ROGUE_SWORD);
+                            output.accept(SQUIRE_SWORD);
+                            output.accept(UNDEAD_SWORD);
+                            output.accept(ZOMBIE_SWORD);
+                            output.accept(ORNATE_ZOMBIE_SWORD);
+                            output.accept(FLORID_ZOMBIE_SWORD);
+                            output.accept(RUSTY_CLEAVER);
+                            output.accept(GOLDEN_CLEAVER);
+                            output.accept(SUPER_CLEAVER);
+                            output.accept(HYPER_CLEAVER);
+                            output.accept(GIANT_CLEAVER);
+                            output.accept(IRON_DAGGER);
+                            output.accept(EMERALD_DAGGER);
+                            output.accept(ARTISANAL_SHORTBOW);
+                        }).build()
+        );
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UNSHATTERED_TALISMANS_TAB = CREATIVE_MODE_TABS.register("unshattered_talismans_tab",
-            () -> CreativeModeTab.builder()
-                .title(Component.translatable("item_group.unshattered.talismans"))
-                .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
-                .icon(() -> BAT_TALISMAN.get().getDefaultInstance())
-                .displayItems((_, output) -> {
-                    output.accept(BAT_TALISMAN.get());
-                    output.accept(COINS_TALISMAN.get());
-                    output.accept(RAINBOW_YARN_TALISMAN.get());
-                        output.accept(DWARF_TURTLE_SHELL.get());
-                        output.accept(PIGGY_BANK_TALISMAN.get());
-                        output.accept(HASTE_RING.get());
-                        output.accept(HONEYCOMB_RING.get());
-                    output.accept(BLOOD_CHALICE.get());
-                    output.accept(INFINITE_QUIVER.get());
-                    output.accept(FIRE_TALISMAN.get());
-                    output.accept(BAT_ARTIFACT.get());
-                }).build()
-    );
+        CREATIVE_MODE_TABS.register("unshattered_talismans_tab",
+                () -> CreativeModeTab.builder()
+                        .title(Component.translatable("item_group.unshattered.talismans"))
+                        .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
+                        .icon(() -> BAT_TALISMAN.get().getDefaultInstance())
+                        .displayItems((_, output) -> {
+                            output.accept(BAT_TALISMAN);
+                            output.accept(COINS_TALISMAN);
+                            output.accept(RAINBOW_YARN_TALISMAN);
+                            output.accept(DWARF_TURTLE_SHELL);
+                            output.accept(PIGGY_BANK_TALISMAN);
+                            output.accept(HASTE_RING);
+                            output.accept(HONEYCOMB_RING);
+                            output.accept(BLOOD_CHALICE);
+                            output.accept(INFINITE_QUIVER);
+                            output.accept(FIRE_TALISMAN);
+                            output.accept(BAT_ARTIFACT);
+                        }).build()
+        );
+    }
 }

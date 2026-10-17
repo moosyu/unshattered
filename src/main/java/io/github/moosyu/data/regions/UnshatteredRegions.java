@@ -28,4 +28,8 @@ public final class UnshatteredRegions {
             Identifier.fromNamespaceAndPath(MODID, "hythe")
     );
 
+    public static final ResourceKey<Region> SKY = ResourceKey.create(
+            DataPackRegistryHandler.REGION_REGISTRY_KEY,
+            Identifier.fromNamespaceAndPath(MODID, "sky")
+    );
 }

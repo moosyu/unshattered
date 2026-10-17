@@ -38,13 +38,12 @@ import java.util.Set;
 
 public class SkeletonHat extends Item implements PassiveAbilityItem {
     public static final Identifier ABILITY_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("skeleton_hat_explosive_arrows");
-    public static ResourceKey<EquipmentAsset> SKELETON_HAT_KEY = ResourceKey.create(UnshatteredArmourMaterials.ROOT_ID, UnshatteredUtils.getUnshatteredIdentifier("skeleton_hat"));
 
     public SkeletonHat(Properties properties) {
         super(properties.component(DataComponents.EQUIPPABLE,
                         Equippable.builder(EquipmentSlot.HEAD)
                                 .setEquipSound(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.SKELETON_AMBIENT))
-                                .setAsset(SKELETON_HAT_KEY)
+                                .setAsset(UnshatteredArmourMaterials.SKELETON_HAT_KEY)
                                 .build()
                 )
                 .attributes(ItemAttributeModifiers.builder()

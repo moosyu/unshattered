@@ -162,8 +162,7 @@ public final class DamageUtils {
                     target.invulnerableTime = itemType.getInvulnerability();
                 } else {
                     targetHealth.setBaseValue(0.0);
-                    // this should one shot just about any vanilla mob to my knowledge (and actually calculating it wouldnt make sense as custom mobs ill make will have a base normal hp of like 1)
-                    target.hurtServer((ServerLevel) target.level(), target.damageSources().playerAttack(player), 500.0f);
+                    target.hurtServer((ServerLevel) target.level(), target.damageSources().playerAttack(player), Integer.MAX_VALUE);
                 }
                 PacketDistributor.sendToPlayer((ServerPlayer) player, new DamageNumberPacket((int) damage, target.position()));
             }
@@ -210,7 +209,7 @@ public final class DamageUtils {
                         target.invulnerableTime = 0;
                     } else {
                         targetHealth.setBaseValue(0.0);
-                        target.hurtServer((ServerLevel) target.level(), target.damageSources().playerAttack(player), 500.0f);
+                        target.hurtServer((ServerLevel) target.level(), target.damageSources().playerAttack(player), Integer.MAX_VALUE);
                     }
 
                     PacketDistributor.sendToPlayer((ServerPlayer) player, new FerocityEffectPacket(target.getId(), playSound));

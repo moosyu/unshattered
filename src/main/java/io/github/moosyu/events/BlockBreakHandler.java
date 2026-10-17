@@ -4,7 +4,6 @@ import io.github.moosyu.abilities.*;
 import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.components.ItemFuel;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.data.datagen.UnshatteredBlockTagsProvider;
 import io.github.moosyu.data.drops.BlockBreakData;
 import io.github.moosyu.data.regen.RegenClientCache;
 import io.github.moosyu.data.regen.RegenPaths;
@@ -128,7 +127,7 @@ public class BlockBreakHandler {
             UnshatteredUtils.addBlockBrokenResultToInventory(blockHolder, player, UnshatteredAttributeValues.MINING_FORTUNE);
 
             if (blockBreakData.expAmount() > 0.0f) {
-                skills.addExp(PlayerSkillsAttachment.Skill.MINING, blockBreakData.expAmount(), player);
+                skills.addExp(PlayerSkillsAttachment.Skill.MINING, blockBreakData.expAmount(), player, UnshatteredAttributeValues.MINING_WISDOM.holder);
                 player.syncData(PLAYER_SKILLS);
             }
 
@@ -157,7 +156,7 @@ public class BlockBreakHandler {
             UnshatteredUtils.addBlockBrokenResultToInventory(blockHolder, player, UnshatteredAttributeValues.FARMING_FORTUNE);
 
             if (blockBreakData.expAmount() > 0.0f) {
-                skills.addExp(PlayerSkillsAttachment.Skill.FARMING, blockBreakData.expAmount(), player);
+                skills.addExp(PlayerSkillsAttachment.Skill.FARMING, blockBreakData.expAmount(), player, UnshatteredAttributeValues.MINING_WISDOM.holder);
                 player.syncData(PLAYER_SKILLS);
             }
 
@@ -171,7 +170,7 @@ public class BlockBreakHandler {
             }
         } else if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.FORAGING) {
             if (blockState.is(BlockTags.FLOWERS)) {
-                skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, blockBreakData.expAmount(), player);
+                skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, blockBreakData.expAmount(), player, UnshatteredAttributeValues.MINING_WISDOM.holder);
                 player.syncData(PLAYER_SKILLS);
             } else {
                 TreeSweepHandler.trySweep(player.level(), blockPos, player);

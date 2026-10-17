@@ -94,7 +94,7 @@ public class TreeSweepHandler {
                 }
             }
 
-            skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, expReward, player);
+            skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, expReward, player, UnshatteredAttributeValues.FORAGING_WISDOM.holder);
             player.syncData(PLAYER_SKILLS);
 
             triggered.forEach(item -> item.onAbilityFinished(context));
@@ -114,7 +114,7 @@ public class TreeSweepHandler {
             BlockBreakData blockBreakData = startBlock.getData(UnshatteredDataMaps.BLOCK_BREAK_DATA);
 
             if (blockBreakData != null && blockBreakData.expAmount() > 0.0f) {
-                skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, blockBreakData.expAmount(), player);
+                skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, blockBreakData.expAmount(), player, UnshatteredAttributeValues.FORAGING_WISDOM.holder);
                 player.syncData(PLAYER_SKILLS);
             }
 

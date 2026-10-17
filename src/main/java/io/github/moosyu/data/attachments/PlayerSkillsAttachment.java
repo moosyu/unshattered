@@ -5,11 +5,13 @@ import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.packets.ExpSoundEffectPacket;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jspecify.annotations.NonNull;
@@ -230,11 +232,12 @@ public final class PlayerSkillsAttachment {
         return skillExp[skill.ordinal()];
     }
 
-    public void addExp(Skill skill, float amount, Player player) {
+    public void addExp(Skill skill, float amount, Player player, Holder<Attribute> wisdomAttribute) {
         if (amount == 0.0f) return;
 
         int currentLevel = getLevel(getExp(skill));
-        skillExp[skill.ordinal()] += amount;
+        float expGainedAmount = amount * (float) (player.getAttributeValue(wisdomAttribute) / 100);
+        skillExp[skill.ordinal()] += expGainedAmount;
         int levelDifference = getLevel(getExp(skill)) - currentLevel;
         for (int i = 0; i < levelDifference; i++) {
             StringBuilder borderBar = new StringBuilder();
@@ -275,7 +278,7 @@ public final class PlayerSkillsAttachment {
             currentLevel++;
             player.sendSystemMessage(Component.literal(borderBar.toString()).withColor(0xFF00ADAB));
         }
-        player.sendOverlayMessage((Component.literal("+" + amount + " ").append(Component.translatable(skill.getTranslationKey()))).withColor(0xFF00AAAA).append(Component.literal(" (").withColor(0xFF7D7874).append(Component.literal(String.format("%.2f", getPercentageToNextLevel(getExp(skill)) * 100) + "%").withColor(0xFFFFAA00).append(Component.literal(")").withColor(0xFF7D7874)))));
+        player.sendOverlayMessage((Component.literal("+" + expGainedAmount + " ").append(Component.translatable(skill.getTranslationKey()))).withColor(0xFF00AAAA).append(Component.literal(" (").withColor(0xFF7D7874).append(Component.literal(String.format("%.2f", getPercentageToNextLevel(getExp(skill)) * 100) + "%").withColor(0xFFFFAA00).append(Component.literal(")").withColor(0xFF7D7874)))));
         PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
     }
 

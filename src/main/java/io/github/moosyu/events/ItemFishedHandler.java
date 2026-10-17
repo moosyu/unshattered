@@ -77,7 +77,7 @@ public class ItemFishedHandler {
 
                     float expReward = Objects.requireNonNullElse(BuiltInRegistries.ITEM.wrapAsHolder(selectedItem).getData(UnshatteredDataMaps.FISHABLE_ITEMS_EXP_DATA), 0.0f);
                     if (expReward > 0.0f) {
-                        skills.addExp(PlayerSkillsAttachment.Skill.FISHING, expReward, player);
+                        skills.addExp(PlayerSkillsAttachment.Skill.FISHING, expReward, player, UnshatteredAttributeValues.FISHING_WISDOM.holder);
                         player.syncData(PLAYER_SKILLS);
                     }
 
@@ -120,7 +120,7 @@ public class ItemFishedHandler {
                             serverLevel.tryAddFreshEntityWithPassengers(entity);
                         }
 
-                        skills.addExp(PlayerSkillsAttachment.Skill.FISHING, Objects.requireNonNullElse(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entityType).getData(UnshatteredDataMaps.FISHABLE_MOBS_EXP_DATA), 0.0f), player);
+                        skills.addExp(PlayerSkillsAttachment.Skill.FISHING, Objects.requireNonNullElse(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entityType).getData(UnshatteredDataMaps.FISHABLE_MOBS_EXP_DATA), 0.0f), player, UnshatteredAttributeValues.FISHING_WISDOM.holder);
                     }
 
                     break;

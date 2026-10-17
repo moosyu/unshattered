@@ -1,7 +1,10 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.entities.UnshatteredEntities;
+import io.github.moosyu.entities.mobs.GraveyardZombieVillager;
+import io.github.moosyu.entities.mobs.SneakyCreeper;
 import io.github.moosyu.entities.npcs.NPCEntity;
+import net.minecraft.world.entity.monster.Creeper;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
@@ -17,5 +20,7 @@ public class EntityAttributeCreationHandler {
         event.put(UnshatteredEntities.FORGER.get(), NPCEntity.createNpcAttributes().build());
         event.put(UnshatteredEntities.BUBU.get(), NPCEntity.createNpcAttributes().build());
         event.put(UnshatteredEntities.JENNY.get(), NPCEntity.createNpcAttributes().build());
+        event.put(UnshatteredEntities.GRAVEYARD_ZOMBIE_VILLAGER.get(), GraveyardZombieVillager.createAttributes().build());
+        event.put(UnshatteredEntities.SNEAKY_CREEPER.get(), SneakyCreeper.createAttributes().build());
     }
 }

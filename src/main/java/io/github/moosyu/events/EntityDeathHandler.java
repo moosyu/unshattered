@@ -54,7 +54,7 @@ public class EntityDeathHandler {
             }
 
             if (mobLoot.experience() > 0.0f) {
-                skills.addExp(mobLoot.skill(), mobLoot.experience(), player);
+                skills.addExp(mobLoot.skill(), mobLoot.experience(), player, UnshatteredAttributeValues.COMBAT_WISDOM.holder);
                 player.syncData(PLAYER_SKILLS);
             }
 
