@@ -2,7 +2,6 @@ package io.github.moosyu.data.regions;
 
 import io.github.moosyu.data.attachments.PlayerRegionAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
-import io.github.moosyu.events.DataPackRegistryHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -16,12 +15,22 @@ public final class RegionAreas {
     public static List<RegionBoundary>[][] chunks;
     public static int worldMinX;
     public static int worldMinZ;
+    private static Region defaultRegion;
+    private static final int VERTICAL_RADIUS = 32;
     /**
      * creates a grid of 256 block areas and defines whether regions intersect them. should only be generated once.
      * @param worldSize total world size in blocks to create the grid rectangle.
      * @param regionBoundaries regions that should be included in the grid
      */
     public static void createRegionAreaGrid(Vector2i worldSize, List<RegionBoundary> regionBoundaries) {
+        defaultRegion = null;
+        for (RegionBoundary regionBoundary : regionBoundaries) {
+            if (regionBoundary.region().getKey() == UnshatteredRegions.DEFAULT_REGION) {
+                defaultRegion = regionBoundary.region().value();
+                break;
+            }
+        }
+
         // because the world needs to be offset as the top left isnt at 0, 0
         worldMinX = -worldSize.x / 2;
         worldMinZ = -worldSize.y / 2;
@@ -128,11 +137,12 @@ public final class RegionAreas {
         }
 
         Set<Region> regions = new HashSet<>();
+        regions.add(defaultRegion);
         for (RegionBoundary boundary : candidates) {
             BoundaryCoordinates boundaryCoordinates = boundary.boundaryCoordinates();
 
-            if (boundaryCoordinates.minY() <= (player.blockPosition().getY() + searchBlocksRadius)
-                    && boundaryCoordinates.maxY() >= (player.blockPosition().getY() - searchBlocksRadius)
+            if (boundaryCoordinates.minY() <= (player.blockPosition().getY() + VERTICAL_RADIUS)
+                    && boundaryCoordinates.maxY() >= (player.blockPosition().getY() - VERTICAL_RADIUS)
                     && checkRectangleOverlap(searchTopLeft,
                     searchBottomRight,
                     boundaryCoordinates.topLeftCornerCoordinates(),

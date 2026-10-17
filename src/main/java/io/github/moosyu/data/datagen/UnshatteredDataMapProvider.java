@@ -1024,7 +1024,7 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
 
         createBlockNPCData(UnshatteredBlocks.ROCK_TALKABLE_BLOCK.get(), 0xFFFFFFFF);
 
-        createMobSpawnData(UnshatteredRegions.DEFAULT_REGION, EntityType.ZOMBIE, 263, 65, -228);
+        createMobSpawnData(UnshatteredRegions.DEFAULT_REGION, EntityType.ZOMBIE, 3, 103, 4);
     }
 
     private void createSimpleBlockDropData(DataMapProvider.Builder<BlockBreakData, Block> builder, DeferredBlock<Block> block, ItemRange itemRange, PlayerSkillsAttachment.Skill skill, float expAmount) {

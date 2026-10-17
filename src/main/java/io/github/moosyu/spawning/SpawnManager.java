@@ -10,9 +10,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.Mob;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
@@ -23,9 +23,10 @@ import java.util.Set;
 
 import static io.github.moosyu.Unshattered.MODID;
 
-@EventBusSubscriber(modid = MODID, value = Dist.DEDICATED_SERVER)
+@EventBusSubscriber(modid = MODID)
 public class SpawnManager {
     private static final int CHECK_INTERVAL = 20;
+    private static final int RESPAWN_TIME = 600;
     // spawn points that have spawned an entity already
     private static final Set<EntitySpawnPoint> ACTIVE_SPAWN_POINTS = new HashSet<>();
     private static final HashMap<EntitySpawnPoint, Integer> SPAWN_POINT_COOLDOWNS = new HashMap<>();
@@ -55,7 +56,7 @@ public class SpawnManager {
             ) {
                 Integer cooldown = SPAWN_POINT_COOLDOWNS.get(spawnPoint);
                 if (cooldown != null && cooldown > 0) {
-                    SPAWN_POINT_COOLDOWNS.put(spawnPoint, cooldown - 1);
+                    SPAWN_POINT_COOLDOWNS.put(spawnPoint, cooldown - CHECK_INTERVAL);
                 } else {
                     if (!ACTIVE_SPAWN_POINTS.contains(spawnPoint)) {
                         Entity spawnedEntity = spawnPoint.entityType().spawn(serverLevel, spawnPoint.blockPos(), EntitySpawnReason.TRIGGERED);
@@ -71,6 +72,20 @@ public class SpawnManager {
     }
 
     @SubscribeEvent
+    public static void onJoin(EntityJoinLevelEvent event) {
+        if (!(event.getLevel() instanceof ServerLevel level)
+                || level.isClientSide()
+                || !(event.getEntity() instanceof Mob mob)
+        ) {
+            return;
+        }
+
+        if (mob.hasData(UnshatteredAttachments.MOB_SPAWN_BLOCK_POS.get())) {
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
     public static void onLeave(EntityLeaveLevelEvent event) {
         if (!(event.getLevel() instanceof ServerLevel level)
                 || level.isClientSide()
@@ -80,7 +95,13 @@ public class SpawnManager {
         }
 
         if (mob.hasData(UnshatteredAttachments.MOB_SPAWN_BLOCK_POS.get())) {
-            
+            EntitySpawnPoint spawnPoint = new EntitySpawnPoint(mob.getType(), mob.getData(UnshatteredAttachments.MOB_SPAWN_BLOCK_POS.get()));
+            ACTIVE_SPAWN_POINTS.remove(spawnPoint);
+
+            Entity.RemovalReason reason = mob.getRemovalReason();
+            if (reason != null && reason.shouldDestroy()) {
+                SPAWN_POINT_COOLDOWNS.put(spawnPoint, RESPAWN_TIME);
+            }
         }
     }
 

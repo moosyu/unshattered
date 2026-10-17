@@ -2,9 +2,9 @@
   "values": {
     "unshattered:unincorporated": {
       "block_pos": [
-        263,
-        65,
-        -228
+        3,
+        103,
+        4
       ],
       "entity_type": "minecraft:zombie"
     }
