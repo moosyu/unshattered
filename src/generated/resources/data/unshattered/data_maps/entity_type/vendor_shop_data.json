@@ -77,6 +77,11 @@
         "item": "unshattered:rookie_hoe",
         "price": 10,
         "sell_multiple": false
+      },
+      {
+        "item": "unshattered:beginner_agronomy_sack",
+        "price": 250,
+        "sell_multiple": false
       }
     ],
     "unshattered:wool_weaver": [

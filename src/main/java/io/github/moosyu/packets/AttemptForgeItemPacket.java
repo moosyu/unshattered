@@ -12,7 +12,7 @@ public record AttemptForgeItemPacket(ForgeRecipe forgeRecipe, int forgeSlotIndex
     public static final CustomPacketPayload.Type<AttemptForgeItemPacket> TYPE = new CustomPacketPayload.Type<>(UnshatteredUtils.getUnshatteredIdentifier("attempt_forge_item_packet"));
     public static final StreamCodec<RegistryFriendlyByteBuf, AttemptForgeItemPacket> STREAM_CODEC = StreamCodec.composite(
             ForgeRecipe.STREAM_CODEC, AttemptForgeItemPacket::forgeRecipe,
-            ByteBufCodecs.INT, AttemptForgeItemPacket::forgeSlotIndex,
+            ByteBufCodecs.VAR_INT, AttemptForgeItemPacket::forgeSlotIndex,
             AttemptForgeItemPacket::new
     );
 

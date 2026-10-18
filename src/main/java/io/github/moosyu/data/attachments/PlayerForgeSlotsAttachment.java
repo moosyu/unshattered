@@ -56,7 +56,7 @@ public record PlayerForgeSlotsAttachment(int availableSlots, List<ForgeSlot> slo
     );
 
     public static StreamCodec<RegistryFriendlyByteBuf, PlayerForgeSlotsAttachment> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.INT, PlayerForgeSlotsAttachment::availableSlots,
+            ByteBufCodecs.VAR_INT, PlayerForgeSlotsAttachment::availableSlots,
             ForgeSlot.STREAM_CODEC.apply(ByteBufCodecs.list(MAX_SLOTS)), PlayerForgeSlotsAttachment::slots,
             PlayerForgeSlotsAttachment::new
     );

@@ -18,7 +18,6 @@ public class SackOfSacksScreen extends AbstractContainerScreen<SackOfSacksMenu> 
     public final int IMAGE_HEIGHT = 168;
     public final int Y_OFFSET = 71;
 
-
     public SackOfSacksScreen(SackOfSacksMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
         inventoryLabelY = IMAGE_HEIGHT - 94;

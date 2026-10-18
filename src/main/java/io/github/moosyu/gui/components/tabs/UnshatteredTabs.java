@@ -106,7 +106,7 @@ public class UnshatteredTabs {
         }
     }
 
-    private static void closeContainerKeepScreen() {
+    public static void closeContainerKeepScreen() {
         Minecraft minecraft = Minecraft.getInstance();
         LocalPlayer player = minecraft.player;
         if (player == null) {

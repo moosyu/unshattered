@@ -77,7 +77,7 @@ public record DropData(ItemRange itemRange, float dropChance) {
             dropStack = new ItemStack(dropStack.getItem(), UnshatteredUtils.getItemsCount(fortuneValue, dropStack.count()));
         }
 
-        UnshatteredUtils.givePlayerHarvestedItemStack(player, dropStack);
+        UnshatteredUtils.addItemStackToInventory(player, dropStack);
 
         return rolledAboveOccasional;
     }

@@ -20,7 +20,7 @@ public record AttemptPurchasePacket(ItemStack soldItemStack, Optional<Integer> p
     public static final CustomPacketPayload.Type<AttemptPurchasePacket> TYPE = new CustomPacketPayload.Type<>(UnshatteredUtils.getUnshatteredIdentifier("attempt_purchase_packet"));
     public static final StreamCodec<RegistryFriendlyByteBuf, AttemptPurchasePacket> STREAM_CODEC = StreamCodec.composite(
             ItemStack.STREAM_CODEC, AttemptPurchasePacket::soldItemStack,
-            ByteBufCodecs.optional(ByteBufCodecs.INT), AttemptPurchasePacket::price,
+            ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), AttemptPurchasePacket::price,
             ByteBufCodecs.optional(ItemStack.STREAM_CODEC.apply(ByteBufCodecs.list())), AttemptPurchasePacket::itemTradeRequirements,
             AttemptPurchasePacket::new
     );

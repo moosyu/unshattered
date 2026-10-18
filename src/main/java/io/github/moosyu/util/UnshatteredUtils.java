@@ -10,14 +10,16 @@ import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.ItemCharges;
+import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.data.drops.BlockBreakData;
 import io.github.moosyu.data.drops.DropData;
-import io.github.moosyu.data.drops.DropTypes;
 import io.github.moosyu.data.fishing.FishingEntry;
 import io.github.moosyu.data.fishing.FishingWeightEntry;
 import io.github.moosyu.data.recipes.ForgeRecipe;
 import io.github.moosyu.data.recipes.ForgeRecipeInput;
+import io.github.moosyu.gui.menus.containers.SackOfSacksContainer;
 import io.github.moosyu.items.ItemType;
+import io.github.moosyu.items.SackItem;
 import io.github.moosyu.items.UnshatteredRarity;
 import net.minecraft.client.gui.Font;
 import net.minecraft.core.Holder;
@@ -32,7 +34,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -53,7 +54,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.NonNull;
 
-import javax.annotation.Nullable;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.function.Supplier;
@@ -62,7 +62,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static io.github.moosyu.Unshattered.MODID;
-import static io.github.moosyu.data.drops.DropTypes.getDropType;
 
 // generic utilities i use in multiple places
 public final class UnshatteredUtils {
@@ -305,14 +304,30 @@ public final class UnshatteredUtils {
     // block drop methods
 
     /**
-     * should be used instead of Inventory#add when adding items that were harvested by the player
+     * should be used always when giving an item to a player. handles stat tracking, overflows and sacks.
      * @param player player having the item added
      * @param itemStack itemstack being added to inventory
      */
-    public static void givePlayerHarvestedItemStack(Player player, ItemStack itemStack) {
-        if (itemStack.isEmpty()) return;
+    public static void addItemStackToInventory(Player player, ItemStack itemStack) {
+        if (itemStack.isEmpty()) {
+            return;
+        }
 
         ((ServerPlayer) player).getStats().increment(player, Stats.ITEM_PICKED_UP.get(itemStack.getItem()), itemStack.count());
+
+        for (ItemStack sackItemStack : player.getData(UnshatteredAttachments.PLAYER_SACK_OF_SACKS_STORAGE.get()).getItems()) {
+            if (sackItemStack.getItem() instanceof SackItem sackItem && sackItem.acceptedItems.contains(itemStack.getItem())) {
+                HashMap<Holder<Item>, Integer> sackContents = sackItemStack.get(UnshatteredDataComponents.SACK_CONTENTS.get());
+                if (sackContents != null) {
+                    HashMap<Holder<Item>, Integer> newContents = new HashMap<>(sackContents);
+
+                    newContents.merge(itemStack.typeHolder(), itemStack.count(), Integer::sum);
+                    sackItemStack.set(UnshatteredDataComponents.SACK_CONTENTS.get(), newContents);
+
+                    return;
+                }
+            }
+        }
 
         if (!player.getInventory().add(itemStack)) {
             ItemEntity drop = new ItemEntity(player.level(), player.getX(), player.getY(), player.getZ(), itemStack);

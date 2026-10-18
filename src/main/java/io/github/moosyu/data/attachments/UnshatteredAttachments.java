@@ -94,7 +94,7 @@ public final class UnshatteredAttachments {
                             : DataResult.error(() -> "player bank page count too big or too small!!"),
                     DataResult::success
             ).fieldOf("player_bank_pages"))
-            .sync(ByteBufCodecs.INT)
+            .sync(ByteBufCodecs.VAR_INT)
             .build()
     );
 

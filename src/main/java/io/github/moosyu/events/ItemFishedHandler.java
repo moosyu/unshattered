@@ -73,7 +73,7 @@ public class ItemFishedHandler {
                         break;
                     }
 
-                    UnshatteredUtils.givePlayerHarvestedItemStack(player, new ItemStack(selectedItem, UnshatteredUtils.getItemsCount(FISHING_FORTUNE, 1)));
+                    UnshatteredUtils.addItemStackToInventory(player, new ItemStack(selectedItem, UnshatteredUtils.getItemsCount(FISHING_FORTUNE, 1)));
 
                     float expReward = Objects.requireNonNullElse(BuiltInRegistries.ITEM.wrapAsHolder(selectedItem).getData(UnshatteredDataMaps.FISHABLE_ITEMS_EXP_DATA), 0.0f);
                     if (expReward > 0.0f) {

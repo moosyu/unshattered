@@ -222,7 +222,7 @@ public class RegisterPayloadsHandler {
                             )
                     );
 
-                    UnshatteredUtils.givePlayerHarvestedItemStack(context.player(), data.soldItemStack());
+                    UnshatteredUtils.addItemStackToInventory(context.player(), data.soldItemStack());
                 })
         );
 
@@ -283,7 +283,7 @@ public class RegisterPayloadsHandler {
 
                     context.player().getData(UnshatteredAttachments.PLAYER_SKILLS.get()).addExp(PlayerSkillsAttachment.Skill.CARPENTRY, (float) (UnshatteredUtils.getItemSellValue(data.claimedItem()) * 0.1), context.player(), UnshatteredAttributeValues.CARPENTRY_WISDOM.holder);
                     context.player().syncData(UnshatteredAttachments.PLAYER_SKILLS.get());
-                    UnshatteredUtils.givePlayerHarvestedItemStack(context.player(), claimedItem);
+                    UnshatteredUtils.addItemStackToInventory(context.player(), claimedItem);
                 })
         );
 

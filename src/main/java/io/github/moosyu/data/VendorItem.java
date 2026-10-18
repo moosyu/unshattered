@@ -41,7 +41,7 @@ public record VendorItem(Holder<Item> item, boolean sellMultiple, Optional<Integ
     public static StreamCodec<RegistryFriendlyByteBuf, VendorItem> STREAM_CODEC = StreamCodec.composite(
             Item.STREAM_CODEC, VendorItem::item,
             ByteBufCodecs.BOOL, VendorItem::sellMultiple,
-            ByteBufCodecs.optional(ByteBufCodecs.INT), VendorItem::price,
+            ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), VendorItem::price,
             ByteBufCodecs.optional(ItemStack.STREAM_CODEC.apply(ByteBufCodecs.list())), VendorItem::itemTradeRequirements,
             VendorItem::new
     );

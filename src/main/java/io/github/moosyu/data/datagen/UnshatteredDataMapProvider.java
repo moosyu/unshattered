@@ -167,6 +167,7 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         setBaseData(UnshatteredItems.ENCHANTED_GUNPOWDER, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 640);
         setBaseData(UnshatteredItems.ENCHANTED_SLIME_BALL, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 800);
         setBaseData(UnshatteredItems.ENCHANTED_SLIME_BLOCK, ItemType.MATERIAL, UnshatteredRarity.RARE, 128000);
+        setBaseData(UnshatteredItems.BEGINNER_AGRONOMY_SACK, ItemType.SACK, UnshatteredRarity.COMMON, 100);
 
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK, new ItemRange(UnshatteredItems.FIG_LOG.get()), PlayerSkillsAttachment.Skill.FORAGING, 15);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_STONE_BLOCK, new ItemRange(Items.COBBLESTONE), PlayerSkillsAttachment.Skill.MINING, 1);
@@ -1029,8 +1030,7 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 List.of(new VendorItem(UnshatteredItems.BROKEN_MITHRIL_PICKAXE, false, 10000),
                         new VendorItem(UnshatteredItems.RUSTED_TITANIUM_PICKAXE, false, 50000),
                         new VendorItem(UnshatteredItems.BIOFUEL, true, 20000)
-                ),
-                false
+                ), false
         ).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.JENNY.get()),
                 List.of(new VendorItem(Items.WHEAT, 8),
                         new VendorItem(Items.CARROT, 6),
@@ -1043,9 +1043,9 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         new VendorItem(Items.BROWN_MUSHROOM, 25),
                         new VendorItem(Items.SAND, 4),
                         new VendorItem(Items.CACTUS, 15),
-                        new VendorItem(UnshatteredItems.ROOKIE_HOE, false, 10)
-                ),
-                false
+                        new VendorItem(UnshatteredItems.ROOKIE_HOE, false, 10),
+                        new VendorItem(UnshatteredItems.BEGINNER_AGRONOMY_SACK, false, 250)
+                ), false
         );
 
         createEntityNPCData(UnshatteredEntities.BUBU.get(), "bubu", UnshatteredUtils.PURPLE);

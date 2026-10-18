@@ -36,9 +36,9 @@ public record ItemCharges(int currentCharges, int maxCharges, int rechargeTime) 
     );
 
     public static final StreamCodec<RegistryFriendlyByteBuf, ItemCharges> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.INT, ItemCharges::currentCharges,
-            ByteBufCodecs.INT, ItemCharges::maxCharges,
-            ByteBufCodecs.INT, ItemCharges::rechargeTime,
+            ByteBufCodecs.VAR_INT, ItemCharges::currentCharges,
+            ByteBufCodecs.VAR_INT, ItemCharges::maxCharges,
+            ByteBufCodecs.VAR_INT, ItemCharges::rechargeTime,
             ItemCharges::new
     );
 

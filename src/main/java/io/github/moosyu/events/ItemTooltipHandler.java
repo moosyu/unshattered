@@ -5,6 +5,7 @@ import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.components.*;
 import io.github.moosyu.data.datagen.UnshatteredItemTagsProvider;
+import io.github.moosyu.items.SackItem;
 import io.github.moosyu.items.enchantments.UnshatteredEnchantmentEffects;
 import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.UnshatteredRarity;
@@ -117,6 +118,18 @@ public class ItemTooltipHandler {
             if (hasAttributes) tooltipComponents.add(Component.empty());
 
             addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.description.unshattered." + BuiltInRegistries.ITEM.getKey(itemStack.getItem()).getPath()).getString(), 0xFFAAAAAA, player));
+        }
+
+        if (itemStack.getItem() instanceof SackItem sackItem) {
+            tooltipComponents.add(Component.empty());
+            tooltipComponents.add(Component.translatable("tooltip.unshattered.capacity").withColor(UnshatteredUtils.GRAY)
+                    .append(Component.literal(": "))
+                    .append(Component.literal(sackItem.sackCapacity + " ").withColor(UnshatteredUtils.YELLOW))
+                    .append(Component.translatable("tooltip.unshattered.capacity_item").withColor(UnshatteredUtils.YELLOW))
+            );
+
+            tooltipComponents.add(Component.empty());
+            tooltipComponents.add(Component.translatable("tooltip.unshattered.right_click_sack").withColor(UnshatteredUtils.YELLOW));
         }
 
         // for enchanted books

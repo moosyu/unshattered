@@ -33,7 +33,7 @@ public record GiveItemDialogueEvent(Holder<Item> item, int count) implements Dia
 
     public static final StreamCodec<RegistryFriendlyByteBuf, GiveItemDialogueEvent> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.holderRegistry(Registries.ITEM), GiveItemDialogueEvent::item,
-            ByteBufCodecs.INT, GiveItemDialogueEvent::count,
+            ByteBufCodecs.VAR_INT, GiveItemDialogueEvent::count,
             GiveItemDialogueEvent::new
     );
 }

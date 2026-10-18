@@ -7,6 +7,7 @@
   "item_group.unshattered.breakable_blocks": "Skyblock: Unshattered - Breakable Blocks",
   "item_group.unshattered.unshattered_resources": "Skyblock: Unshattered - Resources",
   "item_group.unshattered.talismans": "Skyblock: Unshattered - Talismans",
+  "item_group.unshattered.sacks": "Skyblock: Unshattered - Sacks",
 
   "item.unshattered.treecapitator": "Treecapitator",
   "item.unshattered.spruce_axe": "Spruce Axe",
@@ -208,6 +209,7 @@
   "item.unshattered.enchanted_gunpowder": "Enchanted Gunpowder",
   "item.unshattered.slime_ball": "Slime Ball",
   "item.unshattered.slime_block": "Slime Block",
+  "item.unshattered.beginner_agronomy_sack": "Beginner Agronomy Sack",
 
   "item.description.unshattered.bat_the_fish": "Where is my cape!",
   "item.description.unshattered.century_the_fish": "The term 'century' was actually named after him, or so he says.",
@@ -309,6 +311,7 @@
   "item.description.unshattered.green_candy": "A delicious treat.",
   "item.description.unshattered.purple_candy": "An [c=0xFFAA00AA]ominous[/c] treat.",
   "item.description.unshattered.dwarf_turtle_shell": "Seems near indestructible with a size that belies its true density.",
+  "item.description.unshattered.beginner_agronomy_sack": "Holds various items obtained from farming! Items you pickup go directly into your sacks.",
 
   "item.ability.unshattered.rogue_sword_speed_boost": "Speed Boost",
   "item.ability.unshattered.mind_blowing": "Mind Blowing",
@@ -554,6 +557,9 @@
   "tooltip.unshattered.none": "NONE",
   "tooltip.unshattered.fuelable_1": "Adds",
   "tooltip.unshattered.fuelable_2": "fuel to a refuelable machine.",
+  "tooltip.unshattered.capacity": "Capacity",
+  "tooltip.unshattered.capacity_item": "of each item",
+  "tooltip.unshattered.right_click_sack": "Right click to open!",
 
   "combat.messages.unshattered.failed": "You tried to attack... but nothing happened.",
   "fishing.messages.entity.minecraft.squid": "A Squid appeared.",
@@ -646,6 +652,7 @@
   "widget.unshattered.narration.forge_recipe": "Forge Recipe",
   "widget.unshattered.narration.forge_category": "Forge Category",
   "widget.unshattered.narration.forge_item": "Forge Item",
+  "widget.unshattered.narration.sack_item": "Sack Item",
 
   "enchantment.unshattered.rainbow": "Rainbow",
 

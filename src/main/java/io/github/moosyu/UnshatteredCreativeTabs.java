@@ -4,6 +4,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import static io.github.moosyu.Unshattered.MODID;
@@ -312,6 +313,16 @@ public class UnshatteredCreativeTabs {
                             output.accept(INFINITE_QUIVER);
                             output.accept(FIRE_TALISMAN);
                             output.accept(BAT_ARTIFACT);
+                        }).build()
+        );
+
+        CREATIVE_MODE_TABS.register("unshattered_sacks_tab",
+                () -> CreativeModeTab.builder()
+                        .title(Component.translatable("item_group.unshattered.sacks"))
+                        .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
+                        .icon(Items.BUNDLE::getDefaultInstance)
+                        .displayItems((_, output) -> {
+                            output.accept(BEGINNER_AGRONOMY_SACK);
                         }).build()
         );
     }

@@ -20,7 +20,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.animal.sheep.Sheep;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -82,7 +81,7 @@ public class SheepMixin {
                 drops = new ItemRange(Items.WHITE_WOOL, 1, 3);
             }
 
-            UnshatteredUtils.givePlayerHarvestedItemStack(shearer, new ItemStack(drops.item(), drops.getDropAmount(level.getRandom())));
+            UnshatteredUtils.addItemStackToInventory(shearer, new ItemStack(drops.item(), drops.getDropAmount(level.getRandom())));
             shearer = null;
         }
     }

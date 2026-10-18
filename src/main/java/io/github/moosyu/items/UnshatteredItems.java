@@ -1,5 +1,6 @@
 package io.github.moosyu.items;
 
+import com.google.common.collect.ImmutableSet;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.components.ItemCharges;
@@ -829,4 +830,24 @@ public class UnshatteredItems {
     public static final DeferredItem<EnchantedItem> ENCHANTED_SLIME_BALL = ITEMS.registerItem("enchanted_slime_ball", EnchantedItem::new);
 
     public static final DeferredItem<EnchantedItem> ENCHANTED_SLIME_BLOCK = ITEMS.registerItem("enchanted_slime_block", EnchantedItem::new);
+
+    public static final DeferredItem<SackItem> BEGINNER_AGRONOMY_SACK = ITEMS.registerItem("beginner_agronomy_sack", props -> new SackItem(props,
+            ImmutableSet.of(
+                    Items.BROWN_MUSHROOM,
+                    Items.CACTUS,
+                    Items.CACTUS_FLOWER,
+                    Items.CARROT,
+                    Items.COCOA_BEANS,
+                    Items.MELON_SLICE,
+                    Items.NETHER_WART,
+                    Items.POISONOUS_POTATO,
+                    Items.POTATO,
+                    Items.PUMPKIN,
+                    Items.RED_MUSHROOM,
+                    Items.WHEAT_SEEDS,
+                    Items.WHEAT,
+                    Items.SUGAR_CANE
+            ),
+            640)
+    );
 }

@@ -196,7 +196,7 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
     public void extractBackground(@NonNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         super.extractBackground(graphics, mouseX, mouseY, partialTick);
 
-        graphics.blit(RenderPipelines.GUI_TEXTURED, UnshatteredUtils.getUnshatteredIdentifier("textures/gui/forge.png"), leftPos, topPos, 0, 0, 176, 204, 256, 256);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, UnshatteredUtils.getUnshatteredIdentifier("textures/gui/generic_screen.png"), leftPos, topPos, 0, 0, 176, 204, 256, 256);
     }
 
     @Override

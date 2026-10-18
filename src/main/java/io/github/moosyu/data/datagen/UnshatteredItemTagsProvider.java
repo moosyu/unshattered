@@ -180,7 +180,8 @@ public class UnshatteredItemTagsProvider extends ItemTagsProvider {
                 .add(BAT_ARTIFACT.get())
                 .add(GREEN_CANDY.get())
                 .add(PURPLE_CANDY.get())
-                .add(DWARF_TURTLE_SHELL.get());
+                .add(DWARF_TURTLE_SHELL.get())
+                .add(BEGINNER_AGRONOMY_SACK.get());
 
         tag(ItemTags.HOES)
                 .add(ROOKIE_HOE.get());

@@ -21,5 +21,6 @@ public class RegisterMenuScreensHandler {
         event.register(UnshatteredMenus.VENDOR_MENU_TYPE.get(), VendorScreen::new);
         event.register(UnshatteredMenus.FORGE_MENU_TYPE.get(), ForgeScreen::new);
         event.register(UnshatteredMenus.SACK_OF_SACKS_MENU_TYPE.get(), SackOfSacksScreen::new);
+        event.register(UnshatteredMenus.SACK_MENU_TYPE.get(), SackScreen::new);
     }
 }
