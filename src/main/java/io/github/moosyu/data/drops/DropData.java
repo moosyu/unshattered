@@ -61,7 +61,7 @@ public record DropData(ItemRange itemRange, float dropChance) {
                             .append(Component.literal(Component.translatable("drop_type.message.unshattered." + type.key).getString().toUpperCase())
                                     .withStyle(style -> style.withColor(type.colour).withBold(true)))
                             .append(Component.literal(" "))
-                            .append(Component.translatable(itemRange().item().getDescriptionId()).withStyle(style -> style.withColor(itemRarity.getColour(1.0f)).withBold(false)))
+                            .append(Component.translatable(itemRange().item().getDescriptionId()).withStyle(style -> style.withColor(itemRarity.getColour()).withBold(false)))
                             .append(fortuneValue > 0 ?
                                     Component.literal(" (+" + Math.round(fortuneValue) + fortuneType.symbol + " ")
                                             .append(Component.translatable(fortuneType.getTranslationKey()))

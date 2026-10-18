@@ -646,6 +646,7 @@
   "screen.unshattered.quests": "Quests",
   "screen.unshattered.sack_of_sacks": "Sack of Sacks",
   "screen.unshattered.talisman.tiered_block": "You have another talisman of the same upgrade path already in your bag!",
+  "screen.unshattered.sack.stored": "Stored",
 
   "widget.unshattered.narration.scroller": "Scroller Widget",
   "widget.unshattered.narration.shop_item": "Shop Item",
@@ -653,6 +654,7 @@
   "widget.unshattered.narration.forge_category": "Forge Category",
   "widget.unshattered.narration.forge_item": "Forge Item",
   "widget.unshattered.narration.sack_item": "Sack Item",
+  "widget.unshattered.narration.insert_into_sack": "Insert inventory into sack",
 
   "enchantment.unshattered.rainbow": "Rainbow",
 

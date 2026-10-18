@@ -17,7 +17,6 @@ import io.github.moosyu.data.fishing.FishingEntry;
 import io.github.moosyu.data.fishing.FishingWeightEntry;
 import io.github.moosyu.data.recipes.ForgeRecipe;
 import io.github.moosyu.data.recipes.ForgeRecipeInput;
-import io.github.moosyu.gui.menus.containers.SackOfSacksContainer;
 import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.SackItem;
 import io.github.moosyu.items.UnshatteredRarity;
@@ -315,25 +314,44 @@ public final class UnshatteredUtils {
 
         ((ServerPlayer) player).getStats().increment(player, Stats.ITEM_PICKED_UP.get(itemStack.getItem()), itemStack.count());
 
+        int amountNotAddedToSack = addItemStackToSack(player, itemStack);
+
+        if (amountNotAddedToSack > 0) {
+            ItemStack newItemStack = new ItemStack(itemStack.getItem(), amountNotAddedToSack);
+            if (!player.getInventory().add(newItemStack)) {
+                ItemEntity drop = new ItemEntity(player.level(), player.getX(), player.getY(), player.getZ(), newItemStack);
+                drop.setDeltaMovement(Vec3.ZERO);
+                player.level().addFreshEntity(drop);
+            }
+        }
+    }
+
+    /**
+     * @return remaining items not added to sack
+     */
+    public static int addItemStackToSack(Player player, ItemStack itemStack) {
+        int remaining = itemStack.getCount();
+
         for (ItemStack sackItemStack : player.getData(UnshatteredAttachments.PLAYER_SACK_OF_SACKS_STORAGE.get()).getItems()) {
-            if (sackItemStack.getItem() instanceof SackItem sackItem && sackItem.acceptedItems.contains(itemStack.getItem())) {
-                HashMap<Holder<Item>, Integer> sackContents = sackItemStack.get(UnshatteredDataComponents.SACK_CONTENTS.get());
-                if (sackContents != null) {
-                    HashMap<Holder<Item>, Integer> newContents = new HashMap<>(sackContents);
+            if (remaining <= 0) {
+                break;
+            }
 
-                    newContents.merge(itemStack.typeHolder(), itemStack.count(), Integer::sum);
-                    sackItemStack.set(UnshatteredDataComponents.SACK_CONTENTS.get(), newContents);
+            if (!(sackItemStack.getItem() instanceof SackItem sackItem) || !sackItem.acceptedItems.contains(itemStack.getItem())) {
+                continue;
+            }
 
-                    return;
-                }
+            HashMap<Holder<Item>, Integer> current = sackItemStack.get(UnshatteredDataComponents.SACK_CONTENTS.get());
+            HashMap<Holder<Item>, Integer> newContents = current == null ? new HashMap<>() : new HashMap<>(current);
+            int amountToAdd = Math.clamp(sackItem.sackSlotCapacity - newContents.getOrDefault(itemStack.typeHolder(), 0), 0, remaining);
+            if (amountToAdd > 0) {
+                newContents.merge(itemStack.typeHolder(), amountToAdd, Integer::sum);
+                sackItemStack.set(UnshatteredDataComponents.SACK_CONTENTS.get(), newContents);
+                remaining -= amountToAdd;
             }
         }
 
-        if (!player.getInventory().add(itemStack)) {
-            ItemEntity drop = new ItemEntity(player.level(), player.getX(), player.getY(), player.getZ(), itemStack);
-            drop.setDeltaMovement(Vec3.ZERO);
-            player.level().addFreshEntity(drop);
-        }
+        return remaining;
     }
 
     public static void addBlockBrokenResultToInventory(Holder<Block> blockHolder, Player player, UnshatteredAttributeValues fortuneType) {

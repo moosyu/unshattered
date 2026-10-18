@@ -230,7 +230,7 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
                 if (forgeSlot.itemStack().isPresent() && (forgeSlot.startTime() + forgeSlot.forgingDuration()) <= Instant.now().getEpochSecond()) {
                     completed = true;
                     tooltipSet = true;
-                    tooltipText = itemStack.getItemName().copy().withColor(UnshatteredUtils.getItemRarity(itemStack).getColour(1.0f))
+                    tooltipText = itemStack.getItemName().copy().withColor(UnshatteredUtils.getItemRarity(itemStack).getColour())
                             .append(Component.literal("\n"))
                             .append(Component.translatable("screen.unshattered.forge.completed").withColor(UnshatteredUtils.YELLOW));
                 } else if (forgeSlots.availableSlots() <= slotIndex) {
@@ -252,7 +252,7 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
                             .append(Component.translatable("screen.unshattered.forge.start_process").withColor(UnshatteredUtils.YELLOW));
                 } else {
                     ItemStack tooltipStack = itemStack;
-                    supplier = () -> tooltipStack.getItemName().copy().withColor(UnshatteredUtils.getItemRarity(tooltipStack).getColour(1.0f))
+                    supplier = () -> tooltipStack.getItemName().copy().withColor(UnshatteredUtils.getItemRarity(tooltipStack).getColour())
                             .append(Component.literal("\n"))
                             .append(Component.translatable("screen.unshattered.forge.time_remaining").withColor(UnshatteredUtils.GRAY))
                             .append(Component.literal(": ").withColor(UnshatteredUtils.GRAY))
@@ -423,7 +423,7 @@ public class ForgeScreen extends AbstractContainerScreen<ForgeMenu> {
 
                     lines.add(ingredientItemStack.getItemName()
                             .copy()
-                            .withColor(UnshatteredUtils.getItemRarity(ingredientItemStack).getColour(1.0f))
+                            .withColor(UnshatteredUtils.getItemRarity(ingredientItemStack).getColour())
                             .append(sizedIngredient.count() > 1
                                     ? Component.literal(" x" + sizedIngredient.count()).withColor(UnshatteredUtils.DARK_GRAY)
                                     : Component.empty()

@@ -185,7 +185,7 @@ public class VendorScreen extends AbstractContainerScreen<VendorMenu> {
         vendorItem.itemTradeRequirements().ifPresent(requirements -> {
             for (ItemStack requirement : requirements) {
                 MutableComponent line = requirement.getItemName().copy()
-                        .withColor(UnshatteredUtils.getItemRarity(requirement).getColour(1.0f));
+                        .withColor(UnshatteredUtils.getItemRarity(requirement).getColour());
 
                 if (requirement.count() > 1) {
                     line.append(Component.literal(" x" + requirement.count())

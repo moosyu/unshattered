@@ -64,7 +64,7 @@ public class ItemTooltipHandler {
         int fuelAmount = UnshatteredUtils.getItemFuelAmount(itemStack) * itemStack.count();
 
         event.getToolTip().clear();
-        tooltipComponents.add(Component.translatable(itemStack.getItemName().getString()).withColor(itemRarity.getColour(1.0f)));
+        tooltipComponents.add(Component.translatable(itemStack.getItemName().getString()).withColor(itemRarity.getColour()));
 
         if (!modifiers.modifiers().isEmpty()) {
             Map<Holder<Attribute>, double[]> mergedAmounts = new LinkedHashMap<>();
@@ -124,7 +124,7 @@ public class ItemTooltipHandler {
             tooltipComponents.add(Component.empty());
             tooltipComponents.add(Component.translatable("tooltip.unshattered.capacity").withColor(UnshatteredUtils.GRAY)
                     .append(Component.literal(": "))
-                    .append(Component.literal(sackItem.sackCapacity + " ").withColor(UnshatteredUtils.YELLOW))
+                    .append(Component.literal(sackItem.sackSlotCapacity + " ").withColor(UnshatteredUtils.YELLOW))
                     .append(Component.translatable("tooltip.unshattered.capacity_item").withColor(UnshatteredUtils.YELLOW))
             );
 
@@ -277,7 +277,7 @@ public class ItemTooltipHandler {
             tooltipComponents.add(Component.translatable("tooltip.unshattered.attachable").withStyle(ChatFormatting.DARK_GRAY));
         }
 
-        tooltipComponents.add(Component.literal(Component.translatable("rarity.unshattered." + itemRarity.name().toLowerCase()).getString().toUpperCase() + " " + Component.translatable("item_type.unshattered." + itemType.getSerializedName()).getString().toUpperCase()).withColor(itemRarity.getColour(1.0f)).withStyle(ChatFormatting.BOLD));
+        tooltipComponents.add(Component.literal(Component.translatable("rarity.unshattered." + itemRarity.name().toLowerCase()).getString().toUpperCase() + " " + Component.translatable("item_type.unshattered." + itemType.getSerializedName()).getString().toUpperCase()).withColor(itemRarity.getColour()).withStyle(ChatFormatting.BOLD));
     }
 
     /**

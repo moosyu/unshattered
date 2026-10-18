@@ -19,13 +19,8 @@ public enum UnshatteredRarity {
         this.color = color;
     }
 
-    /**
-     *
-     * @param opacity 0.0 -> 1.0, why did i include opacity here? whos to say.
-     * @return the colour
-     */
-    public int getColour(float opacity) {
-        return UnshatteredUtils.getOpacityColor(color, opacity);
+    public int getColour() {
+        return color;
     }
 
     public static final Codec<UnshatteredRarity> CODEC = Codec.STRING.xmap(UnshatteredRarity::valueOf, UnshatteredRarity::name);
