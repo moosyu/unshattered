@@ -825,4 +825,8 @@ public class UnshatteredItems {
                 .attributes(attributeModifiers)
         ));
     }
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_SLIME_BALL = ITEMS.registerItem("enchanted_slime_ball", EnchantedItem::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_SLIME_BLOCK = ITEMS.registerItem("enchanted_slime_block", EnchantedItem::new);
 }

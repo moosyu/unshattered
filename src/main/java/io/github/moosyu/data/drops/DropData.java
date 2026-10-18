@@ -38,7 +38,8 @@ public record DropData(ItemRange itemRange, float dropChance) {
         fortuneValue = player.getAttributeValue(fortuneType.holder);
 
         if (dropChance() < 1.0) {
-            DropTypes type = getDropType(dropChance());
+            // non combat drops have a lot more chances to roll so their drop type display should reflect it
+            DropTypes type = getDropType(fortuneType == UnshatteredAttributeValues.COMBAT_FORTUNE ? dropChance() : dropChance() * 50);
             // so the player cant roll a bunch of super rare drops in a single go ever if they're really lucky
             if (dropChance() < DropTypes.OCCASIONAL.minRate) {
                 if (rolledAboveOccasional) {

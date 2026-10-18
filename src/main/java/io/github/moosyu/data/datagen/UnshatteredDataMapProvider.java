@@ -165,6 +165,8 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         setBaseData(UnshatteredItems.LAPIS_LEGGINGS, ItemType.LEGGINGS, UnshatteredRarity.UNCOMMON, 1000);
         setBaseData(UnshatteredItems.LAPIS_BOOTS, ItemType.BOOTS, UnshatteredRarity.UNCOMMON, 1000);
         setBaseData(UnshatteredItems.ENCHANTED_GUNPOWDER, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 640);
+        setBaseData(UnshatteredItems.ENCHANTED_SLIME_BALL, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 800);
+        setBaseData(UnshatteredItems.ENCHANTED_SLIME_BLOCK, ItemType.MATERIAL, UnshatteredRarity.RARE, 128000);
 
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK, new ItemRange(UnshatteredItems.FIG_LOG.get()), PlayerSkillsAttachment.Skill.FORAGING, 15);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_STONE_BLOCK, new ItemRange(Items.COBBLESTONE), PlayerSkillsAttachment.Skill.MINING, 1);
@@ -448,6 +450,36 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         1,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         7.0f
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.LAPIS_ZOMBIE.get()), new MobRewardData(
+                        List.of(new MobItemDropData(Items.ROTTEN_FLESH, 1, 2, 1.0f, false),
+                                new MobItemDropData(UnshatteredItems.LAPIS_HELMET, 0.01f, true),
+                                new MobItemDropData(UnshatteredItems.LAPIS_CHESTPLATE, 0.01f, true),
+                                new MobItemDropData(UnshatteredItems.LAPIS_LEGGINGS, 0.01f, true),
+                                new MobItemDropData(UnshatteredItems.LAPIS_BOOTS, 0.01f, true)
+                        ),
+                        5,
+                        PlayerSkillsAttachment.Skill.COMBAT,
+                        9.0f
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.SLIME_CHILD.get()), new MobRewardData(
+                        List.of(new MobItemDropData(Items.SLIME_BALL, false)),
+                        1,
+                        PlayerSkillsAttachment.Skill.COMBAT,
+                        6.0f
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.EMERALD_SLIME.get()), new MobRewardData(
+                        List.of(new MobItemDropData(Items.SLIME_BALL, 1, 3, 1.0f, false),
+                                new MobItemDropData(Items.SLIME_BALL, 1, 0.5f, false)
+                        ),
+                        3,
+                        PlayerSkillsAttachment.Skill.COMBAT,
+                        8.0f
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.MASSIVE_EMERALD_SLIME.get()), new MobRewardData(
+                        List.of(new MobItemDropData(Items.SLIME_BALL, 5, 10, 1.0f, false),
+                                new MobItemDropData(UnshatteredItems.ENCHANTED_SLIME_BALL, 0.01f, true),
+                                new MobItemDropData(UnshatteredItems.ENCHANTED_SLIME_BLOCK, 0.0001f, true)
+                        ),
+                        5,
+                        PlayerSkillsAttachment.Skill.COMBAT,
+                        24.0f
                 ), false);
 
         builder(BLOCK_BREAKING_POWER_DATA)

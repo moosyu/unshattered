@@ -393,6 +393,8 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.LAPIS_LEGGINGS.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.LAPIS_BOOTS.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_GUNPOWDER.get(), Items.GUNPOWDER, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_SLIME_BALL.get(), Items.SLIME_BALL, ModelTemplates.FLAT_ITEM);
+        copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_SLIME_BLOCK.get(), Blocks.SLIME_BLOCK);
     }
 
     /**

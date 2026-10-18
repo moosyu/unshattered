@@ -1,7 +1,6 @@
 package io.github.moosyu.entities;
 
-import io.github.moosyu.entities.mobs.GraveyardZombieVillager;
-import io.github.moosyu.entities.mobs.SneakyCreeper;
+import io.github.moosyu.entities.mobs.*;
 import io.github.moosyu.entities.npcs.*;
 import io.github.moosyu.entities.projectiles.HomingBee;
 import io.github.moosyu.util.UnshatteredUtils;
@@ -123,5 +122,50 @@ public class UnshatteredEntities {
                     .clientTrackingRange(8)
                     .notInPeaceful()
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("sneaky_creeper")))
+    );
+
+    public static final Supplier<EntityType<LapisZombie>> LAPIS_ZOMBIE = ENTITY_TYPES.register(
+            "lapis_zombie",
+            () -> EntityType.Builder.of(LapisZombie::new, MobCategory.MONSTER)
+                    .sized(0.6f, 1.95f)
+                    .eyeHeight(1.74f)
+                    .passengerAttachments(2.0125f)
+                    .ridingOffset(-0.7f)
+                    .clientTrackingRange(8)
+                    .notInPeaceful()
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("lapis_zombie")))
+    );
+
+    public static final Supplier<EntityType<SlimeChild>> SLIME_CHILD = ENTITY_TYPES.register(
+            "slime_child",
+            () -> EntityType.Builder.of(SlimeChild::new, MobCategory.MONSTER)
+                    .sized(0.52f, 0.52f)
+                    .eyeHeight(0.325f)
+                    .spawnDimensionsScale(4.0f)
+                    .clientTrackingRange(10)
+                    .notInPeaceful()
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("slime_child")))
+    );
+
+    public static final Supplier<EntityType<EmeraldSlime>> EMERALD_SLIME = ENTITY_TYPES.register(
+            "emerald_slime",
+            () -> EntityType.Builder.of(EmeraldSlime::new, MobCategory.MONSTER)
+                    .sized(0.52f, 0.52f)
+                    .eyeHeight(0.325f)
+                    .spawnDimensionsScale(4.0f)
+                    .clientTrackingRange(10)
+                    .notInPeaceful()
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("emerald_slime")))
+    );
+
+    public static final Supplier<EntityType<MassiveEmeraldSlime>> MASSIVE_EMERALD_SLIME = ENTITY_TYPES.register(
+            "massive_emerald_slime",
+            () -> EntityType.Builder.of(MassiveEmeraldSlime::new, MobCategory.MONSTER)
+                    .sized(0.52f, 0.52f)
+                    .eyeHeight(0.325f)
+                    .spawnDimensionsScale(4.0f)
+                    .clientTrackingRange(10)
+                    .notInPeaceful()
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("massive_emerald_slime")))
     );
 }

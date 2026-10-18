@@ -211,6 +211,8 @@ public class UnshatteredCreativeTabs {
                             output.accept(GREEN_CANDY);
                             output.accept(PURPLE_CANDY);
                             output.accept(ENCHANTED_GUNPOWDER);
+                            output.accept(ENCHANTED_SLIME_BALL);
+                            output.accept(ENCHANTED_SLIME_BLOCK);
                         }).build()
         );
 

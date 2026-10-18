@@ -60,7 +60,7 @@ public class ItemAttributeModifierHandler {
         } else if (itemStack.is(Items.GOLDEN_SWORD)) {
             event.addModifier(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(getUnshatteredIdentifier("golden_sword_damage"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
         } else if (itemStack.is(Items.DIAMOND_SWORD)) {
-            event.addModifier(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_sword_damage"), 4, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+            event.addModifier(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(getUnshatteredIdentifier("diamond_sword_damage"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
         } else if (itemStack.is(Items.WOODEN_AXE)) {
             event.addModifier(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(getUnshatteredIdentifier("wooden_axe_damage"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
         } else if (itemStack.is(Items.STONE_AXE)) {

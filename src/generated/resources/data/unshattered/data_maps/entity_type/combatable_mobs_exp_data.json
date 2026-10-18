@@ -570,6 +570,159 @@
       "min_coins": 1,
       "skill": "combat"
     },
+    "unshattered:emerald_slime": {
+      "drops": [
+        {
+          "combat_fortune_boosted": false,
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:slime_ball",
+              "max_amount": 3,
+              "min_amount": 1
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": false,
+          "drop_data": {
+            "drop_chance": 0.5,
+            "item_range": {
+              "item": "minecraft:slime_ball",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        }
+      ],
+      "experience": 8.0,
+      "max_coins": 3,
+      "min_coins": 3,
+      "skill": "combat"
+    },
+    "unshattered:lapis_zombie": {
+      "drops": [
+        {
+          "combat_fortune_boosted": false,
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:rotten_flesh",
+              "max_amount": 2,
+              "min_amount": 1
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": true,
+          "drop_data": {
+            "drop_chance": 0.01,
+            "item_range": {
+              "item": "unshattered:lapis_helmet",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": true,
+          "drop_data": {
+            "drop_chance": 0.01,
+            "item_range": {
+              "item": "unshattered:lapis_chestplate",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": true,
+          "drop_data": {
+            "drop_chance": 0.01,
+            "item_range": {
+              "item": "unshattered:lapis_leggings",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": true,
+          "drop_data": {
+            "drop_chance": 0.01,
+            "item_range": {
+              "item": "unshattered:lapis_boots",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        }
+      ],
+      "experience": 9.0,
+      "max_coins": 5,
+      "min_coins": 5,
+      "skill": "combat"
+    },
+    "unshattered:massive_emerald_slime": {
+      "drops": [
+        {
+          "combat_fortune_boosted": false,
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:slime_ball",
+              "max_amount": 10,
+              "min_amount": 5
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": true,
+          "drop_data": {
+            "drop_chance": 0.01,
+            "item_range": {
+              "item": "unshattered:enchanted_slime_ball",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": true,
+          "drop_data": {
+            "drop_chance": 1.0E-4,
+            "item_range": {
+              "item": "unshattered:enchanted_slime_block",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        }
+      ],
+      "experience": 24.0,
+      "max_coins": 5,
+      "min_coins": 5,
+      "skill": "combat"
+    },
+    "unshattered:slime_child": {
+      "drops": [
+        {
+          "combat_fortune_boosted": false,
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:slime_ball",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        }
+      ],
+      "experience": 6.0,
+      "max_coins": 1,
+      "min_coins": 1,
+      "skill": "combat"
+    },
     "unshattered:sneaky_creeper": {
       "drops": [
         {

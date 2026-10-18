@@ -39,6 +39,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -314,7 +315,9 @@ public final class UnshatteredUtils {
         ((ServerPlayer) player).getStats().increment(player, Stats.ITEM_PICKED_UP.get(itemStack.getItem()), itemStack.count());
 
         if (!player.getInventory().add(itemStack)) {
-            player.drop(itemStack, false);
+            ItemEntity drop = new ItemEntity(player.level(), player.getX(), player.getY(), player.getZ(), itemStack);
+            drop.setDeltaMovement(Vec3.ZERO);
+            player.level().addFreshEntity(drop);
         }
     }
 
