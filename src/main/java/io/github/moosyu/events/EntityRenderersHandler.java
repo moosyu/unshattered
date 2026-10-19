@@ -1,11 +1,10 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.entities.UnshatteredEntities;
-import io.github.moosyu.entities.renderers.GraveyardZombieVillagerRenderer;
-import io.github.moosyu.entities.renderers.HomingBeeRenderer;
-import io.github.moosyu.entities.renderers.LapisZombieRenderer;
-import io.github.moosyu.entities.renderers.NPCEntityRenderer;
+import io.github.moosyu.entities.mobs.SlimeChild;
+import io.github.moosyu.entities.renderers.*;
 import net.minecraft.client.renderer.entity.CreeperRenderer;
+import net.minecraft.client.renderer.entity.SlimeRenderer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -26,5 +25,8 @@ public class EntityRenderersHandler {
         event.registerEntityRenderer(UnshatteredEntities.JENNY.get(), context -> new NPCEntityRenderer(context, true));
         event.registerEntityRenderer(UnshatteredEntities.SNEAKY_CREEPER.get(), CreeperRenderer::new);
         event.registerEntityRenderer(UnshatteredEntities.LAPIS_ZOMBIE.get(), LapisZombieRenderer::new);
+        event.registerEntityRenderer(UnshatteredEntities.SLIME_CHILD.get(), context ->  new UnshatteredSlimeRenderer(context, 2));
+        event.registerEntityRenderer(UnshatteredEntities.EMERALD_SLIME.get(), context ->  new UnshatteredSlimeRenderer(context, 3));
+        event.registerEntityRenderer(UnshatteredEntities.MASSIVE_EMERALD_SLIME.get(), context ->  new UnshatteredSlimeRenderer(context, 8));
     }
 }

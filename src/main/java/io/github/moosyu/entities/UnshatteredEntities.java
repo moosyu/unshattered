@@ -139,9 +139,8 @@ public class UnshatteredEntities {
     public static final Supplier<EntityType<SlimeChild>> SLIME_CHILD = ENTITY_TYPES.register(
             "slime_child",
             () -> EntityType.Builder.of(SlimeChild::new, MobCategory.MONSTER)
-                    .sized(0.52f, 0.52f)
-                    .eyeHeight(0.325f)
-                    .spawnDimensionsScale(4.0f)
+                    .sized(1.04f, 1.04f)
+                    .eyeHeight(0.65f)
                     .clientTrackingRange(10)
                     .notInPeaceful()
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("slime_child")))
@@ -150,9 +149,8 @@ public class UnshatteredEntities {
     public static final Supplier<EntityType<EmeraldSlime>> EMERALD_SLIME = ENTITY_TYPES.register(
             "emerald_slime",
             () -> EntityType.Builder.of(EmeraldSlime::new, MobCategory.MONSTER)
-                    .sized(0.52f, 0.52f)
-                    .eyeHeight(0.325f)
-                    .spawnDimensionsScale(4.0f)
+                    .sized(1.56f, 1.56f)
+                    .eyeHeight(0.975f)
                     .clientTrackingRange(10)
                     .notInPeaceful()
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("emerald_slime")))
@@ -161,9 +159,8 @@ public class UnshatteredEntities {
     public static final Supplier<EntityType<MassiveEmeraldSlime>> MASSIVE_EMERALD_SLIME = ENTITY_TYPES.register(
             "massive_emerald_slime",
             () -> EntityType.Builder.of(MassiveEmeraldSlime::new, MobCategory.MONSTER)
-                    .sized(0.52f, 0.52f)
-                    .eyeHeight(0.325f)
-                    .spawnDimensionsScale(4.0f)
+                    .sized(4.16f, 4.16f)
+                    .eyeHeight(2.6f)
                     .clientTrackingRange(10)
                     .notInPeaceful()
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("massive_emerald_slime")))

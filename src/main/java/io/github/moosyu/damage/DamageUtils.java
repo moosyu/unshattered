@@ -110,7 +110,7 @@ public final class DamageUtils {
                 // just to further disincentivise spam clicking on weapons where you aren't meant to be
                 attackStrength /= 2;
             } else {
-                critDamage = player.getAttributeValue(UnshatteredAttributeValues.CRITICAL_CHANCE.holder) >= (player.getRandom().nextIntBetweenInclusive(0, 101))
+                critDamage = player.getRandom().nextDouble() * 100.0 < player.getAttributeValue(UnshatteredAttributeValues.CRITICAL_CHANCE.holder)
                         ? player.getAttributeValue(UnshatteredAttributeValues.CRITICAL_DAMAGE.holder)
                         : 0.0d;
             }
@@ -119,13 +119,13 @@ public final class DamageUtils {
             damage += damageBonus;
             damage *= (1 + (player.getAttributeValue(UnshatteredAttributeValues.STRENGTH.holder) / 20));
             damage *= (1 + (critDamage / 20));
-            damage *= (player.getAttributeValue(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder) + damageBonus);
+            damage *= player.getAttributeValue(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder);
 
             if (useAttackStrength) {
                 damage *= attackStrength;
             }
 
-            AttributeInstance targetHealth = target.getAttribute(UnshatteredAttributeValues.HEALTH.holder);
+            AttributeInstance targetHealth = target.getAttribute(UnshatteredAttributeValues.CURRENT_HEALTH.holder);
 
             if (targetHealth != null) {
                 if (critDamage > 0.0d) {
@@ -134,7 +134,7 @@ public final class DamageUtils {
                 }
 
                 // divided by 10 when displayed so multiplied here
-                serverPlayer.awardStat(Stats.DAMAGE_DEALT, (int) damage * 10);
+                serverPlayer.awardStat(Stats.DAMAGE_DEALT, (int) (damage * 10));
 
                 if ((targetHealth.getBaseValue() - damage) > 0) {
                     targetHealth.setBaseValue(targetHealth.getBaseValue() - damage);
@@ -148,7 +148,7 @@ public final class DamageUtils {
                         double nextHundredDiff = ferocityAmount - (prevHundredPlace * 100);
                         int ferocityHits = prevHundredPlace;
 
-                        if (new Random().nextDouble(100.0d) < nextHundredDiff) {
+                        if ((player.getRandom().nextDouble() * 100.0d) < nextHundredDiff) {
                             ferocityHits++;
                         }
 
@@ -168,10 +168,6 @@ public final class DamageUtils {
             }
 
             player.resetAttackStrengthTicker();
-
-            if (player.isSprinting()) {
-                player.setSprinting(true);
-            }
 
             if (triggerAbilities) {
                 triggeredItems.forEach(item -> item.onAbilityFinished(context));
@@ -201,7 +197,7 @@ public final class DamageUtils {
             waitTime--;
 
             if (waitTime <= 0) {
-                AttributeInstance targetHealth = target.getAttribute(UnshatteredAttributeValues.HEALTH.holder);
+                AttributeInstance targetHealth = target.getAttribute(UnshatteredAttributeValues.CURRENT_HEALTH.holder);
 
                 if (targetHealth != null && (player.isCreative() || !target.is(EntityType.ARMOR_STAND))) {
                     if ((targetHealth.getBaseValue() - damage) > 0) {
@@ -313,7 +309,7 @@ public final class DamageUtils {
                     }
                 }
 
-                states.setStatValue(PlayerStateAttachment.Stat.HEALTH, player.getAttributeValue(UnshatteredAttributeValues.HEALTH.holder), player);
+                states.setStatValue(PlayerStateAttachment.Stat.HEALTH, player.getAttributeValue(UnshatteredAttributeValues.MAX_HEALTH.holder), player);
                 states.setStatValue(PlayerStateAttachment.Stat.MANA, player.getAttributeValue(UnshatteredAttributeValues.MANA.holder), player);
                 player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(), TemperatureTypes.BASE_TEMP.getValue());
 

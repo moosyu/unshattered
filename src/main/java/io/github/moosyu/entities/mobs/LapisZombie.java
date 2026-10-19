@@ -1,16 +1,13 @@
 package io.github.moosyu.entities.mobs;
 
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.items.UnshatteredItems;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.Difficulty;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -24,7 +21,6 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
-import net.minecraft.world.entity.monster.zombie.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -44,10 +40,8 @@ public class LapisZombie extends Monster implements RangedAttackMob {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Zombie.createMonsterAttributes()
-                .add(Attributes.MOVEMENT_SPEED, 0.23f)
-                .add(UnshatteredAttributeValues.HEALTH.holder, 35.0f)
-                .add(UnshatteredAttributeValues.DAMAGE.holder, 2.0f);
+        return UnshatteredUtils.createHostileMobAttributes(35.0f, 2.0f)
+                .add(Attributes.MOVEMENT_SPEED, 0.23f);
     }
 
     @Override

@@ -56,7 +56,7 @@ public class ZombieSwordBase extends UnshatteredSword {
     public @NonNull InteractionResult use(Level level, @NonNull Player player, @NonNull InteractionHand hand) {
         if (level.isClientSide()) return InteractionResult.FAIL;
 
-        AttributeInstance maxHealthAttribute = player.getAttribute(UnshatteredAttributeValues.HEALTH.holder);
+        AttributeInstance maxHealthAttribute = player.getAttribute(UnshatteredAttributeValues.MAX_HEALTH.holder);
         PlayerAbilityEffectsAttachment abilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES.get());
         ItemStack itemStack = player.getItemInHand(InteractionHand.MAIN_HAND);
         ItemCharges itemCharges = itemStack.get(UnshatteredDataComponents.CHARGES.get());

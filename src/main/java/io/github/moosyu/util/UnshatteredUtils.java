@@ -40,6 +40,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -616,5 +617,12 @@ public final class UnshatteredUtils {
         } else {
             return (seconds / 86400) + "d";
         }
+    }
+
+    public static AttributeSupplier.Builder createHostileMobAttributes(double health, double damage) {
+        return Monster.createMobAttributes()
+                .add(UnshatteredAttributeValues.MAX_HEALTH.holder, health)
+                .add(UnshatteredAttributeValues.CURRENT_HEALTH.holder, health)
+                .add(UnshatteredAttributeValues.DAMAGE.holder, damage);
     }
 }

@@ -1,6 +1,7 @@
 package io.github.moosyu.entities.mobs;
 
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.monster.Creeper;
@@ -17,9 +18,7 @@ public class SneakyCreeper extends Creeper {
     }
 
     public static AttributeSupplier.@NonNull Builder createAttributes() {
-        return Creeper.createAttributes()
-                .add(UnshatteredAttributeValues.HEALTH.holder, 25.0f)
-                .add(UnshatteredAttributeValues.DAMAGE.holder, 60.0f);
+        return UnshatteredUtils.createHostileMobAttributes(25.0f, 20.0f);
     }
 
     @Override

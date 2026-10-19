@@ -30,7 +30,7 @@ public class PlayerTickHandler {
         Level level = player.level();
         if (player.level().isClientSide()) return;
         PlayerStateAttachment state = player.getData(PLAYER_STATE.get());
-        double maxHealthValue = player.getAttributeValue(UnshatteredAttributeValues.HEALTH.holder);
+        double maxHealthValue = player.getAttributeValue(UnshatteredAttributeValues.MAX_HEALTH.holder);
         double healthRegenValue = player.getAttributeValue(UnshatteredAttributeValues.HEALTH_REGEN.holder);
         double maxManaValue = player.getAttributeValue(UnshatteredAttributeValues.MANA.holder);
         double manaRegenValue = player.getAttributeValue(UnshatteredAttributeValues.MANA_REGEN.holder);

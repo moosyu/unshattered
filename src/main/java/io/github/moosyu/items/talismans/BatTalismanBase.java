@@ -30,7 +30,7 @@ public class BatTalismanBase extends TieredTalisman implements PassiveAbilityIte
 
         if (target.isPresent() && target.get().isDeadOrDying() && player.isPresent()) {
             player.get().getData(UnshatteredAttachments.PLAYER_STATE).increaseStatValue(PlayerStateAttachment.Stat.HEALTH,
-                    UnshatteredUtils.getDefaultAttributes(target.get()).map(supplier -> supplier.getBaseValue(UnshatteredAttributeValues.HEALTH.holder)).orElse(0.0) * lifeStealAmount,
+                    UnshatteredUtils.getDefaultAttributes(target.get()).map(supplier -> supplier.getBaseValue(UnshatteredAttributeValues.MAX_HEALTH.holder)).orElse(0.0) * lifeStealAmount,
                     player.get()
             );
         }

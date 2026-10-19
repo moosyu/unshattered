@@ -5,7 +5,6 @@ import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.NpcData;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.entities.npcs.NPCEntity;
-import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -53,15 +52,15 @@ public class RenderNameTagHandler {
 
         if (entity instanceof LivingEntity livingEntity && !livingEntity.is(EntityType.ARMOR_STAND) && livingEntity.getPassengers().isEmpty()) {
             event.setCanRender(TriState.TRUE);
-            AttributeInstance healthAttribute = livingEntity.getAttribute(UnshatteredAttributeValues.HEALTH.holder);
-            if (healthAttribute == null) {
+            AttributeInstance maxHealthAttribute = livingEntity.getAttribute(UnshatteredAttributeValues.MAX_HEALTH.holder);
+            AttributeInstance healthAttribute = livingEntity.getAttribute(UnshatteredAttributeValues.CURRENT_HEALTH.holder);
+            if (maxHealthAttribute == null || healthAttribute == null) {
                 event.setContent(Component.literal("SOMETHING WENT WRONG!! (NO HEALTH ASSIGNED)").withColor(0xFFFF5555));
             } else {
-                double baseHealth = UnshatteredUtils.getDefaultAttributes(livingEntity).map(supplier -> supplier.getBaseValue(UnshatteredAttributeValues.HEALTH.holder)).orElse(0.0);
                 event.setContent(Component.literal(livingEntity.getPlainTextName()).withColor(0xFFFF5555)
-                        .append(Component.literal(" " + Mth.ceil(healthAttribute.getValue())).withColor(healthAttribute.getValue() / baseHealth <= 0.5 ? 0xFFFFFF55 : 0xFF55FF55))
+                        .append(Component.literal(" " + Mth.ceil(healthAttribute.getValue())).withColor(healthAttribute.getValue() / maxHealthAttribute.getValue() <= 0.5 ? 0xFFFFFF55 : 0xFF55FF55))
                         .append(Component.literal("/").withColor(0xFFFFFFFF))
-                        .append(Component.literal(String.valueOf((int) (baseHealth))).withColor(0xFF55FF55))
+                        .append(Component.literal(String.valueOf((int) (maxHealthAttribute.getValue()))).withColor(0xFF55FF55))
                         .append(Component.literal("❤").withColor(0xFFFF5555))
                 );
             }
@@ -85,19 +84,19 @@ public class RenderNameTagHandler {
         poseStack.translate(0.0d, entityHeight + 0.5d, 0.0d);
         poseStack.mulPose(camera.rotation());
         poseStack.scale(EntityRenderer.NAMETAG_SCALE, -EntityRenderer.NAMETAG_SCALE, EntityRenderer.NAMETAG_SCALE);
-        // text, x, y, color, ordered text, shadow, text layer type, light, color, background color, outline color
-        event.getSubmitNodeCollector().submitText(
-                poseStack,
-                (float)(-Minecraft.getInstance().font.width(text) / 2),
-                0.0f,
-                text,
-                true,
-                Font.DisplayMode.NORMAL,
-                state.lightCoords,
-                -1,
-                0,
-                0
-        );
+        // text, x, y, colour, ordered text, shadow, text layer type, light, colour, background colour, outline colour
+        event.getSubmitNodeCollector()
+                .submitText(poseStack,
+                        (float)(-Minecraft.getInstance().font.width(text) / 2),
+                        0.0f,
+                        text,
+                        true,
+                        Font.DisplayMode.NORMAL,
+                        state.lightCoords,
+                        -1,
+                        0,
+                        0
+                );
 
         poseStack.popPose();
     }

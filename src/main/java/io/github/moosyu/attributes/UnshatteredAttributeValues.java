@@ -13,7 +13,8 @@ import static io.github.moosyu.Unshattered.LOGGER;
 
 public enum UnshatteredAttributeValues {
     // defaults are the player's base values for the attributes
-    HEALTH("health", "❤", 20.0, 0.0, 2147483647.0, UnshatteredUtils.RED, true, false, false),
+    // health attribute is current health for non player mo
+    MAX_HEALTH("health", "❤", 20.0, 0.0, 2147483647.0, UnshatteredUtils.RED, true, false, false),
     HEALTH_REGEN("health_regen", "❣", 100.0, 0.0, 2048.0, UnshatteredUtils.RED, true, false, true),
     DEFENCE("defence", "❈", 0.0, 0.0, 131072.0, UnshatteredUtils.GREEN, true, false, false),
     TRUE_DEFENCE("true_defence", "❂", 0.0, 0.0, 1024.0, UnshatteredUtils.WHITE, true, false, false),
@@ -42,7 +43,8 @@ public enum UnshatteredAttributeValues {
     MINING_WISDOM("mining_wisdom", "☯", 100, 0, 500, UnshatteredUtils.DARK_AQUA, true, false, true),
     FORAGING_WISDOM("foraging_wisdom", "☯", 100, 0, 500, UnshatteredUtils.DARK_AQUA, true, false, true),
     MAGECRAFT_WISDOM("magecraft_wisdom", "☯", 100, 0, 500, UnshatteredUtils.DARK_AQUA, true, false, true),
-    CARPENTRY_WISDOM("carpentry_wisdom", "☯", 100, 0, 500, UnshatteredUtils.DARK_AQUA, true, false, true);
+    CARPENTRY_WISDOM("carpentry_wisdom", "☯", 100, 0, 500, UnshatteredUtils.DARK_AQUA, true, false, true),
+    CURRENT_HEALTH("max_health", 20.0, 0.0, 2147483647.0);
 
     private static final Map<Attribute, UnshatteredAttributeValues> ATTRIBUTE_MAP = new HashMap<>();
     public final String id;

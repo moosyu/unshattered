@@ -37,7 +37,7 @@ public class BloodChalice extends Item implements PassiveAbilityItem {
             PacketDistributor.sendToPlayer(player, new ClientsidePlayerSoundEffectPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.TRIDENT_HIT), 1.0f));
             PlayerAbilityEffectsAttachment abilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES.get());
             AttributeInstance ferocity = player.getAttribute(UnshatteredAttributeValues.FEROCITY.holder);
-            AttributeInstance health = player.getAttribute(UnshatteredAttributeValues.HEALTH.holder);
+            AttributeInstance health = player.getAttribute(UnshatteredAttributeValues.MAX_HEALTH.holder);
 
             if (ferocity == null || health == null) return;
 

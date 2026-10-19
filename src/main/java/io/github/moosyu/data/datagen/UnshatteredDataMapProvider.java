@@ -32,12 +32,15 @@ import io.github.moosyu.items.weapons.swords.UndeadSword;
 import io.github.moosyu.spawning.EntitySpawnPoint;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -45,10 +48,9 @@ import net.neoforged.neoforge.common.data.DataMapProvider;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import org.jspecify.annotations.NonNull;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 import static io.github.moosyu.data.UnshatteredDataMaps.*;
 
@@ -1055,8 +1057,6 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         createEntityNPCData(UnshatteredEntities.WOOL_WEAVER.get(), "wool_weaver", UnshatteredUtils.WHITE);
 
         createBlockNPCData(UnshatteredBlocks.ROCK_TALKABLE_BLOCK.get(), 0xFFFFFFFF);
-
-        createMobSpawnData(UnshatteredRegions.DEFAULT_REGION, EntityType.ZOMBIE, 3, 103, 4);
     }
 
     private void createSimpleBlockDropData(DataMapProvider.Builder<BlockBreakData, Block> builder, DeferredBlock<Block> block, ItemRange itemRange, PlayerSkillsAttachment.Skill skill, float expAmount) {
@@ -1083,7 +1083,13 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         builder(BLOCK_NPC_DATA).add(BuiltInRegistries.BLOCK.wrapAsHolder(block), colour, false);
     }
 
-    private void createMobSpawnData(ResourceKey<Region> region, EntityType<?> entityType, int x, int y, int z) {
-        builder(MOB_SPAWN_DATA).add(region, new EntitySpawnPoint(entityType, new BlockPos(x, y, z)), false);
+    @SafeVarargs
+    private void createMobSpawnData(ResourceKey<Region> region, EntityType<?> entityType, int x, int y, int z, Map.Entry<EquipmentSlot, ItemLike>... equipment) {
+        Map<EquipmentSlot, Holder<Item>> equipmentMap = new HashMap<>();
+        for (Map.Entry<EquipmentSlot, ItemLike> entry : equipment) {
+            equipmentMap.put(entry.getKey(), BuiltInRegistries.ITEM.wrapAsHolder(entry.getValue().asItem()));
+        }
+
+        builder(MOB_SPAWN_DATA).add(region, new EntitySpawnPoint(entityType, new BlockPos(x, y, z), equipmentMap), false);
     }
 }

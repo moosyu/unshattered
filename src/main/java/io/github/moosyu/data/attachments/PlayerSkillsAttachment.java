@@ -149,7 +149,7 @@ public final class PlayerSkillsAttachment {
                 new LevelReward(UnshatteredAttributeValues.CRITICAL_CHANCE, 1.0d)
         )),
         FARMING("farming", level -> List.of(
-                new LevelReward(UnshatteredAttributeValues.HEALTH,
+                new LevelReward(UnshatteredAttributeValues.MAX_HEALTH,
                         level < 15 ? 1.0d : level < 20 ? 2.0d : level < 25 ? 3.0d : 4.0d),
                 new LevelReward(UnshatteredAttributeValues.FARMING_FORTUNE, 2.0d)
         )),
@@ -170,7 +170,7 @@ public final class PlayerSkillsAttachment {
                 new LevelReward(UnshatteredAttributeValues.MANA_REGEN, 1.5d)
         )),
         CARPENTRY("carpentry", _ -> List.of(
-                new LevelReward(UnshatteredAttributeValues.HEALTH, 1.0d)
+                new LevelReward(UnshatteredAttributeValues.MAX_HEALTH, 1.0d)
         ));
 
         private final String id;

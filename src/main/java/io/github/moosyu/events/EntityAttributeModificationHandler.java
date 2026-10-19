@@ -1,9 +1,8 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.entities.UnshatteredEntities;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
@@ -14,7 +13,7 @@ import static io.github.moosyu.Unshattered.MODID;
 public class EntityAttributeModificationHandler {
     @SubscribeEvent
     public static void onModifyAttributesCalled(EntityAttributeModificationEvent event) {
-        event.add(EntityType.PLAYER, UnshatteredAttributeValues.HEALTH.holder);
+        event.add(EntityType.PLAYER, UnshatteredAttributeValues.MAX_HEALTH.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.DEFENCE.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.STRENGTH.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.CRITICAL_DAMAGE.holder);
@@ -45,46 +44,54 @@ public class EntityAttributeModificationHandler {
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.MAGECRAFT_WISDOM.holder);
         event.add(EntityType.PLAYER, UnshatteredAttributeValues.CARPENTRY_WISDOM.holder);
 
-        event.add(EntityType.ZOMBIE, UnshatteredAttributeValues.HEALTH.holder, 20.0);
-        event.add(EntityType.ZOMBIE, UnshatteredAttributeValues.DAMAGE.holder, 5.0d);
+        addHostileMob(event, EntityType.ZOMBIE, 20.0d, 5.0d);
 
-        event.add(EntityType.SKELETON, UnshatteredAttributeValues.HEALTH.holder, 20.0d);
-        event.add(EntityType.SKELETON, UnshatteredAttributeValues.DAMAGE.holder, 5.0);
+        addHostileMob(event, EntityType.SKELETON, 20.0d, 5.0d);
 
-        event.add(EntityType.SPIDER, UnshatteredAttributeValues.HEALTH.holder, 16.0d);
-        event.add(EntityType.SPIDER, UnshatteredAttributeValues.DAMAGE.holder, 3.0d);
+        addHostileMob(event, EntityType.SPIDER, 16.0d, 3.0d);
 
-        event.add(EntityType.CAVE_SPIDER, UnshatteredAttributeValues.HEALTH.holder, 12.0d);
-        event.add(EntityType.CAVE_SPIDER, UnshatteredAttributeValues.DAMAGE.holder, 4.0d);
+        addHostileMob(event, EntityType.CAVE_SPIDER, 12.0d, 4.0d);
 
-        event.add(EntityType.WITCH, UnshatteredAttributeValues.HEALTH.holder, 26.0d);
-        event.add(EntityType.WITCH, UnshatteredAttributeValues.DAMAGE.holder, 7.0d);
+        addHostileMob(event, EntityType.WITCH, 26.0d, 7.0d);
 
-        event.add(EntityType.ENDERMAN, UnshatteredAttributeValues.HEALTH.holder, 40.0d);
-        event.add(EntityType.ENDERMAN, UnshatteredAttributeValues.DAMAGE.holder, 8.5d);
+        addHostileMob(event, EntityType.ENDERMAN, 40.0d, 8.5d);
 
-        event.add(EntityType.CREEPER, UnshatteredAttributeValues.HEALTH.holder, 20.0d);
-        event.add(EntityType.CREEPER, UnshatteredAttributeValues.DAMAGE.holder, 20.0d);
+        addHostileMob(event, EntityType.CREEPER, 20.0d, 20.0d);
 
-        event.add(EntityType.SQUID, UnshatteredAttributeValues.HEALTH.holder, 10.0d);
+        addPassiveMob(event, EntityType.SQUID, 10.0d);
 
-        event.add(EntityType.GLOW_SQUID, UnshatteredAttributeValues.HEALTH.holder, 40.0d);
+        addPassiveMob(event, EntityType.GLOW_SQUID, 40.0d);
 
-        event.add(EntityType.MOOSHROOM, UnshatteredAttributeValues.HEALTH.holder, 10.0d);
+        addPassiveMob(event, EntityType.MOOSHROOM, 10.0d);
 
-        event.add(EntityType.SHEEP, UnshatteredAttributeValues.HEALTH.holder, 8.0d);
+        addPassiveMob(event, EntityType.SHEEP, 8.0d);
 
-        event.add(EntityType.COW, UnshatteredAttributeValues.HEALTH.holder, 10.0d);
+        addPassiveMob(event, EntityType.COW, 10.0d);
 
-        event.add(EntityType.CHICKEN, UnshatteredAttributeValues.HEALTH.holder, 4.0d);
+        addPassiveMob(event, EntityType.CHICKEN, 4.0d);
 
-        event.add(EntityType.RABBIT, UnshatteredAttributeValues.HEALTH.holder, 10.0d);
+        addPassiveMob(event, EntityType.RABBIT, 10.0d);
 
-        event.add(EntityType.PIG, UnshatteredAttributeValues.HEALTH.holder, 10.0d);
+        addPassiveMob(event, EntityType.PIG, 10.0d);
 
-        event.add(EntityType.ARMOR_STAND, UnshatteredAttributeValues.HEALTH.holder, 0.1d);
+        addPassiveMob(event, EntityType.ARMOR_STAND, 0.1d);
 
-        event.add(EntityType.ENDERMITE, UnshatteredAttributeValues.HEALTH.holder, 50.0d);
-        event.add(EntityType.ENDERMITE, UnshatteredAttributeValues.DAMAGE.holder, 7.0);
+        addHostileMob(event, EntityType.ENDERMITE, 50.0d, 7.0d);
+
+        // the actual values will be set based on size on level join
+        addHostileMob(event, EntityType.SLIME, 0.0d, 0.0d);
+
+        addHostileMob(event, EntityType.ZOMBIE_VILLAGER, 25.0d, 7.0d);
+    }
+
+    public static void addPassiveMob(EntityAttributeModificationEvent event, EntityType<? extends LivingEntity> entityType, double health) {
+        event.add(entityType, UnshatteredAttributeValues.CURRENT_HEALTH.holder, health);
+        event.add(entityType, UnshatteredAttributeValues.MAX_HEALTH.holder, health);
+    }
+
+    public static void addHostileMob(EntityAttributeModificationEvent event, EntityType<? extends LivingEntity> entityType, double health, double damage) {
+        event.add(entityType, UnshatteredAttributeValues.CURRENT_HEALTH.holder, health);
+        event.add(entityType, UnshatteredAttributeValues.MAX_HEALTH.holder, health);
+        event.add(entityType, UnshatteredAttributeValues.DAMAGE.holder, damage);
     }
 }
