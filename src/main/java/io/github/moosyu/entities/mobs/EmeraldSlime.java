@@ -32,6 +32,5 @@ public class EmeraldSlime extends UnshatteredSlime {
         goalSelector.addGoal(3, new SlimeRandomDirectionGoal(this));
         goalSelector.addGoal(5, new SlimeKeepOnJumpingGoal(this));
         targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, (target, level) -> Math.abs(target.getY() - this.getY()) <= 4.0));
-        targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
     }
 }

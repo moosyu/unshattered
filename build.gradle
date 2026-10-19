@@ -28,11 +28,28 @@ sourceSets.main.resources {
 
 repositories {
     maven { url = "https://maven.firstdark.dev/snapshots" }
+
     maven {
         // location of the maven that hosts JEI files since January 2023
         name = "Jared's maven"
         url = "https://maven.blamejared.com/"
     }
+
+    // photon
+    maven {
+        name = "firstdarkMavenSnapshots"
+        url = uri("https://maven.firstdark.dev/snapshots")
+    }
+
+    maven {
+        url "https://maven.commoble.net/"
+    }
+
+    maven {
+        name = 'GeckoLib'
+        url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+    }
+
     maven {
         // location of a maven mirror for JEI files, as a fallback
         name = "ModMaven"
@@ -158,6 +175,9 @@ dependencies {
     implementation "maven.modrinth:RH2KUdKJ:nDf20sjT"
     // nerb
     implementation "maven.modrinth:bQh7xzFq:yziDsCIm"
+    implementation("com.lowdragmc.photon:photon-neoforge-26.1:26.1.2.3")
+    implementation "net.commoble.infiniverse:infiniverse:${infiniverse_version}"
+    implementation "com.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
     compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
     // load the full JEI jar for development testing on NeoForge
     localRuntime("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")

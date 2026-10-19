@@ -1,5 +1,6 @@
 package io.github.moosyu.entities.mobs;
 
+import net.minecraft.client.renderer.entity.state.SlimeRenderState;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -75,6 +76,12 @@ public abstract class UnshatteredSlime extends Mob {
         return ((random.nextFloat() - random.nextFloat()) * 0.2f + 1.0f) * 0.8f;
     }
 
+    public static class UnshatteredSlimeRenderState extends SlimeRenderState {
+        public float squish;
+        public int size = 1;
+        public float scaleMultiplier = 1.0f;
+    }
+
     protected static class SlimeFloatGoal extends Goal {
         private final UnshatteredSlime slime;
 
@@ -100,7 +107,6 @@ public abstract class UnshatteredSlime extends Mob {
             if (slime.getMoveControl() instanceof SlimeMoveControl slimeMoveControl) {
                 slimeMoveControl.setWantedMovement(1.2);
             }
-
         }
     }
 
@@ -120,7 +126,6 @@ public abstract class UnshatteredSlime extends Mob {
             if (slime.getMoveControl() instanceof SlimeMoveControl slimeMoveControl) {
                 slimeMoveControl.setWantedMovement(1.0f);
             }
-
         }
     }
 
@@ -244,7 +249,6 @@ public abstract class UnshatteredSlime extends Mob {
             if (slime.getMoveControl() instanceof UnshatteredSlime.SlimeMoveControl slimeMoveControl) {
                 slimeMoveControl.setDirection(slime.getYRot());
             }
-
         }
     }
 }

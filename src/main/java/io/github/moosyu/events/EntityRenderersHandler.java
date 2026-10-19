@@ -1,10 +1,8 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.entities.UnshatteredEntities;
-import io.github.moosyu.entities.mobs.SlimeChild;
 import io.github.moosyu.entities.renderers.*;
 import net.minecraft.client.renderer.entity.CreeperRenderer;
-import net.minecraft.client.renderer.entity.SlimeRenderer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;

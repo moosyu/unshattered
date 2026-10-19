@@ -61,6 +61,7 @@ public class SpawnManager {
             if (!serverLevel.getChunkSource().hasChunk(
                     SectionPos.blockToSectionCoord(pos.getX()),
                     SectionPos.blockToSectionCoord(pos.getZ()))
+                    || ACTIVE_SPAWN_POINTS.contains(pos)
             ) {
                 return;
             }
@@ -68,8 +69,6 @@ public class SpawnManager {
             Integer cooldown = SPAWN_POINT_COOLDOWNS.get(pos);
             if (cooldown != null && cooldown > 0) {
                 SPAWN_POINT_COOLDOWNS.put(pos, cooldown - CHECK_INTERVAL);
-                return;
-            } else if (ACTIVE_SPAWN_POINTS.contains(pos)) {
                 return;
             }
 
