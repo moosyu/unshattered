@@ -170,6 +170,10 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         setBaseData(UnshatteredItems.ENCHANTED_SLIME_BALL, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 800);
         setBaseData(UnshatteredItems.ENCHANTED_SLIME_BLOCK, ItemType.MATERIAL, UnshatteredRarity.RARE, 128000);
         setBaseData(UnshatteredItems.BEGINNER_AGRONOMY_SACK, ItemType.SACK, UnshatteredRarity.COMMON, 100);
+        setBaseData(UnshatteredItems.MINER_HELMET, ItemType.HELMET, UnshatteredRarity.RARE, 1500);
+        setBaseData(UnshatteredItems.MINER_CHESTPLATE, ItemType.CHESTPLATE, UnshatteredRarity.RARE, 1500);
+        setBaseData(UnshatteredItems.MINER_LEGGINGS, ItemType.LEGGINGS, UnshatteredRarity.RARE, 1500);
+        setBaseData(UnshatteredItems.MINER_BOOTS, ItemType.BOOTS, UnshatteredRarity.RARE, 1500);
 
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK, new ItemRange(UnshatteredItems.FIG_LOG.get()), PlayerSkillsAttachment.Skill.FORAGING, 15);
         createSimpleBlockDropData(blockBreakBuilder, UnshatteredBlocks.BREAKABLE_STONE_BLOCK, new ItemRange(Items.COBBLESTONE), PlayerSkillsAttachment.Skill.MINING, 1);
@@ -483,6 +487,16 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         5,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         24.0f
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.SKELETON_MINER.get()), new MobRewardData(
+                        List.of(new MobItemDropData(Items.BONE, 1, 2, 1.0f, false),
+                                new MobItemDropData(UnshatteredItems.MINER_HELMET, 0.01f, true),
+                                new MobItemDropData(UnshatteredItems.MINER_CHESTPLATE, 0.01f, true),
+                                new MobItemDropData(UnshatteredItems.MINER_LEGGINGS, 0.01f, true),
+                                new MobItemDropData(UnshatteredItems.MINER_BOOTS, 0.01f, true)
+                        ),
+                        4,
+                        PlayerSkillsAttachment.Skill.COMBAT,
+                        16.0f
                 ), false);
 
         builder(BLOCK_BREAKING_POWER_DATA)
@@ -1055,6 +1069,7 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         createEntityNPCData(UnshatteredEntities.JENNY.get(), "jenny", UnshatteredUtils.WHITE);
         createEntityNPCData(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), "jotraeline_greatforge", UnshatteredUtils.DARK_GREEN);
         createEntityNPCData(UnshatteredEntities.WOOL_WEAVER.get(), "wool_weaver", UnshatteredUtils.WHITE);
+        createEntityNPCData(UnshatteredEntities.RHYS.get(), "rhys", UnshatteredUtils.WHITE);
 
         createBlockNPCData(UnshatteredBlocks.ROCK_TALKABLE_BLOCK.get(), 0xFFFFFFFF);
     }

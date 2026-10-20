@@ -850,4 +850,69 @@ public class UnshatteredItems {
             ),
             640)
     );
+
+    public static final DeferredItem<Item> MINER_HELMET = createSimpleArmourPiece("miner_helmet",
+            UnshatteredArmourMaterials.MINER_ARMOUR_MATERIAL,
+            ArmorType.HELMET,
+            ItemAttributeModifiers.builder()
+                    .add(UnshatteredAttributeValues.DEFENCE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_helmet_defence"), 5, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.HEAD
+                    ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_helmet_mining_speed"), 5, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.HEAD
+                    ).add(UnshatteredAttributeValues.MINING_FORTUNE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_helmet_mining_fortune"), 1, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.HEAD
+                    ).build()
+    );
+
+    public static final DeferredItem<Item> MINER_CHESTPLATE = createSimpleArmourPiece("miner_chestplate",
+            UnshatteredArmourMaterials.MINER_ARMOUR_MATERIAL,
+            ArmorType.CHESTPLATE,
+            ItemAttributeModifiers.builder()
+                    .add(UnshatteredAttributeValues.DEFENCE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_chestplate_defence"), 8, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.CHEST
+                    ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_chestplate_mining_speed"), 5, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.CHEST
+                    ).add(UnshatteredAttributeValues.MINING_FORTUNE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_chestplate_mining_fortune"), 2, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.CHEST
+                    ).build()
+    );
+
+    public static final DeferredItem<Item> MINER_LEGGINGS = createSimpleArmourPiece("miner_leggings",
+            UnshatteredArmourMaterials.MINER_ARMOUR_MATERIAL,
+            ArmorType.LEGGINGS,
+            ItemAttributeModifiers.builder()
+                    .add(UnshatteredAttributeValues.DEFENCE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_leggings_defence"), 7, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.LEGS
+                    ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_leggings_mining_speed"), 5, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.LEGS
+                    )
+                    .add(UnshatteredAttributeValues.MINING_FORTUNE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_leggings_mining_fortune"), 1, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.LEGS
+                    ).build()
+    );
+
+    public static final DeferredItem<Item> MINER_BOOTS = createSimpleArmourPiece("miner_boots",
+            UnshatteredArmourMaterials.MINER_ARMOUR_MATERIAL,
+            ArmorType.BOOTS,
+            ItemAttributeModifiers.builder()
+                    .add(UnshatteredAttributeValues.DEFENCE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_boots_defence"), 4, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.FEET
+                    ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_boots_mining_speed"), 5, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.FEET
+                    ).add(UnshatteredAttributeValues.MINING_FORTUNE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_boots_mining_fortune"), 1, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.FEET
+                    ).build()
+    );
 }

@@ -233,6 +233,10 @@ public class UnshatteredCreativeTabs {
                             output.accept(LAPIS_CHESTPLATE);
                             output.accept(LAPIS_LEGGINGS);
                             output.accept(LAPIS_BOOTS);
+                            output.accept(MINER_HELMET);
+                            output.accept(MINER_CHESTPLATE);
+                            output.accept(MINER_LEGGINGS);
+                            output.accept(MINER_BOOTS);
                         }).build()
         );
 

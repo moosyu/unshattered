@@ -10,6 +10,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FluidState;
 import org.jspecify.annotations.NonNull;
@@ -72,4 +73,9 @@ public class NPCEntity extends Mob {
     }
 
     @Override public void knockback(double strength, double x, double z) {}
+
+    @Override
+    public boolean ignoreExplosion(@NonNull Explosion explosion) {
+        return true;
+    }
 }

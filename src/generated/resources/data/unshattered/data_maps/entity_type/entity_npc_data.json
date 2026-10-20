@@ -20,6 +20,11 @@
       "skin_location": "unshattered:entity/npcs/jotraeline_greatforge",
       "texture_path": "unshattered:textures/entity/npcs/jotraeline_greatforge.png"
     },
+    "unshattered:rhys": {
+      "npc_colour": -1,
+      "skin_location": "unshattered:entity/npcs/rhys",
+      "texture_path": "unshattered:textures/entity/npcs/rhys.png"
+    },
     "unshattered:wool_weaver": {
       "npc_colour": -1,
       "skin_location": "unshattered:entity/npcs/wool_weaver",

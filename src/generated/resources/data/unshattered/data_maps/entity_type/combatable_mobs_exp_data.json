@@ -704,6 +704,69 @@
       "min_coins": 5,
       "skill": "combat"
     },
+    "unshattered:skeleton_miner": {
+      "drops": [
+        {
+          "combat_fortune_boosted": false,
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:bone",
+              "max_amount": 2,
+              "min_amount": 1
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": true,
+          "drop_data": {
+            "drop_chance": 0.01,
+            "item_range": {
+              "item": "unshattered:miner_helmet",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": true,
+          "drop_data": {
+            "drop_chance": 0.01,
+            "item_range": {
+              "item": "unshattered:miner_chestplate",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": true,
+          "drop_data": {
+            "drop_chance": 0.01,
+            "item_range": {
+              "item": "unshattered:miner_leggings",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": true,
+          "drop_data": {
+            "drop_chance": 0.01,
+            "item_range": {
+              "item": "unshattered:miner_boots",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        }
+      ],
+      "experience": 16.0,
+      "max_coins": 4,
+      "min_coins": 4,
+      "skill": "combat"
+    },
     "unshattered:slime_child": {
       "drops": [
         {

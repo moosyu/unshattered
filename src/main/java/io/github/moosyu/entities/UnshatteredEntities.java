@@ -165,4 +165,20 @@ public class UnshatteredEntities {
                     .notInPeaceful()
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("massive_emerald_slime")))
     );
+
+    public static final Supplier<EntityType<RhysNPC>> RHYS = ENTITY_TYPES.register(
+            "rhys",
+            () -> EntityType.Builder.of(RhysNPC::new, MobCategory.CREATURE)
+                    .sized(0.6f, 1.8f)
+                    .eyeHeight(1.62f)
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, RhysNPC.RHYS_IDENTIFIER))
+    );
+
+    public static final Supplier<EntityType<SkeletonMiner>> SKELETON_MINER = ENTITY_TYPES.register(
+            "skeleton_miner",
+            () -> EntityType.Builder.of(SkeletonMiner::new, MobCategory.MONSTER)
+                    .sized(0.6f, 1.8f)
+                    .eyeHeight(1.62f)
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("skeleton_miner")))
+    );
 }

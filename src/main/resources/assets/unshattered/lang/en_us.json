@@ -672,6 +672,8 @@
   "entity.unshattered.slime_child": "Slime Child",
   "entity.unshattered.emerald_slime": "Emerald Slime",
   "entity.unshattered.massive_emerald_slime": "Massive Emerald Slime",
+  "entity.unshattered.rhys": "Rhys",
+  "entity.unshattered.skeleton_miner": "Skeleton Miner",
 
   "dialogue.unshattered.generic.player_yes_choice": "Yes.",
   "dialogue.unshattered.generic.player_no_choice": "No.",

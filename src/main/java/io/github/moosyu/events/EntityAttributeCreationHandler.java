@@ -3,6 +3,7 @@ package io.github.moosyu.events;
 import io.github.moosyu.entities.UnshatteredEntities;
 import io.github.moosyu.entities.mobs.*;
 import io.github.moosyu.entities.npcs.NPCEntity;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.world.entity.monster.Creeper;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -25,5 +26,7 @@ public class EntityAttributeCreationHandler {
         event.put(UnshatteredEntities.SLIME_CHILD.get(), SlimeChild.createAttributes().build());
         event.put(UnshatteredEntities.EMERALD_SLIME.get(), EmeraldSlime.createAttributes().build());
         event.put(UnshatteredEntities.MASSIVE_EMERALD_SLIME.get(), MassiveEmeraldSlime.createAttributes().build());
+        event.put(UnshatteredEntities.RHYS.get(), NPCEntity.createNpcAttributes().build());
+        event.put(UnshatteredEntities.SKELETON_MINER.get(), SkeletonMiner.createAttributes().build());
     }
 }

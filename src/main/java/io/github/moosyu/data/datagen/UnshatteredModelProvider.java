@@ -396,6 +396,10 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_SLIME_BALL.get(), Items.SLIME_BALL, ModelTemplates.FLAT_ITEM);
         copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_SLIME_BLOCK.get(), Blocks.SLIME_BLOCK);
         itemModels.generateFlatItem(UnshatteredItems.BEGINNER_AGRONOMY_SACK.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.MINER_HELMET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.MINER_CHESTPLATE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.MINER_LEGGINGS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.MINER_BOOTS.get(), ModelTemplates.FLAT_ITEM);
     }
 
     /**
