@@ -196,30 +196,27 @@ public class BlockBreakHandler {
         Holder<Block> block = blockState.typeHolder();
 
         BlockBreakData blockBreakData = block.getData(UnshatteredDataMaps.BLOCK_BREAK_DATA);
+        System.out.println(blockBreakData);
         if (blockBreakData == null || !hasBreakingPowerRequirement(player, blockState.typeHolder())) {
             event.setNewSpeed(0.0f);
+            System.out.println("1");
             return;
         }
 
         ItemStack itemStack = player.getMainHandItem();
         ItemFuel itemFuel = itemStack.get(UnshatteredDataComponents.FUEL.get());
         ItemAttributeModifiers itemAttributeModifiers = itemStack.get(DataComponents.ATTRIBUTE_MODIFIERS);
-        if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.MINING
-                && itemStack.is(ItemTags.PICKAXES)
-                && (itemFuel == null || itemFuel.currentFuel() > 0)
-        ) {
+
+        if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.MINING && itemStack.is(ItemTags.PICKAXES) && (itemFuel == null || itemFuel.currentFuel() > 0)) {
             event.setNewSpeed((float) (player.getAttributeValue(UnshatteredAttributeValues.MINING_SPEED.holder)));
+        }  else if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.FARMING && itemStack.is(ItemTags.HOES)) {
+            event.setNewSpeed(100.0f);
         } else if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.FORAGING
                 && itemStack.is(ItemTags.AXES)
                 || !itemStack.is(ItemTags.AXES)
                 && (itemAttributeModifiers == null || itemAttributeModifiers.modifiers().stream().noneMatch(entry -> entry.attribute().equals(UnshatteredAttributeValues.BREAKING_POWER.holder)))
         ) {
             event.setNewSpeed((float) ((1 + (127 * player.getAttributeValue(UnshatteredAttributeValues.SWEEP.holder))/119) - (Math.pow(player.getAttributeValue(UnshatteredAttributeValues.SWEEP.holder), 2)/3570)));
-        } else if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.FARMING
-                && itemStack.is(ItemTags.HOES)
-        ) {
-            // instabreak farming blocks with hoes
-            event.setNewSpeed(100f);
         } else {
             event.setNewSpeed(0.0f);
         }
@@ -234,8 +231,9 @@ public class BlockBreakHandler {
     private static boolean hasBreakingPowerRequirement(Player player, Holder<Block> block) {
         int requiredBreakingPower = Objects.requireNonNullElse(block.getData(UnshatteredDataMaps.BLOCK_BREAKING_POWER_DATA), 0);
         int playerBreakingPower = (int) player.getAttributeValue(UnshatteredAttributeValues.BREAKING_POWER.holder);
-        if (playerBreakingPower >= requiredBreakingPower) return true;
-        else if (!player.level().isClientSide()) {
+        if (playerBreakingPower >= requiredBreakingPower) {
+            return true;
+        } else if (!player.level().isClientSide()) {
             PlayerStateAttachment playerStateAttachment = player.getData(UnshatteredAttachments.PLAYER_STATE);
             if (!playerStateAttachment.isFailedMessageFired()) {
                 player.sendSystemMessage(
@@ -248,8 +246,8 @@ public class BlockBreakHandler {
             }
             playerStateAttachment.setFailedMessageFired(true);
             player.syncData(UnshatteredAttachments.PLAYER_STATE);
-
         }
+
         return false;
     }
 }

@@ -5,14 +5,10 @@ import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.damage.DamageUtils;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
-import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -24,7 +20,6 @@ import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.*;
@@ -35,7 +30,6 @@ import java.util.List;
 
 @Mixin(AbstractArrow.class)
 public abstract class AbstractArrowMixin extends Projectile {
-    @Shadow private double baseDamage;
     @Shadow @Nullable private IntOpenHashSet piercingIgnoreEntityIds;
     @Shadow private @Nullable List<Entity> piercedAndKilledEntities;
     @Shadow private ItemStack firedFromWeapon;
@@ -133,29 +127,11 @@ public abstract class AbstractArrowMixin extends Projectile {
                 }
 
                 playSound(soundEvent, 1.0f, 1.2f / (this.random.nextFloat() * 0.2f + 0.9f));
-            } else if (target instanceof Player targetPlayer && currentOwner instanceof LivingEntity livingOwner) {
-                DamageUtils.damagePlayer(targetPlayer,
-                        livingOwner.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder),
-                        Component.literal("☠ " + targetPlayer.getPlainTextName() + " was shot to death by a " + livingOwner.getPlainTextName() + "!"),
-                        false,
-                        damageSource
-                );
-
-                Vec3 deltaMovement = arrow.getDeltaMovement();
-
+            } else if (target instanceof ServerPlayer targetPlayer && currentOwner instanceof LivingEntity livingOwner && level() instanceof ServerLevel serverLevel) {
+                targetPlayer.hurtServer(serverLevel, damageSource, (float) livingOwner.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder));
                 doPostHurtEffects(targetPlayer);
-                targetPlayer.indicateDamage(deltaMovement.x, deltaMovement.z);
-
-                // for whatever reason doKnockback does nothing here so i just did it by myself. do tell if youre reading this and know why.
-                if (targetPlayer instanceof ServerPlayer serverPlayer) {
-                    // needs to be negative so the knockback doesnt pull the player towards the direction of the x z vector
-                    targetPlayer.knockback(0.4, -deltaMovement.x, -deltaMovement.z);
-                    serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(targetPlayer));
-                }
-
-                // sounds close enough to vanilla's damage sound
-                targetPlayer.level().playSound(null, targetPlayer.blockPosition(), SoundEvents.PLAYER_HURT, SoundSource.PLAYERS, 1.0f, (random.nextFloat() - random.nextFloat()) * 0.2f + 1.0f);
             }
+
             if (arrow.getPierceLevel() <= 0) {
                 discard();
             }

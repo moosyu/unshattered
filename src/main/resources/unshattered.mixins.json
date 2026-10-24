@@ -15,7 +15,8 @@
     "SheepMixin",
     "AbstractArrowMixin",
     "ProjectileWeaponItemMixin",
-    "CropBlockMixin"
+    "CropBlockMixin",
+    "LivingEntityMixin"
   ],
   "client": [
     "StatsScreenMixin"
