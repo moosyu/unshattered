@@ -5,14 +5,13 @@ import io.github.moosyu.blocks.TalkingRockBlock;
 import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.dialogue.*;
 import io.github.moosyu.data.dialogue.events.*;
-import io.github.moosyu.data.fishing.FishingConditions;
+import io.github.moosyu.data.fishing.FishingCondition;
 import io.github.moosyu.data.fishing.TriggerMiscReward;
 import io.github.moosyu.data.fishing.rewards.CoinReward;
 import io.github.moosyu.data.quests.Quest;
 import io.github.moosyu.data.quests.QuestTypes;
 import io.github.moosyu.data.regen.RegenCondition;
 import io.github.moosyu.data.regen.RegenPaths.*;
-import io.github.moosyu.data.regen.conditions.NotBelowBlock;
 import io.github.moosyu.data.regions.*;
 import io.github.moosyu.data.datagen.*;
 import io.github.moosyu.entities.UnshatteredEntities;
@@ -635,7 +634,7 @@ public class DatagenHandler {
                             500,
                             1,
                             null,
-                            new NotBelowBlock(Blocks.AIR)
+                            RegenCondition.NOT_ABOVE_AIR
                     );
 
                     createRegenPath(bootstrap,
@@ -644,7 +643,7 @@ public class DatagenHandler {
                             500,
                             1,
                             null,
-                            new NotBelowBlock(Blocks.AIR)
+                            RegenCondition.NOT_ABOVE_AIR
                     );
 
                     createRegenPathWithBlocks(bootstrap, "cocoa", List.of(UnshatteredBlocks.BREAKABLE_COCOA_BEAN_BLOCK.get(), Blocks.AIR), 600);
@@ -654,7 +653,7 @@ public class DatagenHandler {
                             "good_catch",
                             0xFF810AF3,
                             100.0f,
-                            Optional.of(FishingConditions.NONE),
+                            Optional.of(FishingCondition.NONE),
                             20.0d,
                             Optional.of(1))
                     );
@@ -664,7 +663,7 @@ public class DatagenHandler {
                             "great_catch",
                             0xFFFFAA00,
                             1000.0f,
-                            Optional.of(FishingConditions.NONE),
+                            Optional.of(FishingCondition.NONE),
                             5.0d,
                             Optional.of(5))
                     );
@@ -674,7 +673,7 @@ public class DatagenHandler {
                             "outstanding_catch",
                             0xFFFF55FF,
                             10000.0f,
-                            Optional.of(FishingConditions.NONE),
+                            Optional.of(FishingCondition.NONE),
                             1.0d,
                             Optional.of(10))
                     );

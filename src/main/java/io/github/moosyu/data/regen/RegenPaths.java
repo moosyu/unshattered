@@ -39,7 +39,7 @@ public final class RegenPaths {
                         Codec.INT.fieldOf("regen_ticks").forGetter(RegenPath::regenTicks),
                         Codec.INT.fieldOf("stages_incremented").forGetter(RegenPath::stagesIncremented),
                         RegenVariant.CODEC.optionalFieldOf("variant").forGetter(RegenPath::variant),
-                        RegenConditionTypes.CODEC.optionalFieldOf("condition").forGetter(RegenPath::regenCondition)
+                        RegenCondition.CODEC.optionalFieldOf("condition").forGetter(RegenPath::regenCondition)
                 ).apply(instance, RegenPath::new)
         );
 

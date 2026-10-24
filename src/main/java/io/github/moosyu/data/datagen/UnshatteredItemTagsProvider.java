@@ -23,6 +23,7 @@ public class UnshatteredItemTagsProvider extends ItemTagsProvider {
 
     public static final TagKey<Item> HAS_DESCRIPTION = ItemTags.create(UnshatteredUtils.getUnshatteredIdentifier("has_description"));
     public static final TagKey<Item> HIDDEN_FROM_RECIPE_VIEWER = ItemTags.create(Tags.HIDDEN_FROM_RECIPE_VIEWERS);
+    public static final TagKey<Item> CAN_FISH_IN_LAVA = ItemTags.create(UnshatteredUtils.getUnshatteredIdentifier("can_fish_in_lava"));
 
     @Override
     protected void addTags(HolderLookup.@NonNull Provider provider) {
@@ -227,5 +228,7 @@ public class UnshatteredItemTagsProvider extends ItemTagsProvider {
                 .add(BREAKABLE_ACACIA_LOG.get())
                 .add(BREAKABLE_DARK_OAK_LOG.get())
                 .add(ROCK_TALKABLE_BLOCK.get());
+
+        tag(CAN_FISH_IN_LAVA).add(Items.FISHING_ROD);
     }
 }

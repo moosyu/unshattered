@@ -6,7 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.attachments.PlayerCurrencyAttachment;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.data.fishing.FishingConditions;
+import io.github.moosyu.data.fishing.FishingCondition;
 import io.github.moosyu.data.fishing.TriggerMiscReward;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -17,14 +17,14 @@ import java.util.Optional;
 import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_CURRENCY;
 import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_SKILLS;
 
-public record CoinReward(int min, int max, String messageKey, int color, float expAmount, Optional<FishingConditions> condition, double weight, Optional<Integer> fishingLevelRequirement) implements TriggerMiscReward {
+public record CoinReward(int min, int max, String messageKey, int color, float expAmount, Optional<FishingCondition> condition, double weight, Optional<Integer> fishingLevelRequirement) implements TriggerMiscReward {
     public static final MapCodec<CoinReward> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("min").forGetter(CoinReward::min),
             Codec.INT.fieldOf("max").forGetter(CoinReward::max),
             Codec.STRING.fieldOf("message_key").forGetter(CoinReward::messageKey),
             Codec.INT.fieldOf("color").forGetter(CoinReward::color),
             Codec.FLOAT.fieldOf("exp_amount").forGetter(CoinReward::expAmount),
-            FishingConditions.CODEC.optionalFieldOf("condition").forGetter(CoinReward::condition),
+            FishingCondition.CODEC.optionalFieldOf("condition").forGetter(CoinReward::condition),
             Codec.DOUBLE.fieldOf("weight").forGetter(CoinReward::weight),
             Codec.INT.optionalFieldOf("level_requirement").forGetter(CoinReward::fishingLevelRequirement)
     ).apply(instance, CoinReward::new));

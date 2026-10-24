@@ -10,10 +10,9 @@ import io.github.moosyu.data.drops.BlockBreakData;
 import io.github.moosyu.data.drops.DropData;
 import io.github.moosyu.data.drops.MobItemDropData;
 import io.github.moosyu.data.drops.MobRewardData;
-import io.github.moosyu.data.fishing.FishingConditions;
+import io.github.moosyu.data.fishing.FishingCondition;
 import io.github.moosyu.data.fishing.FishingWeightEntry;
 import io.github.moosyu.data.regions.Region;
-import io.github.moosyu.data.regions.UnshatteredRegions;
 import io.github.moosyu.entities.UnshatteredEntities;
 import io.github.moosyu.items.ItemRange;
 import io.github.moosyu.items.ItemType;
@@ -40,7 +39,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -50,7 +48,6 @@ import org.jspecify.annotations.NonNull;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 import static io.github.moosyu.data.UnshatteredDataMaps.*;
 
@@ -528,7 +525,7 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
 
         builder(FISHING_MOB_WEIGHT_DATA).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SQUID), new FishingWeightEntry(1200.0d), false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.GLOW_SQUID),
-                        new FishingWeightEntry(Optional.of(FishingConditions.NIGHT),
+                        new FishingWeightEntry(Optional.of(FishingCondition.NIGHT),
                                 1100.0d,
                                 Optional.of(1)
                         ),
