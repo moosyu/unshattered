@@ -13,6 +13,7 @@ import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.data.drops.BlockBreakData;
 import io.github.moosyu.data.drops.DropData;
+import io.github.moosyu.data.fishing.FishingCondition;
 import io.github.moosyu.data.fishing.FishingEntry;
 import io.github.moosyu.data.fishing.FishingWeightEntry;
 import io.github.moosyu.data.recipes.ForgeRecipe;
@@ -21,6 +22,7 @@ import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.SackItem;
 import io.github.moosyu.items.UnshatteredRarity;
 import net.minecraft.client.gui.Font;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -473,17 +475,27 @@ public final class UnshatteredUtils {
         return selectedMap.values().stream().mapToDouble(FishingWeightEntry::weight).sum();
     }
 
-    public static <T> Map<T, FishingWeightEntry> filterFishingEntries(Map<T, FishingWeightEntry> entries, ServerPlayer player) {
+    public static <T> Map<T, FishingWeightEntry> filterFishingEntries(Map<T, FishingWeightEntry> entries, ServerPlayer player, BlockPos hookPos) {
         return entries.entrySet().stream()
-                .filter(entry -> fishingRequirementsMet(entry.getValue(), player))
+                .filter(entry -> fishingRequirementsMet(entry.getValue(), player, hookPos))
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         Map.Entry::getValue
                 ));
     }
 
-    public static boolean fishingRequirementsMet(FishingEntry entry, ServerPlayer player) {
-        boolean metCondition = entry.condition().map(condition -> condition.test(player)).orElse(true);
+    public static boolean fishingRequirementsMet(FishingEntry entry, ServerPlayer player, BlockPos hookPos) {
+        boolean metCondition = true;
+
+        if (entry.conditions().isPresent()) {
+            for (FishingCondition condition : entry.conditions().get()) {
+                if (!condition.test(player.level(), hookPos)) {
+                    metCondition = false;
+                    break;
+                }
+            }
+        }
+
         boolean metLevelRequirement;
 
         if (entry.fishingLevelRequirement().isPresent()) {

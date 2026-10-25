@@ -653,7 +653,7 @@ public class DatagenHandler {
                             "good_catch",
                             0xFF810AF3,
                             100.0f,
-                            Optional.of(FishingCondition.NONE),
+                            Optional.of(List.of(FishingCondition.WATER)),
                             20.0d,
                             Optional.of(1))
                     );
@@ -663,7 +663,7 @@ public class DatagenHandler {
                             "great_catch",
                             0xFFFFAA00,
                             1000.0f,
-                            Optional.of(FishingCondition.NONE),
+                            Optional.of(List.of(FishingCondition.WATER)),
                             5.0d,
                             Optional.of(5))
                     );
@@ -673,7 +673,7 @@ public class DatagenHandler {
                             "outstanding_catch",
                             0xFFFF55FF,
                             10000.0f,
-                            Optional.of(FishingCondition.NONE),
+                            Optional.of(List.of(FishingCondition.WATER)),
                             1.0d,
                             Optional.of(10))
                     );

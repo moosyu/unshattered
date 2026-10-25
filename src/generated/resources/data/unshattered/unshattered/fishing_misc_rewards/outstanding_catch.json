@@ -1,7 +1,9 @@
 {
   "type": "unshattered:give_coins",
-  "color": -43521,
-  "condition": "none",
+  "colour": -43521,
+  "conditions": [
+    "water"
+  ],
   "exp_amount": 10000.0,
   "level_requirement": 10,
   "max": 1000000,

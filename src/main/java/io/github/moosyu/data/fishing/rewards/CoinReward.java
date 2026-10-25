@@ -12,19 +12,20 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
+import java.util.List;
 import java.util.Optional;
 
 import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_CURRENCY;
 import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_SKILLS;
 
-public record CoinReward(int min, int max, String messageKey, int color, float expAmount, Optional<FishingCondition> condition, double weight, Optional<Integer> fishingLevelRequirement) implements TriggerMiscReward {
+public record CoinReward(int min, int max, String messageKey, int colour, float expAmount, Optional<List<FishingCondition>> conditions, double weight, Optional<Integer> fishingLevelRequirement) implements TriggerMiscReward {
     public static final MapCodec<CoinReward> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("min").forGetter(CoinReward::min),
             Codec.INT.fieldOf("max").forGetter(CoinReward::max),
             Codec.STRING.fieldOf("message_key").forGetter(CoinReward::messageKey),
-            Codec.INT.fieldOf("color").forGetter(CoinReward::color),
+            Codec.INT.fieldOf("colour").forGetter(CoinReward::colour),
             Codec.FLOAT.fieldOf("exp_amount").forGetter(CoinReward::expAmount),
-            FishingCondition.CODEC.optionalFieldOf("condition").forGetter(CoinReward::condition),
+            FishingCondition.CODEC.listOf().optionalFieldOf("conditions").forGetter(CoinReward::conditions),
             Codec.DOUBLE.fieldOf("weight").forGetter(CoinReward::weight),
             Codec.INT.optionalFieldOf("level_requirement").forGetter(CoinReward::fishingLevelRequirement)
     ).apply(instance, CoinReward::new));
@@ -39,7 +40,7 @@ public record CoinReward(int min, int max, String messageKey, int color, float e
         player.syncData(PLAYER_SKILLS);
 
         player.sendSystemMessage(Component.empty()
-                .append(Component.translatable(messageKey).withColor(color).withStyle(ChatFormatting.BOLD))
+                .append(Component.translatable(messageKey).withColor(colour).withStyle(ChatFormatting.BOLD))
                 .append(Component.literal(" "))
                 .append(Component.translatable("skills.messages.unshattered.fishing.you_found").withColor(0xFF55FFFF))
                 .append(Component.literal(" "))

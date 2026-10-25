@@ -3,17 +3,16 @@ package io.github.moosyu.data.fishing;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.level.material.Fluids;
 import org.jspecify.annotations.NonNull;
 
 import java.util.Locale;
 import java.util.function.BiPredicate;
-import java.util.function.Predicate;
 
 public enum FishingCondition implements StringRepresentable {
-    NONE((_, _) -> true),
-    NIGHT((level, _) -> level.isDarkOutside());
+    NIGHT((level, _) -> level.isDarkOutside()),
+    WATER((level, blockPos) -> level.getFluidState(blockPos).is(Fluids.WATER));
 
     private final BiPredicate<ServerLevel, BlockPos> condition;
     FishingCondition(BiPredicate<ServerLevel, BlockPos> condition) {

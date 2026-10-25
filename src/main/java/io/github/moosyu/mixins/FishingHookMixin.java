@@ -2,9 +2,10 @@ package io.github.moosyu.mixins;
 
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.UnshatteredDataMaps;
-import io.github.moosyu.data.components.UnshatteredDataComponents;
+import io.github.moosyu.data.datagen.UnshatteredItemTagsProvider;
 import io.github.moosyu.items.ItemType;
 import io.github.moosyu.damage.DamageUtils;
+import io.github.moosyu.items.tools.rods.UnshatteredRod;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -166,5 +167,17 @@ public abstract class FishingHookMixin extends Projectile {
         } else {
             timeUntilLured = random.nextInt(20, Math.max(40, (int) (160 * fishingSpeedPercentage)));
         }
+    }
+
+    @Override
+    public boolean fireImmune() {
+        if (getOwner() instanceof Player player) {
+            InteractionHand hand = UnshatteredRod.getCastingHand(player);
+            if (hand != null) {
+                return player.getItemInHand(hand).is(UnshatteredItemTagsProvider.CAN_FISH_IN_LAVA);
+            }
+        }
+
+        return false;
     }
 }

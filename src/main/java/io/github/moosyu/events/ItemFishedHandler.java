@@ -60,7 +60,7 @@ public class ItemFishedHandler {
         final double FISHING_FORTUNE = fishingFortuneAttribute.getValue();
 
         if (SELECTED_TABLE_RANGE < 160) {
-            Map<ResourceKey<Item>, FishingWeightEntry> selectedMap = UnshatteredUtils.filterFishingEntries(BuiltInRegistries.ITEM.getDataMap(UnshatteredDataMaps.FISHING_ITEM_WEIGHT_DATA), (ServerPlayer) player);
+            Map<ResourceKey<Item>, FishingWeightEntry> selectedMap = UnshatteredUtils.filterFishingEntries(BuiltInRegistries.ITEM.getDataMap(UnshatteredDataMaps.FISHING_ITEM_WEIGHT_DATA), (ServerPlayer) player, event.getHookEntity().blockPosition());
             totalWeight = UnshatteredUtils.calculateTableWeight(selectedMap);
             double currentWeight = level.getRandom().nextDouble() * totalWeight;
 
@@ -85,7 +85,7 @@ public class ItemFishedHandler {
                 }
             }
         } else if (SELECTED_TABLE_RANGE < 194) {
-            Map<ResourceKey<EntityType<?>>, FishingWeightEntry> selectedMap = UnshatteredUtils.filterFishingEntries(BuiltInRegistries.ENTITY_TYPE.getDataMap(UnshatteredDataMaps.FISHING_MOB_WEIGHT_DATA), (ServerPlayer) player);
+            Map<ResourceKey<EntityType<?>>, FishingWeightEntry> selectedMap = UnshatteredUtils.filterFishingEntries(BuiltInRegistries.ENTITY_TYPE.getDataMap(UnshatteredDataMaps.FISHING_MOB_WEIGHT_DATA), (ServerPlayer) player, event.getHookEntity().blockPosition());
             totalWeight = UnshatteredUtils.calculateTableWeight(selectedMap);
             double currentWeight = level.getRandom().nextDouble() * totalWeight;
 
@@ -130,7 +130,7 @@ public class ItemFishedHandler {
             List<TriggerMiscReward> selectedEntries = level.registryAccess()
                     .lookupOrThrow(DataPackRegistryHandler.FISHING_MISC_REWARD_KEY)
                     .stream()
-                    .filter(reward -> UnshatteredUtils.fishingRequirementsMet(reward, (ServerPlayer) player))
+                    .filter(reward -> UnshatteredUtils.fishingRequirementsMet(reward, (ServerPlayer) player, event.getHookEntity().blockPosition()))
                     .toList();
             totalWeight = selectedEntries.stream().mapToDouble(TriggerMiscReward::weight).sum();
             double currentWeight = level.getRandom().nextDouble() * totalWeight;

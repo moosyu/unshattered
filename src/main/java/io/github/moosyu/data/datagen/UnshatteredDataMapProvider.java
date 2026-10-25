@@ -514,22 +514,19 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK.get()), 2, false)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_TITANIUM_BLOCK.get()), 5, false);
 
-        builder(FISHING_ITEM_WEIGHT_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(Items.COD), new FishingWeightEntry(100000.0d), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.SALMON), new FishingWeightEntry(75000.0d), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.PUFFERFISH), new FishingWeightEntry(60000.0d), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.TROPICAL_FISH), new FishingWeightEntry(55000.0d), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.PRISMARINE_SHARD), new FishingWeightEntry(45000.0d), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.PRISMARINE_CRYSTALS), new FishingWeightEntry(45000.0d), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.CLAY_BALL), new FishingWeightEntry(45000.0d), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.SPONGE), new FishingWeightEntry(35000.0d), false);
+        builder(FISHING_ITEM_WEIGHT_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(Items.COD), new FishingWeightEntry(100000.0d, FishingCondition.WATER), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.SALMON), new FishingWeightEntry(75000.0d, FishingCondition.WATER), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.PUFFERFISH), new FishingWeightEntry(60000.0d, FishingCondition.WATER), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.TROPICAL_FISH), new FishingWeightEntry(55000.0d, FishingCondition.WATER), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.PRISMARINE_SHARD), new FishingWeightEntry(45000.0d, FishingCondition.WATER), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.PRISMARINE_CRYSTALS), new FishingWeightEntry(45000.0d, FishingCondition.WATER), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.CLAY_BALL), new FishingWeightEntry(45000.0d, FishingCondition.WATER), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.SPONGE), new FishingWeightEntry(35000.0d, FishingCondition.WATER), false);
 
-        builder(FISHING_MOB_WEIGHT_DATA).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SQUID), new FishingWeightEntry(1200.0d), false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.GLOW_SQUID),
-                        new FishingWeightEntry(Optional.of(FishingCondition.NIGHT),
-                                1100.0d,
-                                Optional.of(1)
-                        ),
-                        false
+        builder(FISHING_MOB_WEIGHT_DATA).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SQUID),
+                        new FishingWeightEntry(1200.0d), false
+                ).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.GLOW_SQUID),
+                        new FishingWeightEntry(1100.0d, 1, FishingCondition.NIGHT, FishingCondition.WATER), false
                 );
 
         builder(ITEM_RARITY_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.MERCENARY_AXE.get()), UnshatteredRarity.RARE, false)
