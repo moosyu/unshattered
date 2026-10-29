@@ -20,7 +20,9 @@ public class UnshatteredMiningToolBase extends Item {
 
     @Override
     public @NonNull InteractionResult use(Level level, @NonNull Player player, @NonNull InteractionHand hand) {
-        if (level.isClientSide()) return InteractionResult.FAIL;
+        if (level.isClientSide()) {
+            return InteractionResult.FAIL;
+        }
 
         int abilityLength = 120;
         ItemStack itemStack = player.getItemInHand(hand);

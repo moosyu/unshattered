@@ -248,4 +248,6 @@ public class UnshatteredBlocks {
                     .destroyTime(1.0f)
             )
     );
+
+    public static final DeferredBlock<Block> TACKLEBOX_BLOCK = BLOCKS.registerBlock("tacklebox_block", TackleboxBlock::new);
 }

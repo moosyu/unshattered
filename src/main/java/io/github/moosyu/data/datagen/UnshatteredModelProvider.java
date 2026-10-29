@@ -22,6 +22,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SkullBlock;
@@ -245,7 +246,7 @@ public class UnshatteredModelProvider extends ModelProvider {
         copyFlatBlockTextureItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_POPPY.get(), Blocks.POPPY);
 
         itemModels.generateFlatItem(UnshatteredItems.HEALING_TISSUE.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFishingRod(UnshatteredItems.CHALLENGING_ROD.get());
+        createFishingRod(itemModels, UnshatteredItems.CHALLENGING_ROD);
         copyColumnBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_FIG_LOG.get(), UnshatteredBlocks.FIG_LOG_BLOCK.get());
         copyColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_OAK_LOG.get(), Blocks.OAK_LOG);
         copyColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_BIRCH_LOG.get(), Blocks.BIRCH_LOG);
@@ -255,12 +256,7 @@ public class UnshatteredModelProvider extends ModelProvider {
         copyColumnBlockItemModelNoSideSuffix(itemModels, blockModels, UnshatteredItems.ENCHANTED_DARK_OAK_LOG.get(), Blocks.DARK_OAK_LOG);
         copyColumnBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_BONE_BLOCK.get(), Blocks.BONE_BLOCK);
 
-        itemModels.itemModelOutput.accept(UnshatteredItems.FISHING_ROD.get(),
-                ItemModelUtils.conditional(new FishingRodCast(),
-                        ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(Items.FISHING_ROD, "_cast")),
-                        ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(Items.FISHING_ROD))
-                )
-        );
+        createFishingRod(itemModels, UnshatteredItems.FISHING_ROD.get(), Items.FISHING_ROD);
 
         blockModels.createRotatedPillarWithHorizontalVariant(UnshatteredBlocks.FIG_LOG_BLOCK.get(), TexturedModel.COLUMN, TexturedModel.COLUMN_HORIZONTAL);
 
@@ -400,6 +396,51 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.MINER_CHESTPLATE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.MINER_LEGGINGS.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.MINER_BOOTS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.REDSTONE_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        createFishingRod(itemModels, UnshatteredItems.STARTER_MAGMA_ROD);
+        itemModels.generateFlatItem(UnshatteredItems.COMMON_HOOK.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.SPEEDY_LINE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.PRISMARINE_SINKER.get(), ModelTemplates.FLAT_ITEM);
+
+        blockModels.blockStateOutput.accept(MultiVariantGenerator
+                .dispatch(UnshatteredBlocks.TACKLEBOX_BLOCK.get(), BlockModelGenerators.variant(new Variant(UnshatteredUtils.getUnshatteredIdentifier("block/tackle_box"))))
+                .with(PropertyDispatch.modify(BlockStateProperties.HORIZONTAL_FACING)
+                        .select(Direction.SOUTH, BlockModelGenerators.NOP)
+                        .select(Direction.WEST,  BlockModelGenerators.Y_ROT_90)
+                        .select(Direction.NORTH, BlockModelGenerators.Y_ROT_180)
+                        .select(Direction.EAST,  BlockModelGenerators.Y_ROT_270)
+                )
+        );
+
+        blockModels.registerSimpleItemModel(
+                UnshatteredBlocks.TACKLEBOX_BLOCK.get(),
+                UnshatteredUtils.getUnshatteredIdentifier("block/tackle_box")
+        );
+    }
+
+    private void createFishingRod(ItemModelGenerators itemModels, Item fishingRod, Item textureDonor) {
+        Identifier normal = ModelTemplates.FLAT_HANDHELD_ROD_ITEM.create(
+                ModelLocationUtils.getModelLocation(textureDonor),
+                TextureMapping.layer0(TextureMapping.getItemTexture(textureDonor)),
+                itemModels.modelOutput
+        );
+
+        Identifier cast = ModelTemplates.FLAT_HANDHELD_ROD_ITEM.create(
+                ModelLocationUtils.getModelLocation(textureDonor, "_cast"),
+                TextureMapping.layer0(TextureMapping.getItemTexture(textureDonor, "_cast")),
+                itemModels.modelOutput
+        );
+
+        itemModels.itemModelOutput.accept(fishingRod,
+                ItemModelUtils.conditional(new FishingRodCast(),
+                        ItemModelUtils.plainModel(cast),
+                        ItemModelUtils.plainModel(normal)
+                )
+        );
+    }
+
+    private void createFishingRod(ItemModelGenerators itemModels, ItemLike fishingRod) {
+        createFishingRod(itemModels, fishingRod.asItem(), fishingRod.asItem());
     }
 
     /**

@@ -37,10 +37,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
+import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
@@ -633,6 +630,7 @@ public final class UnshatteredUtils {
 
     public static AttributeSupplier.Builder createHostileMobAttributes(double health, double damage) {
         return Monster.createMobAttributes()
+                .add(Attributes.ATTACK_DAMAGE, 1.0f)
                 .add(UnshatteredAttributeValues.MAX_HEALTH.holder, health)
                 .add(UnshatteredAttributeValues.CURRENT_HEALTH.holder, health)
                 .add(UnshatteredAttributeValues.DAMAGE.holder, damage);

@@ -57,6 +57,7 @@ public class UnshatteredCreativeTabs {
                         .displayItems((_, output) -> {
                             output.accept(FIG_LOG);
                             output.accept(ROCK_TALKABLE_BLOCK);
+                            output.accept(TACKLEBOX);
                         }).build()
         );
 
@@ -273,6 +274,10 @@ public class UnshatteredCreativeTabs {
                             output.accept(MITHRIL_PLATED_DRILL_ENGINE);
                             output.accept(FRIED_GOBLIN_EGG);
                             output.accept(ROOKIE_HOE);
+                            output.accept(STARTER_MAGMA_ROD);
+                            output.accept(COMMON_HOOK);
+                            output.accept(SPEEDY_LINE);
+                            output.accept(PRISMARINE_SINKER);
                         }).build()
         );
 
@@ -297,6 +302,7 @@ public class UnshatteredCreativeTabs {
                             output.accept(IRON_DAGGER);
                             output.accept(EMERALD_DAGGER);
                             output.accept(ARTISANAL_SHORTBOW);
+                            output.accept(REDSTONE_SWORD);
                         }).build()
         );
 

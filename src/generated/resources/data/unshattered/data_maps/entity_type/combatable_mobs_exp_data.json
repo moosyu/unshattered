@@ -704,6 +704,110 @@
       "min_coins": 5,
       "skill": "combat"
     },
+    "unshattered:redstone_pigman": {
+      "drops": [
+        {
+          "combat_fortune_boosted": false,
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:redstone",
+              "max_amount": 5,
+              "min_amount": 1
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": false,
+          "drop_data": {
+            "drop_chance": 0.5,
+            "item_range": {
+              "item": "minecraft:redstone",
+              "max_amount": 4,
+              "min_amount": 2
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": true,
+          "drop_data": {
+            "drop_chance": 0.01,
+            "item_range": {
+              "item": "unshattered:redstone_sword",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        }
+      ],
+      "experience": 20.0,
+      "max_coins": 12,
+      "min_coins": 12,
+      "skill": "combat"
+    },
+    "unshattered:sea_walker": {
+      "drops": [
+        {
+          "combat_fortune_boosted": false,
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:rotten_flesh",
+              "max_amount": 5,
+              "min_amount": 5
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": false,
+          "drop_data": {
+            "drop_chance": 0.5,
+            "item_range": {
+              "item": "minecraft:rotten_flesh",
+              "max_amount": 2,
+              "min_amount": 2
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": false,
+          "drop_data": {
+            "drop_chance": 0.25,
+            "item_range": {
+              "item": "minecraft:rotten_flesh",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": false,
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:cod",
+              "max_amount": 3,
+              "min_amount": 2
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": false,
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:cod",
+              "max_amount": 4,
+              "min_amount": 1
+            }
+          }
+        }
+      ],
+      "experience": 10.0,
+      "max_coins": 1,
+      "min_coins": 1,
+      "skill": "combat"
+    },
     "unshattered:skeleton_miner": {
       "drops": [
         {

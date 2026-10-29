@@ -6,9 +6,9 @@ import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.data.regions.UnshatteredRegions;
 import io.github.moosyu.items.armours.SkeletonHat;
-import io.github.moosyu.items.attachments.DrillEngineAttachment;
-import io.github.moosyu.items.attachments.FriedGoblinEggAttachment;
-import io.github.moosyu.items.attachments.FuelAttachmentItem;
+import io.github.moosyu.items.attachments.*;
+import io.github.moosyu.items.attachments.hooks.CommonHook;
+import io.github.moosyu.items.attachments.sinkers.PrismarineSinker;
 import io.github.moosyu.items.talismans.*;
 import io.github.moosyu.items.tools.UnshatteredMiningToolBase;
 import io.github.moosyu.items.tools.axes.PromisingAxe;
@@ -248,7 +248,6 @@ public class UnshatteredItems {
     ));
 
     public static final DeferredItem<UnshatteredRod> CHALLENGING_ROD = ITEMS.registerItem("challenging_rod", props -> new UnshatteredRod(props
-            .stacksTo(1)
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("challenging_rod_damage"), 8, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("challenging_rod_strength"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
@@ -259,7 +258,6 @@ public class UnshatteredItems {
     ));
 
     public static final DeferredItem<UnshatteredRod> FISHING_ROD = ITEMS.registerItem("fishing_rod", props -> new UnshatteredRod(props
-            .stacksTo(1)
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("fishing_rod_damage"), 10, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("fishing_rod_strength"), 10, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
@@ -344,6 +342,7 @@ public class UnshatteredItems {
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("squire_sword_damage"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("squire_sword_strength"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(Attributes.ATTACK_SPEED, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("squire_sword_attack_speed"), -3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
             )
     ));
@@ -915,4 +914,35 @@ public class UnshatteredItems {
                             EquipmentSlotGroup.FEET
                     ).build()
     );
+
+    public static final DeferredItem<Item> REDSTONE_SWORD = ITEMS.registerItem("redstone_sword", props -> new Item(props
+            .stacksTo(1)
+            .attributes(ItemAttributeModifiers.builder()
+                    .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("redstone_sword_damage"), 9, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("redstone_sword_strength"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(Attributes.ATTACK_SPEED, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("redstone_sword_attack_speed"), -2.4, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .build()
+            )
+    ));
+
+    public static final DeferredItem<UnshatteredRod> STARTER_MAGMA_ROD = ITEMS.registerItem("starter_magma_rod", props -> new UnshatteredRod(props
+            .attributes(ItemAttributeModifiers.builder()
+                    .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("starter_magma_rod_damage"), 25, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("starter_magma_rod_strength"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValues.FISHING_SPEED.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("starter_magma_rod_fishing_speed"), 11, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValues.FISHING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("starter_magma_rod_fishing_fortune"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .build()
+            )
+    ));
+
+    public static final DeferredItem<CommonHook> COMMON_HOOK = ITEMS.registerItem("common_hook", CommonHook::new);
+    public static final DeferredItem<LineAttachment> SPEEDY_LINE = ITEMS.registerItem("speedy_line", props -> new LineAttachment(props,
+            new LineAttachment.LineAttributeGroup(UnshatteredAttributeValues.FISHING_SPEED.holder,
+                    new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("speedy_line_fishing_speed"),
+                            10,
+                            AttributeModifier.Operation.ADD_VALUE)
+            )
+    ));
+    public static final DeferredItem<PrismarineSinker> PRISMARINE_SINKER = ITEMS.registerItem("prismarine_sinker", PrismarineSinker::new);
+    public static final DeferredItem<BlockItem> TACKLEBOX = ITEMS.registerSimpleBlockItem(TACKLEBOX_BLOCK.getDelegate());
 }

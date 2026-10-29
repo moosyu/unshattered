@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "unshattered:block/tackle_box",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "unshattered:block/tackle_box",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "unshattered:block/tackle_box"
+    },
+    "facing=west": {
+      "model": "unshattered:block/tackle_box",
+      "y": 90
+    }
+  }
+}

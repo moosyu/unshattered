@@ -21,50 +21,53 @@ import java.util.Optional;
 public abstract class ProjectileWeaponItemMixin {
     @Inject(method = "useAmmo", at = @At("HEAD"), cancellable = true)
     private static void useAmmo(ItemStack weapon, ItemStack projectile, LivingEntity holder, boolean forceInfinite, CallbackInfoReturnable<ItemStack> cir) {
-        ServerPlayer player = holder instanceof ServerPlayer sp ? sp : null;
-        AbilityContext context = player != null ? new AbilityContext().add(AbilityContextKey.PLAYER, player) : null;
-        List<PassiveAbilityItem> triggeredItems = new ArrayList<>();
+        final ServerPlayer SERVER_PLAYER = holder instanceof ServerPlayer serverPlayer ? serverPlayer : null;
+        final AbilityContext CONTEXT = SERVER_PLAYER != null ? new AbilityContext().add(AbilityContextKey.PLAYER, SERVER_PLAYER) : null;
+        final List<PassiveAbilityItem> TRIGGERED_ITEMS = new ArrayList<>();
 
-        if (player != null) {
-            for (ItemStack item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredNonOngoingItems()) {
-                if (!(item.getItem() instanceof PassiveAbilityItem passiveAbilityItem)) continue;
-
-                if (!passiveAbilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_USE_PROJECTILE_WEAPON_AMMO) || !passiveAbilityItem.abilityConditionsMet(context)) {
+        if (SERVER_PLAYER != null) {
+            for (ItemStack item : SERVER_PLAYER.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredNonOngoingItems()) {
+                if (!(item.getItem() instanceof final PassiveAbilityItem PASSIVE_ABILITY_ITEM)
+                        || !PASSIVE_ABILITY_ITEM.triggerTypes().contains(AbilityTriggerType.PLAYER_USE_PROJECTILE_WEAPON_AMMO)
+                        || !PASSIVE_ABILITY_ITEM.abilityConditionsMet(CONTEXT)
+                ) {
                     continue;
                 }
 
-                passiveAbilityItem.onAbilityTriggered(context);
-                triggeredItems.add(passiveAbilityItem);
+                PASSIVE_ABILITY_ITEM.onAbilityTriggered(CONTEXT);
+                TRIGGERED_ITEMS.add(PASSIVE_ABILITY_ITEM);
 
-
-                Optional<?> result = passiveAbilityItem.triggerResult();
-                if (result.isPresent() && result.get() == AbilityTriggerResult.CANCEL_EVENT) {
-                    finishTriggeredItems(triggeredItems, context);
+                final Optional<?> RESULT = PASSIVE_ABILITY_ITEM.triggerResult();
+                if (RESULT.isPresent() && RESULT.get() == AbilityTriggerResult.CANCEL_EVENT) {
+                    finishTriggeredItems(TRIGGERED_ITEMS, CONTEXT);
                     cir.setReturnValue(projectile.copyWithCount(1));
                     return;
                 }
             }
         }
 
-        int ammoToUse = !forceInfinite && holder.level() instanceof ServerLevel && !(holder.hasInfiniteMaterials() || (projectile.getItem() instanceof ArrowItem ai && ai.isInfinite(projectile, weapon, holder))) ? 1 : 0;
-        if (ammoToUse > projectile.getCount()) {
-            finishTriggeredItems(triggeredItems, context);
+        final int AMMO_TO_USE = !forceInfinite && holder.level() instanceof ServerLevel && !(holder.hasInfiniteMaterials() || (projectile.getItem() instanceof ArrowItem ai && ai.isInfinite(projectile, weapon, holder))) ? 1 : 0;
+        if (AMMO_TO_USE > projectile.getCount()) {
+            finishTriggeredItems(TRIGGERED_ITEMS, CONTEXT);
             cir.setReturnValue(ItemStack.EMPTY);
-        } else if (ammoToUse == 0) {
-            finishTriggeredItems(triggeredItems, context);
+        } else if (AMMO_TO_USE == 0) {
+            finishTriggeredItems(TRIGGERED_ITEMS, CONTEXT);
             cir.setReturnValue(projectile.copyWithCount(1));
         } else {
-            ItemStack used = projectile.split(ammoToUse);
-            if (projectile.isEmpty() && player != null) {
-                player.getInventory().removeItem(projectile);
-                finishTriggeredItems(triggeredItems, context);
+            final ItemStack USED_AMMO = projectile.split(AMMO_TO_USE);
+            if (projectile.isEmpty() && SERVER_PLAYER != null) {
+                SERVER_PLAYER.getInventory().removeItem(projectile);
+                finishTriggeredItems(TRIGGERED_ITEMS, CONTEXT);
             }
-            cir.setReturnValue(used);
+            cir.setReturnValue(USED_AMMO);
         }
     }
 
     private static void finishTriggeredItems(List<PassiveAbilityItem> triggeredItems, AbilityContext context) {
-        if (context == null) return;
+        if (context == null) {
+            return;
+        }
+
         triggeredItems.forEach(item -> item.onAbilityFinished(context));
     }
 }

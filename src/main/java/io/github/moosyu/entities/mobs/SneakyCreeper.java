@@ -1,6 +1,5 @@
 package io.github.moosyu.entities.mobs;
 
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;

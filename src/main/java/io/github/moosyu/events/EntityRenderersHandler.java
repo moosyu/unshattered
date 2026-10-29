@@ -4,7 +4,6 @@ import io.github.moosyu.entities.UnshatteredEntities;
 import io.github.moosyu.entities.renderers.*;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.renderer.entity.CreeperRenderer;
-import net.minecraft.client.renderer.entity.SkeletonRenderer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -25,10 +24,12 @@ public class EntityRenderersHandler {
         event.registerEntityRenderer(UnshatteredEntities.JENNY.get(), context -> new NPCEntityRenderer(context, true));
         event.registerEntityRenderer(UnshatteredEntities.SNEAKY_CREEPER.get(), CreeperRenderer::new);
         event.registerEntityRenderer(UnshatteredEntities.LAPIS_ZOMBIE.get(), LapisZombieRenderer::new);
-        event.registerEntityRenderer(UnshatteredEntities.SLIME_CHILD.get(), context ->  new UnshatteredSlimeRenderer(context, 2, UnshatteredUtils.getUnshatteredIdentifier("textures/entity/slime/emerald_slime.png")));
-        event.registerEntityRenderer(UnshatteredEntities.EMERALD_SLIME.get(), context ->  new UnshatteredSlimeRenderer(context, 3, UnshatteredUtils.getUnshatteredIdentifier("textures/entity/slime/emerald_slime.png")));
-        event.registerEntityRenderer(UnshatteredEntities.MASSIVE_EMERALD_SLIME.get(), context ->  new UnshatteredSlimeRenderer(context, 8, UnshatteredUtils.getUnshatteredIdentifier("textures/entity/slime/emerald_slime.png")));
+        event.registerEntityRenderer(UnshatteredEntities.SLIME_CHILD.get(), context ->  new UnshatteredSlimeRenderer(context, 2, UnshatteredUtils.getUnshatteredIdentifier("textures/entity/mobs/emerald_slime.png")));
+        event.registerEntityRenderer(UnshatteredEntities.EMERALD_SLIME.get(), context ->  new UnshatteredSlimeRenderer(context, 3, UnshatteredUtils.getUnshatteredIdentifier("textures/entity/mobs/emerald_slime.png")));
+        event.registerEntityRenderer(UnshatteredEntities.MASSIVE_EMERALD_SLIME.get(), context ->  new UnshatteredSlimeRenderer(context, 8, UnshatteredUtils.getUnshatteredIdentifier("textures/entity/mobs/emerald_slime.png")));
         event.registerEntityRenderer(UnshatteredEntities.RHYS.get(), NPCEntityRenderer::new);
         event.registerEntityRenderer(UnshatteredEntities.SKELETON_MINER.get(), SkeletonMinerRenderer::new);
+        event.registerEntityRenderer(UnshatteredEntities.REDSTONE_PIGMAN.get(), RedstonePigmanRenderer::new);
+        event.registerEntityRenderer(UnshatteredEntities.SEA_WALKER.get(), SeaWalkerRenderer::new);
     }
 }

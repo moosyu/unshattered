@@ -181,4 +181,21 @@ public class UnshatteredEntities {
                     .eyeHeight(1.62f)
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("skeleton_miner")))
     );
+
+    public static final Supplier<EntityType<RedstonePigman>> REDSTONE_PIGMAN = ENTITY_TYPES.register(
+            "redstone_pigman",
+            () -> EntityType.Builder.of(RedstonePigman::new, MobCategory.MONSTER)
+                    .fireImmune()
+                    .sized(0.6f, 1.95f)
+                    .eyeHeight(1.79f)
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("redstone_pigman")))
+    );
+
+    public static final Supplier<EntityType<SeaWalker>> SEA_WALKER = ENTITY_TYPES.register(
+            "sea_walker",
+            () -> EntityType.Builder.of(SeaWalker::new, MobCategory.MONSTER)
+                    .sized(0.6f, 1.95f)
+                    .eyeHeight(1.74f)
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("sea_walker")))
+    );
 }

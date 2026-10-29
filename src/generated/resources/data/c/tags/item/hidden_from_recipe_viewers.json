@@ -39,6 +39,7 @@
     "unshattered:breakable_jungle_log",
     "unshattered:breakable_acacia_log",
     "unshattered:breakable_dark_oak_log",
-    "unshattered:rock_talkable"
+    "unshattered:rock_talkable",
+    "unshattered:tacklebox_block"
   ]
 }

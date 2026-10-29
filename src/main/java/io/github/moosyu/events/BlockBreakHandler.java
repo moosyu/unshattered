@@ -196,10 +196,8 @@ public class BlockBreakHandler {
         Holder<Block> block = blockState.typeHolder();
 
         BlockBreakData blockBreakData = block.getData(UnshatteredDataMaps.BLOCK_BREAK_DATA);
-        System.out.println(blockBreakData);
         if (blockBreakData == null || !hasBreakingPowerRequirement(player, blockState.typeHolder())) {
             event.setNewSpeed(0.0f);
-            System.out.println("1");
             return;
         }
 

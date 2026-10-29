@@ -44,4 +44,8 @@ public class UnshatteredMenus {
     public static final Supplier<MenuType<SackMenu>> SACK_MENU_TYPE = MENUS.register("sack_menu_type", () ->
             IMenuTypeExtension.create(SackMenu::new)
     );
+
+    public static final Supplier<MenuType<TackleboxMenu>> TACKLEBOX_MENU_TYPE = MENUS.register("tacklebox_menu_type", () ->
+            new MenuType<>(TackleboxMenu::new, FeatureFlags.DEFAULT_FLAGS)
+    );
 }

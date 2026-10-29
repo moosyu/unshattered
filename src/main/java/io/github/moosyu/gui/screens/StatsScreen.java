@@ -114,7 +114,7 @@ public class StatsScreen extends SimpleScreen {
      * @param visibleIndex current visible index (needs to be incremented after adding)
      * @param scissorTop scissor top
      * @param scissorBottom scissor bottom
-     * @param attributeHolder attribute holder
+     * @param attribute attribute holder
      * @param symbol string symbol for the attribute
      * @param currentAttributeId the attributes id (not key, just like a name as it adds the attribute.name.unshattered. for you)
      * @param isPercentage whether the attribute should be displayed as a percentage
@@ -126,7 +126,7 @@ public class StatsScreen extends SimpleScreen {
                                     int visibleIndex,
                                     int scissorTop,
                                     int scissorBottom,
-                                    Holder<Attribute> attributeHolder,
+                                    Holder<Attribute> attribute,
                                     String symbol,
                                     String currentAttributeId,
                                     boolean isPercentage,
@@ -136,8 +136,8 @@ public class StatsScreen extends SimpleScreen {
         int lineY = backgroundTopLeft.y + LINE_HEIGHT + (visibleIndex * LINE_HEIGHT) - (int) scrollOffset;
 
         if (lineY + LINE_HEIGHT >= scissorTop && lineY <= scissorBottom) {
-            double attributeBaseValue = player.getAttributeBaseValue(attributeHolder) * attributeModifier;
-            double attributeValue = player.getAttributeValue(attributeHolder) * attributeModifier;
+            double attributeBaseValue = player.getAttributeBaseValue(attribute) * attributeModifier;
+            double attributeValue = player.getAttributeValue(attribute) * attributeModifier;
             String attributeBaseValueFormatted = UnshatteredUtils.oneDecimalFormat.format(attributeBaseValue);
 
             graphics.text(font,

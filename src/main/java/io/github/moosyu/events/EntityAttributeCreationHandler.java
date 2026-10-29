@@ -28,5 +28,7 @@ public class EntityAttributeCreationHandler {
         event.put(UnshatteredEntities.MASSIVE_EMERALD_SLIME.get(), MassiveEmeraldSlime.createAttributes().build());
         event.put(UnshatteredEntities.RHYS.get(), NPCEntity.createNpcAttributes().build());
         event.put(UnshatteredEntities.SKELETON_MINER.get(), SkeletonMiner.createAttributes().build());
+        event.put(UnshatteredEntities.REDSTONE_PIGMAN.get(), RedstonePigman.createAttributes().build());
+        event.put(UnshatteredEntities.SEA_WALKER.get(), SeaWalker.createAttributes().build());
     }
 }

@@ -28,6 +28,10 @@
       "ability_id": "unshattered:coin_talisman_accrual",
       "passive": true
     },
+    "unshattered:common_hook": {
+      "ability_id": "unshattered:common_hook",
+      "passive": true
+    },
     "unshattered:dwarf_turtle_shell": {
       "ability_id": "unshattered:turtle_stability",
       "passive": true
@@ -104,6 +108,10 @@
       "ability_id": "unshattered:piggy_bank_saving_grace",
       "passive": true
     },
+    "unshattered:prismarine_sinker": {
+      "ability_id": "unshattered:prismarine_sinker",
+      "passive": true
+    },
     "unshattered:promising_axe": {
       "ability_id": "unshattered:axe_stored_potential",
       "passive": true
@@ -135,8 +143,16 @@
       "ability_id": "unshattered:skeleton_hat_explosive_arrows",
       "passive": true
     },
+    "unshattered:speedy_line": {
+      "ability_id": "unshattered:speedy_line",
+      "passive": true
+    },
     "unshattered:spruce_axe": {
       "ability_id": "unshattered:spruce_axe_park_enthusiast",
+      "passive": true
+    },
+    "unshattered:starter_magma_rod": {
+      "ability_id": "unshattered:fish_out_of_lava",
       "passive": true
     },
     "unshattered:super_cleaver": {

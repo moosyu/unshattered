@@ -73,5 +73,9 @@ public enum AbilityTriggerType {
     /**
      * runs in {@link io.github.moosyu.events.BlockBreakHandler#onBlockBreak(BreakBlockEvent)}, only to cancel fuel use
      */
-    PLAYER_ATTEMPT_CONSUME_FUEL
+    PLAYER_ATTEMPT_CONSUME_FUEL,
+    /**
+     * runs in {@link io.github.moosyu.events.ItemFishedHandler}, start and finish hooks exist and can cancel
+     */
+    PLAYER_FISH
 }

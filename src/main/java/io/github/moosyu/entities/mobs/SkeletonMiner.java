@@ -1,8 +1,6 @@
 package io.github.moosyu.entities.mobs;
 
-import io.github.moosyu.items.UnshatteredItems;
 import io.github.moosyu.util.UnshatteredUtils;
-import net.minecraft.client.renderer.entity.state.SkeletonRenderState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;

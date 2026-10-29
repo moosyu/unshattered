@@ -210,6 +210,11 @@
   "item.unshattered.slime_ball": "Slime Ball",
   "item.unshattered.slime_block": "Slime Block",
   "item.unshattered.beginner_agronomy_sack": "Beginner Agronomy Sack",
+  "item.unshattered.redstone_sword": "Redstone Sword",
+  "item.unshattered.starter_magma_rod": "Starter Magma Rod",
+  "item.unshattered.common_hook": "Common Hook",
+  "item.unshattered.speedy_line": "Speedy Line",
+  "item.unshattered.prismarine_sinker": "Prismarine Sinker",
 
   "item.description.unshattered.bat_the_fish": "Where is my cape!",
   "item.description.unshattered.century_the_fish": "The term 'century' was actually named after him, or so he says.",
@@ -312,6 +317,10 @@
   "item.description.unshattered.purple_candy": "An [c=0xFFAA00AA]ominous[/c] treat.",
   "item.description.unshattered.dwarf_turtle_shell": "Seems near indestructible with a size that belies its true density.",
   "item.description.unshattered.beginner_agronomy_sack": "Holds various items obtained from farming! Items you pickup go directly into your sacks.",
+  "item.description.unshattered.starter_magma_rod": "Don't leave it too close to anything flammable.",
+  "item.description.unshattered.common_hook": "Don't leave it too close to anything flammable.",
+  "item.description.unshattered.speedy_line": "There's nothing [c=0xFF00AAAA]sea creatures[/c] can do but wait until this line drags them in and snags their hearts!",
+  "item.description.unshattered.prismarine_sinker": "Proves ones affinity to the sea.",
 
   "item.ability.unshattered.rogue_sword_speed_boost": "Speed Boost",
   "item.ability.unshattered.mind_blowing": "Mind Blowing",
@@ -353,6 +362,10 @@
   "item.ability.unshattered.mithril_plated_drill_engine": "Ubercharged",
   "item.ability.unshattered.fried_goblin_egg": "Frugal",
   "item.ability.unshattered.bat_artifact_leech": "Leech",
+  "item.ability.unshattered.fish_out_of_lava": "Fish Out Of Lava",
+  "item.ability.unshattered.common_hook": "Lowest Common Denominator",
+  "item.ability.unshattered.speedy_line": "Beach Boy",
+  "item.ability.unshattered.prismarine_sinker": "Moskstraumen",
 
   "item.ability.description.unshattered.rogue_sword_speed_boost": "Grants [c=0xFFFFFFFF]+0.5✦ Speed[/c] for [c=0xFF55FF55]30s[/c].",
   "item.ability.description.unshattered.mind_blowing": "Deals [c=0xFF55FF55]+100%[/c] damage to undead mobs.",
@@ -394,6 +407,10 @@
   "item.ability.description.unshattered.mithril_plated_drill_engine": "Grants [c=0xFFFFAA00]+8⸕[/c] and [c=0xFFFFAA00]+5\uD83D\uDC8E[/c].",
   "item.ability.description.unshattered.fried_goblin_egg": "Grants a [c=0xFF55FF55]25%[/c] chance to not use fuel.",
   "item.ability.description.unshattered.bat_artifact_leech": "Gain [c=0xFFFC3A3A]15%[/c] of enemy's maximum [c=0xFFFC3A3A]health[/c] on kill.",
+  "item.ability.description.unshattered.fish_out_of_lava": "You can only damage [c=0xFFFF5555]magmatic[/c] enemies with this fishing rod!",
+  "item.ability.description.unshattered.common_hook": "Common [c=0xFF00AAAA]sea creatures[/c] get weighted 25% higher with this hook attached!",
+  "item.ability.description.unshattered.speedy_line": "Grants [c=0xFF55FFFF]+10☂[/c] to fishing rods.",
+  "item.ability.description.unshattered.prismarine_sinker": "Causes [c=0xFFFFFFFF]prismarine shards[/c] and [c=0xFFFFFFFF]crystals[/c] to be materialized with every catch.",
 
   "block.unshattered.fig_log": "Fig Log",
   "block.unshattered.breakable_fig_log": "Breakable Fig Log",
@@ -437,6 +454,7 @@
   "block.unshattered.breakable_pumpkin_block": "Breakable Pumpkin",
   "block.unshattered.giant_potato": "Giant Potato",
   "block.unshattered.giant_carrot": "Giant Carrot",
+  "block.unshattered.tacklebox_block": "Tacklebox",
 
   "attribute.name.unshattered.sweep": "Sweep",
   "attribute.name.unshattered.foraging_fortune": "Foraging Fortune",
@@ -514,7 +532,7 @@
   "item_type.unshattered.wand": "Wand",
   "item_type.unshattered.talisman": "Talisman",
   "item_type.unshattered.staff": "Staff",
-  "item_type.unshattered.fish": "Fish",
+  "item_type.unshattered.fish": "\"Fish\"",
   "item_type.unshattered.log": "Log",
   "item_type.unshattered.shortbow": "Shortbow",
   "item_type.unshattered.grimoire": "Grimoire",
@@ -535,6 +553,9 @@
   "item_type.unshattered.fuel": "Fuel",
   "item_type.unshattered.hoe": "Hoe",
   "item_type.unshattered.sack": "Sack",
+  "item_type.unshattered.hook": "Hook",
+  "item_type.unshattered.line": "Line",
+  "item_type.unshattered.sinker": "Sinker",
 
   "unshattered.configuration.title": "unshattered Configs",
   "unshattered.configuration.section.unshattered.common.toml": "unshattered Configs",
@@ -565,6 +586,7 @@
   "combat.messages.unshattered.failed": "You tried to attack... but nothing happened.",
   "fishing.messages.entity.minecraft.squid": "A Squid appeared.",
   "fishing.messages.entity.minecraft.glow_squid": "Pitch darkness reveals a Glow Squid.",
+  "fishing.messages.entity.minecraft.sea_walker": "You caught a Sea Walker.",
 
   "misc.unshattered.coins": "Coins",
   "misc.messages.unshattered.wizardman_request": "Help Wizardman",
@@ -607,6 +629,7 @@
   "container.unshattered.crafting": "Crafting",
   "container.unshattered.reforge_anvil": "Anvil",
   "container.unshattered.drill_attachments": "Drill Attachments",
+  "container.unshattered.tacklebox": "Tacklebox",
 
   "screen.unshattered.stats": "Stats",
   "screen.unshattered.dialogue": "Dialogue",
@@ -675,6 +698,8 @@
   "entity.unshattered.massive_emerald_slime": "Massive Emerald Slime",
   "entity.unshattered.rhys": "Rhys",
   "entity.unshattered.skeleton_miner": "Skeleton Miner",
+  "entity.unshattered.redstone_pigman": "Redstone Pigman",
+  "entity.unshattered.sea_walker": "Sea Walker",
 
   "dialogue.unshattered.generic.player_yes_choice": "Yes.",
   "dialogue.unshattered.generic.player_no_choice": "No.",

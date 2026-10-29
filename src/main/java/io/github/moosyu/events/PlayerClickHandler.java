@@ -15,6 +15,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.TriState;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -61,22 +62,29 @@ public class PlayerClickHandler {
                 || interactedBlockState.is(Blocks.STONECUTTER)
                 || interactedBlockState.is(Blocks.BREWING_STAND)
                 || interactedBlockState.is(Blocks.ENCHANTING_TABLE)
-        ) event.setCanceled(true);
+        ) {
+            event.setCanceled(true);
+            return;
+        }
 
         if (interactedBlockState.is(Blocks.ANVIL)) {
             event.setCanceled(true);
             player.swing(InteractionHand.MAIN_HAND);
+            event.setCancellationResult(InteractionResult.SUCCESS);
             ClientPacketDistributor.sendToServer(new OpenReforgeAnvilPacket());
+            return;
         }
 
         // disables block placement
         if (event.getItemStack().getItem() instanceof BlockItem && !player.isCreative()) {
             event.setUseItem(TriState.FALSE);
+            return;
         }
 
         Block interactedBlock = interactedBlockState.getBlock();
         // i *think* this was firing on both hands for some reason so i added the event#getHand gate
         if (interactedBlock instanceof DialogueInteractable dialogueBlock && event.getHand() == InteractionHand.MAIN_HAND) {
+            event.setCancellationResult(InteractionResult.SUCCESS);
             PlayerAbilityEffectsAttachment playerAbilityEffectsAttachment = player.getData(UnshatteredAttachments.PLAYER_ABILITIES);
             if (playerAbilityEffectsAttachment.hasActiveEffect(ACTIVE_RIGHT_CLICK) && !event.getLevel().isClientSide()) {
                 player.sendSystemMessage(Component.translatable("misc.messages.unshattered.interact_cooldown").withColor(UnshatteredUtils.RED));

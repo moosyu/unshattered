@@ -68,7 +68,8 @@ public final class DamageUtils {
             ItemType itemType = UnshatteredUtils.getItemType(weapon);
             AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player)
                     .add(AbilityContextKey.TARGET, target)
-                    .add(AbilityContextKey.ITEM_TYPE, itemType);
+                    .add(AbilityContextKey.ITEM_TYPE, itemType)
+                    .add(AbilityContextKey.ITEM_STACK, weapon);
             ServerPlayer serverPlayer = (ServerPlayer) player;
 
             if (triggerAbilities) {

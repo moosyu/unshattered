@@ -54,6 +54,7 @@ public class DrillAttachmentMenu extends AbstractContainerMenu {
                 ItemStack fuel = container.getItem(FUEL_SLOT_INDEX);
                 if (!fuel.isEmpty()) {
                     container.setItem(FUEL_SLOT_INDEX, ItemStack.EMPTY);
+                    // so fuel doesnt get added to sacks
                     if (!player.getInventory().add(fuel)) {
                         player.drop(fuel, false);
                     }

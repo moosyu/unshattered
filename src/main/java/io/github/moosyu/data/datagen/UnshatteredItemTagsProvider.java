@@ -1,5 +1,6 @@
 package io.github.moosyu.data.datagen;
 
+import io.github.moosyu.items.UnshatteredItems;
 import io.github.moosyu.util.UnshatteredUtils;
 import mezz.jei.api.constants.Tags;
 import net.minecraft.core.HolderLookup;
@@ -182,7 +183,11 @@ public class UnshatteredItemTagsProvider extends ItemTagsProvider {
                 .add(GREEN_CANDY.get())
                 .add(PURPLE_CANDY.get())
                 .add(DWARF_TURTLE_SHELL.get())
-                .add(BEGINNER_AGRONOMY_SACK.get());
+                .add(BEGINNER_AGRONOMY_SACK.get())
+                .add(STARTER_MAGMA_ROD.get())
+                .add(COMMON_HOOK.get())
+                .add(SPEEDY_LINE.get())
+                .add(PRISMARINE_SINKER.get());
 
         tag(ItemTags.HOES)
                 .add(ROOKIE_HOE.get());
@@ -227,8 +232,9 @@ public class UnshatteredItemTagsProvider extends ItemTagsProvider {
                 .add(BREAKABLE_JUNGLE_LOG.get())
                 .add(BREAKABLE_ACACIA_LOG.get())
                 .add(BREAKABLE_DARK_OAK_LOG.get())
-                .add(ROCK_TALKABLE_BLOCK.get());
+                .add(ROCK_TALKABLE_BLOCK.get())
+                .add(TACKLEBOX.get());
 
-        tag(CAN_FISH_IN_LAVA).add(Items.FISHING_ROD);
+        tag(CAN_FISH_IN_LAVA).add(STARTER_MAGMA_ROD.get());
     }
 }
