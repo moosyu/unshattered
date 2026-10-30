@@ -176,6 +176,10 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         setBaseData(UnshatteredItems.COMMON_HOOK, ItemType.HOOK, UnshatteredRarity.COMMON, 1000);
         setBaseData(UnshatteredItems.SPEEDY_LINE, ItemType.LINE, UnshatteredRarity.UNCOMMON, 10000);
         setBaseData(UnshatteredItems.PRISMARINE_SINKER, ItemType.SINKER, UnshatteredRarity.COMMON, 50);
+        setBaseData(UnshatteredItems.ENCHANTED_RAW_MUTTON, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 800);
+        setBaseData(UnshatteredItems.ENCHANTED_COOKED_MUTTON, ItemType.MATERIAL, UnshatteredRarity.RARE, 128000);
+        setBaseData(UnshatteredItems.ENCHANTED_RAW_RABBIT, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 640);
+        setBaseData(UnshatteredItems.ENCHANTED_COOKED_RABBIT, ItemType.MATERIAL, UnshatteredRarity.RARE, 102400);
 
         createSimpleBlockDropData(BLOCK_BREAK_BUILDER, UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK, new ItemRange(UnshatteredItems.FIG_LOG.get()), PlayerSkillsAttachment.Skill.FORAGING, 15);
         createSimpleBlockDropData(BLOCK_BREAK_BUILDER, UnshatteredBlocks.BREAKABLE_STONE_BLOCK, new ItemRange(Items.COBBLESTONE), PlayerSkillsAttachment.Skill.MINING, 1);
@@ -317,7 +321,9 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
 
         builder(FISHABLE_MOBS_EXP_DATA)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SQUID), 25.0f, false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.GLOW_SQUID), 90.0f, false);
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.GLOW_SQUID), 90.0f, false)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.OASIS_SHEEP.get()), 40.0f, false)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.OASIS_RABBIT.get()), 40.0f, false);
 
         builder(COMBATABLE_MOBS_LOOT_DATA)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.ZOMBIE), new MobRewardData(
@@ -517,6 +523,29 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         1,
                         PlayerSkillsAttachment.Skill.COMBAT,
                         10.0f
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.OASIS_SHEEP.get()), new MobRewardData(
+                        List.of(new MobItemDropData(Items.MUTTON, 1, 1.0f, false),
+                                new MobItemDropData(Items.WHITE_WOOL, 1, 1.0f, false),
+                                new MobItemDropData(Items.LILY_PAD, 1, 1.0f, false),
+                                new MobItemDropData(Items.LILY_PAD, 1, 0.5f, false),
+                                new MobItemDropData(UnshatteredItems.ENCHANTED_RAW_MUTTON, 10, 15, 0.05f, true),
+                                new MobItemDropData(UnshatteredItems.ENCHANTED_COOKED_MUTTON, 1, 0.001f, true)
+                        ),
+                        4,
+                        PlayerSkillsAttachment.Skill.COMBAT,
+                        15.0f
+                ), false).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.OASIS_RABBIT.get()), new MobRewardData(
+                        List.of(new MobItemDropData(Items.LILY_PAD, 1, 1.0f, false),
+                                new MobItemDropData(Items.LILY_PAD, 1, 0.5f, false),
+                                new MobItemDropData(Items.RABBIT, 1, 1.0f, false),
+                                new MobItemDropData(Items.RABBIT_FOOT, 1, 0.7f, false),
+                                new MobItemDropData(Items.RABBIT_HIDE, 1, 0.7f, false),
+                                new MobItemDropData(UnshatteredItems.ENCHANTED_RAW_RABBIT, 10, 15, 0.05f, true),
+                                new MobItemDropData(UnshatteredItems.ENCHANTED_COOKED_RABBIT, 1, 0.001f, true)
+                        ),
+                        4,
+                        PlayerSkillsAttachment.Skill.COMBAT,
+                        15.0f
                 ), false);
 
         builder(BLOCK_BREAKING_POWER_DATA)
@@ -537,22 +566,24 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK.get()), 2, false)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_TITANIUM_BLOCK.get()), 5, false);
 
-        builder(FISHING_ITEM_WEIGHT_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(Items.COD), new FishingWeightEntry(100000.0d, FishingCondition.WATER), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.SALMON), new FishingWeightEntry(75000.0d, FishingCondition.WATER), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.PUFFERFISH), new FishingWeightEntry(60000.0d, FishingCondition.WATER), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.TROPICAL_FISH), new FishingWeightEntry(55000.0d, FishingCondition.WATER), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.PRISMARINE_SHARD), new FishingWeightEntry(45000.0d, FishingCondition.WATER), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.PRISMARINE_CRYSTALS), new FishingWeightEntry(45000.0d, FishingCondition.WATER), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.CLAY_BALL), new FishingWeightEntry(45000.0d, FishingCondition.WATER), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.SPONGE), new FishingWeightEntry(35000.0d, FishingCondition.WATER), false);
+        builder(FISHING_ITEM_WEIGHT_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(Items.COD), new FishingWeightEntry(100000f, FishingCondition.WATER), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.SALMON), new FishingWeightEntry(75000f, FishingCondition.WATER), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.PUFFERFISH), new FishingWeightEntry(60000f, FishingCondition.WATER), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.TROPICAL_FISH), new FishingWeightEntry(55000f, FishingCondition.WATER), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.PRISMARINE_SHARD), new FishingWeightEntry(45000f, FishingCondition.WATER), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.PRISMARINE_CRYSTALS), new FishingWeightEntry(45000f, FishingCondition.WATER), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.CLAY_BALL), new FishingWeightEntry(45000f, FishingCondition.WATER), false)
+                .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.SPONGE), new FishingWeightEntry(35000f, FishingCondition.WATER), false);
 
         builder(FISHING_MOB_WEIGHT_DATA)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.SQUID),
-                        new FishingWeightEntry(1200.0d, FishingCondition.WATER), false
+                        new FishingWeightEntry(1200, FishingCondition.WATER), false
                 ).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.GLOW_SQUID),
-                        new FishingWeightEntry(1100.0d, 1, FishingCondition.NIGHT, FishingCondition.WATER), false
+                        new FishingWeightEntry(1100, 1, FishingCondition.NIGHT, FishingCondition.WATER), false
                 ).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.SEA_WALKER.get()),
-                        new FishingWeightEntry(900.0d, FishingCondition.WATER), false
+                        new FishingWeightEntry(700, FishingCondition.WATER), false
+                ).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.OASIS_SHEEP.get()),
+                        new FishingWeightEntry(900, FishingCondition.WATER), false
                 );
 
         builder(ITEM_RARITY_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.MERCENARY_AXE.get()), UnshatteredRarity.RARE, false)

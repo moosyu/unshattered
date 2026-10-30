@@ -14,11 +14,17 @@
       ],
       "weight": 1200.0
     },
-    "unshattered:sea_walker": {
+    "unshattered:oasis_sheep": {
       "conditions": [
         "water"
       ],
       "weight": 900.0
+    },
+    "unshattered:sea_walker": {
+      "conditions": [
+        "water"
+      ],
+      "weight": 700.0
     }
   }
 }

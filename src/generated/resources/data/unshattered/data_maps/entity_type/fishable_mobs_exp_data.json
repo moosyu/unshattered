@@ -1,6 +1,8 @@
 {
   "values": {
     "minecraft:glow_squid": 90.0,
-    "minecraft:squid": 25.0
+    "minecraft:squid": 25.0,
+    "unshattered:oasis_rabbit": 40.0,
+    "unshattered:oasis_sheep": 40.0
   }
 }

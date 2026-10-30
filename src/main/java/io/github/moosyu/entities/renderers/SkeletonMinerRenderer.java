@@ -21,7 +21,7 @@ public class SkeletonMinerRenderer extends HumanoidMobRenderer<SkeletonMiner, Sk
 
     public SkeletonMinerRenderer(EntityRendererProvider.Context context) {
         super(context, new SkeletonMinerModel(context.bakeLayer(ModelLayers.SKELETON)), 0.5f);
-        this.blockModelResolver = context.getBlockModelResolver();
+        blockModelResolver = context.getBlockModelResolver();
 
         addLayer(new HumanoidArmorLayer<>(this,
                 ArmorModelSet.bake(ModelLayers.SKELETON_ARMOR, context.getModelSet(), SkeletonMinerModel::new),
@@ -30,7 +30,7 @@ public class SkeletonMinerRenderer extends HumanoidMobRenderer<SkeletonMiner, Sk
 
         addLayer(new BlockDecorationLayer<>(this,
                 state -> state.heldTnt,
-                this.model::applyHeldTntTransform));
+                model::applyHeldTntTransform));
     }
 
     @Override

@@ -945,4 +945,12 @@ public class UnshatteredItems {
     ));
     public static final DeferredItem<PrismarineSinker> PRISMARINE_SINKER = ITEMS.registerItem("prismarine_sinker", PrismarineSinker::new);
     public static final DeferredItem<BlockItem> TACKLEBOX = ITEMS.registerSimpleBlockItem(TACKLEBOX_BLOCK.getDelegate());
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_RAW_MUTTON = ITEMS.registerItem("enchanted_raw_mutton", EnchantedItem::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_COOKED_MUTTON = ITEMS.registerItem("enchanted_cooked_mutton", EnchantedItem::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_RAW_RABBIT = ITEMS.registerItem("enchanted_raw_rabbit", EnchantedItem::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_COOKED_RABBIT = ITEMS.registerItem("enchanted_cooked_rabbit", EnchantedItem::new);
 }

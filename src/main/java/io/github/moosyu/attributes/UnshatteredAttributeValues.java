@@ -13,7 +13,6 @@ import static io.github.moosyu.Unshattered.LOGGER;
 
 public enum UnshatteredAttributeValues {
     // defaults are the player's base values for the attributes
-    // health attribute is current health for non player mob
     MAX_HEALTH("health", "❤", 20.0, 0.0, 2147483647.0, UnshatteredUtils.RED, true, false, false),
     HEALTH_REGEN("health_regen", "❣", 100.0, 0.0, 2048.0, UnshatteredUtils.RED, true, false, true),
     DEFENCE("defence", "❈", 0.0, 0.0, 131072.0, UnshatteredUtils.GREEN, true, false, false),

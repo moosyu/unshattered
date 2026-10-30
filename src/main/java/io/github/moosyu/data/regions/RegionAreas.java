@@ -3,6 +3,8 @@ package io.github.moosyu.data.regions;
 import io.github.moosyu.data.attachments.PlayerRegionAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -44,20 +46,20 @@ public final class RegionAreas {
         for (int i = 0; i < HORIZONTAL_CHUNKS; i++) {
             for (int j = 0; j < VERTICAL_CHUNKS; j++) {
                 chunks[i][j] = new ArrayList<>();
-                int chunkX = worldMinX + i * REGION_CHUNK_SIZE;
-                int chunkZ = worldMinZ + j * REGION_CHUNK_SIZE;
-                int chunkWidth = Math.min(REGION_CHUNK_SIZE, worldSize.x - i * REGION_CHUNK_SIZE);
-                int chunkHeight = Math.min(REGION_CHUNK_SIZE, worldSize.y - j * REGION_CHUNK_SIZE);
-                Vector2i chunkTopLeft = new Vector2i(chunkX, chunkZ);
-                Vector2i chunkBottomRight = new Vector2i(chunkX + chunkWidth, chunkZ + chunkHeight);
+                final int CHUNK_X = worldMinX + i * REGION_CHUNK_SIZE;
+                final int CHUNK_Z = worldMinZ + j * REGION_CHUNK_SIZE;
+                final int CHUNK_WIDTH = Math.min(REGION_CHUNK_SIZE, worldSize.x - i * REGION_CHUNK_SIZE);
+                final int CHUNK_HEIGHT = Math.min(REGION_CHUNK_SIZE, worldSize.y - j * REGION_CHUNK_SIZE);
+                final Vector2i CHUNK_TOP_LEFT = new Vector2i(CHUNK_X, CHUNK_Z);
+                final Vector2i CHUNK_BOTTOM_RIGHT = new Vector2i(CHUNK_X + CHUNK_WIDTH, CHUNK_Z + CHUNK_HEIGHT);
 
                 for (RegionBoundary regionBoundary : regionBoundaries) {
                     if (regionBoundary.region().getKey() == UnshatteredRegions.DEFAULT_REGION) continue;
                     BoundaryCoordinates boundaryCoordinates = regionBoundary.boundaryCoordinates();
 
                     if (checkRectangleOverlap(
-                            chunkTopLeft,
-                            chunkBottomRight,
+                            CHUNK_TOP_LEFT,
+                            CHUNK_BOTTOM_RIGHT,
                             boundaryCoordinates.topLeftCornerCoordinates(),
                             boundaryCoordinates.bottomRightCornerCoordinates()
                     )) {
@@ -81,31 +83,35 @@ public final class RegionAreas {
                 && Math.max(aTopLeft.y, aBottomRight.y) >= Math.min(bTopLeft.y, bBottomRight.y);
     }
 
-    public static boolean containsPoint(BoundaryCoordinates bc, int x, int y, int z) {
-        return y >= bc.minY() && y <= bc.maxY()
-                && x >= Math.min(bc.topLeftCornerCoordinates().x, bc.bottomRightCornerCoordinates().x)
-                && x <= Math.max(bc.topLeftCornerCoordinates().x, bc.bottomRightCornerCoordinates().x)
-                && z >= Math.min(bc.topLeftCornerCoordinates().y, bc.bottomRightCornerCoordinates().y)
-                && z <= Math.max(bc.topLeftCornerCoordinates().y, bc.bottomRightCornerCoordinates().y);
+    public static boolean containsPoint(BoundaryCoordinates boundaryCoordinates, BlockPos blockPos) {
+        final int X = blockPos.getX();
+        final int Y = blockPos.getY();
+        final int Z = blockPos.getZ();
+
+        return Y >= boundaryCoordinates.minY() && Y <= boundaryCoordinates.maxY()
+                && X >= Math.min(boundaryCoordinates.topLeftCornerCoordinates().x, boundaryCoordinates.bottomRightCornerCoordinates().x)
+                && X <= Math.max(boundaryCoordinates.topLeftCornerCoordinates().x, boundaryCoordinates.bottomRightCornerCoordinates().x)
+                && Z >= Math.min(boundaryCoordinates.topLeftCornerCoordinates().y, boundaryCoordinates.bottomRightCornerCoordinates().y)
+                && Z <= Math.max(boundaryCoordinates.topLeftCornerCoordinates().y, boundaryCoordinates.bottomRightCornerCoordinates().y
+        );
     }
 
     public static void updatePlayerRegion(Player player) {
-        BlockPos blockPos = player.blockPosition();
-        if (player.getData(UnshatteredAttachments.PLAYER_REGION.get()).currentBlockPos().equals(blockPos)) {
+        final BlockPos BLOCK_POS = player.blockPosition();
+        if (player.getData(UnshatteredAttachments.PLAYER_REGION.get()).currentBlockPos().equals(BLOCK_POS)) {
             return;
         }
 
-        int blockX = blockPos.getX();
-        int blockY = blockPos.getY();
-        int blockZ = blockPos.getZ();
-        int chunkX = Mth.clamp(Math.floorDiv(blockX - worldMinX, REGION_CHUNK_SIZE), 0, chunks.length - 1);
-        int chunkZ = Mth.clamp(Math.floorDiv(blockZ - worldMinZ, REGION_CHUNK_SIZE), 0, chunks[0].length - 1);
+        final int CHUNK_X = Mth.clamp(Math.floorDiv(BLOCK_POS.getX() - worldMinX, REGION_CHUNK_SIZE), 0, chunks.length - 1);
+        final int CHUNK_Z = Mth.clamp(Math.floorDiv(BLOCK_POS.getZ() - worldMinZ, REGION_CHUNK_SIZE), 0, chunks[0].length - 1);
         RegionBoundary selectedBoundary = null;
 
-        for (RegionBoundary regionBoundary : chunks[chunkX][chunkZ]) {
-            BoundaryCoordinates bc = regionBoundary.boundaryCoordinates();
-            if (!containsPoint(bc, blockX, blockY, blockZ)) continue;
-            if (selectedBoundary == null || bc.priority() > selectedBoundary.boundaryCoordinates().priority()) {
+        for (RegionBoundary regionBoundary : chunks[CHUNK_X][CHUNK_Z]) {
+            BoundaryCoordinates boundaryCoordinates = regionBoundary.boundaryCoordinates();
+
+            if (containsPoint(boundaryCoordinates, BLOCK_POS)
+                    && (selectedBoundary == null || boundaryCoordinates.priority() > selectedBoundary.boundaryCoordinates().priority())
+            ) {
                 selectedBoundary = regionBoundary;
             }
         }
@@ -119,39 +125,48 @@ public final class RegionAreas {
         }
 
         // multiplied by 16 because a chunk is 16 blocks
-        int searchBlocksRadius = player.level().getServer().getPlayerList().getSimulationDistance() * 16;
-        Vector2i searchTopLeft = new Vector2i(player.blockPosition().getX() - searchBlocksRadius, player.blockPosition().getZ() - searchBlocksRadius);
-        Vector2i searchBottomRight = new Vector2i(player.blockPosition().getX() + searchBlocksRadius, player.blockPosition().getZ() + searchBlocksRadius);
+        final int SEARCH_BLOCKS_RADIUS = player.level().getServer().getPlayerList().getSimulationDistance() * 16;
+        final Vector2i SEARCH_TOP_LEFT = new Vector2i(player.blockPosition().getX() - SEARCH_BLOCKS_RADIUS, player.blockPosition().getZ() - SEARCH_BLOCKS_RADIUS);
+        final Vector2i SEARCH_BOTTOM_RIGHT = new Vector2i(player.blockPosition().getX() + SEARCH_BLOCKS_RADIUS, player.blockPosition().getZ() + SEARCH_BLOCKS_RADIUS);
 
         Set<RegionBoundary> candidates = new HashSet<>();
-        for (int i = Mth.clamp(Math.floorDiv(searchTopLeft.x - worldMinX, REGION_CHUNK_SIZE), 0, chunks.length - 1);
-             i <= Mth.clamp(Math.floorDiv(searchBottomRight.x - worldMinX, REGION_CHUNK_SIZE), 0, chunks.length - 1);
+        for (int i = Mth.clamp(Math.floorDiv(SEARCH_TOP_LEFT.x - worldMinX, REGION_CHUNK_SIZE), 0, chunks.length - 1);
+             i <= Mth.clamp(Math.floorDiv(SEARCH_BOTTOM_RIGHT.x - worldMinX, REGION_CHUNK_SIZE), 0, chunks.length - 1);
              i++
         ) {
-            for (int j = Mth.clamp(Math.floorDiv(searchTopLeft.y - worldMinZ, REGION_CHUNK_SIZE), 0, chunks[0].length - 1);
-                 j <= Mth.clamp(Math.floorDiv(searchBottomRight.y - worldMinZ, REGION_CHUNK_SIZE), 0, chunks[0].length - 1);
+            for (int j = Mth.clamp(Math.floorDiv(SEARCH_TOP_LEFT.y - worldMinZ, REGION_CHUNK_SIZE), 0, chunks[0].length - 1);
+                 j <= Mth.clamp(Math.floorDiv(SEARCH_BOTTOM_RIGHT.y - worldMinZ, REGION_CHUNK_SIZE), 0, chunks[0].length - 1);
                  j++
             ) {
                 candidates.addAll(chunks[i][j]);
             }
         }
 
-        Set<Region> regions = new HashSet<>();
-        regions.add(defaultRegion);
+        final Set<Region> REGIONS = new HashSet<>();
+        REGIONS.add(defaultRegion);
         for (RegionBoundary boundary : candidates) {
-            BoundaryCoordinates boundaryCoordinates = boundary.boundaryCoordinates();
+            final BoundaryCoordinates BOUNDARY_COORDINATES = boundary.boundaryCoordinates();
 
-            if (boundaryCoordinates.minY() <= (player.blockPosition().getY() + VERTICAL_RADIUS)
-                    && boundaryCoordinates.maxY() >= (player.blockPosition().getY() - VERTICAL_RADIUS)
-                    && checkRectangleOverlap(searchTopLeft,
-                    searchBottomRight,
-                    boundaryCoordinates.topLeftCornerCoordinates(),
-                    boundaryCoordinates.bottomRightCornerCoordinates()
+            if (BOUNDARY_COORDINATES.minY() <= (player.blockPosition().getY() + VERTICAL_RADIUS)
+                    && BOUNDARY_COORDINATES.maxY() >= (player.blockPosition().getY() - VERTICAL_RADIUS)
+                    && checkRectangleOverlap(SEARCH_TOP_LEFT,
+                    SEARCH_BOTTOM_RIGHT,
+                    BOUNDARY_COORDINATES.topLeftCornerCoordinates(),
+                    BOUNDARY_COORDINATES.bottomRightCornerCoordinates()
             )) {
-                regions.add(boundary.region().value());
+                REGIONS.add(boundary.region().value());
             }
         }
 
-        return regions;
+        return REGIONS;
+    }
+
+    public static boolean isBlockPosInRegion(ServerLevel serverLevel, BlockPos blockPos, ResourceKey<Region> regionKey) {
+        if (regionKey == UnshatteredRegions.DEFAULT_REGION) {
+            return true;
+        }
+
+        final BoundaryCoordinates BOUNDARY_COORDINATES = BoundaryCoordinates.getRegionCoordinates(serverLevel, regionKey);
+        return BOUNDARY_COORDINATES != null && containsPoint(BOUNDARY_COORDINATES, blockPos);
     }
 }

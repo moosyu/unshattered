@@ -215,6 +215,10 @@ public class UnshatteredCreativeTabs {
                             output.accept(ENCHANTED_GUNPOWDER);
                             output.accept(ENCHANTED_SLIME_BALL);
                             output.accept(ENCHANTED_SLIME_BLOCK);
+                            output.accept(ENCHANTED_RAW_MUTTON);
+                            output.accept(ENCHANTED_COOKED_MUTTON);
+                            output.accept(ENCHANTED_RAW_RABBIT);
+                            output.accept(ENCHANTED_COOKED_RABBIT);
                         }).build()
         );
 

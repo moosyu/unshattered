@@ -70,6 +70,7 @@ public class DatagenHandler {
                     bootstrap.register(UnshatteredRegions.FORGOTTEN_DWELLING, new Region(0xFFCCD9E3, RegionTemperatureTypes.COMFORTABLE, false));
                     bootstrap.register(UnshatteredRegions.HYTHE, new Region(0xFFB1FA96, RegionTemperatureTypes.COMFORTABLE, false));
                     bootstrap.register(UnshatteredRegions.SKY, new Region(0xFF96E3FA, RegionTemperatureTypes.COLD, false));
+                    bootstrap.register(UnshatteredRegions.OASIS, new Region(0xFFF1E9E0, RegionTemperatureTypes.COMFORTABLE, false));
                 }).add(DataPackRegistryHandler.REGION_BOUNDARY_REGISTRY_KEY, bootstrap -> {
                     HolderGetter<Region> regions = bootstrap.lookup(DataPackRegistryHandler.REGION_REGISTRY_KEY);
 
@@ -78,7 +79,6 @@ public class DatagenHandler {
                     registerRegionBoundary(bootstrap, new BoundaryCoordinates(new Vector2i(-846, 688), new Vector2i(-1119, 825), 1), UnshatteredRegions.PLAINS_REGION, regions);
                     registerRegionBoundary(bootstrap, new BoundaryCoordinates(new Vector2i(-1035, 837), new Vector2i(-1070, 805), 2), UnshatteredRegions.FORGOTTEN_DWELLING, regions);
                     registerRegionBoundary(bootstrap, new BoundaryCoordinates(new Vector2i(-864, 707), new Vector2i(-937, 792), 2), UnshatteredRegions.HYTHE, regions);
-
                 }).add(DataPackRegistryHandler.DIALOGUE_TREE_REGISTRY_KEY, bootstrap -> {
                     registerDialogueTree(bootstrap,
                             TalkingRockBlock.ROCK_IDENTIFIER,

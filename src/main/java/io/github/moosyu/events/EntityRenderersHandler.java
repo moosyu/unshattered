@@ -4,6 +4,8 @@ import io.github.moosyu.entities.UnshatteredEntities;
 import io.github.moosyu.entities.renderers.*;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.renderer.entity.CreeperRenderer;
+import net.minecraft.client.renderer.entity.RabbitRenderer;
+import net.minecraft.client.renderer.entity.SheepRenderer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -31,5 +33,7 @@ public class EntityRenderersHandler {
         event.registerEntityRenderer(UnshatteredEntities.SKELETON_MINER.get(), SkeletonMinerRenderer::new);
         event.registerEntityRenderer(UnshatteredEntities.REDSTONE_PIGMAN.get(), RedstonePigmanRenderer::new);
         event.registerEntityRenderer(UnshatteredEntities.SEA_WALKER.get(), SeaWalkerRenderer::new);
+        event.registerEntityRenderer(UnshatteredEntities.OASIS_SHEEP.get(), OasisSheepRenderer::new);
+        event.registerEntityRenderer(UnshatteredEntities.OASIS_RABBIT.get(), OasisRabbitRenderer::new);
     }
 }

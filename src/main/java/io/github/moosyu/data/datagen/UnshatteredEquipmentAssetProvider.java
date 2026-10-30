@@ -30,6 +30,7 @@ public class UnshatteredEquipmentAssetProvider implements DataProvider {
         output.accept(GLOW_SQUID_BOOTS_KEY, EquipmentClientInfo.builder().addHumanoidLayers(UnshatteredUtils.getUnshatteredIdentifier("glow_squid_boots")).build());
         output.accept(SKELETON_HAT_KEY, EquipmentClientInfo.builder().addHumanoidLayers(UnshatteredUtils.getUnshatteredIdentifier("skeleton_hat")).build());
         output.accept(LAPIS_ARMOUR_KEY, EquipmentClientInfo.builder().addHumanoidLayers(UnshatteredUtils.getUnshatteredIdentifier("lapis")).build());
+        output.accept(MINER_ARMOUR_KEY, EquipmentClientInfo.builder().addHumanoidLayers(UnshatteredUtils.getUnshatteredIdentifier("miner")).build());
     }
 
     @Override

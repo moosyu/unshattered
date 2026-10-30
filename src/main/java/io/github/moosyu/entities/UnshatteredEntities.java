@@ -8,6 +8,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.animal.rabbit.Rabbit;
+import net.minecraft.world.entity.animal.sheep.Sheep;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
@@ -197,5 +199,21 @@ public class UnshatteredEntities {
                     .sized(0.6f, 1.95f)
                     .eyeHeight(1.74f)
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("sea_walker")))
+    );
+
+    public static final Supplier<EntityType<OasisSheep>> OASIS_SHEEP = ENTITY_TYPES.register(
+            "oasis_sheep",
+            () -> EntityType.Builder.of(OasisSheep::new, MobCategory.CREATURE)
+                    .sized(0.9f, 1.3f)
+                    .eyeHeight(1.235f)
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("oasis_sheep")))
+    );
+
+    public static final Supplier<EntityType<OasisRabbit>> OASIS_RABBIT = ENTITY_TYPES.register(
+            "oasis_rabbit",
+            () -> EntityType.Builder.of(OasisRabbit::new, MobCategory.CREATURE)
+                    .sized(0.49f, 0.6f)
+                    .eyeHeight(0.59f)
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("oasis_rabbit")))
     );
 }

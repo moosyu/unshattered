@@ -704,6 +704,165 @@
       "min_coins": 5,
       "skill": "combat"
     },
+    "unshattered:oasis_rabbit": {
+      "drops": [
+        {
+          "combat_fortune_boosted": false,
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:lily_pad",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": false,
+          "drop_data": {
+            "drop_chance": 0.5,
+            "item_range": {
+              "item": "minecraft:lily_pad",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": false,
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:rabbit",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": false,
+          "drop_data": {
+            "drop_chance": 0.7,
+            "item_range": {
+              "item": "minecraft:rabbit_foot",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": false,
+          "drop_data": {
+            "drop_chance": 0.7,
+            "item_range": {
+              "item": "minecraft:rabbit_hide",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": true,
+          "drop_data": {
+            "drop_chance": 0.05,
+            "item_range": {
+              "item": "unshattered:enchanted_raw_rabbit",
+              "max_amount": 15,
+              "min_amount": 10
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": true,
+          "drop_data": {
+            "drop_chance": 0.001,
+            "item_range": {
+              "item": "unshattered:enchanted_cooked_rabbit",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        }
+      ],
+      "experience": 15.0,
+      "max_coins": 4,
+      "min_coins": 4,
+      "skill": "combat"
+    },
+    "unshattered:oasis_sheep": {
+      "drops": [
+        {
+          "combat_fortune_boosted": false,
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:mutton",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": false,
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:white_wool",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": false,
+          "drop_data": {
+            "drop_chance": 1.0,
+            "item_range": {
+              "item": "minecraft:lily_pad",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": false,
+          "drop_data": {
+            "drop_chance": 0.5,
+            "item_range": {
+              "item": "minecraft:lily_pad",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": true,
+          "drop_data": {
+            "drop_chance": 0.05,
+            "item_range": {
+              "item": "unshattered:enchanted_raw_mutton",
+              "max_amount": 15,
+              "min_amount": 10
+            }
+          }
+        },
+        {
+          "combat_fortune_boosted": true,
+          "drop_data": {
+            "drop_chance": 0.001,
+            "item_range": {
+              "item": "unshattered:enchanted_cooked_mutton",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        }
+      ],
+      "experience": 15.0,
+      "max_coins": 4,
+      "min_coins": 4,
+      "skill": "combat"
+    },
     "unshattered:redstone_pigman": {
       "drops": [
         {

@@ -32,4 +32,9 @@ public final class UnshatteredRegions {
             DataPackRegistryHandler.REGION_REGISTRY_KEY,
             Identifier.fromNamespaceAndPath(MODID, "sky")
     );
+
+    public static final ResourceKey<Region> OASIS = ResourceKey.create(
+            DataPackRegistryHandler.REGION_REGISTRY_KEY,
+            Identifier.fromNamespaceAndPath(MODID, "oasis")
+    );
 }

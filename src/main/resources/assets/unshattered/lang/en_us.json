@@ -215,6 +215,14 @@
   "item.unshattered.common_hook": "Common Hook",
   "item.unshattered.speedy_line": "Speedy Line",
   "item.unshattered.prismarine_sinker": "Prismarine Sinker",
+  "item.unshattered.miner_helmet": "Miner Helmet",
+  "item.unshattered.miner_chestplate": "Miner Chestplate",
+  "item.unshattered.miner_leggings": "Miner Leggings",
+  "item.unshattered.miner_boots": "Miner Boots",
+  "item.unshattered.enchanted_raw_mutton": "Enchanted Raw Mutton",
+  "item.unshattered.enchanted_cooked_mutton": "Enchanted Cooked Mutton",
+  "item.unshattered.enchanted_raw_rabbit": "Enchanted Raw Rabbit",
+  "item.unshattered.enchanted_cooked_rabbit": "Enchanted Cooked Rabbit",
 
   "item.description.unshattered.bat_the_fish": "Where is my cape!",
   "item.description.unshattered.century_the_fish": "The term 'century' was actually named after him, or so he says.",
@@ -587,6 +595,8 @@
   "fishing.messages.entity.minecraft.squid": "A Squid appeared.",
   "fishing.messages.entity.minecraft.glow_squid": "Pitch darkness reveals a Glow Squid.",
   "fishing.messages.entity.minecraft.sea_walker": "You caught a Sea Walker.",
+  "fishing.messages.entity.minecraft.oasis_sheep": "An oasis sheep appears from the water.",
+  "fishing.messages.entity.minecraft.oasis_rabbit": "An oasis rabbit appears from the water.",
 
   "misc.unshattered.coins": "Coins",
   "misc.messages.unshattered.wizardman_request": "Help Wizardman",
@@ -611,6 +621,7 @@
   "region.unshattered.forgotten_dwelling": "Forgotten Dwelling",
   "region.unshattered.hythe": "Hythe",
   "region.unshattered.sky": "Sky",
+  "region.unshattered.oasis": "Oasis",
 
   "breaking_power.messages.unshattered.generic_breaking_power_requirment_start": "A breaking power of ",
   "breaking_power.messages.unshattered.generic_breaking_power_requirment_end": " is required to break this block",
@@ -700,6 +711,8 @@
   "entity.unshattered.skeleton_miner": "Skeleton Miner",
   "entity.unshattered.redstone_pigman": "Redstone Pigman",
   "entity.unshattered.sea_walker": "Sea Walker",
+  "entity.unshattered.oasis_sheep": "Oasis Sheep",
+  "entity.unshattered.oasis_rabbit": "Oasis Rabbit",
 
   "dialogue.unshattered.generic.player_yes_choice": "Yes.",
   "dialogue.unshattered.generic.player_no_choice": "No.",

@@ -373,6 +373,10 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
         createEnchantedItemRecipe(Items.GUNPOWDER, UnshatteredItems.ENCHANTED_GUNPOWDER.get());
         createEnchantedItemRecipe(Items.SLIME_BALL, UnshatteredItems.ENCHANTED_SLIME_BALL.get());
         createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_SLIME_BALL, UnshatteredItems.ENCHANTED_SLIME_BLOCK.get());
+        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_RAW_MUTTON, Items.MUTTON);
+        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_COOKED_MUTTON, UnshatteredItems.ENCHANTED_RAW_MUTTON.get());
+        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_RAW_RABBIT, Items.RABBIT);
+        createEnchantedItemRecipe(UnshatteredItems.ENCHANTED_COOKED_RABBIT, UnshatteredItems.ENCHANTED_RAW_RABBIT.get());
 
         new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.FIG_HEW.get()), RecipeCategory.MISC)
                 .pattern("FF ", "SF ", "S  ")
