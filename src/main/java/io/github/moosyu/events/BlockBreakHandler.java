@@ -99,52 +99,35 @@ public class BlockBreakHandler {
             return;
         }
 
+        if (!(player instanceof ServerPlayer serverPlayer)) {
+            return;
+        }
+
         PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
 
         if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.MINING) {
-            AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player).add(AbilityContextKey.BLOCKSTATE, blockState);
-            List<PassiveAbilityItem> triggered = new ArrayList<>();
-            boolean fuelUseDisabled = false;
+            AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, serverPlayer).add(AbilityContextKey.BLOCKSTATE, blockState);
+            try (AbilityScope scope = AbilityScope.open(serverPlayer, AbilityTriggerType.PLAYER_ATTEMPT_CONSUME_FUEL, context)) {
+                // just assuming the mainhand item is the mining tool, i hope this doesnt bite me later on but drills only apply attributes in mainhand so we'll see how it goes
+                ItemStack itemStack = player.getMainHandItem();
+                ItemFuel itemFuel = itemStack.get(UnshatteredDataComponents.FUEL.get());
 
-            for (ItemStack item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredNonOngoingItems()) {
-                if (!(item.getItem() instanceof AbilityItem abilityItem)) {
-                    continue;
-                }
-
-                if (abilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_BREAK_MINING_BLOCK)) {
-                    if (abilityItem instanceof PassiveAbilityItem passiveAbilityItem && passiveAbilityItem.abilityConditionsMet(context)) {
-                        passiveAbilityItem.onAbilityTriggered(context);
-                        triggered.add(passiveAbilityItem);
-                    } else if (abilityItem instanceof IncrementalAbilityItem incrementalAbilityItem) {
-                        incrementalAbilityItem.addIncrements(item, 1);
-                    }
-                } else if (abilityItem instanceof PassiveAbilityItem passiveAbilityItem
-                        && passiveAbilityItem.abilityConditionsMet(context)
-                        && abilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_ATTEMPT_CONSUME_FUEL)
-                ) {
-                    fuelUseDisabled = true;
+                if (itemFuel != null && !scope.results.get(AbilityResult.CANCEL_EVENT)) {
+                    itemStack.set(UnshatteredDataComponents.FUEL.get(), new ItemFuel(itemFuel.maxFuel(), Math.max(0, itemFuel.currentFuel() - 1)));
                 }
             }
 
-            UnshatteredUtils.addBlockBrokenResultToInventory(blockHolder, player, UnshatteredAttributeValues.MINING_FORTUNE);
+            try (AbilityScope _ = AbilityScope.open(serverPlayer, AbilityTriggerType.PLAYER_BREAK_MINING_BLOCK, context)) {
+                UnshatteredUtils.addBlockBrokenResultToInventory(blockHolder, player, UnshatteredAttributeValues.MINING_FORTUNE);
 
-            if (blockBreakData.expAmount() > 0.0f) {
-                skills.addExp(PlayerSkillsAttachment.Skill.MINING, blockBreakData.expAmount(), player, UnshatteredAttributeValues.MINING_WISDOM.holder);
-                player.syncData(PLAYER_SKILLS);
+                if (blockBreakData.expAmount() > 0.0f) {
+                    skills.addExp(PlayerSkillsAttachment.Skill.MINING, blockBreakData.expAmount(), player, UnshatteredAttributeValues.MINING_WISDOM.holder);
+                    player.syncData(PLAYER_SKILLS);
+                }
+
+                ServerLevel serverLevel = (ServerLevel) level;
+                serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID).destroyRegeneratingBlock(blockPos, serverLevel, player);
             }
-
-            ServerLevel serverLevel = (ServerLevel) level;
-            serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID).destroyRegeneratingBlock(blockPos, serverLevel, player);
-
-            // just assuming the mainhand item is the mining tool, i hope this doesnt bite me later on but drills only apply attributes in mainhand so we'll see how it goes
-            ItemStack itemStack = player.getMainHandItem();
-            ItemFuel itemFuel = itemStack.get(UnshatteredDataComponents.FUEL.get());
-
-            if (itemFuel != null && !fuelUseDisabled) {
-                itemStack.set(UnshatteredDataComponents.FUEL.get(), new ItemFuel(itemFuel.maxFuel(), Math.max(0, itemFuel.currentFuel() - 1)));
-            }
-
-            triggered.forEach(item -> item.onAbilityFinished(context));
         } else if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.FARMING) {
             UnshatteredUtils.addBlockBrokenResultToInventory(blockHolder, player, UnshatteredAttributeValues.FARMING_FORTUNE);
 
@@ -170,7 +153,7 @@ public class BlockBreakHandler {
             }
         }
 
-        ((ServerPlayer) player).getStats().increment(player, Stats.BLOCK_MINED.get(blockHolder.value()), 1);
+        serverPlayer.getStats().increment(player, Stats.BLOCK_MINED.get(blockHolder.value()), 1);
     }
 
     // to stop players from attempting to break blocks

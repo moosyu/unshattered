@@ -7,10 +7,12 @@ import io.github.moosyu.abilities.AbilityTriggerType;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
 import net.minecraft.core.Holder;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
+import java.util.Optional;
 
 public class Incremental extends Ability {
     public record AttributeStage(Holder<Attribute> attributeHolder, int amountPerMilestone) {}
@@ -28,16 +30,17 @@ public class Incremental extends Ability {
         this.incrementNameKey = incrementNameKey;
     }
 
-    /**
-     * @return how much one trigger is worth
-     */
-    private int incrementAmount() {
-        return 1;
+    @Override
+    public boolean conditionsMet(AbilityContext context) {
+        Optional<ItemStack> source = context.get(AbilityContextKey.ITEM_STACK);
+        Optional<ServerPlayer> player = context.get(AbilityContextKey.PLAYER);
+        return source.isPresent() && player.isPresent() && source.get() == player.get().getMainHandItem();
     }
 
     @Override
     public void onTrigger(AbilityContext context) {
-        context.get(AbilityContextKey.ITEM_STACK).ifPresent(itemStack -> addIncrements(itemStack, incrementAmount()));
+        int amount = context.get(AbilityContextKey.BROKEN_COUNT).orElse(1);
+        context.get(AbilityContextKey.ITEM_STACK).ifPresent(itemStack -> addIncrements(itemStack, amount));
     }
 
     public int getMilestone(ItemStack itemStack) {

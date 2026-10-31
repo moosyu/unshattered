@@ -3,7 +3,6 @@ package io.github.moosyu.events;
 import io.github.moosyu.abilities.*;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.drops.BlockBreakData;
 import io.github.moosyu.data.regen.RegenSavedData;
@@ -14,7 +13,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -71,37 +69,38 @@ public class TreeSweepHandler {
         private void finish() {
             // unless something has gone horribly wrong the "player" value in tasks should be the same in every index
             Player player = tasks.getFirst().player();
-            AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player);
-            List<PassiveAbilityItem> triggered = new ArrayList<>();
 
-            for (ItemStack itemStack : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredNonOngoingItems()) {
-                if (itemStack.getItem() instanceof PassiveAbilityItem passiveAbilityItem && passiveAbilityItem.triggerTypes().contains(AbilityTriggerType.TREE_BREAK_INSTANCE_FINISH) && passiveAbilityItem.abilityConditionsMet(context)) {
-                    passiveAbilityItem.onAbilityTriggered(context);
-                    triggered.add(passiveAbilityItem);
-                }
+            if (!(player instanceof ServerPlayer serverPlayer)) {
+                return;
             }
 
-            PlayerSkillsAttachment skills = player.getData(PLAYER_SKILLS.get());
-            // a little more sketchy but i probably wont mix and match logs so this should be fine
-            float expReward = 0.0f;
+            AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, serverPlayer);
 
-            for (BreakTask current : tasks) {
-                UnshatteredUtils.addBlockBrokenResultToInventory(current.state().typeHolder(), player, UnshatteredAttributeValues.FORAGING_FORTUNE);
+            try (AbilityScope _ = AbilityScope.open(serverPlayer, AbilityTriggerType.TREE_BREAK_INSTANCE_FINISH, context)) {
+                PlayerSkillsAttachment skills = player.getData(PLAYER_SKILLS.get());
+                // a little more sketchy but i probably wont mix and match logs so this should be fine
+                float expReward = 0.0f;
 
-                BlockBreakData blockBreakData = current.state.getData(UnshatteredDataMaps.BLOCK_BREAK_DATA);
-                if (blockBreakData != null) {
-                    expReward += blockBreakData.expAmount();
+                for (BreakTask current : tasks) {
+                    UnshatteredUtils.addBlockBrokenResultToInventory(current.state().typeHolder(), player, UnshatteredAttributeValues.FORAGING_FORTUNE);
+
+                    BlockBreakData blockBreakData = current.state.getData(UnshatteredDataMaps.BLOCK_BREAK_DATA);
+                    if (blockBreakData != null) {
+                        expReward += blockBreakData.expAmount();
+                    }
                 }
+
+                skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, expReward, player, UnshatteredAttributeValues.FORAGING_WISDOM.holder);
+                player.syncData(PLAYER_SKILLS);
             }
-
-            skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, expReward, player, UnshatteredAttributeValues.FORAGING_WISDOM.holder);
-            player.syncData(PLAYER_SKILLS);
-
-            triggered.forEach(item -> item.onAbilityFinished(context));
         }
     }
 
     public static void trySweep(Level level, BlockPos startPos, Player player) {
+        if (!(player instanceof ServerPlayer serverPlayer)) {
+            return;
+        }
+
         PlayerSkillsAttachment skills = player.getData(PLAYER_SKILLS.get());
         BlockState startBlock = level.getBlockState(startPos);
 
@@ -119,27 +118,20 @@ public class TreeSweepHandler {
             }
 
             UnshatteredUtils.addBlockBrokenResultToInventory(startBlock.typeHolder(), player, UnshatteredAttributeValues.FORAGING_FORTUNE);
-
-            for (ItemStack itemStack : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredNonOngoingItems()) {
-                if (itemStack.getItem() instanceof IncrementalAbilityItem incrementalAbilityItem && incrementalAbilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_BREAK_SWEEP_BLOCK)) {
-                    incrementalAbilityItem.addIncrements(itemStack, 1);
-                }
-            }
+            countBroken(serverPlayer, 1);
 
             return;
         }
 
         Queue<BreakTask> result = breakConnectedLogs(level, startPos, player, sweep);
+        countBroken(serverPlayer, result.size());
         result.add(new BreakTask(level, startPos, player, startBlock));
         ACTIVE_BREAKS.add(new TreeBreakInstance(new ArrayList<>(result)));
+    }
 
-        for (ItemStack itemStack : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredNonOngoingItems()) {
-            if (itemStack.getItem() instanceof IncrementalAbilityItem incrementalAbilityItem
-                    && incrementalAbilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_BREAK_SWEEP_BLOCK)
-            ) {
-                incrementalAbilityItem.addIncrements(itemStack, result.size());
-            }
-        }
+    private static void countBroken(ServerPlayer player, int amount) {
+        AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, player).add(AbilityContextKey.BROKEN_COUNT, amount);
+        AbilityScope.fire(player, AbilityTriggerType.PLAYER_BREAK_MINING_BLOCK, context);
     }
 
     private static Queue<BreakTask> breakConnectedLogs(Level level, BlockPos startPos, Player player, int sweep) {

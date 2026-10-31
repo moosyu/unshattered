@@ -31,11 +31,11 @@ public class UnshatteredAbilities {
 
     public static final DeferredHolder<Ability, ExplosiveArrows> EXPLOSIVE_ARROWS = ABILITIES.register("explosive_arrows", ExplosiveArrows::new);
 
-    public static final DeferredHolder<Ability, DrillEngineBoost> MITHRIL_PLATED_DRILL_ENGINE_UBERCHARGED = ABILITIES.register("ubercharged", () -> new DrillEngineBoost(8, 5));
+    public static final DeferredHolder<Ability, DrillEngineBoost> MITHRIL_PLATED_DRILL_ENGINE_UBERCHARGED = ABILITIES.register("mithril_plated_drill_engine_ubercharged", () -> new DrillEngineBoost(8, 5));
 
     public static final DeferredHolder<Ability, Frugal> FRUGAL = ABILITIES.register("frugal", Frugal::new);
 
-    public static final DeferredHolder<Ability, Lifesteal> BAT_TALISMAN_LIFESTEAL = ABILITIES.register("bat_artifact_lifesteal", () -> new Lifesteal(0.05f));
+    public static final DeferredHolder<Ability, Lifesteal> BAT_TALISMAN_LIFESTEAL = ABILITIES.register("bat_talisman_lifesteal", () -> new Lifesteal(0.05f));
 
     public static final DeferredHolder<Ability, DecreaseMiningAbilityCooldown> MITHRIL_INFUSED_FUEL_TANK_DECREASE_MINING_ABILITY_COOLDOWN = ABILITIES.register("mithril_infused_fuel_tank_decrease_mining_ability_cooldown", () -> new DecreaseMiningAbilityCooldown(-0.2f));
 

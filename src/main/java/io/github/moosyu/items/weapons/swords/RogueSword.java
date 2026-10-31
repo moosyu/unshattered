@@ -23,7 +23,6 @@ import static io.github.moosyu.Unshattered.MODID;
 
 @EventBusSubscriber(modid = MODID, value = Dist.DEDICATED_SERVER)
 public class RogueSword extends UnshatteredSword implements AbilityItem {
-
     public RogueSword(Properties properties) {
         super(properties.attributes(ItemAttributeModifiers.builder()
                         .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("rogue_sword_damage"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)

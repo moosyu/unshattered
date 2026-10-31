@@ -11,8 +11,17 @@ public class AbilityResults {
         return this;
     }
 
+    public void merge(AbilityResults other) {
+        other.data.forEach(this::addRaw);
+    }
+
     public <T> T get(AbilityResult<T> key) {
         Object value = data.get(key);
-        return value == null ? key.identity() : key.type().cast(value);
+        return value == null ? key.defaultValue() : key.type().cast(value);
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> void addRaw(AbilityResult<T> key, Object value) {
+        add(key, (T) value);
     }
 }

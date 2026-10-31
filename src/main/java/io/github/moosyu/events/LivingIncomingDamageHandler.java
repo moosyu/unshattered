@@ -26,36 +26,20 @@ public class LivingIncomingDamageHandler {
         DamageSource source = event.getSource();
 
         if (event.getEntity() instanceof Player player) {
-            if (player.level().isClientSide()) {
+            if (player.level().isClientSide() || !(player instanceof ServerPlayer serverPlayer)) {
                 return;
             }
 
-            List<PassiveAbilityItem> triggeredItems = new ArrayList<>();
-            AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player)
+            AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, serverPlayer)
                     .add(AbilityContextKey.DAMAGE_AMOUNT, (double) event.getAmount())
                     .add(AbilityContextKey.DAMAGE_SOURCE, source);
-
-
-            for (ItemStack item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredNonOngoingItems()) {
-                if (item.getItem() instanceof PassiveAbilityItem passiveAbilityItem
-                        && passiveAbilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_INCOMING_DAMAGE)
-                        && passiveAbilityItem.abilityConditionsMet(context)
-                ) {
-                    passiveAbilityItem.onAbilityTriggered(context);
-                    triggeredItems.add(passiveAbilityItem);
-
-                    if (passiveAbilityItem.triggerResult().isPresent() && passiveAbilityItem.triggerResult().get() == AbilityTriggerResult.CANCEL_EVENT) {
-                        triggeredItems.forEach(triggeredItem -> triggeredItem.onAbilityFinished(context));
-                        event.setCanceled(true);
-                    }
+            try (AbilityScope scope = AbilityScope.open(serverPlayer, AbilityTriggerType.PLAYER_INCOMING_DAMAGE, context)) {
+                if (scope.results.get(AbilityResult.CANCEL_EVENT) || source.is(DamageTypeTags.IS_FALL) && (int) (event.getAmount() + 3) < 7) {
+                    event.setCanceled(true);
+                    scope.close();
+                    return;
                 }
             }
-
-            if (source.is(DamageTypeTags.IS_FALL) && (int) (event.getAmount() + 3) < 7) {
-                event.setCanceled(true);
-            }
-
-            triggeredItems.forEach(triggeredItem -> triggeredItem.onAbilityFinished(context));
         } else {
             if (!source.is(DamageTypeTags.IS_PLAYER_ATTACK)) {
                 event.setCanceled(true);

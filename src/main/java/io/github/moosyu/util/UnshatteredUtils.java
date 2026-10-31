@@ -404,24 +404,6 @@ public final class UnshatteredUtils {
         return true;
     }
 
-    // abilities
-
-    /**
-     * triggers all non-ongoing passive item abilities if their conditions are met and they have the correct trigger type. doesnt interact with {@link PassiveAbilityItem#triggerResult()}.
-     * @return a list of items that had their abilities triggered. REMEMBER TO USE THIS LIST TO CLEAN UP!!
-     */
-    public static List<PassiveAbilityItem> triggerInstantPassiveAbilities(Player player, AbilityTriggerType triggerType, AbilityContext context) {
-        List<PassiveAbilityItem> triggered = new ArrayList<>();
-
-        for (ItemStack item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredNonOngoingItems()) {
-            if (item.getItem() instanceof PassiveAbilityItem passiveAbilityItem && passiveAbilityItem.triggerTypes().contains(triggerType) && passiveAbilityItem.abilityConditionsMet(context)) {
-                passiveAbilityItem.onAbilityTriggered(context);
-                triggered.add(passiveAbilityItem);
-            }
-        }
-        return triggered;
-    }
-
     /**
      * @param player player having the attribute modified/checked
      * @param attribute the attribute to get instance of

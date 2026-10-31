@@ -11,45 +11,50 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 public class DrillEngineBoost extends Ability {
     private final float miningFortune;
     private final float miningSpeed;
-    private final Identifier miningSpeedIdentifier;
-    private final Identifier miningFortuneIdentifier;
+    private Identifier miningSpeedIdentifier;
+    private Identifier miningFortuneIdentifier;
 
     public DrillEngineBoost(float miningSpeed, float miningFortune) {
         super(new ItemAbility(), AbilityTriggerType.ONGOING);
-
         this.miningSpeed = miningSpeed;
         this.miningFortune = miningFortune;
-        this.miningSpeedIdentifier = UnshatteredUtils.getUnshatteredIdentifier(identifier().getPath() + "_mining_speed");
-        this.miningFortuneIdentifier = UnshatteredUtils.getUnshatteredIdentifier(identifier().getPath() + "_mining_fortune");
+    }
+
+    private Identifier getSpeedIdentifier() {
+        if (miningSpeedIdentifier == null) {
+            miningSpeedIdentifier = UnshatteredUtils.getUnshatteredIdentifier(identifier().getPath() + "_mining_speed");
+        }
+        return miningSpeedIdentifier;
+    }
+
+    private Identifier getFortuneIdentifier() {
+        if (miningFortuneIdentifier == null) {
+            miningFortuneIdentifier = UnshatteredUtils.getUnshatteredIdentifier(identifier().getPath() + "_mining_fortune");
+        }
+        return miningFortuneIdentifier;
     }
 
     @Override
     public void onTrigger(AbilityContext context) {
         context.get(AbilityContextKey.PLAYER).ifPresent(player -> {
-            AttributeInstance miningSpeedAttribute = player.getAttribute(UnshatteredAttributeValues.MINING_SPEED.holder);
-            AttributeInstance miningFortuneAttribute = player.getAttribute(UnshatteredAttributeValues.MINING_FORTUNE.holder);
+            AttributeInstance speedAttribute = player.getAttribute(UnshatteredAttributeValues.MINING_SPEED.holder);
+            AttributeInstance fortuneAttribute = player.getAttribute(UnshatteredAttributeValues.MINING_FORTUNE.holder);
+            if (speedAttribute == null || fortuneAttribute == null) return;
 
-            if (miningFortuneAttribute == null || miningSpeedAttribute == null) {
-                return;
-            }
-
-            miningSpeedAttribute.addTransientModifier(new AttributeModifier(miningSpeedIdentifier, miningSpeed, AttributeModifier.Operation.ADD_VALUE));
-            miningFortuneAttribute.addTransientModifier(new AttributeModifier(miningFortuneIdentifier, miningFortune, AttributeModifier.Operation.ADD_VALUE));
+            speedAttribute.addTransientModifier(new AttributeModifier(getSpeedIdentifier(), miningSpeed, AttributeModifier.Operation.ADD_VALUE));
+            fortuneAttribute.addTransientModifier(new AttributeModifier(getFortuneIdentifier(), miningFortune, AttributeModifier.Operation.ADD_VALUE));
         });
     }
 
     @Override
     public void onFinish(AbilityContext context) {
         context.get(AbilityContextKey.PLAYER).ifPresent(player -> {
-            AttributeInstance miningSpeedAttribute = player.getAttribute(UnshatteredAttributeValues.MINING_SPEED.holder);
-            AttributeInstance miningFortuneAttribute = player.getAttribute(UnshatteredAttributeValues.MINING_FORTUNE.holder);
+            AttributeInstance speedAttribute = player.getAttribute(UnshatteredAttributeValues.MINING_SPEED.holder);
+            AttributeInstance fortuneAttribute = player.getAttribute(UnshatteredAttributeValues.MINING_FORTUNE.holder);
+            if (speedAttribute == null || fortuneAttribute == null) return;
 
-            if (miningFortuneAttribute == null || miningSpeedAttribute == null) {
-                return;
-            }
-
-            miningSpeedAttribute.removeModifier(miningSpeedIdentifier);
-            miningFortuneAttribute.removeModifier(miningFortuneIdentifier);
+            speedAttribute.removeModifier(getSpeedIdentifier());
+            fortuneAttribute.removeModifier(getFortuneIdentifier());
         });
     }
 }

@@ -17,7 +17,7 @@ public final class AbilityScope implements AutoCloseable {
 
     private final List<Triggered> triggeredAbilities;
     private final @Nullable AbilityContext context;
-    private final AbilityResults results;
+    public final AbilityResults results;
     private boolean closed;
 
     private AbilityScope(List<Triggered> triggeredAbilities, @Nullable AbilityContext context, AbilityResults results) {
@@ -35,7 +35,7 @@ public final class AbilityScope implements AutoCloseable {
         }
 
         List<Triggered> triggered = null;
-        AbilityResults results = null;
+        AbilityResults results = new AbilityResults();
 
         for (Ability ability : abilities) {
             ItemStack source = attachment.abilityItemStacks.get(ability);
@@ -54,6 +54,7 @@ public final class AbilityScope implements AutoCloseable {
 
             triggered.add(new Triggered(ability, source));
             ability.onTrigger(context);
+            results.merge(ability.abilityResults);
         }
 
         if (triggered == null) {

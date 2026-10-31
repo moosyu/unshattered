@@ -65,8 +65,6 @@ public final class DamageUtils {
         if (player.level().isClientSide()) {
             target.hurtClient(target.damageSources().playerAttack(player));
         } else {
-            PlayerAbilityEffectsAttachment abilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES);
-            List<PassiveAbilityItem> triggeredItems = new ArrayList<>();
             ItemType itemType = UnshatteredUtils.getItemType(weapon);
             AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player)
                     .add(AbilityContextKey.TARGET, target)
@@ -74,108 +72,95 @@ public final class DamageUtils {
                     .add(AbilityContextKey.ITEM_STACK, weapon);
             ServerPlayer serverPlayer = (ServerPlayer) player;
 
-            if (triggerAbilities) {
-                for (ItemStack item : abilities.getStoredNonOngoingItems()) {
-                    if (item.getItem() instanceof AbilityItem abilityItem && abilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_DEAL_DAMAGE)
-                            && abilityItem instanceof PassiveAbilityItem passiveAbilityItem
-                            && passiveAbilityItem.abilityConditionsMet(context)
+            try (AbilityScope scope = AbilityScope.open(serverPlayer, AbilityTriggerType.PLAYER_DEAL_DAMAGE, context)) {
+                if (scope.results.get(AbilityResult.CANCEL_EVENT)) {
+                    scope.close();
+                    return;
+                }
+
+                float attackStrength = player.getAttackStrengthScale(0.0f);
+                double critDamage = 0.0d;
+                boolean weakAttack = attackStrength < 0.9f;
+                double damageBonus = 0.0f;
+
+                for (Object2IntMap.Entry<Holder<Enchantment>> entry : weapon.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY).entrySet()) {
+                    Optional<ResourceKey<Enchantment>> key = entry.getKey().unwrapKey();
+                    if (key.isEmpty()) {
+                        continue;
+                    }
+
+                    Optional<UnshatteredEnchantmentEffects.UnshatteredSimpleEffect> effect = UnshatteredEnchantmentEffects.getEffect(key.get());
+                    if (effect.isPresent()
+                            && effect.get() instanceof UnshatteredEnchantmentEffects.DamageComplexEffect damageEffect
+                            && damageEffect.checkPassesEffectRequirement(player, target)
                     ) {
-                        passiveAbilityItem.onAbilityTriggered(context);
-                        triggeredItems.add(passiveAbilityItem);
-                        if (passiveAbilityItem.triggerResult().isPresent() && passiveAbilityItem.triggerResult().get() == AbilityTriggerResult.CANCEL_EVENT) {
-                            triggeredItems.forEach(triggeredItem -> triggeredItem.onAbilityFinished(context));
-                            return;
-                        }
+                        damageBonus += damageEffect.getEffectBonus(entry.getIntValue());
                     }
                 }
-            }
 
-            float attackStrength = player.getAttackStrengthScale(0.0f);
-            double critDamage = 0.0d;
-            boolean weakAttack = attackStrength < 0.9f;
-            double damageBonus = 0.0f;
-
-            for (Object2IntMap.Entry<Holder<Enchantment>> entry : weapon.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY).entrySet()) {
-                Optional<ResourceKey<Enchantment>> key = entry.getKey().unwrapKey();
-                if (key.isEmpty()) {
-                    continue;
-                }
-
-                Optional<UnshatteredEnchantmentEffects.UnshatteredSimpleEffect> effect = UnshatteredEnchantmentEffects.getEffect(key.get());
-                if (effect.isPresent()
-                        && effect.get() instanceof UnshatteredEnchantmentEffects.DamageComplexEffect damageEffect
-                        && damageEffect.checkPassesEffectRequirement(player, target)
-                ) {
-                    damageBonus += damageEffect.getEffectBonus(entry.getIntValue());
-                }
-            }
-
-            if (useAttackStrength && weakAttack) {
-                PacketDistributor.sendToPlayer((ServerPlayer) player, new WeakHitSoundEffectPacket());
-                // just to further disincentivise spam clicking on weapons where you aren't meant to be
-                attackStrength /= 2;
-            } else {
-                critDamage = player.getRandom().nextDouble() * 100.0 < player.getAttributeValue(UnshatteredAttributeValues.CRITICAL_CHANCE.holder)
-                        ? player.getAttributeValue(UnshatteredAttributeValues.CRITICAL_DAMAGE.holder)
-                        : 0.0d;
-            }
-
-            // trying out doing this instead of long things of multiplying and adding, i think it's more readable but idk about it just yet
-            damage += damageBonus;
-            damage *= (1 + (player.getAttributeValue(UnshatteredAttributeValues.STRENGTH.holder) / 20));
-            damage *= (1 + (critDamage / 20));
-            damage *= player.getAttributeValue(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder);
-
-            if (useAttackStrength) {
-                damage *= attackStrength;
-            }
-
-            AttributeInstance targetHealth = target.getAttribute(UnshatteredAttributeValues.CURRENT_HEALTH.holder);
-
-            if (targetHealth != null) {
-                if (critDamage > 0.0d) {
-                    player.crit(target);
-                    target.playSound(SoundEvents.PLAYER_ATTACK_CRIT, 1.0F, 1.0F);
-                }
-
-                // divided by 10 when displayed so multiplied here
-                serverPlayer.awardStat(Stats.DAMAGE_DEALT, (int) (damage * 10));
-
-                if ((targetHealth.getBaseValue() - damage) > 0) {
-                    targetHealth.setBaseValue(targetHealth.getBaseValue() - damage);
-                    // fake hit to trigger some of the effects which i cant be bothered replicating
-                    target.hurtServer((ServerLevel) target.level(), target.damageSources().playerAttack(player), 0.0f);
-
-                    double ferocityAmount = player.getAttributeValue(UnshatteredAttributeValues.FEROCITY.holder);
-                    if (ferocityAmount > 0 && player.getData(UnshatteredAttachments.PLAYER_FEROCITY_COOLDOWN) <= 0) {
-                        // shouldn't ever be negative so id hope this is fine
-                        int prevHundredPlace = (int) (ferocityAmount / 100.0);
-                        double nextHundredDiff = ferocityAmount - (prevHundredPlace * 100);
-                        int ferocityHits = prevHundredPlace;
-
-                        if ((player.getRandom().nextDouble() * 100.0d) < nextHundredDiff) {
-                            ferocityHits++;
-                        }
-
-                        for (int i = 0; i < ferocityHits; i++) {
-                            SCHEDULED_FEROCITY_ATTACKS.add(new FerocityHit(target, FEROCITY_COOLDOWN + ((FEROCITY_COOLDOWN / 2) * i), damage, player, i == 0));
-                        }
-
-                        player.setData(UnshatteredAttachments.PLAYER_FEROCITY_COOLDOWN, FEROCITY_COOLDOWN * 2);
-                    }
-                    // has to be placed after hurt as hurt sets its own invulnerability
-                    target.invulnerableTime = itemType.getInvulnerability();
+                if (useAttackStrength && weakAttack) {
+                    PacketDistributor.sendToPlayer((ServerPlayer) player, new WeakHitSoundEffectPacket());
+                    // just to further disincentivise spam clicking on weapons where you aren't meant to be
+                    attackStrength /= 2;
                 } else {
-                    targetHealth.setBaseValue(0.0);
-                    target.hurtServer((ServerLevel) target.level(), target.damageSources().playerAttack(player), Integer.MAX_VALUE);
+                    critDamage = player.getRandom().nextDouble() * 100.0 < player.getAttributeValue(UnshatteredAttributeValues.CRITICAL_CHANCE.holder)
+                            ? player.getAttributeValue(UnshatteredAttributeValues.CRITICAL_DAMAGE.holder)
+                            : 0.0d;
                 }
-                PacketDistributor.sendToPlayer((ServerPlayer) player, new DamageNumberPacket((int) damage, target.position()));
-            }
 
-            player.resetAttackStrengthTicker();
+                // trying out doing this instead of long things of multiplying and adding, i think it's more readable but idk about it just yet
+                damage += damageBonus;
+                damage *= (1 + (player.getAttributeValue(UnshatteredAttributeValues.STRENGTH.holder) / 20));
+                damage *= (1 + (critDamage / 20));
+                damage *= player.getAttributeValue(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder);
 
-            if (triggerAbilities) {
-                triggeredItems.forEach(item -> item.onAbilityFinished(context));
+                if (useAttackStrength) {
+                    damage *= attackStrength;
+                }
+
+                AttributeInstance targetHealth = target.getAttribute(UnshatteredAttributeValues.CURRENT_HEALTH.holder);
+
+                if (targetHealth != null) {
+                    if (critDamage > 0.0d) {
+                        player.crit(target);
+                        target.playSound(SoundEvents.PLAYER_ATTACK_CRIT, 1.0F, 1.0F);
+                    }
+
+                    // divided by 10 when displayed so multiplied here
+                    serverPlayer.awardStat(Stats.DAMAGE_DEALT, (int) (damage * 10));
+
+                    if ((targetHealth.getBaseValue() - damage) > 0) {
+                        targetHealth.setBaseValue(targetHealth.getBaseValue() - damage);
+                        // fake hit to trigger some of the effects which i cant be bothered replicating
+                        target.hurtServer((ServerLevel) target.level(), target.damageSources().playerAttack(player), 0.0f);
+
+                        double ferocityAmount = player.getAttributeValue(UnshatteredAttributeValues.FEROCITY.holder);
+                        if (ferocityAmount > 0 && player.getData(UnshatteredAttachments.PLAYER_FEROCITY_COOLDOWN) <= 0) {
+                            // shouldn't ever be negative so id hope this is fine
+                            int prevHundredPlace = (int) (ferocityAmount / 100.0);
+                            double nextHundredDiff = ferocityAmount - (prevHundredPlace * 100);
+                            int ferocityHits = prevHundredPlace;
+
+                            if ((player.getRandom().nextDouble() * 100.0d) < nextHundredDiff) {
+                                ferocityHits++;
+                            }
+
+                            for (int i = 0; i < ferocityHits; i++) {
+                                SCHEDULED_FEROCITY_ATTACKS.add(new FerocityHit(target, FEROCITY_COOLDOWN + ((FEROCITY_COOLDOWN / 2) * i), damage, player, i == 0));
+                            }
+
+                            player.setData(UnshatteredAttachments.PLAYER_FEROCITY_COOLDOWN, FEROCITY_COOLDOWN * 2);
+                        }
+                        // has to be placed after hurt as hurt sets its own invulnerability
+                        target.invulnerableTime = itemType.getInvulnerability();
+                    } else {
+                        targetHealth.setBaseValue(0.0);
+                        target.hurtServer((ServerLevel) target.level(), target.damageSources().playerAttack(player), Integer.MAX_VALUE);
+                    }
+                    PacketDistributor.sendToPlayer((ServerPlayer) player, new DamageNumberPacket((int) damage, target.position()));
+                }
+
+                player.resetAttackStrengthTicker();
             }
         }
     }
@@ -238,108 +223,92 @@ public final class DamageUtils {
             player.hurtClient(damageSource);
             return false;
         } else {
-            List<PassiveAbilityItem> triggeredItems = new ArrayList<>();
-            AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player)
+            if (!(player instanceof ServerPlayer serverPlayer)) {
+                return false;
+            }
+
+            AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, serverPlayer)
                     .add(AbilityContextKey.DAMAGE_AMOUNT, damageDealt)
                     .add(AbilityContextKey.DAMAGE_SOURCE, damageSource);
-            boolean coinLoss = true;
-            ServerPlayer serverPlayer = (ServerPlayer) player;
 
-            for (ItemStack item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredNonOngoingItems()) {
-                if (!(item.getItem() instanceof PassiveAbilityItem passiveAbilityItem) || !passiveAbilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_TAKE_DAMAGE) ||  !passiveAbilityItem.abilityConditionsMet(context)) {
-                    continue;
-                }
-
-                passiveAbilityItem.onAbilityTriggered(context);
-                triggeredItems.add(passiveAbilityItem);
-
-                AbilityTriggerResult result = passiveAbilityItem.triggerResult().map(trigger -> {
-                    if (trigger instanceof AbilityTriggerResult abilityTrigger) {
-                        return abilityTrigger;
-                    }
-                    return null;
-                }).orElse(null);
-
-                if (result == AbilityTriggerResult.CANCEL_EVENT) {
-                    triggeredItems.forEach(triggeredItem -> triggeredItem.onAbilityFinished(context));
+            try (AbilityScope scope = AbilityScope.open(serverPlayer, AbilityTriggerType.PLAYER_TAKE_DAMAGE, context)) {
+                if (scope.results.get(AbilityResult.CANCEL_EVENT)) {
+                    scope.close();
                     return false;
-                } else if (result == AbilityTriggerResult.DISABLE_COIN_LOSS) {
-                    coinLoss = false;
-                }
-            }
-
-            PlayerStateAttachment states = player.getData(PLAYER_STATE.get());
-            double playerHealth = states.getStatValue(PlayerStateAttachment.Stat.HEALTH);
-            double effectiveDamage = damageDealt;
-
-            if (!overrideInvulnerability) {
-                if (states.getInvulnerableTime() > INVULNERABILITY_TIME_MAX / 2) {
-                    if (damageDealt <= states.getLastHitAmount()) return false;
-                    effectiveDamage = damageDealt - states.getLastHitAmount();
-                }
-                states.setLastHitAmount(damageDealt);
-                states.setInvulnerableTime(INVULNERABILITY_TIME_MAX);
-            }
-
-            boolean killed = playerHealth - effectiveDamage <= 0.0d;
-
-            // it's divided by 10 when displayed so this is just kind of a work-around
-            serverPlayer.awardStat(Stats.DAMAGE_TAKEN, (int) effectiveDamage * 10);
-            if (!killed) {
-                states.decreaseStatValue(PlayerStateAttachment.Stat.HEALTH, effectiveDamage, player);
-            } else {
-                int coinsLost;
-
-                PlayerCurrencyAttachment currency = player.getData(PLAYER_CURRENCY.get());
-                BlockPos spawnPos = player.level().getRespawnData().pos();
-
-                // greed makes you lose all your coins
-                if (player.getData(UnshatteredAttachments.PLAYER_ABILITIES).activeEffects.containsKey(UnshatteredAbilities.GREED.get().identifier())) {
-                    coinsLost = currency.getCoins();
-                } else if (coinLoss) {
-                    coinsLost = currency.getCoins() / 2;
-                } else {
-                    coinsLost = 0;
                 }
 
-                player.teleportTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5);
+                PlayerStateAttachment states = player.getData(PLAYER_STATE.get());
+                double playerHealth = states.getStatValue(PlayerStateAttachment.Stat.HEALTH);
+                double effectiveDamage = damageDealt;
 
-                for (ServerPlayer playerOnServer : serverPlayer.level().getServer().getPlayerList().getPlayers()) {
-                    if (playerOnServer == serverPlayer) {
-                        playerOnServer.sendSystemMessage(deathMessage.copy()
-                                .withStyle(ChatFormatting.RED)
-                                .append(coinsLost > 0 ? Component.literal(" You lost " + coinsLost + " coins.") : Component.empty()));
-                    } else {
-                        playerOnServer.sendSystemMessage(deathMessage.copy().withStyle(ChatFormatting.RED));
+                if (!overrideInvulnerability) {
+                    if (states.getInvulnerableTime() > INVULNERABILITY_TIME_MAX / 2) {
+                        if (damageDealt <= states.getLastHitAmount()) return false;
+                        effectiveDamage = damageDealt - states.getLastHitAmount();
                     }
+                    states.setLastHitAmount(damageDealt);
+                    states.setInvulnerableTime(INVULNERABILITY_TIME_MAX);
                 }
 
-                states.setStatValue(PlayerStateAttachment.Stat.HEALTH, player.getAttributeValue(UnshatteredAttributeValues.MAX_HEALTH.holder), player);
-                states.setStatValue(PlayerStateAttachment.Stat.MANA, player.getAttributeValue(UnshatteredAttributeValues.MANA.holder), player);
-                player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(), TemperatureTypes.BASE_TEMP.getValue());
+                boolean killed = playerHealth - effectiveDamage <= 0.0d;
 
-                if (coinsLost > 0) {
-                    currency.removeCoins(coinsLost);
-                    player.syncData(PLAYER_CURRENCY.get());
+                // it's divided by 10 when displayed so this is just kind of a work-around
+                serverPlayer.awardStat(Stats.DAMAGE_TAKEN, (int) effectiveDamage * 10);
+                if (!killed) {
+                    states.decreaseStatValue(PlayerStateAttachment.Stat.HEALTH, effectiveDamage, player);
+                } else {
+                    int coinsLost;
+
+                    PlayerCurrencyAttachment currency = player.getData(PLAYER_CURRENCY.get());
+                    BlockPos spawnPos = player.level().getRespawnData().pos();
+
+                    // greed makes you lose all your coins
+                    if (player.getData(UnshatteredAttachments.PLAYER_ABILITIES).activeEffects.containsKey(UnshatteredAbilities.GREED.get().identifier())) {
+                        coinsLost = currency.getCoins();
+                    } else if (scope.results.get(AbilityResult.CANCEL_COIN_LOSS)) {
+                        coinsLost = currency.getCoins() / 2;
+                    } else {
+                        coinsLost = 0;
+                    }
+
+                    player.teleportTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5);
+
+                    for (ServerPlayer playerOnServer : serverPlayer.level().getServer().getPlayerList().getPlayers()) {
+                        if (playerOnServer == serverPlayer) {
+                            playerOnServer.sendSystemMessage(deathMessage.copy()
+                                    .withStyle(ChatFormatting.RED)
+                                    .append(coinsLost > 0 ? Component.literal(" You lost " + coinsLost + " coins.") : Component.empty()));
+                        } else {
+                            playerOnServer.sendSystemMessage(deathMessage.copy().withStyle(ChatFormatting.RED));
+                        }
+                    }
+
+                    states.setStatValue(PlayerStateAttachment.Stat.HEALTH, player.getAttributeValue(UnshatteredAttributeValues.MAX_HEALTH.holder), player);
+                    states.setStatValue(PlayerStateAttachment.Stat.MANA, player.getAttributeValue(UnshatteredAttributeValues.MANA.holder), player);
+                    player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(), TemperatureTypes.BASE_TEMP.getValue());
+
+                    if (coinsLost > 0) {
+                        currency.removeCoins(coinsLost);
+                        player.syncData(PLAYER_CURRENCY.get());
+                    }
+
+                    PacketDistributor.sendToPlayer(serverPlayer, new DeathSoundEffectPacket());
+                    states.setCancelledKnockback(true);
+
+                    if (player.isOnFire()) {
+                        player.clearFire();
+                    }
+
+                    serverPlayer.getStats().setValue(player, Stats.CUSTOM.get(Stats.TIME_SINCE_DEATH), 0);
+                    if (damageSource.getEntity() != null) {
+                        serverPlayer.getStats().increment(player, Stats.ENTITY_KILLED_BY.get(damageSource.getEntity().getType()), 1);
+                    }
+                    serverPlayer.getStats().increment(player, Stats.CUSTOM.get(Stats.DEATHS), 1);
                 }
 
-                PacketDistributor.sendToPlayer(serverPlayer, new DeathSoundEffectPacket());
-                states.setCancelledKnockback(true);
-
-                if (player.isOnFire()) {
-                    player.clearFire();
-                }
-
-                serverPlayer.getStats().setValue(player, Stats.CUSTOM.get(Stats.TIME_SINCE_DEATH), 0);
-                if (damageSource.getEntity() != null) {
-                    serverPlayer.getStats().increment(player, Stats.ENTITY_KILLED_BY.get(damageSource.getEntity().getType()), 1);
-                }
-                serverPlayer.getStats().increment(player, Stats.CUSTOM.get(Stats.DEATHS), 1);
+                player.invulnerableTime = 0;
+                return killed;
             }
-
-            player.invulnerableTime = 0;
-            triggeredItems.forEach(item -> item.onAbilityFinished(context));
-            return killed;
         }
     }
 }

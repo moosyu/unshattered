@@ -20,21 +20,16 @@ public class LivingKnockBackHandler {
             PlayerStateAttachment state = player.getData(UnshatteredAttachments.PLAYER_STATE.get());
             PlayerAbilityEffectsAttachment abilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES.get());
 
-            boolean abilityCancelled = false;
             AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, player);
-            for (ItemStack itemStack : abilities.getStoredNonOngoingItems()) {
-                if (itemStack.getItem() instanceof PassiveAbilityItem passiveAbilityItem
-                        && passiveAbilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_INCOMING_KNOCKBACK)
-                        && passiveAbilityItem.abilityConditionsMet(context)
-                ) {
-                    if (passiveAbilityItem.triggerResult().map(it -> it instanceof AbilityTriggerResult result && result == AbilityTriggerResult.CANCEL_EVENT).orElse(false)) {
-                        abilityCancelled = true;
-                        break;
-                    }
+            try (AbilityScope scope = AbilityScope.open(player, AbilityTriggerType.PLAYER_INCOMING_KNOCKBACK, context)) {
+                if (scope.results.get(AbilityResult.CANCEL_EVENT)) {
+                    event.setCanceled(true);
+                    scope.close();
+                    return;
                 }
             }
 
-            if (state.isKnockbackCancelled() || abilityCancelled) {
+            if (state.isKnockbackCancelled()) {
                 event.setCanceled(true);
             }
 

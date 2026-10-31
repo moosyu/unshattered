@@ -113,8 +113,9 @@ public final class PlayerAbilityEffectsAttachment {
                 tickList.add(ability);
             }
 
-            if (ability.trigger != AbilityTriggerType.ONGOING && ability.trigger != AbilityTriggerType.TICKED) {
-                nextTriggerTypeAbilities.computeIfAbsent(ability.trigger, _ -> new ArrayList<>()).add(ability);
+            AbilityTriggerType trigger = ability.trigger;
+            if (trigger != null && trigger != AbilityTriggerType.ONGOING && trigger != AbilityTriggerType.TICKED) {
+                nextTriggerTypeAbilities.computeIfAbsent(trigger, _ -> new ArrayList<>()).add(ability);
             }
         }
 

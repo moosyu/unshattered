@@ -20,7 +20,6 @@ public class DataMapRegistryHandler {
         event.register(FISHING_MOB_WEIGHT_DATA);
         event.register(ITEM_RARITY_DATA);
         event.register(ITEM_TYPE_DATA);
-        event.register(ITEM_ABILITY_DATA);
         event.register(ITEM_SELL_VALUE_DATA);
         event.register(ITEM_FUEL_VALUE_DATA);
         event.register(VENDOR_SHOP_DATA);

@@ -21,53 +21,32 @@ import java.util.Optional;
 public abstract class ProjectileWeaponItemMixin {
     @Inject(method = "useAmmo", at = @At("HEAD"), cancellable = true)
     private static void useAmmo(ItemStack weapon, ItemStack projectile, LivingEntity holder, boolean forceInfinite, CallbackInfoReturnable<ItemStack> cir) {
-        final ServerPlayer SERVER_PLAYER = holder instanceof ServerPlayer serverPlayer ? serverPlayer : null;
-        final AbilityContext CONTEXT = SERVER_PLAYER != null ? new AbilityContext().add(AbilityContextKey.PLAYER, SERVER_PLAYER) : null;
-        final List<PassiveAbilityItem> TRIGGERED_ITEMS = new ArrayList<>();
+        if (holder instanceof ServerPlayer serverPlayer) {
+            AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, serverPlayer);
 
-        if (SERVER_PLAYER != null) {
-            for (ItemStack item : SERVER_PLAYER.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredNonOngoingItems()) {
-                if (!(item.getItem() instanceof final PassiveAbilityItem PASSIVE_ABILITY_ITEM)
-                        || !PASSIVE_ABILITY_ITEM.triggerTypes().contains(AbilityTriggerType.PLAYER_USE_PROJECTILE_WEAPON_AMMO)
-                        || !PASSIVE_ABILITY_ITEM.abilityConditionsMet(CONTEXT)
-                ) {
-                    continue;
-                }
-
-                PASSIVE_ABILITY_ITEM.onAbilityTriggered(CONTEXT);
-                TRIGGERED_ITEMS.add(PASSIVE_ABILITY_ITEM);
-
-                final Optional<?> RESULT = PASSIVE_ABILITY_ITEM.triggerResult();
-                if (RESULT.isPresent() && RESULT.get() == AbilityTriggerResult.CANCEL_EVENT) {
-                    finishTriggeredItems(TRIGGERED_ITEMS, CONTEXT);
+            try (AbilityScope scope = AbilityScope.open(serverPlayer, AbilityTriggerType.PLAYER_USE_PROJECTILE_WEAPON_AMMO, context)) {
+                if (scope.results.get(AbilityResult.CANCEL_EVENT)) {
+                    scope.close();
                     cir.setReturnValue(projectile.copyWithCount(1));
                     return;
                 }
+
+                int ammoToUse = !forceInfinite && !(holder.hasInfiniteMaterials() || projectile.getItem() instanceof ArrowItem ai && ai.isInfinite(projectile, weapon, holder)) ? 1 : 0;
+                if (ammoToUse > projectile.getCount()) {
+                    scope.close();
+                    cir.setReturnValue(ItemStack.EMPTY);
+                } else if (ammoToUse == 0) {
+                    scope.close();
+                    cir.setReturnValue(projectile.copyWithCount(1));
+                } else {
+                    ItemStack usedAmmo = projectile.split(ammoToUse);
+                    if (projectile.isEmpty()) {
+                        serverPlayer.getInventory().removeItem(projectile);
+                        scope.close();
+                    }
+                    cir.setReturnValue(usedAmmo);
+                }
             }
         }
-
-        final int AMMO_TO_USE = !forceInfinite && holder.level() instanceof ServerLevel && !(holder.hasInfiniteMaterials() || (projectile.getItem() instanceof ArrowItem ai && ai.isInfinite(projectile, weapon, holder))) ? 1 : 0;
-        if (AMMO_TO_USE > projectile.getCount()) {
-            finishTriggeredItems(TRIGGERED_ITEMS, CONTEXT);
-            cir.setReturnValue(ItemStack.EMPTY);
-        } else if (AMMO_TO_USE == 0) {
-            finishTriggeredItems(TRIGGERED_ITEMS, CONTEXT);
-            cir.setReturnValue(projectile.copyWithCount(1));
-        } else {
-            final ItemStack USED_AMMO = projectile.split(AMMO_TO_USE);
-            if (projectile.isEmpty() && SERVER_PLAYER != null) {
-                SERVER_PLAYER.getInventory().removeItem(projectile);
-                finishTriggeredItems(TRIGGERED_ITEMS, CONTEXT);
-            }
-            cir.setReturnValue(USED_AMMO);
-        }
-    }
-
-    private static void finishTriggeredItems(List<PassiveAbilityItem> triggeredItems, AbilityContext context) {
-        if (context == null) {
-            return;
-        }
-
-        triggeredItems.forEach(item -> item.onAbilityFinished(context));
     }
 }

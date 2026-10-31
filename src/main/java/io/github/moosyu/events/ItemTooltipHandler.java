@@ -1,7 +1,9 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.abilities.Ability;
+import io.github.moosyu.abilities.AbilityItem;
+import io.github.moosyu.abilities.data.Incremental;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.components.*;
 import io.github.moosyu.data.datagen.UnshatteredItemTagsProvider;
 import io.github.moosyu.items.SackItem;
@@ -35,6 +37,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static io.github.moosyu.Unshattered.MODID;
@@ -57,7 +60,6 @@ public class ItemTooltipHandler {
         ItemType itemType = UnshatteredUtils.getItemType(itemStack);
         boolean hasAttributes = false;
         boolean hasDescription = itemStack.is(UnshatteredItemTagsProvider.HAS_DESCRIPTION);
-        ItemAbility itemAbility = itemStack.typeHolder().getData(UnshatteredDataMaps.ITEM_ABILITY_DATA);
         ItemCharges itemCharges = itemStack.get(UnshatteredDataComponents.CHARGES);
         int sellPrice = UnshatteredUtils.getItemSellValue(itemStack) * itemStack.count();
         ItemAttributeModifiers modifiers = itemStack.getAttributeModifiers();
@@ -207,33 +209,36 @@ public class ItemTooltipHandler {
 
         }
 
-        if (itemAbility != null) {
-            tooltipComponents.add(Component.empty());
-            if (itemAbility.passive()) {
-                tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.abilityIdentifier().getPath())).withColor(0xFFFFAA00));
-                addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityIdentifier().getPath()).getString(), 0xFFAAAAAA, player));
-            } else {
-                tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.abilityIdentifier().getPath())).withColor(0xFFFFAA00).append(Component.literal(" RIGHT CLICK").withColor(0xFFFFFF55).withStyle(ChatFormatting.BOLD)));
-                addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityIdentifier().getPath()).getString(), 0xFFAAAAAA, player));
-
-                if (itemAbility.manaCost() > 0) tooltipComponents.add(Component.literal("Mana Cost: ").withStyle(ChatFormatting.DARK_GRAY).append(Component.literal(String.valueOf(itemAbility.manaCost())).withColor(0xFF00AAAA)));
-                if (itemAbility.cooldown() > 0) tooltipComponents.add(Component.literal("Cooldown: ").withStyle(ChatFormatting.DARK_GRAY).append(Component.literal(String.format("%.1f", (float) itemAbility.cooldown() / 20 /* convert ticks to seconds */)).append("s").withColor(0xFF55FF55)));
-                if (itemCharges != null) tooltipComponents.add(Component.literal("Charges: ").withStyle(ChatFormatting.DARK_GRAY).append(Component.literal(String.valueOf(itemCharges.currentCharges())).withColor(0xFFFFFF55)).append(Component.literal("/").withStyle(ChatFormatting.DARK_GRAY)).append(Component.literal((itemCharges.rechargeTime() / 20) + "s").withColor(0xFF55FF55)));
-            }
-
-            if (itemStack.getItem() instanceof IncrementalAbilityItem incrementalAbilityItem) {
-                tooltipComponents.add(Component.literal("(Max "
-                        + incrementalAbilityItem.attributes().stream().map(incremental -> "+"
-                                + (incrementalAbilityItem.maxMilestone() * incremental.amountPerMilestone())
-                                + UnshatteredAttributeValues.fromAttribute(incremental.attributeHolder().value()).symbol)
-                        .collect(Collectors.joining(", "))
-                        + ")"
-                ).withStyle(ChatFormatting.DARK_GRAY));
+        if (itemStack.getItem() instanceof AbilityItem abilityItem) {
+            for (Supplier<? extends Ability> abilitySupplier : abilityItem.abilities()) {
+                Ability itemAbility = abilitySupplier.get();
                 tooltipComponents.add(Component.empty());
-                tooltipComponents.add(Component.translatable(incrementalAbilityItem.incrementNameKey()).withStyle(ChatFormatting.GRAY)
-                        .append(Component.literal(": "))
-                        .append(Component.literal(String.valueOf(itemStack.getOrDefault(UnshatteredDataComponents.INCREMENTS_STORED.get(), 0))).withColor(0xFF55FF55))
-                );
+                if (itemAbility.data.passive()) {
+                    tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.identifier().getPath())).withColor(0xFFFFAA00));
+                    addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.identifier().getPath()).getString(), 0xFFAAAAAA, player));
+                } else {
+                    tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.identifier().getPath())).withColor(0xFFFFAA00).append(Component.literal(" RIGHT CLICK").withColor(0xFFFFFF55).withStyle(ChatFormatting.BOLD)));
+                    addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.identifier().getPath()).getString(), 0xFFAAAAAA, player));
+
+                    if (itemAbility.data.manaCost() > 0) tooltipComponents.add(Component.literal("Mana Cost: ").withStyle(ChatFormatting.DARK_GRAY).append(Component.literal(String.valueOf(itemAbility.data.manaCost())).withColor(0xFF00AAAA)));
+                    if (itemAbility.data.cooldown() > 0) tooltipComponents.add(Component.literal("Cooldown: ").withStyle(ChatFormatting.DARK_GRAY).append(Component.literal(String.format("%.1f", (float) itemAbility.data.cooldown() / 20 /* convert ticks to seconds */)).append("s").withColor(0xFF55FF55)));
+                    if (itemCharges != null) tooltipComponents.add(Component.literal("Charges: ").withStyle(ChatFormatting.DARK_GRAY).append(Component.literal(String.valueOf(itemCharges.currentCharges())).withColor(0xFFFFFF55)).append(Component.literal("/").withStyle(ChatFormatting.DARK_GRAY)).append(Component.literal((itemCharges.rechargeTime() / 20) + "s").withColor(0xFF55FF55)));
+                }
+
+                if (itemAbility instanceof Incremental incrementalAbility) {
+                    tooltipComponents.add(Component.literal("(Max "
+                            + incrementalAbility.attributes().stream().map(incremental -> "+"
+                                    + (incrementalAbility.maxMilestone() * incremental.amountPerMilestone())
+                                    + UnshatteredAttributeValues.fromAttribute(incremental.attributeHolder().value()).symbol)
+                            .collect(Collectors.joining(", "))
+                            + ")"
+                    ).withStyle(ChatFormatting.DARK_GRAY));
+                    tooltipComponents.add(Component.empty());
+                    tooltipComponents.add(Component.translatable(incrementalAbility.incrementNameKey()).withStyle(ChatFormatting.GRAY)
+                            .append(Component.literal(": "))
+                            .append(Component.literal(String.valueOf(itemStack.getOrDefault(UnshatteredDataComponents.INCREMENTS_STORED.get(), 0))).withColor(0xFF55FF55))
+                    );
+                }
             }
         }
 
@@ -241,22 +246,21 @@ public class ItemTooltipHandler {
 
         if (itemAttachments != null) {
             itemAttachments.attachments().forEach(((slotType, attachmentItem) -> {
-                ItemAbility attachmentAbility = attachmentItem.typeHolder().getData(UnshatteredDataMaps.ITEM_ABILITY_DATA);
+                if (attachmentItem.getItem() instanceof AbilityItem abilityItem) {
+                    abilityItem.abilities().forEach(ability -> {
+                        tooltipComponents.add(Component.translatable("item_type.unshattered." + slotType.correspondingType.getSerializedName()).withColor(0xFF459BFF)
+                                .append(Component.literal(" "))
+                                .append(attachmentItem == ItemStack.EMPTY
+                                        ? Component.translatable("tooltip.unshattered.none").withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.BOLD)
+                                        : attachmentItem.getItemName().copy().withStyle(ChatFormatting.GREEN)
+                                )
+                        );
 
-                tooltipComponents.add(Component.translatable("item_type.unshattered." + slotType.correspondingType.getSerializedName()).withColor(0xFF459BFF)
-                        .append(Component.literal(" "))
-                        .append(attachmentItem == ItemStack.EMPTY
-                                ? Component.translatable("tooltip.unshattered.none").withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.BOLD)
-                                : attachmentItem.getItemName().copy().withStyle(ChatFormatting.GREEN)
-                        )
-                );
-
-                if (attachmentAbility != null) {
-                    addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + attachmentAbility.abilityIdentifier().getPath()).getString(), 0xFFAAAAAA, player));
+                        addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + ability.get().identifier().getPath()).getString(), 0xFFAAAAAA, player));
+                        tooltipComponents.add(Component.empty());
+                    });
                 }
-                tooltipComponents.add(Component.empty());
-            }
-            ));
+            }));
         }
 
         if (itemFuel != null) {

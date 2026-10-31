@@ -15,4 +15,5 @@ public record AbilityContextKey<T>(Class<T> type) {
     public static final AbilityContextKey<BlockState> BLOCKSTATE = new AbilityContextKey<>(BlockState.class);
     public static final AbilityContextKey<ItemType> ITEM_TYPE = new AbilityContextKey<>(ItemType.class);
     public static final AbilityContextKey<DamageSource> DAMAGE_SOURCE = new AbilityContextKey<>(DamageSource.class);
+    public static final AbilityContextKey<Integer> BROKEN_COUNT = new AbilityContextKey<>(Integer.class);
 }

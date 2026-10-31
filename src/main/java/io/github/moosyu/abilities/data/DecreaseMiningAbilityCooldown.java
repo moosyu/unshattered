@@ -8,6 +8,6 @@ import io.github.moosyu.data.components.ItemAbility;
 
 public class DecreaseMiningAbilityCooldown extends Ability {
     public DecreaseMiningAbilityCooldown(float abilityCooldownDecrease) {
-        super(new ItemAbility(), AbilityTriggerType.PLAYER_USE_MINING_ABILITY, new AbilityResults().add(AbilityResult.COOLDOWN_DECREASE, abilityCooldownDecrease));
+        super(new ItemAbility(), AbilityTriggerType.PLAYER_USE_MINING_ABILITY, new AbilityResults().add(AbilityResult.MODIFY_COOLDOWN_AMOUNT, abilityCooldownDecrease));
     }
 }
