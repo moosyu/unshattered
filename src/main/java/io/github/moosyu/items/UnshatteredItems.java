@@ -1,26 +1,22 @@
 package io.github.moosyu.items;
 
 import com.google.common.collect.ImmutableSet;
+import io.github.moosyu.abilities.UnshatteredAbilities;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.components.ItemCharges;
-import io.github.moosyu.data.regions.UnshatteredRegions;
 import io.github.moosyu.items.armours.SkeletonHat;
 import io.github.moosyu.items.attachments.*;
 import io.github.moosyu.items.attachments.hooks.CommonHook;
-import io.github.moosyu.items.attachments.sinkers.PrismarineSinker;
 import io.github.moosyu.items.talismans.*;
 import io.github.moosyu.items.tools.UnshatteredMiningToolBase;
-import io.github.moosyu.items.tools.axes.PromisingAxe;
-import io.github.moosyu.items.tools.axes.RegionLockedFortuneAxe;
+import io.github.moosyu.items.tools.axes.PlainsLockedFortuneAxe;
 import io.github.moosyu.items.tools.axes.UnshatteredAxeTool;
 import io.github.moosyu.items.tools.drills.DrillItem;
-import io.github.moosyu.items.tools.drills.MithrilDrillSXR226;
-import io.github.moosyu.items.tools.drills.MithrilDrillSXR326;
 import io.github.moosyu.items.tools.pickaxes.*;
-import io.github.moosyu.items.tools.rods.UnshatteredRod;
+import io.github.moosyu.items.tools.rods.UnshatteredLavaRod;
+import io.github.moosyu.items.tools.rods.UnshatteredWaterRod;
 import io.github.moosyu.items.weapons.axes.AxeWeapon;
-import io.github.moosyu.items.weapons.cleavers.*;
 import io.github.moosyu.items.weapons.daggers.DaggerItem;
 import io.github.moosyu.items.weapons.daggers.EmeraldDagger;
 import io.github.moosyu.items.weapons.shortbows.ArtisanalShortbow;
@@ -53,20 +49,16 @@ public class UnshatteredItems {
             )
     ));
 
-    public static final DeferredItem<RegionLockedFortuneAxe> TREECAPITATOR = ITEMS.registerItem("treecapitator", props -> new RegionLockedFortuneAxe(props,
+    public static final DeferredItem<PlainsLockedFortuneAxe> TREECAPITATOR = ITEMS.registerItem("treecapitator", props -> new PlainsLockedFortuneAxe(props,
             50,
             5,
-            12,
-            UnshatteredRegions.PLAINS_REGION,
-            UnshatteredUtils.getUnshatteredIdentifier("treecapitator_park_enthusiast")
+            UnshatteredAbilities.TREECAPITATOR_PARK_ENTHUSIAST
     ));
 
-    public static final DeferredItem<RegionLockedFortuneAxe> SPRUCE_AXE = ITEMS.registerItem("spruce_axe", props -> new RegionLockedFortuneAxe(props,
+    public static final DeferredItem<PlainsLockedFortuneAxe> SPRUCE_AXE = ITEMS.registerItem("spruce_axe", props -> new PlainsLockedFortuneAxe(props,
             25,
             2,
-            6,
-            UnshatteredRegions.PLAINS_REGION,
-            UnshatteredUtils.getUnshatteredIdentifier("spruce_axe_park_enthusiast")
+            UnshatteredAbilities.SPRUCE_AXE_PARK_ENTHUSIAST
     ));
 
     public static final DeferredItem<UnshatteredAxeTool> SERIOUSLY_DAMAGED_AXE = ITEMS.registerItem("seriously_damaged_axe", props -> new UnshatteredAxeTool(props
@@ -247,7 +239,7 @@ public class UnshatteredItems {
             .stacksTo(1)
     ));
 
-    public static final DeferredItem<UnshatteredRod> CHALLENGING_ROD = ITEMS.registerItem("challenging_rod", props -> new UnshatteredRod(props
+    public static final DeferredItem<UnshatteredWaterRod> CHALLENGING_ROD = ITEMS.registerItem("challenging_rod", props -> new UnshatteredWaterRod(props
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("challenging_rod_damage"), 8, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("challenging_rod_strength"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
@@ -257,7 +249,7 @@ public class UnshatteredItems {
             )
     ));
 
-    public static final DeferredItem<UnshatteredRod> FISHING_ROD = ITEMS.registerItem("fishing_rod", props -> new UnshatteredRod(props
+    public static final DeferredItem<UnshatteredWaterRod> FISHING_ROD = ITEMS.registerItem("fishing_rod", props -> new UnshatteredWaterRod(props
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("fishing_rod_damage"), 10, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("fishing_rod_strength"), 10, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
@@ -347,7 +339,14 @@ public class UnshatteredItems {
             )
     ));
 
-    public static final DeferredItem<Item> UNDEAD_SWORD = ITEMS.registerItem("undead_sword", UndeadSword::new);
+    public static final DeferredItem<Item> UNDEAD_SWORD = ITEMS.registerItem("undead_sword", props -> new BaseAbilityItem(
+            props.attributes(ItemAttributeModifiers.builder()
+                    .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("undead_sword_damage"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(Attributes.ATTACK_SPEED, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("undead_sword_attack_speed"), -2.4f, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .build()
+            ),
+            UnshatteredAbilities.MINDBLOWING)
+    );
 
     public static final DeferredItem<ZombieSwordBase> ZOMBIE_SWORD = ITEMS.registerItem("zombie_sword",
             props -> new ZombieSwordBase(props.component(UnshatteredDataComponents.CHARGES.get(), new ItemCharges(4, 300)),
@@ -355,30 +354,28 @@ public class UnshatteredItems {
                     28,
                     12,
                     20,
-                    40,
-                    24,
-                    10
+                    UnshatteredAbilities.ZOMBIE_SWORD_INSTANT_HEAL
             )
     );
 
     public static final DeferredItem<Item> BROKEN_MITHRIL_PICKAXE = ITEMS.registerItem("broken_mithril_pickaxe",
-            props -> new MithriPickaxeBase(props, 13, 2, "broken_mithril_pickaxe", 20)
+            props -> new MithriPickaxeBase(props, 13, 2, "broken_mithril_pickaxe", UnshatteredAbilities.BROKEN_MITHRIL_PICKAXE_MITHRIL_MINER)
     );
 
     public static final DeferredItem<Item> BANDAGED_MITHRIL_PICKAXE = ITEMS.registerItem("bandaged_mithril_pickaxe",
-            props -> new MithriPickaxeBase(props, 15, 4, "bandaged_mithril_pickaxe", 25)
+            props -> new MithriPickaxeBase(props, 15, 4, "bandaged_mithril_pickaxe", UnshatteredAbilities.BANDAGED_MITHRIL_PICKAXE_MITHRIL_MINER)
     );
 
     public static final DeferredItem<Item> MITHRIL_PICKAXE = ITEMS.registerItem("mithril_pickaxe",
-            props -> new MithriPickaxeBase(props, 17, 7, "mithril_pickaxe", 30)
+            props -> new MithriPickaxeBase(props, 17, 7, "mithril_pickaxe", UnshatteredAbilities.MITHRIL_PICKAXE_MITHRIL_MINER)
     );
 
     public static final DeferredItem<Item> RUSTED_TITANIUM_PICKAXE = ITEMS.registerItem("rusted_titanium_pickaxe",
-            props -> new TitaniumPickaxeBase(props, "rusted_titanium_pickaxe", 15, 15)
+            props -> new TitaniumPickaxeBase(props, "rusted_titanium_pickaxe", 15, UnshatteredAbilities.RUSTED_TITANIUM_PICKAXE_TITANIUM_FANATIC)
     );
 
     public static final DeferredItem<Item> TITANIUM_PICKAXE = ITEMS.registerItem("titanium_pickaxe",
-            props -> new TitaniumPickaxeBase(props, "titanium_pickaxe", 20, 20)
+            props -> new TitaniumPickaxeBase(props, "titanium_pickaxe", 20,  UnshatteredAbilities.TITANIUM_PICKAXE_TITANIUM_FANATIC)
     );
 
     public static final DeferredItem<Item> LAPIS_PICKAXE = ITEMS.registerItem("lapis_pickaxe",
@@ -420,9 +417,7 @@ public class UnshatteredItems {
                     35,
                     15,
                     25,
-                    50,
-                    30,
-                    10
+                    UnshatteredAbilities.ORNATE_ZOMBIE_SWORD_INSTANT_HEAL
             )
     );
 
@@ -432,18 +427,94 @@ public class UnshatteredItems {
                     42,
                     20,
                     30,
-                    60,
-                    36,
-                    10
+                    UnshatteredAbilities.FLORID_ZOMBIE_SWORD_INSTANT_HEAL
             )
     );
 
-    public static final DeferredItem<Item> RUSTY_CLEAVER = ITEMS.registerItem("rusty_cleaver", RustyCleaver::new);
-    public static final DeferredItem<Item> GOLDEN_CLEAVER = ITEMS.registerItem("golden_cleaver", GoldenCleaver::new);
-    public static final DeferredItem<Item> SUPER_CLEAVER = ITEMS.registerItem("super_cleaver", SuperCleaver::new);
-    public static final DeferredItem<Item> HYPER_CLEAVER = ITEMS.registerItem("hyper_cleaver", HyperCleaver::new);
-    public static final DeferredItem<Item> GIANT_CLEAVER = ITEMS.registerItem("giant_cleaver", GiantCleaver::new);
-    public static final DeferredItem<BatTalismanBase> BAT_TALISMAN = ITEMS.registerItem("bat_talisman", props -> new BatTalismanBase(props, 0.05f));
+    public static final DeferredItem<Item> RUSTY_CLEAVER = ITEMS.registerItem("rusty_cleaver", props -> new BaseAbilityItem(
+            props.attributes(ItemAttributeModifiers.builder()
+                    .add(
+                            UnshatteredAttributeValues.DAMAGE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("rusty_cleaver_damage"), 4, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).add(
+                            Attributes.ATTACK_SPEED,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("rusty_cleaver_sword_attack_speed"), -3.0f, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).build()
+            ),
+            UnshatteredAbilities.RUSTY_CLEAVER_CLEAVE
+    ));
+    public static final DeferredItem<Item> GOLDEN_CLEAVER = ITEMS.registerItem("golden_cleaver", props -> new BaseAbilityItem(
+            props.attributes(ItemAttributeModifiers.builder()
+                    .add(UnshatteredAttributeValues.DAMAGE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("golden_cleaver_damage"), 7, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).add(UnshatteredAttributeValues.STRENGTH.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("golden_cleaver_strength"), 3, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).add(Attributes.ATTACK_SPEED,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("golden_cleaver_sword_attack_speed"), -3.0f, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).build()
+            ),
+            UnshatteredAbilities.GOLDEN_CLEAVER_CLEAVE
+    ));
+    public static final DeferredItem<Item> SUPER_CLEAVER = ITEMS.registerItem("super_cleaver", props -> new BaseAbilityItem(
+            props.attributes(ItemAttributeModifiers.builder()
+                    .add(UnshatteredAttributeValues.DAMAGE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("super_cleaver_damage"), 8, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).add(UnshatteredAttributeValues.STRENGTH.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("super_cleaver_strength"), 9, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).add(UnshatteredAttributeValues.CRITICAL_DAMAGE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("super_cleaver_crit_damage"), 5, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).add(Attributes.ATTACK_SPEED,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("super_cleaver_sword_attack_speed"), -3.0f, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).build()
+            ),
+            UnshatteredAbilities.SUPER_CLEAVER_CLEAVE
+    ));
+    public static final DeferredItem<Item> HYPER_CLEAVER = ITEMS.registerItem("hyper_cleaver", props -> new BaseAbilityItem(
+            props.attributes(ItemAttributeModifiers.builder()
+                    .add(UnshatteredAttributeValues.DAMAGE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("hyper_cleaver_damage"), 15, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).add(UnshatteredAttributeValues.STRENGTH.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("hyper_cleaver_strength"), 19, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).add(UnshatteredAttributeValues.CRITICAL_DAMAGE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("hyper_cleaver_crit_damage"), 8, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).add(Attributes.ATTACK_SPEED,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("hyper_cleaver_sword_attack_speed"), -3.0f, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).build()
+            ),
+            UnshatteredAbilities.HYPER_CLEAVER_CLEAVE
+    ));
+    public static final DeferredItem<Item> GIANT_CLEAVER = ITEMS.registerItem("giant_cleaver", props -> new BaseAbilityItem(
+            props.attributes(ItemAttributeModifiers.builder()
+                    .add(UnshatteredAttributeValues.DAMAGE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("giant_cleaver_damage"), 41, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).add(UnshatteredAttributeValues.STRENGTH.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("giant_cleaver_strength"), 34, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).add(UnshatteredAttributeValues.CRITICAL_DAMAGE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("giant_cleaver_crit_damage"), 16, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).add(Attributes.ATTACK_SPEED,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("florid_zombie_sword_attack_speed"), -3.0f, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).build()
+            ),
+            UnshatteredAbilities.GIANT_CLEAVER_CLEAVE
+    ));
+    public static final DeferredItem<BatTalismanBase> BAT_TALISMAN = ITEMS.registerItem("bat_talisman", props -> new BatTalismanBase(props, UnshatteredAbilities.BAT_TALISMAN_LIFESTEAL));
 
     public static final DeferredItem<DaggerItem> IRON_DAGGER = ITEMS.registerItem("iron_dagger", props -> new DaggerItem(props
             .attributes(ItemAttributeModifiers.builder()
@@ -456,7 +527,7 @@ public class UnshatteredItems {
 
     public static final DeferredItem<DaggerItem> EMERALD_DAGGER = ITEMS.registerItem("emerald_dagger", EmeraldDagger::new);
 
-    public static final DeferredItem<Item> COINS_TALISMAN = ITEMS.registerItem("coins_talisman", CoinTalisman::new);
+    public static final DeferredItem<Item> COINS_TALISMAN = ITEMS.registerItem("coins_talisman", props -> new BaseAbilityItem(props, UnshatteredAbilities.ACCRUAL));
 
     public static final DeferredItem<Item> GLOW_SQUID_BOOTS = createSimpleArmourPiece("glow_squid_boots",
             UnshatteredArmourMaterials.GLOW_SQUID_BOOTS_MATERIAL,
@@ -561,33 +632,79 @@ public class UnshatteredItems {
 
     public static final DeferredItem<EnchantedItem> ENCHANTED_TITANIUM = ITEMS.registerItem("enchanted_titanium", EnchantedItem::new);
 
-    public static final DeferredItem<Item> RAINBOW_YARN_TALISMAN = ITEMS.registerItem("rainbow_yarn_talisman", RainbowYarnTalisman::new);
+    public static final DeferredItem<Item> RAINBOW_YARN_TALISMAN = ITEMS.registerItem("rainbow_yarn_talisman", props -> new BaseAbilityItem(props, UnshatteredAbilities.WOOLEN_BARRIER));
 
-    public static final DeferredItem<Item> DWARF_TURTLE_SHELL = ITEMS.registerItem("dwarf_turtle_shell", DwarfTurtleTalisman::new);
+    public static final DeferredItem<Item> DWARF_TURTLE_SHELL = ITEMS.registerItem("dwarf_turtle_shell", props -> new BaseAbilityItem(props, UnshatteredAbilities.STABILITY));
 
-    public static final DeferredItem<Item> PIGGY_BANK_TALISMAN = ITEMS.registerItem("piggy_bank", PiggyBankTalisman::new);
+    public static final DeferredItem<Item> PIGGY_BANK_TALISMAN = ITEMS.registerItem("piggy_bank", props -> new BaseAbilityItem(props, UnshatteredAbilities.SAVING_GRACE));
 
-    public static final DeferredItem<Item> HONEYCOMB_RING = ITEMS.registerItem("honeycomb_ring", HoneycombRing::new);
+    public static final DeferredItem<Item> HONEYCOMB_RING = ITEMS.registerItem("honeycomb_ring", props -> new BaseAbilityItem(props, UnshatteredAbilities.APIAN_AEGIS));
 
-    public static final DeferredItem<Item> HASTE_RING = ITEMS.registerItem("haste_ring", HasteRing::new);
+    public static final DeferredItem<Item> HASTE_RING = ITEMS.registerItem("haste_ring", props -> new BaseAbilityItem(props, UnshatteredAbilities.HEAVY_STRIKE));
 
-    public static final DeferredItem<Item> BLOOD_CHALICE = ITEMS.registerItem("blood_chalice", BloodChalice::new);
+    public static final DeferredItem<Item> BLOOD_CHALICE = ITEMS.registerItem("blood_chalice", props -> new BaseAbilityItem(props, UnshatteredAbilities.PAIN_TO_POWER));
 
-    public static final DeferredItem<Item> INFINITE_QUIVER = ITEMS.registerItem("infinite_quiver", InfiniteQuiver::new);
+    public static final DeferredItem<Item> INFINITE_QUIVER = ITEMS.registerItem("infinite_quiver", props -> new BaseAbilityItem(props, UnshatteredAbilities.BOTTOMLESS));
 
     public static final DeferredItem<Item> ARTISANAL_SHORTBOW = ITEMS.registerItem("artisanal_shortbow", ArtisanalShortbow::new);
 
     public static final DeferredItem<Item> ZOMBIE_PICKAXE = ITEMS.registerItem("zombie_pickaxe", ZombiePickaxe::new);
 
-    public static final DeferredItem<Item> PROMISING_PICKAXE = ITEMS.registerItem("promising_pickaxe", PromisingPickaxe::new);
+    public static final DeferredItem<Item> PROMISING_PICKAXE = ITEMS.registerItem("promising_pickaxe", props -> new BaseAbilityItem(props.attributes(ItemAttributeModifiers.builder()
+                    .add(UnshatteredAttributeValues.DAMAGE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("promising_pickaxe_damage"), 2, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("promising_pickaxe_mining_speed"), 3, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).add(UnshatteredAttributeValues.BREAKING_POWER.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("promising_pickaxe_breaking_power"), 3, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).add(Attributes.ATTACK_SPEED,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("promising_pickaxe_attack_speed"), -2.8, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).build()
+            ).component(UnshatteredDataComponents.INCREMENTS_STORED.get(), 0),
+            UnshatteredAbilities.PROMISING_PICKAXE_INCREMENTAL)
+    );
 
-    public static final DeferredItem<Item> PROMISING_AXE = ITEMS.registerItem("promising_axe", PromisingAxe::new);
+    public static final DeferredItem<Item> PROMISING_AXE = ITEMS.registerItem("promising_axe", props -> new BaseAbilityItem(props.attributes(ItemAttributeModifiers.builder()
+                    .add(UnshatteredAttributeValues.DAMAGE.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("promising_axe_damage"), 2, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).add(UnshatteredAttributeValues.SWEEP.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("promising_axe_sweep"), 1, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).add(UnshatteredAttributeValues.BREAKING_POWER.holder,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("promising_axe_breaking_power"), 2, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).add(Attributes.ATTACK_SPEED,
+                            new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("promising_axe_attack_speed"), -3, AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    ).build()
+            ).component(UnshatteredDataComponents.INCREMENTS_STORED.get(), 0),
+            UnshatteredAbilities.PROMISING_AXE_INCREMENTAL)
+    );
 
-    public static final DeferredItem<Item> FIRE_TALISMAN = ITEMS.registerItem("fire_talisman", FireTalisman::new);
+    public static final DeferredItem<Item> FIRE_TALISMAN = ITEMS.registerItem("fire_talisman", props -> new BaseAbilityItem(props, UnshatteredAbilities.BLAZEBORN));
 
-    public static final DeferredItem<Item> MITHRIL_DRILL_SX_R226 = ITEMS.registerItem("mithril_drill_sx_r226", MithrilDrillSXR226::new);
+    public static final DeferredItem<Item> MITHRIL_DRILL_SX_R226 = ITEMS.registerItem("mithril_drill_sx_r226", props -> new DrillItem(props,
+            7,
+            64,
+            13,
+            5,
+            "mithril_drill_sx_r226",
+            20)
+    );
 
-    public static final DeferredItem<Item> MITHRIL_DRILL_SX_R326 = ITEMS.registerItem("mithril_drill_sx_r326", MithrilDrillSXR326::new);
+    public static final DeferredItem<Item> MITHRIL_DRILL_SX_R326 = ITEMS.registerItem("mithril_drill_sx_r326", props -> new DrillItem(props,
+            10,
+            80,
+            15,
+            6,
+            "mithril_drill_sx_r326",
+            40)
+    );
 
     public static final DeferredItem<Item> TITANIUM_DRILL_DR_X355 = ITEMS.registerItem("titanium_drill_dr_x355", props ->
             new DrillItem(props,
@@ -595,7 +712,8 @@ public class UnshatteredItems {
                     90,
                     18,
                     7,
-                    "titanium_drill_dr_x355"
+                    "titanium_drill_dr_x355",
+                    0
             )
     );
 
@@ -605,7 +723,8 @@ public class UnshatteredItems {
                     110,
                     23,
                     8,
-                    "titanium_drill_dr_x455"
+                    "titanium_drill_dr_x455",
+                    0
             )
     );
 
@@ -615,7 +734,8 @@ public class UnshatteredItems {
                     140,
                     30,
                     9,
-                    "titanium_drill_dr_x555"
+                    "titanium_drill_dr_x555",
+                    0
             )
     );
 
@@ -625,7 +745,8 @@ public class UnshatteredItems {
                     180,
                     40,
                     9,
-                    "titanium_drill_dr_x655"
+                    "titanium_drill_dr_x655",
+                    0
             )
     );
 
@@ -633,13 +754,13 @@ public class UnshatteredItems {
 
     public static final DeferredItem<EnchantedItem> ENCHANTED_BLAZE_ROD = ITEMS.registerItem("enchanted_blaze_rod", EnchantedItem::new);
 
-    public static final DeferredItem<Item> MITHRIL_INFUSED_FUEL_TANK = ITEMS.registerItem("mithril_infused_fuel_tank", props -> new FuelAttachmentItem(props,10000, -0.2f));
+    public static final DeferredItem<Item> MITHRIL_INFUSED_FUEL_TANK = ITEMS.registerItem("mithril_infused_fuel_tank", props -> new FuelAttachmentItem(props,10000, UnshatteredAbilities.MITHRIL_INFUSED_FUEL_TANK_DECREASE_MINING_ABILITY_COOLDOWN));
 
     public static final DeferredItem<EnchantedItem> ENCHANTED_WOOL = ITEMS.registerItem("enchanted_wool", EnchantedItem::new);
 
-    public static final DeferredItem<Item> MITHRIL_PLATED_DRILL_ENGINE = ITEMS.registerItem("mithril_plated_drill_engine", props -> new DrillEngineAttachment(props,8, 5, "mithril_plated_drill_engine"));
+    public static final DeferredItem<Item> MITHRIL_PLATED_DRILL_ENGINE = ITEMS.registerItem("mithril_plated_drill_engine", props -> new DrillEngineAttachment(props,UnshatteredAbilities.MITHRIL_PLATED_DRILL_ENGINE_UBERCHARGED));
 
-    public static final DeferredItem<Item> FRIED_GOBLIN_EGG = ITEMS.registerItem("fried_goblin_egg", FriedGoblinEggAttachment::new);
+    public static final DeferredItem<FriedGoblinEggAttachment> FRIED_GOBLIN_EGG = ITEMS.registerItem("fried_goblin_egg", props -> new FriedGoblinEggAttachment(props, UnshatteredAbilities.FRUGAL));
 
     public static final DeferredItem<Item> REFINED_MITHRIL = ITEMS.registerItem("refined_mithril", Item::new);
 
@@ -729,7 +850,7 @@ public class UnshatteredItems {
 
     public static final DeferredItem<Item> BEJEWELED_HANDLE = ITEMS.registerItem("bejeweled_handle", Item::new);
 
-    public static final DeferredItem<BatTalismanBase> BAT_ARTIFACT = ITEMS.registerItem("bat_artifact", props -> new BatTalismanBase(props, 0.15f));
+    public static final DeferredItem<BatTalismanBase> BAT_ARTIFACT = ITEMS.registerItem("bat_artifact", props -> new BatTalismanBase(props, UnshatteredAbilities.BAT_ARTIFACT_LIFESTEAL));
 
     public static final DeferredItem<Item> GREEN_CANDY = ITEMS.registerItem("green_candy", Item::new);
 
@@ -925,7 +1046,7 @@ public class UnshatteredItems {
             )
     ));
 
-    public static final DeferredItem<UnshatteredRod> STARTER_MAGMA_ROD = ITEMS.registerItem("starter_magma_rod", props -> new UnshatteredRod(props
+    public static final DeferredItem<UnshatteredLavaRod> STARTER_MAGMA_ROD = ITEMS.registerItem("starter_magma_rod", props -> new UnshatteredLavaRod(props
             .attributes(ItemAttributeModifiers.builder()
                     .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("starter_magma_rod_damage"), 25, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("starter_magma_rod_strength"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
@@ -936,14 +1057,15 @@ public class UnshatteredItems {
     ));
 
     public static final DeferredItem<CommonHook> COMMON_HOOK = ITEMS.registerItem("common_hook", CommonHook::new);
-    public static final DeferredItem<LineAttachment> SPEEDY_LINE = ITEMS.registerItem("speedy_line", props -> new LineAttachment(props,
-            new LineAttachment.LineAttributeGroup(UnshatteredAttributeValues.FISHING_SPEED.holder,
-                    new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("speedy_line_fishing_speed"),
-                            10,
-                            AttributeModifier.Operation.ADD_VALUE)
-            )
+
+    public static final DeferredItem<Item> SPEEDY_LINE = ITEMS.registerItem("speedy_line", props -> new BaseAbilityItem(props,
+            UnshatteredAbilities.SPEEDY_LINE_BEACH_BOY
     ));
-    public static final DeferredItem<PrismarineSinker> PRISMARINE_SINKER = ITEMS.registerItem("prismarine_sinker", PrismarineSinker::new);
+
+    public static final DeferredItem<Item> PRISMARINE_SINKER = ITEMS.registerItem("prismarine_sinker", props -> new BaseAbilityItem(props,
+            UnshatteredAbilities.MOSKSTRAUMEN
+    ));
+
     public static final DeferredItem<BlockItem> TACKLEBOX = ITEMS.registerSimpleBlockItem(TACKLEBOX_BLOCK.getDelegate());
 
     public static final DeferredItem<EnchantedItem> ENCHANTED_RAW_MUTTON = ITEMS.registerItem("enchanted_raw_mutton", EnchantedItem::new);

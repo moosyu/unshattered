@@ -104,7 +104,9 @@ public class ReforgeAnvilMenu extends ItemCombinerMenu {
                 if (bookEnchants.size() == 1) {
                     Holder<Enchantment> bookEnchant = bookEnchants.keySet().iterator().next();
 
-                    if (!item.supportsEnchantment(bookEnchant)) return;
+                    if (!item.supportsEnchantment(bookEnchant)) {
+                        return;
+                    }
 
                     ItemEnchantments itemEnchants = EnchantmentHelper.getEnchantmentsForCrafting(item);
                     int bookLevel = bookEnchants.getLevel(bookEnchant);

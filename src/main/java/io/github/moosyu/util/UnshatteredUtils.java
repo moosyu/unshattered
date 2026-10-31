@@ -3,7 +3,6 @@ package io.github.moosyu.util;
 import io.github.moosyu.Unshattered;
 import io.github.moosyu.abilities.AbilityContext;
 import io.github.moosyu.abilities.AbilityTriggerType;
-import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;

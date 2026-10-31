@@ -29,7 +29,9 @@ public class SelectedItemLayer implements GuiLayer {
     public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
-        if (player == null || !player.level().isClientSide() || minecraft.options.hideGui) return;
+        if (player == null || !player.level().isClientSide() || minecraft.options.hideGui) {
+            return;
+        }
 
         ItemStack currentItemStack = player.getMainHandItem();
         Set<DataComponentType<?>> ignoredComponents = Set.of(UnshatteredDataComponents.CHARGES.get());

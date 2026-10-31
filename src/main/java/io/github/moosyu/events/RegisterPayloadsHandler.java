@@ -168,15 +168,11 @@ public class RegisterPayloadsHandler {
         registrar.playToServer(PlayerStartedSneakingPacket.TYPE,
                 PlayerStartedSneakingPacket.STREAM_CODEC,
                 (_, context) -> context.enqueueWork(() -> {
-                    PlayerAbilityEffectsAttachment abilities = context.player().getData(UnshatteredAttachments.PLAYER_ABILITIES);
-                    AbilityContext abilityContext = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) context.player());
-
-                    for (ItemStack item : abilities.getStoredNonOngoingItems()) {
-                        if (item.getItem() instanceof PassiveAbilityItem passiveAbilityItem && passiveAbilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_STARTED_SNEAKING) && passiveAbilityItem.abilityConditionsMet(abilityContext)) {
-                            passiveAbilityItem.onAbilityTriggered(abilityContext);
-                            passiveAbilityItem.onAbilityFinished(abilityContext);
-                        }
+                    if (!(context.player() instanceof ServerPlayer player)) {
+                        return;
                     }
+
+                    AbilityScope.fire(player, AbilityTriggerType.PLAYER_STARTED_SNEAKING, new AbilityContext().add(AbilityContextKey.PLAYER, player));
                 })
         );
 

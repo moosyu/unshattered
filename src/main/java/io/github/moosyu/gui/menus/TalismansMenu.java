@@ -101,28 +101,22 @@ public class TalismansMenu extends AbstractContainerMenu {
     public void broadcastChanges() {
         super.broadcastChanges();
 
-        if (player.level().isClientSide() || !(player instanceof ServerPlayer serverPlayer)) return;
+        if (player.level().isClientSide() || !(player instanceof ServerPlayer serverPlayer)) {
+            return;
+        }
 
+        boolean changed = false;
         for (int i = 0; i < container.getContainerSize(); i++) {
             ItemStack current = container.getItem(i);
-            ItemStack previous = lastKnownStacks[i];
 
-            if (!ItemStack.isSameItemSameComponents(previous, current)) {
-                // at this point talismans only need the player context for being added and removed
-                AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, serverPlayer);
-
-                if (!current.isEmpty() && current.getItem() instanceof AbilityItem) {
-                    player.getData(UnshatteredAttachments.PLAYER_ABILITIES).addPassiveItem(current, context);
-                    System.out.println("stored passive item added");
-                }
-
-                if (!previous.isEmpty() && previous.getItem() instanceof AbilityItem) {
-                    player.getData(UnshatteredAttachments.PLAYER_ABILITIES).removePassiveItem(previous, context);
-                    System.out.println("stored passive item removed");
-                }
-
+            if (!ItemStack.isSameItemSameComponents(lastKnownStacks[i], current)) {
                 lastKnownStacks[i] = current.copy();
+                changed = true;
             }
+        }
+
+        if (changed) {
+            serverPlayer.getData(UnshatteredAttachments.PLAYER_ABILITIES).refresh(serverPlayer);
         }
     }
 

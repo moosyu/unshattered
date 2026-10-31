@@ -1,5 +1,6 @@
 package io.github.moosyu;
 
+import io.github.moosyu.abilities.UnshatteredAbilities;
 import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.data.recipes.UnshatteredRecipes;
 import org.slf4j.Logger;
@@ -32,6 +33,7 @@ public class Unshattered {
         CREATIVE_MODE_TABS.register(modEventBus);
         ATTACHMENT_TYPES.register(modEventBus);
         UnshatteredAttributes.registerAll();
+        UnshatteredAbilities.ABILITIES.register(modEventBus);
         ATTRIBUTES.register(modEventBus);
         ITEMS.register(modEventBus);
         DATA_COMPONENTS.register(modEventBus);

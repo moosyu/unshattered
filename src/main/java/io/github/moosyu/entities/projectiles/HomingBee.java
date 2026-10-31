@@ -57,7 +57,9 @@ public class HomingBee extends Projectile {
                 return;
             }
             steerTowardsTarget();
-            if (isRemoved()) return;
+            if (isRemoved()) {
+                return;
+            }
         }
 
 
@@ -65,7 +67,10 @@ public class HomingBee extends Projectile {
         if (hit.getType() != HitResult.Type.MISS && isAlive()) {
             hitTargetOrDeflectSelf(hit);
         }
-        if (isRemoved()) return;
+
+        if (isRemoved()) {
+            return;
+        }
 
         setPos(position().add(getDeltaMovement()));
         updateRotation();
@@ -106,7 +111,9 @@ public class HomingBee extends Projectile {
     @Override
     protected void updateRotation() {
         Vec3 movement = getDeltaMovement();
-        if (movement.lengthSqr() < 1.0E-7) return;
+        if (movement.lengthSqr() < 1.0E-7) {
+            return;
+        }
 
         setYRot(Mth.rotLerp(0.5f, getYRot(), (float) (Mth.atan2(-movement.x, movement.z) * Mth.RAD_TO_DEG)));
         setXRot(Mth.rotLerp(0.5f, getXRot(), (float) (-Mth.atan2(movement.y, movement.horizontalDistance()) * Mth.RAD_TO_DEG)));

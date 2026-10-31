@@ -1,12 +1,8 @@
 package io.github.moosyu.items.tools.axes;
 
 import io.github.moosyu.abilities.AbilityTriggerType;
-import io.github.moosyu.abilities.IncrementalAbilityItem;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.items.ItemType;
-import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;

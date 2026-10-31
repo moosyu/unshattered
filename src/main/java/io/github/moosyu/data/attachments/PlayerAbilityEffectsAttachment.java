@@ -14,13 +14,21 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public final class PlayerAbilityEffectsAttachment {
-    private record ActiveEffectEntry(long expiryTime, @Nullable Consumer<AbilityContext> onExpire) {}
-    private final Map<Identifier, ActiveEffectEntry> activeEffects = new HashMap<>();
-    // ability -> whether its ability is currently active, methods written in a way that player should only ever have one of the exact same ability items
-    private final Map<PassiveAbilityItem, Boolean> storedPassiveOngoingItems = new HashMap<>();
-    private final Set<ItemStack> storedNonOngoingItems = Collections.newSetFromMap(new IdentityHashMap<>());
+    public record ActiveEffectEntry(long expiryTime, @Nullable Consumer<AbilityContext> onExpire) {}
+
+    public final Map<Identifier, ActiveEffectEntry> activeEffects = new HashMap<>();
+
+    public Map<Ability, ItemStack> abilityItemStacks = Map.of();
+    public Map<AbilityTriggerType, List<Ability>> triggerTypeAbilities = Map.of();
+    private List<Ability> tickingAbilities = List.of();
+    private final Set<Ability> activeAbilities = Collections.newSetFromMap(new IdentityHashMap<>());
+
+    public void addActiveEffect(Ability ability, long abilityLength, Level level) {
+        addActiveEffect(ability.identifier(), abilityLength, level, ability::onFinish);
+    }
 
     /**
      * @param abilityIdentifier identifier for the ability
@@ -33,9 +41,7 @@ public final class PlayerAbilityEffectsAttachment {
     }
 
     /**
-     * removes an active effect on the player (for when the effect is finished), removing it from active effects and running its onExpire consumer
-     * @param abilityIdentifier identifier for the effect
-     * @param player player having the effect removed
+     * cancel an active effect early (expatriation code runs)
      */
     public void removeActiveEffect(Identifier abilityIdentifier, ServerPlayer player) {
         ActiveEffectEntry entry = activeEffects.remove(abilityIdentifier);
@@ -49,128 +55,100 @@ public final class PlayerAbilityEffectsAttachment {
     }
 
     /**
-     * checks whether player has an effect active
+     * @return whether an effects expiry time has passed, if it's 0 it will return false as if expiry time is 0 the effect should be removed manually
      */
-    public boolean hasActiveEffect(Identifier abilityIdentifier) {
-        return activeEffects.containsKey(abilityIdentifier);
-    }
-
-    /**
-     * @return whether an active effect has been finished
-     */
-    public boolean activeEffectFinished(Identifier abilityIdentifier, Level level) {
-        ActiveEffectEntry entry = activeEffects.get(abilityIdentifier);
-        return entry != null && isFinished(entry, level);
-    }
-
     private static boolean isFinished(ActiveEffectEntry entry, Level level) {
-        // if expiry time is 0 effect should be removed manually
         return entry.expiryTime() != 0 && level.getGameTime() > entry.expiryTime();
     }
 
-    /**
-     * @return the absolute game time at which the effect expires
-     * @throws IllegalArgumentException if there is no effect for that identifier
-     */
     public long expiryTimeTicks(Identifier abilityIdentifier) {
         ActiveEffectEntry entry = activeEffects.get(abilityIdentifier);
         if (entry == null) {
             throw new IllegalArgumentException("no effect for " + abilityIdentifier);
         }
-
         return entry.expiryTime();
     }
 
     /**
-     * @return ticks remaining until the effect expires (never negative)
-     * @throws IllegalArgumentException if there is no effect for that identifier
+     * rescans everything that can provide abilities (equipment, equipment attachments, talisman bag etc),
+     * finishes abilities that went away and starts ongoing abilities that appeared.
+     * call on login and whenever equipment, attachments or the talisman bag change.
      */
-    public long remainingTicks(Identifier abilityIdentifier, Level level) {
-        return Math.max(0, expiryTimeTicks(abilityIdentifier) - level.getGameTime());
-    }
+    public void refresh(ServerPlayer player) {
+        // needs to be populated with itemstacks from every possible location where ability items could be stored
+        Map<Ability, ItemStack> nextSources = new HashMap<>();
 
-    /**
-     * ongoing passive items are tracked by type and triggered if their conditions are met.
-     * non-ongoing passive items and all incremental items are tracked by itemstack so they can be found later (to add to increments etc)
-     */
-    public void addPassiveItem(ItemStack item, AbilityContext context) {
-        if (item.isEmpty() || !(item.getItem() instanceof AbilityItem abilityItem)) {
-            return;
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            ItemStack itemStack = player.getItemBySlot(slot);
+            if (itemStack.isEmpty()) {
+                continue;
+            }
+
+            ItemAttachments attachments = itemStack.get(UnshatteredDataComponents.ITEM_ATTACHMENTS);
+            if (attachments != null) {
+                attachments.attachments().forEach((_, attachment) -> attemptAddingAbilitySource(nextSources, attachment));
+            }
+
+            attemptAddingAbilitySource(nextSources, itemStack);
         }
 
-        if (abilityItem instanceof PassiveAbilityItem passiveAbilityItem) {
-            if (abilityItem.triggerTypes().contains(AbilityTriggerType.ONGOING)) {
-                addOngoing(passiveAbilityItem, context);
-            } else {
-                storedNonOngoingItems.add(item);
+        player.getData(UnshatteredAttachments.PLAYER_TALISMAN_STORAGE.get()).forEach(itemStack -> {
+            if (UnshatteredUtils.getItemType(itemStack) == ItemType.TALISMAN) {
+                attemptAddingAbilitySource(nextSources, itemStack);
+            }
+        });
+
+        AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, player);
+
+        for (Ability old : abilityItemStacks.keySet()) {
+            if (!nextSources.containsKey(old) && activeAbilities.remove(old)) {
+                old.onFinish(context);
             }
         }
 
-        if (abilityItem instanceof IncrementalAbilityItem) {
-            storedNonOngoingItems.add(item);
-        }
-    }
+        EnumMap<AbilityTriggerType, List<Ability>> nextTriggerTypeAbilities = new EnumMap<>(AbilityTriggerType.class);
+        List<Ability> tickList = new ArrayList<>();
+        for (Ability ability : nextSources.keySet()) {
+            if (ability.isTicking()) {
+                tickList.add(ability);
+            }
 
-    /**
-     * removes an ability item, running onAbilityFinished for passive items that were active/tracked
-     */
-    public void removePassiveItem(ItemStack itemStack, AbilityContext context) {
-        if (!(itemStack.getItem() instanceof AbilityItem abilityItem)) {
-            return;
-        }
-
-        if (abilityItem instanceof PassiveAbilityItem passiveAbilityItem) {
-            if (abilityItem.triggerTypes().contains(AbilityTriggerType.ONGOING)) {
-                if (Boolean.TRUE.equals(storedPassiveOngoingItems.remove(abilityItem))) {
-                    passiveAbilityItem.onAbilityFinished(context);
-                }
-            } else {
-                if (removeTrackedStack(itemStack)) {
-                    passiveAbilityItem.onAbilityFinished(context);
-                }
+            if (ability.trigger != AbilityTriggerType.ONGOING && ability.trigger != AbilityTriggerType.TICKED) {
+                nextTriggerTypeAbilities.computeIfAbsent(ability.trigger, _ -> new ArrayList<>()).add(ability);
             }
         }
 
-        if (abilityItem instanceof IncrementalAbilityItem) {
-            removeTrackedStack(itemStack);
+        nextTriggerTypeAbilities.replaceAll((_, list) -> List.copyOf(list));
+
+        abilityItemStacks = nextSources;
+        triggerTypeAbilities = nextTriggerTypeAbilities;
+        // supposedly i should always be using immutable lists when i can even if im not really modifying it
+        // though that is kind of the vibe we're on with this class right now
+        tickingAbilities = List.copyOf(tickList);
+
+        for (Ability ability : tickList) {
+            if (!(ability.trigger == AbilityTriggerType.TICKED) && !activeAbilities.contains(ability) && ability.conditionsMet(context)) {
+                ability.onTrigger(context);
+                activeAbilities.add(ability);
+            }
         }
     }
 
     /**
-     * read only view of stored non-ongoing items, add/remove through addPassiveItem/removePassiveItem
+     * adds an item to sources if it is in fact an ability item, adding all abilities of that item
      */
-    public Set<ItemStack> getStoredNonOngoingItems() {
-        return Collections.unmodifiableSet(storedNonOngoingItems);
-    }
-
-    private void addOngoing(PassiveAbilityItem item, AbilityContext context) {
-        // already tracked (e.g. login scan plus equipment events), don't trigger twice
-        if (storedPassiveOngoingItems.containsKey(item)) {
+    private static void attemptAddingAbilitySource(Map<Ability, ItemStack> sources, ItemStack itemStack) {
+        if (itemStack.isEmpty() || !(itemStack.getItem() instanceof AbilityItem item)) {
             return;
         }
 
-        boolean active = item.abilityConditionsMet(context);
-        storedPassiveOngoingItems.put(item, active);
-
-        if (active) {
-            item.onAbilityTriggered(context);
+        for (Supplier<? extends Ability> ability : item.abilities()) {
+            sources.putIfAbsent(ability.get(), itemStack);
         }
     }
 
     /**
-     * tries to remove a soldItemStack, as itemstack identities seem to change often it falls back to a comparison
-     * @return true if the soldItemStack was removed successfully
-     */
-    private boolean removeTrackedStack(ItemStack itemStack) {
-        if (storedNonOngoingItems.remove(itemStack)) {
-            return true;
-        }
-
-        return storedNonOngoingItems.removeIf(tracked -> tracked.getItem() == itemStack.getItem());
-    }
-
-    /**
-     * tick player active effects and ensure passive item abilities are still having their conditions met
+     * tick player active effects and ensure ongoing abilities are still having their conditions met
      */
     public void updateEffects(AbilityContext context, Level level) {
         List<Identifier> finished = new ArrayList<>();
@@ -187,70 +165,47 @@ public final class PlayerAbilityEffectsAttachment {
             }
         }
 
-        // DON'T REMOVE THE SNAPSHOT, ConcurrentModificationException's can happen without it
-        for (PassiveAbilityItem item : new ArrayList<>(storedPassiveOngoingItems.keySet())) {
-            Boolean active = storedPassiveOngoingItems.get(item);
-            if (active == null) continue;
+        if (tickingAbilities.isEmpty()) {
+            return;
+        }
 
-            boolean conditionsMet = item.abilityConditionsMet(context);
+        for (Ability ability : tickingAbilities) {
+            if (!abilityItemStacks.containsKey(ability)) {
+                continue;
+            }
 
-            if (item.triggerTypes().contains(AbilityTriggerType.TICKED)) {
+            boolean conditionsMet = ability.conditionsMet(context);
+            boolean wasActive = activeAbilities.contains(ability);
+
+            if (ability.trigger == AbilityTriggerType.TICKED) {
                 if (conditionsMet) {
-                    item.onAbilityTriggered(context);
-                    storedPassiveOngoingItems.put(item, true);
+                    ability.onTrigger(context);
+                    activeAbilities.add(ability);
                 }
-            } else {
-                if (conditionsMet && !active) {
-                    item.onAbilityTriggered(context);
-                    storedPassiveOngoingItems.put(item, true);
-                } else if (!conditionsMet && active) {
-                    item.onAbilityFinished(context);
-                    storedPassiveOngoingItems.put(item, false);
-                }
+            } else if (conditionsMet && !wasActive) {
+                ability.onTrigger(context);
+                activeAbilities.add(ability);
+            } else if (!conditionsMet && wasActive) {
+                ability.onFinish(context);
+                activeAbilities.remove(ability);
             }
         }
     }
 
     /**
-     * apply passive effects on joining, does a full inventory and talisman bag check instead
-     * of checking a codec to make sure nothing terrible occurred in the last session.
+     * apply passive effects on joining, does a full rescan to make sure nothing terrible occurred
      */
     public void applyPassiveEffects(ServerPlayer player) {
-        storedPassiveOngoingItems.clear();
-        storedNonOngoingItems.clear();
-
-        List<ItemStack> itemStacks = new ArrayList<>();
-        AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, player);
-
-        for (EquipmentSlot slot : EquipmentSlot.values()) {
-            ItemStack itemStack = player.getItemBySlot(slot);
-            if (itemStack.isEmpty()) continue;
-
-            ItemAttachments itemAttachments = itemStack.get(UnshatteredDataComponents.ITEM_ATTACHMENTS);
-            if (itemAttachments != null) {
-                itemAttachments.attachments().forEach((_, a) -> {
-                    if (a.getItem() instanceof AbilityItem) addPassiveItem(a, context);
-                });
-            }
-            if (itemStack.getItem() instanceof AbilityItem) itemStacks.add(itemStack);
-        }
-
-        player.getData(UnshatteredAttachments.PLAYER_TALISMAN_STORAGE.get()).forEach(itemStack -> {
-            if (!itemStack.isEmpty()
-                    && itemStack.getItem() instanceof AbilityItem
-                    && UnshatteredUtils.getItemType(itemStack) == ItemType.TALISMAN) {
-                itemStacks.add(itemStack);
-            }
-        });
-
-        for (ItemStack itemStack : itemStacks) {
-            addPassiveItem(itemStack, context);
-        }
+        abilityItemStacks = Map.of();
+        triggerTypeAbilities = Map.of();
+        tickingAbilities = List.of();
+        activeAbilities.clear();
+        refresh(player);
     }
 
     /**
-     * runs onAbilityFinished for active effects and active passive items, clearing the active effects map
-     * but keeping the tracked items (they're rescanned on rejoin via applyPassiveEffects)
+     * runs onFinish for active effects and triggered abilities, clearing the active effects map.
+     * tracked sources are kept (they're rescanned on rejoin during applyPassiveEffects)
      */
     public void forceStopEffects(ServerPlayer player) {
         AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, player);
@@ -263,17 +218,10 @@ public final class PlayerAbilityEffectsAttachment {
             }
         }
 
-        for (PassiveAbilityItem item : new ArrayList<>(storedPassiveOngoingItems.keySet())) {
-            if (Boolean.TRUE.equals(storedPassiveOngoingItems.get(item))) {
-                storedPassiveOngoingItems.put(item, false);
-                item.onAbilityFinished(context);
-            }
+        for (Ability ability : List.copyOf(activeAbilities)) {
+            ability.onFinish(context);
         }
 
-        for (ItemStack itemStack : new ArrayList<>(storedNonOngoingItems)) {
-            if (itemStack.getItem() instanceof PassiveAbilityItem passiveAbilityItem) {
-                passiveAbilityItem.onAbilityFinished(context);
-            }
-        }
+        activeAbilities.clear();
     }
 }

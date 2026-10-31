@@ -54,7 +54,9 @@ public final class RegionAreas {
                 final Vector2i CHUNK_BOTTOM_RIGHT = new Vector2i(CHUNK_X + CHUNK_WIDTH, CHUNK_Z + CHUNK_HEIGHT);
 
                 for (RegionBoundary regionBoundary : regionBoundaries) {
-                    if (regionBoundary.region().getKey() == UnshatteredRegions.DEFAULT_REGION) continue;
+                    if (regionBoundary.region().getKey() == UnshatteredRegions.DEFAULT_REGION) {
+                        continue;
+                    }
                     BoundaryCoordinates boundaryCoordinates = regionBoundary.boundaryCoordinates();
 
                     if (checkRectangleOverlap(

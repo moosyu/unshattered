@@ -25,7 +25,9 @@ public class InfoBarLayer implements GuiLayer {
     public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
-        if (player == null || minecraft.options.hideGui) return;
+        if (player == null || minecraft.options.hideGui) {
+            return;
+        }
 
         int coins = player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get()).coins;
         ResourceKey<Region> regionKey = player.getData(UnshatteredAttachments.PLAYER_REGION.get()).regionKey();

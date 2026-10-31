@@ -87,11 +87,11 @@ public class SackMenu extends AbstractContainerMenu {
                 int space = sackSlotCapacity - updated.getOrDefault(holder, 0);
 
                 for (int i = 0; i < Inventory.INVENTORY_SIZE && space > 0; i++) {
-                    ItemStack stack = player.getInventory().getItem(i);
+                    ItemStack itemStack = player.getInventory().getItem(i);
 
-                    if (stack.is(item)) {
-                        int moved = Math.min(stack.getCount(), space);
-                        stack.shrink(moved);
+                    if (itemStack.is(item)) {
+                        int moved = Math.min(itemStack.getCount(), space);
+                        itemStack.shrink(moved);
                         space -= moved;
                         updated.merge(holder, moved, Integer::sum);
                         changed = true;
@@ -118,11 +118,11 @@ public class SackMenu extends AbstractContainerMenu {
 
         int remaining = stored;
         while (remaining > 0) {
-            ItemStack stack = new ItemStack(item, Math.min(remaining, item.getDefaultMaxStackSize()));
-            int before = stack.getCount();
-            player.getInventory().add(stack);
+            ItemStack itemStack = new ItemStack(item, Math.min(remaining, item.getDefaultMaxStackSize()));
+            int before = itemStack.getCount();
+            player.getInventory().add(itemStack);
 
-            int inserted = before - stack.getCount();
+            int inserted = before - itemStack.getCount();
             if (inserted <= 0) {
                 break;
             }

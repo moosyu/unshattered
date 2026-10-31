@@ -32,7 +32,9 @@ public record DropData(ItemRange itemRange, float dropChance) {
         double fortuneValue;
         RandomSource randomSource = player.getRandom();
 
-        if (fortuneType == null) return rolledAboveOccasional;
+        if (fortuneType == null) {
+            return rolledAboveOccasional;
+        }
 
         ItemStack dropStack = new ItemStack(itemRange().item(), itemRange().getDropAmount(randomSource));
         fortuneValue = player.getAttributeValue(fortuneType.holder);

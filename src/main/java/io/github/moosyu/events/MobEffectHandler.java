@@ -11,7 +11,10 @@ import static io.github.moosyu.Unshattered.MODID;
 public class MobEffectHandler {
     @SubscribeEvent
     public static void onMobEffect(MobEffectEvent.Applicable event) {
-        if (event.getEntity().level().isClientSide()) return;
+        if (event.getEntity().level().isClientSide()) {
+            return;
+        }
+
         event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
     }
 }

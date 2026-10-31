@@ -97,7 +97,9 @@ public class RegisterClientPayloadHandler {
 
                     Minecraft minecraft = Minecraft.getInstance();
                     Entity entity = level.getEntity(data.entityIdentifier());
-                    if (entity == null) return;
+                    if (entity == null) {
+                        return;
+                    }
 
                     minecraft.particleEngine.createTrackingEmitter(entity, ParticleTypes.RAID_OMEN);
                 })

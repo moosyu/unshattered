@@ -64,7 +64,9 @@ public class SackOfSacksMenu extends AbstractContainerMenu {
         super.broadcastChanges();
 
         Player player = playerInventory.player;
-        if (player.level().isClientSide() || !(player instanceof ServerPlayer serverPlayer)) return;
+        if (player.level().isClientSide() || !(player instanceof ServerPlayer)) {
+            return;
+        }
 
         for (int i = 0; i < container.getContainerSize(); i++) {
             ItemStack current = container.getItem(i);

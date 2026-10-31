@@ -1,7 +1,6 @@
 package io.github.moosyu.items.tools;
 
 import io.github.moosyu.abilities.AbilityTriggerType;
-import io.github.moosyu.abilities.PassiveAbilityItem;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import net.minecraft.world.InteractionHand;

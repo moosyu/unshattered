@@ -56,9 +56,9 @@ public record ForgeRecipe(ItemStackTemplate result, List<SizedIngredient> ingred
             }
 
             SizedIngredient base = ingredients.get(index);
-            for (ItemStack stack : inventory.getNonEquipmentItems()) {
-                if (base.ingredient().test(stack)) {
-                    output.applyComponents(stack.getComponentsPatch());
+            for (ItemStack itemStack : inventory.getNonEquipmentItems()) {
+                if (base.ingredient().test(itemStack)) {
+                    output.applyComponents(itemStack.getComponentsPatch());
                     break;
                 }
             }

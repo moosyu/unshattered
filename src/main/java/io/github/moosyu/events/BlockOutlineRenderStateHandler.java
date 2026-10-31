@@ -15,7 +15,9 @@ public class BlockOutlineRenderStateHandler {
     @SubscribeEvent
     public static void onRenderHighlight(ExtractBlockOutlineRenderStateEvent event) {
         Player player = Minecraft.getInstance().player;
-        if (player == null) return;
+        if (player == null) {
+            return;
+        }
 
         if (!player.isCreative()) {
             event.setCanceled(event.getBlockState().getData(UnshatteredDataMaps.BLOCK_BREAK_DATA) == null);

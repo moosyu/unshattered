@@ -34,34 +34,35 @@ public class EntityDeathHandler {
         Entity attacker = source.getEntity();
 
         if (attacker instanceof Player player) {
-            if (player.level().isClientSide()) return;
-
-            PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
-            LivingEntity entity = event.getEntity();
-            AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player).add(AbilityContextKey.TARGET, entity);
-            List<PassiveAbilityItem> relevantPassiveItems = UnshatteredUtils.triggerInstantPassiveAbilities(player, AbilityTriggerType.ENTITY_DEATH, context);
-
-            MobRewardData mobLoot = BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.getType()).getData(UnshatteredDataMaps.COMBATABLE_MOBS_LOOT_DATA);
-            if (mobLoot == null) {
-                Unshattered.LOGGER.warn("entity {} is missing loot", entity.getPlainTextName());
+            if (player.level().isClientSide() || !(player instanceof ServerPlayer serverPlayer)) {
                 return;
             }
 
-            boolean rolledAboveOccasional = false;
-            // may end up doing it weighted instead of rolling them all at once, we'll see though
-            for (MobItemDropData itemDrop : mobLoot.drops()) {
-                rolledAboveOccasional = itemDrop.dropData().getNonGuaranteedDrop(itemDrop.combatFortuneBoosted(), rolledAboveOccasional, player, UnshatteredAttributeValues.COMBAT_FORTUNE);
+            PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
+            LivingEntity entity = event.getEntity();
+            AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, serverPlayer).add(AbilityContextKey.TARGET, entity);
+
+            try (AbilityScope _ = AbilityScope.open(serverPlayer, AbilityTriggerType.ENTITY_DEATH, context)) {
+                MobRewardData mobLoot = BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.getType()).getData(UnshatteredDataMaps.COMBATABLE_MOBS_LOOT_DATA);
+                if (mobLoot == null) {
+                    Unshattered.LOGGER.warn("entity {} is missing loot", entity.getPlainTextName());
+                    return;
+                }
+
+                boolean rolledAboveOccasional = false;
+                // may end up doing it weighted instead of rolling them all at once, we'll see though
+                for (MobItemDropData itemDrop : mobLoot.drops()) {
+                    rolledAboveOccasional = itemDrop.dropData().getNonGuaranteedDrop(itemDrop.combatFortuneBoosted(), rolledAboveOccasional, player, UnshatteredAttributeValues.COMBAT_FORTUNE);
+                }
+
+                if (mobLoot.experience() > 0.0f) {
+                    skills.addExp(mobLoot.skill(), mobLoot.experience(), player, UnshatteredAttributeValues.COMBAT_WISDOM.holder);
+                    player.syncData(PLAYER_SKILLS);
+                }
+
+                player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get()).addCoins(player.getRandom().nextIntBetweenInclusive(mobLoot.minCoins(), mobLoot.maxCoins()));
+                player.syncData(UnshatteredAttachments.PLAYER_CURRENCY.get());
             }
-
-            if (mobLoot.experience() > 0.0f) {
-                skills.addExp(mobLoot.skill(), mobLoot.experience(), player, UnshatteredAttributeValues.COMBAT_WISDOM.holder);
-                player.syncData(PLAYER_SKILLS);
-            }
-
-            player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get()).addCoins(player.getRandom().nextIntBetweenInclusive(mobLoot.minCoins(), mobLoot.maxCoins()));
-            player.syncData(UnshatteredAttachments.PLAYER_CURRENCY.get());
-
-            relevantPassiveItems.forEach(item -> item.onAbilityFinished(context));
         }
     }
 }

@@ -35,14 +35,18 @@ public class PlayerLevelChangeHandler {
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         Player player = event.getEntity();
-        
-        if (player.level().isClientSide() || !pendingAttributeUpdates.remove(player.getUUID())) return;
+
+        if (player.level().isClientSide() || !pendingAttributeUpdates.remove(player.getUUID())) {
+            return;
+        }
 
         PlayerStateAttachment stats = player.getData(PLAYER_STATE.get());
         AttributeInstance healthAttribute = player.getAttribute(UnshatteredAttributeValues.MAX_HEALTH.holder);
         AttributeInstance manaAttribute = player.getAttribute(UnshatteredAttributeValues.MANA.holder);
 
-        if (healthAttribute == null || manaAttribute == null) return;
+        if (healthAttribute == null || manaAttribute == null) {
+            return;
+        }
 
         stats.setStatValue(PlayerStateAttachment.Stat.HEALTH, healthAttribute.getValue(), player);
         stats.setStatValue(PlayerStateAttachment.Stat.MANA, manaAttribute.getValue(), player);

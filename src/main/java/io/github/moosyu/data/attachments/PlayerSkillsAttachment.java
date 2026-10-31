@@ -233,7 +233,9 @@ public final class PlayerSkillsAttachment {
     }
 
     public void addExp(Skill skill, float amount, Player player, Holder<Attribute> wisdomAttribute) {
-        if (amount == 0.0f) return;
+        if (amount == 0.0f) {
+            return;
+        }
 
         int currentLevel = getLevel(getExp(skill));
         float expGainedAmount = amount * (float) (player.getAttributeValue(wisdomAttribute) / 100);

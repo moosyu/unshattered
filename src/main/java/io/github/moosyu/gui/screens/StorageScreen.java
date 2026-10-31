@@ -41,7 +41,9 @@ public class StorageScreen extends AbstractContainerScreen<StorageMenu> {
     protected void init() {
         super.init();
 
-        if (minecraft.player == null) return;
+        if (minecraft.player == null) {
+            return;
+        }
 
         Vector2i backgroundTopLeft = new Vector2i((width - IMAGE_WIDTH) / 2, ((height - IMAGE_HEIGHT) / 2) - 28);
 
@@ -111,7 +113,9 @@ public class StorageScreen extends AbstractContainerScreen<StorageMenu> {
 
     @Override
     protected void extractLabels(@NonNull GuiGraphicsExtractor graphics, int xm, int ym) {
-        if (minecraft.player == null) return;
+        if (minecraft.player == null) {
+            return;
+        }
 
         graphics.text(font,
                 Component.translatable("screen.unshattered.storage.page").append(" (" + (menu.currentPageIndex + 1) + "/"

@@ -59,7 +59,9 @@ public class BlockBreakHandler {
         BlockPos blockPos = event.getPos();
 
         // so you can still break stuff normally in creative
-        if (player.isCreative() || blockBreakData == null) return;
+        if (player.isCreative() || blockBreakData == null) {
+            return;
+        }
         event.setCanceled(true);
 
         // so the block doesnt flash in and out of existence when broken before the server says what's up
@@ -102,11 +104,12 @@ public class BlockBreakHandler {
         if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.MINING) {
             AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player).add(AbilityContextKey.BLOCKSTATE, blockState);
             List<PassiveAbilityItem> triggered = new ArrayList<>();
-            float powderModifiedAmount = 1.0f;
             boolean fuelUseDisabled = false;
 
             for (ItemStack item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredNonOngoingItems()) {
-                if (!(item.getItem() instanceof AbilityItem abilityItem)) continue;
+                if (!(item.getItem() instanceof AbilityItem abilityItem)) {
+                    continue;
+                }
 
                 if (abilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_BREAK_MINING_BLOCK)) {
                     if (abilityItem instanceof PassiveAbilityItem passiveAbilityItem && passiveAbilityItem.abilityConditionsMet(context)) {
@@ -115,12 +118,11 @@ public class BlockBreakHandler {
                     } else if (abilityItem instanceof IncrementalAbilityItem incrementalAbilityItem) {
                         incrementalAbilityItem.addIncrements(item, 1);
                     }
-                } else if (abilityItem instanceof PassiveAbilityItem passiveAbilityItem && passiveAbilityItem.abilityConditionsMet(context)) {
-                    if (abilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_MODIFY_POWDER) && passiveAbilityItem.triggerResult().orElse(null) instanceof Float amount) {
-                        powderModifiedAmount += amount;
-                    } else if (abilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_ATTEMPT_CONSUME_FUEL)) {
-                        fuelUseDisabled = true;
-                    }
+                } else if (abilityItem instanceof PassiveAbilityItem passiveAbilityItem
+                        && passiveAbilityItem.abilityConditionsMet(context)
+                        && abilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_ATTEMPT_CONSUME_FUEL)
+                ) {
+                    fuelUseDisabled = true;
                 }
             }
 
@@ -130,15 +132,6 @@ public class BlockBreakHandler {
                 skills.addExp(PlayerSkillsAttachment.Skill.MINING, blockBreakData.expAmount(), player, UnshatteredAttributeValues.MINING_WISDOM.holder);
                 player.syncData(PLAYER_SKILLS);
             }
-
-            final float finalPowderModifiedAmount = powderModifiedAmount;
-            blockBreakData.powder().ifPresent(powder -> player.getData(UnshatteredAttachments.PLAYER_POWDER)
-                    .addPowder(
-                            player,
-                            powder.powderType(),
-                            (int) (powder.powderAmount() * finalPowderModifiedAmount)
-                    )
-            );
 
             ServerLevel serverLevel = (ServerLevel) level;
             serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID).destroyRegeneratingBlock(blockPos, serverLevel, player);

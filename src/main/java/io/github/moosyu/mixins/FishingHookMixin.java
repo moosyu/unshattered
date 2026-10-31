@@ -85,7 +85,9 @@ public abstract class FishingHookMixin extends Projectile {
     private void catchingFish(CallbackInfo ci) {
         ci.cancel();
         FishingHook hook = (FishingHook)(Object)this;
-        if (!(hook.getOwner() instanceof Player player)) return;
+        if (!(hook.getOwner() instanceof Player player)) {
+            return;
+        }
         ServerLevel level = (ServerLevel)hook.level();
         RandomSource random = hook.getRandom();
         double fishingSpeed = player.getAttributeValue(UnshatteredAttributeValues.FISHING_SPEED.holder);

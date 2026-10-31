@@ -70,7 +70,9 @@ public class SkeletonMiner extends Monster implements RangedAttackMob {
 
     @Override
     public void performRangedAttack(@NonNull LivingEntity target, float power) {
-        if (reloadTicks > 0 || getMainHandItem().isEmpty()) return;
+        if (reloadTicks > 0 || getMainHandItem().isEmpty()) {
+            return;
+        }
 
         swing(InteractionHand.MAIN_HAND);
         setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);

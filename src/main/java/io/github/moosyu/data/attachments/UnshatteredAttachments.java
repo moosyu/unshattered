@@ -98,14 +98,6 @@ public final class UnshatteredAttachments {
             .build()
     );
 
-    public static final Supplier<AttachmentType<PlayerPowderAttachment>> PLAYER_POWDER = ATTACHMENT_TYPES.register("player_powder", () ->
-            AttachmentType.builder(() -> new PlayerPowderAttachment(PlayerPowderAttachment.PowderBalance.ZERO, PlayerPowderAttachment.PowderBalance.ZERO, PlayerPowderAttachment.PowderBalance.ZERO))
-                    .serialize(PlayerPowderAttachment.CODEC.fieldOf("powder"))
-                    .sync(PlayerPowderAttachment.STREAM_CODEC)
-                    .copyOnDeath()
-                    .build()
-    );
-
     // to store last sell slot history between sessions
     public static final Supplier<AttachmentType<SellSlotContainer>> PLAYER_SELL_SLOT = ATTACHMENT_TYPES.register("player_sell_slot", () -> AttachmentType.serializable(SellSlotContainer::new).build());
 

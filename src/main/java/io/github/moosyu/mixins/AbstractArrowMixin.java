@@ -87,7 +87,9 @@ public abstract class AbstractArrowMixin extends Projectile {
             target.igniteForSeconds(5.0f);
         }
 
-        if (isEnderman) return;
+        if (isEnderman) {
+            return;
+        }
 
         if (target instanceof LivingEntity mob) {
             if (currentOwner instanceof Player player) {

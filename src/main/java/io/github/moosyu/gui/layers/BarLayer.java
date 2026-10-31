@@ -83,7 +83,9 @@ public class BarLayer implements GuiLayer {
                 || minecraft.options.hideGui
                 || player.gameMode() != GameType.SURVIVAL
                 || !visibilityConditions.test(player)
-        ) return;
+        ) {
+            return;
+        }
 
         Font font = Minecraft.getInstance().font;
         String currentText = String.valueOf(Mth.ceil(getCurrentValue.applyAsDouble(player)));

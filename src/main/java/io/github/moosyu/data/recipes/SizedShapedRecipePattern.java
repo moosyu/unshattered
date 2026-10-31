@@ -101,7 +101,9 @@ public final class SizedShapedRecipePattern {
             }
         }
 
-        if (pattern.size() == bottom) return new String[0];
+        if (pattern.size() == bottom) {
+            return new String[0];
+        }
 
         String[] result = new String[pattern.size() - bottom - top];
         for (int line = 0; line < result.length; ++line) {
@@ -127,13 +129,16 @@ public final class SizedShapedRecipePattern {
     }
 
     public boolean matches(CraftingInput input) {
-        if (input.ingredientCount() != this.ingredientCount
-                || input.width() != this.width
-                || input.height() != this.height) return false;
+        if (input.ingredientCount() != ingredientCount
+                || input.width() != width
+                || input.height() != height
+        ) {
+            return false;
+        }
 
-        for (int y = 0; y < this.height; ++y) {
-            for (int x = 0; x < this.width; ++x) {
-                Optional<SizedIngredient> expected = this.ingredients.get(x + y * this.width);
+        for (int y = 0; y < height; ++y) {
+            for (int x = 0; x < width; ++x) {
+                Optional<SizedIngredient> expected = ingredients.get(x + y * width);
                 ItemStack actual = input.getItem(x, y);
 
                 if (expected.isEmpty()) {
@@ -150,7 +155,7 @@ public final class SizedShapedRecipePattern {
     }
 
     public List<Optional<SizedIngredient>> ingredients() {
-        return this.ingredients;
+        return ingredients;
     }
 
     public static SizedShapedRecipePattern of(Map<Character, SizedIngredient> key, String... pattern) {

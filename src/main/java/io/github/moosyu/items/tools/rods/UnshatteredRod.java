@@ -20,10 +20,9 @@ import org.jspecify.annotations.NonNull;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Supplier;
 
-public class UnshatteredRod extends FishingRodItem implements PassiveAbilityItem {
-    public static final Identifier ABILITY_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("fish_out_of_water");
-    public static final Identifier ABILITY_IDENTIFIER_LAVA = UnshatteredUtils.getUnshatteredIdentifier("fish_out_of_lava");
+public class UnshatteredRod extends FishingRodItem {
     private static final Map<UUID, InteractionHand> CAST_HANDS = new HashMap<>();
 
     public UnshatteredRod(Properties properties) {
@@ -33,37 +32,6 @@ public class UnshatteredRod extends FishingRodItem implements PassiveAbilityItem
                         ItemAttachments.SlotType.SINKER
                 )).stacksTo(1)
         );
-    }
-
-    @Override
-    public void onAbilityTriggered(AbilityContext context) {
-        context.get(AbilityContextKey.PLAYER).ifPresent(player -> player.sendSystemMessage(Component.translatable("combat.messages.unshattered.failed").withColor(UnshatteredUtils.RED)));
-    }
-
-    @Override
-    public boolean abilityConditionsMet(AbilityContext context) {
-        LivingEntity target = context.get(AbilityContextKey.TARGET).orElse(null);
-        ItemStack rod = context.get(AbilityContextKey.ITEM_STACK).orElse(null);
-
-        if (rod == null || target == null) {
-            return true;
-        } else {
-            if (rod.is(UnshatteredItemTagsProvider.CAN_FISH_IN_LAVA)) {
-                return !target.is(UnshatteredEntityTagsProvider.MAGMATIC);
-            } else {
-                return !target.is(EntityTypeTags.AQUATIC);
-            }
-        }
-    }
-
-    @Override
-    public Set<AbilityTriggerType> triggerTypes() {
-        return Set.of(AbilityTriggerType.PLAYER_DEAL_DAMAGE);
-    }
-
-    @Override
-    public Optional<AbilityTriggerResult> triggerResult() {
-        return Optional.of(AbilityTriggerResult.CANCEL_EVENT);
     }
 
     @Override

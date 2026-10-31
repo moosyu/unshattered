@@ -48,7 +48,9 @@ public class StorageMenu extends AbstractContainerMenu {
                 addSlot(new Slot(WINDOW, col + row * COLUMNS, (col * 18) + 8, (row * 18) - 38) {
                     @Override
                     public boolean mayPlace(@NonNull ItemStack itemStack) {
-                        if (!isSearching) return true;
+                        if (!isSearching) {
+                            return true;
+                        }
 
                         return !WINDOW.getItem(getSlotIndex()).isEmpty();
                     }
@@ -94,7 +96,10 @@ public class StorageMenu extends AbstractContainerMenu {
     }
 
     public void handleSearch(String input) {
-        if (input.equals(previousSearchInput)) return;
+        if (input.equals(previousSearchInput)) {
+            return;
+        }
+
         previousSearchInput = input;
         isSearching = !input.isEmpty();
 
@@ -155,7 +160,10 @@ public class StorageMenu extends AbstractContainerMenu {
             int backing = getDisplayIndex(windowIndex);
             super.setItem(windowIndex, itemStack);
 
-            if (backing < 0 || backing >= fullStorage.getContainerSize()) return;
+            if (backing < 0 || backing >= fullStorage.getContainerSize()) {
+                return;
+            }
+
             fullStorage.setItem(backing, itemStack);
 
             // remove fully withdrawn stacks from view
@@ -174,7 +182,10 @@ public class StorageMenu extends AbstractContainerMenu {
 
         private int getDisplayIndex(int windowIndex) {
             int displayIndex = windowIndex + currentPageIndex * getContainerSize();
-            if (displayIndex < 0 || displayIndex >= displayedIndices.size()) return -1;
+            if (displayIndex < 0 || displayIndex >= displayedIndices.size()) {
+                return -1;
+            }
+
             return displayedIndices.get(displayIndex);
         }
     }

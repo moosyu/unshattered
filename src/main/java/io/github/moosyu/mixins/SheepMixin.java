@@ -60,7 +60,9 @@ public class SheepMixin {
 
             for (Object2IntMap.Entry<Holder<Enchantment>> entry : tool.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY).entrySet()) {
                 Optional<ResourceKey<Enchantment>> key = entry.getKey().unwrapKey();
-                if (key.isEmpty()) continue;
+                if (key.isEmpty()) {
+                    continue;
+                }
 
                 Optional<UnshatteredEnchantmentEffects.UnshatteredSimpleEffect> effect = UnshatteredEnchantmentEffects.getEffect(key.get());
 

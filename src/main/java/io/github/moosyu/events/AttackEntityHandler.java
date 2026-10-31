@@ -20,7 +20,9 @@ public class AttackEntityHandler {
         if (!(event.getTarget() instanceof LivingEntity target)
                 || player.level().isClientSide()
                 || (event.getTarget() instanceof Player)
-        ) return;
+        ) {
+            return;
+        }
         event.setCanceled(true);
 
         playerDealDamage(player,

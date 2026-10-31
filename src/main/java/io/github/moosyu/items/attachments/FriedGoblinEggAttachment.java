@@ -8,26 +8,22 @@ import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.world.item.Item;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Supplier;
 
-public class FriedGoblinEggAttachment extends Item implements PassiveAbilityItem {
-    public FriedGoblinEggAttachment(Properties properties) {
+public class FriedGoblinEggAttachment extends Item implements AbilityItem {
+    private final Supplier<? extends Ability> ability;
+
+    public FriedGoblinEggAttachment(Properties properties, Supplier<? extends Ability> ability) {
         super(properties.stacksTo(1));
+
+        this.ability = ability;
     }
 
     @Override
-    public Set<AbilityTriggerType> triggerTypes() {
-        return Set.of(AbilityTriggerType.PLAYER_ATTEMPT_CONSUME_FUEL);
-    }
-
-    @Override
-    public boolean abilityConditionsMet(AbilityContext context) {
-        return context.get(AbilityContextKey.PLAYER).map(player -> player.getRandom().nextInt(0, 3) == 0).orElse(false);
-    }
-
-    @Override
-    public Optional<AbilityTriggerResult> triggerResult() {
-        return Optional.of(AbilityTriggerResult.CANCEL_EVENT);
+    public List<? extends Supplier<? extends Ability>> abilities() {
+        return List.of(ability);
     }
 }

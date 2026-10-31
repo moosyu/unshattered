@@ -28,7 +28,10 @@ public class PlayerTickHandler {
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         Player player = event.getEntity();
         Level level = player.level();
-        if (player.level().isClientSide()) return;
+        if (player.level().isClientSide()) {
+            return;
+        }
+
         PlayerStateAttachment state = player.getData(PLAYER_STATE.get());
         double maxHealthValue = player.getAttributeValue(UnshatteredAttributeValues.MAX_HEALTH.holder);
         double healthRegenValue = player.getAttributeValue(UnshatteredAttributeValues.HEALTH_REGEN.holder);
@@ -47,7 +50,9 @@ public class PlayerTickHandler {
 
             PlayerRegionAttachment regionAttachment = player.getData(UnshatteredAttachments.PLAYER_REGION.get());
             Region region = player.level().registryAccess().lookupOrThrow(REGION_REGISTRY_KEY).getValue(regionAttachment.regionKey());
-            if (region == null) return;
+            if (region == null) {
+                return;
+            }
 
             float extraTemperatureChange = 0.0f;
 

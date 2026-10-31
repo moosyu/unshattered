@@ -86,7 +86,7 @@ public class PlayerClickHandler {
         if (interactedBlock instanceof DialogueInteractable dialogueBlock && event.getHand() == InteractionHand.MAIN_HAND) {
             event.setCancellationResult(InteractionResult.SUCCESS);
             PlayerAbilityEffectsAttachment playerAbilityEffectsAttachment = player.getData(UnshatteredAttachments.PLAYER_ABILITIES);
-            if (playerAbilityEffectsAttachment.hasActiveEffect(ACTIVE_RIGHT_CLICK) && !event.getLevel().isClientSide()) {
+            if (playerAbilityEffectsAttachment.activeEffects.containsKey(ACTIVE_RIGHT_CLICK) && !event.getLevel().isClientSide()) {
                 player.sendSystemMessage(Component.translatable("misc.messages.unshattered.interact_cooldown").withColor(UnshatteredUtils.RED));
                 return;
             }
@@ -114,7 +114,7 @@ public class PlayerClickHandler {
                     && npcEntity instanceof DialogueInteractable dialogueInteractable
             ) {
                 PlayerAbilityEffectsAttachment playerAbilityEffectsAttachment = player.getData(UnshatteredAttachments.PLAYER_ABILITIES);
-                if (playerAbilityEffectsAttachment.hasActiveEffect(ACTIVE_RIGHT_CLICK) && !level.isClientSide()) {
+                if (playerAbilityEffectsAttachment.activeEffects.containsKey(ACTIVE_RIGHT_CLICK) && !level.isClientSide()) {
                     player.sendSystemMessage(Component.translatable("misc.messages.unshattered.interact_cooldown").withColor(UnshatteredUtils.RED));
                     return;
                 }

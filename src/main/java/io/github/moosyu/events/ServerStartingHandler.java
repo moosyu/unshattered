@@ -27,11 +27,13 @@ public class ServerStartingHandler {
     @SubscribeEvent
     public static void onServerStart(ServerStartingEvent event) {
         MinecraftServer server = event.getServer();
-        Unshattered.LOGGER.info("hello from moosyu");
+        Unshattered.LOGGER.info("mingus...");
         ServerLevel serverLevel = server.getLevel(OVERWORLD);
         BoundaryCoordinates boundaryCoordinates = BoundaryCoordinates.getRegionCoordinates(serverLevel, UnshatteredRegions.DEFAULT_REGION);
 
-        if (serverLevel == null) return;
+        if (serverLevel == null) {
+            return;
+        }
 
         RegistryAccess registryAccess = serverLevel.registryAccess();
         if (boundaryCoordinates != null) {

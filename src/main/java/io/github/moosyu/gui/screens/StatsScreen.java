@@ -55,7 +55,9 @@ public class StatsScreen extends SimpleScreen {
 
         UnshatteredAttributeValues[] attributeValues = UnshatteredAttributeValues.values();
         Player player = Minecraft.getInstance().player;
-        if (player == null) return;
+        if (player == null) {
+            return;
+        }
 
         int visibleCount = 0;
         for (UnshatteredAttributeValues attribute : attributeValues) {

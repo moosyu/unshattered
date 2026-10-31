@@ -26,32 +26,32 @@ public class ForgeMenu extends AbstractContainerMenu {
         Slot slot = this.slots.get(slotIndex);
 
         if (slot.hasItem()) {
-            ItemStack stack = slot.getItem();
-            copy = stack.copy();
+            ItemStack itemStack = slot.getItem();
+            copy = itemStack.copy();
 
             // inventory to hotbar
             if (slotIndex < 27) {
-                if (!this.moveItemStackTo(stack, 27, 36, false)) {
+                if (!this.moveItemStackTo(itemStack, 27, 36, false)) {
                     return ItemStack.EMPTY;
                 }
             // hotbar to inventory
             } else {
-                if (!this.moveItemStackTo(stack, 0, 27, false)) {
+                if (!this.moveItemStackTo(itemStack, 0, 27, false)) {
                     return ItemStack.EMPTY;
                 }
             }
 
-            if (stack.isEmpty()) {
+            if (itemStack.isEmpty()) {
                 slot.setByPlayer(ItemStack.EMPTY);
             } else {
                 slot.setChanged();
             }
 
-            if (stack.getCount() == copy.getCount()) {
+            if (itemStack.getCount() == copy.getCount()) {
                 return ItemStack.EMPTY;
             }
 
-            slot.onTake(player, stack);
+            slot.onTake(player, itemStack);
         }
 
         return copy;

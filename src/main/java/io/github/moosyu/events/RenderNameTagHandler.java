@@ -76,7 +76,9 @@ public class RenderNameTagHandler {
         FormattedCharSequence text = event.getContent().getVisualOrderText();
 
         Camera camera = Minecraft.getInstance().getEntityRenderDispatcher().camera;
-        if (camera == null) return;
+        if (camera == null) {
+            return;
+        }
 
         poseStack.pushPose();
 

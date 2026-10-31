@@ -26,7 +26,9 @@ public class LivingIncomingDamageHandler {
         DamageSource source = event.getSource();
 
         if (event.getEntity() instanceof Player player) {
-            if (player.level().isClientSide()) return;
+            if (player.level().isClientSide()) {
+                return;
+            }
 
             List<PassiveAbilityItem> triggeredItems = new ArrayList<>();
             AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player)

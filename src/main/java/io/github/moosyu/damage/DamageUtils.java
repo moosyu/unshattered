@@ -58,7 +58,9 @@ public final class DamageUtils {
      * @param triggerAbilities whether the attack should trigger abilities. should be true for most normal attacks, only really to stop cascades of an ability triggering itself
      */
     public static void playerDealDamage(Player player, LivingEntity target, double damage, boolean useAttackStrength, ItemStack weapon, boolean triggerAbilities) {
-        if (!player.isCreative() && target.is(EntityType.ARMOR_STAND)) return;
+        if (!player.isCreative() && target.is(EntityType.ARMOR_STAND)) {
+            return;
+        }
 
         if (player.level().isClientSide()) {
             target.hurtClient(target.damageSources().playerAttack(player));
@@ -95,7 +97,9 @@ public final class DamageUtils {
 
             for (Object2IntMap.Entry<Holder<Enchantment>> entry : weapon.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY).entrySet()) {
                 Optional<ResourceKey<Enchantment>> key = entry.getKey().unwrapKey();
-                if (key.isEmpty()) continue;
+                if (key.isEmpty()) {
+                    continue;
+                }
 
                 Optional<UnshatteredEnchantmentEffects.UnshatteredSimpleEffect> effect = UnshatteredEnchantmentEffects.getEffect(key.get());
                 if (effect.isPresent()
@@ -242,9 +246,9 @@ public final class DamageUtils {
             ServerPlayer serverPlayer = (ServerPlayer) player;
 
             for (ItemStack item : player.getData(UnshatteredAttachments.PLAYER_ABILITIES).getStoredNonOngoingItems()) {
-                if (!(item.getItem() instanceof PassiveAbilityItem passiveAbilityItem)) continue;
-
-                if (!passiveAbilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_TAKE_DAMAGE) ||  !passiveAbilityItem.abilityConditionsMet(context)) continue;
+                if (!(item.getItem() instanceof PassiveAbilityItem passiveAbilityItem) || !passiveAbilityItem.triggerTypes().contains(AbilityTriggerType.PLAYER_TAKE_DAMAGE) ||  !passiveAbilityItem.abilityConditionsMet(context)) {
+                    continue;
+                }
 
                 passiveAbilityItem.onAbilityTriggered(context);
                 triggeredItems.add(passiveAbilityItem);
@@ -290,7 +294,7 @@ public final class DamageUtils {
                 BlockPos spawnPos = player.level().getRespawnData().pos();
 
                 // greed makes you lose all your coins
-                if (player.getData(UnshatteredAttachments.PLAYER_ABILITIES).hasActiveEffect(EmeraldDagger.ABILITY_IDENTIFIER)) {
+                if (player.getData(UnshatteredAttachments.PLAYER_ABILITIES).activeEffects.containsKey(UnshatteredAbilities.GREED.get().identifier())) {
                     coinsLost = currency.getCoins();
                 } else if (coinLoss) {
                     coinsLost = currency.getCoins() / 2;

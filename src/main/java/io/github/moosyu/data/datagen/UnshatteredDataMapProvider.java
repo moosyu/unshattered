@@ -2,7 +2,6 @@ package io.github.moosyu.data.datagen;
 
 import io.github.moosyu.data.NpcData;
 import io.github.moosyu.data.VendorItem;
-import io.github.moosyu.data.attachments.PlayerPowderAttachment;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.components.ItemAbility;
@@ -18,16 +17,7 @@ import io.github.moosyu.items.ItemRange;
 import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.UnshatteredItems;
 import io.github.moosyu.items.UnshatteredRarity;
-import io.github.moosyu.items.armours.SkeletonHat;
-import io.github.moosyu.items.talismans.BloodChalice;
-import io.github.moosyu.items.talismans.DwarfTurtleTalisman;
-import io.github.moosyu.items.talismans.HasteRing;
-import io.github.moosyu.items.talismans.RainbowYarnTalisman;
-import io.github.moosyu.items.tools.pickaxes.ZombiePickaxe;
-import io.github.moosyu.items.tools.rods.UnshatteredRod;
-import io.github.moosyu.items.weapons.daggers.EmeraldDagger;
 import io.github.moosyu.items.weapons.swords.RogueSword;
-import io.github.moosyu.items.weapons.swords.UndeadSword;
 import io.github.moosyu.spawning.EntitySpawnPoint;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.BlockPos;
@@ -207,19 +197,16 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         builder(BLOCK_BREAK_DATA)
                 .add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_COBBLED_MITHRIL_BLOCK.get()),
                         new BlockBreakData(PlayerSkillsAttachment.Skill.MINING, 25, List.of(new DropData(new ItemRange(UnshatteredItems.MITHRIL.get())),
-                                new DropData(new ItemRange(Items.COBBLESTONE, 1, 3))),
-                                Optional.of(new PlayerPowderAttachment.Powder(PlayerPowderAttachment.PowderType.MITHRIL, 1))
+                                new DropData(new ItemRange(Items.COBBLESTONE, 1, 3)))
                         ), false
                 ).add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_SOFT_MITHRIL_BLOCK.get()),
                         new BlockBreakData(PlayerSkillsAttachment.Skill.MINING,
                                 35,
-                                List.of(new DropData(new ItemRange(UnshatteredItems.MITHRIL.get(), 2, 4))),
-                                Optional.of(new PlayerPowderAttachment.Powder(PlayerPowderAttachment.PowderType.MITHRIL, 2))
+                                List.of(new DropData(new ItemRange(UnshatteredItems.MITHRIL.get(), 2, 4)))
                         ), false
                 ).add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_HARD_MITHRIL_BLOCK.get()),
                         new BlockBreakData(PlayerSkillsAttachment.Skill.MINING, 45, List.of(new DropData(new ItemRange(UnshatteredItems.MITHRIL.get(), 2, 5)),
-                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_MITHRIL.get()), 0.01f)),
-                                Optional.of(new PlayerPowderAttachment.Powder(PlayerPowderAttachment.PowderType.MITHRIL, 5))
+                                new DropData(new ItemRange(UnshatteredItems.ENCHANTED_MITHRIL.get()), 0.01f))
                         ), false
                 ).add(BuiltInRegistries.BLOCK.wrapAsHolder(UnshatteredBlocks.BREAKABLE_POTATO_BLOCK.get()),
                         new BlockBreakData(PlayerSkillsAttachment.Skill.FARMING, 8, List.of(new DropData(new ItemRange(Items.POTATO, 2, 5)),
@@ -1037,50 +1024,6 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.WHEAT), ItemType.MATERIAL, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.CARROT), ItemType.MATERIAL, false)
                 .add(BuiltInRegistries.ITEM.wrapAsHolder(Items.POTATO), ItemType.MATERIAL, false);
-
-        builder(ITEM_ABILITY_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.TREECAPITATOR.get()), new ItemAbility("treecapitator_park_enthusiast"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.SPRUCE_AXE.get()), new ItemAbility("spruce_axe_park_enthusiast"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.FISHING_ROD.get()), new ItemAbility(UnshatteredRod.ABILITY_IDENTIFIER, 0, 0, 0, true), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.ZOMBIE_SWORD.get()), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("zombie_sword_instant_heal"), 24, 10, 0, false), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.ORNATE_ZOMBIE_SWORD.get()), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("ornate_zombie_sword_instant_heal"), 30, 10, 0, false), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.FLORID_ZOMBIE_SWORD.get()), new ItemAbility(UnshatteredUtils.getUnshatteredIdentifier("florid_zombie_sword_instant_heal"), 36, 10, 0, false), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.SKELETON_HAT.get()), new ItemAbility(SkeletonHat.ABILITY_IDENTIFIER, 0, 0, 0, true), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.MITHRIL_PLATED_DRILL_ENGINE.get()), new ItemAbility("mithril_plated_drill_engine"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.FRIED_GOBLIN_EGG.get()), new ItemAbility("fried_goblin_egg"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.MITHRIL_INFUSED_FUEL_TANK.get()), new ItemAbility("mithril_infused_fuel_tank"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.BAT_TALISMAN.get()), new ItemAbility("bat_talisman_leech"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.BLOOD_CHALICE.get()), new ItemAbility(BloodChalice.ABILITY_IDENTIFIER.getPath()), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.COINS_TALISMAN.get()), new ItemAbility("coin_talisman_accrual"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.DWARF_TURTLE_SHELL.get()), new ItemAbility(DwarfTurtleTalisman.ABILITY_IDENTIFIER.getPath()), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.CHALLENGING_ROD.get()), new ItemAbility(UnshatteredRod.ABILITY_IDENTIFIER.getPath()), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.FIRE_TALISMAN.get()), new ItemAbility("blazeborn"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.HASTE_RING.get()), new ItemAbility(HasteRing.ABILITY_IDENTIFIER.getPath()), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.HONEYCOMB_RING.get()), new ItemAbility("apian_aegis"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.INFINITE_QUIVER.get()), new ItemAbility("bottomless"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.PIGGY_BANK_TALISMAN.get()), new ItemAbility("piggy_bank_saving_grace"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.RAINBOW_YARN_TALISMAN.get()), new ItemAbility(RainbowYarnTalisman.ABILITY_IDENTIFIER.getPath()), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.PROMISING_AXE.get()), new ItemAbility("axe_stored_potential"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.UNDEAD_SWORD.get()), new ItemAbility(UndeadSword.ABILITY_IDENTIFIER.getPath()), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.ROGUE_SWORD.get()), RogueSword.SPEED_BOOST_ABILITY, false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.EMERALD_DAGGER.get()), new ItemAbility(EmeraldDagger.ABILITY_IDENTIFIER.getPath()), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.SUPER_CLEAVER.get()), new ItemAbility("super_cleaver_cleave"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.RUSTY_CLEAVER.get()), new ItemAbility("rusty_cleaver_cleave"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.HYPER_CLEAVER.get()), new ItemAbility("hyper_cleaver_cleave"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.GOLDEN_CLEAVER.get()), new ItemAbility("golden_cleaver_cleave"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.GIANT_CLEAVER.get()), new ItemAbility("giant_cleaver_cleave"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.ZOMBIE_PICKAXE.get()), new ItemAbility(ZombiePickaxe.ABILITY_IDENTIFIER.getPath()), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.RUSTED_TITANIUM_PICKAXE.get()), new ItemAbility("rusted_titanium_pickaxe_titanium_fanatic"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.TITANIUM_PICKAXE.get()), new ItemAbility("titanium_pickaxe_titanium_fanatic"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.PROMISING_PICKAXE.get()), new ItemAbility("stored_potential"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.BROKEN_MITHRIL_PICKAXE.get()), new ItemAbility("broken_mithril_pickaxe_mithril_speed"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.BANDAGED_MITHRIL_PICKAXE.get()), new ItemAbility("bandaged_mithril_pickaxe_mithril_speed"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.MITHRIL_PICKAXE.get()), new ItemAbility("mithril_pickaxe_mithril_speed"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.MITHRIL_DRILL_SX_R226.get()), new ItemAbility("r226_junkie"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.BAT_ARTIFACT.get()), new ItemAbility("bat_artifact_leech"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.STARTER_MAGMA_ROD.get()), new ItemAbility(UnshatteredRod.ABILITY_IDENTIFIER_LAVA.getPath()), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.COMMON_HOOK.get()), new ItemAbility("common_hook"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.SPEEDY_LINE.get()), new ItemAbility("speedy_line"), false)
-                .add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.PRISMARINE_SINKER.get()), new ItemAbility("prismarine_sinker"), false);
 
         for (Item wool : UnshatteredUtils.WOOL_TYPES) {
             setBaseData(wool, ItemType.MATERIAL, 2);

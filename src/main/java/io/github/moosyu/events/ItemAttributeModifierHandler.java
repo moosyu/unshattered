@@ -1,8 +1,9 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.abilities.IncrementalAbilityItem;
+import io.github.moosyu.abilities.Ability;
+import io.github.moosyu.abilities.AbilityItem;
+import io.github.moosyu.abilities.data.Incremental;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.data.components.UnshatteredDataComponents;
 import io.github.moosyu.items.enchantments.UnshatteredEnchantmentEffects;
 import io.github.moosyu.util.UnshatteredUtils;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
@@ -21,6 +22,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
 
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.util.UnshatteredUtils.getUnshatteredIdentifier;
@@ -95,7 +97,9 @@ public class ItemAttributeModifierHandler {
 
         for (Object2IntMap.Entry<Holder<Enchantment>> entry : itemStack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY).entrySet()) {
             Optional<ResourceKey<Enchantment>> key = entry.getKey().unwrapKey();
-            if (key.isEmpty()) continue;
+            if (key.isEmpty()) {
+                continue;
+            }
 
             Optional<UnshatteredEnchantmentEffects.UnshatteredSimpleEffect> effect = UnshatteredEnchantmentEffects.getEffect(key.get());
 
@@ -108,15 +112,26 @@ public class ItemAttributeModifierHandler {
         }
 
         Item item = itemStack.getItem();
-        if (item instanceof IncrementalAbilityItem abilityItem) {
-            for (IncrementalAbilityItem.AttributeStage attributeStage : abilityItem.attributes()) {
-                event.addModifier(attributeStage.attributeHolder(),
-                        new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(item.getDescriptionId() + "_" + attributeStage.attributeHolder().value().getDescriptionId() + "_incremental"),
-                                abilityItem.getMilestone(itemStack) * attributeStage.amountPerMilestone(),
-                                AttributeModifier.Operation.ADD_VALUE
-                        ),
-                        EquipmentSlotGroup.MAINHAND
-                );
+        if (item instanceof AbilityItem abilityItem) {
+            for (Supplier<? extends Ability> abilitySupplier : abilityItem.abilities()) {
+                Ability ability = abilitySupplier.get();
+
+                if (!(ability instanceof Incremental incremental)) {
+                    continue;
+                }
+
+                int milestone = incremental.getMilestone(itemStack);
+                for (Incremental.AttributeStage stage : incremental.attributes()) {
+                    event.addModifier(stage.attributeHolder(),
+                            new AttributeModifier(
+                                    UnshatteredUtils.getUnshatteredIdentifier(
+                                            incremental.identifier().getPath() + "_"
+                                                    + stage.attributeHolder().value().getDescriptionId() + "_incremental"),
+                                    milestone * stage.amountPerMilestone(),
+                                    AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND
+                    );
+                }
             }
         }
     }

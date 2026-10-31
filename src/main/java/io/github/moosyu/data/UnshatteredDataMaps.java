@@ -73,12 +73,6 @@ public final class UnshatteredDataMaps {
             Registries.ITEM,
             ItemType.CODEC
     ).synced(ItemType.CODEC, true).build();
-    
-    public static final DataMapType<Item, ItemAbility> ITEM_ABILITY_DATA = DataMapType.builder(
-            UnshatteredUtils.getUnshatteredIdentifier("item_ability_data"),
-            Registries.ITEM,
-            ItemAbility.CODEC
-    ).synced(ItemAbility.CODEC, true).build();
 
     public static final DataMapType<Item, Integer> ITEM_SELL_VALUE_DATA = DataMapType.builder(
             UnshatteredUtils.getUnshatteredIdentifier("item_sell_value_data"),

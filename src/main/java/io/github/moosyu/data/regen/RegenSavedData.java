@@ -57,7 +57,9 @@ public final class RegenSavedData extends SavedData {
         if (regenQueue.containsKey(globalPos)) {
             RegenState state = regenQueue.get(globalPos);
             RegenPath regenPath = registry.getValue(state.regenPathIdentifier());
-            if (regenPath == null) return;
+            if (regenPath == null) {
+                return;
+            }
 
             int newRegenPathIndex = state.regenPathIndex + regenPath.stagesIncremented();
 

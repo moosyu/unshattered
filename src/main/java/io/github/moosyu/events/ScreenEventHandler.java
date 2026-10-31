@@ -29,7 +29,9 @@ public class ScreenEventHandler {
     public static void onScreenEventOpen(ScreenEvent.Opening event) {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
-        if (player == null) return;
+        if (player == null) {
+            return;
+        }
 
         // override inventory
         if (event.getNewScreen() instanceof InventoryScreen && !player.isCreative()) {

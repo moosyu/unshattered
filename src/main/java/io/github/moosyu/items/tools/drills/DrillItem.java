@@ -17,7 +17,7 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 import org.jspecify.annotations.NonNull;
 
 public class DrillItem extends UnshatteredMiningToolBase {
-    public DrillItem(Properties properties, int damage, int miningSpeed, int miningFortune, int breakingPower, String identifier) {
+    public DrillItem(Properties properties, int damage, int miningSpeed, int miningFortune, int breakingPower, String identifier, float miningWisdom) {
         super(properties.stacksTo(1)
                 .component(UnshatteredDataComponents.FUEL.get(), new ItemFuel(3000, 3000))
                 .component(UnshatteredDataComponents.ITEM_ATTACHMENTS.get(), ItemAttachments.withSlots(ItemAttachments.SlotType.FUEL_TANK,
@@ -40,6 +40,9 @@ public class DrillItem extends UnshatteredMiningToolBase {
                         ).add(Attributes.ATTACK_SPEED,
                                 new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(identifier + "_attack_speed"), -2.8, AttributeModifier.Operation.ADD_VALUE),
                                 EquipmentSlotGroup.MAINHAND
+                        ).add(UnshatteredAttributeValues.MINING_WISDOM.holder,
+                                new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(identifier + "_mining_wisdom"), miningWisdom, AttributeModifier.Operation.ADD_VALUE),
+                                EquipmentSlotGroup.MAINHAND
                         ).build()
                 )
         );
@@ -55,26 +58,32 @@ public class DrillItem extends UnshatteredMiningToolBase {
     }
 
     @Override
-    public boolean isBarVisible(ItemStack stack) {
-        ItemFuel fuel = stack.get(UnshatteredDataComponents.FUEL.get());
-        if (fuel == null) return false;
+    public boolean isBarVisible(ItemStack itemStack) {
+        ItemFuel fuel = itemStack.get(UnshatteredDataComponents.FUEL.get());
+        if (fuel == null) {
+            return false;
+        }
 
-        return fuel.currentFuel() < fuel.getMaxFuel(stack);
+        return fuel.currentFuel() < fuel.getMaxFuel(itemStack);
     }
 
     @Override
-    public int getBarWidth(ItemStack stack) {
-        ItemFuel fuel = stack.get(UnshatteredDataComponents.FUEL.get());
-        if (fuel == null) return 0;
+    public int getBarWidth(ItemStack itemStack) {
+        ItemFuel fuel = itemStack.get(UnshatteredDataComponents.FUEL.get());
+        if (fuel == null) {
+            return 0;
+        }
 
-        int max = fuel.getMaxFuel(stack);
-        if (max <= 0) return 0;
+        int max = fuel.getMaxFuel(itemStack);
+        if (max <= 0) {
+            return 0;
+        }
 
         return Math.round(13.0f * Mth.clamp((float) fuel.currentFuel() / max, 0.0f, 1.0f));
     }
 
     @Override
-    public int getBarColor(@NonNull ItemStack stack) {
+    public int getBarColor(@NonNull ItemStack itemStack) {
         return 0xFFFF6A00;
     }
 }

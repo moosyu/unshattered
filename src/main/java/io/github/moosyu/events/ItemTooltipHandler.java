@@ -1,6 +1,5 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.abilities.IncrementalAbilityItem;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.components.*;
@@ -45,9 +44,13 @@ public class ItemTooltipHandler {
     private final static int MAX_WIDTH = 200;
     @SubscribeEvent
     public static void onItemTooltip(ItemTooltipEvent event) {
-        if (event.getEntity() != null && !event.getEntity().level().isClientSide()) return;
+        if (event.getEntity() != null && !event.getEntity().level().isClientSide()) {
+            return;
+        }
         Player player = event.getEntity();
-        if (player == null) return;
+        if (player == null) {
+            return;
+        }
         ItemStack itemStack = event.getItemStack();
         List<Component> tooltipComponents = event.getToolTip();
         UnshatteredRarity itemRarity = UnshatteredUtils.getItemRarity(itemStack);
@@ -84,7 +87,9 @@ public class ItemTooltipHandler {
                 Holder<Attribute> attributeHolder = entry.getKey();
                 double amount = entry.getValue()[0];
 
-                if (amount == 0.0) continue;
+                if (amount == 0.0) {
+                    continue;
+                }
 
                 UnshatteredAttributeValues itemAttribute = UnshatteredAttributeValues.fromAttribute(attributeHolder.value());
 
@@ -138,10 +143,14 @@ public class ItemTooltipHandler {
             tooltipComponents.add(Component.empty());
             for (Map.Entry<Holder<Enchantment>, Integer> entry : itemEnchantments.entrySet()) {
                 Optional<ResourceKey<Enchantment>> key = entry.getKey().unwrapKey();
-                if (key.isEmpty()) continue;
+                if (key.isEmpty()) {
+                    continue;
+                }
 
                 Optional<UnshatteredEnchantmentEffects.UnshatteredSimpleEffect> effect = UnshatteredEnchantmentEffects.getEffect(key.get());
-                if (effect.isEmpty()) continue;
+                if (effect.isEmpty()) {
+                    continue;
+                }
 
                 int level = entry.getValue();
 
@@ -175,9 +184,14 @@ public class ItemTooltipHandler {
                 while (iterator.hasNext()) {
                     Object2IntMap.Entry<Holder<Enchantment>> enchantmentHolder = iterator.next();
                     Optional<ResourceKey<Enchantment>> key = enchantmentHolder.getKey().unwrapKey();
-                    if (key.isEmpty()) continue;
+                    if (key.isEmpty()) {
+                        continue;
+                    }
+
                     Optional<UnshatteredEnchantmentEffects.UnshatteredSimpleEffect> effect = UnshatteredEnchantmentEffects.getEffect(key.get());
-                    if (effect.isEmpty()) continue;
+                    if (effect.isEmpty()) {
+                        continue;
+                    }
 
                     int level = enchantmentHolder.getIntValue();
                     int maxLevel = enchantmentHolder.getKey().value().getMaxLevel();
@@ -196,11 +210,11 @@ public class ItemTooltipHandler {
         if (itemAbility != null) {
             tooltipComponents.add(Component.empty());
             if (itemAbility.passive()) {
-                tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.abilityId().getPath())).withColor(0xFFFFAA00));
-                addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityId().getPath()).getString(), 0xFFAAAAAA, player));
+                tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.abilityIdentifier().getPath())).withColor(0xFFFFAA00));
+                addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityIdentifier().getPath()).getString(), 0xFFAAAAAA, player));
             } else {
-                tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.abilityId().getPath())).withColor(0xFFFFAA00).append(Component.literal(" RIGHT CLICK").withColor(0xFFFFFF55).withStyle(ChatFormatting.BOLD)));
-                addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityId().getPath()).getString(), 0xFFAAAAAA, player));
+                tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.abilityIdentifier().getPath())).withColor(0xFFFFAA00).append(Component.literal(" RIGHT CLICK").withColor(0xFFFFFF55).withStyle(ChatFormatting.BOLD)));
+                addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.abilityIdentifier().getPath()).getString(), 0xFFAAAAAA, player));
 
                 if (itemAbility.manaCost() > 0) tooltipComponents.add(Component.literal("Mana Cost: ").withStyle(ChatFormatting.DARK_GRAY).append(Component.literal(String.valueOf(itemAbility.manaCost())).withColor(0xFF00AAAA)));
                 if (itemAbility.cooldown() > 0) tooltipComponents.add(Component.literal("Cooldown: ").withStyle(ChatFormatting.DARK_GRAY).append(Component.literal(String.format("%.1f", (float) itemAbility.cooldown() / 20 /* convert ticks to seconds */)).append("s").withColor(0xFF55FF55)));
@@ -238,7 +252,7 @@ public class ItemTooltipHandler {
                 );
 
                 if (attachmentAbility != null) {
-                    addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + attachmentAbility.abilityId().getPath()).getString(), 0xFFAAAAAA, player));
+                    addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + attachmentAbility.abilityIdentifier().getPath()).getString(), 0xFFAAAAAA, player));
                 }
                 tooltipComponents.add(Component.empty());
             }
