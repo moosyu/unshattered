@@ -23,7 +23,7 @@ public class Lifesteal extends Ability {
     @Override
     public void onTrigger(AbilityContext context) {
         Optional<LivingEntity> target = context.get(AbilityContextKey.TARGET);
-        Optional<ServerPlayer> player = context.get(AbilityContextKey.PLAYER);
+        Optional<ServerPlayer> player = context.getServerPlayer();
 
         if (target.isPresent() && target.get().isDeadOrDying() && player.isPresent()) {
             player.get().getData(UnshatteredAttachments.PLAYER_STATE).increaseStatValue(PlayerStateAttachment.Stat.HEALTH,

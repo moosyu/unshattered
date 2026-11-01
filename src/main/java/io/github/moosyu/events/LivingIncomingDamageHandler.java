@@ -2,20 +2,15 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.abilities.*;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static io.github.moosyu.Unshattered.MODID;
 

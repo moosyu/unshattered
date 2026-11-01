@@ -33,7 +33,7 @@ public class Incremental extends Ability {
     @Override
     public boolean conditionsMet(AbilityContext context) {
         Optional<ItemStack> source = context.get(AbilityContextKey.ITEM_STACK);
-        Optional<ServerPlayer> player = context.get(AbilityContextKey.PLAYER);
+        Optional<ServerPlayer> player = context.getServerPlayer();
         return source.isPresent() && player.isPresent() && source.get() == player.get().getMainHandItem();
     }
 

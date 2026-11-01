@@ -2,14 +2,12 @@ package io.github.moosyu.damage;
 
 import io.github.moosyu.abilities.*;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.PlayerCurrencyAttachment;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.regions.TemperatureTypes;
 import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.enchantments.UnshatteredEnchantmentEffects;
-import io.github.moosyu.items.weapons.daggers.EmeraldDagger;
 import io.github.moosyu.packets.DamageNumberPacket;
 import io.github.moosyu.packets.DeathSoundEffectPacket;
 import io.github.moosyu.packets.FerocityEffectPacket;
@@ -66,7 +64,7 @@ public final class DamageUtils {
             target.hurtClient(target.damageSources().playerAttack(player));
         } else {
             ItemType itemType = UnshatteredUtils.getItemType(weapon);
-            AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, (ServerPlayer) player)
+            AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, player)
                     .add(AbilityContextKey.TARGET, target)
                     .add(AbilityContextKey.ITEM_TYPE, itemType)
                     .add(AbilityContextKey.ITEM_STACK, weapon);
@@ -263,7 +261,7 @@ public final class DamageUtils {
                     BlockPos spawnPos = player.level().getRespawnData().pos();
 
                     // greed makes you lose all your coins
-                    if (player.getData(UnshatteredAttachments.PLAYER_ABILITIES).activeEffects.containsKey(UnshatteredAbilities.GREED.get().identifier())) {
+                    if (player.getData(UnshatteredAttachments.PLAYER_ABILITIES).activeEffects.containsKey(UnshatteredAbilities.GREED.get().id())) {
                         coinsLost = currency.getCoins();
                     } else if (scope.results.get(AbilityResult.CANCEL_COIN_LOSS)) {
                         coinsLost = currency.getCoins() / 2;

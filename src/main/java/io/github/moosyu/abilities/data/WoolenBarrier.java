@@ -20,11 +20,10 @@ public class WoolenBarrier extends Ability {
 
     @Override
     public void onTrigger(AbilityContext context) {
-        context.get(AbilityContextKey.PLAYER)
-                .ifPresent(player -> PacketDistributor.sendToPlayer(player,
-                        new ClientsidePlayerSoundEffectPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.WOOL_PLACE),
-                                1.4f
-                        )
-                ));
+        context.getServerPlayer().ifPresent(player -> PacketDistributor.sendToPlayer(player,
+                new ClientsidePlayerSoundEffectPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.WOOL_PLACE),
+                        1.4f
+                )
+        ));
     }
 }

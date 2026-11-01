@@ -1059,7 +1059,7 @@ public class UnshatteredItems {
     public static final DeferredItem<CommonHook> COMMON_HOOK = ITEMS.registerItem("common_hook", CommonHook::new);
 
     public static final DeferredItem<Item> SPEEDY_LINE = ITEMS.registerItem("speedy_line", props -> new BaseAbilityItem(props,
-            UnshatteredAbilities.SPEEDY_LINE_BEACH_BOY
+            UnshatteredAbilities.SPEEDY_LINE_BONUS
     ));
 
     public static final DeferredItem<Item> PRISMARINE_SINKER = ITEMS.registerItem("prismarine_sinker", props -> new BaseAbilityItem(props,

@@ -27,7 +27,7 @@ public final class PlayerAbilityEffectsAttachment {
     private final Set<Ability> activeAbilities = Collections.newSetFromMap(new IdentityHashMap<>());
 
     public void addActiveEffect(Ability ability, long abilityLength, Level level) {
-        addActiveEffect(ability.identifier(), abilityLength, level, ability::onFinish);
+        addActiveEffect(ability.id(), abilityLength, level, ability::deactivate);
     }
 
     /**
@@ -98,11 +98,10 @@ public final class PlayerAbilityEffectsAttachment {
             }
         });
 
-        AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, player);
-
-        for (Ability old : abilityItemStacks.keySet()) {
-            if (!nextSources.containsKey(old) && activeAbilities.remove(old)) {
-                old.onFinish(context);
+        for (Ability oldAbility : abilityItemStacks.keySet()) {
+            AbilityContext oldContext = new AbilityContext().add(AbilityContextKey.PLAYER, player).add(AbilityContextKey.ITEM_STACK, abilityItemStacks.get(oldAbility));
+            if (!nextSources.containsKey(oldAbility) && activeAbilities.remove(oldAbility)) {
+                oldAbility.deactivate(oldContext);
             }
         }
 
@@ -128,8 +127,9 @@ public final class PlayerAbilityEffectsAttachment {
         tickingAbilities = List.copyOf(tickList);
 
         for (Ability ability : tickList) {
-            if (!(ability.trigger == AbilityTriggerType.TICKED) && !activeAbilities.contains(ability) && ability.conditionsMet(context)) {
-                ability.onTrigger(context);
+            AbilityContext tickedContext = new AbilityContext().add(AbilityContextKey.PLAYER, player).add(AbilityContextKey.ITEM_STACK, abilityItemStacks.get(ability));
+            if (!(ability.trigger == AbilityTriggerType.TICKED) && !activeAbilities.contains(ability) && ability.conditionsMet(tickedContext)) {
+                ability.activate(tickedContext);
                 activeAbilities.add(ability);
             }
         }
@@ -171,23 +171,25 @@ public final class PlayerAbilityEffectsAttachment {
         }
 
         for (Ability ability : tickingAbilities) {
-            if (!abilityItemStacks.containsKey(ability)) {
-                continue;
-            }
+            ItemStack source = abilityItemStacks.get(ability);
+            if (source == null) continue;
+            context.add(AbilityContextKey.ITEM_STACK, source);
 
             boolean conditionsMet = ability.conditionsMet(context);
             boolean wasActive = activeAbilities.contains(ability);
 
-            if (ability.trigger == AbilityTriggerType.TICKED) {
-                if (conditionsMet) {
-                    ability.onTrigger(context);
+            if (conditionsMet) {
+                if (ability.trigger == AbilityTriggerType.TICKED) {
+                    ability.activate(context);
                     activeAbilities.add(ability);
+                } else if (!wasActive) {
+                    ability.activate(context);
+                    activeAbilities.add(ability);
+                } else {
+                    ability.applyBonuses(context);
                 }
-            } else if (conditionsMet && !wasActive) {
-                ability.onTrigger(context);
-                activeAbilities.add(ability);
-            } else if (!conditionsMet && wasActive) {
-                ability.onFinish(context);
+            } else if (wasActive) {
+                ability.deactivate(context);
                 activeAbilities.remove(ability);
             }
         }
@@ -220,7 +222,7 @@ public final class PlayerAbilityEffectsAttachment {
         }
 
         for (Ability ability : List.copyOf(activeAbilities)) {
-            ability.onFinish(context);
+            ability.deactivate(context);
         }
 
         activeAbilities.clear();

@@ -31,7 +31,7 @@ public class UnshatteredAbilities {
 
     public static final DeferredHolder<Ability, ExplosiveArrows> EXPLOSIVE_ARROWS = ABILITIES.register("explosive_arrows", ExplosiveArrows::new);
 
-    public static final DeferredHolder<Ability, DrillEngineBoost> MITHRIL_PLATED_DRILL_ENGINE_UBERCHARGED = ABILITIES.register("mithril_plated_drill_engine_ubercharged", () -> new DrillEngineBoost(8, 5));
+    public static final DeferredHolder<Ability, DrillEngineBonus> MITHRIL_PLATED_DRILL_ENGINE_UBERCHARGED = ABILITIES.register("mithril_plated_drill_engine_ubercharged", () -> new DrillEngineBonus(8, 5));
 
     public static final DeferredHolder<Ability, Frugal> FRUGAL = ABILITIES.register("frugal", Frugal::new);
 
@@ -122,9 +122,9 @@ public class UnshatteredAbilities {
 
     public static final DeferredHolder<Ability, Lifesteal> BAT_ARTIFACT_LIFESTEAL = ABILITIES.register("bat_artifact_lifesteal", () -> new Lifesteal(0.15f));
 
-    public static final DeferredHolder<Ability, BeachBoy> SPEEDY_LINE_BEACH_BOY = ABILITIES.register("speedy_line_beach_boy", () ->
-            new BeachBoy(new BeachBoy.LineAttributeGroup(UnshatteredAttributeValues.FISHING_SPEED.holder,
-                    new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("speedy_line_fishing_speed"),
+    public static final DeferredHolder<Ability, LineBonus> SPEEDY_LINE_BONUS = ABILITIES.register("speedy_line_bonus", () ->
+            new LineBonus(new UnshatteredUtils.AttributeGroup(UnshatteredAttributeValues.FISHING_SPEED.holder,
+                    new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("speedy_line_bonus"),
                             10,
                             AttributeModifier.Operation.ADD_VALUE
                     )

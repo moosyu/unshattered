@@ -63,6 +63,8 @@ import static io.github.moosyu.Unshattered.MODID;
 
 // generic utilities i use in multiple places
 public final class UnshatteredUtils {
+    public record AttributeGroup(Holder<Attribute> attributeHolder, AttributeModifier modifier) {}
+
     // text stuff
     public static DecimalFormat oneDecimalFormat = new DecimalFormat("0.#");
     public static final int BLACK = 0xFF000000;

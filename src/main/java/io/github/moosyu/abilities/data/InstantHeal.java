@@ -15,11 +15,10 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-public final class InstantHeal extends ActiveAbility {
+public class InstantHeal extends ActiveAbility {
     private final int healAmount;
 
     public InstantHeal(ItemAbility data, int healAmount) {
@@ -29,22 +28,24 @@ public final class InstantHeal extends ActiveAbility {
 
     @Override
     protected boolean canActivate(AbilityContext context) {
-        Optional<ServerPlayer> optionalPlayer = context.get(AbilityContextKey.PLAYER);
+        Optional<ServerPlayer> optionalPlayer = context.getServerPlayer();
         Optional<ItemStack> optionalItemStack = context.get(AbilityContextKey.ITEM_STACK);
-        if (optionalPlayer.isEmpty() || optionalItemStack.isEmpty()) return false;
+        if (optionalPlayer.isEmpty() || optionalItemStack.isEmpty()) {
+            return false;
+        }
 
         ServerPlayer player = optionalPlayer.get();
         ItemCharges charges = optionalItemStack.get().get(UnshatteredDataComponents.CHARGES.get());
         if (player.getAttribute(UnshatteredAttributeValues.MAX_HEALTH.holder) == null || charges == null) {
-            Unshattered.LOGGER.error("max health attribute or charges missing (from {})", identifier());
+            Unshattered.LOGGER.error("max health attribute or charges missing (from {})", id());
             return false;
         }
-        return player.isCreative() || UnshatteredUtils.passesChargesCheck(player, charges, identifier());
+        return player.isCreative() || UnshatteredUtils.passesChargesCheck(player, charges, id());
     }
 
     @Override
     protected void onActivate(AbilityContext context, boolean refreshing) {
-        ServerPlayer player = context.get(AbilityContextKey.PLAYER).orElseThrow();
+        ServerPlayer player = context.getServerPlayer().orElseThrow();
         ItemStack itemStack = context.get(AbilityContextKey.ITEM_STACK).orElseThrow();
 
         if (!player.isCreative()) {
@@ -64,7 +65,7 @@ public final class InstantHeal extends ActiveAbility {
 
     @Override
     protected long effectDuration(AbilityContext context) {
-        ServerPlayer player = context.get(AbilityContextKey.PLAYER).orElseThrow();
+        ServerPlayer player = context.getServerPlayer().orElseThrow();
         if (player.isCreative()) {
             return 0;
         }

@@ -33,14 +33,19 @@ public class ExplosiveArrows extends Ability {
 
     @Override
     public void onTrigger(AbilityContext context) {
-        Optional<ServerPlayer> player = context.get(AbilityContextKey.PLAYER);
+        Optional<ServerPlayer> optionalServerPlayer = context.getServerPlayer();
+        if (optionalServerPlayer.isEmpty()) {
+            return;
+        }
+
+        ServerPlayer player = optionalServerPlayer.get();
         Optional<LivingEntity> target = context.get(AbilityContextKey.TARGET);
 
-        if (player.isPresent() && target.isPresent()) {
-            Optional<AttributeInstance> finalDamageAttribute = UnshatteredUtils.getAttributeInstance(player.get(), UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder);
+        if (target.isPresent()) {
+            Optional<AttributeInstance> finalDamageAttribute = UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder);
             finalDamageAttribute.ifPresent(attribute ->
                     attribute.addTransientModifier(new AttributeModifier(
-                            identifier(),
+                            id(),
                             -(attribute.getValue() - 0.8),
                             AttributeModifier.Operation.ADD_VALUE
                     ))
@@ -55,17 +60,17 @@ public class ExplosiveArrows extends Ability {
             );
 
             int validEntities = 0;
-            for (Entity entity : player.get().level().getEntities(null, boundingBox)) {
+            for (Entity entity : player.level().getEntities(null, boundingBox)) {
                 if (entity instanceof LivingEntity livingEntity && !(livingEntity instanceof Player) && livingEntity != target.get()) {
-                    DamageUtils.playerDealDamage(player.get(),
+                    DamageUtils.playerDealDamage(player,
                             livingEntity,
-                            player.get().getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder),
+                            player.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder),
                             false,
-                            player.get().getMainHandItem(),
+                            player.getMainHandItem(),
                             false
                     );
 
-                    player.get().level().sendParticles(ParticleTypes.SOUL_FIRE_FLAME,
+                    player.level().sendParticles(ParticleTypes.SOUL_FIRE_FLAME,
                             livingEntity.getX(),
                             livingEntity.getY() + 0.2,
                             livingEntity.getZ(),
@@ -81,7 +86,7 @@ public class ExplosiveArrows extends Ability {
             }
 
             if (validEntities > 0) {
-                player.get().level().playSound(null,
+                player.level().playSound(null,
                         target.get().blockPosition(),
                         SoundEvents.SKELETON_HURT,
                         SoundSource.PLAYERS,
@@ -96,6 +101,6 @@ public class ExplosiveArrows extends Ability {
     public void onFinish(AbilityContext context) {
         context.get(AbilityContextKey.PLAYER).flatMap(player -> UnshatteredUtils.getAttributeInstance(player,
                 UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder)
-        ).ifPresent(attribute -> attribute.removeModifier(identifier()));
+        ).ifPresent(attribute -> attribute.removeModifier(id()));
     }
 }

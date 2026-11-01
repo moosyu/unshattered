@@ -9,10 +9,10 @@ import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.datagen.UnshatteredBlockTagsProvider;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
+import java.util.List;
 import java.util.Optional;
 
 public class MithrilMiner extends Ability {
@@ -26,7 +26,7 @@ public class MithrilMiner extends Ability {
 
     @Override
     public boolean conditionsMet(AbilityContext context) {
-        Optional<ServerPlayer> player = context.get(AbilityContextKey.PLAYER);
+        Optional<ServerPlayer> player = context.getServerPlayer();
         return player.map(
                 serverPlayer ->
                         UnshatteredUtils.getLookedAtBlock(serverPlayer, serverPlayer.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE))
@@ -36,22 +36,7 @@ public class MithrilMiner extends Ability {
     }
 
     @Override
-    public void onTrigger(AbilityContext context) {
-        context.get(AbilityContextKey.PLAYER).ifPresent(player -> {
-            AttributeInstance miningSpeed = player.getAttribute(UnshatteredAttributeValues.MINING_SPEED.holder);
-            if (miningSpeed != null) {
-                miningSpeed.addTransientModifier(new AttributeModifier(identifier(), speedBoost, AttributeModifier.Operation.ADD_VALUE));
-            }
-        });
-    }
-
-    @Override
-    public void onFinish(AbilityContext context) {
-        context.get(AbilityContextKey.PLAYER).ifPresent(player -> {
-            AttributeInstance miningSpeed = player.getAttribute(UnshatteredAttributeValues.MINING_SPEED.holder);
-            if (miningSpeed != null) {
-                miningSpeed.removeModifier(identifier());
-            }
-        });
+    public List<UnshatteredUtils.AttributeGroup> attributeBonuses(AbilityContext context) {
+        return List.of(new UnshatteredUtils.AttributeGroup(UnshatteredAttributeValues.MINING_SPEED.holder, new AttributeModifier(id(), speedBoost, AttributeModifier.Operation.ADD_VALUE)));
     }
 }

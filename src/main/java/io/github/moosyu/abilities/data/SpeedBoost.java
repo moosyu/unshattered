@@ -2,12 +2,11 @@ package io.github.moosyu.abilities.data;
 
 import io.github.moosyu.abilities.*;
 import io.github.moosyu.data.components.ItemAbility;
-import io.github.moosyu.items.weapons.swords.RogueSword;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
-public final class SpeedBoost extends ActiveAbility {
+public class SpeedBoost extends ActiveAbility {
     private static final double SPEED_BOOST_AMOUNT = 0.05;
 
     public SpeedBoost() {
@@ -28,7 +27,7 @@ public final class SpeedBoost extends ActiveAbility {
 
             if (movementSpeedAttribute != null) {
                 movementSpeedAttribute.addOrUpdateTransientModifier(
-                        new AttributeModifier(identifier(),
+                        new AttributeModifier(id(),
                                 SPEED_BOOST_AMOUNT,
                                 AttributeModifier.Operation.ADD_VALUE
                         )
@@ -42,7 +41,7 @@ public final class SpeedBoost extends ActiveAbility {
         context.get(AbilityContextKey.PLAYER).ifPresent(player -> {
             AttributeInstance movementSpeedAttribute = player.getAttribute(Attributes.MOVEMENT_SPEED);
             if (movementSpeedAttribute != null) {
-                movementSpeedAttribute.removeModifier(identifier());
+                movementSpeedAttribute.removeModifier(id());
             }
         });
     }

@@ -27,10 +27,12 @@ public class PainToPower extends Ability {
     }
 
     public void onTrigger(AbilityContext context) {
-        context.get(AbilityContextKey.PLAYER).ifPresent(player -> {
+        context.getServerPlayer().ifPresent(player -> {
             AttributeInstance ferocity = player.getAttribute(UnshatteredAttributeValues.FEROCITY.holder);
             AttributeInstance health = player.getAttribute(UnshatteredAttributeValues.MAX_HEALTH.holder);
 
+            System.out.println(ferocity);
+            System.out.println(health);
             if (ferocity == null || health == null) {
                 return;
             }
@@ -38,15 +40,15 @@ public class PainToPower extends Ability {
             PacketDistributor.sendToPlayer(player, new ClientsidePlayerSoundEffectPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.TRIDENT_HIT), 1.0f));
 
             PlayerAbilityEffectsAttachment abilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES.get());
-            if (abilities.activeEffects.containsKey(identifier())) {
-                AttributeModifier prevModifier = ferocity.getModifier(identifier());
+            if (abilities.activeEffects.containsKey(id())) {
+                AttributeModifier prevModifier = ferocity.getModifier(id());
 
                 if (prevModifier != null) {
-                    ferocity.removeModifier(identifier());
-                    ferocity.addTransientModifier(new AttributeModifier(identifier(), prevModifier.amount() + 20, AttributeModifier.Operation.ADD_VALUE));
+                    ferocity.removeModifier(id());
+                    ferocity.addTransientModifier(new AttributeModifier(id(), prevModifier.amount() + 20, AttributeModifier.Operation.ADD_VALUE));
                 }
             } else {
-                ferocity.addTransientModifier(new AttributeModifier(identifier(), 20, AttributeModifier.Operation.ADD_VALUE));
+                ferocity.addTransientModifier(new AttributeModifier(id(), 20, AttributeModifier.Operation.ADD_VALUE));
             }
 
             abilities.addActiveEffect(this, 600, player.level());
@@ -60,8 +62,8 @@ public class PainToPower extends Ability {
                             .getOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, UnshatteredUtils.getUnshatteredIdentifier("blood_chalice")))
                     )
             )) {
-                ferocity.removeModifier(identifier());
-                abilities.removeActiveEffect(identifier(), player);
+                ferocity.removeModifier(id());
+                abilities.removeActiveEffect(id(), player);
             }
         });
     }
@@ -71,7 +73,7 @@ public class PainToPower extends Ability {
         context.get(AbilityContextKey.PLAYER).ifPresent(player -> {
             AttributeInstance ferocity = player.getAttribute(UnshatteredAttributeValues.FEROCITY.holder);
             if (ferocity != null) {
-                ferocity.removeModifier(identifier());
+                ferocity.removeModifier(id());
             }
         });
     }

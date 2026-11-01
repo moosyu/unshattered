@@ -36,7 +36,12 @@ public class Cleave extends Ability {
             return;
         }
 
-        ServerPlayer player = context.get(AbilityContextKey.PLAYER).get();
+        Optional<ServerPlayer> optionalServerPlayer = context.getServerPlayer();
+        if (optionalServerPlayer.isEmpty()) {
+            return;
+        }
+
+        ServerPlayer player = optionalServerPlayer.get();
         LivingEntity target = context.get(AbilityContextKey.TARGET).get();
         Level level = player.level();
 
@@ -56,7 +61,7 @@ public class Cleave extends Ability {
         Optional<AttributeInstance> finalDamageAttribute = UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder);
         finalDamageAttribute.ifPresent(attribute ->
                 attribute.addTransientModifier(new AttributeModifier(
-                        identifier(),
+                        id(),
                         -(attribute.getValue() - (1 - cleaveDamageFraction)),
                         AttributeModifier.Operation.ADD_VALUE
                 ))
@@ -81,6 +86,6 @@ public class Cleave extends Ability {
         context.get(AbilityContextKey.PLAYER).flatMap(
                 player -> UnshatteredUtils.getAttributeInstance(player,
                         UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder)
-        ).ifPresent(attribute -> attribute.removeModifier(identifier()));
+        ).ifPresent(attribute -> attribute.removeModifier(id()));
     }
 }

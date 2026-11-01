@@ -53,7 +53,7 @@ public final class AbilityScope implements AutoCloseable {
             }
 
             triggered.add(new Triggered(ability, source));
-            ability.onTrigger(context);
+            ability.activate(context);
             results.merge(ability.abilityResults);
         }
 
@@ -83,9 +83,9 @@ public final class AbilityScope implements AutoCloseable {
             }
 
             try {
-                triggered.ability().onFinish(context);
+                triggered.ability().deactivate(context);
             } catch (RuntimeException exception) {
-                Unshattered.LOGGER.error("onFinish failed for {}", triggered.ability().identifier(), exception);
+                Unshattered.LOGGER.error("onFinish failed for {}", triggered.ability().id(), exception);
             }
         }
     }

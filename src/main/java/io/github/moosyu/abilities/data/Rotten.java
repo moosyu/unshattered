@@ -11,6 +11,8 @@ import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.phys.AABB;
 
+import java.util.List;
+
 public class Rotten extends Ability {
     public static int DIAMETER = 10;
 
@@ -26,7 +28,7 @@ public class Rotten extends Ability {
             int fortuneBoost = player.level().getEntities(null, boundingBox).stream().filter(entity -> entity.is(EntityTypeTags.UNDEAD)).mapToInt(_ -> 5).sum();
             if (fortuneBoost > 0) {
                 UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValues.MINING_FORTUNE.holder).ifPresent(attribute ->
-                        attribute.addTransientModifier(new AttributeModifier(identifier(), fortuneBoost, AttributeModifier.Operation.ADD_VALUE))
+                        attribute.addTransientModifier(new AttributeModifier(id(), fortuneBoost, AttributeModifier.Operation.ADD_VALUE))
                 );
             }
         });
@@ -36,6 +38,39 @@ public class Rotten extends Ability {
     public void onFinish(AbilityContext context) {
         context.get(AbilityContextKey.PLAYER).flatMap(player -> UnshatteredUtils.getAttributeInstance(player,
                 UnshatteredAttributeValues.MINING_FORTUNE.holder)
-        ).ifPresent(attribute -> attribute.removeModifier(identifier()));
+        ).ifPresent(attribute -> attribute.removeModifier(id()));
+    }
+
+    @Override
+    public List<UnshatteredUtils.AttributeGroup> attributeBonuses(AbilityContext context) {
+        return context.get(AbilityContextKey.PLAYER).<List<UnshatteredUtils.AttributeGroup>>map(player -> {
+            AABB boundingBox = AABB.ofSize(
+                    player.position(),
+                    DIAMETER + 1,
+                    DIAMETER + 1,
+                    DIAMETER + 1
+            );
+
+            int fortuneBoost = player.level()
+                    .getEntities(null, boundingBox)
+                    .stream()
+                    .filter(entity -> entity.is(EntityTypeTags.UNDEAD))
+                    .mapToInt(_ -> 5)
+                    .sum();
+
+            if (fortuneBoost > 0) {
+                UnshatteredUtils.getAttributeInstance(
+                        player,
+                        UnshatteredAttributeValues.MINING_FORTUNE.holder
+                ).ifPresent(attribute -> attribute.addTransientModifier(
+                        new AttributeModifier(
+                                id(),
+                                fortuneBoost,
+                                AttributeModifier.Operation.ADD_VALUE
+                        ))
+                );
+            }
+            return List.of();
+        }).orElse(List.of());
     }
 }

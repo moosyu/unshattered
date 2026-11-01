@@ -8,6 +8,8 @@ import io.github.moosyu.data.regions.UnshatteredRegions;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
+import java.util.List;
+
 public class ParkEnthusiast extends Ability {
     private final float foragingFortuneAmount;
 
@@ -24,20 +26,7 @@ public class ParkEnthusiast extends Ability {
     }
 
     @Override
-    public void onTrigger(AbilityContext context) {
-        context.get(AbilityContextKey.PLAYER)
-                .flatMap(player -> UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValues.FORAGING_FORTUNE.holder))
-                .ifPresent(attr -> attr.addOrUpdateTransientModifier(
-                        new AttributeModifier(identifier(), foragingFortuneAmount, AttributeModifier.Operation.ADD_VALUE))
-                );
-    }
-
-    @Override
-    public void onFinish(AbilityContext context) {
-        context.get(AbilityContextKey.PLAYER).flatMap(player -> UnshatteredUtils.getAttributeInstance(player,
-                UnshatteredAttributeValues.FORAGING_FORTUNE.holder)
-        ).ifPresent(attribute ->
-                attribute.removeModifier(identifier())
-        );
+    public List<UnshatteredUtils.AttributeGroup> attributeBonuses(AbilityContext context) {
+        return List.of(new UnshatteredUtils.AttributeGroup(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(id(), foragingFortuneAmount, AttributeModifier.Operation.ADD_VALUE)));
     }
 }

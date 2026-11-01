@@ -12,6 +12,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
+import java.util.List;
 import java.util.Optional;
 
 public class TitaniumFanatic extends Ability {
@@ -25,7 +26,7 @@ public class TitaniumFanatic extends Ability {
 
     @Override
     public boolean conditionsMet(AbilityContext context) {
-        Optional<ServerPlayer> player = context.get(AbilityContextKey.PLAYER);
+        Optional<ServerPlayer> player = context.getServerPlayer();
         return player.map(
                 serverPlayer -> UnshatteredUtils.getLookedAtBlock(serverPlayer, serverPlayer.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE))
                         .map(
@@ -37,16 +38,7 @@ public class TitaniumFanatic extends Ability {
     }
 
     @Override
-    public void onTrigger(AbilityContext context) {
-        context.get(AbilityContextKey.PLAYER).flatMap(player -> UnshatteredUtils.getAttributeInstance(player,
-                UnshatteredAttributeValues.MINING_FORTUNE.holder)
-        ).ifPresent(attribute -> attribute.addTransientModifier(new AttributeModifier(identifier(), fortuneBoost, AttributeModifier.Operation.ADD_VALUE)));
-    }
-
-    @Override
-    public void onFinish(AbilityContext context) {
-        context.get(AbilityContextKey.PLAYER).flatMap(player -> UnshatteredUtils.getAttributeInstance(player,
-                UnshatteredAttributeValues.MINING_FORTUNE.holder)
-        ).ifPresent(attribute -> attribute.removeModifier(identifier()));
+    public List<UnshatteredUtils.AttributeGroup> attributeBonuses(AbilityContext context) {
+        return List.of(new UnshatteredUtils.AttributeGroup(UnshatteredAttributeValues.MINING_FORTUNE.holder, new AttributeModifier(id(), fortuneBoost, AttributeModifier.Operation.ADD_VALUE)));
     }
 }

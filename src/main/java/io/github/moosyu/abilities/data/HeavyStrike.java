@@ -6,43 +6,30 @@ import io.github.moosyu.abilities.AbilityContextKey;
 import io.github.moosyu.abilities.AbilityTriggerType;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.ItemAbility;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
+import java.util.List;
+
 public class HeavyStrike extends Ability {
     public HeavyStrike() {
-        super(new ItemAbility(), AbilityTriggerType.TICKED);
+        super(new ItemAbility(), AbilityTriggerType.ONGOING);
     }
 
     @Override
-    public void onTrigger(AbilityContext context) {
-        context.get(AbilityContextKey.PLAYER).ifPresent(player -> {
+    public List<UnshatteredUtils.AttributeGroup> attributeBonuses(AbilityContext context) {
+        return context.get(AbilityContextKey.PLAYER).map(player -> {
             AttributeInstance strength = player.getAttribute(UnshatteredAttributeValues.STRENGTH.holder);
-            AttributeInstance miningSpeed = player.getAttribute(UnshatteredAttributeValues.MINING_SPEED.holder);
-            if (miningSpeed != null && strength != null) {
-                AttributeModifier attributeModifier = miningSpeed.getModifier(identifier());
-                int bonusMiningSpeed = ((int) strength.getValue() / 20) * 4;
-                if (attributeModifier != null) {
-                    if (attributeModifier.amount() != bonusMiningSpeed) {
-                        miningSpeed.removeModifier(identifier());
-                        miningSpeed.addTransientModifier(new AttributeModifier(identifier(), bonusMiningSpeed, AttributeModifier.Operation.ADD_VALUE));
-                    }
-                } else {
-                    miningSpeed.addTransientModifier(new AttributeModifier(identifier(), bonusMiningSpeed, AttributeModifier.Operation.ADD_VALUE));
-                }
+            if (strength == null) {
+                return List.<UnshatteredUtils.AttributeGroup>of();
             }
-        });
-    }
 
-    @Override
-    public void onFinish(AbilityContext context) {
-        context.get(AbilityContextKey.PLAYER).ifPresent(player -> {
-            AttributeInstance strength = player.getAttribute(UnshatteredAttributeValues.STRENGTH.holder);
-            AttributeInstance miningSpeed = player.getAttribute(UnshatteredAttributeValues.MINING_SPEED.holder);
-            if (miningSpeed != null && strength != null) {
-                strength.removeModifier(identifier());
-                miningSpeed.removeModifier(identifier());
-            }
-        });
+            double bonus = Math.floor(strength.getValue() / 20) * 4;
+            return List.of(new UnshatteredUtils.AttributeGroup(
+                    UnshatteredAttributeValues.MINING_SPEED.holder,
+                    new AttributeModifier(id(), bonus, AttributeModifier.Operation.ADD_VALUE))
+            );
+        }).orElse(List.of());
     }
 }

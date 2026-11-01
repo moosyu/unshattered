@@ -5,11 +5,8 @@ import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.datagen.UnshatteredEntityTagsProvider;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.network.chat.Component;
-import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-
-import java.util.Set;
 
 public class FishOutOfLava extends Ability {
     public FishOutOfLava() {

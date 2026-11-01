@@ -1,7 +1,6 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.abilities.Ability;
-import io.github.moosyu.abilities.AbilityItem;
+import io.github.moosyu.abilities.*;
 import io.github.moosyu.abilities.data.Incremental;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.components.*;
@@ -24,6 +23,7 @@ import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -36,6 +36,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -45,15 +46,16 @@ import static io.github.moosyu.Unshattered.MODID;
 @EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
 public class ItemTooltipHandler {
     private final static int MAX_WIDTH = 200;
+    private final static int SPEED_MULTIPLIER = 10;
+
     @SubscribeEvent
     public static void onItemTooltip(ItemTooltipEvent event) {
-        if (event.getEntity() != null && !event.getEntity().level().isClientSide()) {
-            return;
-        }
         Player player = event.getEntity();
-        if (player == null) {
+
+        if (player == null || !event.getEntity().level().isClientSide()) {
             return;
         }
+
         ItemStack itemStack = event.getItemStack();
         List<Component> tooltipComponents = event.getToolTip();
         UnshatteredRarity itemRarity = UnshatteredUtils.getItemRarity(itemStack);
@@ -71,42 +73,72 @@ public class ItemTooltipHandler {
         event.getToolTip().clear();
         tooltipComponents.add(Component.translatable(itemStack.getItemName().getString()).withColor(itemRarity.getColour()));
 
-        if (!modifiers.modifiers().isEmpty()) {
-            Map<Holder<Attribute>, double[]> mergedAmounts = new LinkedHashMap<>();
+        Map<Holder<Attribute>, double[]> mergedAmounts = new LinkedHashMap<>();
+        List<AttributeModifier> finalDamageModifiers = new ArrayList<>();
 
-            for (ItemAttributeModifiers.Entry entry : modifiers.modifiers()) {
-                Holder<Attribute> attributeHolder = entry.attribute();
-                double amount = entry.modifier().amount();
+        for (ItemAttributeModifiers.Entry entry : modifiers.modifiers()) {
+            Holder<Attribute> attributeHolder = entry.attribute();
 
-                if (attributeHolder == Attributes.MOVEMENT_SPEED) {
-                    amount *= 10;
-                }
-
-                mergedAmounts.computeIfAbsent(attributeHolder, _ -> new double[1])[0] += amount;
+            // not shown as its own line, folded into the damage line below
+            if (isFinalDamageModifier(attributeHolder)) {
+                finalDamageModifiers.add(entry.modifier());
+                continue;
             }
 
+            double amount = entry.modifier().amount();
+
+            if (attributeHolder == Attributes.MOVEMENT_SPEED) {
+                amount *= SPEED_MULTIPLIER;
+            }
+
+            mergedAmounts.computeIfAbsent(attributeHolder, _ -> new double[1])[0] += amount;
+        }
+
+        collectAbilityBonuses(player, itemStack, mergedAmounts, finalDamageModifiers);
+        if (itemAttachments != null) {
+            itemAttachments.attachments().forEach((_, attachment) -> collectAbilityBonuses(player, attachment, mergedAmounts, finalDamageModifiers));
+        }
+
+        double extraDamage = 0.0;
+        if (!finalDamageModifiers.isEmpty()) {
+            double displayedDamage = 0.0;
             for (Map.Entry<Holder<Attribute>, double[]> entry : mergedAmounts.entrySet()) {
-                Holder<Attribute> attributeHolder = entry.getKey();
-                double amount = entry.getValue()[0];
-
-                if (amount == 0.0) {
-                    continue;
+                if (UnshatteredAttributeValues.fromAttribute(entry.getKey().value()) == UnshatteredAttributeValues.DAMAGE) {
+                    displayedDamage = entry.getValue()[0];
+                    break;
                 }
+            }
 
-                UnshatteredAttributeValues itemAttribute = UnshatteredAttributeValues.fromAttribute(attributeHolder.value());
+            double base = UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder.value().getDefaultValue();
+            if (base != 0) {
+                extraDamage = displayedDamage * (evaluateModifiers(base, finalDamageModifiers) / base - 1);
+            }
+        }
 
-                hasAttributes = true;
-                if (itemAttribute == null) {
-                    boolean isSpeed = attributeHolder == Attributes.MOVEMENT_SPEED;
-                    boolean isRange = attributeHolder == Attributes.ENTITY_INTERACTION_RANGE;
+        for (Map.Entry<Holder<Attribute>, double[]> entry : mergedAmounts.entrySet()) {
+            Holder<Attribute> attributeHolder = entry.getKey();
+            double amount = entry.getValue()[0];
 
-                    // this might be the most brilliant line of code in my career, feeling real smart right now
-                    if (isSpeed || isRange) {
-                        addAttributeToTooltip(tooltipComponents, attributeHolder, amount, false, false, isRange);
-                    }
-                } else {
-                    addAttributeToTooltip(tooltipComponents, attributeHolder, amount, itemAttribute.percentage, itemAttribute.offensive, true);
+            if (amount == 0.0) {
+                continue;
+            }
+
+            UnshatteredAttributeValues itemAttribute = UnshatteredAttributeValues.fromAttribute(attributeHolder.value());
+
+            hasAttributes = true;
+            if (itemAttribute == null) {
+                boolean isSpeed = attributeHolder == Attributes.MOVEMENT_SPEED;
+                boolean isRange = attributeHolder == Attributes.ENTITY_INTERACTION_RANGE;
+
+                if (isSpeed || isRange) {
+                    addAttributeToTooltip(tooltipComponents, attributeHolder, amount, false, false, isRange, null);
                 }
+            } else {
+                Component suffix = (itemAttribute == UnshatteredAttributeValues.DAMAGE && (int) extraDamage > 0)
+                        ? Component.literal(" (+" + (int) extraDamage + ")").withStyle(ChatFormatting.GOLD)
+                        : null;
+
+                addAttributeToTooltip(tooltipComponents, attributeHolder, amount, itemAttribute.percentage, itemAttribute.offensive, true, suffix);
             }
         }
 
@@ -214,11 +246,11 @@ public class ItemTooltipHandler {
                 Ability itemAbility = abilitySupplier.get();
                 tooltipComponents.add(Component.empty());
                 if (itemAbility.data.passive()) {
-                    tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.identifier().getPath())).withColor(0xFFFFAA00));
-                    addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.identifier().getPath()).getString(), 0xFFAAAAAA, player));
+                    tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.id().getPath())).withColor(0xFFFFAA00));
+                    addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.id().getPath()).getString(), 0xFFAAAAAA, player));
                 } else {
-                    tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.identifier().getPath())).withColor(0xFFFFAA00).append(Component.literal(" RIGHT CLICK").withColor(0xFFFFFF55).withStyle(ChatFormatting.BOLD)));
-                    addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.identifier().getPath()).getString(), 0xFFAAAAAA, player));
+                    tooltipComponents.add(Component.literal("Ability: ").append(Component.translatable("item.ability.unshattered." + itemAbility.id().getPath())).withColor(0xFFFFAA00).append(Component.literal(" RIGHT CLICK").withColor(0xFFFFFF55).withStyle(ChatFormatting.BOLD)));
+                    addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + itemAbility.id().getPath()).getString(), 0xFFAAAAAA, player));
 
                     if (itemAbility.data.manaCost() > 0) tooltipComponents.add(Component.literal("Mana Cost: ").withStyle(ChatFormatting.DARK_GRAY).append(Component.literal(String.valueOf(itemAbility.data.manaCost())).withColor(0xFF00AAAA)));
                     if (itemAbility.data.cooldown() > 0) tooltipComponents.add(Component.literal("Cooldown: ").withStyle(ChatFormatting.DARK_GRAY).append(Component.literal(String.format("%.1f", (float) itemAbility.data.cooldown() / 20 /* convert ticks to seconds */)).append("s").withColor(0xFF55FF55)));
@@ -256,9 +288,15 @@ public class ItemTooltipHandler {
                                 )
                         );
 
-                        addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + ability.get().identifier().getPath()).getString(), 0xFFAAAAAA, player));
+                        addWrappedText(tooltipComponents, UnshatteredUtils.parseStyledText(Component.translatable("item.ability.description.unshattered." + ability.get().id().getPath()).getString(), 0xFFAAAAAA, player));
                         tooltipComponents.add(Component.empty());
                     });
+                } else {
+                    tooltipComponents.add(Component.translatable("item_type.unshattered." + slotType.correspondingType.getSerializedName()).withColor(0xFF459BFF)
+                            .append(Component.literal(" "))
+                            .append(Component.translatable("tooltip.unshattered.none").withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.BOLD))
+                    );
+                    tooltipComponents.add(Component.empty());
                 }
             }));
         }
@@ -319,11 +357,82 @@ public class ItemTooltipHandler {
         }
     }
 
-    private static void addAttributeToTooltip(List<Component> tooltipComponents, Holder<Attribute> attributeHolder, double amount, boolean percentage, boolean offensive, boolean truncate) {
-        tooltipComponents.add(Component.translatable(attributeHolder.value().getDescriptionId())
+    private static void addAttributeToTooltip(List<Component> tooltipComponents, Holder<Attribute> attributeHolder, double amount, boolean percentage, boolean offensive, boolean truncate, @Nullable Component suffix) {
+        MutableComponent line = Component.translatable(attributeHolder.value().getDescriptionId())
                 .append(Component.literal(": ")).withStyle(ChatFormatting.GRAY)
                 .append(Component.literal("+" + (truncate ? (int) amount : UnshatteredUtils.oneDecimalFormat.format(amount)) + (percentage ? "%" : ""))
-                        .withStyle((offensive) ? ChatFormatting.RED : ChatFormatting.GREEN))
-        );
+                        .withStyle((offensive) ? ChatFormatting.RED : ChatFormatting.GREEN));
+
+        if (suffix != null) {
+            line.append(suffix);
+        }
+
+        tooltipComponents.add(line);
+    }
+
+    private static boolean isFinalDamageModifier(Holder<Attribute> holder) {
+        return UnshatteredAttributeValues.fromAttribute(holder.value()) == UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER;
+    }
+
+    /**
+     * does the same maths vanilla uses to turn modifiers into an attribute value:
+     * (base + all ADD_VALUE) * (1 + all ADD_MULTIPLIED_BASE) * each (1 + ADD_MULTIPLIED_TOTAL)
+     */
+    private static double evaluateModifiers(double base, List<AttributeModifier> modifiers) {
+        double add = 0.0;
+        double multipliedBase = 0.0;
+        double multipliedTotal = 1.0;
+
+        for (AttributeModifier modifier : modifiers) {
+            switch (modifier.operation()) {
+                case ADD_VALUE -> add += modifier.amount();
+                case ADD_MULTIPLIED_BASE -> multipliedBase += modifier.amount();
+                case ADD_MULTIPLIED_TOTAL -> multipliedTotal *= 1 + modifier.amount();
+            }
+        }
+
+        return (base + add) * (1 + multipliedBase) * multipliedTotal;
+    }
+
+    private static void collectAbilityBonuses(Player player, ItemStack source, Map<Holder<Attribute>, double[]> merged, List<AttributeModifier> finalDamageModifiers) {
+        if (!(source.getItem() instanceof AbilityItem abilityItem)) {
+            return;
+        }
+
+        for (Supplier<? extends Ability> supplier : abilityItem.abilities()) {
+            Ability ability = supplier.get();
+
+            if (ability.trigger != AbilityTriggerType.ONGOING) {
+                continue;
+            }
+
+            AbilityContext context = new AbilityContext()
+                    .add(AbilityContextKey.PLAYER, player)
+                    .add(AbilityContextKey.ITEM_STACK, source);
+
+            if (!ability.conditionsMet(context)) {
+                continue;
+            }
+
+            for (UnshatteredUtils.AttributeGroup group : ability.attributeBonuses(context)) {
+                AttributeModifier modifier = group.modifier();
+
+                if (isFinalDamageModifier(group.attributeHolder())) {
+                    finalDamageModifiers.add(modifier);
+                    continue;
+                }
+
+                if (modifier.operation() != AttributeModifier.Operation.ADD_VALUE) {
+                    continue;
+                }
+
+                double amount = modifier.amount();
+                if (group.attributeHolder() == Attributes.MOVEMENT_SPEED) {
+                    amount *= SPEED_MULTIPLIER;
+                }
+
+                merged.computeIfAbsent(group.attributeHolder(), _ -> new double[1])[0] += amount;
+            }
+        }
     }
 }

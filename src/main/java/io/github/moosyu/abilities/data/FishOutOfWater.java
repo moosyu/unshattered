@@ -8,8 +8,6 @@ import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.Set;
-
 public class FishOutOfWater extends Ability {
     public FishOutOfWater() {
         super(new ItemAbility(), AbilityTriggerType.PLAYER_DEAL_DAMAGE, new AbilityResults().add(AbilityResult.CANCEL_EVENT, true));

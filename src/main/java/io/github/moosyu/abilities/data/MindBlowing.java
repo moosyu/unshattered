@@ -10,6 +10,8 @@ import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
+import java.util.List;
+
 public class MindBlowing extends Ability {
     public MindBlowing() {
         super(new ItemAbility(), AbilityTriggerType.PLAYER_DEAL_DAMAGE);
@@ -21,24 +23,10 @@ public class MindBlowing extends Ability {
     }
 
     @Override
-    public void onTrigger(AbilityContext context) {
-        context.get(AbilityContextKey.PLAYER).flatMap(
-                player -> UnshatteredUtils.getAttributeInstance(
-                        player,
-                        UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder)
-        ).ifPresent(attribute -> attribute.addTransientModifier(
-                new AttributeModifier(identifier(),
+    public List<UnshatteredUtils.AttributeGroup> attributeBonuses(AbilityContext context) {
+        return List.of(new UnshatteredUtils.AttributeGroup(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder, new AttributeModifier(id(),
                 1.0,
                 AttributeModifier.Operation.ADD_MULTIPLIED_BASE))
         );
-    }
-
-    @Override
-    public void onFinish(AbilityContext context) {
-        context.get(AbilityContextKey.PLAYER).flatMap(
-                player -> UnshatteredUtils.getAttributeInstance(
-                        player,
-                        UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder)
-        ).ifPresent(attribute -> attribute.removeModifier(identifier()));
     }
 }

@@ -125,7 +125,7 @@ public class ItemAttributeModifierHandler {
                     event.addModifier(stage.attributeHolder(),
                             new AttributeModifier(
                                     UnshatteredUtils.getUnshatteredIdentifier(
-                                            incremental.identifier().getPath() + "_"
+                                            incremental.id().getPath() + "_"
                                                     + stage.attributeHolder().value().getDescriptionId() + "_incremental"),
                                     milestone * stage.amountPerMilestone(),
                                     AttributeModifier.Operation.ADD_VALUE),

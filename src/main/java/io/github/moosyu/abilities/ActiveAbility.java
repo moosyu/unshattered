@@ -42,7 +42,7 @@ public abstract class ActiveAbility extends Ability {
         }
 
         PlayerAbilityEffectsAttachment effects = player.getData(UnshatteredAttachments.PLAYER_ABILITIES.get());
-        boolean refreshing = effects.activeEffects.containsKey(identifier());
+        boolean refreshing = effects.activeEffects.containsKey(id());
 
         onActivate(context, refreshing);
 
