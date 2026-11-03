@@ -6,11 +6,14 @@ import io.github.moosyu.abilities.AbilityContextKey;
 import io.github.moosyu.abilities.AbilityTriggerType;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.blocks.UnshatteredBlocks;
+import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
+import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,21 +22,16 @@ public class TitaniumFanatic extends Ability {
     private final int fortuneBoost;
 
     public TitaniumFanatic(int fortuneBoost) {
-        super(new ItemAbility(), AbilityTriggerType.PLAYER_BREAK_MINING_BLOCK);
+        super(new ItemAbility(), AbilityTriggerType.ONGOING);
 
         this.fortuneBoost = fortuneBoost;
     }
 
     @Override
     public boolean conditionsMet(AbilityContext context) {
-        Optional<ServerPlayer> player = context.getServerPlayer();
-        return player.map(
-                serverPlayer -> UnshatteredUtils.getLookedAtBlock(serverPlayer, serverPlayer.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE))
-                        .map(
-                                blockHitResult -> serverPlayer.level()
-                                        .getBlockState(blockHitResult.getBlockPos())
-                                        .is(UnshatteredBlocks.BREAKABLE_TITANIUM_BLOCK)
-                        ).orElse(false)
+        Optional<Player> optionalPlayer = context.get(AbilityContextKey.PLAYER);
+        return optionalPlayer.map(player ->
+                player.getData(UnshatteredAttachments.PLAYER_ABILITIES.get()).getLookedAtState(player) == UnshatteredBlocks.BREAKABLE_TITANIUM_BLOCK.get().defaultBlockState()
         ).orElse(false);
     }
 

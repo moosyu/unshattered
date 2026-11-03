@@ -5,12 +5,14 @@ import io.github.moosyu.abilities.AbilityContext;
 import io.github.moosyu.abilities.AbilityContextKey;
 import io.github.moosyu.abilities.AbilityTriggerType;
 import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.datagen.UnshatteredBlockTagsProvider;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,12 +28,9 @@ public class MithrilMiner extends Ability {
 
     @Override
     public boolean conditionsMet(AbilityContext context) {
-        Optional<ServerPlayer> player = context.getServerPlayer();
-        return player.map(
-                serverPlayer ->
-                        UnshatteredUtils.getLookedAtBlock(serverPlayer, serverPlayer.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE))
-                                .map(blockHitResult -> serverPlayer.level().getBlockState(blockHitResult.getBlockPos()).is(UnshatteredBlockTagsProvider.MITHRIL_BLOCKS))
-                                .orElse(false)
+        Optional<Player> optionalPlayer = context.get(AbilityContextKey.PLAYER);
+        return optionalPlayer.map(player ->
+                player.getData(UnshatteredAttachments.PLAYER_ABILITIES.get()).getLookedAtState(player).is(UnshatteredBlockTagsProvider.MITHRIL_BLOCKS)
         ).orElse(false);
     }
 

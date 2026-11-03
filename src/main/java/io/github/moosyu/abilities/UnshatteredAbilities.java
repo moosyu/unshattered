@@ -140,4 +140,6 @@ public class UnshatteredAbilities {
     public static final DeferredHolder<Ability, InstantHeal> ORNATE_ZOMBIE_SWORD_INSTANT_HEAL = ABILITIES.register("ornate_zombie_sword_instant_heal", () -> new InstantHeal(new ItemAbility(30, 10, 0), 50));
 
     public static final DeferredHolder<Ability, InstantHeal> FLORID_ZOMBIE_SWORD_INSTANT_HEAL = ABILITIES.register("florid_zombie_sword_instant_heal", () -> new InstantHeal(new ItemAbility(36, 10, 0), 60));
+
+    public static final DeferredHolder<Ability, LowestCommonDenominator> LOWEST_COMMON_DENOMINATOR = ABILITIES.register("lowest_common_demoninator", LowestCommonDenominator::new);
 }

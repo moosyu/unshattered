@@ -20,6 +20,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -174,9 +175,9 @@ public abstract class FishingHookMixin extends Projectile {
     @Override
     public boolean fireImmune() {
         if (getOwner() instanceof Player player) {
-            InteractionHand hand = UnshatteredRod.getCastingHand(player);
-            if (hand != null) {
-                return player.getItemInHand(hand).is(UnshatteredItemTagsProvider.CAN_FISH_IN_LAVA);
+            ItemStack rodItemStack = UnshatteredRod.getCastingItemStack(player);
+            if (rodItemStack != null) {
+                return rodItemStack.is(UnshatteredItemTagsProvider.CAN_FISH_IN_LAVA);
             }
         }
 

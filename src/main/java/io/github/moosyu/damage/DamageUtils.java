@@ -163,50 +163,6 @@ public final class DamageUtils {
         }
     }
 
-    public static class FerocityHit {
-        private final LivingEntity target;
-        private int waitTime;
-        private final double damage;
-        private final Player player;
-        private final boolean playSound;
-
-        public FerocityHit(LivingEntity target, int waitTime, double damage, Player player, boolean playSound) {
-            this.target = target;
-            this.waitTime = waitTime;
-            this.damage = damage;
-            this.player = player;
-            this.playSound = playSound;
-        }
-
-        /**
-         * @return true if the wait time has hit 0
-         */
-        public boolean tick() {
-            waitTime--;
-
-            if (waitTime <= 0) {
-                AttributeInstance targetHealth = target.getAttribute(UnshatteredAttributeValues.CURRENT_HEALTH.holder);
-
-                if (targetHealth != null && (player.isCreative() || !target.is(EntityType.ARMOR_STAND))) {
-                    if ((targetHealth.getBaseValue() - damage) > 0) {
-                        targetHealth.setBaseValue(targetHealth.getBaseValue() - damage);
-                        target.invulnerableTime = 0;
-                    } else {
-                        targetHealth.setBaseValue(0.0);
-                        target.hurtServer((ServerLevel) target.level(), target.damageSources().playerAttack(player), Integer.MAX_VALUE);
-                    }
-
-                    PacketDistributor.sendToPlayer((ServerPlayer) player, new FerocityEffectPacket(target.getId(), playSound));
-                    PacketDistributor.sendToPlayer((ServerPlayer) player, new DamageNumberPacket((int) damage, target.position()));
-                }
-
-                return true;
-            }
-
-            return false;
-        }
-    }
-
     /**
      * deal damage to a player
      * @param player player being damaged

@@ -326,7 +326,7 @@
   "item.description.unshattered.dwarf_turtle_shell": "Seems near indestructible with a size that belies its true density.",
   "item.description.unshattered.beginner_agronomy_sack": "Holds various items obtained from farming! Items you pickup go directly into your sacks.",
   "item.description.unshattered.starter_magma_rod": "Don't leave it too close to anything flammable.",
-  "item.description.unshattered.common_hook": "",
+  "item.description.unshattered.common_hook": "Follows a quantity over quality mindset.",
   "item.description.unshattered.speedy_line": "There's nothing [c=0xFF00AAAA]sea creatures[/c] can do but wait until this line drags them in and snags their hearts!",
   "item.description.unshattered.prismarine_sinker": "Proves ones affinity to the sea.",
 
@@ -371,7 +371,7 @@
   "item.ability.unshattered.frugal": "Frugal",
   "item.ability.unshattered.bat_artifact_lifesteal": "Leech",
   "item.ability.unshattered.fish_out_of_lava": "Fish Out Of Lava",
-  "item.ability.unshattered.common_hook": "Lowest Common Denominator",
+  "item.ability.unshattered.lowest_common_denominator": "Lowest Common Denominator",
   "item.ability.unshattered.speedy_line_bonus": "Beach Boy",
   "item.ability.unshattered.moskstraumen": "Moskstraumen",
 
@@ -416,7 +416,7 @@
   "item.ability.description.unshattered.frugal": "Grants a [c=0xFF55FF55]25%[/c] chance to not use fuel.",
   "item.ability.description.unshattered.bat_artifact_lifesteal": "Gain [c=0xFFFC3A3A]15%[/c] of enemy's maximum [c=0xFFFC3A3A]health[/c] on kill.",
   "item.ability.description.unshattered.fish_out_of_lava": "You can only damage [c=0xFFFF5555]magmatic[/c] enemies with this fishing rod!",
-  "item.ability.description.unshattered.common_hook": "Common [c=0xFF00AAAA]sea creatures[/c] get weighted 25% higher with this hook attached!",
+  "item.ability.description.unshattered.lowest_common_denominator": "[c=0xFF00AAAA]Sea creatures[/c] within the top 70% for weighting have their fishing odds get weighted a further 25% higher with this hook attached!",
   "item.ability.description.unshattered.speedy_line_bonus": "Grants [c=0xFF55FFFF]+10☂[/c] to fishing rods.",
   "item.ability.description.unshattered.moskstraumen": "Causes [c=0xFFFFFFFF]prismarine shards[/c] and [c=0xFFFFFFFF]crystals[/c] to be materialized with every catch.",
 
@@ -595,8 +595,8 @@
   "fishing.messages.entity.minecraft.squid": "A Squid appeared.",
   "fishing.messages.entity.minecraft.glow_squid": "Pitch darkness reveals a Glow Squid.",
   "fishing.messages.entity.minecraft.sea_walker": "You caught a Sea Walker.",
-  "fishing.messages.entity.minecraft.oasis_sheep": "An oasis sheep appears from the water.",
-  "fishing.messages.entity.minecraft.oasis_rabbit": "An oasis rabbit appears from the water.",
+  "fishing.messages.entity.unshattered.oasis_sheep": "An oasis sheep appears from the water.",
+  "fishing.messages.entity.unshattered.oasis_rabbit": "An oasis rabbit appears from the water.",
 
   "misc.unshattered.coins": "Coins",
   "misc.messages.unshattered.wizardman_request": "Help Wizardman",

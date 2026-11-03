@@ -2,12 +2,10 @@ package io.github.moosyu.items.attachments.hooks;
 
 import io.github.moosyu.abilities.Ability;
 import io.github.moosyu.abilities.AbilityItem;
-import io.github.moosyu.abilities.AbilityTriggerType;
-import io.github.moosyu.data.components.ItemAbility;
+import io.github.moosyu.abilities.UnshatteredAbilities;
 import net.minecraft.world.item.Item;
 
 import java.util.List;
-import java.util.Set;
 import java.util.function.Supplier;
 
 public class CommonHook extends Item implements AbilityItem {
@@ -17,6 +15,6 @@ public class CommonHook extends Item implements AbilityItem {
 
     @Override
     public List<? extends Supplier<? extends Ability>> abilities() {
-        return List.of();
+        return List.of(UnshatteredAbilities.LOWEST_COMMON_DENOMINATOR);
     }
 }

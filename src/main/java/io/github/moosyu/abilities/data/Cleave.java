@@ -17,9 +17,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 
 public class Cleave extends Ability {
+    // players currently in the middle of a cleave so its known when a cleave is active
+    private static final Set<UUID> CLEAVING = new HashSet<>();
+
     private final float radius;
     private final float cleaveDamageFraction;
 
@@ -45,39 +51,46 @@ public class Cleave extends Ability {
         LivingEntity target = context.get(AbilityContextKey.TARGET).get();
         Level level = player.level();
 
-        if (level.isClientSide()) {
+        if (level.isClientSide() || !CLEAVING.add(player.getUUID())) {
             return;
         }
 
-        AABB boundingBox = new AABB(
-                target.getX() - radius,
-                target.getY() - radius,
-                target.getZ() - radius,
-                target.getX() + 1 + radius,
-                target.getY() + 1 + radius,
-                target.getZ() + 1 + radius
-        );
+        Optional<AttributeInstance> optionalFinalDamageAttribute = UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder);
 
-        Optional<AttributeInstance> finalDamageAttribute = UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder);
-        finalDamageAttribute.ifPresent(attribute ->
+        try {
+            AABB boundingBox = new AABB(
+                    target.getX() - radius,
+                    target.getY() - radius,
+                    target.getZ() - radius,
+                    target.getX() + 1 + radius,
+                    target.getY() + 1 + radius,
+                    target.getZ() + 1 + radius
+            );
+
+            optionalFinalDamageAttribute.ifPresent(attribute -> {
+                attribute.removeModifier(id());
                 attribute.addTransientModifier(new AttributeModifier(
                         id(),
                         -(attribute.getValue() - (1 - cleaveDamageFraction)),
                         AttributeModifier.Operation.ADD_VALUE
-                ))
-        );
+                ));
+            });
 
-        // this causes knockback to cleaved enemies which isn't really what i wanted, but we'll see if i ever fix it
-        for (Entity entity : level.getEntities(null, boundingBox)) {
-            if (entity instanceof LivingEntity livingEntity && !(livingEntity instanceof Player) && livingEntity != target) {
-                DamageUtils.playerDealDamage(player,
-                        livingEntity,
-                        player.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder),
-                        false,
-                        player.getMainHandItem(),
-                        false
-                );
+            // this causes knockback to cleaved enemies which isn't really what i wanted, but we'll see if i ever fix it
+            for (Entity entity : level.getEntities(null, boundingBox)) {
+                if (entity instanceof LivingEntity livingEntity && !(livingEntity instanceof Player) && livingEntity != target) {
+                    DamageUtils.playerDealDamage(player,
+                            livingEntity,
+                            player.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder),
+                            false,
+                            player.getMainHandItem(),
+                            false
+                    );
+                }
             }
+        } finally {
+            optionalFinalDamageAttribute.ifPresent(attribute -> attribute.removeModifier(id()));
+            CLEAVING.remove(player.getUUID());
         }
     }
 

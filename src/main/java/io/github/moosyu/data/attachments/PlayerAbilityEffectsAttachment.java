@@ -8,8 +8,14 @@ import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -25,6 +31,9 @@ public final class PlayerAbilityEffectsAttachment {
     public Map<AbilityTriggerType, List<Ability>> triggerTypeAbilities = Map.of();
     private List<Ability> tickingAbilities = List.of();
     private final Set<Ability> activeAbilities = Collections.newSetFromMap(new IdentityHashMap<>());
+
+    private long lookCacheTick = -1;
+    private BlockState lookedAtState = Blocks.AIR.defaultBlockState();
 
     public void addActiveEffect(Ability ability, long abilityLength, Level level) {
         addActiveEffect(ability.id(), abilityLength, level, ability::deactivate);
@@ -226,5 +235,17 @@ public final class PlayerAbilityEffectsAttachment {
         }
 
         activeAbilities.clear();
+    }
+
+    public BlockState getLookedAtState(Player player) {
+        long now = player.level().getGameTime();
+        if (now != lookCacheTick) {
+            lookCacheTick = now;
+            HitResult hit = player.pick(player.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE), 0.0f, false);
+            lookedAtState = hit instanceof BlockHitResult b && b.getType() == HitResult.Type.BLOCK
+                    ? player.level().getBlockState(b.getBlockPos())
+                    : Blocks.AIR.defaultBlockState();
+        }
+        return lookedAtState;
     }
 }

@@ -18,7 +18,7 @@ public class Greed extends Ability {
     private static final double EXPONENT = 0.25;
 
     public Greed() {
-        super(new ItemAbility(), AbilityTriggerType.PLAYER_DEAL_DAMAGE);
+        super(new ItemAbility(), AbilityTriggerType.ONGOING);
     }
 
     @Override

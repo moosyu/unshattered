@@ -420,23 +420,6 @@ public final class UnshatteredUtils {
         return Optional.of(attributeInstance);
     }
 
-    /**
-     * @param player the player looking
-     * @param reach player's reach, probably either BLOCK_INTERACTION_RANGE or ENTITY_INTERACTION_RANGE attributes
-     * @return a block hit result if the raycast hit a block, Optional.empty() if it didn't
-     */
-    public static Optional<BlockHitResult> getLookedAtBlock(ServerPlayer player, double reach) {
-        Vec3 eyePosition = player.getEyePosition();
-        BlockHitResult result = player.level().clip(new ClipContext(eyePosition,
-                eyePosition.add(player.getViewVector(1.0F).scale(reach)),
-                ClipContext.Block.OUTLINE,
-                ClipContext.Fluid.NONE,
-                player)
-        );
-
-        return result.getType() == HitResult.Type.BLOCK ? Optional.of(result) : Optional.empty();
-    }
-
     public static <T extends LivingEntity> Optional<AttributeSupplier> getDefaultAttributes(T entity) {
         @SuppressWarnings("unchecked")
         EntityType<T> type = (EntityType<T>) entity.getType();
