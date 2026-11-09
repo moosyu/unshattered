@@ -1,5 +1,6 @@
 package io.github.moosyu.mixins;
 
+import io.github.moosyu.data.UnshatteredStatistics;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.gui.screens.achievement.StatsScreen;
 import net.minecraft.resources.Identifier;
@@ -36,7 +37,8 @@ public abstract class StatsScreenMixin {
             Stats.PLAY_TIME,
             Stats.TIME_SINCE_DEATH,
             Stats.TIME_SINCE_REST,
-            Stats.TOTAL_WORLD_TIME
+            Stats.TOTAL_WORLD_TIME,
+            UnshatteredStatistics.GIFTS_OPENED.get()
     );
 
     @ModifyVariable(method = "<init>", at = @At(value = "STORE", ordinal = 0))

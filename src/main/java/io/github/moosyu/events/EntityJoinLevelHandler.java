@@ -1,7 +1,6 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.entities.mobs.RedstonePigman;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.monster.Slime;
@@ -20,9 +19,9 @@ public class EntityJoinLevelHandler {
             mob.setCanPickUpLoot(false);
 
             if (mob instanceof Slime slime) {
-                AttributeInstance maxHealthAttribute = slime.getAttribute(UnshatteredAttributeValues.CURRENT_HEALTH.holder);
-                AttributeInstance healthAttribute = slime.getAttribute(UnshatteredAttributeValues.MAX_HEALTH.holder);
-                AttributeInstance damageAttribute = slime.getAttribute(UnshatteredAttributeValues.DAMAGE.holder);
+                AttributeInstance maxHealthAttribute = slime.getAttribute(UnshatteredAttributeValue.CURRENT_HEALTH.holder);
+                AttributeInstance healthAttribute = slime.getAttribute(UnshatteredAttributeValue.MAX_HEALTH.holder);
+                AttributeInstance damageAttribute = slime.getAttribute(UnshatteredAttributeValue.DAMAGE.holder);
 
                 if (healthAttribute != null && damageAttribute != null && maxHealthAttribute != null) {
                     maxHealthAttribute.setBaseValue(10.0d * slime.getSize());

@@ -1,20 +1,15 @@
 package io.github.moosyu.items.tools.pickaxes;
 
 import io.github.moosyu.abilities.*;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.blocks.UnshatteredBlocks;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.items.tools.UnshatteredMiningToolBase;
 import io.github.moosyu.util.UnshatteredUtils;
-import net.minecraft.resources.Identifier;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 import java.util.function.Supplier;
 
 public class TitaniumPickaxeBase extends UnshatteredMiningToolBase implements AbilityItem {
@@ -23,13 +18,13 @@ public class TitaniumPickaxeBase extends UnshatteredMiningToolBase implements Ab
     public TitaniumPickaxeBase(Properties properties, String identifier, int miningSpeed, Supplier<? extends Ability> ability) {
         super(properties.stacksTo(1)
                 .attributes(ItemAttributeModifiers.builder()
-                        .add(UnshatteredAttributeValues.DAMAGE.holder,
+                        .add(UnshatteredAttributeValue.DAMAGE.holder,
                                 new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(identifier + "_damage"), 7, AttributeModifier.Operation.ADD_VALUE),
                                 EquipmentSlotGroup.MAINHAND
-                        ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
+                        ).add(UnshatteredAttributeValue.MINING_SPEED.holder,
                                 new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(identifier + "_mining_speed"), miningSpeed, AttributeModifier.Operation.ADD_VALUE),
                                 EquipmentSlotGroup.MAINHAND
-                        ).add(UnshatteredAttributeValues.BREAKING_POWER.holder,
+                        ).add(UnshatteredAttributeValue.BREAKING_POWER.holder,
                                 new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(identifier + "_breaking_power"), 5, AttributeModifier.Operation.ADD_VALUE),
                                 EquipmentSlotGroup.MAINHAND
                         ).add(Attributes.ATTACK_SPEED,

@@ -1,11 +1,9 @@
 package io.github.moosyu.items.tools.drills;
 
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.data.components.ItemAttachments;
 import io.github.moosyu.data.components.ItemFuel;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
-import io.github.moosyu.items.ItemType;
-import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.items.tools.UnshatteredMiningToolBase;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.util.Mth;
@@ -25,22 +23,22 @@ public class DrillItem extends UnshatteredMiningToolBase {
                         ItemAttachments.SlotType.UPGRADE_MODULE)
                 )
                 .attributes(ItemAttributeModifiers.builder()
-                        .add(UnshatteredAttributeValues.DAMAGE.holder,
+                        .add(UnshatteredAttributeValue.DAMAGE.holder,
                                 new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(identifier + "_damage"), damage, AttributeModifier.Operation.ADD_VALUE),
                                 EquipmentSlotGroup.MAINHAND
-                        ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
+                        ).add(UnshatteredAttributeValue.MINING_SPEED.holder,
                                 new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(identifier + "_mining_speed"), miningSpeed, AttributeModifier.Operation.ADD_VALUE),
                                 EquipmentSlotGroup.MAINHAND
-                        ).add(UnshatteredAttributeValues.MINING_FORTUNE.holder,
+                        ).add(UnshatteredAttributeValue.MINING_FORTUNE.holder,
                                 new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(identifier + "_mining_fortune"), miningFortune, AttributeModifier.Operation.ADD_VALUE),
                                 EquipmentSlotGroup.MAINHAND
-                        ).add(UnshatteredAttributeValues.BREAKING_POWER.holder,
+                        ).add(UnshatteredAttributeValue.BREAKING_POWER.holder,
                                 new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(identifier + "_breaking_power"), breakingPower, AttributeModifier.Operation.ADD_VALUE),
                                 EquipmentSlotGroup.MAINHAND
                         ).add(Attributes.ATTACK_SPEED,
                                 new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(identifier + "_attack_speed"), -2.8, AttributeModifier.Operation.ADD_VALUE),
                                 EquipmentSlotGroup.MAINHAND
-                        ).add(UnshatteredAttributeValues.MINING_WISDOM.holder,
+                        ).add(UnshatteredAttributeValue.MINING_WISDOM.holder,
                                 new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(identifier + "_mining_wisdom"), miningWisdom, AttributeModifier.Operation.ADD_VALUE),
                                 EquipmentSlotGroup.MAINHAND
                         ).build()

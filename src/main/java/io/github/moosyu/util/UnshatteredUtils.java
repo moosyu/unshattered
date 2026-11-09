@@ -1,9 +1,7 @@
 package io.github.moosyu.util;
 
 import io.github.moosyu.Unshattered;
-import io.github.moosyu.abilities.AbilityContext;
-import io.github.moosyu.abilities.AbilityTriggerType;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
@@ -44,11 +42,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.NonNull;
 
@@ -355,7 +350,11 @@ public final class UnshatteredUtils {
         return remaining;
     }
 
-    public static void addBlockBrokenResultToInventory(Holder<Block> blockHolder, Player player, UnshatteredAttributeValues fortuneType) {
+    public static void addBlockBrokenResultToInventory(Holder<Block> blockHolder, Player player, UnshatteredAttributeValue fortuneType) {
+        if (player.level().isClientSide() || !(player instanceof ServerPlayer serverPlayer)) {
+            return;
+        }
+
         BlockBreakData blockBreakData = blockHolder.getData(UnshatteredDataMaps.BLOCK_BREAK_DATA);
 
         if (blockBreakData == null) {
@@ -366,9 +365,9 @@ public final class UnshatteredUtils {
         boolean rolledAboveOccasional = false;
 
         for (DropData blockDropData : blockBreakData.dropData()) {
-            rolledAboveOccasional = blockDropData.getNonGuaranteedDrop(true,
+            rolledAboveOccasional = blockDropData.getNonGuaranteedDrop(
                     rolledAboveOccasional,
-                    player,
+                    serverPlayer,
                     fortuneType
             );
         }
@@ -597,8 +596,8 @@ public final class UnshatteredUtils {
     public static AttributeSupplier.Builder createHostileMobAttributes(double health, double damage) {
         return Monster.createMobAttributes()
                 .add(Attributes.ATTACK_DAMAGE, 1.0f)
-                .add(UnshatteredAttributeValues.MAX_HEALTH.holder, health)
-                .add(UnshatteredAttributeValues.CURRENT_HEALTH.holder, health)
-                .add(UnshatteredAttributeValues.DAMAGE.holder, damage);
+                .add(UnshatteredAttributeValue.MAX_HEALTH.holder, health)
+                .add(UnshatteredAttributeValue.CURRENT_HEALTH.holder, health)
+                .add(UnshatteredAttributeValue.DAMAGE.holder, damage);
     }
 }

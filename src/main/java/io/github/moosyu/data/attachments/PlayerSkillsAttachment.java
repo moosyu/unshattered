@@ -1,7 +1,7 @@
 package io.github.moosyu.data.attachments;
 
 import com.mojang.serialization.Codec;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.packets.ExpSoundEffectPacket;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.ChatFormatting;
@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.function.IntFunction;
 
 public final class PlayerSkillsAttachment {
-    public record LevelReward(UnshatteredAttributeValues attribute, double amount) {
+    public record LevelReward(UnshatteredAttributeValue attribute, double amount) {
         public Component getComponent() {
             return Component.literal("    " + ((amount == Math.floor(amount)) ? String.valueOf((long) amount) : String.valueOf(amount)) + (attribute.percentage ? "%" : "")).withColor(0xFF00FF24)
                     .append(Component.literal(" " + attribute.symbol + " ").withColor(attribute.color))
@@ -144,40 +144,63 @@ public final class PlayerSkillsAttachment {
     private final float[] skillExp = new float[Skill.values().length];
 
     public enum Skill implements StringRepresentable {
-        COMBAT("combat", _ -> List.of(
-                new LevelReward(UnshatteredAttributeValues.CRITICAL_DAMAGE, 10.0d),
-                new LevelReward(UnshatteredAttributeValues.CRITICAL_CHANCE, 1.0d)
-        )),
-        FARMING("farming", level -> List.of(
-                new LevelReward(UnshatteredAttributeValues.MAX_HEALTH,
-                        level < 15 ? 1.0d : level < 20 ? 2.0d : level < 25 ? 3.0d : 4.0d),
-                new LevelReward(UnshatteredAttributeValues.FARMING_FORTUNE, 2.0d)
-        )),
-        FISHING("fishing", _ -> List.of(
-                new LevelReward(UnshatteredAttributeValues.FISHING_SPEED, 1.0d),
-                new LevelReward(UnshatteredAttributeValues.FISHING_FORTUNE, 0.1d)
-        )),
-        MINING("mining", level -> List.of(
-                new LevelReward(UnshatteredAttributeValues.DEFENCE, level < 15 ? 1.0d : 2.0d),
-                new LevelReward(UnshatteredAttributeValues.MINING_FORTUNE, 2.0d)
-        )),
-        FORAGING("foraging", level -> List.of(
-                new LevelReward(UnshatteredAttributeValues.STRENGTH, level < 15 ? 1.0d : 2.0d),
-                new LevelReward(UnshatteredAttributeValues.FARMING_FORTUNE, 2.0d)
-        )),
-        MAGECRAFT("magecraft", _ -> List.of(
-                new LevelReward(UnshatteredAttributeValues.MANA, 2.0d),
-                new LevelReward(UnshatteredAttributeValues.MANA_REGEN, 1.5d)
-        )),
-        CARPENTRY("carpentry", _ -> List.of(
-                new LevelReward(UnshatteredAttributeValues.MAX_HEALTH, 1.0d)
-        ));
+        COMBAT("combat",
+                UnshatteredAttributeValue.COMBAT_WISDOM.holder,
+                _ -> List.of(
+                        new LevelReward(UnshatteredAttributeValue.CRITICAL_DAMAGE, 10.0d),
+                        new LevelReward(UnshatteredAttributeValue.CRITICAL_CHANCE, 1.0d)
+                )
+        ),
+        FARMING("farming",
+                UnshatteredAttributeValue.FARMING_WISDOM.holder,
+                level -> List.of(
+                        new LevelReward(UnshatteredAttributeValue.MAX_HEALTH,
+                                level < 15 ? 1.0d : level < 20 ? 2.0d : level < 25 ? 3.0d : 4.0d),
+                        new LevelReward(UnshatteredAttributeValue.FARMING_FORTUNE, 2.0d)
+                )
+        ),
+        FISHING("fishing",
+                UnshatteredAttributeValue.FISHING_WISDOM.holder,
+                _ -> List.of(
+                        new LevelReward(UnshatteredAttributeValue.FISHING_SPEED, 1.0d),
+                        new LevelReward(UnshatteredAttributeValue.FISHING_FORTUNE, 0.1d)
+                )
+        ),
+        MINING("mining",
+                UnshatteredAttributeValue.MINING_WISDOM.holder,
+                level -> List.of(
+                        new LevelReward(UnshatteredAttributeValue.DEFENCE, level < 15 ? 1.0d : 2.0d),
+                        new LevelReward(UnshatteredAttributeValue.MINING_FORTUNE, 2.0d)
+                )
+        ),
+        FORAGING("foraging",
+                UnshatteredAttributeValue.FORAGING_WISDOM.holder,
+                level -> List.of(
+                        new LevelReward(UnshatteredAttributeValue.STRENGTH, level < 15 ? 1.0d : 2.0d),
+                        new LevelReward(UnshatteredAttributeValue.FARMING_FORTUNE, 2.0d)
+                )
+        ),
+        MAGECRAFT("magecraft",
+                UnshatteredAttributeValue.MAGECRAFT_WISDOM.holder,
+                _ -> List.of(
+                        new LevelReward(UnshatteredAttributeValue.MANA, 2.0d),
+                        new LevelReward(UnshatteredAttributeValue.MANA_REGEN, 1.5d)
+                )
+        ),
+        CARPENTRY("carpentry",
+                UnshatteredAttributeValue.CARPENTRY_WISDOM.holder,
+                _ -> List.of(
+                        new LevelReward(UnshatteredAttributeValue.MAX_HEALTH, 1.0d)
+                )
+        );
 
         private final String id;
+        private final Holder<Attribute> wisdomAttribute;
         private final IntFunction<List<LevelReward>> rewards;
 
-        Skill(String id, IntFunction<List<LevelReward>> rewards) {
+        Skill(String id, Holder<Attribute> wisdomAttribute, IntFunction<List<LevelReward>> rewards) {
             this.id = id;
+            this.wisdomAttribute = wisdomAttribute;
             this.rewards = rewards;
         }
 
@@ -202,8 +225,8 @@ public final class PlayerSkillsAttachment {
          * @param attribute attribute being added to
          * @param amount amount added to attribute base
          */
-        private static void addPlayerAttributeReward(Player player, UnshatteredAttributeValues attribute, double amount) {
-            UnshatteredAttributeValues.modifyAttributeBaseValue(player, attribute, amount);
+        private static void addPlayerAttributeReward(Player player, UnshatteredAttributeValue attribute, double amount) {
+            UnshatteredAttributeValue.modifyAttributeBaseValue(player, attribute, amount);
             player.sendSystemMessage(attributeGainMessage(attribute, amount));
         }
 
@@ -232,13 +255,16 @@ public final class PlayerSkillsAttachment {
         return skillExp[skill.ordinal()];
     }
 
-    public void addExp(Skill skill, float amount, Player player, Holder<Attribute> wisdomAttribute) {
-        if (amount == 0.0f) {
+    /**
+     * adds skill exp to attachment and syncs
+     */
+    public void addExp(Skill skill, float amount, Player player) {
+        if (amount == 0.0f || player.level().isClientSide()) {
             return;
         }
 
         int currentLevel = getLevel(getExp(skill));
-        float expGainedAmount = amount * (float) (player.getAttributeValue(wisdomAttribute) / 100);
+        float expGainedAmount = amount * (float) (player.getAttributeValue(skill.wisdomAttribute) / 100);
         skillExp[skill.ordinal()] += expGainedAmount;
         int levelDifference = getLevel(getExp(skill)) - currentLevel;
         for (int i = 0; i < levelDifference; i++) {
@@ -266,10 +292,8 @@ public final class PlayerSkillsAttachment {
             player.sendSystemMessage(Component.literal(" REWARDS").withColor(0xFF00FF24).withStyle(ChatFormatting.BOLD));
 
             for (LevelReward reward : skill.getRewards(currentLevel)) {
-                if (!player.level().isClientSide()) {
-                    UnshatteredAttributeValues.modifyAttributeBaseValue(player, reward.attribute(), reward.amount());
-                    player.sendSystemMessage(reward.getComponent());
-                }
+                UnshatteredAttributeValue.modifyAttributeBaseValue(player, reward.attribute(), reward.amount());
+                player.sendSystemMessage(reward.getComponent());
             }
 
             int coins = skill.getCoinReward(currentLevel);
@@ -280,6 +304,7 @@ public final class PlayerSkillsAttachment {
             currentLevel++;
             player.sendSystemMessage(Component.literal(borderBar.toString()).withColor(0xFF00ADAB));
         }
+
         player.sendOverlayMessage((Component.literal("+" + expGainedAmount + " ").append(Component.translatable(skill.getTranslationKey()))).withColor(0xFF00AAAA).append(Component.literal(" (").withColor(0xFF7D7874).append(Component.literal(String.format("%.2f", getPercentageToNextLevel(getExp(skill)) * 100) + "%").withColor(0xFFFFAA00).append(Component.literal(")").withColor(0xFF7D7874)))));
         PacketDistributor.sendToPlayer((ServerPlayer) player, new ExpSoundEffectPacket());
     }
@@ -331,7 +356,7 @@ public final class PlayerSkillsAttachment {
         return level >= SKILL_LEVEL_TABLE.length;
     }
 
-    private static Component attributeGainMessage(UnshatteredAttributeValues attribute, double amount) {
+    private static Component attributeGainMessage(UnshatteredAttributeValue attribute, double amount) {
         return Component.literal("    " + ((amount == Math.floor(amount)) ? String.valueOf((long) amount) : String.valueOf(amount)) + (attribute.percentage ? "%" : "")).withColor(0xFF00FF24)
                 .append(Component.literal(" " + attribute.symbol + " ").withColor(attribute.color)
                         .append(Component.translatable(attribute.getTranslationKey()).withColor(attribute.color)));

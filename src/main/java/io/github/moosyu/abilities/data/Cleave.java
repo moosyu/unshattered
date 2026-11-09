@@ -4,7 +4,7 @@ import io.github.moosyu.abilities.Ability;
 import io.github.moosyu.abilities.AbilityContext;
 import io.github.moosyu.abilities.AbilityContextKey;
 import io.github.moosyu.abilities.AbilityTriggerType;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.damage.DamageUtils;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.util.UnshatteredUtils;
@@ -55,7 +55,7 @@ public class Cleave extends Ability {
             return;
         }
 
-        Optional<AttributeInstance> optionalFinalDamageAttribute = UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder);
+        Optional<AttributeInstance> optionalFinalDamageAttribute = UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValue.FINAL_DAMAGE_MODIFIER.holder);
 
         try {
             AABB boundingBox = new AABB(
@@ -81,7 +81,7 @@ public class Cleave extends Ability {
                 if (entity instanceof LivingEntity livingEntity && !(livingEntity instanceof Player) && livingEntity != target) {
                     DamageUtils.playerDealDamage(player,
                             livingEntity,
-                            player.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder),
+                            player.getAttributeValue(UnshatteredAttributeValue.DAMAGE.holder),
                             false,
                             player.getMainHandItem(),
                             false
@@ -98,7 +98,7 @@ public class Cleave extends Ability {
     public void onFinish(AbilityContext context) {
         context.get(AbilityContextKey.PLAYER).flatMap(
                 player -> UnshatteredUtils.getAttributeInstance(player,
-                        UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder)
+                        UnshatteredAttributeValue.FINAL_DAMAGE_MODIFIER.holder)
         ).ifPresent(attribute -> attribute.removeModifier(id()));
     }
 }

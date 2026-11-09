@@ -16,9 +16,11 @@ import java.util.function.BiPredicate;
 public enum FishingCondition implements StringRepresentable {
     NIGHT((level, _) -> level.isDarkOutside()),
     WATER((level, blockPos) -> level.getFluidState(blockPos).is(Fluids.WATER)),
-    IN_OASIS((level, blockPos) -> RegionAreas.isBlockPosInRegion(level, blockPos, UnshatteredRegions.OASIS));
+    IN_OASIS((level, blockPos) -> RegionAreas.isBlockPosInRegion(level, blockPos, UnshatteredRegions.OASIS)),
+    IN_JERRY_WORKSHOP((level, blockPos) -> RegionAreas.isBlockPosInRegion(level, blockPos, UnshatteredRegions.JERRY_WORKSHOP));
 
     private final BiPredicate<ServerLevel, BlockPos> condition;
+
     FishingCondition(BiPredicate<ServerLevel, BlockPos> condition) {
         this.condition = condition;
     }

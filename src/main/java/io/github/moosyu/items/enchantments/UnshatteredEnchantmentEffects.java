@@ -1,6 +1,6 @@
 package io.github.moosyu.items.enchantments;
 
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
@@ -80,7 +80,7 @@ public interface UnshatteredEnchantmentEffects {
             Map.entry(Enchantments.EFFICIENCY, new BlockBreakingAttributeComplexEffect() {
                 @Override
                 public Holder<Attribute> getAttributeHolder() {
-                    return UnshatteredAttributeValues.MINING_SPEED.holder;
+                    return UnshatteredAttributeValue.MINING_SPEED.holder;
                 }
 
                 @Override
@@ -106,7 +106,7 @@ public interface UnshatteredEnchantmentEffects {
                 @Override
                 public Component getEffectDescription(int level) {
                     return Component.literal("Grants ").withColor(0xFFAAAAAA)
-                            .append(Component.literal("+" + (int) getEffectBonus(level) + UnshatteredAttributeValues.MINING_SPEED.symbol + ".").withColor(UnshatteredAttributeValues.MINING_SPEED.color));
+                            .append(Component.literal("+" + (int) getEffectBonus(level) + UnshatteredAttributeValue.MINING_SPEED.symbol + ".").withColor(UnshatteredAttributeValue.MINING_SPEED.color));
                 }
 
                 @Override
@@ -142,7 +142,7 @@ public interface UnshatteredEnchantmentEffects {
                 @Override
                 public Component getEffectDescription(int level) {
                     return Component.literal("Grants ").withColor(0xFFAAAAAA)
-                            .append(Component.literal("+" + getEffectBonus(level) + " " + UnshatteredAttributeValues.DEFENCE.symbol).withColor(UnshatteredAttributeValues.DEFENCE.color))
+                            .append(Component.literal("+" + getEffectBonus(level) + " " + UnshatteredAttributeValue.DEFENCE.symbol).withColor(UnshatteredAttributeValue.DEFENCE.color))
                             .append(Component.literal(".").withColor(0xFFAAAAAA));
                 }
 

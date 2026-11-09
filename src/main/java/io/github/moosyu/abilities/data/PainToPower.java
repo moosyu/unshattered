@@ -4,7 +4,7 @@ import io.github.moosyu.abilities.Ability;
 import io.github.moosyu.abilities.AbilityContext;
 import io.github.moosyu.abilities.AbilityContextKey;
 import io.github.moosyu.abilities.AbilityTriggerType;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.damage.DamageUtils;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
@@ -28,8 +28,8 @@ public class PainToPower extends Ability {
 
     public void onTrigger(AbilityContext context) {
         context.getServerPlayer().ifPresent(player -> {
-            AttributeInstance ferocity = player.getAttribute(UnshatteredAttributeValues.FEROCITY.holder);
-            AttributeInstance health = player.getAttribute(UnshatteredAttributeValues.MAX_HEALTH.holder);
+            AttributeInstance ferocity = player.getAttribute(UnshatteredAttributeValue.FEROCITY.holder);
+            AttributeInstance health = player.getAttribute(UnshatteredAttributeValue.MAX_HEALTH.holder);
 
             System.out.println(ferocity);
             System.out.println(health);
@@ -71,7 +71,7 @@ public class PainToPower extends Ability {
     @Override
     public void onFinish(AbilityContext context) {
         context.get(AbilityContextKey.PLAYER).ifPresent(player -> {
-            AttributeInstance ferocity = player.getAttribute(UnshatteredAttributeValues.FEROCITY.holder);
+            AttributeInstance ferocity = player.getAttribute(UnshatteredAttributeValue.FEROCITY.holder);
             if (ferocity != null) {
                 ferocity.removeModifier(id());
             }

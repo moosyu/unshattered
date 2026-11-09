@@ -1,6 +1,6 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.damage.DamageUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.DamageTypeTags;
@@ -30,11 +30,11 @@ public class LivingDamageHandler {
 
             double scale = Math.min(1.0f, remaining / original);
             DamageSource damageSource = event.getSource();
-            double playerDefenceValue = player.getAttributeValue(UnshatteredAttributeValues.DEFENCE.holder);
+            double playerDefenceValue = player.getAttributeValue(UnshatteredAttributeValue.DEFENCE.holder);
             String playerName = player.getName().getString();
 
             if (event.getSource().getEntity() instanceof LivingEntity entity) {
-                AttributeInstance damageAttributeInstance = entity.getAttribute(UnshatteredAttributeValues.DAMAGE.holder);
+                AttributeInstance damageAttributeInstance = entity.getAttribute(UnshatteredAttributeValue.DAMAGE.holder);
                 // in case the damage attribute was never defined
                 if (damageAttributeInstance == null) {
                     LOGGER.error("A damage attribute wasn't defined for entity: {}", entity.getName().getString());
@@ -66,7 +66,7 @@ public class LivingDamageHandler {
                         damageSource
                 );
             } else if (damageSource.is(DamageTypeTags.IS_FIRE)) {
-                double trueDefence = player.getAttributeBaseValue(UnshatteredAttributeValues.TRUE_DEFENCE.holder);
+                double trueDefence = player.getAttributeBaseValue(UnshatteredAttributeValue.TRUE_DEFENCE.holder);
                 DamageUtils.damagePlayer(player,
                         (100.0f / 33.0f) * (1 - (trueDefence / (trueDefence + 100))) * scale,
                         Component.literal("☠ " + playerName + " burnt to death!"),

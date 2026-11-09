@@ -2,7 +2,7 @@ package io.github.moosyu.abilities.data;
 
 import io.github.moosyu.Unshattered;
 import io.github.moosyu.abilities.*;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.ItemAbility;
@@ -36,7 +36,7 @@ public class InstantHeal extends ActiveAbility {
 
         ServerPlayer player = optionalPlayer.get();
         ItemCharges charges = optionalItemStack.get().get(UnshatteredDataComponents.CHARGES.get());
-        if (player.getAttribute(UnshatteredAttributeValues.MAX_HEALTH.holder) == null || charges == null) {
+        if (player.getAttribute(UnshatteredAttributeValue.MAX_HEALTH.holder) == null || charges == null) {
             Unshattered.LOGGER.error("max health attribute or charges missing (from {})", id());
             return false;
         }
@@ -56,7 +56,7 @@ public class InstantHeal extends ActiveAbility {
             }
         }
 
-        double maxHealth = player.getAttributeValue(UnshatteredAttributeValues.MAX_HEALTH.holder);
+        double maxHealth = player.getAttributeValue(UnshatteredAttributeValue.MAX_HEALTH.holder);
         player.getData(UnshatteredAttachments.PLAYER_STATE.get())
                 .increaseStatValue(PlayerStateAttachment.Stat.HEALTH, healAmount + maxHealth * 0.05, player);
 

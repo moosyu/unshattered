@@ -1,7 +1,7 @@
 package io.github.moosyu.abilities.data;
 
 import io.github.moosyu.abilities.*;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.damage.DamageUtils;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.items.ItemType;
@@ -42,7 +42,7 @@ public class ExplosiveArrows extends Ability {
         Optional<LivingEntity> target = context.get(AbilityContextKey.TARGET);
 
         if (target.isPresent()) {
-            Optional<AttributeInstance> finalDamageAttribute = UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder);
+            Optional<AttributeInstance> finalDamageAttribute = UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValue.FINAL_DAMAGE_MODIFIER.holder);
             finalDamageAttribute.ifPresent(attribute ->
                     attribute.addTransientModifier(new AttributeModifier(
                             id(),
@@ -64,7 +64,7 @@ public class ExplosiveArrows extends Ability {
                 if (entity instanceof LivingEntity livingEntity && !(livingEntity instanceof Player) && livingEntity != target.get()) {
                     DamageUtils.playerDealDamage(player,
                             livingEntity,
-                            player.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder),
+                            player.getAttributeValue(UnshatteredAttributeValue.DAMAGE.holder),
                             false,
                             player.getMainHandItem(),
                             false
@@ -100,7 +100,7 @@ public class ExplosiveArrows extends Ability {
     @Override
     public void onFinish(AbilityContext context) {
         context.get(AbilityContextKey.PLAYER).flatMap(player -> UnshatteredUtils.getAttributeInstance(player,
-                UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder)
+                UnshatteredAttributeValue.FINAL_DAMAGE_MODIFIER.holder)
         ).ifPresent(attribute -> attribute.removeModifier(id()));
     }
 }

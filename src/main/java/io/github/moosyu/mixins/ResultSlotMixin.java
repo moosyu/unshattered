@@ -1,6 +1,5 @@
 package io.github.moosyu.mixins;
 
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.recipes.SizedItemRecipe;
@@ -65,7 +64,7 @@ public abstract class ResultSlotMixin {
                     }
                 }
 
-                player.getData(UnshatteredAttachments.PLAYER_SKILLS).addExp(PlayerSkillsAttachment.Skill.CARPENTRY, (float) carpentryExp, player, UnshatteredAttributeValues.CARPENTRY_WISDOM.holder);
+                player.getData(UnshatteredAttachments.PLAYER_SKILLS).addExp(PlayerSkillsAttachment.Skill.CARPENTRY, (float) carpentryExp, player);
                 player.syncData(UnshatteredAttachments.PLAYER_SKILLS);
             });
         }

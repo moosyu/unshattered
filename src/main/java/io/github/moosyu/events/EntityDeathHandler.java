@@ -4,9 +4,8 @@ import io.github.moosyu.Unshattered;
 import io.github.moosyu.abilities.*;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.data.drops.MobItemDropData;
-import io.github.moosyu.data.drops.MobRewardData;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerPlayer;
@@ -17,6 +16,8 @@ import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+
+import java.util.List;
 
 import static io.github.moosyu.Unshattered.MODID;
 import static io.github.moosyu.data.attachments.UnshatteredAttachments.PLAYER_SKILLS;
@@ -33,12 +34,11 @@ public class EntityDeathHandler {
                 return;
             }
 
-            PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
             LivingEntity entity = event.getEntity();
             AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, serverPlayer).add(AbilityContextKey.TARGET, entity);
 
             try (AbilityScope _ = AbilityScope.open(serverPlayer, AbilityTriggerType.ENTITY_DEATH, context)) {
-                MobRewardData mobLoot = BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.getType()).getData(UnshatteredDataMaps.COMBATABLE_MOBS_LOOT_DATA);
+                List<MobItemDropData> mobLoot = BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.getType()).getData(UnshatteredDataMaps.COMBATABLE_MOBS_LOOT_DATA);
                 if (mobLoot == null) {
                     Unshattered.LOGGER.warn("entity {} is missing loot", entity.getPlainTextName());
                     return;
@@ -46,17 +46,9 @@ public class EntityDeathHandler {
 
                 boolean rolledAboveOccasional = false;
                 // may end up doing it weighted instead of rolling them all at once, we'll see though
-                for (MobItemDropData itemDrop : mobLoot.drops()) {
-                    rolledAboveOccasional = itemDrop.dropData().getNonGuaranteedDrop(itemDrop.combatFortuneBoosted(), rolledAboveOccasional, player, UnshatteredAttributeValues.COMBAT_FORTUNE);
+                for (MobItemDropData itemDrop : mobLoot) {
+                    rolledAboveOccasional = itemDrop.dropData().getNonGuaranteedDrop(rolledAboveOccasional, serverPlayer, itemDrop.combatFortuneBoosted() ? UnshatteredAttributeValue.COMBAT_FORTUNE : null);
                 }
-
-                if (mobLoot.experience() > 0.0f) {
-                    skills.addExp(mobLoot.skill(), mobLoot.experience(), player, UnshatteredAttributeValues.COMBAT_WISDOM.holder);
-                    player.syncData(PLAYER_SKILLS);
-                }
-
-                player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get()).addCoins(player.getRandom().nextIntBetweenInclusive(mobLoot.minCoins(), mobLoot.maxCoins()));
-                player.syncData(UnshatteredAttachments.PLAYER_CURRENCY.get());
             }
         }
     }

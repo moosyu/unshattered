@@ -9,7 +9,7 @@ import io.github.moosyu.data.regen.RegenClientCache;
 import io.github.moosyu.data.regen.RegenPaths;
 import io.github.moosyu.data.regen.RegenSavedData;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.util.*;
@@ -118,10 +118,10 @@ public class BlockBreakHandler {
             }
 
             try (AbilityScope _ = AbilityScope.open(serverPlayer, AbilityTriggerType.PLAYER_BREAK_MINING_BLOCK, context)) {
-                UnshatteredUtils.addBlockBrokenResultToInventory(blockHolder, player, UnshatteredAttributeValues.MINING_FORTUNE);
+                UnshatteredUtils.addBlockBrokenResultToInventory(blockHolder, player, UnshatteredAttributeValue.MINING_FORTUNE);
 
                 if (blockBreakData.expAmount() > 0.0f) {
-                    skills.addExp(PlayerSkillsAttachment.Skill.MINING, blockBreakData.expAmount(), player, UnshatteredAttributeValues.MINING_WISDOM.holder);
+                    skills.addExp(PlayerSkillsAttachment.Skill.MINING, blockBreakData.expAmount(), player);
                     player.syncData(PLAYER_SKILLS);
                 }
 
@@ -129,10 +129,10 @@ public class BlockBreakHandler {
                 serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID).destroyRegeneratingBlock(blockPos, serverLevel, player);
             }
         } else if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.FARMING) {
-            UnshatteredUtils.addBlockBrokenResultToInventory(blockHolder, player, UnshatteredAttributeValues.FARMING_FORTUNE);
+            UnshatteredUtils.addBlockBrokenResultToInventory(blockHolder, player, UnshatteredAttributeValue.FARMING_FORTUNE);
 
             if (blockBreakData.expAmount() > 0.0f) {
-                skills.addExp(PlayerSkillsAttachment.Skill.FARMING, blockBreakData.expAmount(), player, UnshatteredAttributeValues.MINING_WISDOM.holder);
+                skills.addExp(PlayerSkillsAttachment.Skill.FARMING, blockBreakData.expAmount(), player);
                 player.syncData(PLAYER_SKILLS);
             }
 
@@ -146,7 +146,7 @@ public class BlockBreakHandler {
             }
         } else if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.FORAGING) {
             if (blockState.is(BlockTags.FLOWERS)) {
-                skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, blockBreakData.expAmount(), player, UnshatteredAttributeValues.MINING_WISDOM.holder);
+                skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, blockBreakData.expAmount(), player);
                 player.syncData(PLAYER_SKILLS);
             } else {
                 TreeSweepHandler.trySweep(player.level(), blockPos, player);
@@ -182,15 +182,15 @@ public class BlockBreakHandler {
         ItemAttributeModifiers itemAttributeModifiers = itemStack.get(DataComponents.ATTRIBUTE_MODIFIERS);
 
         if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.MINING && itemStack.is(ItemTags.PICKAXES) && (itemFuel == null || itemFuel.currentFuel() > 0)) {
-            event.setNewSpeed((float) (player.getAttributeValue(UnshatteredAttributeValues.MINING_SPEED.holder)));
+            event.setNewSpeed((float) (player.getAttributeValue(UnshatteredAttributeValue.MINING_SPEED.holder)));
         }  else if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.FARMING && itemStack.is(ItemTags.HOES)) {
             event.setNewSpeed(100.0f);
         } else if (blockBreakData.skill() == PlayerSkillsAttachment.Skill.FORAGING
                 && itemStack.is(ItemTags.AXES)
                 || !itemStack.is(ItemTags.AXES)
-                && (itemAttributeModifiers == null || itemAttributeModifiers.modifiers().stream().noneMatch(entry -> entry.attribute().equals(UnshatteredAttributeValues.BREAKING_POWER.holder)))
+                && (itemAttributeModifiers == null || itemAttributeModifiers.modifiers().stream().noneMatch(entry -> entry.attribute().equals(UnshatteredAttributeValue.BREAKING_POWER.holder)))
         ) {
-            event.setNewSpeed((float) ((1 + (127 * player.getAttributeValue(UnshatteredAttributeValues.SWEEP.holder))/119) - (Math.pow(player.getAttributeValue(UnshatteredAttributeValues.SWEEP.holder), 2)/3570)));
+            event.setNewSpeed((float) ((1 + (127 * player.getAttributeValue(UnshatteredAttributeValue.SWEEP.holder))/119) - (Math.pow(player.getAttributeValue(UnshatteredAttributeValue.SWEEP.holder), 2)/3570)));
         } else {
             event.setNewSpeed(0.0f);
         }
@@ -204,7 +204,7 @@ public class BlockBreakHandler {
      */
     private static boolean hasBreakingPowerRequirement(Player player, Holder<Block> block) {
         int requiredBreakingPower = Objects.requireNonNullElse(block.getData(UnshatteredDataMaps.BLOCK_BREAKING_POWER_DATA), 0);
-        int playerBreakingPower = (int) player.getAttributeValue(UnshatteredAttributeValues.BREAKING_POWER.holder);
+        int playerBreakingPower = (int) player.getAttributeValue(UnshatteredAttributeValue.BREAKING_POWER.holder);
         if (playerBreakingPower >= requiredBreakingPower) {
             return true;
         } else if (!player.level().isClientSide()) {
@@ -213,7 +213,7 @@ public class BlockBreakHandler {
                 player.sendSystemMessage(
                         Component.translatable(player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty() ? "breaking_power.messages.unshattered.hand" : "breaking_power.messages.unshattered.tool")
                                 .append(Component.translatable("breaking_power.messages.unshattered.generic_breaking_power_requirment_start"))
-                                .append(Component.literal(requiredBreakingPower + UnshatteredAttributeValues.BREAKING_POWER.symbol).withColor(UnshatteredAttributeValues.BREAKING_POWER.color))
+                                .append(Component.literal(requiredBreakingPower + UnshatteredAttributeValue.BREAKING_POWER.symbol).withColor(UnshatteredAttributeValue.BREAKING_POWER.color))
                                 .append(Component.translatable("breaking_power.messages.unshattered.generic_breaking_power_requirment_end"))
                                 .append(".")
                 );

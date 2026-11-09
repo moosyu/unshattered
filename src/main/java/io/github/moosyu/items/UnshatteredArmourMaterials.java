@@ -22,6 +22,7 @@ public class UnshatteredArmourMaterials {
     public static ResourceKey<EquipmentAsset> SKELETON_HAT_KEY = ResourceKey.create(UnshatteredArmourMaterials.ROOT_ID, UnshatteredUtils.getUnshatteredIdentifier("skeleton_hat"));
     public static ResourceKey<EquipmentAsset> LAPIS_ARMOUR_KEY = ResourceKey.create(UnshatteredArmourMaterials.ROOT_ID, UnshatteredUtils.getUnshatteredIdentifier("lapis_armour"));
     public static ResourceKey<EquipmentAsset> MINER_ARMOUR_KEY = ResourceKey.create(UnshatteredArmourMaterials.ROOT_ID, UnshatteredUtils.getUnshatteredIdentifier("miner_armour"));
+    public static ResourceKey<EquipmentAsset> KRAMPUS_HELMET_KEY = ResourceKey.create(UnshatteredArmourMaterials.ROOT_ID, UnshatteredUtils.getUnshatteredIdentifier("krampus_helmet_key"));
 
     public static UnshatteredArmourMaterial LEAFLET_MATERIAL = new UnshatteredArmourMaterial(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.AZALEA_LEAVES_PLACE), LEAFLET_KEY);
     public static UnshatteredArmourMaterial GLOW_SQUID_BOOTS_MATERIAL = new UnshatteredArmourMaterial(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.GLOW_SQUID_SQUIRT), GLOW_SQUID_BOOTS_KEY);

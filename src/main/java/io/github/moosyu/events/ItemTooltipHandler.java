@@ -2,7 +2,7 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.abilities.*;
 import io.github.moosyu.abilities.data.Incremental;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.data.components.*;
 import io.github.moosyu.data.datagen.UnshatteredItemTagsProvider;
 import io.github.moosyu.items.SackItem;
@@ -103,13 +103,13 @@ public class ItemTooltipHandler {
         if (!finalDamageModifiers.isEmpty()) {
             double displayedDamage = 0.0;
             for (Map.Entry<Holder<Attribute>, double[]> entry : mergedAmounts.entrySet()) {
-                if (UnshatteredAttributeValues.fromAttribute(entry.getKey().value()) == UnshatteredAttributeValues.DAMAGE) {
+                if (UnshatteredAttributeValue.fromAttribute(entry.getKey().value()) == UnshatteredAttributeValue.DAMAGE) {
                     displayedDamage = entry.getValue()[0];
                     break;
                 }
             }
 
-            double base = UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder.value().getDefaultValue();
+            double base = UnshatteredAttributeValue.FINAL_DAMAGE_MODIFIER.holder.value().getDefaultValue();
             if (base != 0) {
                 extraDamage = displayedDamage * (evaluateModifiers(base, finalDamageModifiers) / base - 1);
             }
@@ -123,7 +123,7 @@ public class ItemTooltipHandler {
                 continue;
             }
 
-            UnshatteredAttributeValues itemAttribute = UnshatteredAttributeValues.fromAttribute(attributeHolder.value());
+            UnshatteredAttributeValue itemAttribute = UnshatteredAttributeValue.fromAttribute(attributeHolder.value());
 
             hasAttributes = true;
             if (itemAttribute == null) {
@@ -134,7 +134,7 @@ public class ItemTooltipHandler {
                     addAttributeToTooltip(tooltipComponents, attributeHolder, amount, false, false, isRange, null);
                 }
             } else {
-                Component suffix = (itemAttribute == UnshatteredAttributeValues.DAMAGE && (int) extraDamage > 0)
+                Component suffix = (itemAttribute == UnshatteredAttributeValue.DAMAGE && (int) extraDamage > 0)
                         ? Component.literal(" (+" + (int) extraDamage + ")").withStyle(ChatFormatting.GOLD)
                         : null;
 
@@ -163,7 +163,7 @@ public class ItemTooltipHandler {
             tooltipComponents.add(Component.empty());
             tooltipComponents.add(Component.translatable("tooltip.unshattered.capacity").withColor(UnshatteredUtils.GRAY)
                     .append(Component.literal(": "))
-                    .append(Component.literal(sackItem.sackSlotCapacity + " ").withColor(UnshatteredUtils.YELLOW))
+                    .append(Component.literal(String.format("%,d", sackItem.sackSlotCapacity) + " ").withColor(UnshatteredUtils.YELLOW))
                     .append(Component.translatable("tooltip.unshattered.capacity_item").withColor(UnshatteredUtils.YELLOW))
             );
 
@@ -261,7 +261,7 @@ public class ItemTooltipHandler {
                     tooltipComponents.add(Component.literal("(Max "
                             + incrementalAbility.attributes().stream().map(incremental -> "+"
                                     + (incrementalAbility.maxMilestone() * incremental.amountPerMilestone())
-                                    + UnshatteredAttributeValues.fromAttribute(incremental.attributeHolder().value()).symbol)
+                                    + UnshatteredAttributeValue.fromAttribute(incremental.attributeHolder().value()).symbol)
                             .collect(Collectors.joining(", "))
                             + ")"
                     ).withStyle(ChatFormatting.DARK_GRAY));
@@ -371,7 +371,7 @@ public class ItemTooltipHandler {
     }
 
     private static boolean isFinalDamageModifier(Holder<Attribute> holder) {
-        return UnshatteredAttributeValues.fromAttribute(holder.value()) == UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER;
+        return UnshatteredAttributeValue.fromAttribute(holder.value()) == UnshatteredAttributeValue.FINAL_DAMAGE_MODIFIER;
     }
 
     /**

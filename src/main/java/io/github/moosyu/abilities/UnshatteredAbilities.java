@@ -1,7 +1,7 @@
 package io.github.moosyu.abilities;
 
 import io.github.moosyu.abilities.data.*;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.Registry;
@@ -67,7 +67,7 @@ public class UnshatteredAbilities {
     public static final DeferredHolder<Ability, WoolenBarrier> WOOLEN_BARRIER = ABILITIES.register("woolen_barrier", WoolenBarrier::new);
 
     public static final DeferredHolder<Ability, Incremental> PROMISING_AXE_INCREMENTAL = ABILITIES.register("promising_axe_incremental", () -> new Incremental(
-            List.of(new Incremental.AttributeStage(UnshatteredAttributeValues.SWEEP.holder, 1)),
+            List.of(new Incremental.AttributeStage(UnshatteredAttributeValue.SWEEP.holder, 1)),
             15,
             200,
             "tooltip.unshattered.incremental.blocks_broken",
@@ -76,7 +76,7 @@ public class UnshatteredAbilities {
     );
 
     public static final DeferredHolder<Ability, Incremental> PROMISING_PICKAXE_INCREMENTAL = ABILITIES.register("promising_pickaxe_incremental", () -> new Incremental(
-                    List.of(new Incremental.AttributeStage(UnshatteredAttributeValues.MINING_SPEED.holder, 3)),
+                    List.of(new Incremental.AttributeStage(UnshatteredAttributeValue.MINING_SPEED.holder, 3)),
                     25,
                     100,
                     "tooltip.unshattered.incremental.blocks_broken",
@@ -123,7 +123,7 @@ public class UnshatteredAbilities {
     public static final DeferredHolder<Ability, Lifesteal> BAT_ARTIFACT_LIFESTEAL = ABILITIES.register("bat_artifact_lifesteal", () -> new Lifesteal(0.15f));
 
     public static final DeferredHolder<Ability, LineBonus> SPEEDY_LINE_BONUS = ABILITIES.register("speedy_line_bonus", () ->
-            new LineBonus(new UnshatteredUtils.AttributeGroup(UnshatteredAttributeValues.FISHING_SPEED.holder,
+            new LineBonus(new UnshatteredUtils.AttributeGroup(UnshatteredAttributeValue.FISHING_SPEED.holder,
                     new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("speedy_line_bonus"),
                             10,
                             AttributeModifier.Operation.ADD_VALUE
@@ -141,5 +141,7 @@ public class UnshatteredAbilities {
 
     public static final DeferredHolder<Ability, InstantHeal> FLORID_ZOMBIE_SWORD_INSTANT_HEAL = ABILITIES.register("florid_zombie_sword_instant_heal", () -> new InstantHeal(new ItemAbility(36, 10, 0), 60));
 
-    public static final DeferredHolder<Ability, LowestCommonDenominator> LOWEST_COMMON_DENOMINATOR = ABILITIES.register("lowest_common_demoninator", LowestCommonDenominator::new);
+    public static final DeferredHolder<Ability, LowestCommonDenominator> LOWEST_COMMON_DENOMINATOR = ABILITIES.register("lowest_common_denominator", LowestCommonDenominator::new);
+
+    public static final DeferredHolder<Ability, ChristmasSpirit> CHRISTMAS_SPIRIT = ABILITIES.register("christmas_spirit", ChristmasSpirit::new);
 }

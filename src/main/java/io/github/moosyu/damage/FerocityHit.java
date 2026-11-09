@@ -1,6 +1,6 @@
 package io.github.moosyu.damage;
 
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.packets.DamageNumberPacket;
 import io.github.moosyu.packets.FerocityEffectPacket;
 import net.minecraft.server.level.ServerLevel;
@@ -33,7 +33,7 @@ public class FerocityHit {
         waitTime--;
 
         if (waitTime <= 0) {
-            AttributeInstance targetHealth = target.getAttribute(UnshatteredAttributeValues.CURRENT_HEALTH.holder);
+            AttributeInstance targetHealth = target.getAttribute(UnshatteredAttributeValue.CURRENT_HEALTH.holder);
 
             if (targetHealth != null && (player.isCreative() || !target.is(EntityType.ARMOR_STAND))) {
                 if ((targetHealth.getBaseValue() - damage) > 0) {

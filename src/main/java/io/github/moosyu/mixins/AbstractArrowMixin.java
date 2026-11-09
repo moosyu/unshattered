@@ -1,7 +1,7 @@
 package io.github.moosyu.mixins;
 
 import com.google.common.collect.Lists;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.damage.DamageUtils;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -45,7 +45,7 @@ public abstract class AbstractArrowMixin extends Projectile {
     @ModifyConstant(method = "<init>", constant = @Constant(doubleValue = 2.0))
     private double setBaseDamage(double original) {
         if (getOwner() instanceof LivingEntity livingEntity) {
-            return livingEntity.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder);
+            return livingEntity.getAttributeValue(UnshatteredAttributeValue.DAMAGE.holder);
         } else {
             return original;
         }
@@ -96,7 +96,7 @@ public abstract class AbstractArrowMixin extends Projectile {
                 if (getWeaponItem() != null) {
                     DamageUtils.playerDealDamage(player,
                             mob,
-                            getDeltaMovement().length() * player.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder),
+                            getDeltaMovement().length() * player.getAttributeValue(UnshatteredAttributeValue.DAMAGE.holder),
                             false,
                             getWeaponItem(),
                             true
@@ -130,7 +130,7 @@ public abstract class AbstractArrowMixin extends Projectile {
 
                 playSound(soundEvent, 1.0f, 1.2f / (this.random.nextFloat() * 0.2f + 0.9f));
             } else if (target instanceof ServerPlayer targetPlayer && currentOwner instanceof LivingEntity livingOwner && level() instanceof ServerLevel serverLevel) {
-                targetPlayer.hurtServer(serverLevel, damageSource, (float) livingOwner.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder));
+                targetPlayer.hurtServer(serverLevel, damageSource, (float) livingOwner.getAttributeValue(UnshatteredAttributeValue.DAMAGE.holder));
                 doPostHurtEffects(targetPlayer);
             }
 

@@ -5,7 +5,7 @@ import io.github.moosyu.abilities.AbilityContextKey;
 import io.github.moosyu.data.attachments.PlayerRegionAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.data.regions.Region;
 import io.github.moosyu.data.regions.RegionAreas;
 import io.github.moosyu.data.regions.RegionTemperatureTypes;
@@ -33,10 +33,10 @@ public class PlayerTickHandler {
         }
 
         PlayerStateAttachment state = player.getData(PLAYER_STATE.get());
-        double maxHealthValue = player.getAttributeValue(UnshatteredAttributeValues.MAX_HEALTH.holder);
-        double healthRegenValue = player.getAttributeValue(UnshatteredAttributeValues.HEALTH_REGEN.holder);
-        double maxManaValue = player.getAttributeValue(UnshatteredAttributeValues.MANA.holder);
-        double manaRegenValue = player.getAttributeValue(UnshatteredAttributeValues.MANA_REGEN.holder);
+        double maxHealthValue = player.getAttributeValue(UnshatteredAttributeValue.MAX_HEALTH.holder);
+        double healthRegenValue = player.getAttributeValue(UnshatteredAttributeValue.HEALTH_REGEN.holder);
+        double maxManaValue = player.getAttributeValue(UnshatteredAttributeValue.MANA.holder);
+        double manaRegenValue = player.getAttributeValue(UnshatteredAttributeValue.MANA_REGEN.holder);
 
         // disable hunger effects
         player.getFoodData().setFoodLevel(20);

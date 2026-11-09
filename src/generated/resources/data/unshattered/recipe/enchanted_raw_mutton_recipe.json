@@ -3,7 +3,7 @@
   "key": {
     "A": {
       "count": 32,
-      "ingredient": "unshattered:enchanted_cooked_mutton"
+      "ingredient": "minecraft:mutton"
     }
   },
   "pattern": [

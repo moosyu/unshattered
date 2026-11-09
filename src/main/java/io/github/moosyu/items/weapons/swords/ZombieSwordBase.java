@@ -3,7 +3,7 @@ package io.github.moosyu.items.weapons.swords;
 import io.github.moosyu.abilities.Ability;
 import io.github.moosyu.abilities.AbilityItem;
 import io.github.moosyu.abilities.ActiveAbility;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -30,9 +30,9 @@ public class ZombieSwordBase extends UnshatteredSword implements AbilityItem {
 
     private static ItemAttributeModifiers attributes(String id, int damage, int strength, int mana) {
         return ItemAttributeModifiers.builder()
-                .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(id + "_damage"), damage, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(id + "_strength"), strength, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                .add(UnshatteredAttributeValues.MANA.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(id + "_mana"), mana, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                .add(UnshatteredAttributeValue.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(id + "_damage"), damage, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                .add(UnshatteredAttributeValue.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(id + "_strength"), strength, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                .add(UnshatteredAttributeValue.MANA.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(id + "_mana"), mana, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                 .add(Attributes.ATTACK_SPEED, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier(id + "_attack_speed"), -2.4f, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                 .build();
     }

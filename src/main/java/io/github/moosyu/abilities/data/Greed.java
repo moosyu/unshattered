@@ -4,7 +4,7 @@ import io.github.moosyu.abilities.Ability;
 import io.github.moosyu.abilities.AbilityContext;
 import io.github.moosyu.abilities.AbilityContextKey;
 import io.github.moosyu.abilities.AbilityTriggerType;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.util.UnshatteredUtils;
@@ -24,7 +24,7 @@ public class Greed extends Ability {
     @Override
     public void onTrigger(AbilityContext context) {
         context.get(AbilityContextKey.PLAYER).ifPresent(player -> UnshatteredUtils.getAttributeInstance(
-                player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder).ifPresent(attribute -> {
+                player, UnshatteredAttributeValue.FINAL_DAMAGE_MODIFIER.holder).ifPresent(attribute -> {
                     double coins = player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get()).getCoins();
                     attribute.addOrUpdateTransientModifier(new AttributeModifier(
                             id(),
@@ -38,7 +38,7 @@ public class Greed extends Ability {
     @Override
     public void onFinish(AbilityContext context) {
         context.get(AbilityContextKey.PLAYER)
-                .flatMap(player -> UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder))
+                .flatMap(player -> UnshatteredUtils.getAttributeInstance(player, UnshatteredAttributeValue.FINAL_DAMAGE_MODIFIER.holder))
                 .ifPresent(attribute -> attribute.removeModifier(id()));
     }
 
@@ -47,7 +47,7 @@ public class Greed extends Ability {
         List<UnshatteredUtils.AttributeGroup> bonuses = new ArrayList<>();
         context.get(AbilityContextKey.PLAYER).ifPresent(player -> {
             double coins = player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get()).getCoins();
-            bonuses.add(new UnshatteredUtils.AttributeGroup(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder, new AttributeModifier(
+            bonuses.add(new UnshatteredUtils.AttributeGroup(UnshatteredAttributeValue.FINAL_DAMAGE_MODIFIER.holder, new AttributeModifier(
                     id(),
                     SCALE * Math.pow(coins, EXPONENT),
                     AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)

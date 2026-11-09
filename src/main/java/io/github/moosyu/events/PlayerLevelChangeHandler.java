@@ -1,7 +1,7 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.regen.RegenClientCache;
 import net.minecraft.server.level.ServerPlayer;
@@ -41,8 +41,8 @@ public class PlayerLevelChangeHandler {
         }
 
         PlayerStateAttachment stats = player.getData(PLAYER_STATE.get());
-        AttributeInstance healthAttribute = player.getAttribute(UnshatteredAttributeValues.MAX_HEALTH.holder);
-        AttributeInstance manaAttribute = player.getAttribute(UnshatteredAttributeValues.MANA.holder);
+        AttributeInstance healthAttribute = player.getAttribute(UnshatteredAttributeValue.MAX_HEALTH.holder);
+        AttributeInstance manaAttribute = player.getAttribute(UnshatteredAttributeValue.MANA.holder);
 
         if (healthAttribute == null || manaAttribute == null) {
             return;
@@ -56,8 +56,6 @@ public class PlayerLevelChangeHandler {
     public static void onPlayerLeave(EntityLeaveLevelEvent event) {
         if (event.getEntity() instanceof Player player && player.level().isClientSide()) {
             RegenClientCache.clear();
-        } else if (event.getEntity() instanceof ServerPlayer player && !player.level().isClientSide()) {
-            player.getData(UnshatteredAttachments.PLAYER_ABILITIES.get()).forceStopEffects(player);
         }
     }
 }

@@ -1,7 +1,7 @@
 package io.github.moosyu.items.weapons.swords;
 
 import io.github.moosyu.abilities.*;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -25,7 +25,7 @@ import static io.github.moosyu.Unshattered.MODID;
 public class RogueSword extends UnshatteredSword implements AbilityItem {
     public RogueSword(Properties properties) {
         super(properties.attributes(ItemAttributeModifiers.builder()
-                        .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("rogue_sword_damage"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                        .add(UnshatteredAttributeValue.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("rogue_sword_damage"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                         .add(Attributes.ATTACK_SPEED, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("rogue_sword_attack_speed"), -2.4f, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                         .build()
                 )

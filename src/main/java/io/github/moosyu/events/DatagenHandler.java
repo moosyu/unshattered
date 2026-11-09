@@ -71,6 +71,7 @@ public class DatagenHandler {
                     bootstrap.register(UnshatteredRegions.HYTHE, new Region(0xFFB1FA96, RegionTemperatureTypes.COMFORTABLE, false));
                     bootstrap.register(UnshatteredRegions.SKY, new Region(0xFF96E3FA, RegionTemperatureTypes.COLD, false));
                     bootstrap.register(UnshatteredRegions.OASIS, new Region(0xFFF1E9E0, RegionTemperatureTypes.COMFORTABLE, false));
+                    bootstrap.register(UnshatteredRegions.JERRY_WORKSHOP, new Region(0xFF55FFFF, RegionTemperatureTypes.COLD, false));
                 }).add(DataPackRegistryHandler.REGION_BOUNDARY_REGISTRY_KEY, bootstrap -> {
                     HolderGetter<Region> regions = bootstrap.lookup(DataPackRegistryHandler.REGION_REGISTRY_KEY);
 

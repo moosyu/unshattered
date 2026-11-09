@@ -5,6 +5,7 @@ import com.mojang.math.Axis;
 import io.github.moosyu.data.NpcData;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.entities.npcs.NPCEntity;
+import io.github.moosyu.entities.states.NPCRenderState;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
@@ -19,7 +20,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import org.jspecify.annotations.NonNull;
 
-public class NPCEntityRenderer extends EntityRenderer<NPCEntity, NPCEntityRenderer.NPCRenderState> {
+public class NPCEntityRenderer extends EntityRenderer<NPCEntity, NPCRenderState> {
     private final PlayerModel model;
     private final boolean slim;
 
@@ -91,11 +92,5 @@ public class NPCEntityRenderer extends EntityRenderer<NPCEntity, NPCEntityRender
 
         poseStack.popPose();
         super.submit(state, poseStack, collector, camera);
-    }
-
-    // getRenderer in EntityRenderDispatcher doesn't work if AvatarRenderState is used normally
-    public static class NPCRenderState extends EntityRenderState {
-        public final AvatarRenderState avatar = new AvatarRenderState();
-        public Identifier texture;
     }
 }

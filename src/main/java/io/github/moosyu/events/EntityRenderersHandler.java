@@ -1,6 +1,7 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.entities.UnshatteredEntities;
+import io.github.moosyu.entities.models.PresentModel;
 import io.github.moosyu.entities.renderers.*;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.renderer.entity.CreeperRenderer;
@@ -35,5 +36,12 @@ public class EntityRenderersHandler {
         event.registerEntityRenderer(UnshatteredEntities.SEA_WALKER.get(), SeaWalkerRenderer::new);
         event.registerEntityRenderer(UnshatteredEntities.OASIS_SHEEP.get(), OasisSheepRenderer::new);
         event.registerEntityRenderer(UnshatteredEntities.OASIS_RABBIT.get(), OasisRabbitRenderer::new);
+        event.registerEntityRenderer(UnshatteredEntities.FROZEN_STEVE.get(), FrozenSteveRenderer::new);
+        event.registerEntityRenderer(UnshatteredEntities.PRESENT.get(), PresentRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void registerEntityLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(PresentModel.LAYER_LOCATION, PresentModel::createBodyLayer);
     }
 }

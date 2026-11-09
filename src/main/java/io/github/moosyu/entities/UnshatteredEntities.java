@@ -1,15 +1,16 @@
 package io.github.moosyu.entities;
 
+import io.github.moosyu.entities.decoration.present.Present;
 import io.github.moosyu.entities.mobs.*;
 import io.github.moosyu.entities.npcs.*;
 import io.github.moosyu.entities.projectiles.HomingBee;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.animal.rabbit.Rabbit;
-import net.minecraft.world.entity.animal.sheep.Sheep;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
@@ -215,5 +216,21 @@ public class UnshatteredEntities {
                     .sized(0.49f, 0.6f)
                     .eyeHeight(0.59f)
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("oasis_rabbit")))
+    );
+
+    public static final Supplier<EntityType<FrozenSteve>> FROZEN_STEVE = ENTITY_TYPES.register(
+            "frozen_steve",
+            () -> EntityType.Builder.of(FrozenSteve::new, MobCategory.CREATURE)
+                    .sized(0.6f, 1.95f)
+                    .eyeHeight(1.74f)
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("frozen_steve")))
+    );
+
+    public static final DeferredHolder<EntityType<?>, EntityType<Present>> PRESENT = ENTITY_TYPES.register(
+            "present",
+            () -> EntityType.Builder.<Present>of(Present::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f)
+                    .clientTrackingRange(8)
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("present")))
     );
 }

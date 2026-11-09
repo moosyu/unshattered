@@ -2,9 +2,11 @@ package io.github.moosyu.items;
 
 import com.google.common.collect.ImmutableSet;
 import io.github.moosyu.abilities.UnshatteredAbilities;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.blocks.UnshatteredBlocks;
 import io.github.moosyu.data.components.ItemCharges;
+import io.github.moosyu.entities.decoration.present.PresentTypes;
+import io.github.moosyu.items.armours.KrampusHelmet;
 import io.github.moosyu.items.armours.SkeletonHat;
 import io.github.moosyu.items.attachments.*;
 import io.github.moosyu.items.attachments.hooks.CommonHook;
@@ -14,8 +16,8 @@ import io.github.moosyu.items.tools.axes.PlainsLockedFortuneAxe;
 import io.github.moosyu.items.tools.axes.UnshatteredAxeTool;
 import io.github.moosyu.items.tools.drills.DrillItem;
 import io.github.moosyu.items.tools.pickaxes.*;
-import io.github.moosyu.items.tools.rods.UnshatteredLavaRod;
-import io.github.moosyu.items.tools.rods.UnshatteredWaterRod;
+import io.github.moosyu.items.tools.rods.UnshatteredLavaFishingRod;
+import io.github.moosyu.items.tools.rods.UnshatteredWaterFishingRod;
 import io.github.moosyu.items.weapons.axes.AxeWeapon;
 import io.github.moosyu.items.weapons.daggers.DaggerItem;
 import io.github.moosyu.items.weapons.daggers.EmeraldDagger;
@@ -42,8 +44,8 @@ public class UnshatteredItems {
 
     public static final DeferredItem<AxeWeapon> MERCENARY_AXE = ITEMS.registerItem("mercenary_axe", props -> new AxeWeapon(props
             .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("mercenary_axe_damage"), 8, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("mercenary_axe_strength"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("mercenary_axe_damage"), 8, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("mercenary_axe_strength"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(Attributes.ATTACK_SPEED, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("mercenary_axe_attack_speed"), -3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
             )
@@ -63,36 +65,36 @@ public class UnshatteredItems {
 
     public static final DeferredItem<UnshatteredAxeTool> SERIOUSLY_DAMAGED_AXE = ITEMS.registerItem("seriously_damaged_axe", props -> new UnshatteredAxeTool(props
             .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.SWEEP.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("seriously_damaged_axe_sweep"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("seriously_damaged_axe_foraging_fortune"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.BREAKING_POWER.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("seriously_damaged_axe_breaking_power"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.SWEEP.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("seriously_damaged_axe_sweep"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.FORAGING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("seriously_damaged_axe_foraging_fortune"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.BREAKING_POWER.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("seriously_damaged_axe_breaking_power"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()),
             6.0f
     ));
 
     public static final DeferredItem<UnshatteredAxeTool> DECENT_AXE = ITEMS.registerItem("decent_axe", props -> new UnshatteredAxeTool(props
             .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.SWEEP.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("decent_axe_sweep"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("decent_axe_foraging_fortune"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.BREAKING_POWER.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("decent_axe_breaking_power"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.SWEEP.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("decent_axe_sweep"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.FORAGING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("decent_axe_foraging_fortune"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.BREAKING_POWER.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("decent_axe_breaking_power"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()),
             8.0f
     ));
 
     public static final DeferredItem<UnshatteredAxeTool> FIG_HEW = ITEMS.registerItem("fig_hew", props -> new UnshatteredAxeTool(props
             .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.SWEEP.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("fig_hew_sweep"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("fig_hew_foraging_fortune"), 12, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.BREAKING_POWER.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("fig_hew_breaking_power"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.SWEEP.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("fig_hew_sweep"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.FORAGING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("fig_hew_foraging_fortune"), 12, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.BREAKING_POWER.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("fig_hew_breaking_power"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()),
             10.0f
     ));
 
     public static final DeferredItem<UnshatteredAxeTool> FIGSTONE_SPLITTER = ITEMS.registerItem("figstone_splitter", props -> new UnshatteredAxeTool(props
             .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.SWEEP.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("figstone_splitter_sweep"), 15, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("figstone_splitter_foraging_fortune"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.BREAKING_POWER.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("figstone_splitter_breaking_power"), 4, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.SWEEP.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("figstone_splitter_sweep"), 15, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.FORAGING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("figstone_splitter_foraging_fortune"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.BREAKING_POWER.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("figstone_splitter_breaking_power"), 4, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()),
             12.0f
     ));
@@ -101,8 +103,8 @@ public class UnshatteredItems {
             UnshatteredArmourMaterials.LEAFLET_MATERIAL,
             ArmorType.HELMET,
             ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.MAX_HEALTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_helmet_health"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.HEAD)
-                    .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_helmet_foraging_fortune"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.HEAD)
+                    .add(UnshatteredAttributeValue.MAX_HEALTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_helmet_health"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.HEAD)
+                    .add(UnshatteredAttributeValue.FORAGING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_helmet_foraging_fortune"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.HEAD)
                     .build()
     );
 
@@ -110,8 +112,8 @@ public class UnshatteredItems {
             UnshatteredArmourMaterials.LEAFLET_MATERIAL,
             ArmorType.CHESTPLATE,
             ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.MAX_HEALTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_chestplate_health"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.CHEST)
-                    .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_chestplate_foraging_fortune"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.CHEST)
+                    .add(UnshatteredAttributeValue.MAX_HEALTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_chestplate_health"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.CHEST)
+                    .add(UnshatteredAttributeValue.FORAGING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_chestplate_foraging_fortune"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.CHEST)
                     .build()
     );
 
@@ -119,8 +121,8 @@ public class UnshatteredItems {
             UnshatteredArmourMaterials.LEAFLET_MATERIAL,
             ArmorType.LEGGINGS,
             ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.MAX_HEALTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_leggings_health"), 4, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.LEGS)
-                    .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_leggings_foraging_fortune"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.LEGS)
+                    .add(UnshatteredAttributeValue.MAX_HEALTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_leggings_health"), 4, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.LEGS)
+                    .add(UnshatteredAttributeValue.FORAGING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_leggings_foraging_fortune"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.LEGS)
                     .build()
     );
 
@@ -128,8 +130,8 @@ public class UnshatteredItems {
             UnshatteredArmourMaterials.LEAFLET_MATERIAL,
             ArmorType.BOOTS,
             ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.MAX_HEALTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_boots_health"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
-                    .add(UnshatteredAttributeValues.FORAGING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_boots_foraging_fortune"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
+                    .add(UnshatteredAttributeValue.MAX_HEALTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_boots_health"), 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
+                    .add(UnshatteredAttributeValue.FORAGING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("leaflet_boots_foraging_fortune"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
                     .build()
     );
 
@@ -239,20 +241,20 @@ public class UnshatteredItems {
             .stacksTo(1)
     ));
 
-    public static final DeferredItem<UnshatteredWaterRod> CHALLENGING_ROD = ITEMS.registerItem("challenging_rod", props -> new UnshatteredWaterRod(props
+    public static final DeferredItem<UnshatteredWaterFishingRod> CHALLENGING_ROD = ITEMS.registerItem("challenging_rod", props -> new UnshatteredWaterFishingRod(props
             .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("challenging_rod_damage"), 8, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("challenging_rod_strength"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.FISHING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("challenging_rod_fishing_fortune"), 4, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.FISHING_SPEED.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("challenging_rod_fishing_speed"), 9, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("challenging_rod_damage"), 8, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("challenging_rod_strength"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.FISHING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("challenging_rod_fishing_fortune"), 4, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.FISHING_SPEED.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("challenging_rod_fishing_speed"), 9, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
             )
     ));
 
-    public static final DeferredItem<UnshatteredWaterRod> FISHING_ROD = ITEMS.registerItem("fishing_rod", props -> new UnshatteredWaterRod(props
+    public static final DeferredItem<UnshatteredWaterFishingRod> FISHING_ROD = ITEMS.registerItem("fishing_rod", props -> new UnshatteredWaterFishingRod(props
             .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("fishing_rod_damage"), 10, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("fishing_rod_strength"), 10, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("fishing_rod_damage"), 10, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("fishing_rod_strength"), 10, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
             )
     ));
@@ -261,9 +263,7 @@ public class UnshatteredItems {
 
     public static final DeferredItem<EnchantedItem> ENCHANTED_ROTTEN_FLESH = ITEMS.registerItem("enchanted_rotten_flesh", EnchantedItem::new);
 
-    public static final DeferredItem<Item> ZOMBIE_HEART = ITEMS.registerItem("zombie_heart", props -> new Item(props
-            .stacksTo(1)
-    ));
+    public static final DeferredItem<Item> ZOMBIE_HEART = ITEMS.registerItem("zombie_heart", props -> new Item(props.stacksTo(1)));
 
     public static final DeferredItem<EnchantedItem> GOLDEN_POWDER = ITEMS.registerItem("golden_powder", EnchantedItem::new);
 
@@ -332,8 +332,8 @@ public class UnshatteredItems {
     public static final DeferredItem<Item> SQUIRE_SWORD = ITEMS.registerItem("squire_sword", props -> new Item(props
             .stacksTo(1)
             .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("squire_sword_damage"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("squire_sword_strength"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("squire_sword_damage"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("squire_sword_strength"), 2, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(Attributes.ATTACK_SPEED, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("squire_sword_attack_speed"), -3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
             )
@@ -341,7 +341,7 @@ public class UnshatteredItems {
 
     public static final DeferredItem<Item> UNDEAD_SWORD = ITEMS.registerItem("undead_sword", props -> new BaseAbilityItem(
             props.attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("undead_sword_damage"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("undead_sword_damage"), 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(Attributes.ATTACK_SPEED, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("undead_sword_attack_speed"), -2.4f, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
             ),
@@ -381,22 +381,22 @@ public class UnshatteredItems {
     public static final DeferredItem<Item> LAPIS_PICKAXE = ITEMS.registerItem("lapis_pickaxe",
             props -> new UnshatteredMiningToolBase(props.stacksTo(1)
                     .attributes(ItemAttributeModifiers.builder()
-                            .add(UnshatteredAttributeValues.DAMAGE.holder,
+                            .add(UnshatteredAttributeValue.DAMAGE.holder,
                                     new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_pickaxe_damage"),
                                             3,
                                             AttributeModifier.Operation.ADD_VALUE
                                     ), EquipmentSlotGroup.MAINHAND
-                            ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
+                            ).add(UnshatteredAttributeValue.MINING_SPEED.holder,
                                     new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_pickaxe_mining_speed"),
                                             10,
                                             AttributeModifier.Operation.ADD_VALUE
                                     ), EquipmentSlotGroup.MAINHAND
-                            ).add(UnshatteredAttributeValues.MINING_FORTUNE.holder,
+                            ).add(UnshatteredAttributeValue.MINING_FORTUNE.holder,
                                     new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_pickaxe_mining_fortune"),
                                             4,
                                             AttributeModifier.Operation.ADD_VALUE
                                     ), EquipmentSlotGroup.MAINHAND
-                            ).add(UnshatteredAttributeValues.BREAKING_POWER.holder,
+                            ).add(UnshatteredAttributeValue.BREAKING_POWER.holder,
                                     new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_pickaxe_breaking_power"),
                                             3,
                                             AttributeModifier.Operation.ADD_VALUE
@@ -434,7 +434,7 @@ public class UnshatteredItems {
     public static final DeferredItem<Item> RUSTY_CLEAVER = ITEMS.registerItem("rusty_cleaver", props -> new BaseAbilityItem(
             props.attributes(ItemAttributeModifiers.builder()
                     .add(
-                            UnshatteredAttributeValues.DAMAGE.holder,
+                            UnshatteredAttributeValue.DAMAGE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("rusty_cleaver_damage"), 4, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.MAINHAND
                     ).add(
@@ -447,10 +447,10 @@ public class UnshatteredItems {
     ));
     public static final DeferredItem<Item> GOLDEN_CLEAVER = ITEMS.registerItem("golden_cleaver", props -> new BaseAbilityItem(
             props.attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DAMAGE.holder,
+                    .add(UnshatteredAttributeValue.DAMAGE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("golden_cleaver_damage"), 7, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.MAINHAND
-                    ).add(UnshatteredAttributeValues.STRENGTH.holder,
+                    ).add(UnshatteredAttributeValue.STRENGTH.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("golden_cleaver_strength"), 3, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.MAINHAND
                     ).add(Attributes.ATTACK_SPEED,
@@ -462,13 +462,13 @@ public class UnshatteredItems {
     ));
     public static final DeferredItem<Item> SUPER_CLEAVER = ITEMS.registerItem("super_cleaver", props -> new BaseAbilityItem(
             props.attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DAMAGE.holder,
+                    .add(UnshatteredAttributeValue.DAMAGE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("super_cleaver_damage"), 8, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.MAINHAND
-                    ).add(UnshatteredAttributeValues.STRENGTH.holder,
+                    ).add(UnshatteredAttributeValue.STRENGTH.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("super_cleaver_strength"), 9, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.MAINHAND
-                    ).add(UnshatteredAttributeValues.CRITICAL_DAMAGE.holder,
+                    ).add(UnshatteredAttributeValue.CRITICAL_DAMAGE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("super_cleaver_crit_damage"), 5, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.MAINHAND
                     ).add(Attributes.ATTACK_SPEED,
@@ -480,13 +480,13 @@ public class UnshatteredItems {
     ));
     public static final DeferredItem<Item> HYPER_CLEAVER = ITEMS.registerItem("hyper_cleaver", props -> new BaseAbilityItem(
             props.attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DAMAGE.holder,
+                    .add(UnshatteredAttributeValue.DAMAGE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("hyper_cleaver_damage"), 15, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.MAINHAND
-                    ).add(UnshatteredAttributeValues.STRENGTH.holder,
+                    ).add(UnshatteredAttributeValue.STRENGTH.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("hyper_cleaver_strength"), 19, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.MAINHAND
-                    ).add(UnshatteredAttributeValues.CRITICAL_DAMAGE.holder,
+                    ).add(UnshatteredAttributeValue.CRITICAL_DAMAGE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("hyper_cleaver_crit_damage"), 8, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.MAINHAND
                     ).add(Attributes.ATTACK_SPEED,
@@ -498,13 +498,13 @@ public class UnshatteredItems {
     ));
     public static final DeferredItem<Item> GIANT_CLEAVER = ITEMS.registerItem("giant_cleaver", props -> new BaseAbilityItem(
             props.attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DAMAGE.holder,
+                    .add(UnshatteredAttributeValue.DAMAGE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("giant_cleaver_damage"), 41, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.MAINHAND
-                    ).add(UnshatteredAttributeValues.STRENGTH.holder,
+                    ).add(UnshatteredAttributeValue.STRENGTH.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("giant_cleaver_strength"), 34, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.MAINHAND
-                    ).add(UnshatteredAttributeValues.CRITICAL_DAMAGE.holder,
+                    ).add(UnshatteredAttributeValue.CRITICAL_DAMAGE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("giant_cleaver_crit_damage"), 16, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.MAINHAND
                     ).add(Attributes.ATTACK_SPEED,
@@ -518,8 +518,8 @@ public class UnshatteredItems {
 
     public static final DeferredItem<DaggerItem> IRON_DAGGER = ITEMS.registerItem("iron_dagger", props -> new DaggerItem(props
             .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("iron_dagger_damage"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.FEROCITY.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("iron_dagger_ferocity"), 25, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("iron_dagger_damage"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.FEROCITY.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("iron_dagger_ferocity"), 25, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(Attributes.ATTACK_SPEED, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("iron_dagger_attack_speed"), 8, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
             )
@@ -533,8 +533,8 @@ public class UnshatteredItems {
             UnshatteredArmourMaterials.GLOW_SQUID_BOOTS_MATERIAL,
             ArmorType.BOOTS,
             ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.FISHING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("squid_boots_fishing_fortune"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
-                    .add(UnshatteredAttributeValues.MAX_HEALTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("squid_boots_health"), 12, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
+                    .add(UnshatteredAttributeValue.FISHING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("squid_boots_fishing_fortune"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
+                    .add(UnshatteredAttributeValue.MAX_HEALTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("squid_boots_health"), 12, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
                     .build()
     );
 
@@ -651,13 +651,13 @@ public class UnshatteredItems {
     public static final DeferredItem<Item> ZOMBIE_PICKAXE = ITEMS.registerItem("zombie_pickaxe", ZombiePickaxe::new);
 
     public static final DeferredItem<Item> PROMISING_PICKAXE = ITEMS.registerItem("promising_pickaxe", props -> new BaseAbilityItem(props.attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DAMAGE.holder,
+                    .add(UnshatteredAttributeValue.DAMAGE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("promising_pickaxe_damage"), 2, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.MAINHAND
-                    ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
+                    ).add(UnshatteredAttributeValue.MINING_SPEED.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("promising_pickaxe_mining_speed"), 3, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.MAINHAND
-                    ).add(UnshatteredAttributeValues.BREAKING_POWER.holder,
+                    ).add(UnshatteredAttributeValue.BREAKING_POWER.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("promising_pickaxe_breaking_power"), 3, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.MAINHAND
                     ).add(Attributes.ATTACK_SPEED,
@@ -669,13 +669,13 @@ public class UnshatteredItems {
     );
 
     public static final DeferredItem<Item> PROMISING_AXE = ITEMS.registerItem("promising_axe", props -> new BaseAbilityItem(props.attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DAMAGE.holder,
+                    .add(UnshatteredAttributeValue.DAMAGE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("promising_axe_damage"), 2, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.MAINHAND
-                    ).add(UnshatteredAttributeValues.SWEEP.holder,
+                    ).add(UnshatteredAttributeValue.SWEEP.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("promising_axe_sweep"), 1, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.MAINHAND
-                    ).add(UnshatteredAttributeValues.BREAKING_POWER.holder,
+                    ).add(UnshatteredAttributeValue.BREAKING_POWER.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("promising_axe_breaking_power"), 2, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.MAINHAND
                     ).add(Attributes.ATTACK_SPEED,
@@ -800,7 +800,7 @@ public class UnshatteredItems {
             .attributes(ItemAttributeModifiers.builder().add(Attributes.ATTACK_SPEED,
                     new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("rooke_hoe_attack_speed"), -2.0f, AttributeModifier.Operation.ADD_VALUE),
                     EquipmentSlotGroup.MAINHAND
-            ).add(UnshatteredAttributeValues.FARMING_FORTUNE.holder,
+            ).add(UnshatteredAttributeValue.FARMING_FORTUNE.holder,
                     new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("rooke_hoe_farming_fortune"), 5.0f, AttributeModifier.Operation.ADD_VALUE),
                     EquipmentSlotGroup.MAINHAND
             ).build()))
@@ -860,16 +860,16 @@ public class UnshatteredItems {
             UnshatteredArmourMaterials.LAPIS_ARMOUR_MATERIAL,
             ArmorType.HELMET,
             ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DEFENCE.holder,
+                    .add(UnshatteredAttributeValue.DEFENCE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_helmet_defence"), 4, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.HEAD
-                    ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
+                    ).add(UnshatteredAttributeValue.MINING_SPEED.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_helmet_mining_speed"), 3, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.HEAD
-                    ).add(UnshatteredAttributeValues.MINING_FORTUNE.holder,
+                    ).add(UnshatteredAttributeValue.MINING_FORTUNE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_helmet_mining_fortune"), 1, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.HEAD
-                    ).add(UnshatteredAttributeValues.MINING_WISDOM.holder,
+                    ).add(UnshatteredAttributeValue.MINING_WISDOM.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_helmet_mining_wisdom"), 10, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.HEAD
                     ).build()
@@ -879,16 +879,16 @@ public class UnshatteredItems {
             UnshatteredArmourMaterials.LAPIS_ARMOUR_MATERIAL,
             ArmorType.CHESTPLATE,
             ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DEFENCE.holder,
+                    .add(UnshatteredAttributeValue.DEFENCE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_chestplate_defence"), 7, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.CHEST
-                    ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
+                    ).add(UnshatteredAttributeValue.MINING_SPEED.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_chestplate_mining_speed"), 3, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.CHEST
-                    ).add(UnshatteredAttributeValues.MINING_FORTUNE.holder,
+                    ).add(UnshatteredAttributeValue.MINING_FORTUNE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_chestplate_mining_fortune"), 2, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.CHEST
-                    ).add(UnshatteredAttributeValues.MINING_WISDOM.holder,
+                    ).add(UnshatteredAttributeValue.MINING_WISDOM.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_chestplate_mining_wisdom"), 10, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.CHEST
                     ).build()
@@ -898,17 +898,17 @@ public class UnshatteredItems {
             UnshatteredArmourMaterials.LAPIS_ARMOUR_MATERIAL,
             ArmorType.LEGGINGS,
             ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DEFENCE.holder,
+                    .add(UnshatteredAttributeValue.DEFENCE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_leggings_defence"), 6, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.LEGS
-                    ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
+                    ).add(UnshatteredAttributeValue.MINING_SPEED.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_leggings_mining_speed"), 3, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.LEGS
                     )
-                    .add(UnshatteredAttributeValues.MINING_FORTUNE.holder,
+                    .add(UnshatteredAttributeValue.MINING_FORTUNE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_leggings_mining_fortune"), 1, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.LEGS
-                    ).add(UnshatteredAttributeValues.MINING_WISDOM.holder,
+                    ).add(UnshatteredAttributeValue.MINING_WISDOM.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_leggings_mining_wisdom"), 10, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.LEGS
                     ).build()
@@ -918,16 +918,16 @@ public class UnshatteredItems {
             UnshatteredArmourMaterials.LAPIS_ARMOUR_MATERIAL,
             ArmorType.BOOTS,
             ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DEFENCE.holder,
+                    .add(UnshatteredAttributeValue.DEFENCE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_boots_defence"), 3, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.FEET
-                    ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
+                    ).add(UnshatteredAttributeValue.MINING_SPEED.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_boots_mining_speed"), 3, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.FEET
-                    ).add(UnshatteredAttributeValues.MINING_FORTUNE.holder,
+                    ).add(UnshatteredAttributeValue.MINING_FORTUNE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_boots_mining_fortune"), 1, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.FEET
-                    ).add(UnshatteredAttributeValues.MINING_WISDOM.holder,
+                    ).add(UnshatteredAttributeValue.MINING_WISDOM.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("lapis_boots_mining_wisdom"), 10, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.FEET
                     ).build()
@@ -968,20 +968,20 @@ public class UnshatteredItems {
                     Items.WHEAT,
                     Items.SUGAR_CANE
             ),
-            640)
+            SackItem.BEGINNER_SACK_SIZE)
     );
 
     public static final DeferredItem<Item> MINER_HELMET = createSimpleArmourPiece("miner_helmet",
             UnshatteredArmourMaterials.MINER_ARMOUR_MATERIAL,
             ArmorType.HELMET,
             ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DEFENCE.holder,
+                    .add(UnshatteredAttributeValue.DEFENCE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_helmet_defence"), 5, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.HEAD
-                    ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
+                    ).add(UnshatteredAttributeValue.MINING_SPEED.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_helmet_mining_speed"), 5, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.HEAD
-                    ).add(UnshatteredAttributeValues.MINING_FORTUNE.holder,
+                    ).add(UnshatteredAttributeValue.MINING_FORTUNE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_helmet_mining_fortune"), 1, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.HEAD
                     ).build()
@@ -991,13 +991,13 @@ public class UnshatteredItems {
             UnshatteredArmourMaterials.MINER_ARMOUR_MATERIAL,
             ArmorType.CHESTPLATE,
             ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DEFENCE.holder,
+                    .add(UnshatteredAttributeValue.DEFENCE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_chestplate_defence"), 8, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.CHEST
-                    ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
+                    ).add(UnshatteredAttributeValue.MINING_SPEED.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_chestplate_mining_speed"), 5, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.CHEST
-                    ).add(UnshatteredAttributeValues.MINING_FORTUNE.holder,
+                    ).add(UnshatteredAttributeValue.MINING_FORTUNE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_chestplate_mining_fortune"), 2, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.CHEST
                     ).build()
@@ -1007,14 +1007,14 @@ public class UnshatteredItems {
             UnshatteredArmourMaterials.MINER_ARMOUR_MATERIAL,
             ArmorType.LEGGINGS,
             ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DEFENCE.holder,
+                    .add(UnshatteredAttributeValue.DEFENCE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_leggings_defence"), 7, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.LEGS
-                    ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
+                    ).add(UnshatteredAttributeValue.MINING_SPEED.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_leggings_mining_speed"), 5, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.LEGS
                     )
-                    .add(UnshatteredAttributeValues.MINING_FORTUNE.holder,
+                    .add(UnshatteredAttributeValue.MINING_FORTUNE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_leggings_mining_fortune"), 1, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.LEGS
                     ).build()
@@ -1024,13 +1024,13 @@ public class UnshatteredItems {
             UnshatteredArmourMaterials.MINER_ARMOUR_MATERIAL,
             ArmorType.BOOTS,
             ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DEFENCE.holder,
+                    .add(UnshatteredAttributeValue.DEFENCE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_boots_defence"), 4, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.FEET
-                    ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
+                    ).add(UnshatteredAttributeValue.MINING_SPEED.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_boots_mining_speed"), 5, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.FEET
-                    ).add(UnshatteredAttributeValues.MINING_FORTUNE.holder,
+                    ).add(UnshatteredAttributeValue.MINING_FORTUNE.holder,
                             new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("miner_boots_mining_fortune"), 1, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.FEET
                     ).build()
@@ -1039,19 +1039,19 @@ public class UnshatteredItems {
     public static final DeferredItem<Item> REDSTONE_SWORD = ITEMS.registerItem("redstone_sword", props -> new Item(props
             .stacksTo(1)
             .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("redstone_sword_damage"), 9, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("redstone_sword_strength"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("redstone_sword_damage"), 9, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("redstone_sword_strength"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .add(Attributes.ATTACK_SPEED, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("redstone_sword_attack_speed"), -2.4, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
             )
     ));
 
-    public static final DeferredItem<UnshatteredLavaRod> STARTER_MAGMA_ROD = ITEMS.registerItem("starter_magma_rod", props -> new UnshatteredLavaRod(props
+    public static final DeferredItem<UnshatteredLavaFishingRod> STARTER_MAGMA_ROD = ITEMS.registerItem("starter_magma_rod", props -> new UnshatteredLavaFishingRod(props
             .attributes(ItemAttributeModifiers.builder()
-                    .add(UnshatteredAttributeValues.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("starter_magma_rod_damage"), 25, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("starter_magma_rod_strength"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.FISHING_SPEED.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("starter_magma_rod_fishing_speed"), 11, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(UnshatteredAttributeValues.FISHING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("starter_magma_rod_fishing_fortune"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.DAMAGE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("starter_magma_rod_damage"), 25, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.STRENGTH.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("starter_magma_rod_strength"), 20, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.FISHING_SPEED.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("starter_magma_rod_fishing_speed"), 11, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(UnshatteredAttributeValue.FISHING_FORTUNE.holder, new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("starter_magma_rod_fishing_fortune"), 5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()
             )
     ));
@@ -1075,4 +1075,31 @@ public class UnshatteredItems {
     public static final DeferredItem<EnchantedItem> ENCHANTED_RAW_RABBIT = ITEMS.registerItem("enchanted_raw_rabbit", EnchantedItem::new);
 
     public static final DeferredItem<EnchantedItem> ENCHANTED_COOKED_RABBIT = ITEMS.registerItem("enchanted_cooked_rabbit", EnchantedItem::new);
+
+    public static final DeferredItem<PresentItem> WHITE_PRESENT = ITEMS.registerItem("white_present", props -> new PresentItem(props, PresentTypes.WHITE));
+
+    public static final DeferredItem<PresentItem> GREEN_PRESENT = ITEMS.registerItem("green_present", props -> new PresentItem(props,  PresentTypes.GREEN));
+
+    public static final DeferredItem<PresentItem> RED_PRESENT = ITEMS.registerItem("red_present", props -> new PresentItem(props,  PresentTypes.RED));
+
+    public static final DeferredItem<Item> KRAMPUS_HELMET = ITEMS.registerItem("krampus_helmet", KrampusHelmet::new);
+
+    public static final DeferredItem<Item> GOLDEN_PRESENT = ITEMS.registerItem("golden_gift", Item::new);
+
+    public static final DeferredItem<EnchantedItem> ENCHANTED_SNOW_BLOCK = ITEMS.registerItem("enchanted_snow_block", EnchantedItem::new);
+
+    public static final DeferredItem<SackItem> WINTER_SACK = ITEMS.registerItem("winter_sack", props -> new SackItem(props,
+            ImmutableSet.of(
+                    UnshatteredItems.WHITE_PRESENT.get(),
+                    UnshatteredItems.GREEN_PRESENT.get(),
+                    UnshatteredItems.RED_PRESENT.get(),
+                    Items.SNOWBALL,
+                    Items.SNOW_BLOCK,
+                    UnshatteredItems.ENCHANTED_SNOW_BLOCK.get(),
+                    Items.ICE,
+                    UnshatteredItems.ENCHANTED_ICE.get(),
+                    UnshatteredItems.ENCHANTED_PACKED_ICE.get()
+            ),
+            SackItem.LARGE_SACK_SIZE)
+    );
 }

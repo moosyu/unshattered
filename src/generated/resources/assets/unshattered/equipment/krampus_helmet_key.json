@@ -1,0 +1,19 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "unshattered:krampus_helmet"
+      }
+    ],
+    "humanoid_baby": [
+      {
+        "texture": "unshattered:krampus_helmet"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "unshattered:krampus_helmet"
+      }
+    ]
+  }
+}

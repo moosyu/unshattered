@@ -4,7 +4,7 @@ import io.github.moosyu.abilities.Ability;
 import io.github.moosyu.abilities.AbilityContext;
 import io.github.moosyu.abilities.AbilityContextKey;
 import io.github.moosyu.abilities.AbilityTriggerType;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.tags.EntityTypeTags;
@@ -24,7 +24,7 @@ public class MindBlowing extends Ability {
 
     @Override
     public List<UnshatteredUtils.AttributeGroup> attributeBonuses(AbilityContext context) {
-        return List.of(new UnshatteredUtils.AttributeGroup(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder, new AttributeModifier(id(),
+        return List.of(new UnshatteredUtils.AttributeGroup(UnshatteredAttributeValue.FINAL_DAMAGE_MODIFIER.holder, new AttributeModifier(id(),
                 1.0,
                 AttributeModifier.Operation.ADD_MULTIPLIED_BASE))
         );

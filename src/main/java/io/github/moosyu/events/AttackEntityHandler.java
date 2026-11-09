@@ -1,6 +1,6 @@
 package io.github.moosyu.events;
 
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.damage.FerocityHit;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -28,7 +28,7 @@ public class AttackEntityHandler {
 
         playerDealDamage(player,
                 target,
-                player.getAttributeValue(UnshatteredAttributeValues.DAMAGE.holder) + BASE_DAMAGE,
+                player.getAttributeValue(UnshatteredAttributeValue.DAMAGE.holder) + BASE_DAMAGE,
                 true,
                 player.getItemInHand(InteractionHand.MAIN_HAND),
                 true

@@ -2,6 +2,7 @@ package io.github.moosyu.data.drops;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.items.ItemRange;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
@@ -9,7 +10,6 @@ import net.minecraft.world.level.ItemLike;
 
 /**
  * record for normal items dropped by mobs
- * @param dropData stores item, it's range (min and max amounts to be randomly picked) and drop chance
  * @param combatFortuneBoosted whether the drop chance is boosted by combat fortune
  */
 public record MobItemDropData(DropData dropData, boolean combatFortuneBoosted) {
@@ -27,6 +27,22 @@ public record MobItemDropData(DropData dropData, boolean combatFortuneBoosted) {
 
     public MobItemDropData(ItemLike item, int amount, float dropChance, boolean combatFortuneBoosted) {
         this(new DropData(new ItemRange(item.asItem(), amount), dropChance), combatFortuneBoosted);
+    }
+
+    public MobItemDropData(int minCoins, int maxCoins) {
+        this(new DropData(new CoinReward(minCoins, maxCoins), 1.0f), false);
+    }
+
+    public MobItemDropData(float experience) {
+        this(new DropData(new ExperienceReward(PlayerSkillsAttachment.Skill.COMBAT, experience), 1.0f), false);
+    }
+
+    public MobItemDropData(int coins) {
+        this(new DropData(new CoinReward(coins, coins), 1.0f), false);
+    }
+
+    public MobItemDropData(PlayerSkillsAttachment.Skill skill, float experience) {
+        this(new DropData(new ExperienceReward(skill, experience), 1.0f), false);
     }
 
     public static final Codec<MobItemDropData> CODEC = RecordCodecBuilder.create(instance -> instance.group(

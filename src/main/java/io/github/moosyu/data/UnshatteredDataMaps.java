@@ -1,11 +1,12 @@
 package io.github.moosyu.data;
 
 import com.mojang.serialization.Codec;
-import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.data.drops.BlockBreakData;
-import io.github.moosyu.data.drops.MobRewardData;
+import io.github.moosyu.data.drops.MobItemDropData;
+import io.github.moosyu.data.drops.WeightedDropData;
 import io.github.moosyu.data.fishing.FishingWeightEntry;
 import io.github.moosyu.data.regions.Region;
+import io.github.moosyu.entities.decoration.present.PresentTypes;
 import io.github.moosyu.events.DataPackRegistryHandler;
 import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.UnshatteredRarity;
@@ -38,10 +39,10 @@ public final class UnshatteredDataMaps {
             Codec.FLOAT
     ).build();
 
-    public static final DataMapType<EntityType<?>, MobRewardData> COMBATABLE_MOBS_LOOT_DATA = DataMapType.builder(
+    public static final DataMapType<EntityType<?>, List<MobItemDropData>> COMBATABLE_MOBS_LOOT_DATA = DataMapType.builder(
             UnshatteredUtils.getUnshatteredIdentifier("combatable_mobs_exp_data"),
             Registries.ENTITY_TYPE,
-            MobRewardData.CODEC
+            MobItemDropData.CODEC.listOf()
     ).build();
 
     public static final DataMapType<Block, Integer> BLOCK_BREAKING_POWER_DATA = DataMapType.builder(
@@ -108,5 +109,11 @@ public final class UnshatteredDataMaps {
             UnshatteredUtils.getUnshatteredIdentifier("mob_spawn_data"),
             DataPackRegistryHandler.REGION_REGISTRY_KEY,
             EntitySpawnPoint.CODEC
+    ).build();
+
+    public static final DataMapType<PresentTypes.PresentType, List<WeightedDropData>> PRESENT_DATA = DataMapType.builder(
+            UnshatteredUtils.getUnshatteredIdentifier("present_data"),
+            PresentTypes.PRESENT_KEY,
+            WeightedDropData.CODEC.listOf()
     ).build();
 }

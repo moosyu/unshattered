@@ -2,7 +2,7 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.abilities.*;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.drops.BlockBreakData;
 import io.github.moosyu.data.regen.RegenSavedData;
@@ -82,7 +82,7 @@ public class TreeSweepHandler {
                 float expReward = 0.0f;
 
                 for (BreakTask current : tasks) {
-                    UnshatteredUtils.addBlockBrokenResultToInventory(current.state().typeHolder(), player, UnshatteredAttributeValues.FORAGING_FORTUNE);
+                    UnshatteredUtils.addBlockBrokenResultToInventory(current.state().typeHolder(), player, UnshatteredAttributeValue.FORAGING_FORTUNE);
 
                     BlockBreakData blockBreakData = current.state.getData(UnshatteredDataMaps.BLOCK_BREAK_DATA);
                     if (blockBreakData != null) {
@@ -90,7 +90,7 @@ public class TreeSweepHandler {
                     }
                 }
 
-                skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, expReward, player, UnshatteredAttributeValues.FORAGING_WISDOM.holder);
+                skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, expReward, player);
                 player.syncData(PLAYER_SKILLS);
             }
         }
@@ -108,16 +108,16 @@ public class TreeSweepHandler {
         ServerLevel serverLevel = (ServerLevel) level;
         serverLevel.getDataStorage().computeIfAbsent(RegenSavedData.ID).destroyRegeneratingBlock(startPos, serverLevel, player);
 
-        int sweep = (int) player.getAttributeValue(UnshatteredAttributeValues.SWEEP.holder);
+        int sweep = (int) player.getAttributeValue(UnshatteredAttributeValue.SWEEP.holder);
         if (sweep <= 0) {
             BlockBreakData blockBreakData = startBlock.getData(UnshatteredDataMaps.BLOCK_BREAK_DATA);
 
             if (blockBreakData != null && blockBreakData.expAmount() > 0.0f) {
-                skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, blockBreakData.expAmount(), player, UnshatteredAttributeValues.FORAGING_WISDOM.holder);
+                skills.addExp(PlayerSkillsAttachment.Skill.FORAGING, blockBreakData.expAmount(), player);
                 player.syncData(PLAYER_SKILLS);
             }
 
-            UnshatteredUtils.addBlockBrokenResultToInventory(startBlock.typeHolder(), player, UnshatteredAttributeValues.FORAGING_FORTUNE);
+            UnshatteredUtils.addBlockBrokenResultToInventory(startBlock.typeHolder(), player, UnshatteredAttributeValue.FORAGING_FORTUNE);
             countBroken(serverPlayer, 1);
 
             return;

@@ -26,5 +26,6 @@ public class DataMapRegistryHandler {
         event.register(ENTITY_NPC_DATA);
         event.register(BLOCK_NPC_DATA);
         event.register(MOB_SPAWN_DATA);
+        event.register(PRESENT_DATA);
     }
 }

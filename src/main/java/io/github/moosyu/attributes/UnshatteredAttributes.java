@@ -11,9 +11,10 @@ public class UnshatteredAttributes {
     public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(Registries.ATTRIBUTE, MODID);
 
     public static void registerAll() {
-        for (UnshatteredAttributeValues attribute : UnshatteredAttributeValues.values()) {
+        for (UnshatteredAttributeValue attribute : UnshatteredAttributeValue.values()) {
             attribute.holder = ATTRIBUTES.register(attribute.id, () ->
-                new RangedAttribute(attribute.getTranslationKey(), attribute.def, attribute.min, attribute.max).setSyncable(true));
+                new RangedAttribute(attribute.getTranslationKey(), attribute.def, attribute.min, attribute.max).setSyncable(true)
+            );
         }
     }
 }

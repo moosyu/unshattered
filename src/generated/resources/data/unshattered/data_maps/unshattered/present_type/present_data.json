@@ -1,0 +1,586 @@
+{
+  "values": {
+    "unshattered:green": [
+      {
+        "drop_data": {
+          "type": "coins",
+          "max": 20000,
+          "min": 2000
+        },
+        "weight": 2000
+      },
+      {
+        "drop_data": {
+          "type": "item",
+          "item_range": {
+            "item": "unshattered:winter_sack",
+            "max_amount": 1,
+            "min_amount": 1
+          }
+        },
+        "weight": 50
+      },
+      {
+        "drop_data": {
+          "type": "item",
+          "item_range": {
+            "item": "unshattered:gift_the_fish",
+            "max_amount": 1,
+            "min_amount": 1
+          }
+        },
+        "weight": 5
+      },
+      {
+        "drop_data": {
+          "type": "item",
+          "item_range": {
+            "item": "unshattered:golden_gift",
+            "max_amount": 1,
+            "min_amount": 1
+          }
+        },
+        "weight": 2
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 1000.0,
+          "skill": "combat"
+        },
+        "weight": 1500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 1000.0,
+          "skill": "farming"
+        },
+        "weight": 1500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 1000.0,
+          "skill": "fishing"
+        },
+        "weight": 1500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 1000.0,
+          "skill": "mining"
+        },
+        "weight": 1500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 1000.0,
+          "skill": "foraging"
+        },
+        "weight": 1500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 1000.0,
+          "skill": "magecraft"
+        },
+        "weight": 1500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 1000.0,
+          "skill": "carpentry"
+        },
+        "weight": 1500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 2000.0,
+          "skill": "combat"
+        },
+        "weight": 500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 2000.0,
+          "skill": "farming"
+        },
+        "weight": 500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 2000.0,
+          "skill": "fishing"
+        },
+        "weight": 500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 2000.0,
+          "skill": "mining"
+        },
+        "weight": 500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 2000.0,
+          "skill": "foraging"
+        },
+        "weight": 500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 2000.0,
+          "skill": "magecraft"
+        },
+        "weight": 500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 2000.0,
+          "skill": "carpentry"
+        },
+        "weight": 500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 3000.0,
+          "skill": "combat"
+        },
+        "weight": 100
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 3000.0,
+          "skill": "farming"
+        },
+        "weight": 100
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 3000.0,
+          "skill": "fishing"
+        },
+        "weight": 100
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 3000.0,
+          "skill": "mining"
+        },
+        "weight": 100
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 3000.0,
+          "skill": "foraging"
+        },
+        "weight": 100
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 3000.0,
+          "skill": "magecraft"
+        },
+        "weight": 100
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 3000.0,
+          "skill": "carpentry"
+        },
+        "weight": 100
+      }
+    ],
+    "unshattered:red": [
+      {
+        "drop_data": {
+          "type": "coins",
+          "max": 20000,
+          "min": 5000
+        },
+        "weight": 2000
+      },
+      {
+        "drop_data": {
+          "type": "coins",
+          "max": 100000,
+          "min": 20000
+        },
+        "weight": 750
+      },
+      {
+        "drop_data": {
+          "type": "coins",
+          "max": 1000000,
+          "min": 500000
+        },
+        "weight": 20
+      },
+      {
+        "drop_data": {
+          "type": "item",
+          "item_range": {
+            "item": "unshattered:winter_sack",
+            "max_amount": 1,
+            "min_amount": 1
+          }
+        },
+        "weight": 70
+      },
+      {
+        "drop_data": {
+          "type": "item",
+          "item_range": {
+            "item": "unshattered:gift_the_fish",
+            "max_amount": 1,
+            "min_amount": 1
+          }
+        },
+        "weight": 6
+      },
+      {
+        "drop_data": {
+          "type": "item",
+          "item_range": {
+            "item": "unshattered:golden_gift",
+            "max_amount": 1,
+            "min_amount": 1
+          }
+        },
+        "weight": 5
+      },
+      {
+        "drop_data": {
+          "type": "item",
+          "item_range": {
+            "item": "unshattered:krampus_helmet",
+            "max_amount": 1,
+            "min_amount": 1
+          }
+        },
+        "weight": 4
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 2000.0,
+          "skill": "combat"
+        },
+        "weight": 1500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 2000.0,
+          "skill": "farming"
+        },
+        "weight": 1500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 2000.0,
+          "skill": "fishing"
+        },
+        "weight": 1500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 2000.0,
+          "skill": "mining"
+        },
+        "weight": 1500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 2000.0,
+          "skill": "foraging"
+        },
+        "weight": 1500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 2000.0,
+          "skill": "magecraft"
+        },
+        "weight": 1500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 2000.0,
+          "skill": "carpentry"
+        },
+        "weight": 1500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 3000.0,
+          "skill": "combat"
+        },
+        "weight": 500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 3000.0,
+          "skill": "farming"
+        },
+        "weight": 500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 3000.0,
+          "skill": "fishing"
+        },
+        "weight": 500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 3000.0,
+          "skill": "mining"
+        },
+        "weight": 500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 3000.0,
+          "skill": "foraging"
+        },
+        "weight": 500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 3000.0,
+          "skill": "magecraft"
+        },
+        "weight": 500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 3000.0,
+          "skill": "carpentry"
+        },
+        "weight": 500
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 5000.0,
+          "skill": "combat"
+        },
+        "weight": 100
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 5000.0,
+          "skill": "farming"
+        },
+        "weight": 100
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 5000.0,
+          "skill": "fishing"
+        },
+        "weight": 100
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 5000.0,
+          "skill": "mining"
+        },
+        "weight": 100
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 5000.0,
+          "skill": "foraging"
+        },
+        "weight": 100
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 5000.0,
+          "skill": "magecraft"
+        },
+        "weight": 100
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 5000.0,
+          "skill": "carpentry"
+        },
+        "weight": 100
+      }
+    ],
+    "unshattered:white": [
+      {
+        "drop_data": {
+          "type": "coins",
+          "max": 10000,
+          "min": 1000
+        },
+        "weight": 2000
+      },
+      {
+        "drop_data": {
+          "type": "item",
+          "item_range": {
+            "item": "unshattered:gift_the_fish",
+            "max_amount": 1,
+            "min_amount": 1
+          }
+        },
+        "weight": 4
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 500.0,
+          "skill": "combat"
+        },
+        "weight": 1000
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 500.0,
+          "skill": "farming"
+        },
+        "weight": 1000
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 500.0,
+          "skill": "fishing"
+        },
+        "weight": 1000
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 500.0,
+          "skill": "mining"
+        },
+        "weight": 1000
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 500.0,
+          "skill": "foraging"
+        },
+        "weight": 1000
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 500.0,
+          "skill": "magecraft"
+        },
+        "weight": 1000
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 500.0,
+          "skill": "carpentry"
+        },
+        "weight": 1000
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 1000.0,
+          "skill": "combat"
+        },
+        "weight": 200
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 1000.0,
+          "skill": "farming"
+        },
+        "weight": 200
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 1000.0,
+          "skill": "fishing"
+        },
+        "weight": 200
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 1000.0,
+          "skill": "mining"
+        },
+        "weight": 200
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 1000.0,
+          "skill": "foraging"
+        },
+        "weight": 200
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 1000.0,
+          "skill": "magecraft"
+        },
+        "weight": 200
+      },
+      {
+        "drop_data": {
+          "type": "experience",
+          "experience_amount": 1000.0,
+          "skill": "carpentry"
+        },
+        "weight": 200
+      }
+    ]
+  }
+}

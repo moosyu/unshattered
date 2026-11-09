@@ -1,7 +1,7 @@
 package io.github.moosyu.abilities.data;
 
 import io.github.moosyu.abilities.*;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.data.components.ItemAbility;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.resources.Identifier;
@@ -39,8 +39,8 @@ public class DrillEngineBonus extends Ability {
 
     @Override
     public List<UnshatteredUtils.AttributeGroup> attributeBonuses(AbilityContext context) {
-        return List.of(new UnshatteredUtils.AttributeGroup(UnshatteredAttributeValues.MINING_SPEED.holder, new AttributeModifier(getSpeedIdentifier(), miningSpeed, AttributeModifier.Operation.ADD_VALUE)),
-                new UnshatteredUtils.AttributeGroup(UnshatteredAttributeValues.MINING_FORTUNE.holder, new AttributeModifier(getFortuneIdentifier(), miningFortune, AttributeModifier.Operation.ADD_VALUE))
+        return List.of(new UnshatteredUtils.AttributeGroup(UnshatteredAttributeValue.MINING_SPEED.holder, new AttributeModifier(getSpeedIdentifier(), miningSpeed, AttributeModifier.Operation.ADD_VALUE)),
+                new UnshatteredUtils.AttributeGroup(UnshatteredAttributeValue.MINING_FORTUNE.holder, new AttributeModifier(getFortuneIdentifier(), miningFortune, AttributeModifier.Operation.ADD_VALUE))
         );
     }
 }

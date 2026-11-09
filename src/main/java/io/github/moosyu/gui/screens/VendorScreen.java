@@ -177,7 +177,7 @@ public class VendorScreen extends AbstractContainerScreen<VendorMenu> {
 
         vendorItem.price().ifPresent(price ->
                 lines.add(Component.literal(String.format("%,d", price) + " ")
-                        .append(Component.translatable("screen.unshattered.vendor.text.coins"))
+                        .append(Component.translatable("misc.unshattered.coins"))
                         .withColor(0xFFF9A604)
                 )
         );

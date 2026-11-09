@@ -2,7 +2,9 @@ package io.github.moosyu;
 
 import io.github.moosyu.abilities.UnshatteredAbilities;
 import io.github.moosyu.attributes.UnshatteredAttributes;
+import io.github.moosyu.data.UnshatteredStatistics;
 import io.github.moosyu.data.recipes.UnshatteredRecipes;
+import io.github.moosyu.entities.decoration.present.PresentTypes;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -35,6 +37,7 @@ public class Unshattered {
         UnshatteredAttributes.registerAll();
         UnshatteredAbilities.ABILITIES.register(modEventBus);
         ATTRIBUTES.register(modEventBus);
+        PresentTypes.PRESENT_TYPES.register(modEventBus);
         ITEMS.register(modEventBus);
         DATA_COMPONENTS.register(modEventBus);
         ENTITY_TYPES.register(modEventBus);
@@ -43,6 +46,7 @@ public class Unshattered {
         UnshatteredRecipes.RECIPE_TYPES.register(modEventBus);
         RECIPE_BOOK_CATEGORIES.register(modEventBus);
         MENUS.register(modEventBus);
+        UnshatteredStatistics.CUSTOM_STATS.register(modEventBus);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }

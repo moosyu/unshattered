@@ -1,6 +1,6 @@
 package io.github.moosyu.gui.screens;
 
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.gui.components.ScrollerWidget;
 import io.github.moosyu.gui.components.tabs.TabBar;
 import io.github.moosyu.gui.components.tabs.UnshatteredTabs;
@@ -53,14 +53,14 @@ public class StatsScreen extends SimpleScreen {
     public void extractRenderState(@NonNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         super.extractRenderState(graphics, mouseX, mouseY, partialTick);
 
-        UnshatteredAttributeValues[] attributeValues = UnshatteredAttributeValues.values();
+        UnshatteredAttributeValue[] attributeValues = UnshatteredAttributeValue.values();
         Player player = Minecraft.getInstance().player;
         if (player == null) {
             return;
         }
 
         int visibleCount = 0;
-        for (UnshatteredAttributeValues attribute : attributeValues) {
+        for (UnshatteredAttributeValue attribute : attributeValues) {
             if (attribute.visible) {
                 visibleCount++;
             }
@@ -73,7 +73,7 @@ public class StatsScreen extends SimpleScreen {
         graphics.enableScissor(backgroundTopLeft.x, scissorTop, backgroundTopLeft.x + imageWidth, scissorBottom);
 
         int visibleIndex = 0;
-        for (UnshatteredAttributeValues currentAttribute : attributeValues) {
+        for (UnshatteredAttributeValue currentAttribute : attributeValues) {
             if (currentAttribute.visible) {
                 addAttributeToList(player,
                         graphics,

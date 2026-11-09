@@ -1,11 +1,8 @@
 package io.github.moosyu.items.tools.axes;
 
 import io.github.moosyu.abilities.*;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
-import io.github.moosyu.data.regions.Region;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.util.UnshatteredUtils;
-import net.minecraft.resources.Identifier;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -20,7 +17,7 @@ public class PlainsLockedFortuneAxe extends UnshatteredAxeTool implements Abilit
 
     public PlainsLockedFortuneAxe(Properties properties, float sweepAmount, float miningSpeed, Supplier<? extends Ability> ability) {
         super(properties.attributes(ItemAttributeModifiers.builder()
-                                .add(UnshatteredAttributeValues.SWEEP.holder,
+                                .add(UnshatteredAttributeValue.SWEEP.holder,
                                         new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("region_locked_sweep"),
                                                 sweepAmount,
                                                 AttributeModifier.Operation.ADD_VALUE),

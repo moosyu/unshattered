@@ -3,7 +3,7 @@ package io.github.moosyu.events;
 import io.github.moosyu.Unshattered;
 import io.github.moosyu.abilities.*;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.fishing.FishingWeightEntry;
@@ -59,7 +59,7 @@ public class ItemFishedHandler {
                 return;
             }
 
-            AttributeInstance fishingFortuneAttribute = player.getAttribute(UnshatteredAttributeValues.FISHING_FORTUNE.holder);
+            AttributeInstance fishingFortuneAttribute = player.getAttribute(UnshatteredAttributeValue.FISHING_FORTUNE.holder);
             if (fishingFortuneAttribute == null) {
                 return;
             }
@@ -88,7 +88,7 @@ public class ItemFishedHandler {
 
                     float expReward = Objects.requireNonNullElse(BuiltInRegistries.ITEM.wrapAsHolder(selectedItem).getData(UnshatteredDataMaps.FISHABLE_ITEMS_EXP_DATA), 0.0f);
                     if (expReward > 0.0f) {
-                        skills.addExp(PlayerSkillsAttachment.Skill.FISHING, expReward, player, UnshatteredAttributeValues.FISHING_WISDOM.holder);
+                        skills.addExp(PlayerSkillsAttachment.Skill.FISHING, expReward, player);
                         player.syncData(PLAYER_SKILLS);
                     }
                 }
@@ -140,8 +140,8 @@ public class ItemFishedHandler {
                         skills.addExp(
                                 PlayerSkillsAttachment.Skill.FISHING,
                                 Objects.requireNonNullElse(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entityType).getData(UnshatteredDataMaps.FISHABLE_MOBS_EXP_DATA), 0.0f),
-                                player,
-                                UnshatteredAttributeValues.FISHING_WISDOM.holder);
+                                player
+                        );
                     }
                 }
             } else { // misc
@@ -207,6 +207,6 @@ public class ItemFishedHandler {
     }
 
     private static double calculateAdjustedWeight(double weight, double fishingFortune) {
-        return Math.pow(weight, 1.0 - ((fishingFortune / UnshatteredAttributeValues.FISHING_FORTUNE.max) * 0.5));
+        return Math.pow(weight, 1.0 - ((fishingFortune / UnshatteredAttributeValue.FISHING_FORTUNE.max) * 0.5));
     }
 }

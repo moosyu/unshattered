@@ -219,6 +219,11 @@ public class UnshatteredCreativeTabs {
                             output.accept(ENCHANTED_COOKED_MUTTON);
                             output.accept(ENCHANTED_RAW_RABBIT);
                             output.accept(ENCHANTED_COOKED_RABBIT);
+                            output.accept(WHITE_PRESENT);
+                            output.accept(GREEN_PRESENT);
+                            output.accept(RED_PRESENT);
+                            output.accept(GOLDEN_PRESENT);
+                            output.accept(ENCHANTED_SNOW_BLOCK);
                         }).build()
         );
 
@@ -242,6 +247,7 @@ public class UnshatteredCreativeTabs {
                             output.accept(MINER_CHESTPLATE);
                             output.accept(MINER_LEGGINGS);
                             output.accept(MINER_BOOTS);
+                            output.accept(KRAMPUS_HELMET);
                         }).build()
         );
 

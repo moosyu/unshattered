@@ -24,9 +24,17 @@ public record DamageNumberPacket(int number, Vec3 pos) implements CustomPacketPa
             (number, x, y, z) -> new DamageNumberPacket(number, new Vec3(x, y, z))
     );
 
-    public double getX() { return pos.x; }
-    public double getY() { return pos.y; }
-    public double getZ() { return pos.z; }
+    public double getX() {
+        return pos.x;
+    }
+
+    public double getY() {
+        return pos.y;
+    }
+
+    public double getZ() {
+        return pos.z;
+    }
 
     @Override
     public CustomPacketPayload.@NonNull Type<? extends CustomPacketPayload> type() {

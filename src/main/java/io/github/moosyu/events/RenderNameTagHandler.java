@@ -1,7 +1,7 @@
 package io.github.moosyu.events;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.data.NpcData;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.entities.npcs.NPCEntity;
@@ -52,8 +52,8 @@ public class RenderNameTagHandler {
 
         if (entity instanceof LivingEntity livingEntity && !livingEntity.is(EntityType.ARMOR_STAND) && livingEntity.getPassengers().isEmpty()) {
             event.setCanRender(TriState.TRUE);
-            AttributeInstance maxHealthAttribute = livingEntity.getAttribute(UnshatteredAttributeValues.MAX_HEALTH.holder);
-            AttributeInstance healthAttribute = livingEntity.getAttribute(UnshatteredAttributeValues.CURRENT_HEALTH.holder);
+            AttributeInstance maxHealthAttribute = livingEntity.getAttribute(UnshatteredAttributeValue.MAX_HEALTH.holder);
+            AttributeInstance healthAttribute = livingEntity.getAttribute(UnshatteredAttributeValue.CURRENT_HEALTH.holder);
             if (maxHealthAttribute == null || healthAttribute == null) {
                 event.setContent(Component.literal("SOMETHING WENT WRONG!! (NO HEALTH ASSIGNED)").withColor(0xFFFF5555));
             } else {

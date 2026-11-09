@@ -3,7 +3,6 @@ package io.github.moosyu.data.fishing.rewards;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
 import io.github.moosyu.data.attachments.PlayerCurrencyAttachment;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.fishing.FishingCondition;
@@ -36,7 +35,7 @@ public record CoinReward(int min, int max, String messageKey, int colour, float 
         PlayerSkillsAttachment skillsAttachment = player.getData(PLAYER_SKILLS.get());
         int coins = player.getRandom().nextIntBetweenInclusive(min, max);
 
-        skillsAttachment.addExp(PlayerSkillsAttachment.Skill.FISHING, expAmount, player, UnshatteredAttributeValues.FISHING_WISDOM.holder);
+        skillsAttachment.addExp(PlayerSkillsAttachment.Skill.FISHING, expAmount, player);
         player.syncData(PLAYER_SKILLS);
 
         player.sendSystemMessage(Component.empty()

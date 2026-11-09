@@ -17,6 +17,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public class SackItem extends Item {
+    public static int BEGINNER_SACK_SIZE = 640;
+    public static int SMALL_SACK_SIZE = 2240;
+    public static int MEDIUM_SACK_SIZE = 6720;
+    public static int LARGE_SACK_SIZE = 20160;
+
     public final ImmutableSet<Item> acceptedItems;
     public final int sackSlotCapacity;
 

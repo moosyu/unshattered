@@ -405,6 +405,13 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_COOKED_MUTTON.get(), Items.COOKED_MUTTON, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_RAW_RABBIT.get(), Items.RABBIT, ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.ENCHANTED_COOKED_RABBIT.get(), Items.COOKED_RABBIT, ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.WHITE_PRESENT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.GREEN_PRESENT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.RED_PRESENT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.KRAMPUS_HELMET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.GOLDEN_PRESENT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.WINTER_SACK.get(), ModelTemplates.FLAT_ITEM);
+        copyCubeBlockItemModel(itemModels, blockModels, UnshatteredItems.ENCHANTED_SNOW_BLOCK.get(), Blocks.SNOW);
 
         blockModels.blockStateOutput.accept(MultiVariantGenerator
                 .dispatch(UnshatteredBlocks.TACKLEBOX_BLOCK.get(), BlockModelGenerators.variant(new Variant(UnshatteredUtils.getUnshatteredIdentifier("block/tackle_box"))))

@@ -1,11 +1,12 @@
 {
   "values": {
-    "minecraft:bat": {
-      "drops": [
-        {
-          "combat_fortune_boosted": true,
-          "drop_data": {
-            "drop_chance": 0.01,
+    "minecraft:bat": [
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.01,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "unshattered:bat_talisman",
               "max_amount": 1,
@@ -13,18 +14,34 @@
             }
           }
         }
-      ],
-      "experience": 33.0,
-      "max_coins": 100,
-      "min_coins": 100,
-      "skill": "combat"
-    },
-    "minecraft:blaze": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 100,
+            "min": 100
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 33.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
+    "minecraft:blaze": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:blaze_rod",
               "max_amount": 1,
@@ -32,29 +49,48 @@
             }
           }
         }
-      ],
-      "experience": 10.0,
-      "max_coins": 3,
-      "min_coins": 3,
-      "skill": "combat"
-    },
-    "minecraft:cave_spider": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 3,
+            "min": 3
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 10.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
+    "minecraft:cave_spider": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:string",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 0.5,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "drop_chance": 0.5,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:spider_eye",
               "max_amount": 1,
@@ -62,29 +98,47 @@
             }
           }
         }
-      ],
-      "experience": 8.0,
-      "max_coins": 8,
-      "min_coins": 1,
-      "skill": "combat"
-    },
-    "minecraft:chicken": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 8,
+            "min": 1
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 8.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
+    "minecraft:chicken": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:feather",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:chicken",
               "max_amount": 1,
@@ -92,29 +146,37 @@
             }
           }
         }
-      ],
-      "experience": 2.0,
-      "max_coins": 0,
-      "min_coins": 0,
-      "skill": "farming"
-    },
-    "minecraft:cow": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 2.0,
+            "skill": "farming"
+          }
+        }
+      }
+    ],
+    "minecraft:cow": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:beef",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:leather",
               "max_amount": 1,
@@ -122,18 +184,24 @@
             }
           }
         }
-      ],
-      "experience": 3.0,
-      "max_coins": 0,
-      "min_coins": 0,
-      "skill": "farming"
-    },
-    "minecraft:creeper": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 3.0,
+            "skill": "farming"
+          }
+        }
+      }
+    ],
+    "minecraft:creeper": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:gunpowder",
               "max_amount": 1,
@@ -141,18 +209,34 @@
             }
           }
         }
-      ],
-      "experience": 8.0,
-      "max_coins": 2,
-      "min_coins": 2,
-      "skill": "combat"
-    },
-    "minecraft:enderman": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 2,
+            "min": 2
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 8.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
+    "minecraft:enderman": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:ender_pearl",
               "max_amount": 1,
@@ -160,18 +244,34 @@
             }
           }
         }
-      ],
-      "experience": 15.0,
-      "max_coins": 12,
-      "min_coins": 2,
-      "skill": "combat"
-    },
-    "minecraft:endermite": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 12,
+            "min": 2
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 15.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
+    "minecraft:endermite": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:end_stone",
               "max_amount": 2,
@@ -179,40 +279,61 @@
             }
           }
         }
-      ],
-      "experience": 20.0,
-      "max_coins": 10,
-      "min_coins": 10,
-      "skill": "combat"
-    },
-    "minecraft:glow_squid": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 10,
+            "min": 10
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 20.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
+    "minecraft:glow_squid": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:ink_sac",
               "max_amount": 6,
               "min_amount": 3
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:lily_pad",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": true,
-          "drop_data": {
-            "drop_chance": 0.08,
+        }
+      },
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.08,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "unshattered:glow_squid_boots",
               "max_amount": 1,
@@ -220,40 +341,60 @@
             }
           }
         }
-      ],
-      "experience": 36.0,
-      "max_coins": 5,
-      "min_coins": 5,
-      "skill": "combat"
-    },
-    "minecraft:mooshroom": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 5,
+            "min": 5
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 36.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
+    "minecraft:mooshroom": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:beef",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:red_mushroom",
               "max_amount": 4,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:leather",
               "max_amount": 1,
@@ -261,18 +402,24 @@
             }
           }
         }
-      ],
-      "experience": 5.0,
-      "max_coins": 0,
-      "min_coins": 0,
-      "skill": "farming"
-    },
-    "minecraft:pig": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 5.0,
+            "skill": "farming"
+          }
+        }
+      }
+    ],
+    "minecraft:pig": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:porkchop",
               "max_amount": 1,
@@ -280,40 +427,52 @@
             }
           }
         }
-      ],
-      "experience": 3.0,
-      "max_coins": 0,
-      "min_coins": 0,
-      "skill": "farming"
-    },
-    "minecraft:rabbit": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 3.0,
+            "skill": "farming"
+          }
+        }
+      }
+    ],
+    "minecraft:rabbit": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:rabbit",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 0.7,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "drop_chance": 0.7,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:rabbit_hide",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 0.7,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "drop_chance": 0.7,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:rabbit_foot",
               "max_amount": 1,
@@ -321,29 +480,37 @@
             }
           }
         }
-      ],
-      "experience": 5.0,
-      "max_coins": 0,
-      "min_coins": 0,
-      "skill": "farming"
-    },
-    "minecraft:sheep": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 5.0,
+            "skill": "farming"
+          }
+        }
+      }
+    ],
+    "minecraft:sheep": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:mutton",
               "max_amount": 2,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:white_wool",
               "max_amount": 1,
@@ -351,29 +518,38 @@
             }
           }
         }
-      ],
-      "experience": 3.0,
-      "max_coins": 0,
-      "min_coins": 0,
-      "skill": "farming"
-    },
-    "minecraft:skeleton": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 3.0,
+            "skill": "farming"
+          }
+        }
+      }
+    ],
+    "minecraft:skeleton": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:bone",
               "max_amount": 2,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": true,
-          "drop_data": {
-            "drop_chance": 0.001,
+        }
+      },
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.001,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:crossbow",
               "max_amount": 1,
@@ -381,18 +557,14 @@
             }
           }
         }
-      ],
-      "experience": 6.0,
-      "max_coins": 8,
-      "min_coins": 1,
-      "skill": "combat"
-    },
-    "minecraft:slime": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      }
+    ],
+    "minecraft:slime": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:slime_ball",
               "max_amount": 1,
@@ -400,29 +572,28 @@
             }
           }
         }
-      ],
-      "experience": 6.0,
-      "max_coins": 8,
-      "min_coins": 1,
-      "skill": "combat"
-    },
-    "minecraft:spider": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      }
+    ],
+    "minecraft:spider": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:string",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 0.5,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "drop_chance": 0.5,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:spider_eye",
               "max_amount": 1,
@@ -430,29 +601,47 @@
             }
           }
         }
-      ],
-      "experience": 8.0,
-      "max_coins": 8,
-      "min_coins": 1,
-      "skill": "combat"
-    },
-    "minecraft:squid": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 8,
+            "min": 1
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 8.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
+    "minecraft:squid": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:ink_sac",
               "max_amount": 2,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:lily_pad",
               "max_amount": 1,
@@ -460,40 +649,63 @@
             }
           }
         }
-      ],
-      "experience": 75.0,
-      "max_coins": 5,
-      "min_coins": 5,
-      "skill": "combat"
-    },
-    "minecraft:witch": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 0.5,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 5,
+            "min": 5
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 75.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
+    "minecraft:witch": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "drop_chance": 0.5,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:gunpowder",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 0.5,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "drop_chance": 0.5,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:glowstone_dust",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 0.2,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "drop_chance": 0.2,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:glass_bottle",
               "max_amount": 2,
@@ -501,62 +713,90 @@
             }
           }
         }
-      ],
-      "experience": 15.0,
-      "max_coins": 1,
-      "min_coins": 1,
-      "skill": "combat"
-    },
-    "minecraft:zombie": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 1,
+            "min": 1
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 15.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
+    "minecraft:zombie": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:rotten_flesh",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": true,
-          "drop_data": {
-            "drop_chance": 0.02,
+        }
+      },
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.02,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:poisonous_potato",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": true,
-          "drop_data": {
-            "drop_chance": 0.01,
+        }
+      },
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.01,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:potato",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": true,
-          "drop_data": {
-            "drop_chance": 0.01,
+        }
+      },
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.01,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:carrot",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": true,
-          "drop_data": {
-            "drop_chance": 0.001,
+        }
+      },
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.001,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:iron_sword",
               "max_amount": 1,
@@ -564,29 +804,48 @@
             }
           }
         }
-      ],
-      "experience": 6.0,
-      "max_coins": 8,
-      "min_coins": 1,
-      "skill": "combat"
-    },
-    "unshattered:emerald_slime": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 8,
+            "min": 1
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 6.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
+    "unshattered:emerald_slime": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:slime_ball",
               "max_amount": 3,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 0.5,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "drop_chance": 0.5,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:slime_ball",
               "max_amount": 1,
@@ -594,62 +853,152 @@
             }
           }
         }
-      ],
-      "experience": 8.0,
-      "max_coins": 3,
-      "min_coins": 3,
-      "skill": "combat"
-    },
-    "unshattered:lapis_zombie": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 3,
+            "min": 3
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 8.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
+    "unshattered:frozen_steve": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
+            "item_range": {
+              "item": "minecraft:ice",
+              "max_amount": 4,
+              "min_amount": 2
+            }
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "drop_chance": 0.5,
+          "reward": {
+            "type": "item",
+            "item_range": {
+              "item": "minecraft:lily_pad",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
+            "item_range": {
+              "item": "minecraft:rabbit",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 1,
+            "min": 1
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 15.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
+    "unshattered:lapis_zombie": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:rotten_flesh",
               "max_amount": 2,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": true,
-          "drop_data": {
-            "drop_chance": 0.01,
+        }
+      },
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.01,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "unshattered:lapis_helmet",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": true,
-          "drop_data": {
-            "drop_chance": 0.01,
+        }
+      },
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.01,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "unshattered:lapis_chestplate",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": true,
-          "drop_data": {
-            "drop_chance": 0.01,
+        }
+      },
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.01,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "unshattered:lapis_leggings",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": true,
-          "drop_data": {
-            "drop_chance": 0.01,
+        }
+      },
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.01,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "unshattered:lapis_boots",
               "max_amount": 1,
@@ -657,40 +1006,62 @@
             }
           }
         }
-      ],
-      "experience": 9.0,
-      "max_coins": 5,
-      "min_coins": 5,
-      "skill": "combat"
-    },
-    "unshattered:massive_emerald_slime": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 5,
+            "min": 5
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 9.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
+    "unshattered:massive_emerald_slime": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:slime_ball",
               "max_amount": 10,
               "min_amount": 5
             }
           }
-        },
-        {
-          "combat_fortune_boosted": true,
-          "drop_data": {
-            "drop_chance": 0.01,
+        }
+      },
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.01,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "unshattered:enchanted_slime_ball",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": true,
-          "drop_data": {
-            "drop_chance": 1.0E-4,
+        }
+      },
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 1.0E-4,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "unshattered:enchanted_slime_block",
               "max_amount": 1,
@@ -698,84 +1069,117 @@
             }
           }
         }
-      ],
-      "experience": 24.0,
-      "max_coins": 5,
-      "min_coins": 5,
-      "skill": "combat"
-    },
-    "unshattered:oasis_rabbit": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 5,
+            "min": 5
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 24.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
+    "unshattered:oasis_rabbit": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:lily_pad",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 0.5,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "drop_chance": 0.5,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:lily_pad",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:rabbit",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 0.7,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "drop_chance": 0.7,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:rabbit_foot",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 0.7,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "drop_chance": 0.7,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:rabbit_hide",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": true,
-          "drop_data": {
-            "drop_chance": 0.05,
+        }
+      },
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.05,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "unshattered:enchanted_raw_rabbit",
               "max_amount": 15,
               "min_amount": 10
             }
           }
-        },
-        {
-          "combat_fortune_boosted": true,
-          "drop_data": {
-            "drop_chance": 0.001,
+        }
+      },
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.001,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "unshattered:enchanted_cooked_rabbit",
               "max_amount": 1,
@@ -783,73 +1187,102 @@
             }
           }
         }
-      ],
-      "experience": 15.0,
-      "max_coins": 4,
-      "min_coins": 4,
-      "skill": "combat"
-    },
-    "unshattered:oasis_sheep": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 4,
+            "min": 4
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 15.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
+    "unshattered:oasis_sheep": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:mutton",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:white_wool",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:lily_pad",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 0.5,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "drop_chance": 0.5,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:lily_pad",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": true,
-          "drop_data": {
-            "drop_chance": 0.05,
+        }
+      },
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.05,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "unshattered:enchanted_raw_mutton",
               "max_amount": 15,
               "min_amount": 10
             }
           }
-        },
-        {
-          "combat_fortune_boosted": true,
-          "drop_data": {
-            "drop_chance": 0.001,
+        }
+      },
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.001,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "unshattered:enchanted_cooked_mutton",
               "max_amount": 1,
@@ -857,40 +1290,62 @@
             }
           }
         }
-      ],
-      "experience": 15.0,
-      "max_coins": 4,
-      "min_coins": 4,
-      "skill": "combat"
-    },
-    "unshattered:redstone_pigman": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 4,
+            "min": 4
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 15.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
+    "unshattered:redstone_pigman": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:redstone",
               "max_amount": 5,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 0.5,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "drop_chance": 0.5,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:redstone",
               "max_amount": 4,
               "min_amount": 2
             }
           }
-        },
-        {
-          "combat_fortune_boosted": true,
-          "drop_data": {
-            "drop_chance": 0.01,
+        }
+      },
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.01,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "unshattered:redstone_sword",
               "max_amount": 1,
@@ -898,62 +1353,88 @@
             }
           }
         }
-      ],
-      "experience": 20.0,
-      "max_coins": 12,
-      "min_coins": 12,
-      "skill": "combat"
-    },
-    "unshattered:sea_walker": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 12,
+            "min": 12
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 20.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
+    "unshattered:sea_walker": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:rotten_flesh",
               "max_amount": 5,
               "min_amount": 5
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 0.5,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "drop_chance": 0.5,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:rotten_flesh",
               "max_amount": 2,
               "min_amount": 2
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 0.25,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "drop_chance": 0.25,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:rotten_flesh",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:cod",
               "max_amount": 3,
               "min_amount": 2
             }
           }
-        },
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:cod",
               "max_amount": 4,
@@ -961,62 +1442,90 @@
             }
           }
         }
-      ],
-      "experience": 10.0,
-      "max_coins": 1,
-      "min_coins": 1,
-      "skill": "combat"
-    },
-    "unshattered:skeleton_miner": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 1,
+            "min": 1
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 10.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
+    "unshattered:skeleton_miner": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:bone",
               "max_amount": 2,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": true,
-          "drop_data": {
-            "drop_chance": 0.01,
+        }
+      },
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.01,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "unshattered:miner_helmet",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": true,
-          "drop_data": {
-            "drop_chance": 0.01,
+        }
+      },
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.01,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "unshattered:miner_chestplate",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": true,
-          "drop_data": {
-            "drop_chance": 0.01,
+        }
+      },
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.01,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "unshattered:miner_leggings",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": true,
-          "drop_data": {
-            "drop_chance": 0.01,
+        }
+      },
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.01,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "unshattered:miner_boots",
               "max_amount": 1,
@@ -1024,18 +1533,34 @@
             }
           }
         }
-      ],
-      "experience": 16.0,
-      "max_coins": 4,
-      "min_coins": 4,
-      "skill": "combat"
-    },
-    "unshattered:slime_child": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 4,
+            "min": 4
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 16.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
+    "unshattered:slime_child": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:slime_ball",
               "max_amount": 1,
@@ -1043,29 +1568,48 @@
             }
           }
         }
-      ],
-      "experience": 6.0,
-      "max_coins": 1,
-      "min_coins": 1,
-      "skill": "combat"
-    },
-    "unshattered:sneaky_creeper": {
-      "drops": [
-        {
-          "combat_fortune_boosted": false,
-          "drop_data": {
-            "drop_chance": 1.0,
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 1,
+            "min": 1
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 6.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
+    "unshattered:sneaky_creeper": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "minecraft:gunpowder",
               "max_amount": 1,
               "min_amount": 1
             }
           }
-        },
-        {
-          "combat_fortune_boosted": true,
-          "drop_data": {
-            "drop_chance": 0.005,
+        }
+      },
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.005,
+          "reward": {
+            "type": "item",
             "item_range": {
               "item": "unshattered:enchanted_gunpowder",
               "max_amount": 1,
@@ -1073,11 +1617,27 @@
             }
           }
         }
-      ],
-      "experience": 7.0,
-      "max_coins": 1,
-      "min_coins": 1,
-      "skill": "combat"
-    }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 1,
+            "min": 1
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 7.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ]
   }
 }

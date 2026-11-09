@@ -1,32 +1,28 @@
 package io.github.moosyu.items.tools.pickaxes;
 
 import io.github.moosyu.abilities.*;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.items.tools.UnshatteredMiningToolBase;
 import io.github.moosyu.util.UnshatteredUtils;
-import net.minecraft.resources.Identifier;
-import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.minecraft.world.phys.AABB;
 
 import java.util.List;
-import java.util.Set;
 import java.util.function.Supplier;
 
 public class ZombiePickaxe extends UnshatteredMiningToolBase implements AbilityItem {
     public ZombiePickaxe(Properties properties) {
         super(properties.stacksTo(1)
                 .attributes(ItemAttributeModifiers.builder()
-                        .add(UnshatteredAttributeValues.DAMAGE.holder,
+                        .add(UnshatteredAttributeValue.DAMAGE.holder,
                                 new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("zombie_pickaxe_damage"), 5, AttributeModifier.Operation.ADD_VALUE),
                                 EquipmentSlotGroup.MAINHAND
-                        ).add(UnshatteredAttributeValues.MINING_SPEED.holder,
+                        ).add(UnshatteredAttributeValue.MINING_SPEED.holder,
                                 new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("zombie_pickaxe_mining_speed"), 3, AttributeModifier.Operation.ADD_VALUE),
                                 EquipmentSlotGroup.MAINHAND
-                        ).add(UnshatteredAttributeValues.BREAKING_POWER.holder,
+                        ).add(UnshatteredAttributeValue.BREAKING_POWER.holder,
                                 new AttributeModifier(UnshatteredUtils.getUnshatteredIdentifier("zombie_pickaxe_breaking_power"), 3, AttributeModifier.Operation.ADD_VALUE),
                                 EquipmentSlotGroup.MAINHAND
                         ).add(Attributes.ATTACK_SPEED,

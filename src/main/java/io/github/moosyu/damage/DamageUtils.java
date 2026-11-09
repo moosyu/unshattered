@@ -1,7 +1,7 @@
 package io.github.moosyu.damage;
 
 import io.github.moosyu.abilities.*;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.data.attachments.PlayerCurrencyAttachment;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
@@ -10,7 +10,6 @@ import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.enchantments.UnshatteredEnchantmentEffects;
 import io.github.moosyu.packets.DamageNumberPacket;
 import io.github.moosyu.packets.DeathSoundEffectPacket;
-import io.github.moosyu.packets.FerocityEffectPacket;
 import io.github.moosyu.packets.WeakHitSoundEffectPacket;
 import io.github.moosyu.util.UnshatteredUtils;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
@@ -101,22 +100,22 @@ public final class DamageUtils {
                     // just to further disincentivise spam clicking on weapons where you aren't meant to be
                     attackStrength /= 2;
                 } else {
-                    critDamage = player.getRandom().nextDouble() * 100.0 < player.getAttributeValue(UnshatteredAttributeValues.CRITICAL_CHANCE.holder)
-                            ? player.getAttributeValue(UnshatteredAttributeValues.CRITICAL_DAMAGE.holder)
+                    critDamage = player.getRandom().nextDouble() * 100.0 < player.getAttributeValue(UnshatteredAttributeValue.CRITICAL_CHANCE.holder)
+                            ? player.getAttributeValue(UnshatteredAttributeValue.CRITICAL_DAMAGE.holder)
                             : 0.0d;
                 }
 
                 // trying out doing this instead of long things of multiplying and adding, i think it's more readable but idk about it just yet
                 damage += damageBonus;
-                damage *= (1 + (player.getAttributeValue(UnshatteredAttributeValues.STRENGTH.holder) / 20));
+                damage *= (1 + (player.getAttributeValue(UnshatteredAttributeValue.STRENGTH.holder) / 20));
                 damage *= (1 + (critDamage / 20));
-                damage *= player.getAttributeValue(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder);
+                damage *= player.getAttributeValue(UnshatteredAttributeValue.FINAL_DAMAGE_MODIFIER.holder);
 
                 if (useAttackStrength) {
                     damage *= attackStrength;
                 }
 
-                AttributeInstance targetHealth = target.getAttribute(UnshatteredAttributeValues.CURRENT_HEALTH.holder);
+                AttributeInstance targetHealth = target.getAttribute(UnshatteredAttributeValue.CURRENT_HEALTH.holder);
 
                 if (targetHealth != null) {
                     if (critDamage > 0.0d) {
@@ -132,7 +131,7 @@ public final class DamageUtils {
                         // fake hit to trigger some of the effects which i cant be bothered replicating
                         target.hurtServer((ServerLevel) target.level(), target.damageSources().playerAttack(player), 0.0f);
 
-                        double ferocityAmount = player.getAttributeValue(UnshatteredAttributeValues.FEROCITY.holder);
+                        double ferocityAmount = player.getAttributeValue(UnshatteredAttributeValue.FEROCITY.holder);
                         if (ferocityAmount > 0 && player.getData(UnshatteredAttachments.PLAYER_FEROCITY_COOLDOWN) <= 0) {
                             // shouldn't ever be negative so id hope this is fine
                             int prevHundredPlace = (int) (ferocityAmount / 100.0);
@@ -237,8 +236,8 @@ public final class DamageUtils {
                         }
                     }
 
-                    states.setStatValue(PlayerStateAttachment.Stat.HEALTH, player.getAttributeValue(UnshatteredAttributeValues.MAX_HEALTH.holder), player);
-                    states.setStatValue(PlayerStateAttachment.Stat.MANA, player.getAttributeValue(UnshatteredAttributeValues.MANA.holder), player);
+                    states.setStatValue(PlayerStateAttachment.Stat.HEALTH, player.getAttributeValue(UnshatteredAttributeValue.MAX_HEALTH.holder), player);
+                    states.setStatValue(PlayerStateAttachment.Stat.MANA, player.getAttributeValue(UnshatteredAttributeValue.MANA.holder), player);
                     player.setData(UnshatteredAttachments.PLAYER_TEMPERATURE.get(), TemperatureTypes.BASE_TEMP.getValue());
 
                     if (coinsLost > 0) {

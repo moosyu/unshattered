@@ -1,7 +1,7 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.abilities.*;
-import io.github.moosyu.attributes.UnshatteredAttributeValues;
+import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -40,7 +40,7 @@ public class LivingIncomingDamageHandler {
                 event.setCanceled(true);
             }
 
-             if (source.getEntity() instanceof Player player && player.getAttributeValue(UnshatteredAttributeValues.FINAL_DAMAGE_MODIFIER.holder) == 0.0d) {
+             if (source.getEntity() instanceof Player player && player.getAttributeValue(UnshatteredAttributeValue.FINAL_DAMAGE_MODIFIER.holder) == 0.0d) {
                 player.sendSystemMessage(Component.translatable("combat.messages.unshattered.failed").withColor(UnshatteredUtils.RED));
             }
         }
