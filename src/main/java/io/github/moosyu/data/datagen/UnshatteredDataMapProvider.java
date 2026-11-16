@@ -1,5 +1,6 @@
 package io.github.moosyu.data.datagen;
 
+import io.github.moosyu.data.ItemCount;
 import io.github.moosyu.data.NpcData;
 import io.github.moosyu.data.VendorItem;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
@@ -25,9 +26,11 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import net.neoforged.neoforge.common.data.DataMapProvider;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -175,6 +178,14 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         setBaseData(UnshatteredItems.GOLDEN_PRESENT, ItemType.MATERIAL, UnshatteredRarity.LEGENDARY, 2000000);
         setBaseData(UnshatteredItems.WINTER_SACK, ItemType.SACK, UnshatteredRarity.RARE, 500);
         setBaseData(UnshatteredItems.ENCHANTED_SNOW_BLOCK, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 600);
+        setBaseData(UnshatteredItems.SNOWMAN_MASK, ItemType.MATERIAL, UnshatteredRarity.RARE, 1500000);
+        setBaseData(UnshatteredItems.WHITE_PRESENT_SNOW_GLOBE, ItemType.TALISMAN, UnshatteredRarity.COMMON, 50000);
+        setBaseData(UnshatteredItems.GREEN_PRESENT_SNOW_GLOBE, ItemType.TALISMAN, UnshatteredRarity.UNCOMMON, 60000);
+        setBaseData(UnshatteredItems.BLUE_PRESENT_SNOW_GLOBE, ItemType.TALISMAN, UnshatteredRarity.RARE, 70000);
+        setBaseData(UnshatteredItems.PURPLE_PRESENT_SNOW_GLOBE, ItemType.TALISMAN, UnshatteredRarity.EPIC, 80000);
+        setBaseData(UnshatteredItems.GOLDEN_PRESENT_SNOW_GLOBE, ItemType.TALISMAN, UnshatteredRarity.LEGENDARY, 90000);
+        setBaseData(UnshatteredItems.NORTH_STAR, ItemType.MATERIAL, UnshatteredRarity.SPECIAL, 1000);
+        setBaseData(UnshatteredItems.FESTIVE_SINKER, ItemType.SINKER, UnshatteredRarity.RARE, 1000);
 
         createSimpleBlockDropData(BLOCK_BREAK_BUILDER, UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK, new ItemRange(UnshatteredItems.FIG_LOG.get()), PlayerSkillsAttachment.Skill.FORAGING, 15);
         createSimpleBlockDropData(BLOCK_BREAK_BUILDER, UnshatteredBlocks.BREAKABLE_STONE_BLOCK, new ItemRange(Items.COBBLESTONE), PlayerSkillsAttachment.Skill.MINING, 1);
@@ -1039,6 +1050,13 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         new VendorItem(UnshatteredItems.ROOKIE_HOE, false, 10),
                         new VendorItem(UnshatteredItems.BEGINNER_AGRONOMY_SACK, false, 250)
                 ), false
+        ).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.EINARY.get()),
+                List.of(new VendorItem(UnshatteredItems.WHITE_PRESENT_SNOW_GLOBE, false, new ItemCount(UnshatteredItems.NORTH_STAR, 20)),
+                        new VendorItem(UnshatteredItems.GREEN_PRESENT_SNOW_GLOBE, false, new ItemCount(UnshatteredItems.WHITE_PRESENT_SNOW_GLOBE, 1), new ItemCount(UnshatteredItems.NORTH_STAR, 40)),
+                        new VendorItem(UnshatteredItems.BLUE_PRESENT_SNOW_GLOBE, false, new ItemCount(UnshatteredItems.GREEN_PRESENT_SNOW_GLOBE, 1), new ItemCount(UnshatteredItems.NORTH_STAR, 60)),
+                        new VendorItem(UnshatteredItems.PURPLE_PRESENT_SNOW_GLOBE, false, new ItemCount(UnshatteredItems.BLUE_PRESENT_SNOW_GLOBE, 1), new ItemCount(UnshatteredItems.NORTH_STAR, 80)),
+                        new VendorItem(UnshatteredItems.GOLDEN_PRESENT_SNOW_GLOBE, false, new ItemCount(UnshatteredItems.PURPLE_PRESENT_SNOW_GLOBE, 1), new ItemCount(UnshatteredItems.NORTH_STAR, 100))
+                ), false
         );
 
         createEntityNPCData(UnshatteredEntities.BUBU.get(), "bubu", UnshatteredUtils.PURPLE);
@@ -1047,11 +1065,13 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         createEntityNPCData(UnshatteredEntities.JOTRAELINE_GREATFORGE.get(), "jotraeline_greatforge", UnshatteredUtils.DARK_GREEN);
         createEntityNPCData(UnshatteredEntities.WOOL_WEAVER.get(), "wool_weaver", UnshatteredUtils.WHITE);
         createEntityNPCData(UnshatteredEntities.RHYS.get(), "rhys", UnshatteredUtils.WHITE);
+        createEntityNPCData(UnshatteredEntities.EINARY.get(), "einary", UnshatteredUtils.RED);
 
         createBlockNPCData(UnshatteredBlocks.ROCK_TALKABLE_BLOCK.get(), 0xFFFFFFFF);
 
         createPresentData(PresentTypes.WHITE, concatWeightedData(
                 new WeightedDropData[] {
+                        new WeightedDropData(new ItemReward(new ItemRange(UnshatteredItems.NORTH_STAR, 5)), 2000),
                         new WeightedDropData(new CoinReward(1000, 10000), 2000),
                         new WeightedDropData(new ItemReward(UnshatteredItems.GIFT_THE_FISH), 4)
                 },
@@ -1061,10 +1081,12 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
 
         createPresentData(PresentTypes.GREEN, concatWeightedData(
                 new WeightedDropData[] {
+                        new WeightedDropData(new ItemReward(new ItemRange(UnshatteredItems.NORTH_STAR, 10)), 2000),
                         new WeightedDropData(new CoinReward(2000, 20000), 2000),
                         new WeightedDropData(new ItemReward(UnshatteredItems.WINTER_SACK), 50),
                         new WeightedDropData(new ItemReward(UnshatteredItems.GIFT_THE_FISH), 5),
-                        new WeightedDropData(new ItemReward(UnshatteredItems.GOLDEN_PRESENT), 2)
+                        new WeightedDropData(new ItemReward(UnshatteredItems.GOLDEN_PRESENT), 2),
+                        new WeightedDropData(new ItemReward(UnshatteredItems.SNOWMAN_MASK), 1)
                 },
                 allSkillExperience(1000, 1500).toArray(WeightedDropData[]::new),
                 allSkillExperience(2000, 500).toArray(WeightedDropData[]::new),
@@ -1073,13 +1095,15 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
 
         createPresentData(PresentTypes.RED, concatWeightedData(
                 new WeightedDropData[] {
+                        new WeightedDropData(new ItemReward(new ItemRange(UnshatteredItems.NORTH_STAR, 15)), 2000),
                         new WeightedDropData(new CoinReward(5000, 20000), 2000),
                         new WeightedDropData(new CoinReward(20000, 100000), 750),
                         new WeightedDropData(new CoinReward(500000, 1000000), 20),
                         new WeightedDropData(new ItemReward(UnshatteredItems.WINTER_SACK), 70),
                         new WeightedDropData(new ItemReward(UnshatteredItems.GIFT_THE_FISH), 6),
                         new WeightedDropData(new ItemReward(UnshatteredItems.GOLDEN_PRESENT), 5),
-                        new WeightedDropData(new ItemReward(UnshatteredItems.KRAMPUS_HELMET), 4)
+                        new WeightedDropData(new ItemReward(UnshatteredItems.KRAMPUS_HELMET), 4),
+                        new WeightedDropData(new ItemReward(UnshatteredItems.SNOWMAN_MASK), 3)
                 },
                 allSkillExperience(2000, 1500).toArray(WeightedDropData[]::new),
                 allSkillExperience(3000, 500).toArray(WeightedDropData[]::new),

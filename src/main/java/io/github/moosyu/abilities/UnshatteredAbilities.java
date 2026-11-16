@@ -144,4 +144,18 @@ public class UnshatteredAbilities {
     public static final DeferredHolder<Ability, LowestCommonDenominator> LOWEST_COMMON_DENOMINATOR = ABILITIES.register("lowest_common_denominator", LowestCommonDenominator::new);
 
     public static final DeferredHolder<Ability, ChristmasSpirit> CHRISTMAS_SPIRIT = ABILITIES.register("christmas_spirit", ChristmasSpirit::new);
+
+    public static final DeferredHolder<Ability, FeelinFestive> FEELIN_FESTIVE_SNOWMAN_MASK = ABILITIES.register("feelin_festive_snowman_mask", () -> new FeelinFestive(1.1f));
+
+    public static final DeferredHolder<Ability, FeelinFestive> FEELIN_FESTIVE_WHITE_SNOW_GLOBE = ABILITIES.register("feelin_festive_white_snow_globe", () -> new FeelinFestive(1.05f));
+
+    public static final DeferredHolder<Ability, FeelinFestive> FEELIN_FESTIVE_GREEN_SNOW_GLOBE = ABILITIES.register("feelin_festive_green_snow_globe", () -> new FeelinFestive(1.1f));
+
+    public static final DeferredHolder<Ability, FeelinFestive> FEELIN_FESTIVE_BLUE_SNOW_GLOBE = ABILITIES.register("feelin_festive_blue_snow_globe", () -> new FeelinFestive(1.15f));
+
+    public static final DeferredHolder<Ability, FeelinFestive> FEELIN_FESTIVE_PURPLE_SNOW_GLOBE = ABILITIES.register("feelin_festive_purple_snow_globe", () -> new FeelinFestive(1.2f));
+
+    public static final DeferredHolder<Ability, FeelinFestive> FEELIN_FESTIVE_GOLDEN_SNOW_GLOBE = ABILITIES.register("feelin_festive_golden_snow_globe", () -> new FeelinFestive(1.25f));
+
+    public static final DeferredHolder<Ability, Miracle> MIRACLE = ABILITIES.register("miracle", Miracle::new);
 }

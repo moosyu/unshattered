@@ -131,7 +131,7 @@ public class DatagenHandler {
 
                     // got claude to make me a little webpage to help create these so i wouldnt go off the rails (sorry ocean) so this is just gonna look a little nasty
                     registerDialogueTree(bootstrap,
-                            JotraelineGreatforgeNPC.JOTRAELINE_GREATFORGE_IDENTIFIER,
+                            JotraelineGreatforge.JOTRAELINE_GREATFORGE_IDENTIFIER,
                             new DialogueTree(List.of(new DialogueTreeOrigin(0,
                                     new DialogueNode(Component.translatable("dialogue.unshattered.jotraeline_greatforge.introduction"),
                                             Optional.of(List.of(
@@ -158,7 +158,7 @@ public class DatagenHandler {
                                                                                                                                                                                                             new DialogueChoice(Component.literal("..."), new OpenDrillAttachmentEvent())
                                                                                                                                                                                                     )
                                                                                                                                                                                             ),
-                                                                                                                                                                                            Optional.empty(), List.of(JotraelineGreatforgeNPC.INTRODUCTION_MESSAGE_IDENTIFIER),
+                                                                                                                                                                                            Optional.empty(), List.of(JotraelineGreatforge.INTRODUCTION_MESSAGE_IDENTIFIER),
                                                                                                                                                                                             Optional.empty()),
                                                                                                                                                                                     new DialogueChoice(Component.translatable("dialogue.unshattered.generic.player_no_choice"),
                                                                                                                                                                                             Optional.of(
@@ -171,7 +171,7 @@ public class DatagenHandler {
                                                                                                                                                                                                                                             new DialogueChoice(Component.literal("...")))
                                                                                                                                                                                                                             ),
                                                                                                                                                                                                                             Optional.empty(),
-                                                                                                                                                                                                                            List.of(JotraelineGreatforgeNPC.ANGRY_IDENTIFIER),
+                                                                                                                                                                                                                            List.of(JotraelineGreatforge.ANGRY_IDENTIFIER),
                                                                                                                                                                                                                             Optional.empty()
                                                                                                                                                                                                                     )
                                                                                                                                                                                                             )),
@@ -202,14 +202,14 @@ public class DatagenHandler {
                                                                             Optional.of(List.of(
                                                                                     new DialogueChoice(Component.translatable("dialogue.unshattered.jotraeline_greatforge.player_sure_choice"),
                                                                                             Optional.empty(),
-                                                                                            Optional.empty(), List.of(JotraelineGreatforgeNPC.INTRODUCTION_MESSAGE_IDENTIFIER),
+                                                                                            Optional.empty(), List.of(JotraelineGreatforge.INTRODUCTION_MESSAGE_IDENTIFIER),
                                                                                             Optional.of(new OpenDrillAttachmentEvent())),
                                                                                     new DialogueChoice(Component.translatable("dialogue.unshattered.jotraeline_greatforge.player_no_thanks_choice"))
                                                                             )),
                                                                             true)
                                                             ),
                                                             Optional.empty(),
-                                                            List.of(JotraelineGreatforgeNPC.INTRODUCTION_MESSAGE_IDENTIFIER),
+                                                            List.of(JotraelineGreatforge.INTRODUCTION_MESSAGE_IDENTIFIER),
                                                             Optional.empty())
                                             )),
                                             true),
@@ -218,21 +218,21 @@ public class DatagenHandler {
                                     createDialogueOrigin(2,
                                             new DialogueNode(Component.translatable("dialogue.unshattered.jotraeline_greatforge.still_angry"),
                                                     true,
-                                                    new DialogueChoice(Component.literal("..."), new StartQuestDialogueEvent(JotraelineGreatforgeNPC.APOLOGY_TOUR))
+                                                    new DialogueChoice(Component.literal("..."), new StartQuestDialogueEvent(JotraelineGreatforge.APOLOGY_TOUR))
                                             ),
-                                            List.of(JotraelineGreatforgeNPC.ANGRY_IDENTIFIER),
+                                            List.of(JotraelineGreatforge.ANGRY_IDENTIFIER),
                                             List.of()
                                     ),
                                     createDialogueOrigin(1,
                                             new DialogueNode(Component.translatable("dialogue.unshattered.jotraeline_greatforge.greeting"), true, new DialogueChoice(Component.literal("..."), new OpenDrillAttachmentEvent())),
-                                            List.of(JotraelineGreatforgeNPC.INTRODUCTION_MESSAGE_IDENTIFIER),
+                                            List.of(JotraelineGreatforge.INTRODUCTION_MESSAGE_IDENTIFIER),
                                             List.of()
                                     )
                             ))
                     );
 
                     registerDialogueTree(bootstrap,
-                            WoolWeaverNPC.WOOL_WEAVER_IDENTIFIER,
+                            WoolWeaver.WOOL_WEAVER_IDENTIFIER,
                             new DialogueTree(List.of(new DialogueTreeOrigin(1,
                                     new DialogueNode(Component.translatable("dialogue.unshattered.wool_weaver.greeting"),
                                             true,
@@ -248,7 +248,7 @@ public class DatagenHandler {
                                                                                             new DialogueChoice(Component.literal("..."),
                                                                                                     new DialogueNode(Component.translatable("dialogue.unshattered.wool_weaver.woolhead"),
                                                                                                             true,
-                                                                                                            new DialogueChoice(Component.literal("..."), List.of(WoolWeaverNPC.WOOLHEAD_IDENTIFIER), new OpenStoreMenuEvent(UnshatteredEntities.WOOL_WEAVER.get()))
+                                                                                                            new DialogueChoice(Component.literal("..."), List.of(WoolWeaver.WOOLHEAD_IDENTIFIER), new OpenStoreMenuEvent(UnshatteredEntities.WOOL_WEAVER.get()))
                                                                                                     )
                                                                                             )
                                                                                     )
@@ -273,12 +273,12 @@ public class DatagenHandler {
                                                     )
                                             )
                                     ),
-                                    List.of(WoolWeaverNPC.INTRODUCTION_MESSAGE_IDENTIFIER))
+                                    List.of(WoolWeaver.INTRODUCTION_MESSAGE_IDENTIFIER))
                             ))
                     );
 
                     registerDialogueTree(bootstrap,
-                            BubuNPC.BUBU_IDENTIFIER,
+                            Bubu.BUBU_IDENTIFIER,
                             new DialogueTree(List.of(new DialogueTreeOrigin(0,
                                     new DialogueNode(Component.translatable("dialogue.unshattered.bubu_introduction"),
                                             true,
@@ -289,7 +289,7 @@ public class DatagenHandler {
                     );
 
                     registerDialogueTree(bootstrap,
-                            ForgerNPC.FORGER_IDENTIFIER,
+                            Forger.FORGER_IDENTIFIER,
                             new DialogueTree(List.of(
                                     new DialogueTreeOrigin(0,
                                             new DialogueNode(Component.translatable("dialogue.unshattered.forger_introduction"), true,
@@ -424,32 +424,49 @@ public class DatagenHandler {
                                                     )
                                             ),
                                             Optional.empty(),
-                                            List.of(ForgerNPC.FORGER_INTRODUCTION)
+                                            List.of(Forger.FORGER_INTRODUCTION)
                                     ),
                                     new DialogueTreeOrigin(1,
                                             new DialogueNode(Component.translatable("dialogue.unshattered.forger_player_return"),
                                                     true,
                                                     new DialogueChoice(Component.literal("..."), new OpenForgeEvent())
                                             ),
-                                            Optional.of(new DialogueFlagRequirements(List.of(ForgerNPC.FORGER_INTRODUCTION), List.of())),
+                                            Optional.of(new DialogueFlagRequirements(List.of(Forger.FORGER_INTRODUCTION), List.of())),
                                             List.of()
                                     )
                             ))
                     );
 
                     registerDialogueTree(bootstrap,
-                            JennyNPC.JENNY_IDENTIFIER,
+                            Jenny.JENNY_IDENTIFIER,
                             new DialogueTree(List.of(new DialogueTreeOrigin(2,
                                     new DialogueNode(Component.translatable("dialogue.unshattered.jenny_introduction"),
                                             true,
                                             new DialogueChoice(Component.literal("..."), new OpenStoreMenuEvent(UnshatteredEntities.JENNY.get()))),
-                                    List.of(JennyNPC.JENNY_INTRODUCTION))
+                                    List.of(Jenny.JENNY_INTRODUCTION))
+                            ))
+                    );
+
+                    registerDialogueTree(bootstrap,
+                            Einary.EINARY_IDENTIFIER,
+                            new DialogueTree(List.of(new DialogueTreeOrigin(1,
+                                    new DialogueNode(Component.translatable("dialogue.unshattered.einary_introduction"),
+                                            true,
+                                            new DialogueChoice(Component.literal("..."), new OpenStoreMenuEvent(UnshatteredEntities.EINARY.get()))),
+                                    List.of(Einary.EIANARY_INTRODUCTION)),
+
+                                    new DialogueTreeOrigin(0,
+                                            new DialogueNode(Component.literal("dialogue.unshattered.einary_return"),
+                                                    true,
+                                                    new DialogueChoice(Component.literal("..."), new OpenStoreMenuEvent(UnshatteredEntities.EINARY.get()))
+                                            )
+                                    )
                             ))
                     );
                 }).add(DataPackRegistryHandler.QUEST_REGISTRY_KEY, bootstrap -> {
                     createQuest(bootstrap, TalkingRockBlock.ROCKS_QUEST, QuestTypes.NOVICE, new GiveItemDialogueEvent(BuiltInRegistries.ITEM.wrapAsHolder(Items.STONE), 1));
 
-                    bootstrap.register(ResourceKey.create(DataPackRegistryHandler.QUEST_REGISTRY_KEY, JotraelineGreatforgeNPC.APOLOGY_TOUR), new Quest(QuestTypes.NOVICE, Optional.empty()));
+                    bootstrap.register(ResourceKey.create(DataPackRegistryHandler.QUEST_REGISTRY_KEY, JotraelineGreatforge.APOLOGY_TOUR), new Quest(QuestTypes.NOVICE, Optional.empty()));
                 }).add(DataPackRegistryHandler.REGEN_PATH_REGISTRY_KEY, bootstrap -> {
                     createRegenPathWithBlocks(bootstrap, "stone", List.of(UnshatteredBlocks.BREAKABLE_STONE_BLOCK.get(),
                                     UnshatteredBlocks.BREAKABLE_COBBLESTONE_BLOCK.get(),
@@ -649,7 +666,7 @@ public class DatagenHandler {
 
                     createRegenPathWithBlocks(bootstrap, "cocoa", List.of(UnshatteredBlocks.BREAKABLE_COCOA_BEAN_BLOCK.get(), Blocks.AIR), 600);
                 }).add(DataPackRegistryHandler.FISHING_MISC_REWARD_KEY, bootstrap -> {
-                    bootstrap.register(createMiscRewardResourceKey("good_catch"), new CoinReward(25000,
+                    bootstrap.register(createMiscRewardResourceKey("skills.messages.unshattered.fishing.good_catch"), new CoinReward(25000,
                             5000,
                             "good_catch",
                             0xFF810AF3,
@@ -659,7 +676,7 @@ public class DatagenHandler {
                             Optional.of(1))
                     );
 
-                    bootstrap.register(createMiscRewardResourceKey("great_catch"), new CoinReward(100000,
+                    bootstrap.register(createMiscRewardResourceKey("skills.messages.unshattered.fishing.great_catch"), new CoinReward(100000,
                             250000,
                             "great_catch",
                             0xFFFFAA00,
@@ -669,7 +686,7 @@ public class DatagenHandler {
                             Optional.of(5))
                     );
 
-                    bootstrap.register(createMiscRewardResourceKey("outstanding_catch"), new CoinReward(500000,
+                    bootstrap.register(createMiscRewardResourceKey("skills.messages.unshattered.fishing.outstanding_catch"), new CoinReward(500000,
                             1000000,
                             "outstanding_catch",
                             0xFFFF55FF,

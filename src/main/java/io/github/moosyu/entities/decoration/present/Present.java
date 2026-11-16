@@ -1,10 +1,9 @@
 package io.github.moosyu.entities.decoration.present;
 
+import io.github.moosyu.abilities.*;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.drops.*;
 import io.github.moosyu.entities.UnshatteredEntities;
-import io.github.moosyu.items.ItemRange;
-import io.github.moosyu.items.PresentItem;
 import io.github.moosyu.util.UnshatteredUtils;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.ChatFormatting;
@@ -33,6 +32,7 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class Present extends Entity {
     // in ticks
@@ -78,7 +78,10 @@ public class Present extends Entity {
         if (level().isClientSide()) {
             spawnParticles(progress);
         } else {
-            if (--noteCooldown > 0) return;
+            if (--noteCooldown > 0) {
+                return;
+            }
+
             noteCooldown = Math.round(Mth.lerp(progress, 8f, 2f));
 
             int semitone = SCALE[Math.min((int) (progress * SCALE.length), SCALE.length - 1)];
@@ -94,9 +97,12 @@ public class Present extends Entity {
 
                 if (owner != null && presentType != null) {
                     if (level().getEntity(owner.getUUID()) instanceof ServerPlayer player) {
-                        List<WeightedDropData> presentData = PresentTypes.REGISTRY.wrapAsHolder(presentType).getData(UnshatteredDataMaps.PRESENT_DATA);
+                        AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, player).add(AbilityContextKey.PRESENT_TYPE, presentType);
 
-                        if (presentData != null && !presentData.isEmpty()) {
+                        List<WeightedDropData> presentData = PresentTypes.REGISTRY.wrapAsHolder(presentType).getData(UnshatteredDataMaps.PRESENT_DATA);
+                        AbilityResults abilityResults = AbilityScope.fire(player, AbilityTriggerType.PLAYER_FINISH_OPENING_PRESENT, context);
+
+                        if (presentData != null && !presentData.isEmpty() && !abilityResults.get(AbilityResult.CANCEL_EVENT)) {
                             int totalWeight = 0;
                             for (WeightedDropData data : presentData) {
                                 totalWeight += data.weight();
@@ -110,41 +116,57 @@ public class Present extends Entity {
                                 for (WeightedDropData data : presentData) {
                                     cumulative += data.weight();
                                     if (roll < cumulative) {
-                                        float rewardAmount = data.reward().grant(player, player.getRandom(), null);
-
                                         // multiplying the weight so the odds look less wack. honestly at this point it'd make more sense to hardcode them but we're well past that point
                                         DropType dropType = DropType.getDropType( (float) (data.weight() * 10) / totalWeight);
                                         Component dropTypeComponent = Component.empty().append(Component.literal(Component.translatable("drop_type.message.unshattered." + dropType.key).getString().toUpperCase(Locale.ROOT)).withStyle(ChatFormatting.BOLD).withColor(dropType.colour));
 
                                         switch (data.reward()) {
-                                            case ItemReward(ItemRange itemRange) -> {
-                                                Item item = itemRange.item();
+                                            case ItemReward itemReward -> {
+                                                Item item = itemReward.itemRange().item();
+                                                String count = itemReward.formatAmount(data.reward().grant(player, player.getRandom(), null, 1.0f));
 
                                                 player.sendSystemMessage(Component.empty()
                                                         .append(dropTypeComponent)
                                                         .append(Component.literal(" "))
                                                         .append(Component.translatable(item.getDescriptionId()).withColor(UnshatteredUtils.getItemRarity(item.getDefaultInstance()).getColour()))
+                                                        .append(Objects.equals(count, "1") ? Component.empty() : Component.literal(" x" + count).withColor(UnshatteredUtils.DARK_GRAY))
                                                 );
                                             }
-                                            case CoinReward coinReward -> player.sendSystemMessage(Component.empty()
-                                                    .append(dropTypeComponent)
-                                                    .append(Component.literal(" +").withColor(UnshatteredUtils.GOLD))
-                                                    .append(Component.literal(coinReward.formatAmount(rewardAmount)).withColor(UnshatteredUtils.GOLD))
-                                                    .append(Component.literal(" "))
-                                                    .append(Component.translatable("misc.unshattered.coins").withColor(UnshatteredUtils.GOLD))
-                                                    .append(Component.literal("!").withColor(UnshatteredUtils.YELLOW))
-                                            );
-                                            case ExperienceReward experienceReward ->
-                                                    player.sendSystemMessage(Component.empty()
-                                                            .append(dropTypeComponent)
-                                                            .append(Component.literal(" +").withColor(UnshatteredUtils.DARK_AQUA))
-                                                            .append(Component.literal(experienceReward.formatAmount(rewardAmount)).withColor(UnshatteredUtils.DARK_AQUA))
-                                                            .append(Component.literal(" "))
-                                                            .append(Component.translatable(experienceReward.skill().getTranslationKey()).withColor(UnshatteredUtils.DARK_AQUA))
-                                                            .append(Component.literal(" "))
-                                                            .append(Component.translatable("misc.unshattered.experience").withColor(UnshatteredUtils.DARK_AQUA))
-                                                            .append(Component.literal("!").withColor(UnshatteredUtils.DARK_AQUA))
-                                                    );
+                                            case CoinReward coinReward -> {
+                                                // unfortunately leads to the rewards being displayed after things like level up messages, what can you do i guess
+                                                float modifiedPresentCoinsPercent = abilityResults.get(AbilityResult.ADD_PRESENT_COINS_PERCENT);
+                                                float rewardAmount = data.reward().grant(player, player.getRandom(), null, modifiedPresentCoinsPercent);
+
+                                                player.sendSystemMessage(Component.empty()
+                                                        .append(dropTypeComponent)
+                                                        .append(Component.literal(" +").withColor(UnshatteredUtils.GOLD))
+                                                        .append(Component.literal(modifiedPresentCoinsPercent == 1.0f
+                                                                ? coinReward.formatAmount(rewardAmount)
+                                                                : coinReward.formatAmount(rewardAmount) + " (+" + coinReward.formatAmount((rewardAmount * modifiedPresentCoinsPercent) - rewardAmount) + ")").withColor(UnshatteredUtils.GOLD)
+                                                        )
+                                                        .append(Component.literal(" "))
+                                                        .append(Component.translatable("misc.unshattered.coins").withColor(UnshatteredUtils.GOLD))
+                                                        .append(Component.literal("!").withColor(UnshatteredUtils.YELLOW))
+                                                );
+                                            }
+                                            case ExperienceReward experienceReward -> {
+                                                float modifiedPresentExperiencePercent = abilityResults.get(AbilityResult.ADD_PRESENT_EXPERIENCE_PERCENT);
+                                                float rewardAmount = data.reward().grant(player, player.getRandom(), null, modifiedPresentExperiencePercent);
+
+                                                player.sendSystemMessage(Component.empty()
+                                                        .append(dropTypeComponent)
+                                                        .append(Component.literal(" +").withColor(UnshatteredUtils.DARK_AQUA))
+                                                        .append(Component.literal(modifiedPresentExperiencePercent == 1.0f
+                                                                ? experienceReward.formatAmount(rewardAmount)
+                                                                : experienceReward.formatAmount(rewardAmount) + " (+" + experienceReward.formatAmount((rewardAmount * modifiedPresentExperiencePercent) - rewardAmount) + ")").withColor(UnshatteredUtils.DARK_AQUA)
+                                                        )
+                                                        .append(Component.literal(" "))
+                                                        .append(Component.translatable(experienceReward.skill().getTranslationKey()).withColor(UnshatteredUtils.DARK_AQUA))
+                                                        .append(Component.literal(" "))
+                                                        .append(Component.translatable("misc.unshattered.experience").withColor(UnshatteredUtils.DARK_AQUA))
+                                                        .append(Component.literal("!").withColor(UnshatteredUtils.DARK_AQUA))
+                                                );
+                                            }
                                             default -> {}
                                         }
 

@@ -17,12 +17,13 @@ public class UnshatteredArmourMaterials {
 
     public static final ResourceKey<? extends Registry<EquipmentAsset>> ROOT_ID = ResourceKey.createRegistryKey(Identifier.withDefaultNamespace("equipment_asset"));
 
-    public static ResourceKey<EquipmentAsset> LEAFLET_KEY = ResourceKey.create(ROOT_ID, Identifier.fromNamespaceAndPath(MODID, "leaflet"));
-    public static ResourceKey<EquipmentAsset> GLOW_SQUID_BOOTS_KEY = ResourceKey.create(ROOT_ID, Identifier.fromNamespaceAndPath(MODID, "glow_squid_boots"));
-    public static ResourceKey<EquipmentAsset> SKELETON_HAT_KEY = ResourceKey.create(UnshatteredArmourMaterials.ROOT_ID, UnshatteredUtils.getUnshatteredIdentifier("skeleton_hat"));
-    public static ResourceKey<EquipmentAsset> LAPIS_ARMOUR_KEY = ResourceKey.create(UnshatteredArmourMaterials.ROOT_ID, UnshatteredUtils.getUnshatteredIdentifier("lapis_armour"));
-    public static ResourceKey<EquipmentAsset> MINER_ARMOUR_KEY = ResourceKey.create(UnshatteredArmourMaterials.ROOT_ID, UnshatteredUtils.getUnshatteredIdentifier("miner_armour"));
+    public static ResourceKey<EquipmentAsset> LEAFLET_KEY = ResourceKey.create(ROOT_ID, Identifier.fromNamespaceAndPath(MODID, "leaflet_key"));
+    public static ResourceKey<EquipmentAsset> GLOW_SQUID_BOOTS_KEY = ResourceKey.create(ROOT_ID, Identifier.fromNamespaceAndPath(MODID, "glow_squid_boots_key"));
+    public static ResourceKey<EquipmentAsset> SKELETON_HAT_KEY = ResourceKey.create(UnshatteredArmourMaterials.ROOT_ID, UnshatteredUtils.getUnshatteredIdentifier("skeleton_hat_key"));
+    public static ResourceKey<EquipmentAsset> LAPIS_ARMOUR_KEY = ResourceKey.create(UnshatteredArmourMaterials.ROOT_ID, UnshatteredUtils.getUnshatteredIdentifier("lapis_armour_key"));
+    public static ResourceKey<EquipmentAsset> MINER_ARMOUR_KEY = ResourceKey.create(UnshatteredArmourMaterials.ROOT_ID, UnshatteredUtils.getUnshatteredIdentifier("miner_armour_key"));
     public static ResourceKey<EquipmentAsset> KRAMPUS_HELMET_KEY = ResourceKey.create(UnshatteredArmourMaterials.ROOT_ID, UnshatteredUtils.getUnshatteredIdentifier("krampus_helmet_key"));
+    public static ResourceKey<EquipmentAsset> SNOWMAN_MASK_KEY = ResourceKey.create(UnshatteredArmourMaterials.ROOT_ID, UnshatteredUtils.getUnshatteredIdentifier("snowman_mask_key"));
 
     public static UnshatteredArmourMaterial LEAFLET_MATERIAL = new UnshatteredArmourMaterial(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.AZALEA_LEAVES_PLACE), LEAFLET_KEY);
     public static UnshatteredArmourMaterial GLOW_SQUID_BOOTS_MATERIAL = new UnshatteredArmourMaterial(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.GLOW_SQUID_SQUIRT), GLOW_SQUID_BOOTS_KEY);

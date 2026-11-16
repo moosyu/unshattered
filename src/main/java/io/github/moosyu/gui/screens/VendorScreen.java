@@ -1,6 +1,7 @@
 package io.github.moosyu.gui.screens;
 
 import com.mojang.blaze3d.platform.cursor.CursorTypes;
+import io.github.moosyu.data.ItemCount;
 import io.github.moosyu.data.VendorItem;
 import io.github.moosyu.gui.menus.VendorMenu;
 import io.github.moosyu.packets.AttemptPurchasePacket;
@@ -60,7 +61,7 @@ public class VendorScreen extends AbstractContainerScreen<VendorMenu> {
                         this::openSellPage
                 );
 
-                List<Component> itemTooltip = new ArrayList<>(getTooltipFromItem(minecraft, new ItemStack(vendorItem.item().value())));
+                List<Component> itemTooltip = new ArrayList<>(getTooltipFromItem(minecraft, new ItemStack(vendorItem.item())));
 
                 itemTooltip.addAll(buildPriceLines(vendorItem));
                 itemTooltip.add(Component.empty());
@@ -91,7 +92,7 @@ public class VendorScreen extends AbstractContainerScreen<VendorMenu> {
             int buyButtonWidth = 30;
             SoundlessButton buyButton = new SoundlessButton(centerX() - (buyButtonWidth * 2), panelY() + BOX_Y - 6, buyButtonWidth, _ -> {
                 if (itemInputAmount > 0 && expandedItem != null) {
-                    ClientPacketDistributor.sendToServer(new AttemptPurchasePacket(new ItemStack(expandedItem.item(), itemInputAmount), expandedItem.price(), expandedItem.itemTradeRequirements()));
+                    ClientPacketDistributor.sendToServer(new AttemptPurchasePacket(new ItemCount(expandedItem.item(), itemInputAmount), expandedItem.price(), expandedItem.itemTradeRequirements()));
                 }
             });
 
@@ -183,9 +184,8 @@ public class VendorScreen extends AbstractContainerScreen<VendorMenu> {
         );
 
         vendorItem.itemTradeRequirements().ifPresent(requirements -> {
-            for (ItemStack requirement : requirements) {
-                MutableComponent line = requirement.getItemName().copy()
-                        .withColor(UnshatteredUtils.getItemRarity(requirement).getColour());
+            for (ItemCount requirement : requirements) {
+                MutableComponent line = Component.translatable(requirement.item().asItem().getDescriptionId()).withColor(UnshatteredUtils.getItemRarity(requirement.item().asItem().getDefaultInstance()).getColour());
 
                 if (requirement.count() > 1) {
                     line.append(Component.literal(" x" + requirement.count())
@@ -209,7 +209,7 @@ public class VendorScreen extends AbstractContainerScreen<VendorMenu> {
 
             this.vendorItem = vendorItem;
             this.onRightClick = onRightClick;
-            itemStack = vendorItem.item().value().getDefaultInstance();
+            itemStack = vendorItem.item().getDefaultInstance();
         }
 
         @Override
@@ -234,7 +234,7 @@ public class VendorScreen extends AbstractContainerScreen<VendorMenu> {
         @Override
         public void onClick(@NonNull MouseButtonEvent event, boolean doubleClick) {
             if (event.button() == UnshatteredUtils.MouseButton.LEFT.getButton()) {
-                ClientPacketDistributor.sendToServer(new AttemptPurchasePacket(itemStack, vendorItem.price(), vendorItem.itemTradeRequirements()));
+                ClientPacketDistributor.sendToServer(new AttemptPurchasePacket(new ItemCount(itemStack.getItem(), itemStack.count()), vendorItem.price(), vendorItem.itemTradeRequirements()));
             } else if (vendorItem.sellMultiple()) {
                 onRightClick.accept(vendorItem);
             }

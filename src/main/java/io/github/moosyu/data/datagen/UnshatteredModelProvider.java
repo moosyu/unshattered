@@ -427,6 +427,15 @@ public class UnshatteredModelProvider extends ModelProvider {
                 UnshatteredBlocks.TACKLEBOX_BLOCK.get(),
                 UnshatteredUtils.getUnshatteredIdentifier("block/tackle_box")
         );
+
+        itemModels.generateFlatItem(UnshatteredItems.SNOWMAN_MASK.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.WHITE_PRESENT_SNOW_GLOBE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.GREEN_PRESENT_SNOW_GLOBE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.BLUE_PRESENT_SNOW_GLOBE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.PURPLE_PRESENT_SNOW_GLOBE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.GOLDEN_PRESENT_SNOW_GLOBE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.NORTH_STAR.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.FESTIVE_SINKER.get(), ModelTemplates.FLAT_ITEM);
     }
 
     private void createFishingRod(ItemModelGenerators itemModels, Item fishingRod, Item textureDonor) {

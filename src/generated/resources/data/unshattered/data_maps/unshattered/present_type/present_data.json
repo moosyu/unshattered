@@ -3,6 +3,17 @@
     "unshattered:green": [
       {
         "drop_data": {
+          "type": "item",
+          "item_range": {
+            "item": "unshattered:north_star",
+            "max_amount": 10,
+            "min_amount": 10
+          }
+        },
+        "weight": 2000
+      },
+      {
+        "drop_data": {
           "type": "coins",
           "max": 20000,
           "min": 2000
@@ -35,12 +46,23 @@
         "drop_data": {
           "type": "item",
           "item_range": {
-            "item": "unshattered:golden_gift",
+            "item": "unshattered:golden_present",
             "max_amount": 1,
             "min_amount": 1
           }
         },
         "weight": 2
+      },
+      {
+        "drop_data": {
+          "type": "item",
+          "item_range": {
+            "item": "unshattered:snowman_mask",
+            "max_amount": 1,
+            "min_amount": 1
+          }
+        },
+        "weight": 1
       },
       {
         "drop_data": {
@@ -214,6 +236,17 @@
     "unshattered:red": [
       {
         "drop_data": {
+          "type": "item",
+          "item_range": {
+            "item": "unshattered:north_star",
+            "max_amount": 15,
+            "min_amount": 15
+          }
+        },
+        "weight": 2000
+      },
+      {
+        "drop_data": {
           "type": "coins",
           "max": 20000,
           "min": 5000
@@ -262,7 +295,7 @@
         "drop_data": {
           "type": "item",
           "item_range": {
-            "item": "unshattered:golden_gift",
+            "item": "unshattered:golden_present",
             "max_amount": 1,
             "min_amount": 1
           }
@@ -279,6 +312,17 @@
           }
         },
         "weight": 4
+      },
+      {
+        "drop_data": {
+          "type": "item",
+          "item_range": {
+            "item": "unshattered:snowman_mask",
+            "max_amount": 1,
+            "min_amount": 1
+          }
+        },
+        "weight": 3
       },
       {
         "drop_data": {
@@ -450,6 +494,17 @@
       }
     ],
     "unshattered:white": [
+      {
+        "drop_data": {
+          "type": "item",
+          "item_range": {
+            "item": "unshattered:north_star",
+            "max_amount": 5,
+            "min_amount": 5
+          }
+        },
+        "weight": 2000
+      },
       {
         "drop_data": {
           "type": "coins",

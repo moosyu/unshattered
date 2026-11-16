@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "unshattered:item/golden_gift"
+    "layer0": "unshattered:item/purple_present_snow_globe"
   }
 }

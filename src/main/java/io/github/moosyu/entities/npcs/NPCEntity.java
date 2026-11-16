@@ -2,6 +2,7 @@ package io.github.moosyu.entities.npcs;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -15,7 +16,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FluidState;
 import org.jspecify.annotations.NonNull;
 
-public class NPCEntity extends Mob {
+public abstract class NPCEntity extends Mob {
     public NPCEntity(EntityType<? extends Mob> type, Level level) {
         super(type, level);
     }

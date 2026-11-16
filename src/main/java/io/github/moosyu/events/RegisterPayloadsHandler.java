@@ -179,7 +179,7 @@ public class RegisterPayloadsHandler {
                 AttemptPurchasePacket.STREAM_CODEC,
                 (data, context) -> context.enqueueWork(() -> {
                     ServerPlayer serverPlayer = (ServerPlayer) context.player();
-                    int soldItemCount = data.soldItemStack().count();
+                    int soldItemCount = data.sold().count();
 
                     if (data.price().isPresent() && !UnshatteredUtils.canAffordCoins(data.price().get() * soldItemCount, context.player())) {
                         context.player().sendSystemMessage(Component.translatable("screen.unshattered.vendor.text.purchase_failed_coins")
@@ -194,7 +194,7 @@ public class RegisterPayloadsHandler {
                         return;
                     }
 
-                    if (data.itemTradeRequirements().isPresent() && !UnshatteredUtils.canTradeItems(data.itemTradeRequirements().get(), context.player(), soldItemCount)) {
+                    if (data.tradeRequirements().isPresent() && !UnshatteredUtils.canTradeItems(data.tradeRequirements().get(), context.player(), soldItemCount)) {
                         context.player().sendSystemMessage(Component.translatable("screen.unshattered.vendor.text.purchase_failed_trade")
                                 .withColor(UnshatteredUtils.RED)
                         );
@@ -208,7 +208,7 @@ public class RegisterPayloadsHandler {
 
                     data.price().ifPresent(price -> UnshatteredUtils.spendCoins(price * soldItemCount, context.player()));
 
-                    data.itemTradeRequirements().ifPresent(requirements -> UnshatteredUtils.tradeItems(requirements, context.player(), soldItemCount));
+                    data.tradeRequirements().ifPresent(requirements -> UnshatteredUtils.tradeItems(requirements, context.player(), soldItemCount));
 
                     PacketDistributor.sendToPlayer(serverPlayer, new ClientsidePlayerSoundEffectPacket(
                             BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.NOTE_BLOCK_PLING.value()),
@@ -217,7 +217,7 @@ public class RegisterPayloadsHandler {
                             )
                     );
 
-                    UnshatteredUtils.addItemStackToInventory(context.player(), data.soldItemStack());
+                    UnshatteredUtils.addItemStackToInventory(context.player(), new ItemStack(data.sold().item(), data.sold().count()));
                 })
         );
 

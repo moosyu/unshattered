@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "unshattered:item/white_present_snow_globe"
+  }
+}

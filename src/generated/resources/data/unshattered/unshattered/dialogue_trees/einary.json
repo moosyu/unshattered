@@ -1,0 +1,41 @@
+{
+  "dialogue_tree_origins": [
+    {
+      "dialogue_node": {
+        "dialogue_choices": [
+          {
+            "text": "...",
+            "triggered_event": {
+              "type": "unshattered:open_store",
+              "npc_shop_identifier": "unshattered:einary"
+            }
+          }
+        ],
+        "interacted_speaking": true,
+        "text": {
+          "translate": "dialogue.unshattered.einary_introduction"
+        }
+      },
+      "priority": 1,
+      "set_flags": [
+        "unshattered:einary_introduction"
+      ]
+    },
+    {
+      "dialogue_node": {
+        "dialogue_choices": [
+          {
+            "text": "...",
+            "triggered_event": {
+              "type": "unshattered:open_store",
+              "npc_shop_identifier": "unshattered:einary"
+            }
+          }
+        ],
+        "interacted_speaking": true,
+        "text": "dialogue.unshattered.einary_return"
+      },
+      "priority": 0
+    }
+  ]
+}

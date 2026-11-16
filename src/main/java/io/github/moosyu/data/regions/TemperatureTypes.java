@@ -1,10 +1,12 @@
 package io.github.moosyu.data.regions;
 
+import io.github.moosyu.util.UnshatteredUtils;
+
 public enum TemperatureTypes {
     MAX_TEMP(74.0f),
-    HIGH_TEMP(50.0f,'♨', 0xFFFF5555),
-    BASE_TEMP(37.0f, '~', 0xFFFFFF),
-    LOW_TEMP(0.0f, '❄', 0xFF55FFFF),
+    HIGH_TEMP(50.0f,'♨', UnshatteredUtils.RED),
+    BASE_TEMP(37.0f, '~', UnshatteredUtils.WHITE),
+    LOW_TEMP(0.0f, '❄', UnshatteredUtils.CYAN),
     MIN_TEMP(-37.0f);
 
     private final float value;

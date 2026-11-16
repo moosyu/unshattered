@@ -7,6 +7,7 @@ import io.github.moosyu.data.attachments.PlayerCurrencyAttachment;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.fishing.FishingCondition;
 import io.github.moosyu.data.fishing.TriggerMiscReward;
+import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -41,10 +42,10 @@ public record CoinReward(int min, int max, String messageKey, int colour, float 
         player.sendSystemMessage(Component.empty()
                 .append(Component.translatable(messageKey).withColor(colour).withStyle(ChatFormatting.BOLD))
                 .append(Component.literal(" "))
-                .append(Component.translatable("skills.messages.unshattered.fishing.you_found").withColor(0xFF55FFFF))
+                .append(Component.translatable("skills.messages.unshattered.fishing.you_found").withColor(UnshatteredUtils.CYAN))
                 .append(Component.literal(" "))
-                .append(Component.literal(String.format("%,d", coins) + " ").withColor(0xFFFFAA00))
-                .append(Component.translatable("misc.unshattered.coins").withColor(0xFFFFAA00))
+                .append(Component.literal(String.format("%,d", coins) + " ").withColor(UnshatteredUtils.GOLD))
+                .append(Component.translatable("misc.unshattered.coins").withColor(UnshatteredUtils.GOLD))
                 .append(Component.literal("."))
         );
 

@@ -77,5 +77,9 @@ public enum AbilityTriggerType {
     /**
      * runs in {@link io.github.moosyu.events.ItemFishedHandler}, start and finish hooks exist and can cancel
      */
-    PLAYER_FISH
+    PLAYER_FISH,
+    /**
+     * run in {@link io.github.moosyu.entities.decoration.present.Present}, can be used to cancel rewards
+     */
+    PLAYER_FINISH_OPENING_PRESENT
 }

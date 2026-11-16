@@ -8,16 +8,17 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 
-public class RhysNPC extends NPCEntity implements DialogueInteractable {
-    public static final Identifier RHYS_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("rhys");
+public class Forger extends NPCEntity implements DialogueInteractable {
+    public static final Identifier FORGER_IDENTIFIER = UnshatteredUtils.getUnshatteredIdentifier("forger");
+    public static final Identifier FORGER_INTRODUCTION = UnshatteredUtils.getUnshatteredIdentifier("forger_introduction");
 
-    public RhysNPC(EntityType<? extends Mob> type, Level level) {
+    public Forger(EntityType<? extends Mob> type, Level level) {
         super(type, level);
     }
 
     @Override
     public Identifier getInteractableIdentifier() {
-        return RHYS_IDENTIFIER;
+        return FORGER_IDENTIFIER;
     }
 
     @Override

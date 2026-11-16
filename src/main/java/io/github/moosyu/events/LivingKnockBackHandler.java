@@ -17,7 +17,6 @@ public class LivingKnockBackHandler {
     public static void onLivingKnockBack(LivingKnockBackEvent event) {
         if (event.getEntity() instanceof ServerPlayer player && !player.level().isClientSide()) {
             PlayerStateAttachment state = player.getData(UnshatteredAttachments.PLAYER_STATE.get());
-            PlayerAbilityEffectsAttachment abilities = player.getData(UnshatteredAttachments.PLAYER_ABILITIES.get());
 
             AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, player);
             try (AbilityScope scope = AbilityScope.open(player, AbilityTriggerType.PLAYER_INCOMING_KNOCKBACK, context)) {

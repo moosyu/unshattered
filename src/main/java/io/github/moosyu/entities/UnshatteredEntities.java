@@ -6,7 +6,6 @@ import io.github.moosyu.entities.npcs.*;
 import io.github.moosyu.entities.projectiles.HomingBee;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -63,58 +62,58 @@ public class UnshatteredEntities {
                     )
     );
 
-    public static final Supplier<EntityType<JotraelineGreatforgeNPC>> JOTRAELINE_GREATFORGE = ENTITY_TYPES.register(
+    public static final Supplier<EntityType<JotraelineGreatforge>> JOTRAELINE_GREATFORGE = ENTITY_TYPES.register(
             "jotraeline_greatforge",
-            () -> EntityType.Builder.of(JotraelineGreatforgeNPC::new, MobCategory.CREATURE)
+            () -> EntityType.Builder.of(JotraelineGreatforge::new, MobCategory.CREATURE)
                     .sized(0.6f, 1.8f)
                     .eyeHeight(1.62f)
                     .build(ResourceKey.create(
                             Registries.ENTITY_TYPE,
-                            JotraelineGreatforgeNPC.JOTRAELINE_GREATFORGE_IDENTIFIER)
+                            JotraelineGreatforge.JOTRAELINE_GREATFORGE_IDENTIFIER)
                     )
     );
 
-    public static final Supplier<EntityType<WoolWeaverNPC>> WOOL_WEAVER = ENTITY_TYPES.register(
+    public static final Supplier<EntityType<WoolWeaver>> WOOL_WEAVER = ENTITY_TYPES.register(
             "wool_weaver",
-            () -> EntityType.Builder.of(WoolWeaverNPC::new, MobCategory.CREATURE)
+            () -> EntityType.Builder.of(WoolWeaver::new, MobCategory.CREATURE)
                     .sized(0.6f, 1.8f)
                     .eyeHeight(1.62f)
                     .build(ResourceKey.create(
                             Registries.ENTITY_TYPE,
-                            WoolWeaverNPC.WOOL_WEAVER_IDENTIFIER)
+                            WoolWeaver.WOOL_WEAVER_IDENTIFIER)
                     )
     );
 
-    public static final Supplier<EntityType<ForgerNPC>> FORGER = ENTITY_TYPES.register(
+    public static final Supplier<EntityType<Forger>> FORGER = ENTITY_TYPES.register(
             "forger",
-            () -> EntityType.Builder.of(ForgerNPC::new, MobCategory.CREATURE)
+            () -> EntityType.Builder.of(Forger::new, MobCategory.CREATURE)
                     .sized(0.6f, 1.8f)
                     .eyeHeight(1.62f)
                     .build(ResourceKey.create(
                             Registries.ENTITY_TYPE,
-                            ForgerNPC.FORGER_IDENTIFIER)
+                            Forger.FORGER_IDENTIFIER)
                     )
     );
 
-    public static final Supplier<EntityType<BubuNPC>> BUBU = ENTITY_TYPES.register(
+    public static final Supplier<EntityType<Bubu>> BUBU = ENTITY_TYPES.register(
             "bubu",
-            () -> EntityType.Builder.of(BubuNPC::new, MobCategory.CREATURE)
+            () -> EntityType.Builder.of(Bubu::new, MobCategory.CREATURE)
                     .sized(0.6f, 1.8f)
                     .eyeHeight(1.62f)
                     .build(ResourceKey.create(
                             Registries.ENTITY_TYPE,
-                            BubuNPC.BUBU_IDENTIFIER)
+                            Bubu.BUBU_IDENTIFIER)
                     )
     );
 
-    public static final Supplier<EntityType<JennyNPC>> JENNY = ENTITY_TYPES.register(
+    public static final Supplier<EntityType<Jenny>> JENNY = ENTITY_TYPES.register(
             "jenny",
-            () -> EntityType.Builder.of(JennyNPC::new, MobCategory.CREATURE)
+            () -> EntityType.Builder.of(Jenny::new, MobCategory.CREATURE)
                     .sized(0.6f, 1.8f)
                     .eyeHeight(1.62f)
                     .build(ResourceKey.create(
                             Registries.ENTITY_TYPE,
-                            JennyNPC.JENNY_IDENTIFIER)
+                            Jenny.JENNY_IDENTIFIER)
                     )
     );
 
@@ -169,12 +168,12 @@ public class UnshatteredEntities {
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("massive_emerald_slime")))
     );
 
-    public static final Supplier<EntityType<RhysNPC>> RHYS = ENTITY_TYPES.register(
+    public static final Supplier<EntityType<Rhys>> RHYS = ENTITY_TYPES.register(
             "rhys",
-            () -> EntityType.Builder.of(RhysNPC::new, MobCategory.CREATURE)
+            () -> EntityType.Builder.of(Rhys::new, MobCategory.CREATURE)
                     .sized(0.6f, 1.8f)
                     .eyeHeight(1.62f)
-                    .build(ResourceKey.create(Registries.ENTITY_TYPE, RhysNPC.RHYS_IDENTIFIER))
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, Rhys.RHYS_IDENTIFIER))
     );
 
     public static final Supplier<EntityType<SkeletonMiner>> SKELETON_MINER = ENTITY_TYPES.register(
@@ -232,5 +231,16 @@ public class UnshatteredEntities {
                     .sized(0.5f, 0.5f)
                     .clientTrackingRange(8)
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("present")))
+    );
+
+    public static final Supplier<EntityType<Einary>> EINARY = ENTITY_TYPES.register(
+            "einary",
+            () -> EntityType.Builder.of(Einary::new, MobCategory.CREATURE)
+                    .sized(0.6f, 1.8f)
+                    .eyeHeight(1.62f)
+                    .build(ResourceKey.create(
+                            Registries.ENTITY_TYPE,
+                            Einary.EINARY_IDENTIFIER)
+                    )
     );
 }

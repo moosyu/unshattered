@@ -5,6 +5,11 @@
       "skin_location": "unshattered:entity/npcs/bubu",
       "texture_path": "unshattered:textures/entity/npcs/bubu.png"
     },
+    "unshattered:einary": {
+      "npc_colour": -43691,
+      "skin_location": "unshattered:entity/npcs/einary",
+      "texture_path": "unshattered:textures/entity/npcs/einary.png"
+    },
     "unshattered:forger": {
       "npc_colour": -11141121,
       "skin_location": "unshattered:entity/npcs/forger",

@@ -1,6 +1,5 @@
 package io.github.moosyu.data.datagen;
 
-import io.github.moosyu.items.UnshatteredItems;
 import io.github.moosyu.util.UnshatteredUtils;
 import mezz.jei.api.constants.Tags;
 import net.minecraft.core.HolderLookup;
@@ -30,7 +29,9 @@ public class UnshatteredItemTagsProvider extends ItemTagsProvider {
     protected void addTags(HolderLookup.@NonNull Provider provider) {
         tag(ItemTags.HEAD_ARMOR)
                 .add(LEAFLET_HELMET.get())
-                .add(SKELETON_HAT.get());
+                .add(SKELETON_HAT.get())
+                .add(KRAMPUS_HELMET.get())
+                .add(SNOWMAN_MASK.get());
 
         tag(ItemTags.CHEST_ARMOR).add(LEAFLET_CHESTPLATE.get());
 
@@ -187,7 +188,10 @@ public class UnshatteredItemTagsProvider extends ItemTagsProvider {
                 .add(STARTER_MAGMA_ROD.get())
                 .add(COMMON_HOOK.get())
                 .add(SPEEDY_LINE.get())
-                .add(PRISMARINE_SINKER.get());
+                .add(PRISMARINE_SINKER.get())
+                .add(SNOWMAN_MASK.get())
+                .add(NORTH_STAR.get())
+                .add(FESTIVE_SINKER.get());
 
         tag(ItemTags.HOES)
                 .add(ROOKIE_HOE.get());

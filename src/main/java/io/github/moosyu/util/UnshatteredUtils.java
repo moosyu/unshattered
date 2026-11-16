@@ -2,6 +2,7 @@ package io.github.moosyu.util;
 
 import io.github.moosyu.Unshattered;
 import io.github.moosyu.attributes.UnshatteredAttributeValue;
+import io.github.moosyu.data.ItemCount;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
@@ -480,14 +481,16 @@ public final class UnshatteredUtils {
     /**
      * @param purchasedItemCount the amount of items being purchased as required items is for 1
      */
-    public static boolean canTradeItems(List<ItemStack> requiredItems, Player player, int purchasedItemCount) {
-        for (ItemStack ingredient : requiredItems) {
+    public static boolean canTradeItems(List<ItemCount> requiredItems, Player player, int purchasedItemCount) {
+        for (ItemCount itemCount : requiredItems) {
+            ItemStack itemCountStack = itemCount.item().asItem().getDefaultInstance();
             int totalAvailable = player.getInventory().clearOrCountMatchingItems(
-                    itemStack -> ItemStack.isSameItemSameComponents(itemStack, ingredient),
+                    itemStack -> ItemStack.isSameItemSameComponents(itemStack, itemCountStack),
                     0,
                     player.inventoryMenu.getCraftSlots()
             );
-            if (totalAvailable < (ingredient.getCount() * purchasedItemCount)) {
+
+            if (totalAvailable < (itemCount.count() * purchasedItemCount)) {
                 return false;
             }
         }
@@ -505,15 +508,15 @@ public final class UnshatteredUtils {
     /**
      * assumes {@link #canTradeItems(List, Player, int)} was run to check whether the transaction can be made
      */
-    public static void tradeItems(List<ItemStack> requiredItems, Player player, int purchasedItemCount) {
+    public static void tradeItems(List<ItemCount> requiredItems, Player player, int purchasedItemCount) {
         if (player.level().isClientSide()) {
             return;
         }
 
-        for (ItemStack ingredient : requiredItems) {
+        for (ItemCount itemCount : requiredItems) {
             player.getInventory().clearOrCountMatchingItems(
-                    itemStack -> ItemStack.isSameItemSameComponents(itemStack, ingredient),
-                    ingredient.getCount() * purchasedItemCount,
+                    itemStack -> ItemStack.isSameItemSameComponents(itemStack, itemCount.item().asItem().getDefaultInstance()),
+                    itemCount.count() * purchasedItemCount,
                     player.inventoryMenu.getCraftSlots()
             );
         }

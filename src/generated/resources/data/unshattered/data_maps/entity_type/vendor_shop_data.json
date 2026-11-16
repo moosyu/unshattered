@@ -17,6 +17,74 @@
         "sell_multiple": true
       }
     ],
+    "unshattered:einary": [
+      {
+        "item": "unshattered:white_present_snow_globe",
+        "item_requirements": [
+          {
+            "count": 20,
+            "ingredient": "unshattered:north_star"
+          }
+        ],
+        "sell_multiple": false
+      },
+      {
+        "item": "unshattered:green_present_snow_globe",
+        "item_requirements": [
+          {
+            "count": 1,
+            "ingredient": "unshattered:white_present_snow_globe"
+          },
+          {
+            "count": 40,
+            "ingredient": "unshattered:north_star"
+          }
+        ],
+        "sell_multiple": false
+      },
+      {
+        "item": "unshattered:blue_present_snow_globe",
+        "item_requirements": [
+          {
+            "count": 1,
+            "ingredient": "unshattered:green_present_snow_globe"
+          },
+          {
+            "count": 60,
+            "ingredient": "unshattered:north_star"
+          }
+        ],
+        "sell_multiple": false
+      },
+      {
+        "item": "unshattered:purple_present_snow_globe",
+        "item_requirements": [
+          {
+            "count": 1,
+            "ingredient": "unshattered:blue_present_snow_globe"
+          },
+          {
+            "count": 80,
+            "ingredient": "unshattered:north_star"
+          }
+        ],
+        "sell_multiple": false
+      },
+      {
+        "item": "unshattered:golden_present_snow_globe",
+        "item_requirements": [
+          {
+            "count": 1,
+            "ingredient": "unshattered:purple_present_snow_globe"
+          },
+          {
+            "count": 100,
+            "ingredient": "unshattered:north_star"
+          }
+        ],
+        "sell_multiple": false
+      }
+    ],
     "unshattered:jenny": [
       {
         "item": "minecraft:wheat",

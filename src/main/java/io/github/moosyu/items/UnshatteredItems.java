@@ -8,6 +8,7 @@ import io.github.moosyu.data.components.ItemCharges;
 import io.github.moosyu.entities.decoration.present.PresentTypes;
 import io.github.moosyu.items.armours.KrampusHelmet;
 import io.github.moosyu.items.armours.SkeletonHat;
+import io.github.moosyu.items.armours.SnowmanMask;
 import io.github.moosyu.items.attachments.*;
 import io.github.moosyu.items.attachments.hooks.CommonHook;
 import io.github.moosyu.items.talismans.*;
@@ -1084,7 +1085,7 @@ public class UnshatteredItems {
 
     public static final DeferredItem<Item> KRAMPUS_HELMET = ITEMS.registerItem("krampus_helmet", KrampusHelmet::new);
 
-    public static final DeferredItem<Item> GOLDEN_PRESENT = ITEMS.registerItem("golden_gift", Item::new);
+    public static final DeferredItem<Item> GOLDEN_PRESENT = ITEMS.registerItem("golden_present", Item::new);
 
     public static final DeferredItem<EnchantedItem> ENCHANTED_SNOW_BLOCK = ITEMS.registerItem("enchanted_snow_block", EnchantedItem::new);
 
@@ -1102,4 +1103,22 @@ public class UnshatteredItems {
             ),
             SackItem.LARGE_SACK_SIZE)
     );
+
+    public static final DeferredItem<Item> SNOWMAN_MASK = ITEMS.registerItem("snowman_mask", SnowmanMask::new);
+
+    public static final DeferredItem<Item> WHITE_PRESENT_SNOW_GLOBE = ITEMS.registerItem("white_present_snow_globe", props -> new PresentSnowGlobeBase(props, UnshatteredAbilities.FEELIN_FESTIVE_WHITE_SNOW_GLOBE));
+
+    public static final DeferredItem<Item> GREEN_PRESENT_SNOW_GLOBE = ITEMS.registerItem("green_present_snow_globe", props -> new PresentSnowGlobeBase(props, UnshatteredAbilities.FEELIN_FESTIVE_GREEN_SNOW_GLOBE));
+
+    public static final DeferredItem<Item> BLUE_PRESENT_SNOW_GLOBE = ITEMS.registerItem("blue_present_snow_globe", props -> new PresentSnowGlobeBase(props, UnshatteredAbilities.FEELIN_FESTIVE_BLUE_SNOW_GLOBE));
+
+    public static final DeferredItem<Item> PURPLE_PRESENT_SNOW_GLOBE = ITEMS.registerItem("purple_present_snow_globe", props -> new PresentSnowGlobeBase(props, UnshatteredAbilities.FEELIN_FESTIVE_PURPLE_SNOW_GLOBE));
+
+    public static final DeferredItem<Item> GOLDEN_PRESENT_SNOW_GLOBE = ITEMS.registerItem("golden_present_snow_globe", props -> new PresentSnowGlobeBase(props, UnshatteredAbilities.FEELIN_FESTIVE_GOLDEN_SNOW_GLOBE));
+
+    public static final DeferredItem<Item> NORTH_STAR = ITEMS.registerItem("north_star", Item::new);
+
+    public static final DeferredItem<Item> FESTIVE_SINKER = ITEMS.registerItem("festive_sinker",props -> new BaseAbilityItem(props,
+            UnshatteredAbilities.MIRACLE
+    ));
 }

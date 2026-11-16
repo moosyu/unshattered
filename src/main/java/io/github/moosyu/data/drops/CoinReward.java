@@ -19,10 +19,10 @@ public record CoinReward(int min, int max) implements DropReward {
     }
 
     @Override
-    public float grant(ServerPlayer player, RandomSource random, @Nullable Double fortuneAmount) {
+    public float grant(ServerPlayer player, RandomSource random, @Nullable Double fortuneAmount, float modifiedPercentage) {
         int count = random.nextIntBetweenInclusive(min, max);
 
-        player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get()).addCoins(count);
+        player.getData(UnshatteredAttachments.PLAYER_CURRENCY.get()).addCoins((int) (count * modifiedPercentage));
         player.syncData(UnshatteredAttachments.PLAYER_CURRENCY.get());
 
         return count;

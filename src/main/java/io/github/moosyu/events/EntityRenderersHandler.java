@@ -38,6 +38,7 @@ public class EntityRenderersHandler {
         event.registerEntityRenderer(UnshatteredEntities.OASIS_RABBIT.get(), OasisRabbitRenderer::new);
         event.registerEntityRenderer(UnshatteredEntities.FROZEN_STEVE.get(), FrozenSteveRenderer::new);
         event.registerEntityRenderer(UnshatteredEntities.PRESENT.get(), PresentRenderer::new);
+        event.registerEntityRenderer(UnshatteredEntities.EINARY.get(), NPCEntityRenderer::new);
     }
 
     @SubscribeEvent

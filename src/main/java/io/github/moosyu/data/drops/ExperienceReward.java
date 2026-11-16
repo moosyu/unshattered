@@ -3,11 +3,8 @@ package io.github.moosyu.data.drops;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.data.attachments.PlayerSkillsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
-import io.github.moosyu.util.UnshatteredUtils;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import org.jspecify.annotations.Nullable;
@@ -24,9 +21,9 @@ public record ExperienceReward(PlayerSkillsAttachment.Skill skill, float experie
     }
 
     @Override
-    public float grant(ServerPlayer player, RandomSource random, @Nullable Double fortuneAmount) {
+    public float grant(ServerPlayer player, RandomSource random, @Nullable Double fortuneAmount, float modifiedPercentage) {
         PlayerSkillsAttachment skills = player.getData(UnshatteredAttachments.PLAYER_SKILLS.get());
-        skills.addExp(skill, experienceAmount, player);
+        skills.addExp(skill, experienceAmount * modifiedPercentage, player);
 
         return experienceAmount;
     }

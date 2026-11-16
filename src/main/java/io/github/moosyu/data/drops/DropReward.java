@@ -2,18 +2,13 @@ package io.github.moosyu.data.drops;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-import io.github.moosyu.attributes.UnshatteredAttributeValue;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.item.ItemStack;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Locale;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 public interface DropReward {
     Codec<DropReward> CODEC = Type.CODEC.dispatch("type", DropReward::type, Type::codec);
@@ -23,7 +18,11 @@ public interface DropReward {
     /**
      * @return the amount granted
      */
-    float grant(ServerPlayer player, RandomSource random, @Nullable Double fortuneAmount);
+    float grant(ServerPlayer player, RandomSource random, @Nullable Double fortuneAmount, float modifiedPercentage);
+
+    default float grant(ServerPlayer player, RandomSource random, @Nullable Double fortuneAmount) {
+        return grant(player, random, fortuneAmount, 1.0f);
+    }
 
     default String formatAmount(float amount) {
         return String.format("%,d", (int) amount);

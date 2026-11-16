@@ -2,19 +2,13 @@ package io.github.moosyu.data.drops;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.items.ItemRange;
-import io.github.moosyu.items.UnshatteredRarity;
 import io.github.moosyu.util.UnshatteredUtils;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import org.jspecify.annotations.Nullable;
-
-import static io.github.moosyu.data.drops.DropType.getDropType;
 
 public record ItemReward(ItemRange itemRange) implements DropReward {
     public ItemReward(ItemLike item) {
@@ -30,7 +24,7 @@ public record ItemReward(ItemRange itemRange) implements DropReward {
     }
 
     @Override
-    public float grant(ServerPlayer player, RandomSource random, @Nullable Double fortuneAmount) {
+    public float grant(ServerPlayer player, RandomSource random, @Nullable Double fortuneAmount, float modifiedPercentage) {
         int itemCount = UnshatteredUtils.getItemsCount(fortuneAmount != null ? fortuneAmount : 0, itemRange.getDropAmount(random));
 
         UnshatteredUtils.addItemStackToInventory(player, new ItemStack(itemRange.item(), itemCount));

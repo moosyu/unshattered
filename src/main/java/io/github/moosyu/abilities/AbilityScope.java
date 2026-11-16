@@ -63,6 +63,9 @@ public final class AbilityScope implements AutoCloseable {
         return new AbilityScope(triggered, context, results);
     }
 
+    /**
+     * for simple ability scopes that dont require separate starts and ends, both of them firing back to back
+     */
     public static AbilityResults fire(ServerPlayer player, AbilityTriggerType type, AbilityContext context) {
         try (AbilityScope scope = open(player, type, context)) {
             return scope.results;

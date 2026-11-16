@@ -2,6 +2,7 @@ package io.github.moosyu.compat.jei;
 
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
+import io.github.moosyu.data.ItemCount;
 import io.github.moosyu.data.NpcData;
 import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.VendorItem;
@@ -22,6 +23,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ResolvableProfile;
+import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
@@ -91,25 +93,29 @@ public class VendorCategory implements IRecipeCategory<UnshatteredJEIPlugin.Vend
 
         VendorItem vendorItem = vendorJEIItem.vendorItem();
         Optional<Integer> priceOptional = vendorItem.price();
-        Optional<List<ItemStack>> requirementsOptional = vendorItem.itemTradeRequirements();
+        Optional<List<ItemCount>> requirementsOptional = vendorItem.itemTradeRequirements();
 
         if (priceOptional.isPresent() && requirementsOptional.isEmpty()) {
             createCoinsSlot(builder, SLOT_SIZE + 7, (HEIGHT / 2) - (SLOT_SIZE / 2) + Y_OFFSET, priceOptional.get());
         } else if (priceOptional.isEmpty() && requirementsOptional.isPresent()) {
-            List<ItemStack> itemTradeRequirements = requirementsOptional.get();
+            List<ItemCount> itemTradeRequirements = requirementsOptional.get();
             for (int i = 0, size = itemTradeRequirements.size(); i < size; i++) {
+                ItemCount currentItemCount = itemTradeRequirements.get(i);
+
                 builder.addInputSlot(1 + (i % COLUMNS) * SLOT_SIZE, 1 + (i / COLUMNS) * SLOT_SIZE)
                         .setStandardSlotBackground()
-                        .add(itemTradeRequirements.get(i));
+                        .add(new ItemStack(currentItemCount.item(), currentItemCount.count()));
             }
         } else if (requirementsOptional.isPresent()) {
-            List<ItemStack> itemTradeRequirements = requirementsOptional.get();
+            List<ItemCount> itemTradeRequirements = requirementsOptional.get();
 
             createCoinsSlot(builder, SLOT_SIZE, SLOT_SIZE, priceOptional.get());
             for (int i = 1, size = itemTradeRequirements.size(); i <= size; i++) {
+                ItemCount currentItemCount = itemTradeRequirements.get(i - 1);
+
                 builder.addInputSlot(1 + (i % COLUMNS) * SLOT_SIZE, 1 + (i / COLUMNS) * SLOT_SIZE)
                         .setStandardSlotBackground()
-                        .add(itemTradeRequirements.get(i - 1));
+                        .add(new ItemStack(currentItemCount.item(), currentItemCount.count()));
             }
         }
 

@@ -1,5 +1,6 @@
 package io.github.moosyu.abilities;
 
+import io.github.moosyu.entities.decoration.present.PresentTypes;
 import io.github.moosyu.items.ItemType;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,4 +17,5 @@ public record AbilityContextKey<T>(Class<T> type) {
     public static final AbilityContextKey<ItemType> ITEM_TYPE = new AbilityContextKey<>(ItemType.class);
     public static final AbilityContextKey<DamageSource> DAMAGE_SOURCE = new AbilityContextKey<>(DamageSource.class);
     public static final AbilityContextKey<Integer> BROKEN_COUNT = new AbilityContextKey<>(Integer.class);
+    public static final AbilityContextKey<PresentTypes.PresentType> PRESENT_TYPE = new AbilityContextKey<>(PresentTypes.PresentType.class);
 }

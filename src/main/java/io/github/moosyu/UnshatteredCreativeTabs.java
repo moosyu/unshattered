@@ -224,6 +224,7 @@ public class UnshatteredCreativeTabs {
                             output.accept(RED_PRESENT);
                             output.accept(GOLDEN_PRESENT);
                             output.accept(ENCHANTED_SNOW_BLOCK);
+                            output.accept(NORTH_STAR);
                         }).build()
         );
 
@@ -248,6 +249,7 @@ public class UnshatteredCreativeTabs {
                             output.accept(MINER_LEGGINGS);
                             output.accept(MINER_BOOTS);
                             output.accept(KRAMPUS_HELMET);
+                            output.accept(SNOWMAN_MASK);
                         }).build()
         );
 
@@ -288,6 +290,7 @@ public class UnshatteredCreativeTabs {
                             output.accept(COMMON_HOOK);
                             output.accept(SPEEDY_LINE);
                             output.accept(PRISMARINE_SINKER);
+                            output.accept(FESTIVE_SINKER);
                         }).build()
         );
 
@@ -333,6 +336,11 @@ public class UnshatteredCreativeTabs {
                             output.accept(INFINITE_QUIVER);
                             output.accept(FIRE_TALISMAN);
                             output.accept(BAT_ARTIFACT);
+                            output.accept(WHITE_PRESENT_SNOW_GLOBE);
+                            output.accept(GREEN_PRESENT_SNOW_GLOBE);
+                            output.accept(BLUE_PRESENT_SNOW_GLOBE);
+                            output.accept(PURPLE_PRESENT_SNOW_GLOBE);
+                            output.accept(GOLDEN_PRESENT_SNOW_GLOBE);
                         }).build()
         );
 
@@ -343,6 +351,7 @@ public class UnshatteredCreativeTabs {
                         .icon(Items.BUNDLE::getDefaultInstance)
                         .displayItems((_, output) -> {
                             output.accept(BEGINNER_AGRONOMY_SACK);
+                            output.accept(WINTER_SACK);
                         }).build()
         );
     }

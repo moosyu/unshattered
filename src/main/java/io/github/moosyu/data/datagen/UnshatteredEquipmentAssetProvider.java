@@ -31,6 +31,7 @@ public class UnshatteredEquipmentAssetProvider implements DataProvider {
         output.accept(SKELETON_HAT_KEY, EquipmentClientInfo.builder().addHumanoidLayers(UnshatteredUtils.getUnshatteredIdentifier("skeleton_hat")).build());
         output.accept(LAPIS_ARMOUR_KEY, EquipmentClientInfo.builder().addHumanoidLayers(UnshatteredUtils.getUnshatteredIdentifier("lapis")).build());
         output.accept(KRAMPUS_HELMET_KEY, EquipmentClientInfo.builder().addHumanoidLayers(UnshatteredUtils.getUnshatteredIdentifier("krampus_helmet")).build());
+        output.accept(SNOWMAN_MASK_KEY, EquipmentClientInfo.builder().addHumanoidLayers(UnshatteredUtils.getUnshatteredIdentifier("snowman_mask")).build());
     }
 
     @Override
