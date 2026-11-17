@@ -239,6 +239,8 @@
   "item.unshattered.golden_present_snow_globe": "Golden Present Snow Globe",
   "item.unshattered.north_star": "North Star",
   "item.unshattered.festive_sinker": "Festive Sinker",
+  "item.unshattered.enchanted_slime_ball": "Enchanted Slime Ball",
+  "item.unshattered.enchanted_slime_block": "Enchanted Slime Block",
 
   "item.description.unshattered.bat_the_fish": "Where is my cape!",
   "item.description.unshattered.century_the_fish": "The term 'century' was actually named after him, or so he says.",
@@ -348,6 +350,9 @@
   "item.description.unshattered.snowman_mask": "Very stylish.",
   "item.description.unshattered.north_star": "Can be exchanged with Einary.",
   "item.description.unshattered.festive_sinker": "Enough to make anyone's heart grow.",
+  "item.description.unshattered.white_present": "Right click to open!",
+  "item.description.unshattered.green_present": "Right click to open!",
+  "item.description.unshattered.red_present": "Right click to open!",
 
   "item.ability.unshattered.speed_boost": "Speed Boost",
   "item.ability.unshattered.mindblowing": "Mind Blowing",

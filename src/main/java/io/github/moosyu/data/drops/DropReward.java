@@ -25,7 +25,7 @@ public interface DropReward {
     }
 
     default String formatAmount(float amount) {
-        return String.format("%,d", (int) amount);
+        return String.format("%,d", Math.round(amount));
     }
 
     enum Type implements StringRepresentable {
