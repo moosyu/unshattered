@@ -5,6 +5,7 @@ import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.data.attachments.PlayerCurrencyAttachment;
 import io.github.moosyu.data.attachments.PlayerStateAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
+import io.github.moosyu.data.datagen.UnshatteredEntityTagsProvider;
 import io.github.moosyu.data.regions.TemperatureTypes;
 import io.github.moosyu.items.ItemType;
 import io.github.moosyu.items.enchantments.UnshatteredEnchantmentEffects;
@@ -61,7 +62,7 @@ public final class DamageUtils {
 
         if (player.level().isClientSide()) {
             target.hurtClient(target.damageSources().playerAttack(player));
-        } else {
+        } else if (!target.isDeadOrDying()) {
             ItemType itemType = UnshatteredUtils.getItemType(weapon);
             AbilityContext context = new AbilityContext().add(AbilityContextKey.PLAYER, player)
                     .add(AbilityContextKey.TARGET, target)
@@ -118,9 +119,17 @@ public final class DamageUtils {
                 AttributeInstance targetHealth = target.getAttribute(UnshatteredAttributeValue.CURRENT_HEALTH.holder);
 
                 if (targetHealth != null) {
-                    if (critDamage > 0.0d) {
+                    boolean usingHitCount = target.is(UnshatteredEntityTagsProvider.HIT_COUNT_HEALTH);
+                    boolean crit = critDamage > 0.0d;
+
+                    if (crit) {
+                        // displays crit particles
                         player.crit(target);
-                        target.playSound(SoundEvents.PLAYER_ATTACK_CRIT, 1.0F, 1.0F);
+                        target.playSound(SoundEvents.PLAYER_ATTACK_CRIT, 1.0f, 1.0f);
+                    }
+
+                    if (usingHitCount) {
+                        damage = 1;
                     }
 
                     // divided by 10 when displayed so multiplied here
@@ -154,7 +163,11 @@ public final class DamageUtils {
                         targetHealth.setBaseValue(0.0);
                         target.hurtServer((ServerLevel) target.level(), target.damageSources().playerAttack(player), Integer.MAX_VALUE);
                     }
-                    PacketDistributor.sendToPlayer((ServerPlayer) player, new DamageNumberPacket((int) damage, target.position()));
+
+                    PacketDistributor.sendToPlayer((ServerPlayer) player, new DamageNumberPacket((int) damage,
+                            target.position(),
+                            crit ? DamageType.CRITICAL : DamageType.NORMAL)
+                    );
                 }
 
                 player.resetAttackStrengthTicker();

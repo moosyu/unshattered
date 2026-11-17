@@ -369,7 +369,7 @@
   "item.ability.unshattered.mithril_pickaxe_mithril_miner": "Mithril Miner",
   "item.ability.unshattered.bat_talisman_lifesteal": "Leech",
   "item.ability.unshattered.accrual": "Accrual",
-  "item.ability.unshattered.skeleton_hat_explosive_arrows": "Explosive Arrows",
+  "item.ability.unshattered.explosive_arrows": "Explosive Arrows",
   "item.ability.unshattered.woolen_barrier": "Woolen Barrier",
   "item.ability.unshattered.stability": "Turtle's Stability",
   "item.ability.unshattered.saving_grace": "Saving Grace",
@@ -420,7 +420,7 @@
   "item.ability.description.unshattered.broken_mithril_pickaxe_mithril_miner": "Gain [c=0xFFFFAA00]+20⸕[/c] while mining mithril.",
   "item.ability.description.unshattered.bat_talisman_lifesteal": "Gain [c=0xFFFC3A3A]5%[/c] of enemy's maximum [c=0xFFFC3A3A]health[/c] on kill.",
   "item.ability.description.unshattered.accrual": "Gain a small chance to get some [c=0xFFFFAA00]coins[/c] every second.",
-  "item.ability.description.unshattered.skeleton_hat_explosive_arrows": "Your arrows have a [c=0xFF55FF55]20%[/c] chance to explode on impact, dealing [c=0xFF55FF55]50%[/c] of the initial shot to enemies within [c=0xFF55FF55]8[/c] blocks.",
+  "item.ability.description.unshattered.explosive_arrows": "Your arrows have a [c=0xFF55FF55]20%[/c] chance to explode on impact, dealing [c=0xFF55FF55]50%[/c] of the initial shot to enemies within [c=0xFF55FF55]8[/c] blocks.",
   "item.ability.description.unshattered.woolen_barrier": "Provides a small chance for incoming attacks to be completely cancelled!",
   "item.ability.description.unshattered.stability": "Grants complete [c=0xFF55FF55]immunity[/c] to knockback.",
   "item.ability.description.unshattered.saving_grace": "Saves your [c=0xFFFFAA00]coins[/c] on death.",
@@ -635,6 +635,7 @@
   "fishing.messages.entity.unshattered.oasis_sheep": "An oasis sheep appears from the water.",
   "fishing.messages.entity.unshattered.oasis_rabbit": "An oasis rabbit appears from the water.",
   "fishing.messages.entity.unshattered.frozen_steve": "Frozen Steve fell into the pond long ago, never to resurface...until now!",
+  "fishing.messages.entity.unshattered.grinch": "The Grinch stole Jerry's gifts... Get them back!",
 
   "misc.unshattered.coins": "Coins",
   "misc.messages.unshattered.wizardman_request": "Help Wizardman",
@@ -754,6 +755,7 @@
   "entity.unshattered.oasis_rabbit": "Oasis Rabbit",
   "entity.unshattered.frozen_steve": "Frozen Steve",
   "entity.unshattered.einary": "Einary",
+  "entity.unshattered.grinch": "Grinch",
 
   "dialogue.unshattered.generic.player_yes_choice": "Yes.",
   "dialogue.unshattered.generic.player_no_choice": "No.",

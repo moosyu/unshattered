@@ -937,6 +937,96 @@
         }
       }
     ],
+    "unshattered:grinch": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
+            "item_range": {
+              "item": "minecraft:ice",
+              "max_amount": 64,
+              "min_amount": 32
+            }
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
+            "item_range": {
+              "item": "unshattered:white_present",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "drop_chance": 0.5,
+          "reward": {
+            "type": "item",
+            "item_range": {
+              "item": "unshattered:green_present",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "drop_chance": 0.1,
+          "reward": {
+            "type": "item",
+            "item_range": {
+              "item": "unshattered:red_present",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "drop_chance": 0.05,
+          "reward": {
+            "type": "item",
+            "item_range": {
+              "item": "unshattered:enchanted_packed_ice",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 30,
+            "min": 30
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 30.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
     "unshattered:lapis_zombie": [
       {
         "combat_fortune_boosted": false,

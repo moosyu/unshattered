@@ -45,7 +45,7 @@ public class FerocityHit {
                 }
 
                 PacketDistributor.sendToPlayer((ServerPlayer) player, new FerocityEffectPacket(target.getId(), playSound));
-                PacketDistributor.sendToPlayer((ServerPlayer) player, new DamageNumberPacket((int) damage, target.position()));
+                PacketDistributor.sendToPlayer((ServerPlayer) player, new DamageNumberPacket((int) damage, target.position(), DamageType.FEROCITY));
             }
 
             return true;

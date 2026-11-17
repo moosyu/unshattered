@@ -243,4 +243,13 @@ public class UnshatteredEntities {
                             Einary.EINARY_IDENTIFIER)
                     )
     );
+
+    public static final Supplier<EntityType<Grinch>> GRINCH = ENTITY_TYPES.register(
+            "grinch",
+            () -> EntityType.Builder.of(Grinch::new, MobCategory.CREATURE)
+                    .sized(0.6f, 1.95f)
+                    .eyeHeight(1.74f)
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("grinch")))
+    );
+
 }

@@ -1,22 +1,24 @@
 package io.github.moosyu.damage;
 
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.Vec3;
 
 public class DamageNumber {
-    public final Component text;
+    public static final int MAX_LIFETIME = 30;
+
+    public final int number;
     public final Vec3 position;
+    public final DamageType damageType;
     // both in ticks
     public int age = 0;
-    public final int lifetime = 30;
 
-    public DamageNumber(Vec3 position, Component text) {
+    public DamageNumber(Vec3 position, int number, DamageType damageType) {
         this.position = position;
-        this.text = text;
+        this.number = number;
+        this.damageType = damageType;
     }
 
     public boolean tick() {
         age++;
-        return age >= lifetime;
+        return age >= MAX_LIFETIME;
     }
 }

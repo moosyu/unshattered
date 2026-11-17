@@ -39,6 +39,7 @@ public class EntityRenderersHandler {
         event.registerEntityRenderer(UnshatteredEntities.FROZEN_STEVE.get(), FrozenSteveRenderer::new);
         event.registerEntityRenderer(UnshatteredEntities.PRESENT.get(), PresentRenderer::new);
         event.registerEntityRenderer(UnshatteredEntities.EINARY.get(), NPCEntityRenderer::new);
+        event.registerEntityRenderer(UnshatteredEntities.GRINCH.get(), GrinchRenderer::new);
     }
 
     @SubscribeEvent

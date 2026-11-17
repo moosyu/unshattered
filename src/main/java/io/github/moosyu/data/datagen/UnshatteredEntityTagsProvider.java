@@ -1,5 +1,6 @@
 package io.github.moosyu.data.datagen;
 
+import io.github.moosyu.entities.UnshatteredEntities;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -23,6 +24,9 @@ public class UnshatteredEntityTagsProvider extends EntityTypeTagsProvider {
     }
 
     public static final TagKey<EntityType<?>> MAGMATIC = TagKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("magmatic"));
+    // for enemies that override normal damage and instead have a max "hit count" what is decremented by 1 with every hit
+    public static final TagKey<EntityType<?>> HIT_COUNT_HEALTH = TagKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("hit_count_health"));
+
 
     @Override
     protected void addTags(HolderLookup.@NonNull Provider registries) {
@@ -37,5 +41,15 @@ public class UnshatteredEntityTagsProvider extends EntityTypeTagsProvider {
                 .remove(EntityType.DROWNED)
                 .remove(EntityType.ZOMBIE_NAUTILUS)
                 .remove(EntityType.PHANTOM);
+
+        tag(EntityTypeTags.AQUATIC)
+                .add(UnshatteredEntities.OASIS_RABBIT.get())
+                .add(UnshatteredEntities.OASIS_SHEEP.get())
+                .add(UnshatteredEntities.SEA_WALKER.get())
+                .add(UnshatteredEntities.FROZEN_STEVE.get())
+                .add(UnshatteredEntities.GRINCH.get());
+
+        tag(HIT_COUNT_HEALTH)
+                .add(UnshatteredEntities.GRINCH.get());
     }
 }

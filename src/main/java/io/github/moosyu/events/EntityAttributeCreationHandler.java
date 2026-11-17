@@ -43,5 +43,6 @@ public class EntityAttributeCreationHandler {
         );
         event.put(UnshatteredEntities.FROZEN_STEVE.get(), FrozenSteve.createAttributes().build());
         event.put(UnshatteredEntities.EINARY.get(), NPCEntity.createNpcAttributes().build());
+        event.put(UnshatteredEntities.GRINCH.get(), Grinch.createAttributes().build());
     }
 }

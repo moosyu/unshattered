@@ -35,7 +35,7 @@ public class PresentItem extends Item {
             return InteractionResult.PASS;
         }
 
-        player.getCooldowns().addCooldown(stack, Present.DURATION);
+        player.getCooldowns().addCooldown(stack, Present.DURATION / 2);
         stack.consume(1, player);
 
         Level level = context.getLevel();

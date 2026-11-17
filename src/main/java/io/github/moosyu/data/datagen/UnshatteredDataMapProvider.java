@@ -179,11 +179,11 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         setBaseData(UnshatteredItems.WINTER_SACK, ItemType.SACK, UnshatteredRarity.RARE, 500);
         setBaseData(UnshatteredItems.ENCHANTED_SNOW_BLOCK, ItemType.MATERIAL, UnshatteredRarity.UNCOMMON, 600);
         setBaseData(UnshatteredItems.SNOWMAN_MASK, ItemType.MATERIAL, UnshatteredRarity.RARE, 1500000);
-        setBaseData(UnshatteredItems.WHITE_PRESENT_SNOW_GLOBE, ItemType.TALISMAN, UnshatteredRarity.COMMON, 50000);
-        setBaseData(UnshatteredItems.GREEN_PRESENT_SNOW_GLOBE, ItemType.TALISMAN, UnshatteredRarity.UNCOMMON, 60000);
-        setBaseData(UnshatteredItems.BLUE_PRESENT_SNOW_GLOBE, ItemType.TALISMAN, UnshatteredRarity.RARE, 70000);
-        setBaseData(UnshatteredItems.PURPLE_PRESENT_SNOW_GLOBE, ItemType.TALISMAN, UnshatteredRarity.EPIC, 80000);
-        setBaseData(UnshatteredItems.GOLDEN_PRESENT_SNOW_GLOBE, ItemType.TALISMAN, UnshatteredRarity.LEGENDARY, 90000);
+        setBaseData(UnshatteredItems.WHITE_PRESENT_SNOW_GLOBE, ItemType.TALISMAN, UnshatteredRarity.COMMON, 10000);
+        setBaseData(UnshatteredItems.GREEN_PRESENT_SNOW_GLOBE, ItemType.TALISMAN, UnshatteredRarity.UNCOMMON, 20000);
+        setBaseData(UnshatteredItems.BLUE_PRESENT_SNOW_GLOBE, ItemType.TALISMAN, UnshatteredRarity.RARE, 30000);
+        setBaseData(UnshatteredItems.PURPLE_PRESENT_SNOW_GLOBE, ItemType.TALISMAN, UnshatteredRarity.EPIC, 40000);
+        setBaseData(UnshatteredItems.GOLDEN_PRESENT_SNOW_GLOBE, ItemType.TALISMAN, UnshatteredRarity.LEGENDARY, 50000);
         setBaseData(UnshatteredItems.NORTH_STAR, ItemType.MATERIAL, UnshatteredRarity.SPECIAL, 1000);
         setBaseData(UnshatteredItems.FESTIVE_SINKER, ItemType.SINKER, UnshatteredRarity.RARE, 1000);
 
@@ -327,7 +327,8 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.GLOW_SQUID), 90.0f, false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.OASIS_SHEEP.get()), 40.0f, false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.OASIS_RABBIT.get()), 40.0f, false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.FROZEN_STEVE.get()), 25.0f, false);
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.FROZEN_STEVE.get()), 25.0f, false)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.GRINCH.get()), 300.0f, false);
 
         builder(COMBATABLE_MOBS_LOOT_DATA)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.ZOMBIE),
@@ -519,6 +520,15 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                                 new MobItemDropData(1),
                                 new MobItemDropData(15.0f)
                         ), false
+                ).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.GRINCH.get()),
+                        List.of(new MobItemDropData(Items.ICE, 32, 64, 1.0f, false),
+                                new MobItemDropData(UnshatteredItems.WHITE_PRESENT, 1, 1.0f, false),
+                                new MobItemDropData(UnshatteredItems.GREEN_PRESENT, 1, 0.5f, false),
+                                new MobItemDropData(UnshatteredItems.RED_PRESENT, 1, 0.1f, false),
+                                new MobItemDropData(UnshatteredItems.ENCHANTED_PACKED_ICE, 1, 0.05f, false),
+                                new MobItemDropData(30),
+                                new MobItemDropData(30.0f)
+                        ), false
                 );
 
         builder(BLOCK_BREAKING_POWER_DATA)
@@ -560,7 +570,9 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 ).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.OASIS_RABBIT.get()),
                         new FishingWeightEntry(900, FishingCondition.WATER, FishingCondition.IN_OASIS), false
                 ).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.FROZEN_STEVE.get()),
-                        new FishingWeightEntry(900, FishingCondition.WATER, FishingCondition.IN_JERRY_WORKSHOP), false
+                        new FishingWeightEntry(5000, FishingCondition.WATER, FishingCondition.IN_JERRY_WORKSHOP), false
+                ).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.FROZEN_STEVE.get()),
+                        new FishingWeightEntry(1500, FishingCondition.WATER, FishingCondition.IN_JERRY_WORKSHOP), false
                 );
 
         builder(ITEM_RARITY_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.MERCENARY_AXE.get()), UnshatteredRarity.RARE, false)

@@ -92,23 +92,22 @@ public record DropData(DropReward reward, float dropChance) {
 
             // so the player cant roll a bunch of super rare drops in a single go ever if they're really lucky
             if (random.nextFloat() < modifiedDropChance) {
-                if (!rareDrop()) {
+                if (commonDrop()) {
                     reward.grant(player, random, fortuneValue);
                 } else if (!rolledAboveOccasional) {
                     float rewardAmount = reward.grant(player, random, fortuneValue);
                     UnshatteredRarity itemRarity = UnshatteredUtils.getItemRarity(itemReward.itemRange().item().getDefaultInstance());
 
                     player.sendSystemMessage(Component.empty()
-                            .append(Component.literal(Component.translatable("drop_type.message.unshattered." + type.key).getString().toUpperCase())
-                                    .withStyle(style -> style.withColor(type.colour).withBold(true)))
+                            .append(Component.literal(Component.translatable("drop_type.message.unshattered." + type.key).getString().toUpperCase()).withColor(type.colour).withStyle(ChatFormatting.BOLD))
                             .append(Component.literal(" "))
-                            .append(Component.translatable(itemReward.itemRange().item().getDescriptionId()).withStyle(ChatFormatting.BOLD).withColor(itemRarity.getColour()))
+                            .append(Component.translatable(itemReward.itemRange().item().getDescriptionId()).withColor(itemRarity.getColour()))
                             .append(fortuneValue > 0 ?
                                     Component.literal(" (+" + Math.round(fortuneValue) + fortuneType.symbol + " ")
                                     .append(Component.translatable(fortuneType.getTranslationKey()))
                                     .append(Component.literal(")"))
-                                    .withStyle(style -> style.withColor(fortuneType.color).withBold(false)) : Component.empty())
-                            .append(rewardAmount > 1 ? Component.literal(" x" + reward.formatAmount(rewardAmount)) : Component.empty()).withColor(UnshatteredUtils.DARK_GRAY)
+                                    .withColor(fortuneType.color) : Component.empty()
+                            ).append(rewardAmount > 1 ? Component.literal(" x" + reward.formatAmount(rewardAmount)) : Component.empty()).withColor(UnshatteredUtils.DARK_GRAY)
                     );
 
                     return true;
@@ -133,7 +132,7 @@ public record DropData(DropReward reward, float dropChance) {
 
             // so the player cant roll a bunch of super rare drops in a single go ever if they're really lucky
             if (random.nextFloat() < modifiedDropChance) {
-                if (!rareDrop()) {
+                if (commonDrop()) {
                     reward.grant(player, random, fortuneValue);
                 } else if (!rolledAboveOccasional) {
                     float rewardAmount = reward.grant(player, random, fortuneValue);
@@ -169,7 +168,7 @@ public record DropData(DropReward reward, float dropChance) {
 
             // so the player cant roll a bunch of super rare drops in a single go ever if they're really lucky
             if (random.nextFloat() < modifiedDropChance) {
-                if (!rareDrop()) {
+                if (commonDrop()) {
                     reward.grant(player, random, fortuneValue);
                 } else if (!rolledAboveOccasional) {
                     float rewardAmount = reward.grant(player, random, fortuneValue);
@@ -191,7 +190,7 @@ public record DropData(DropReward reward, float dropChance) {
         return false;
     }
 
-    private boolean rareDrop() {
-        return dropChance < DropType.OCCASIONAL.minRate;
+    private boolean commonDrop() {
+        return !(dropChance < DropType.OCCASIONAL.minRate);
     }
 }
