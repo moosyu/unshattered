@@ -11,4 +11,6 @@ public class UnshatteredSounds {
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, MODID);
 
     public static final Holder<SoundEvent> FEROCITY_TRIGGER_SOUND = SOUND_EVENTS.register("ferocity_trigger_sound", SoundEvent::createVariableRangeEvent);
+
+    public static final Holder<SoundEvent> ICICLE_PLACE = SOUND_EVENTS.register("icicle_place", SoundEvent::createVariableRangeEvent);
 }

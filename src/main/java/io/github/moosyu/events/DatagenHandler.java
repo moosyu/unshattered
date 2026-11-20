@@ -15,7 +15,7 @@ import io.github.moosyu.data.regen.RegenPaths.*;
 import io.github.moosyu.data.regions.*;
 import io.github.moosyu.data.datagen.*;
 import io.github.moosyu.entities.UnshatteredEntities;
-import io.github.moosyu.entities.npcs.*;
+import io.github.moosyu.entities.npc.*;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;

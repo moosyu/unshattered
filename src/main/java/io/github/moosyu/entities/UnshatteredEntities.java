@@ -2,8 +2,8 @@ package io.github.moosyu.entities;
 
 import io.github.moosyu.entities.decoration.present.Present;
 import io.github.moosyu.entities.mobs.*;
-import io.github.moosyu.entities.npcs.*;
-import io.github.moosyu.entities.projectiles.HomingBee;
+import io.github.moosyu.entities.npc.*;
+import io.github.moosyu.entities.projectile.HomingBee;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -252,4 +252,11 @@ public class UnshatteredEntities {
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("grinch")))
     );
 
+    public static final Supplier<EntityType<Frosty>> FROSTY = ENTITY_TYPES.register(
+            "frosty",
+            () -> EntityType.Builder.of(Frosty::new, MobCategory.CREATURE)
+                    .sized(0.7f, 1.9f)
+                    .eyeHeight(1.7f)
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("frosty")))
+    );
 }

@@ -39,8 +39,11 @@ public class ZombieSwordBase extends UnshatteredSword implements AbilityItem {
 
     @Override
     public @NonNull InteractionResult use(Level level, @NonNull Player player, @NonNull InteractionHand hand) {
-        if (level.isClientSide() || !(player instanceof ServerPlayer sp)) return InteractionResult.FAIL;
-        return ability.get().tryActivate(sp, player.getItemInHand(hand))
+        if (level.isClientSide() || !(player instanceof ServerPlayer serverPlayer)) {
+            return InteractionResult.FAIL;
+        }
+
+        return ability.get().tryActivate(serverPlayer, player.getItemInHand(hand))
                 ? InteractionResult.PASS : InteractionResult.FAIL;
     }
 

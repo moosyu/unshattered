@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.data.NpcData;
 import io.github.moosyu.data.UnshatteredDataMaps;
-import io.github.moosyu.entities.npcs.NPCEntity;
+import io.github.moosyu.entities.npc.NPCEntity;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;

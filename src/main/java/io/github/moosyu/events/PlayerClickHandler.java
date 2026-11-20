@@ -5,7 +5,7 @@ import io.github.moosyu.data.UnshatteredDataMaps;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.dialogue.DialogueInteractable;
-import io.github.moosyu.entities.npcs.NPCEntity;
+import io.github.moosyu.entities.npc.NPCEntity;
 import io.github.moosyu.packets.OpenReforgeAnvilPacket;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.BlockPos;

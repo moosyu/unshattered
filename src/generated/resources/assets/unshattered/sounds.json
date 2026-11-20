@@ -4,5 +4,16 @@
       "unshattered:ferocity_trigger"
     ],
     "subtitle": "sound.unshattered.ferocity_trigger"
+  },
+  "icicle_place": {
+    "sounds": [
+      "unshattered:icicle_place_1",
+      "unshattered:icicle_place_2",
+      "unshattered:icicle_place_3",
+      "unshattered:icicle_place_4",
+      "unshattered:icicle_place_5",
+      "unshattered:icicle_place_6"
+    ],
+    "subtitle": "sound.unshattered.icicle_place"
   }
 }

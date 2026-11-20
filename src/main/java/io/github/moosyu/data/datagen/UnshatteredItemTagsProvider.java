@@ -194,7 +194,8 @@ public class UnshatteredItemTagsProvider extends ItemTagsProvider {
                 .add(FESTIVE_SINKER.get())
                 .add(WHITE_PRESENT.get())
                 .add(GREEN_PRESENT.get())
-                .add(RED_PRESENT.get());
+                .add(RED_PRESENT.get())
+                .add(FROSTY_ARM.get());
 
         tag(ItemTags.HOES)
                 .add(ROOKIE_HOE.get());

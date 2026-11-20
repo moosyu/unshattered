@@ -316,6 +316,7 @@ public class UnshatteredCreativeTabs {
                             output.accept(EMERALD_DAGGER);
                             output.accept(ARTISANAL_SHORTBOW);
                             output.accept(REDSTONE_SWORD);
+                            output.accept(FROSTY_ARM);
                         }).build()
         );
 

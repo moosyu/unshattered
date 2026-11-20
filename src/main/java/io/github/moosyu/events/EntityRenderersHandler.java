@@ -1,12 +1,11 @@
 package io.github.moosyu.events;
 
 import io.github.moosyu.entities.UnshatteredEntities;
-import io.github.moosyu.entities.models.PresentModel;
-import io.github.moosyu.entities.renderers.*;
+import io.github.moosyu.entities.model.FrostyModel;
+import io.github.moosyu.entities.model.PresentModel;
+import io.github.moosyu.entities.renderer.*;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.renderer.entity.CreeperRenderer;
-import net.minecraft.client.renderer.entity.RabbitRenderer;
-import net.minecraft.client.renderer.entity.SheepRenderer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -40,10 +39,12 @@ public class EntityRenderersHandler {
         event.registerEntityRenderer(UnshatteredEntities.PRESENT.get(), PresentRenderer::new);
         event.registerEntityRenderer(UnshatteredEntities.EINARY.get(), NPCEntityRenderer::new);
         event.registerEntityRenderer(UnshatteredEntities.GRINCH.get(), GrinchRenderer::new);
+        event.registerEntityRenderer(UnshatteredEntities.FROSTY.get(), FrostyRenderer::new);
     }
 
     @SubscribeEvent
     public static void registerEntityLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(PresentModel.LAYER_LOCATION, PresentModel::createBodyLayer);
+        event.registerLayerDefinition(FrostyModel.LAYER_LOCATION, FrostyModel::createBodyLayer);
     }
 }

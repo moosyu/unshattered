@@ -158,4 +158,6 @@ public class UnshatteredAbilities {
     public static final DeferredHolder<Ability, FeelinFestive> FEELIN_FESTIVE_GOLDEN_SNOW_GLOBE = ABILITIES.register("feelin_festive_golden_snow_globe", () -> new FeelinFestive(1.25f));
 
     public static final DeferredHolder<Ability, Miracle> MIRACLE = ABILITIES.register("miracle", Miracle::new);
+
+    public static final DeferredHolder<Ability, EvilSnowman> EVIL_SNOWMAN = ABILITIES.register("evil_snowman", EvilSnowman::new);
 }

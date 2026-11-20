@@ -2,6 +2,7 @@
   "values": {
     "minecraft:glow_squid": 90.0,
     "minecraft:squid": 25.0,
+    "unshattered:frosty": 200.0,
     "unshattered:frozen_steve": 25.0,
     "unshattered:grinch": 300.0,
     "unshattered:oasis_rabbit": 40.0,

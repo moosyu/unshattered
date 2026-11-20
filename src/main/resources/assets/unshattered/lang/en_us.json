@@ -241,6 +241,7 @@
   "item.unshattered.festive_sinker": "Festive Sinker",
   "item.unshattered.enchanted_slime_ball": "Enchanted Slime Ball",
   "item.unshattered.enchanted_slime_block": "Enchanted Slime Block",
+  "item.unshattered.frosty_arm": "Frosty's Arm",
 
   "item.description.unshattered.bat_the_fish": "Where is my cape!",
   "item.description.unshattered.century_the_fish": "The term 'century' was actually named after him, or so he says.",
@@ -353,6 +354,7 @@
   "item.description.unshattered.white_present": "Right click to open!",
   "item.description.unshattered.green_present": "Right click to open!",
   "item.description.unshattered.red_present": "Right click to open!",
+  "item.description.unshattered.frosty_arm": "Cool to the touch.",
 
   "item.ability.unshattered.speed_boost": "Speed Boost",
   "item.ability.unshattered.mindblowing": "Mind Blowing",
@@ -406,6 +408,7 @@
   "item.ability.unshattered.feelin_festive_purple_snow_globe": "Feelin' Festive",
   "item.ability.unshattered.feelin_festive_golden_snow_globe": "Feelin' Festive",
   "item.ability.unshattered.miracle": "Miracle",
+  "item.ability.unshattered.evil_snowman": "Evil Snowman",
 
   "item.ability.description.unshattered.speed_boost": "Grants [c=0xFFFFFFFF]+0.5✦ Speed[/c] for [c=0xFF55FF55]30s[/c].",
   "item.ability.description.unshattered.mindblowing": "Deals [c=0xFF55FF55]+100%[/c] damage to undead mobs.",
@@ -459,6 +462,7 @@
   "item.ability.description.unshattered.feelin_festive_purple_snow_globe": "Gain [c=0xFF55FF55]+20%[/c] more [c=0xFFFFAA00]coins[/c] and [c=0xFF00AAAA]skill experience[/c] from gifts.",
   "item.ability.description.unshattered.feelin_festive_golden_snow_globe": "Gain [c=0xFF55FF55]+25%[/c] more [c=0xFFFFAA00]coins[/c] and [c=0xFF00AAAA]skill experience[/c] from gifts.",
   "item.ability.description.unshattered.miracle": "Grants a small chance to catch [c=0xFF55FF55]gifts[/c].",
+  "item.ability.description.unshattered.evil_snowman": "Summons a [c=0xFFFF5555]damaging icicle[/c] where you're facing, provided there's enough vertical space and the target is close enough.",
 
   "block.unshattered.fig_log": "Fig Log",
   "block.unshattered.breakable_fig_log": "Breakable Fig Log",
@@ -634,6 +638,8 @@
   "tooltip.unshattered.right_click_sack": "Right click to open!",
 
   "combat.messages.unshattered.failed": "You tried to attack... but nothing happened.",
+  "combat.messages.unshattered.frosty_arm_failed": "Your spell fizzled! (Improper conditions).",
+
   "fishing.messages.entity.minecraft.squid": "A Squid appeared.",
   "fishing.messages.entity.minecraft.glow_squid": "Pitch darkness reveals a Glow Squid.",
   "fishing.messages.entity.unshattered.sea_walker": "You caught a Sea Walker.",
@@ -641,6 +647,7 @@
   "fishing.messages.entity.unshattered.oasis_rabbit": "An oasis rabbit appears from the water.",
   "fishing.messages.entity.unshattered.frozen_steve": "Frozen Steve fell into the pond long ago, never to resurface...until now!",
   "fishing.messages.entity.unshattered.grinch": "The Grinch stole Jerry's gifts... Get them back!",
+  "fishing.messages.entity.unshattered.frosty": "It's a snowman! He looks mischievous.",
 
   "misc.unshattered.coins": "Coins",
   "misc.messages.unshattered.wizardman_request": "Help Wizardman",
@@ -680,6 +687,7 @@
   "quest.name.unshattered.apology_tour": "Apology Tour",
 
   "sound.unshattered.ferocity_trigger": "Ferocity Slash",
+  "sound.unshattered.icicle_place": "Icicle Place",
 
   "container.unshattered.talisman_bag": "Talisman Bag",
   "container.unshattered.storage": "Storage",
@@ -761,6 +769,7 @@
   "entity.unshattered.frozen_steve": "Frozen Steve",
   "entity.unshattered.einary": "Einary",
   "entity.unshattered.grinch": "Grinch",
+  "entity.unshattered.frosty": "Frosty",
 
   "dialogue.unshattered.generic.player_yes_choice": "Yes.",
   "dialogue.unshattered.generic.player_no_choice": "No.",

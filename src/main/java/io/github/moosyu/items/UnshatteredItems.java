@@ -25,6 +25,7 @@ import io.github.moosyu.items.weapons.daggers.EmeraldDagger;
 import io.github.moosyu.items.weapons.shortbows.ArtisanalShortbow;
 import io.github.moosyu.items.weapons.swords.*;
 import io.github.moosyu.data.components.UnshatteredDataComponents;
+import io.github.moosyu.items.weapons.wands.FrostyArm;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -1121,4 +1122,6 @@ public class UnshatteredItems {
     public static final DeferredItem<Item> FESTIVE_SINKER = ITEMS.registerItem("festive_sinker",props -> new BaseAbilityItem(props,
             UnshatteredAbilities.MIRACLE
     ));
+
+    public static final DeferredItem<Item> FROSTY_ARM = ITEMS.registerItem("frosty_arm", FrostyArm::new);
 }

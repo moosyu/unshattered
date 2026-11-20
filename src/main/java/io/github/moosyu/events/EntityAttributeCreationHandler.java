@@ -3,7 +3,7 @@ package io.github.moosyu.events;
 import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.entities.UnshatteredEntities;
 import io.github.moosyu.entities.mobs.*;
-import io.github.moosyu.entities.npcs.NPCEntity;
+import io.github.moosyu.entities.npc.NPCEntity;
 import net.minecraft.world.entity.animal.rabbit.Rabbit;
 import net.minecraft.world.entity.animal.sheep.Sheep;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -44,5 +44,6 @@ public class EntityAttributeCreationHandler {
         event.put(UnshatteredEntities.FROZEN_STEVE.get(), FrozenSteve.createAttributes().build());
         event.put(UnshatteredEntities.EINARY.get(), NPCEntity.createNpcAttributes().build());
         event.put(UnshatteredEntities.GRINCH.get(), Grinch.createAttributes().build());
+        event.put(UnshatteredEntities.FROSTY.get(), Frosty.createAttributes().build());
     }
 }

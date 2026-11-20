@@ -875,6 +875,109 @@
         }
       }
     ],
+    "unshattered:frosty": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
+            "item_range": {
+              "item": "minecraft:ice",
+              "max_amount": 16,
+              "min_amount": 8
+            }
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
+            "item_range": {
+              "item": "minecraft:snow_block",
+              "max_amount": 8,
+              "min_amount": 4
+            }
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "drop_chance": 0.01,
+          "reward": {
+            "type": "item",
+            "item_range": {
+              "item": "unshattered:enchanted_snow_block",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
+            "item_range": {
+              "item": "unshattered:white_present",
+              "max_amount": 4,
+              "min_amount": 1
+            }
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "drop_chance": 0.25,
+          "reward": {
+            "type": "item",
+            "item_range": {
+              "item": "unshattered:green_present",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "drop_chance": 0.1,
+          "reward": {
+            "type": "item",
+            "item_range": {
+              "item": "unshattered:red_present",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 3,
+            "min": 3
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 30.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
     "unshattered:frozen_steve": [
       {
         "combat_fortune_boosted": false,

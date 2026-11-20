@@ -1,7 +1,7 @@
 package io.github.moosyu.entities.layers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import io.github.moosyu.entities.models.BaseQuadrupedModel;
+import io.github.moosyu.entities.model.BaseQuadrupedModel;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayers;
