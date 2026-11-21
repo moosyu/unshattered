@@ -1,6 +1,6 @@
 package io.github.moosyu.entities.renderer;
 
-import io.github.moosyu.entities.mobs.SkeletonMiner;
+import io.github.moosyu.entities.mob.SkeletonMiner;
 import io.github.moosyu.entities.model.SkeletonMinerModel;
 import io.github.moosyu.entities.states.SkeletonMinerRenderState;
 import net.minecraft.client.model.geom.ModelLayers;

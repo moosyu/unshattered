@@ -1,6 +1,6 @@
 package io.github.moosyu.entities.renderer;
 
-import io.github.moosyu.entities.mobs.LapisZombie;
+import io.github.moosyu.entities.mob.LapisZombie;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.ArmorModelSet;

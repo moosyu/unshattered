@@ -1,4 +1,4 @@
-package io.github.moosyu.entities.mobs;
+package io.github.moosyu.entities.mob;
 
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.BlockPos;

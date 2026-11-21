@@ -1,6 +1,6 @@
 package io.github.moosyu.entities.renderer;
 
-import io.github.moosyu.entities.mobs.FrozenSteve;
+import io.github.moosyu.entities.mob.FrozenSteve;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayers;

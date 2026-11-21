@@ -1,6 +1,6 @@
 package io.github.moosyu.entities.renderer;
 
-import io.github.moosyu.entities.mobs.Frosty;
+import io.github.moosyu.entities.mob.Frosty;
 import io.github.moosyu.entities.model.FrostyModel;
 import io.github.moosyu.entities.states.FrostyRenderState;
 import io.github.moosyu.util.UnshatteredUtils;

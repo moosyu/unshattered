@@ -437,6 +437,8 @@ public class UnshatteredModelProvider extends ModelProvider {
         itemModels.generateFlatItem(UnshatteredItems.NORTH_STAR.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.FESTIVE_SINKER.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(UnshatteredItems.FROSTY_ARM.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.HILT_OF_TRUE_ICE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(UnshatteredItems.YETI_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
     }
 
     private void createFishingRod(ItemModelGenerators itemModels, Item fishingRod, Item textureDonor) {

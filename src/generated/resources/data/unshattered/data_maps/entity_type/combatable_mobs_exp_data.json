@@ -903,15 +903,15 @@
         }
       },
       {
-        "combat_fortune_boosted": false,
+        "combat_fortune_boosted": true,
         "drop_data": {
           "drop_chance": 0.01,
           "reward": {
             "type": "item",
             "item_range": {
               "item": "unshattered:enchanted_snow_block",
-              "max_amount": 1,
-              "min_amount": 1
+              "max_amount": 14,
+              "min_amount": 8
             }
           }
         }
@@ -958,12 +958,26 @@
         }
       },
       {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.01,
+          "reward": {
+            "type": "item",
+            "item_range": {
+              "item": "unshattered:frosty_arm",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        }
+      },
+      {
         "combat_fortune_boosted": false,
         "drop_data": {
           "reward": {
             "type": "coins",
-            "max": 3,
-            "min": 3
+            "max": 150,
+            "min": 150
           }
         }
       },
@@ -1096,7 +1110,7 @@
         }
       },
       {
-        "combat_fortune_boosted": false,
+        "combat_fortune_boosted": true,
         "drop_data": {
           "drop_chance": 0.05,
           "reward": {
@@ -1827,6 +1841,121 @@
           "reward": {
             "type": "experience",
             "experience_amount": 7.0,
+            "skill": "combat"
+          }
+        }
+      }
+    ],
+    "unshattered:yeti": [
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
+            "item_range": {
+              "item": "unshattered:enchanted_ice",
+              "max_amount": 16,
+              "min_amount": 8
+            }
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
+            "item_range": {
+              "item": "unshattered:enchanted_snow_block",
+              "max_amount": 24,
+              "min_amount": 14
+            }
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
+            "item_range": {
+              "item": "unshattered:white_present",
+              "max_amount": 4,
+              "min_amount": 1
+            }
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
+            "item_range": {
+              "item": "unshattered:green_present",
+              "max_amount": 2,
+              "min_amount": 1
+            }
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "item",
+            "item_range": {
+              "item": "unshattered:red_present",
+              "max_amount": 2,
+              "min_amount": 1
+            }
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "drop_chance": 0.5,
+          "reward": {
+            "type": "item",
+            "item_range": {
+              "item": "unshattered:enchanted_packed_ice",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": true,
+        "drop_data": {
+          "drop_chance": 0.05,
+          "reward": {
+            "type": "item",
+            "item_range": {
+              "item": "unshattered:hilt_of_true_ice",
+              "max_amount": 1,
+              "min_amount": 1
+            }
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "coins",
+            "max": 2000,
+            "min": 2000
+          }
+        }
+      },
+      {
+        "combat_fortune_boosted": false,
+        "drop_data": {
+          "reward": {
+            "type": "experience",
+            "experience_amount": 500.0,
             "skill": "combat"
           }
         }

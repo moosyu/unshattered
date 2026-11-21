@@ -160,4 +160,6 @@ public class UnshatteredAbilities {
     public static final DeferredHolder<Ability, Miracle> MIRACLE = ABILITIES.register("miracle", Miracle::new);
 
     public static final DeferredHolder<Ability, EvilSnowman> EVIL_SNOWMAN = ABILITIES.register("evil_snowman", EvilSnowman::new);
+
+    public static final DeferredHolder<Ability, TerrainToss> TERRAIN_TOSS = ABILITIES.register("terrain_toss", TerrainToss::new);
 }

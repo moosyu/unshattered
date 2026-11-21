@@ -1,4 +1,4 @@
-package io.github.moosyu.entities.mobs;
+package io.github.moosyu.entities.mob;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;

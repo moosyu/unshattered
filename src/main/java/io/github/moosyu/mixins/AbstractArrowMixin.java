@@ -99,7 +99,8 @@ public abstract class AbstractArrowMixin extends Projectile {
                             getDeltaMovement().length() * player.getAttributeValue(UnshatteredAttributeValue.DAMAGE.holder),
                             false,
                             getWeaponItem(),
-                            true
+                            true,
+                            false
                     );
                 }
 

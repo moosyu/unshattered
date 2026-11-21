@@ -4,6 +4,7 @@ import io.github.moosyu.abilities.UnshatteredAbilities;
 import io.github.moosyu.attributes.UnshatteredAttributes;
 import io.github.moosyu.data.UnshatteredStatistics;
 import io.github.moosyu.data.recipes.UnshatteredRecipes;
+import io.github.moosyu.entities.UnshatteredEntityDataSerializers;
 import io.github.moosyu.entities.decoration.present.PresentTypes;
 import org.slf4j.Logger;
 
@@ -47,6 +48,7 @@ public class Unshattered {
         RECIPE_BOOK_CATEGORIES.register(modEventBus);
         MENUS.register(modEventBus);
         UnshatteredStatistics.CUSTOM_STATS.register(modEventBus);
+        UnshatteredEntityDataSerializers.ENTITY_DATA_SERIALIZERS.register(modEventBus);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }

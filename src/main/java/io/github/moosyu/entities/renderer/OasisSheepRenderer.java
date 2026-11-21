@@ -2,7 +2,7 @@ package io.github.moosyu.entities.renderer;
 
 import io.github.moosyu.entities.layers.OasisSheepWoolLayer;
 import io.github.moosyu.entities.layers.OasisSheepWoolUndercoatLayer;
-import io.github.moosyu.entities.mobs.OasisSheep;
+import io.github.moosyu.entities.mob.OasisSheep;
 import io.github.moosyu.entities.model.BaseQuadrupedModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

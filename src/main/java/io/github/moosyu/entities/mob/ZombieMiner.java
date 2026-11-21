@@ -1,11 +1,9 @@
-package io.github.moosyu.entities.mobs;
+package io.github.moosyu.entities.mob;
 
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -17,7 +15,6 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -26,22 +23,21 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
-public class SkeletonMiner extends Monster implements RangedAttackMob {
+public class ZombieMiner extends Monster {
     private int reloadTicks = 0;
 
-    public SkeletonMiner(EntityType<? extends SkeletonMiner> type, Level level) {
+    public ZombieMiner(EntityType<? extends SkeletonMiner> type, Level level) {
         super(type, level);
     }
 
     public static AttributeSupplier.@NonNull Builder createAttributes() {
-        return UnshatteredUtils.createHostileMobAttributes(100.0f, 11.0f)
+        return UnshatteredUtils.createHostileMobAttributes(100.0f, 13.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.23f);
     }
 
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(1, new FloatGoal(this));
-        goalSelector.addGoal(2, new RangedAttackGoal(this, 1.0, 40, 15.0f));
         goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0));
         goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0f));
         goalSelector.addGoal(6, new RandomLookAroundGoal(this));
@@ -65,34 +61,6 @@ public class SkeletonMiner extends Monster implements RangedAttackMob {
             reloadTicks--;
         } else if (getMainHandItem().isEmpty()) {
             setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.TNT));
-        }
-    }
-
-    @Override
-    public void performRangedAttack(@NonNull LivingEntity target, float power) {
-        if (reloadTicks > 0 || getMainHandItem().isEmpty()) {
-            return;
-        }
-
-        swing(InteractionHand.MAIN_HAND);
-        setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
-        reloadTicks = 25;
-
-        if (level() instanceof ServerLevel serverLevel) {
-            ThrownMinerTnt tnt = new ThrownMinerTnt(serverLevel, getX(), getEyeY() - 0.2, getZ(), this);
-
-            double dx = target.getX() - getX();
-            double dz = target.getZ() - getZ();
-            double dy = target.getY(0.5) - tnt.getY();
-            double horizontalDist = Math.sqrt(dx * dx + dz * dz);
-            double hSpeed = 0.7;
-            double flightTicks = Math.max(horizontalDist / hSpeed, 1.0);
-            double vy = dy / flightTicks + 0.02 * flightTicks;
-
-            tnt.setDeltaMovement(dx / horizontalDist * hSpeed, vy, dz / horizontalDist * hSpeed);
-
-            serverLevel.addFreshEntity(tnt);
-            playSound(SoundEvents.TNT_PRIMED, 1.0f, 1.0f);
         }
     }
 

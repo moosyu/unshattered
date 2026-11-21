@@ -1,4 +1,4 @@
-package io.github.moosyu.entities.mobs;
+package io.github.moosyu.entities.mob;
 
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.util.UnshatteredUtils;
@@ -9,7 +9,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;

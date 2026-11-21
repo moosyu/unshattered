@@ -1,4 +1,4 @@
-package io.github.moosyu.entities.mobs;
+package io.github.moosyu.entities.mob;
 
 import io.github.moosyu.entities.UnshatteredEntities;
 import io.github.moosyu.util.UnshatteredUtils;
@@ -134,12 +134,12 @@ public class MassiveEmeraldSlime extends UnshatteredSlime {
             }
 
             Level level = slime.level();
-            EntityDimensions dims = UnshatteredEntities.SLIME_CHILD.get().getDimensions();
+            EntityDimensions dimensions = UnshatteredEntities.SLIME_CHILD.get().getDimensions();
 
             boolean haveRoomForChildren = true;
             for (Vec3 direction : CARDINAL_DIRECTIONS) {
-                if (hasRoom(level, dims, slime.position().add(direction.scale(LAUNCH_DISTANCE)).add(0, 0.01, 0))
-                        || hasRoom(level, dims, slime.position().add(direction.scale(LAUNCH_DISTANCE * 0.5)).add(0, 1.5, 0))
+                if (hasRoom(level, dimensions, slime.position().add(direction.scale(LAUNCH_DISTANCE)).add(0, 0.01, 0))
+                        || hasRoom(level, dimensions, slime.position().add(direction.scale(LAUNCH_DISTANCE * 0.5)).add(0, 1.5, 0))
                 ) {
                     haveRoomForChildren = false;
                 }
@@ -217,8 +217,8 @@ public class MassiveEmeraldSlime extends UnshatteredSlime {
             slime.setSummonTicks(0);
         }
 
-        private static boolean hasRoom(Level level, EntityDimensions dims, Vec3 pos) {
-            AABB box = dims.makeBoundingBox(pos);
+        private static boolean hasRoom(Level level, EntityDimensions dimensions, Vec3 pos) {
+            AABB box = dimensions.makeBoundingBox(pos);
             return !level.noCollision(box) || level.containsAnyLiquid(box);
         }
     }

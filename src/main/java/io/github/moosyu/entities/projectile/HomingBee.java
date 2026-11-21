@@ -126,7 +126,7 @@ public class HomingBee extends Projectile {
 
     private void hitEntity(LivingEntity victim) {
         if (player != null) {
-            DamageUtils.playerDealDamage(player, victim, damage, false, ItemStack.EMPTY, true);
+            DamageUtils.playerDealDamage(player, victim, damage, false, ItemStack.EMPTY, true, true);
         }
         burst();
     }

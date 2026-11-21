@@ -54,8 +54,9 @@ public final class DamageUtils {
      * @param useAttackStrength whether attack strength should be applied on this attack
      * @param weapon the weapon (or random itemstack) used to attack
      * @param triggerAbilities whether the attack should trigger abilities. should be true for most normal attacks, only really to stop cascades of an ability triggering itself
+     * @param useMana whether the attack damage should be scaled with mana (for magic attacks)
      */
-    public static void playerDealDamage(Player player, LivingEntity target, double damage, boolean useAttackStrength, ItemStack weapon, boolean triggerAbilities) {
+    public static void playerDealDamage(Player player, LivingEntity target, double damage, boolean useAttackStrength, ItemStack weapon, boolean triggerAbilities, boolean useMana) {
         if (!player.isCreative() && target.is(EntityType.ARMOR_STAND)) {
             return;
         }
@@ -114,6 +115,10 @@ public final class DamageUtils {
 
                 if (useAttackStrength) {
                     damage *= attackStrength;
+                }
+
+                if (useMana) {
+                    damage *= (player.getAttributeValue(UnshatteredAttributeValue.MANA.holder) / 20);
                 }
 
                 AttributeInstance targetHealth = target.getAttribute(UnshatteredAttributeValue.CURRENT_HEALTH.holder);

@@ -26,12 +26,15 @@ public class AttackEntityHandler {
         }
         event.setCanceled(true);
 
+        // since at this point this is really only used for physical damage, useMana is false here
+        // not sure if this'll come back to bite me later
         playerDealDamage(player,
                 target,
                 player.getAttributeValue(UnshatteredAttributeValue.DAMAGE.holder) + BASE_DAMAGE,
                 true,
                 player.getItemInHand(InteractionHand.MAIN_HAND),
-                true
+                true,
+                false
         );
     }
 

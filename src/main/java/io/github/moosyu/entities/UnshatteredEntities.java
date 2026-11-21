@@ -1,9 +1,10 @@
 package io.github.moosyu.entities;
 
 import io.github.moosyu.entities.decoration.present.Present;
-import io.github.moosyu.entities.mobs.*;
+import io.github.moosyu.entities.mob.*;
 import io.github.moosyu.entities.npc.*;
 import io.github.moosyu.entities.projectile.HomingBee;
+import io.github.moosyu.entities.projectile.terrain.TossedTerrain;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -229,7 +230,7 @@ public class UnshatteredEntities {
             "present",
             () -> EntityType.Builder.<Present>of(Present::new, MobCategory.MISC)
                     .sized(0.5f, 0.5f)
-                    .clientTrackingRange(8)
+                    .clientTrackingRange(3)
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("present")))
     );
 
@@ -259,4 +260,21 @@ public class UnshatteredEntities {
                     .eyeHeight(1.7f)
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("frosty")))
     );
+
+    public static final Supplier<EntityType<Yeti>> YETI = ENTITY_TYPES.register(
+            "yeti",
+            () -> EntityType.Builder.of(Yeti::new, MobCategory.CREATURE)
+                    .sized(2.2f, 2.6f)
+                    .eyeHeight(2.4f)
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("yeti")))
+    );
+
+    public static final DeferredHolder<EntityType<?>, EntityType<TossedTerrain>> YETI_TOSSED_TERRAIN =
+            ENTITY_TYPES.register("yeti_tossed_terrain",
+                    () -> EntityType.Builder.of(TossedTerrain::new, MobCategory.MISC)
+                        .sized(5.0f, 3.0f)
+                        .clientTrackingRange(10)
+                        .updateInterval(10)
+                        .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("yeti_tossed_terrain")))
+            );
 }

@@ -1,6 +1,6 @@
 package io.github.moosyu.entities.renderer;
 
-import io.github.moosyu.entities.mobs.RedstonePigman;
+import io.github.moosyu.entities.mob.RedstonePigman;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.monster.piglin.AdultZombifiedPiglinModel;

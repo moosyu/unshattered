@@ -1,0 +1,25 @@
+{
+  "type": "unshattered:sized_recipe",
+  "key": {
+    "H": {
+      "count": 1,
+      "ingredient": "unshattered:hilt_of_true_ice"
+    },
+    "I": {
+      "count": 16,
+      "ingredient": "unshattered:enchanted_iron_block"
+    },
+    "P": {
+      "count": 64,
+      "ingredient": "unshattered:enchanted_packed_ice"
+    }
+  },
+  "pattern": [
+    "PIP",
+    "PIP",
+    "PHP"
+  ],
+  "result": {
+    "id": "unshattered:yeti_sword"
+  }
+}

@@ -1,7 +1,7 @@
 package io.github.moosyu.entities.renderer;
 
 import com.google.common.collect.Maps;
-import io.github.moosyu.entities.mobs.OasisRabbit;
+import io.github.moosyu.entities.mob.OasisRabbit;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.model.animal.rabbit.AdultRabbitModel;
 import net.minecraft.client.model.animal.rabbit.RabbitModel;

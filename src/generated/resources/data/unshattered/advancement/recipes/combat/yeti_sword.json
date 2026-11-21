@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_hilt_of_true_ice": {
+      "conditions": {
+        "items": [
+          {
+            "items": "unshattered:hilt_of_true_ice"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "unshattered:yeti_sword"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_hilt_of_true_ice"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "unshattered:yeti_sword"
+    ]
+  }
+}

@@ -67,7 +67,8 @@ public class ExplosiveArrows extends Ability {
                             player.getAttributeValue(UnshatteredAttributeValue.DAMAGE.holder),
                             false,
                             player.getMainHandItem(),
-                            false
+                            false,
+                            true
                     );
 
                     player.level().sendParticles(ParticleTypes.SOUL_FIRE_FLAME,

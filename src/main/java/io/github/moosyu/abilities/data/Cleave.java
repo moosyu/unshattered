@@ -84,6 +84,7 @@ public class Cleave extends Ability {
                             player.getAttributeValue(UnshatteredAttributeValue.DAMAGE.holder),
                             false,
                             player.getMainHandItem(),
+                            false,
                             false
                     );
                 }

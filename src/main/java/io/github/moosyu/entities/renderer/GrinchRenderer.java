@@ -1,6 +1,6 @@
 package io.github.moosyu.entities.renderer;
 
-import io.github.moosyu.entities.mobs.Grinch;
+import io.github.moosyu.entities.mob.Grinch;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayers;

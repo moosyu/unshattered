@@ -1,11 +1,14 @@
 package io.github.moosyu.events;
 
+import com.geckolib.model.DefaultedEntityGeoModel;
+import com.geckolib.renderer.GeoEntityRenderer;
 import io.github.moosyu.entities.UnshatteredEntities;
 import io.github.moosyu.entities.model.FrostyModel;
 import io.github.moosyu.entities.model.PresentModel;
 import io.github.moosyu.entities.renderer.*;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.client.renderer.entity.CreeperRenderer;
+import net.minecraft.world.entity.Entity;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -40,6 +43,8 @@ public class EntityRenderersHandler {
         event.registerEntityRenderer(UnshatteredEntities.EINARY.get(), NPCEntityRenderer::new);
         event.registerEntityRenderer(UnshatteredEntities.GRINCH.get(), GrinchRenderer::new);
         event.registerEntityRenderer(UnshatteredEntities.FROSTY.get(), FrostyRenderer::new);
+        event.registerEntityRenderer(UnshatteredEntities.YETI_TOSSED_TERRAIN.get(), YetiTossedTerrainRenderer::new);
+        event.registerEntityRenderer(UnshatteredEntities.YETI.get(), context -> new GeoEntityRenderer<>(context, new DefaultedEntityGeoModel<>(UnshatteredUtils.getUnshatteredIdentifier("mobs/yeti"))));
     }
 
     @SubscribeEvent

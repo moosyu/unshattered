@@ -48,7 +48,8 @@ public class UnshatteredEntityTagsProvider extends EntityTypeTagsProvider {
                 .add(UnshatteredEntities.SEA_WALKER.get())
                 .add(UnshatteredEntities.FROZEN_STEVE.get())
                 .add(UnshatteredEntities.GRINCH.get())
-                .add(UnshatteredEntities.FROSTY.get());
+                .add(UnshatteredEntities.FROSTY.get())
+                .add(UnshatteredEntities.YETI.get());
 
         tag(HIT_COUNT_HEALTH)
                 .add(UnshatteredEntities.GRINCH.get());

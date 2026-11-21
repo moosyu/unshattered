@@ -60,14 +60,9 @@ public abstract class FishingHookMixin extends Projectile {
     @Shadow
     private static EntityDataAccessor<Boolean> DATA_BITING;
 
-    // ------------------------------------------------------------------
-    // Lava support
-    // ------------------------------------------------------------------
-
     /**
-     * Vanilla tick() calls FluidState.is(FluidTags.WATER) to decide the fluid height,
-     * when to switch from FLYING to BOBBING, and whether gravity applies.
-     * For lava-capable hooks we make lava answer "yes" to that WATER check.
+     * vanilla tick() calls FluidState.is(FluidTags.WATER) to decide the fluid height, when to switch from FLYING
+     * to BOBBING, and whether gravity applies. this enables that functionality for lava.
      */
     @WrapOperation(
             method = "tick",
@@ -76,28 +71,22 @@ public abstract class FishingHookMixin extends Projectile {
                     target = "Lnet/minecraft/world/level/material/FluidState;is(Lnet/minecraft/tags/TagKey;)Z"
             )
     )
-    private boolean unshattered$lavaCountsAsWater(FluidState state, TagKey<Fluid> tag, Operation<Boolean> original) {
+    private boolean lavaCountsAsWater(FluidState state, TagKey<Fluid> tag, Operation<Boolean> original) {
         if (tag == FluidTags.WATER && this.fireImmune() && state.is(FluidTags.LAVA)) {
             return true;
         }
         return original.call(state, tag);
     }
 
-    /** True if this block is something the fish can swim in for this hook. */
     @Unique
-    private boolean unshattered$isFishable(BlockState state) {
+    private boolean isFishable(BlockState state) {
         return state.is(Blocks.WATER) || (this.fireImmune() && state.is(Blocks.LAVA));
     }
 
-    /** True if the hook is currently sitting in lava and is allowed to be. */
     @Unique
-    private boolean unshattered$inLava() {
+    private boolean lavaHook() {
         return this.fireImmune() && this.level().getFluidState(this.blockPosition()).is(FluidTags.LAVA);
     }
-
-    // ------------------------------------------------------------------
-    // Melee hit handling (unchanged)
-    // ------------------------------------------------------------------
 
     @Inject(method = "onHitEntity", at = @At("HEAD"), cancellable = true)
     protected void onHitEntity(EntityHitResult hitResult, CallbackInfo ci) {
@@ -122,16 +111,13 @@ public abstract class FishingHookMixin extends Projectile {
                             player.getAttributeValue(UnshatteredAttributeValue.DAMAGE.holder) + 1,
                             false,
                             player.getItemInHand(hand),
-                            true
+                            true,
+                            false
                     );
                 }
             }
         }
     }
-
-    // ------------------------------------------------------------------
-    // Fishing logic (water + lava)
-    // ------------------------------------------------------------------
 
     @Inject(method = "catchingFish", at = @At("HEAD"), cancellable = true)
     private void catchingFish(BlockPos pos, CallbackInfo ci) {
@@ -145,7 +131,7 @@ public abstract class FishingHookMixin extends Projectile {
         double fishingSpeed = player.getAttributeValue(UnshatteredAttributeValue.FISHING_SPEED.holder);
         double fishingSpeedPercentage = (UnshatteredAttributeValue.FISHING_SPEED.max + 20 - fishingSpeed) / UnshatteredAttributeValue.FISHING_SPEED.max;
 
-        boolean lava = unshattered$inLava();
+        boolean lava = lavaHook();
 
         if (nibble > 0) {
             --nibble;
@@ -165,14 +151,13 @@ public abstract class FishingHookMixin extends Projectile {
                 double fishY = Mth.floor(hook.getY()) + 1.0f;
                 double fishZ = hook.getZ() + angleCos * timeUntilHooked * 0.1f;
                 BlockState splashBlockState = level.getBlockState(BlockPos.containing(fishX, fishY - 1.0, fishZ));
-                if (unshattered$isFishable(splashBlockState)) {
+                if (isFishable(splashBlockState)) {
                     if (random.nextFloat() < 0.15f) {
                         level.sendParticles(lava ? ParticleTypes.LAVA : ParticleTypes.BUBBLE,
                                 fishX, fishY - 0.1f, fishZ, 1, angleSin, 0.1, angleCos, 0.0);
                     }
 
                     if (lava) {
-                        // Flames drifting straight toward the bobber.
                         // (-sin, -cos) points from the fish back to the hook.
                         double speed = 0.05;
                         double velX = -angleSin * speed;
@@ -215,7 +200,7 @@ public abstract class FishingHookMixin extends Projectile {
                 double fishY = Mth.floor(hook.getY()) + 1.0f;
                 double fishZ = hook.getZ() + Mth.cos(angle) * dist * 0.1;
                 BlockState splashBlockState = level.getBlockState(BlockPos.containing(fishX, fishY - 1.0, fishZ));
-                if (unshattered$isFishable(splashBlockState)) {
+                if (isFishable(splashBlockState)) {
                     level.sendParticles(
                             lava ? ParticleTypes.LAVA : ParticleTypes.SPLASH,
                             fishX,
@@ -238,10 +223,6 @@ public abstract class FishingHookMixin extends Projectile {
             timeUntilLured = random.nextInt(20, Math.max(40, (int) (160 * fishingSpeedPercentage)));
         }
     }
-
-    // ------------------------------------------------------------------
-    // Fire immunity (rod tag controls lava fishing)
-    // ------------------------------------------------------------------
 
     @Override
     public boolean fireImmune() {

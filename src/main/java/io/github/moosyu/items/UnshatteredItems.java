@@ -1124,4 +1124,8 @@ public class UnshatteredItems {
     ));
 
     public static final DeferredItem<Item> FROSTY_ARM = ITEMS.registerItem("frosty_arm", FrostyArm::new);
+
+    public static final DeferredItem<Item> HILT_OF_TRUE_ICE = ITEMS.registerItem("hilt_of_true_ice", props -> new Item(props.stacksTo(1)));
+
+    public static final DeferredItem<Item> YETI_SWORD = ITEMS.registerItem("yeti_sword", YetiSword::new);
 }

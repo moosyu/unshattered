@@ -1,8 +1,8 @@
 package io.github.moosyu.entities.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import io.github.moosyu.entities.mobs.MassiveEmeraldSlime;
-import io.github.moosyu.entities.mobs.UnshatteredSlime;
+import io.github.moosyu.entities.mob.MassiveEmeraldSlime;
+import io.github.moosyu.entities.mob.UnshatteredSlime;
 import io.github.moosyu.entities.states.UnshatteredSlimeRenderState;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayers;

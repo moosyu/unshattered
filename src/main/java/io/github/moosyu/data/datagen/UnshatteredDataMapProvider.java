@@ -187,6 +187,8 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
         setBaseData(UnshatteredItems.NORTH_STAR, ItemType.MATERIAL, UnshatteredRarity.SPECIAL, 1000);
         setBaseData(UnshatteredItems.FESTIVE_SINKER, ItemType.SINKER, UnshatteredRarity.RARE, 1000);
         setBaseData(UnshatteredItems.FROSTY_ARM, ItemType.WAND, UnshatteredRarity.RARE, 25000);
+        setBaseData(UnshatteredItems.HILT_OF_TRUE_ICE, ItemType.MATERIAL, UnshatteredRarity.LEGENDARY, 100000);
+        setBaseData(UnshatteredItems.YETI_SWORD, ItemType.SWORD, UnshatteredRarity.LEGENDARY, 1000000);
 
         createSimpleBlockDropData(BLOCK_BREAK_BUILDER, UnshatteredBlocks.BREAKABLE_FIG_LOG_BLOCK, new ItemRange(UnshatteredItems.FIG_LOG.get()), PlayerSkillsAttachment.Skill.FORAGING, 15);
         createSimpleBlockDropData(BLOCK_BREAK_BUILDER, UnshatteredBlocks.BREAKABLE_STONE_BLOCK, new ItemRange(Items.COBBLESTONE), PlayerSkillsAttachment.Skill.MINING, 1);
@@ -330,7 +332,8 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.OASIS_RABBIT.get()), 40.0f, false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.FROZEN_STEVE.get()), 25.0f, false)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.GRINCH.get()), 300.0f, false)
-                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.FROSTY.get()), 200.0f, false);
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.FROSTY.get()), 200.0f, false)
+                .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.YETI.get()), 1000.0f, false);
 
         builder(COMBATABLE_MOBS_LOOT_DATA)
                 .add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(EntityType.ZOMBIE),
@@ -527,19 +530,31 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                                 new MobItemDropData(UnshatteredItems.WHITE_PRESENT, 1, 1.0f, false),
                                 new MobItemDropData(UnshatteredItems.GREEN_PRESENT, 1, 0.5f, false),
                                 new MobItemDropData(UnshatteredItems.RED_PRESENT, 1, 0.1f, false),
-                                new MobItemDropData(UnshatteredItems.ENCHANTED_PACKED_ICE, 1, 0.05f, false),
+                                new MobItemDropData(UnshatteredItems.ENCHANTED_PACKED_ICE, 1, 0.05f, true),
                                 new MobItemDropData(30),
                                 new MobItemDropData(30.0f)
                         ), false
                 ).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.FROSTY.get()),
                         List.of(new MobItemDropData(Items.ICE, 8, 16, 1.0f, false),
                                 new MobItemDropData(Items.SNOW_BLOCK, 4, 8, 1.0f, false),
-                                new MobItemDropData(UnshatteredItems.ENCHANTED_SNOW_BLOCK, 1, 0.01f, false),
+                                new MobItemDropData(UnshatteredItems.ENCHANTED_SNOW_BLOCK, 8, 14, 0.01f, true),
                                 new MobItemDropData(UnshatteredItems.WHITE_PRESENT, 1, 4, 1f, false),
                                 new MobItemDropData(UnshatteredItems.GREEN_PRESENT, 1, 0.25f, false),
                                 new MobItemDropData(UnshatteredItems.RED_PRESENT, 1, 0.1f, false),
-                                new MobItemDropData(3),
+                                new MobItemDropData(UnshatteredItems.FROSTY_ARM, 1, 0.01f, true),
+                                new MobItemDropData(150),
                                 new MobItemDropData(30.0f)
+                        ), false
+                ).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.YETI.get()),
+                        List.of(new MobItemDropData(UnshatteredItems.ENCHANTED_ICE, 8, 16, 1.0f, false),
+                                new MobItemDropData(UnshatteredItems.ENCHANTED_SNOW_BLOCK, 14, 24, 1.0f, false),
+                                new MobItemDropData(UnshatteredItems.WHITE_PRESENT, 1, 4, 1.0f, false),
+                                new MobItemDropData(UnshatteredItems.GREEN_PRESENT, 1, 2, 1.0f, false),
+                                new MobItemDropData(UnshatteredItems.RED_PRESENT, 1, 2, 1.0f, false),
+                                new MobItemDropData(UnshatteredItems.ENCHANTED_PACKED_ICE, 1, 0.5f, false),
+                                new MobItemDropData(UnshatteredItems.HILT_OF_TRUE_ICE, 1, 0.05f, true),
+                                new MobItemDropData(2000),
+                                new MobItemDropData(500.0f)
                         ), false
                 );
 
@@ -587,6 +602,8 @@ public class UnshatteredDataMapProvider extends DataMapProvider {
                         new FishingWeightEntry(1500, 7, FishingCondition.WATER, FishingCondition.IN_JERRY_WORKSHOP), false
                 ).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.FROSTY.get()),
                         new FishingWeightEntry(2875, 5, FishingCondition.WATER, FishingCondition.IN_JERRY_WORKSHOP), false
+                ).add(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(UnshatteredEntities.YETI.get()),
+                        new FishingWeightEntry(100, 20, FishingCondition.WATER, FishingCondition.IN_JERRY_WORKSHOP), false
                 );
 
         builder(ITEM_RARITY_DATA).add(BuiltInRegistries.ITEM.wrapAsHolder(UnshatteredItems.MERCENARY_AXE.get()), UnshatteredRarity.RARE, false)

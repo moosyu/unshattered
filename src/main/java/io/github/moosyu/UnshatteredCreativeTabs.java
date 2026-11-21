@@ -225,6 +225,7 @@ public class UnshatteredCreativeTabs {
                             output.accept(GOLDEN_PRESENT);
                             output.accept(ENCHANTED_SNOW_BLOCK);
                             output.accept(NORTH_STAR);
+                            output.accept(HILT_OF_TRUE_ICE);
                         }).build()
         );
 
@@ -317,6 +318,7 @@ public class UnshatteredCreativeTabs {
                             output.accept(ARTISANAL_SHORTBOW);
                             output.accept(REDSTONE_SWORD);
                             output.accept(FROSTY_ARM);
+                            output.accept(YETI_SWORD);
                         }).build()
         );
 

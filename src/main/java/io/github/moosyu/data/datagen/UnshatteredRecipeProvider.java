@@ -394,6 +394,14 @@ public class UnshatteredRecipeProvider extends RecipeProvider {
                 .define('H', UnshatteredItems.FIG_HEW)
                 .unlockedBy(getHasName(UnshatteredItems.FIG_HEW), has(UnshatteredItems.FIG_HEW))
                 .save(output);
+
+        new SizedItemRecipeBuilder(new ItemStackTemplate(UnshatteredItems.YETI_SWORD.get()), RecipeCategory.COMBAT)
+                .pattern("PIP", "PIP", "PHP")
+                .define('P', SizedIngredient.of(UnshatteredItems.ENCHANTED_PACKED_ICE, 64))
+                .define('I', SizedIngredient.of(UnshatteredItems.ENCHANTED_IRON_BLOCK, 16))
+                .define('H', singleSizedIngredient(UnshatteredItems.HILT_OF_TRUE_ICE))
+                .unlockedBy(getHasName(UnshatteredItems.HILT_OF_TRUE_ICE), has(UnshatteredItems.HILT_OF_TRUE_ICE))
+                .save(output);
     }
 
     public static class Runner extends RecipeProvider.Runner {
