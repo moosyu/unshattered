@@ -846,5 +846,14 @@
   "recipe_book.category.unshattered.drill_parts": "Drill Parts",
   "recipe_book.category.unshattered.description.drill_parts": "Forge your ore into improvements for your drill.",
 
-  "stat.unshattered.gifts_opened": "Gifts Opened"
+  "stat.unshattered.gifts_opened": "Gifts Opened",
+
+  "death_message.unshattered.slain": "was slain by a",
+  "death_message.unshattered.fall": "fell to their death!",
+  "death_message.unshattered.drowned": "drowned!",
+  "death_message.unshattered.burned": "burned to death!",
+  "death_message.unshattered.terrain_crush": "was crushed!",
+
+  "death.attack.terrain_crush": "%1$s was crushed to death",
+  "death.attack.blood_chalice": "%1$s was consumed by the blood chalice"
 }

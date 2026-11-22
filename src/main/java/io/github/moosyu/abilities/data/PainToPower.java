@@ -5,7 +5,7 @@ import io.github.moosyu.abilities.AbilityContext;
 import io.github.moosyu.abilities.AbilityContextKey;
 import io.github.moosyu.abilities.AbilityTriggerType;
 import io.github.moosyu.attributes.UnshatteredAttributeValue;
-import io.github.moosyu.damage.DamageUtils;
+import io.github.moosyu.damage.UnshatteredDamageSource;
 import io.github.moosyu.data.attachments.PlayerAbilityEffectsAttachment;
 import io.github.moosyu.data.attachments.UnshatteredAttachments;
 import io.github.moosyu.data.components.ItemAbility;
@@ -13,15 +13,16 @@ import io.github.moosyu.packets.ClientsidePlayerSoundEffectPacket;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public class PainToPower extends Ability {
+    public static final ResourceKey<DamageType> BLOOD_CHALICE_DAMAGE_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE, UnshatteredUtils.getUnshatteredIdentifier("blood_chalice"));
+
     public PainToPower() {
         super(new ItemAbility(), AbilityTriggerType.PLAYER_STARTED_SNEAKING);
     }
@@ -53,18 +54,16 @@ public class PainToPower extends Ability {
 
             abilities.addActiveEffect(this, 600, player.level());
 
-            if (DamageUtils.damagePlayer(player,
-                    (health.getValue() * 0.3),
-                    Component.literal("☠ " + player.getName().getString() + " had their soul consumed by the blood chalice!"),
-                    true,
-                    new DamageSource(player.registryAccess()
-                            .lookupOrThrow(Registries.DAMAGE_TYPE)
-                            .getOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, UnshatteredUtils.getUnshatteredIdentifier("blood_chalice")))
-                    )
-            )) {
-                ferocity.removeModifier(id());
-                abilities.removeActiveEffect(id(), player);
-            }
+            UnshatteredDamageSource source = new UnshatteredDamageSource(player.registryAccess()
+                    .lookupOrThrow(Registries.DAMAGE_TYPE)
+                    .getOrThrow(BLOOD_CHALICE_DAMAGE_TYPE),
+                    null,
+                    player,
+                    health.getValue() * 0.3,
+                    true
+            );
+
+            player.hurtServer(player.level(), source, 1.0f);
         });
     }
 

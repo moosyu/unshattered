@@ -1,5 +1,5 @@
 {
+  "exhaustion": 1.0,
   "message_id": "terrain_crush",
-  "exhaustion": 0.0,
   "scaling": "never"
 }

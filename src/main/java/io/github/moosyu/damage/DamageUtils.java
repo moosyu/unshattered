@@ -73,14 +73,13 @@ public final class DamageUtils {
 
             try (AbilityScope scope = AbilityScope.open(serverPlayer, AbilityTriggerType.PLAYER_DEAL_DAMAGE, context)) {
                 if (scope.results.get(AbilityResult.CANCEL_EVENT)) {
-                    scope.close();
                     return;
                 }
 
                 float attackStrength = player.getAttackStrengthScale(0.0f);
                 double critDamage = 0.0d;
                 boolean weakAttack = attackStrength < 0.9f;
-                double damageBonus = 0.0f;
+                double damageBonus = 0.0d;
 
                 for (Object2IntMap.Entry<Holder<Enchantment>> entry : weapon.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY).entrySet()) {
                     Optional<ResourceKey<Enchantment>> key = entry.getKey().unwrapKey();
@@ -98,7 +97,7 @@ public final class DamageUtils {
                 }
 
                 if (useAttackStrength && weakAttack) {
-                    PacketDistributor.sendToPlayer((ServerPlayer) player, new WeakHitSoundEffectPacket());
+                    PacketDistributor.sendToPlayer(serverPlayer, new WeakHitSoundEffectPacket());
                     // just to further disincentivise spam clicking on weapons where you aren't meant to be
                     attackStrength /= 2;
                 } else {
@@ -169,13 +168,15 @@ public final class DamageUtils {
                         target.hurtServer((ServerLevel) target.level(), target.damageSources().playerAttack(player), Integer.MAX_VALUE);
                     }
 
-                    PacketDistributor.sendToPlayer((ServerPlayer) player, new DamageNumberPacket((int) damage,
+                    PacketDistributor.sendToPlayer(serverPlayer, new DamageNumberPacket((int) damage,
                             target.position(),
                             crit ? DamageType.CRITICAL : DamageType.NORMAL)
                     );
                 }
 
-                player.resetAttackStrengthTicker();
+                if (useAttackStrength) {
+                    player.resetAttackStrengthTicker();
+                }
             }
         }
     }
@@ -184,12 +185,11 @@ public final class DamageUtils {
      * deal damage to a player
      * @param player player being damaged
      * @param damageDealt damage being dealt to the player
-     * @param deathMessage death message if the damage kills the player
      * @param overrideInvulnerability whether invulnerability stops the attack
      * @param damageSource damage source
      * @return whether the damage killed the player
      */
-    public static boolean damagePlayer(Player player, double damageDealt, Component deathMessage, boolean overrideInvulnerability, DamageSource damageSource) {
+    public static boolean damagePlayer(Player player, double damageDealt, boolean overrideInvulnerability, DamageSource damageSource) {
         if (player.level().isClientSide()) {
             player.hurtClient(damageSource);
             return false;
@@ -204,7 +204,6 @@ public final class DamageUtils {
 
             try (AbilityScope scope = AbilityScope.open(serverPlayer, AbilityTriggerType.PLAYER_TAKE_DAMAGE, context)) {
                 if (scope.results.get(AbilityResult.CANCEL_EVENT)) {
-                    scope.close();
                     return false;
                 }
 
@@ -224,7 +223,7 @@ public final class DamageUtils {
                 boolean killed = playerHealth - effectiveDamage <= 0.0d;
 
                 // it's divided by 10 when displayed so this is just kind of a work-around
-                serverPlayer.awardStat(Stats.DAMAGE_TAKEN, (int) effectiveDamage * 10);
+                serverPlayer.awardStat(Stats.DAMAGE_TAKEN, (int) (effectiveDamage * 10));
                 if (!killed) {
                     states.decreaseStatValue(PlayerStateAttachment.Stat.HEALTH, effectiveDamage, player);
                 } else {
@@ -232,6 +231,8 @@ public final class DamageUtils {
 
                     PlayerCurrencyAttachment currency = player.getData(PLAYER_CURRENCY.get());
                     BlockPos spawnPos = player.level().getRespawnData().pos();
+                    // uses the vanilla death message for the damage source, the text itself is overridden in the lang file
+                    Component deathMessage = damageSource.getLocalizedDeathMessage(player);
 
                     // greed makes you lose all your coins
                     if (player.getData(UnshatteredAttachments.PLAYER_ABILITIES).activeEffects.containsKey(UnshatteredAbilities.GREED.get().id())) {
@@ -243,12 +244,14 @@ public final class DamageUtils {
                     }
 
                     player.teleportTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5);
+                    player.resetFallDistance();
+                    player.setAirSupply(player.getMaxAirSupply());
 
                     for (ServerPlayer playerOnServer : serverPlayer.level().getServer().getPlayerList().getPlayers()) {
                         if (playerOnServer == serverPlayer) {
-                            playerOnServer.sendSystemMessage(deathMessage.copy()
-                                    .withStyle(ChatFormatting.RED)
-                                    .append(coinsLost > 0 ? Component.literal(" You lost " + coinsLost + " coins.") : Component.empty()));
+                            playerOnServer.sendSystemMessage(deathMessage.copy().withStyle(ChatFormatting.RED).append(Component.literal("!"))
+                                    .append(coinsLost > 0 ? Component.literal(" You lost " + coinsLost + " coins.") : Component.empty())
+                            );
                         } else {
                             playerOnServer.sendSystemMessage(deathMessage.copy().withStyle(ChatFormatting.RED));
                         }

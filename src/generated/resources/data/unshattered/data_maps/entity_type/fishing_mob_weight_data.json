@@ -56,6 +56,14 @@
         "water"
       ],
       "weight": 700.0
+    },
+    "unshattered:yeti": {
+      "conditions": [
+        "water",
+        "in_jerry_workshop"
+      ],
+      "level_requirement": 20,
+      "weight": 100.0
     }
   }
 }

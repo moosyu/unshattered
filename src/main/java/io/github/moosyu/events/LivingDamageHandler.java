@@ -2,7 +2,7 @@ package io.github.moosyu.events;
 
 import io.github.moosyu.attributes.UnshatteredAttributeValue;
 import io.github.moosyu.damage.DamageUtils;
-import net.minecraft.network.chat.Component;
+import io.github.moosyu.damage.UnshatteredDamageSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -31,9 +31,15 @@ public class LivingDamageHandler {
             double scale = Math.min(1.0f, remaining / original);
             DamageSource damageSource = event.getSource();
             double playerDefenceValue = player.getAttributeValue(UnshatteredAttributeValue.DEFENCE.holder);
-            String playerName = player.getName().getString();
 
-            if (event.getSource().getEntity() instanceof LivingEntity entity) {
+            if (damageSource instanceof UnshatteredDamageSource unshatteredSource) {
+                // the real damage is carried in the source, the vanilla amount is only there so knockback and sounds happen
+                DamageUtils.damagePlayer(player,
+                        unshatteredSource.getDamage() * scale,
+                        unshatteredSource.shouldOverrideInvulnerability(),
+                        damageSource
+                );
+            } else if (event.getSource().getEntity() instanceof LivingEntity entity) {
                 AttributeInstance damageAttributeInstance = entity.getAttribute(UnshatteredAttributeValue.DAMAGE.holder);
                 // in case the damage attribute was never defined
                 if (damageAttributeInstance == null) {
@@ -46,7 +52,6 @@ public class LivingDamageHandler {
                         * scale;
                 DamageUtils.damagePlayer(player,
                         damageDealt,
-                        Component.literal("☠ " + playerName + " was slain by a " + entity.getName().getString() + "!"),
                         false,
                         damageSource
                 );
@@ -54,14 +59,12 @@ public class LivingDamageHandler {
                 // https://old.reddit.com/r/HypixelSkyblock/comments/fvozn7/fall_damage_calculator/
                 DamageUtils.damagePlayer(player,
                         ((int) original) * (50.0 / 33.0) / (1 + playerDefenceValue / 100.0) * scale,
-                        Component.literal("☠ " + playerName + " fell to their death!"),
                         false,
                         damageSource
                 );
             } else if (damageSource.is(DamageTypeTags.IS_DROWNING)) {
                 DamageUtils.damagePlayer(player,
                         (original * 50 / 33) / ((playerDefenceValue / 100) + 1) * scale,
-                        Component.literal("☠ " + playerName + " drowned!"),
                         false,
                         damageSource
                 );
@@ -69,7 +72,6 @@ public class LivingDamageHandler {
                 double trueDefence = player.getAttributeBaseValue(UnshatteredAttributeValue.TRUE_DEFENCE.holder);
                 DamageUtils.damagePlayer(player,
                         (100.0f / 33.0f) * (1 - (trueDefence / (trueDefence + 100))) * scale,
-                        Component.literal("☠ " + playerName + " burnt to death!"),
                         false,
                         damageSource
                 );

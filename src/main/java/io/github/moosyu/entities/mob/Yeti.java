@@ -8,8 +8,8 @@ import com.geckolib.animation.RawAnimation;
 import com.geckolib.animation.object.LoopType;
 import com.geckolib.animation.object.PlayState;
 import com.geckolib.util.GeckoLibUtil;
+import io.github.moosyu.abilities.data.TerrainToss;
 import io.github.moosyu.util.UnshatteredUtils;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
@@ -20,9 +20,8 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import org.jspecify.annotations.NonNull;
-
-import java.util.EnumSet;
 
 public class Yeti extends PathfinderMob implements GeoEntity {
     private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
@@ -71,7 +70,13 @@ public class Yeti extends PathfinderMob implements GeoEntity {
     public static AttributeSupplier.Builder createAttributes() {
         // quite sure damage won't matter as ill have to pick on a per-move basis but whatever
         return UnshatteredUtils.createHostileMobAttributes(10000.0f, 15.0f)
-                .add(Attributes.MOVEMENT_SPEED, 0.1f);
+                .add(Attributes.MOVEMENT_SPEED, 0.1f)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 1.0);
+    }
+
+    @Override
+    public boolean isPushable() {
+        return false;
     }
 
     private static class ThrowGoal extends Goal {
@@ -82,14 +87,19 @@ public class Yeti extends PathfinderMob implements GeoEntity {
         }
 
         public boolean canUse() {
-            return yeti.getTarget() != null;
+            System.out.println("tried");
+            LivingEntity target = yeti.getTarget();
+            System.out.println(target);
+            return target != null && yeti.distanceToSqr(target) > 150;
         }
 
         @Override
         public void start() {
             LivingEntity target = yeti.getTarget();
             if (target != null) {
-
+                // fallback is snow mainly because in some niche cases this guy can throw straight nothing at you if
+                // it's air and considering its spawn there's probably snow nearby
+                TerrainToss.throwTerrain(yeti.blockPosition().mutable(), yeti.level(), yeti, target.position(), Blocks.SNOW_BLOCK);
             }
         }
     }

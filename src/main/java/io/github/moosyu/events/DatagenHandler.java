@@ -1,5 +1,7 @@
 package io.github.moosyu.events;
 
+import io.github.moosyu.abilities.data.PainToPower;
+import io.github.moosyu.abilities.data.TerrainToss;
 import io.github.moosyu.blocks.BreakableTitaniumBlock;
 import io.github.moosyu.blocks.TalkingRockBlock;
 import io.github.moosyu.blocks.UnshatteredBlocks;
@@ -16,18 +18,22 @@ import io.github.moosyu.data.regions.*;
 import io.github.moosyu.data.datagen.*;
 import io.github.moosyu.entities.UnshatteredEntities;
 import io.github.moosyu.entities.npc.*;
+import io.github.moosyu.entities.projectile.terrain.TossedTerrain;
 import io.github.moosyu.util.UnshatteredUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.damagesource.DamageScaling;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -35,6 +41,7 @@ import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.joml.Vector2i;
 
@@ -42,6 +49,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 import static io.github.moosyu.Unshattered.MODID;
@@ -63,8 +71,7 @@ public class DatagenHandler {
         generator.addProvider(true, new UnshatteredSoundDefinitionsProvider(packOutput));
         event.createProvider(UnshatteredRecipeProvider.Runner::new);
 
-        event.createDatapackRegistryObjects(
-                new RegistrySetBuilder().add(DataPackRegistryHandler.REGION_REGISTRY_KEY, bootstrap -> {
+        RegistrySetBuilder registrySetBuilder = new RegistrySetBuilder().add(DataPackRegistryHandler.REGION_REGISTRY_KEY, bootstrap -> {
                     bootstrap.register(UnshatteredRegions.PLAINS_REGION, new Region(0xFF71AD1C, RegionTemperatureTypes.COMFORTABLE, false));
                     bootstrap.register(UnshatteredRegions.DEFAULT_REGION, new Region(0xFFFFFFFF, RegionTemperatureTypes.COLD, false));
                     bootstrap.register(UnshatteredRegions.FORGOTTEN_DWELLING, new Region(0xFFCCD9E3, RegionTemperatureTypes.COMFORTABLE, false));
@@ -695,8 +702,19 @@ public class DatagenHandler {
                             1.0d,
                             Optional.of(10))
                     );
-                })
-        );
+                }).add(Registries.DAMAGE_TYPE, bootstrap -> {
+                    registerDamageType(bootstrap, PainToPower.BLOOD_CHALICE_DAMAGE_TYPE);
+                    registerDamageType(bootstrap, TossedTerrain.TERRAIN_CRUSH);
+        });
+
+        DatapackBuiltinEntriesProvider datapackProvider = new DatapackBuiltinEntriesProvider(packOutput, lookupProvider, registrySetBuilder, Set.of(MODID));
+        generator.addProvider(true, datapackProvider);
+        CompletableFuture<HolderLookup.Provider> datapackLookup = datapackProvider.getRegistryProvider();
+        generator.addProvider(true, new UnshatteredDamageTypeTagsProvider(packOutput, datapackLookup));
+    }
+
+    public static void registerDamageType(BootstrapContext<DamageType> bootstrap, ResourceKey<DamageType> damageTypeKey) {
+        bootstrap.register(damageTypeKey, new DamageType(damageTypeKey.identifier().getPath(), DamageScaling.NEVER, 1.0f));
     }
 
     private static void registerRegionBoundary(BootstrapContext<RegionBoundary> bootstrap, BoundaryCoordinates boundaryCoordinates, ResourceKey<Region> region, HolderGetter<Region> regions) {

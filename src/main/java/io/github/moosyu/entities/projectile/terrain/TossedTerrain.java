@@ -1,6 +1,7 @@
 package io.github.moosyu.entities.projectile.terrain;
 
 import io.github.moosyu.damage.DamageUtils;
+import io.github.moosyu.damage.UnshatteredDamageSource;
 import io.github.moosyu.entities.UnshatteredEntities;
 import io.github.moosyu.entities.mob.Yeti;
 import io.github.moosyu.util.UnshatteredUtils;
@@ -8,13 +9,11 @@ import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -40,7 +39,7 @@ import java.util.List;
 import static io.github.moosyu.entities.UnshatteredEntityDataSerializers.BLOCK_LIST;
 
 public class TossedTerrain extends Projectile {
-    private static final ResourceKey<DamageType> TERRAIN_CRUSH = ResourceKey.create(Registries.DAMAGE_TYPE, UnshatteredUtils.getUnshatteredIdentifier("terrain_crush"));
+    public static final ResourceKey<DamageType> TERRAIN_CRUSH = ResourceKey.create(Registries.DAMAGE_TYPE, UnshatteredUtils.getUnshatteredIdentifier("terrain_crush"));
     public static final double GRAVITY = 0.05;
     private static final EntityDataAccessor<List<BlockState>> BLOCKS = SynchedEntityData.defineId(TossedTerrain.class, BLOCK_LIST.get());
 
@@ -89,6 +88,7 @@ public class TossedTerrain extends Projectile {
                 if (tosser instanceof Player player) {
                     getEntitiesInCollision(serverLevel, LivingEntity.class).forEach(livingEntity -> {
                         double damage = 2000;
+                        // shouldnt be too expensive considering its only being run once
                         double distanceFromImpact = position().distanceTo(livingEntity.position());
 
                         if (distanceFromImpact > 1) {
@@ -98,19 +98,16 @@ public class TossedTerrain extends Projectile {
                         DamageUtils.playerDealDamage(player, livingEntity, damage, false, player.getMainHandItem(), true, true);
                     });
                 } else if (tosser instanceof Yeti yeti) {
-                    // unfinished
                     getEntitiesInCollision(serverLevel, Player.class).forEach(player -> {
-                        double damage = 15;
-                        double distanceFromImpact = position().distanceTo(player.position());
-
-                        if (distanceFromImpact > 1) {
-                            damage /= distanceFromImpact;
-                        }
-
-                        DamageUtils.damagePlayer(player, damage, Component.translatable(""), true, new DamageSource(player.registryAccess()
+                        DamageSource source = new UnshatteredDamageSource(player.registryAccess()
                                 .lookupOrThrow(Registries.DAMAGE_TYPE)
-                                .getOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, UnshatteredUtils.getUnshatteredIdentifier("terrain_crush"))))
+                                .getOrThrow(TERRAIN_CRUSH),
+                                this,
+                                yeti,
+                                40,
+                                true
                         );
+                        player.hurtServer(serverLevel, source, 1.0f);
                     });
                 }
             }
