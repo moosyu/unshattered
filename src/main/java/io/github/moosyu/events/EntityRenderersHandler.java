@@ -45,6 +45,8 @@ public class EntityRenderersHandler {
         event.registerEntityRenderer(UnshatteredEntities.FROSTY.get(), FrostyRenderer::new);
         event.registerEntityRenderer(UnshatteredEntities.YETI_TOSSED_TERRAIN.get(), YetiTossedTerrainRenderer::new);
         event.registerEntityRenderer(UnshatteredEntities.YETI.get(), context -> new GeoEntityRenderer<>(context, new DefaultedEntityGeoModel<>(UnshatteredUtils.getUnshatteredIdentifier("mobs/yeti"))));
+        event.registerEntityRenderer(UnshatteredEntities.GROUND_INDICATOR.get(), GroundIndicatorRenderer::new);
+
     }
 
     @SubscribeEvent

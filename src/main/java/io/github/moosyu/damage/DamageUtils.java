@@ -250,7 +250,7 @@ public final class DamageUtils {
                     for (ServerPlayer playerOnServer : serverPlayer.level().getServer().getPlayerList().getPlayers()) {
                         if (playerOnServer == serverPlayer) {
                             playerOnServer.sendSystemMessage(deathMessage.copy().withStyle(ChatFormatting.RED).append(Component.literal("!"))
-                                    .append(coinsLost > 0 ? Component.literal(" You lost " + coinsLost + " coins.") : Component.empty())
+                                    .append(coinsLost > 0 ? Component.literal(" You lost " + String.format("%,d", coinsLost) + " coins.") : Component.empty())
                             );
                         } else {
                             playerOnServer.sendSystemMessage(deathMessage.copy().withStyle(ChatFormatting.RED));

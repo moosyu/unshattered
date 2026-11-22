@@ -60,7 +60,6 @@ public class TossedTerrain extends Projectile {
         return entityData.get(BLOCKS);
     }
 
-
     @Override
     public void tick() {
         super.tick();
@@ -86,7 +85,7 @@ public class TossedTerrain extends Projectile {
                 Entity tosser = level().getEntity(owner.getUUID());
 
                 if (tosser instanceof Player player) {
-                    getEntitiesInCollision(serverLevel, LivingEntity.class).forEach(livingEntity -> {
+                    getEntitiesInCollision(serverLevel, LivingEntity.class, 4).forEach(livingEntity -> {
                         double damage = 2000;
                         // shouldnt be too expensive considering its only being run once
                         double distanceFromImpact = position().distanceTo(livingEntity.position());
@@ -98,7 +97,7 @@ public class TossedTerrain extends Projectile {
                         DamageUtils.playerDealDamage(player, livingEntity, damage, false, player.getMainHandItem(), true, true);
                     });
                 } else if (tosser instanceof Yeti yeti) {
-                    getEntitiesInCollision(serverLevel, Player.class).forEach(player -> {
+                    getEntitiesInCollision(serverLevel, Player.class, 0).forEach(player -> {
                         DamageSource source = new UnshatteredDamageSource(player.registryAccess()
                                 .lookupOrThrow(Registries.DAMAGE_TYPE)
                                 .getOrThrow(TERRAIN_CRUSH),
@@ -162,10 +161,10 @@ public class TossedTerrain extends Projectile {
         }
     }
 
-    private <T extends LivingEntity> List<T> getEntitiesInCollision(ServerLevel serverLevel, Class<T> entityClass) {
+    private <T extends LivingEntity> List<T> getEntitiesInCollision(ServerLevel serverLevel, Class<T> entityClass, double inflation) {
         return serverLevel.getEntitiesOfClass(entityClass, UnshatteredEntities.YETI_TOSSED_TERRAIN.get()
                 .getDimensions()
-                .makeBoundingBox(position()).inflate(4)
+                .makeBoundingBox(position()).inflate(inflation)
         );
     }
 }

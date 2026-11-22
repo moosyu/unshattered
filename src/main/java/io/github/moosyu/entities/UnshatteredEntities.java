@@ -1,5 +1,6 @@
 package io.github.moosyu.entities;
 
+import io.github.moosyu.entities.decoration.GroundIndicator;
 import io.github.moosyu.entities.decoration.present.Present;
 import io.github.moosyu.entities.mob.*;
 import io.github.moosyu.entities.npc.*;
@@ -272,9 +273,21 @@ public class UnshatteredEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<TossedTerrain>> YETI_TOSSED_TERRAIN =
             ENTITY_TYPES.register("yeti_tossed_terrain",
                     () -> EntityType.Builder.of(TossedTerrain::new, MobCategory.MISC)
-                        .sized(5.0f, 3.0f)
-                        .clientTrackingRange(10)
-                        .updateInterval(10)
-                        .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("yeti_tossed_terrain")))
+                            .sized(5.0f, 3.0f)
+                            .clientTrackingRange(10)
+                            .updateInterval(10)
+                            .noSave()
+                            .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("yeti_tossed_terrain")))
             );
+
+    public static final DeferredHolder<EntityType<?>, EntityType<GroundIndicator>> GROUND_INDICATOR =
+            ENTITY_TYPES.register("ground_indicator",
+                    () -> EntityType.Builder.of(GroundIndicator::new, MobCategory.MISC)
+                            .sized(0, 0)
+                            .clientTrackingRange(10)
+                            .updateInterval(20)
+                            .noSave()
+                            .build(ResourceKey.create(Registries.ENTITY_TYPE, UnshatteredUtils.getUnshatteredIdentifier("ground_indicator")))
+            );
+
 }

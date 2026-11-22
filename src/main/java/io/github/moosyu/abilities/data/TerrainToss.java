@@ -15,7 +15,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
@@ -55,11 +54,11 @@ public class TerrainToss extends ActiveAbility {
             }
 
             // EntityDataAccessor works better with lists than arrays
-            throwTerrain(blockPosCenter, level, player, player.pick(MAX_RANGE, 1.0f, false).getLocation(), Blocks.AIR);
+            throwTerrain(blockPosCenter, level, player, player.pick(MAX_RANGE, 1.0f, false).getLocation(), Blocks.AIR, 1.0f);
         });
     }
 
-    public static void throwTerrain(BlockPos.MutableBlockPos blockPosCenter, Level level, Entity owner, Vec3 targetPosition, Block fallbackBlock) {
+    public static void throwTerrain(BlockPos.MutableBlockPos blockPosCenter, Level level, Entity owner, Vec3 targetPosition, Block fallbackBlock, float heightMultiplier) {
         // EntityDataAccessor works better with lists than arrays
         List<BlockState> sampled = new ArrayList<>(YetiTossShape.OFFSETS.size());
 
@@ -86,7 +85,8 @@ public class TerrainToss extends ActiveAbility {
         Vec3 displacement = targetPosition.subtract(startPosition);
         Vec3 horizontal = new Vec3(displacement.x, 0, displacement.z);
         double horizontalDist = horizontal.length();
-        int flightTime = Mth.clamp((int) Math.ceil(horizontalDist / H_SPEED), MIN_TICKS, MAX_TICKS);
+        double timeScale = Math.sqrt(heightMultiplier);
+        int flightTime = Mth.clamp((int) Math.ceil(horizontalDist / H_SPEED * timeScale), MIN_TICKS, (int) Math.ceil(MAX_TICKS * timeScale));
         Vec3 vx = horizontalDist > 1.0E-6 ? horizontal.scale(1.0 / flightTime) : Vec3.ZERO;
         double vy = (displacement.y + TossedTerrain.GRAVITY * flightTime * (flightTime - 1) / 2.0) / flightTime;
 

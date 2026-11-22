@@ -99,7 +99,7 @@ public class Yeti extends PathfinderMob implements GeoEntity {
             if (target != null) {
                 // fallback is snow mainly because in some niche cases this guy can throw straight nothing at you if
                 // it's air and considering its spawn there's probably snow nearby
-                TerrainToss.throwTerrain(yeti.blockPosition().mutable(), yeti.level(), yeti, target.position(), Blocks.SNOW_BLOCK);
+                TerrainToss.throwTerrain(yeti.blockPosition().mutable(), yeti.level(), yeti, target.position(), Blocks.SNOW_BLOCK, 2.0f);
             }
         }
     }
